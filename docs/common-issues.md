@@ -1,7 +1,7 @@
 ---
-id: intro
-title: Intro
-sidebar_label: Intro
+id: common-issues
+title: Common Issues
+sidebar_label: Common Issues
 slug: /
 ---
 
