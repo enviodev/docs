@@ -6,7 +6,7 @@ const config = {
   title: "Envio",
   tagline: "A fast, reliable, customizable indexing blockchain solution.",
   favicon: "img/favicon.ico",
-  url: "",
+  url: "https://docs.envio.dev",
   baseUrl: "/",
   organizationName: "float-capital",
   projectName: "indexer-docs",
