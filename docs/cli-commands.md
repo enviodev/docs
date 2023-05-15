@@ -2,7 +2,7 @@
 id: cli-commands
 title: CLI Commands
 sidebar_label: CLI Commands
-slug: /
+slug: /cli-commands
 ---
 
 <sub><sup> NOTE: These docs are under active development 👷‍♀️👷 </sup></sub>

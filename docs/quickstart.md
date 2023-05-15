@@ -35,9 +35,9 @@ This will generate the config, schema and event handlers files according to the 
 
 ## Configure the files according to your project
 
-- How to specify the config file [here](specifying-config-file.md).
-- How to specify the schema file [here](configuring-schema.md).
-- How to specify the event handlers file [here](writing-event-handlers.md).
+- How to specify the config file [here](configuration-file.md).
+- How to specify the schema file [here](schema.md).
+- How to specify the event handlers file [here](event-handlers.md).
 
 ## Generate code according to configuration
 

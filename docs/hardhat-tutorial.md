@@ -1,8 +1,8 @@
 ---
-id: working-with-hardhat
-title: Working with Hardhat
-sidebar_label: Working with Hardhat
-slug: /
+id: hardhat-tutorial
+title: Hardhat Tutorial
+sidebar_label: Hardhat Tutorial
+slug: /hardhat-tutorial
 ---
 
 <sub><sup> NOTE: These docs are under active development 👷‍♀️👷 </sup></sub>

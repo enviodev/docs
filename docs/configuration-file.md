@@ -1,8 +1,8 @@
 ---
-id: specifying-config-file
-title: Specifying the Config file
-sidebar_label: Specifying the Config file
-slug: /
+id: configuration-file
+title: Configuration File
+sidebar_label: Configuration File
+slug: /configuration-file
 ---
 
 <sub><sup> NOTE: These docs are under active development 👷‍♀️👷 </sup></sub>

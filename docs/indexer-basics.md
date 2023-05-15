@@ -2,7 +2,7 @@
 id: indexer-basics
 title: Indexer Basics
 sidebar_label: Indexer Basics
-slug: /
+slug: /indexer-basics
 ---
 
 <sub><sup> NOTE: These docs are under active development 👷‍♀️👷 </sup></sub>
@@ -16,4 +16,5 @@ The following files are required to use the Indexer:
 - Event Handlers (defaults to `src/EventHandlers.*` depending on flavour chosen) 
 
 These files are auto-generated according to the Gravatar template by running `envio init` command.
+
 ---

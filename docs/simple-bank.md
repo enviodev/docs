@@ -2,7 +2,7 @@
 id: simple-bank
 title: SimpleBank
 sidebar_label: SimpleBank
-slug: /
+slug: /simple-bank
 ---
 
 <sub><sup> NOTE: These docs are under active development 👷‍♀️👷 </sup></sub>

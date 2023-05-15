@@ -9,7 +9,7 @@ module.exports = {
       // "Greeter",
       // "NFT Factory",
       // "Ploffen",
-      "SimpleBank",
+      "simple-bank",
   ],
   //   Education: [
   //     "what-is-indexer",
@@ -20,10 +20,10 @@ module.exports = {
     Guides: [
       "quickstart",
       "indexer-basics",
-      "specifying-config-file",
-      "configuring-schema",
-      "writing-event-handlers",
-      "working-with-hardhat",
+      "configuration-file",
+      "schema-file",
+      "event-handlers",
+      "hardhat-tutorial",
       // "working-with-foundry",
       // "integrating-existing-contract",
       // "migrating-from-the-graph",
@@ -35,11 +35,11 @@ module.exports = {
   //     "using-testing-framework",
   //     "dashboard-alerts",
   // ],
-    Troubleshoot: [
-      // "faqs",
-      // "logging",
-      "common-issues",
-      // "error-codes",
-  ],
+  //   Troubleshoot: [
+  //     "faqs",
+  //     "logging",
+  //     "common-issues",
+  //     "error-codes",
+  // ],
   },
 };

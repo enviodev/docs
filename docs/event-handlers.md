@@ -1,8 +1,8 @@
 ---
-id: writing-event-handlers
-title: Writing Event Handlers
-sidebar_label: Writing Event Handlers
-slug: /
+id: event-handlers
+title: Event Handlers
+sidebar_label: Event Handlers
+slug: /event-handlers
 ---
 
 <sub><sup> NOTE: These docs are under active development 👷‍♀️👷 </sup></sub>

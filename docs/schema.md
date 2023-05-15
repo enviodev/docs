@@ -1,8 +1,8 @@
 ---
-id: configuring-schema
-title: Configuring the Schema
-sidebar_label: Configuring the Schema
-slug: /
+id: schema-file
+title: Schema File
+sidebar_label: Schema File
+slug: /schema-file
 ---
 
 <sub><sup> NOTE: These docs are under active development 👷‍♀️👷 </sup></sub>
