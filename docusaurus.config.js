@@ -1,40 +1,36 @@
-
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
-
-
-
+const lightCodeTheme = require("prism-react-renderer/themes/github");
+const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Envio',
-  tagline: 'A fast, reliable, customizable indexing blockchain solution.',
-  favicon: 'img/favicon.ico',
-  url: 'https://float-capital.github.io',
-  baseUrl: '/env.io',
+  title: "Envio",
+  tagline: "A fast, reliable, customizable indexing blockchain solution.",
+  favicon: "img/favicon.ico",
+  url: "",
+  baseUrl: "/",
   organizationName: "float-capital",
   projectName: "indexer-docs",
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenLinks: "throw",
+  onBrokenMarkdownLinks: "warn",
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    defaultLocale: "en",
+    locales: ["en"],
   },
 
   presets: [
     [
-      'classic',
+      "classic",
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
+          sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-          'https://github.com/Float-Capital/indexer-docs/tree/dev/docs/',
+            "https://github.com/Float-Capital/indexer-docs/tree/dev/docs/",
         },
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: require.resolve("./src/css/custom.css"),
         },
       }),
     ],
@@ -46,14 +42,14 @@ const config = {
       navbar: {
         title: "",
         logo: {
-          alt: 'Envio Logo',
+          alt: "Envio Logo",
           src: "img/envio-black-logo.png",
           srcDark: "img/envio-white-logo.png",
           style: {
-          width: 100, 
-          height: 50
-          }
-        }, 
+            width: 100,
+            height: 50,
+          },
+        },
         items: [
           //  {
           //    to: "/",
@@ -61,13 +57,13 @@ const config = {
           //    label: "Home",
           //    position: "left",
           //  },
-           {
-             to: "docs/",
-             activeBasePath: "docs",
-             label: "Docs",
-             position: "left",
-           },
-           {
+          {
+            to: "docs/",
+            activeBasePath: "docs",
+            label: "Docs",
+            position: "left",
+          },
+          {
             to: "blog/",
             activeBasePath: "blog",
             label: "Blog",
@@ -81,19 +77,19 @@ const config = {
         ],
       },
       footer: {
-        style: 'dark',
+        style: "dark",
         links: [
           {
-            title: 'Docs',
+            title: "Docs",
             items: [
               {
-                label: 'Tutorial',
-                to: 'docs/intro',
+                label: "Tutorial",
+                to: "docs/intro",
               },
             ],
           },
           {
-            title: 'Community',
+            title: "Community",
             items: [
               {
                 label: "Discord",
@@ -101,25 +97,25 @@ const config = {
               },
               {
                 label: "Twitter",
-                href: "https://twitter.com/float_shipping",
+                href: "https://twitter.com/envio_indexer",
               },
               {
-              label: "Lens",
-              href: "https://lenster.xyz/u/float.lens"
-              }
+                label: "Lens",
+                href: "https://lenster.xyz/u/float.lens",
+              },
             ],
           },
           {
-            title: 'More',
+            title: "More",
             items: [
               {
-                label: 'GitHub',
+                label: "GitHub",
                 href: "https://github.com/Float-Capital/envio",
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} <a href='https://env.io'>Envio</a>`,
+        copyright: `Copyright © ${new Date().getFullYear()} <a href='https://envio.dev'>Envio</a>`,
       },
       prism: {
         theme: lightCodeTheme,
