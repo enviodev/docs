@@ -2,7 +2,7 @@
 id: ploffen
 title: Ploffen
 sidebar_label: Ploffen
-slug: /
+slug: /ploffen
 ---
 
 <sub><sup> NOTE: These docs are under active development 👷‍♀️👷 </sup></sub>

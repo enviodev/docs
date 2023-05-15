@@ -57,18 +57,18 @@ const config = {
           //    label: "Home",
           //    position: "left",
           //  },
-          {
-            to: "docs/",
-            activeBasePath: "docs",
-            label: "Docs",
-            position: "left",
-          },
-          {
-            to: "blog/",
-            activeBasePath: "blog",
-            label: "Blog",
-            position: "left",
-          },
+          // {
+          //   to: "docs/",
+          //   activeBasePath: "docs",
+          //   label: "Docs",
+          //   position: "left",
+          // },
+          // {
+          //   to: "blog/",
+          //   activeBasePath: "blog",
+          //   label: "Blog",
+          //   position: "left",
+          // },
           {
             href: "https://github.com/Float-Capital/envio",
             label: "GitHub",
@@ -79,15 +79,15 @@ const config = {
       footer: {
         style: "dark",
         links: [
-          {
-            title: "Docs",
-            items: [
-              {
-                label: "Tutorial",
-                to: "docs/intro",
-              },
-            ],
-          },
+          // {
+          //   title: "Docs",
+          //   items: [
+          //     {
+          //       label: "Tutorial",
+          //       to: "docs/intro",
+          //     },
+          //   ],
+          // },
           {
             title: "Community",
             items: [
