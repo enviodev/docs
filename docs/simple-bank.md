@@ -5,7 +5,7 @@ sidebar_label: SimpleBank
 slug: /simple-bank
 ---
 
-<sub><sup> NOTE: These docs are under active development 👷‍♀️👷 </sup></sub>
+
 
 # SimpleBank contract
 

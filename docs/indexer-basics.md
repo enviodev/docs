@@ -5,7 +5,7 @@ sidebar_label: Indexer Basics
 slug: /indexer-basics
 ---
 
-<sub><sup> NOTE: These docs are under active development 👷‍♀️👷 </sup></sub>
+
 
 # Indexer Requirements
 

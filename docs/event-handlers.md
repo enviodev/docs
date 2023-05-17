@@ -5,7 +5,7 @@ sidebar_label: Event Handlers
 slug: /event-handlers
 ---
 
-<sub><sup> NOTE: These docs are under active development 👷‍♀️👷 </sup></sub>
+
 
 # Writing Event Handlers
 

@@ -5,7 +5,7 @@ sidebar_label: Schema File
 slug: /schema-file
 ---
 
-<sub><sup> NOTE: These docs are under active development 👷‍♀️👷 </sup></sub>
+
 
 # Schema Definition
 

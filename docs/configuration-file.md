@@ -5,7 +5,7 @@ sidebar_label: Configuration File
 slug: /configuration-file
 ---
 
-<sub><sup> NOTE: These docs are under active development 👷‍♀️👷 </sup></sub>
+
 
 # Config File Setup
 

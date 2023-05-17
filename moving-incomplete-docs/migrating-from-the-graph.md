@@ -5,6 +5,6 @@ sidebar_label: Migrating from theGraph
 slug: /
 ---
 
-<sub><sup> NOTE: These docs are under active development 👷‍♀️👷 </sup></sub>
+
 
 ---

@@ -5,7 +5,7 @@ sidebar_label: Hardhat Tutorial
 slug: /hardhat-tutorial
 ---
 
-<sub><sup> NOTE: These docs are under active development 👷‍♀️👷 </sup></sub>
+
 
 # Local testing using Hardhat and Docker
 Below are steps to be followed when testing the indexer locally using Hardhat and Docker.

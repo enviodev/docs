@@ -9,8 +9,8 @@ slug: /overview
 
 # Overview
 
-Envio is a reliable real-time indexing solution that makes it easy to ingests events from EVM-compatible chains and process that data into to custom APIs. These APIs are perfect for unlocking slick user-experiences in blockchain application frontends.
+Envio is a reliable real-time indexing solution that makes it easy to ingests events from EVM-compatible chains and processes that data into custom APIs. These APIs are perfect for unlocking slick user-experiences in blockchain application frontends.
 
-Aim of Envio is to optimize developer experience of using an indexer, whilst providing fast, secure and reliable indexing service.
+The aim of Envio is to optimize developer experience of using an indexer, whilst providing fast, secure and reliable indexing service.
 
 ---
