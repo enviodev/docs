@@ -9,7 +9,7 @@ slug: /
 
 # Common issues
 
-## Re-exporting smart contract ABI
+## Re-exporting smart contract ABI using Hardhat and `pnpm`
 If you have updated your smart contract after the initial codegen, then you will have to recreate the ABI for your smart contract.
 
 Run
