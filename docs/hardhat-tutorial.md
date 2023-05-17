@@ -53,6 +53,6 @@ NB: All the files must be configured as per guideline above.
    ```
    ./generated/register_tables_with_hasura.sh
    ```
-   and open http://localhost:8080/console.
+   and open [local hasura server](http://localhost:8080/console).
 
 ---

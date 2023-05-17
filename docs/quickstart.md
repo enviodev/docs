@@ -58,7 +58,7 @@ To view the data in the database, run
 ```
 ./generated/register_tables_with_hasura.sh
 ```
-and open http://localhost:8080/console.
+and open the [local hasura server]([local hasura server](http://localhost:8080/console)).
 
 Admin-secret for local Hasura is `testing` 
 
