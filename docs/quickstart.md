@@ -73,9 +73,9 @@ Alternatively you can open the file `index.html` for a cleaner experience (no Ha
 ## Configure the files according to your project
 Now you can configure the files to your configuration
 
-- How to specify the config file [here](configuration-file.md).
-- How to specify the schema file [here](schema.md).
-- How to specify the event handlers file [here](event-handlers.md).
+- How to specify the config file [here](./configuration-file).
+- How to specify the schema file [here](./schema).
+- How to specify the event handlers file [here](./event-handlers).
 
 
 ---

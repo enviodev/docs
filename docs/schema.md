@@ -2,7 +2,7 @@
 id: schema-file
 title: Schema File
 sidebar_label: Schema File
-slug: /schema-file
+slug: /schema
 ---
 
 
