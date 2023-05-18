@@ -35,7 +35,7 @@ NB: All the files must be configured as per guideline above.
 4. Generating code
    ```
    cd ..
-   envio codegen
+   npx envio codegen
    ```
 
 5. Running the indexer

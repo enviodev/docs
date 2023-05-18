@@ -9,17 +9,21 @@ slug: /quick-start
 
 # Quickstart
 
+## Installation
+
+`npm i -g envio`
+
 ## Create templates
 
 `cd` into folder of your choice and run 
 ```
-envio init
+npx envio init
 ```
 
 Then choose a template out of the possible options
 ```
 ? Which template would you like to use?  
-> "Gravatar"
+> "Greeter"
 [↑↓ to move, enter to select, type to filter]
 ```
 Then choose a language from Javascript, Typescript or Rescript to write the event handlers file.
@@ -44,11 +48,15 @@ This will generate the config, schema and event handlers files according to the 
 Once you have configured the above files, the following can be used generate all the code that is required for indexing your project:
 
 ```
-envio codegen
+npx envio codegen
 ```
 
 ## Run the indexer
 Once all the configuration files and auto-generated files are in place, you are ready to run the indexer for your project:
+```
+pnpm i
+```
+
 ```
 pnpm start
 ```

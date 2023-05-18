@@ -22,7 +22,7 @@ The following files are required to use the Indexer:
 - GraphQL Schema (defaults to `schema.graphql`)
 - Event Handlers (defaults to `src/EventHandlers.*` depending on flavour chosen) 
 
-These files are auto-generated according to a template by running `envio init` command.
+These files are auto-generated according to a template by running `npx envio init` command.
 
 ## Configuration Setup
 
@@ -90,7 +90,7 @@ type Account @entity {
 ## Writing Event Handlers
 
 Once the configuration and graphQL schema files are in place, run
-`envio codegen` in the project directory.
+`npx envio codegen` in the project directory.
 
 The entity and event types will then be available in the handler files. 
 

@@ -11,7 +11,7 @@ slug: /event-handlers
 
 Once the configuration and graphQL schema files are in place, run
 ```bash
-envio codegen
+npx envio codegen
 ``` 
 in the project directory.
 
