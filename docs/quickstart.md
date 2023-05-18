@@ -2,7 +2,7 @@
 id: quickstart
 title: Quickstart
 sidebar_label: Quickstart
-slug: /quick-start
+slug: /quickstart
 ---
 
 
@@ -11,7 +11,9 @@ slug: /quick-start
 
 ## Installation
 
-`npm i -g envio`
+```bash
+npm i -g envio
+```
 
 ## Create templates
 
