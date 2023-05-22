@@ -18,7 +18,7 @@ ports:
 
 Then run 
 ```
-pnpm start
+PG_PORT:-5433 pnpm start
 ```
 
 
