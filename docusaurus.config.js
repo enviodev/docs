@@ -63,12 +63,12 @@ const config = {
           //   label: "Docs",
           //   position: "left",
           // },
-          // {
-          //   to: "blog/",
-          //   activeBasePath: "blog",
-          //   label: "Blog",
-          //   position: "left",
-          // },
+          {
+            to: "blog/",
+            activeBasePath: "blog",
+            label: "Blog",
+            position: "left",
+          },
           {
             href: "https://github.com/Float-Capital/envio",
             label: "GitHub",
