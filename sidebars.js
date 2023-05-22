@@ -6,34 +6,8 @@ module.exports = {
     "installation",
     {
       type: "category",
-      label: "Example Scenarios",
-      items: [
-        {
-          type: "doc",
-          id: "simple-bank",
-        },
-        // {
-        //   type: "doc",
-        //   id: "greeter",
-        // },
-        // {
-        //   type: "doc",
-        //   id: "nft-factory",
-        // },
-        // {
-        //   type: "doc",
-        //   id: "ploffen",
-        // },
-      ],
-    },
-    {
-      type: "category",
       label: "Guides",
       items: [
-        {
-          type: "doc",
-          id: "quickstart",
-        },
         {
           type: "doc",
           id: "indexer-basics",
@@ -52,12 +26,30 @@ module.exports = {
         },
         {
           type: "doc",
-          id: "hardhat-tutorial",
-        },
-        {
-          type: "doc",
           id: "cli-commands",
         },
+      ],
+    },
+    {
+      type: "category",
+      label: "Example Scenarios",
+      items: [
+        {
+          type: "doc",
+          id: "simple-bank",
+        },
+        // {
+        //   type: "doc",
+        //   id: "greeter",
+        // },
+        // {
+        //   type: "doc",
+        //   id: "nft-factory",
+        // },
+        // {
+        //   type: "doc",
+        //   id: "ploffen",
+        // },
       ],
     },
 

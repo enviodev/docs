@@ -7,11 +7,11 @@ slug: /schema
 
 
 
-# Schema Definition
+# Schema File
 
-The `schema.graphql` file contains the definitions of all user-defined entities. These entity types are then created/modified within the handler files.
+The `schema.graphql` file contains the definitions of all user-defined entities, which specify the shape of data to be populated from smart contract events. These entity types are then created/modified within the handler files.
 
-Example schema definition for Gravatar scenario:
+Example `schema.graphql` for Gravatar scenario:
 
 ```graphql
 type Gravatar @entity {

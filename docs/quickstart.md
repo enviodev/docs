@@ -64,7 +64,7 @@ pnpm open-dashboard
 ```bash
 ./generated/register_tables_with_hasura.sh
 ```
-and open the [local hasura server]([local hasura server](http://localhost:8080/console)).
+and open the [**local hasura server**](http://localhost:8080/console).
 
 Admin-secret for local Hasura is `testing` 
 

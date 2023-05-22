@@ -13,26 +13,26 @@ This document contains the help content for the `envio` command-line program.
 
 **Command Overview:**
 
-* [`envio`↴](#envio)
-* [`envio init`↴](#envio-init)
-* [`envio codegen`↴](#envio-codegen)
+* [`npx envio`↴](#envio)
+* [`npx envio init`↴](#envio-init)
+* [`npx envio codegen`↴](#envio-codegen)
 
-## `envio`
+## `npx envio`
 
-**Usage:** `envio <COMMAND>`
+**Usage:** ` npx envio <COMMAND>`
 
 ###### **Subcommands:**
 
 * `init` — Initialize a project with a template
-* `codegen` — Generate code from a config.yaml file
+* `codegen` — Generate code from a `config.yaml` file
 
 
 
-## `envio init`
+## `npx envio init`
 
 Initialize a project with a template
 
-**Usage:** `envio init [OPTIONS]`
+**Usage:** `npx envio init [OPTIONS]`
 
 ###### **Options:**
 
@@ -50,11 +50,11 @@ Initialize a project with a template
 
 
 
-## `envio codegen`
+## `npx envio codegen`
 
-Generate code from a config.yaml file
+Generate code from a `config.yaml` file
 
-**Usage:** `envio codegen [OPTIONS]`
+**Usage:** `npx envio codegen [OPTIONS]`
 
 ###### **Options:**
 
@@ -67,16 +67,6 @@ Generate code from a config.yaml file
 * `-c`, `--config <CONFIG>` — The file in the project containing config
 
   Default value: `config.yaml`
-
-
-
-<hr/>
-
-<small><i>
-    This document was generated automatically by
-    <a href="https://crates.io/crates/clap-markdown"><code>clap-markdown</code></a>.
-</i></small>
-
 
 
 ---
