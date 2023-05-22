@@ -15,7 +15,7 @@ The following files are required to use the Indexer:
 - GraphQL Schema (defaults to `schema.graphql`)
 - Event Handlers (defaults to `src/EventHandlers.*` depending on the language chosen) 
 
-These files are auto-generated according to the Gravatar template by running `npx envio init` command.
+These files are auto-generated according to the Greeter template by running `npx envio init` command.
 
 Click [<ins>here</ins>](./quickstart.md) for a quickstart guide.
 
