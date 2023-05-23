@@ -6,14 +6,13 @@
  */
 
  .blogPostTitle {
-    font-size: 1.5rem;
-  }
-  
-  .blogPostData {
-    font-size: 0.7rem;
-  }
-  
-  .blogPostDetailsFull {
-    flex-direction: column;
-  }
-  
+  font-size: 1.5rem;
+}
+
+.blogPostData {
+  font-size: 0.7rem;
+}
+
+.blogPostDetailsFull {
+  flex-direction: column;
+}
