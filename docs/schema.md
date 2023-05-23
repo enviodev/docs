@@ -16,9 +16,9 @@ Example `schema.graphql` for Greeter scenario:
 ```graphql
 type Greeting @entity {
   id: ID!
-  message: String!
+  latestGreeting: String!
+  numberOfGreetings: Int!
 }
-
 ```
 
 ---

@@ -24,17 +24,19 @@ networks:
     contracts:
       - name: Greeter
         abi_file_path: abis/greeter-abi.json
-        address: ["0x5FbDB2315678afecb367f032d93F642f64180aa3"]
+        address: ["0x2B502ab6F783c2Ae96A75dc68cf82a77ce2637c2"]
         handler: ./src/EventHandlers.bs.js
         events:
           - name: "NewGreeting"
-            requiredEntities: []
-          - name: "UpdateGreeting"
-            requiredEntities: []
+            requiredEntities:
               - name: "Greeting"
                 labels:
                   - "greetingWithChanges"
-
+          - name: "ClearGreeting"
+            requiredEntities:
+              - name: "Greeting"
+                labels:
+                  - "greetingWithChanges"
 ```
 
 **Field Descriptions**
