@@ -64,7 +64,7 @@ pnpm open-dashboard
 ```bash
 ./generated/register_tables_with_hasura.sh
 ```
-and open the [local hasura server]([local hasura server](http://localhost:8080/console)).
+and open the [<ins>local hasura server</ins>](http://localhost:8080/console).
 
 Admin-secret for local Hasura is `testing` 
 
@@ -73,9 +73,9 @@ Alternatively you can open the file `index.html` for a cleaner experience (no Ha
 ## Configure the files according to your project
 Now you can configure the files to your configuration
 
-- How to specify the config file [here](./configuration-file).
-- How to specify the schema file [here](./schema).
-- How to specify the event handlers file [here](./event-handlers).
+- How to specify the config file [<ins>here</ins>](./configuration-file).
+- How to specify the schema file [<ins>here</ins>](./schema).
+- How to specify the event handlers file [[<ins>here</ins>](./event-handlers).
 
 
 ---

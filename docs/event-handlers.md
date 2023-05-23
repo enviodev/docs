@@ -7,9 +7,9 @@ slug: /event-handlers
 
 
 
-# Writing Event Handlers
+# Event Handlers
 
-Once the configuration and graphQL schema files are in place, run
+Once the configuration and schema files are in place, run
 ```bash
 npx envio codegen
 ``` 
@@ -17,20 +17,16 @@ in the project directory.
 
 The entity and event types will then be available in the handler files. 
 
-A user can specify a specific handler file per contract that processes events emitted by that contract.
-Each event handler requires two functions to be registered in order to enable full functionality within the indexer.
+A user can specify a handler file per contract that processes events emitted by that contract.
+Each event requires two functions to be registered:
 1. An `<event>LoadEntities` function
 2. An `<event>Handler` function
 
-### Example of registering a `loadEntities` function for the `UpdatedGravatar` event from the above example config:
+The reason for requiring two functions instead of one for each event is to optimize the indexing speed.
 
-```rescript
-Handlers.GravatarContract.registerUpdatedGravatarLoadEntities((event, contextUpdator) => {
-  contextUpdator.gravatar.gravatarWithChangesLoad(event.params.id->Ethers.BigInt.toString)
-})
-```
+### Gravatar example
 
-Inspecting the config of the `UpdatedGravatar` event from the above example config indicates that there is a defined `requiredEntities` field of the following:
+Inspecting the `config.yaml` of the `UpdatedGravatar` event, it indicates that there is a defined `requiredEntities` field of the following:
 
 ```yaml
 events:
@@ -40,13 +36,21 @@ events:
         labels:
           - "gravatarWithChanges"
 ```
+### Example of registering a `LoadEntities` function for the `UpdatedGravatar` event:
 
-- The register function `registerUpdatedGravatarLoadEntities` follows a naming convention for all events: `register<EventName>LoadEntities`. 
+```rescript
+Handlers.GravatarContract.registerUpdatedGravatarLoadEntities((event, contextUpdator) => {
+  contextUpdator.gravatar.gravatarWithChangesLoad(event.params.id->Ethers.BigInt.toString)
+})
+```
+
+
+- The load entities function `registerUpdatedGravatarLoadEntities` follows a naming convention for all events: `register<EventName>LoadEntities`. 
 - Within the function that is being registered the user must define the criteria for loading the `gravatarWithChanges` entity which corresponds to the label defined in the config. 
 - This is made available to the user through the load entity context defined as `contextUpdator`.
 - In the case of the above example the `gravatarWithChanges` loads a `Gravatar` entity that corresponds to the id received from the event.
 
-### Example of registering a `Handler` function for the `UpdatedGravatar` event and using the loaded entity `gravatarWithChanges`:
+### Example of registering a `Handler` function for the `UpdatedGravatar` event and using the label `gravatarWithChanges`:
 
 ```rescript
 Handlers.GravatarContract.registerUpdatedGravatarHandler((event, context) => {
@@ -67,7 +71,7 @@ Handlers.GravatarContract.registerUpdatedGravatarHandler((event, context) => {
 })
 ```
 
-- The handler functions also follow a naming convention for all events in the form of: `register<EventName>Handler`.
+- The handler function `registerUpdatedGravatarHandler` also follows a naming convention for all events in the form of: `register<EventName>Handler`.
 - Once the user has defined their `loadEntities` function, they are then able to retrieve the loaded entity information via the labels defined in the `config.yaml` file. 
 - In the above example, if a `Gravatar` entity is found matching the load criteria in the `loadEntities` function, it will be available via `gravatarWithChanges`. 
 - This is made available to the user through the handler context defined simply as `context`. 

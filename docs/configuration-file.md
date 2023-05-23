@@ -7,9 +7,11 @@ slug: /configuration-file
 
 
 
-# Config File Setup
+# Configuration File
 
-Example config file from Gravatar scenario:
+The `config.yaml` contains various information about the smart contract project, including network specifications and event information to be fed into the indexing process.
+
+Example `config.yaml` from Gravatar scenario:
 
 ```yaml
 version: 0.0.0
