@@ -24,7 +24,7 @@ PG_PORT:5433 pnpm start
 
 
 ## Smart contract updated after the initial codegen
-If smart contract has been changed after the initial codegen, then recreate the ABI for the smart contract.
+If your smart contracts have been changed after the initial codegen, then you need to recreate the ABI for the smart contracts.
 
 Re-export smart contract ABI's using [Hardhat ABI exporter](https://www.npmjs.com/package/hardhat-abi-exporter) and `pnpm` by running
 ```
