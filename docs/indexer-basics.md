@@ -17,6 +17,6 @@ The following files are required to use the Indexer:
 
 These files are auto-generated according to the Gravatar template by running `npx envio init` command.
 
-Click [<ins>here</ins>](./quickstart.md) for a quickstart guide.
+Click [<ins>here</ins>](./quickstart.md) for the quickstart guide.
 
 ---

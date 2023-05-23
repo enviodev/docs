@@ -22,7 +22,7 @@ Each event requires two functions to be registered:
 1. An `<event>LoadEntities` function
 2. An `<event>Handler` function
 
-Reason for requiring two functions instead of one for each event is to optimize the indexing speed.
+The reason for requiring two functions instead of one for each event is to optimize the indexing speed.
 
 ### Gravatar example
 

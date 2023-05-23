@@ -18,16 +18,16 @@ ports:
 
 Then run 
 ```
-PG_PORT:-5433 pnpm start
+PG_PORT:5433 npx envio codegen
+PG_PORT:5433 pnpm start
 ```
 
 
 ## Smart contract updated after the initial codegen
 If smart contract has been changed after the initial codegen, then recreate the ABI for the smart contract.
 
-Re-export smart contract ABI using Hardhat and `pnpm` by running
+Re-export smart contract ABI's using [Hardhat ABI exporter](https://www.npmjs.com/package/hardhat-abi-exporter) and `pnpm` by running
 ```
-cd contracts
 pnpm hardhat export-abi
 ```
 Ensure that the directory for ABI in `config.yaml` is pointing to the correct folder where ABIs have been freshly generated.
