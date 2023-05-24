@@ -7,9 +7,6 @@ slug: /event-handlers
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-import CodeBlock from '@theme/CodeBlock';
-// import HandlerRescript from '_event-handlers-res.mdx';
-// import MyComponentSource from '!!raw-loader!./myComponent';
 
 # Event Handler
 
@@ -47,9 +44,20 @@ events:
 ### Example of registering a `LoadEntities` function for the `NewGreeting` event:
 
 <Tabs>
-  <TabItem value="javascript" label="Javascript" default>
+  <TabItem value="javascript" label="Javascript">
 
   ```javascript
+  Handlers.GreeterContract.registerNewGreetingLoadEntities((event, context) => {
+    context.greeting.greetingWithChangesLoad(event.params.user.Ethers.ethAddressToString());
+  });
+  ```
+
+  </TabItem>
+  <TabItem value="typescript" label="Typescript">
+
+  ```typescript
+  import { Ethers } from 'ethers';
+
   Handlers.GreeterContract.registerNewGreetingLoadEntities((event, context) => {
     context.greeting.greetingWithChangesLoad(event.params.user.Ethers.ethAddressToString());
   });
@@ -65,17 +73,6 @@ events:
   ```
 
   </TabItem>
-  <TabItem value="typescript" label="Typescript">
-
-  ```typescript
-  import { Ethers } from 'ethers';
-
-  Handlers.GreeterContract.registerNewGreetingLoadEntities((event, context) => {
-    context.greeting.greetingWithChangesLoad(event.params.user.Ethers.ethAddressToString());
-  });
-  ```
-
-  </TabItem>
 </Tabs>
 
 - The load entities function `registerUpdateGreetingLoadEntities` follows a naming convention for all events: `register<EventName>LoadEntities`.
@@ -86,9 +83,43 @@ events:
 ### Example of registering a `Handler` function for the `NewGreeting` event and using the label `greetingWithChanges`:
 
 <Tabs>
-  <TabItem value="javascript" label="Javascript" default>
+  <TabItem value="javascript" label="Javascript">
 
   ```javascript
+  Handlers.GreeterContract.registerNewGreetingHandler((event, context) => {
+    let currentGreeterOpt = context.greeting.greetingWithChanges();
+
+    switch (currentGreeterOpt) {
+      case Some(existingGreeter):
+        let greetingObject = {
+          id: event.params.user.Ethers.ethAddressToString(),
+          latestGreeting: event.params.greeting,
+          numberOfGreetings: existingGreeter.numberOfGreetings + 1,
+        };
+
+        context.greeting.update(greetingObject);
+        break;
+
+      case None:
+        let greetingObject = {
+          id: event.params.user.Ethers.ethAddressToString(),
+          latestGreeting: event.params.greeting,
+          numberOfGreetings: 1,
+        };
+
+        context.greeting.insert(greetingObject);
+        break;
+    }
+  });
+
+  ```
+
+  </TabItem>
+  <TabItem value="typescript" label="Typescript">
+
+  ```typescript
+  import { Ethers } from 'ethers';
+
   Handlers.GreeterContract.registerNewGreetingHandler((event, context) => {
     let currentGreeterOpt = context.greeting.greetingWithChanges();
 
@@ -145,40 +176,6 @@ events:
       context.greeting.insert(greetingObject)
     }
   })
-  ```
-
-  </TabItem>
-  <TabItem value="typescript" label="Typescript">
-
-  ```typescript
-  import { Ethers } from 'ethers';
-
-  Handlers.GreeterContract.registerNewGreetingHandler((event, context) => {
-    let currentGreeterOpt = context.greeting.greetingWithChanges();
-
-    switch (currentGreeterOpt) {
-      case Some(existingGreeter):
-        let greetingObject = {
-          id: event.params.user.Ethers.ethAddressToString(),
-          latestGreeting: event.params.greeting,
-          numberOfGreetings: existingGreeter.numberOfGreetings + 1,
-        };
-
-        context.greeting.update(greetingObject);
-        break;
-
-      case None:
-        let greetingObject = {
-          id: event.params.user.Ethers.ethAddressToString(),
-          latestGreeting: event.params.greeting,
-          numberOfGreetings: 1,
-        };
-
-        context.greeting.insert(greetingObject);
-        break;
-    }
-  });
-
   ```
 
   </TabItem>
