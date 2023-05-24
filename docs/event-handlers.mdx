@@ -56,10 +56,14 @@ events:
   <TabItem value="typescript" label="Typescript">
 
   ```typescript
-  import { Ethers } from 'ethers';
+  import {
+    GreeterContract_registerNewGreetingLoadEntities,
+  } from "../generated/src/Handlers.gen";
 
-  Handlers.GreeterContract.registerNewGreetingLoadEntities((event, context) => {
-    context.greeting.greetingWithChangesLoad(event.params.user.Ethers.ethAddressToString());
+  import { greetingEntity } from "../generated/src/Types.gen";
+
+  GreeterContract_registerNewGreetingLoadEntities(({ event, context }) => {
+    context.greeting.greetingWithChangesLoad(event.params.user.toString());
   });
   ```
 
@@ -67,6 +71,8 @@ events:
   <TabItem value="rescript" label="Rescript">
 
   ```rescript
+  open Types
+
   Handlers.GreeterContract.registerNewGreetingLoadEntities((~event, ~context) => {
     context.greeting.greetingWithChangesLoad(event.params.user->Ethers.ethAddressToString)
   })
@@ -118,31 +124,30 @@ events:
   <TabItem value="typescript" label="Typescript">
 
   ```typescript
-  import { Ethers } from 'ethers';
+  import {
+    GreeterContract_registerNewGreetingHandler,
+  } from "../generated/src/Handlers.gen";
 
-  Handlers.GreeterContract.registerNewGreetingHandler((event, context) => {
-    let currentGreeterOpt = context.greeting.greetingWithChanges();
+  import { greetingEntity } from "../generated/src/Types.gen";
 
-    switch (currentGreeterOpt) {
-      case Some(existingGreeter):
-        let greetingObject = {
-          id: event.params.user.Ethers.ethAddressToString(),
-          latestGreeting: event.params.greeting,
-          numberOfGreetings: existingGreeter.numberOfGreetings + 1,
-        };
+  GreeterContract_registerNewGreetingHandler(({ event, context }) => {
+    let currentGreeter = context.greeting.greetingWithChanges();
 
-        context.greeting.update(greetingObject);
-        break;
+    if (currentGreeter != null) {
+      let greetingObject: greetingEntity = {
+        id: event.params.user.toString(),
+        latestGreeting: event.params.greeting,
+        numberOfGreetings: currentGreeter.numberOfGreetings + 1,
+      };
 
-      case None:
-        let greetingObject = {
-          id: event.params.user.Ethers.ethAddressToString(),
-          latestGreeting: event.params.greeting,
-          numberOfGreetings: 1,
-        };
-
-        context.greeting.insert(greetingObject);
-        break;
+      context.greeting.update(greetingObject);
+    } else {
+      let greetingObject: greetingEntity = {
+        id: event.params.user.toString(),
+        latestGreeting: event.params.greeting,
+        numberOfGreetings: 1,
+      };
+      context.greeting.insert(greetingObject);
     }
   });
 
@@ -152,6 +157,8 @@ events:
   <TabItem value="rescript" label="Rescript">
 
   ```rescript
+  open Types
+
   Handlers.GreeterContract.registerNewGreetingHandler((~event, ~context) => {
     let currentGreeterOpt = context.greeting.greetingWithChanges()
 
