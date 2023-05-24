@@ -11,29 +11,32 @@ slug: /configuration-file
 
 The `config.yaml` contains various information about the smart contract project, including network specifications and event information to be fed into the indexing process.
 
-Example `config.yaml` from Gravatar scenario:
+Example `config.yaml` from Greeter scenario:
 
 ```yaml
 version: 0.0.0
-description: Gravatar for Ethereum
-repository: https://github.com/graphprotocol/example-subgraph
+description: Greeter indexer
+repository: https://github.com/PaulRBerg/hardhat-template
 networks:
-  - id: 137
-    rpc_url: https://polygon-rpc.com
-    start_block: 34316032
+  - id: 1337
+    rpc_url: http://localhost:8545
+    start_block: 0
     contracts:
-      - name: Gravatar
-        abi_file_path: abis/gravatar-abi.json
-        address: ["0x2E645469f354BB4F5c8a05B3b30A929361cf77eC"]
+      - name: Greeter
+        abi_file_path: abis/greeter-abi.json
+        address: ["0x2B502ab6F783c2Ae96A75dc68cf82a77ce2637c2"]
         handler: ./src/EventHandlers.bs.js
         events:
-          - name: "NewGravatar"
-            requiredEntities: []
-          - name: "UpdatedGravatar"
+          - name: "NewGreeting"
             requiredEntities:
-              - name: "Gravatar"
+              - name: "Greeting"
                 labels:
-                  - "gravatarWithChanges"
+                  - "greetingWithChanges"
+          - name: "ClearGreeting"
+            requiredEntities:
+              - name: "Greeting"
+                labels:
+                  - "greetingWithChanges"
 ```
 
 **Field Descriptions**

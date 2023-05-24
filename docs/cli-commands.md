@@ -41,7 +41,7 @@ Initialize a project with a template
   Default value: `./`
 * `-t`, `--template <TEMPLATE>` — The file in the project containing config
 
-  Possible values: `gravatar`
+  Possible values: `greeter`
 
 * `-f`, `--js-flavor <JS_FLAVOR>`
 
