@@ -47,8 +47,10 @@ events:
   <TabItem value="javascript" label="Javascript">
 
   ```javascript
-  Handlers.GreeterContract.registerNewGreetingLoadEntities((event, context) => {
-    context.greeting.greetingWithChangesLoad(event.params.user.Ethers.ethAddressToString());
+  let { GreeterContract } = require("../generated/src/Handlers.bs.js");
+
+  GreeterContract.registerNewGreetingLoadEntities((event, context) => {
+    context.greeting.greetingWithChangesLoad(event.params.user.toString());
   });
   ```
 
@@ -92,32 +94,25 @@ events:
   <TabItem value="javascript" label="Javascript">
 
   ```javascript
-  Handlers.GreeterContract.registerNewGreetingHandler((event, context) => {
-    let currentGreeterOpt = context.greeting.greetingWithChanges();
+  let { GreeterContract } = require("../generated/src/Handlers.bs.js");
 
-    switch (currentGreeterOpt) {
-      case Some(existingGreeter):
-        let greetingObject = {
-          id: event.params.user.Ethers.ethAddressToString(),
-          latestGreeting: event.params.greeting,
-          numberOfGreetings: existingGreeter.numberOfGreetings + 1,
-        };
+  GreeterContract.registerNewGreetingHandler((event, context) => {
+    let existingGreeter = context.greeting.greetingWithChangesLoad;
 
-        context.greeting.update(greetingObject);
-        break;
-
-      case None:
-        let greetingObject = {
-          id: event.params.user.Ethers.ethAddressToString(),
-          latestGreeting: event.params.greeting,
-          numberOfGreetings: 1,
-        };
-
-        context.greeting.insert(greetingObject);
-        break;
+    if (existingGreeter != undefined) {
+      context.greeting.update({
+        id: event.params.user.toString(),
+        latestGreeting: event.params.greeting,
+        numberOfGreetings: existingGreeter.numberOfGreetings + 1,
+      });
+    } else {
+      context.greeting.insert({
+        id: event.params.user.toString(),
+        latestGreeting: event.params.greeting,
+        numberOfGreetings: 1,
+      });
     }
   });
-
   ```
 
   </TabItem>
