@@ -10,7 +10,7 @@ module.exports = {
       items: [
         {
           type: "doc",
-          id: "indexer-basics",
+          id: "envio-basics",
         },
         {
           type: "doc",
@@ -24,9 +24,14 @@ module.exports = {
           type: "doc",
           id: "event-handlers",
         },
+        
         {
           type: "doc",
-          id: "cli-commands",
+          id: "blockchain-indexing",
+        },
+        {
+          type: "doc",
+          id: "terminology",
         },
       ],
     },
