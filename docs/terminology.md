@@ -28,7 +28,7 @@ A specific occurrence or action within a blockchain system, often used to trigge
 ### Event Handler
 A function that listens for a specific event from a smart contract and either updates or inserts new data into your Envio API.
 ### GraphQL
- A query language for interacting with APIs, commonly used in blockchain systems for retrieving specific data from the blockchain.
+ A query language for interacting with APIs.
 ### Hosted Service: 
 A managed service platform for building, hosting and querying Envio's Indexers with guaranteed uptime and performance service level agreements. 
 ### Indexer 
