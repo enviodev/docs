@@ -28,6 +28,13 @@ const config = {
           // Remove this to remove the "edit this page" links.
           editUrl: "https://github.com/Float-Capital/indexer-docs/tree/main/",
         },
+        blog: {
+          // blogTitle: 'Docusaurus blog!',
+          // blogDescription: 'A Docusaurus powered blog!',
+          postsPerPage: 'ALL',
+          blogSidebarTitle: 'All posts',
+          blogSidebarCount: 'ALL',
+        },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
@@ -60,18 +67,18 @@ const config = {
           //    label: "Home",
           //    position: "left",
           //  },
-          // {
-          //   to: "docs/",
-          //   activeBasePath: "docs",
-          //   label: "Docs",
-          //   position: "left",
-          // },
-          // {
-          //   to: "blog/",
-          //   activeBasePath: "blog",
-          //   label: "Blog",
-          //   position: "left",
-          // },
+          {
+            to: "docs/overview",
+            activeBasePath: "docs",
+            label: "Docs",
+            position: "left",
+          },
+          {
+            to: "blog/",
+            activeBasePath: "blog",
+            label: "Blog",
+            position: "left",
+          },
           {
             href: "https://github.com/Float-Capital/envio",
             label: "GitHub",
@@ -116,6 +123,10 @@ const config = {
           {
             title: "More",
             items: [
+              {
+                label: "Blog",
+                to: "blog",
+              },
               {
                 label: "GitHub",
                 href: "https://github.com/Float-Capital/envio",
