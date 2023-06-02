@@ -1,9 +1,30 @@
 ---
 id: blockchain-indexing
-title: Blockchain Indexing
+title: Blockchain Indexing 101
 sidebar_label: Indexing 101
 slug: /blockchain-indexing
 ---
+#### What is an indexer?
+
+An indexer is a specialised tool that organises and indexes blockchain data, making it easier for developers to efficiently query, retrieve, and utilise advanced data on-chain. Blockchain indexing solutions abstract the complexity away from the developer and improves the overall developer experience.
+
+A blockchain indexing solution's core components from an end-user perspective typically includes:
+- Configuration (e.g. `config.yaml`) containing configuration items for your indexer, such as smart contract address, chain, rpc endpoint, start block, abi path
+
+- GraphQL schema file (e.g. `schema.graphql`) which defines the schema for your application, i.e. all the possible data and types of data your application can query via the GraphQL API. 
+
+- Event Handlers (e.g. `handlers.ts`) is a component or function that listens for specific events in a blockchain system and performs actions in response to those events.
+
+<img alt="envio-conceptual-design" src="/img/envio-conceptual-design.png"/>
+
+
+#### How does Envio compare to traditional blockchain indexing solutions?
+
+For one, Envio allows you to receive the data you need from multiple data sources, in a unified database, and eradicates the need to deploy and maintain multiple API instance, when compared to traditional blockchain indexing solutions. Envio allows the aggregation of data (i.e. same db table) from multiple data sources, which is a great use case for multi-chain applications. This is also illustrated by the diagram below. 
+
+<img alt="envio-solution-architecture" src="/img/envio-solution-architecture.png"/>
+
+#### What is the blockchain Indexing Problem?
 
 Blockchain technology has revolutionized the way we store and access data. The decentralized nature of blockchain allows for transparency and immutability, making it an ideal technology for a variety of industries and use cases. Every blockchain project is trying to build something fresh, innovative and unique. 
 
@@ -17,7 +38,7 @@ All of these applications produce and store a variety of underutilized data acro
 - Reliability 
 - Scalability
 - Customizability
-- Aggregation (e.g. multi-chain app)
+- Aggregation (e.g. multi-chain app, full transaction history)
 
 This makes it difficult for developers to query data efficiently, thus maximizing the time you spend on infrastructure and maintenance, where a project's main focus should be on shipping. 
 
@@ -48,7 +69,7 @@ There are three main trade-offs with running a node on your own compared to usin
 - Running and maintaining blockchain nodes can involve lots of technical issues, which can be difficult and time-consuming for beginners.
 
 
-For web3 startups with limited funding and engineering time, dedicating a non-trivial amount of engineering resources to managing their own infrastructure comes at the cost of not focusing on building out the core functionality of their product. 
+For Web3 startups with limited funding and engineering time, dedicating a non-trivial amount of engineering resources to managing their own infrastructure comes at the cost of not focusing on building out the core functionality of their product. 
 
 > In today's fast-paced Web3 environment, time is of the essence to stand out in a crowded space. With an endless stream of innovative products being released daily, reducing time-to-market is critical to success - Sven, Growth at Envio.
 
@@ -65,68 +86,41 @@ Node RPC endpoints are categorized into two main infrastructure offerings: publi
 
 - Public RPC Endpoints are shared, rate-limited resources which run on RPC nodes available for any person to make requests to. Blockchains offer public RPC endpoints because they allow anybody to send and receive data from the blockchain (e.g. make a transaction). Public endpoints are free and ready to use at any time, and because they are not meant to support production-grade applications, they are often rate-limited. Further, public RPC endpoints have limited customer support, lack active developer infrastructure, and do not scale to the demands of running dApps.
 
-- Private RPC endpoints are those that operate in order to service your dApp’s needs alone, avoiding request congestion created by other programs and benefiting from a fast and consistent RPC service. Private RPC nodes run at your request. Additionally, if you’re using a node provider, private RPC endpoints often maintain explicit service-level agreements (SLAs), guaranteeing your dApp performant service, whenever you need it.
+- Private RPC endpoints are those that operate in isolation in order to service your application's needs, avoiding request congestion created by other programs and benefiting from a fast and consistent RPC service. Private RPC nodes run at your request. Additionally, if you’re using a node provider, private RPC endpoints often maintain explicit service-level agreements (SLAs), guaranteeing your dApp performant service, whenever you need it.
 
-RPC node providers handle all node setup, management and maintenance for your dApp and ensure that it’s running smoothly, and is the best practice for the majority of web3 builders.
+RPC node providers handle all node setup, management and maintenance for your dApp and ensure that it’s running smoothly, and is common practice for the majority of web3 builders.
 
-Therefore, by choosing a node provider, all node setup and maintenance responsibility is relieved from the developer. The top blockchain node providers have these features integrated natively, saving developers time and energy to focus on building innovative end-user products. Node providers are available for most leading blockchains such as Ethereum and Solana and also Layer-2s like
+Therefore, by choosing a node provider, all node setup and maintenance responsibility is relieved from the developer. The top blockchain node providers have these features integrated natively, saving developers time and energy to focus on building innovative end-user products. Node providers are available for most leading blockchains such as Ethereum and Solana and also Layer-2 scaling solutions like Polygon, Avalanche and Arbitrum.
 
 #### Trade-offs
 
 RPC node providers predominantly focus only solving two of the said challenges for developers and production-grade blockchain powered applications to query data efficiently and effectively from the blockchain: 
 
-- &#x2612; Speed
-- &#x2611; Reliability
-- &#x2611; Scalability
-- &#x2612; Customisability
-- &#x2612; Aggregation (e.g. multi-chain app)
+- &#x274E; Speed
+- &#x2705; Reliability
+- &#x2705; Scalability
+- &#x274E; Customisability
+- &#x274E; Aggregation (e.g. multi-chain app, full tx history)
 
-However even the challenges RPC node providers aim to solve are a good whether they using the best tech and most efficient methods to solve these user problems. RPC nodes are typically base-level tech and form one the simplest building blocks of blockchain technology. 
+However even the challenges RPC node providers aim to solve are a good debate whether they are using the best tech and most efficient methods to solve these user problems. RPC nodes are typically base-level tech and form one the simplest building blocks of blockchain technology. 
 
-For one, RPC nodes require are request-heavy, which demands a lot of work and back and forth communication of the network. 
+For one, RPC nodes require are request-heavy, which demands a lot of work and back and forth communication of the network. e.g if a user has one hundred tokens, one hundred requests would need to be sent to get the balance of every token. Applications that are built around RPC nodes are also difficult to maintain. As such, it drains your resources trying to maintain and also keeping them up to date.
 
-In addition, to program all that also consumes a lot of time, which is the most valuable asset a developer has. e.g if a user has one hundred tokens, one hundred requests would need to be sent to get the balance of every token. Applications that are built around RPC nodes are also difficult to maintain. As such, it drains your resources trying to maintain and also keeping them up to date.
+Another major limitation here the inability to filter and aggregate data, and as mentioned above, RPC nodes are only the first step in making an expansive and functional application work as it should. Public nodes are commonly not connected to long-term transaction history storage, so you will also have to find workarounds to get a full transaction history. Building your own indexes means you’ll spend weeks, if not months, developing the backend part of your application's needs and use cases. 
+ 
+When we use a Web3 SDK, we can solve this by a single request – we just ask for a user’s balance, and it automatically covers all types of tokens. Moreover, you have to keep in mind that checking a balance is a base level task. Imagine the number of requests you would require to do more advanced queries and computations. 
 
-Furthermore, building your own indexes means you’ll spend weeks, if not months, developing the backend part of your application's needs and use cases. 
-
-However, when we use a proper Web3 SDK, we solve this by a single request – we just ask for a user’s balance, and it automatically covers all types of tokens and coins. Moreover, you have to keep in mind that checking a balance is a basic task. Just imagine the number of requests you would require to use RPC nodes to do more advanced queries and computations. 
-
-Furthermore, imagine your backend is also pre-built and you've got a team of subject matter experts to present information within your application in a few clicks. 
-
-This is where another form of querying and storing blockchain data exists and is an emerging space with a number of Blockchain Indexing solutions forming an integral part of every blockchain=powered application.
+Furthermore, imagine your backend is also pre-built and you've got a team of subject matter experts to present information within your application in just a few commands.This is where another form of querying and storing blockchain data is emerging - with a number of Blockchain indexing solutions already forming an integral part of most blockchain-powered applications.
 
 ### Blockchain indexing solution providers 
 
-Full-stack blockchain indexing SDK are next paradigm in comparison to building around RPC nodes. As such, it makes the development lifecycle of applications quick, and predominantly about the frontend. Blockchain indexing solutions offer Web3 SDKs with all the materials and tools as far as the backend portion of your application goes. 
+Blockchain indexing solutions are next paradigm in comparison to building around RPC nodes. As such, it makes the development lifecycle of applications quick, and predominantly about the frontend. Blockchain indexing solutions offer full-stack Web3 SDKs with all the materials and tools as far as the backend portion of your application goes. 
 
-As a blockchain developer, you should never speak with an RPC node directly unless you really have to. For instance, when you need to upload a smart contract, you have to communicate directly with the RPC node. However, for most of the Web3 development process (especially to fetch data from the blockchain), this is not necessary when you using blockchain indexing solutions. 
+As a blockchain developer, you should never speak with an RPC node directly unless you really have to. For instance, when you need to upload a smart contract, you have to communicate directly with the RPC node. However, for most of the Web3 development process (especially to fetch data from the blockchain), this is not necessary when using blockchain indexing solutions. 
 
-Blockchain indexing solutions prioritize developer experience and performance, and  mostly takes care of the entire blockchain-related backend development. As such, anyone proficient in JavaScript and able to use MetaMask can create blue-chip applications in a shorter period of time.
+Blockchain indexing solutions prioritize developer experience and performance, and mostly takes care of the entire blockchain-related backend development. As such, anyone proficient in JavaScript and able to use MetaMask can create blue-chip applications in a shorter period of time.
 
 Most importantly though, is the customisability that blockchain indexing solution providers offer. Whether you're building a decentralized exchange (DEX), a decentralized autonomous organization (DAO), an immersive Game-Fi experience, a multi-chain NFT marketplace, or the next big P2E (play-to-earn) project in Web3, blockchain indexers offer the customisability to support your project's specific use cases. 
-
-#### What is an indexer?
-
-An indexer is a specialised tool that organises and indexes blockchain data, making it easier for developers to efficiently query, retrieve, and utilise advanced data on-chain. Blockchain indexing solutions abstract the complexity away from the developer and improves the overall developer experience.
-
-A blockchain indexing solution's core components from an end-user perspective typically includes:
-- Configuration (e.g. `config.yaml`) containing configuration items for your indexer, such as smart contract address, chain, rpc endpoint, start block, abi path
-
-- GraphQL schema file (e.g. `schema.graphql`) which defines the schema for your application, i.e. all the possible data and types of data your application can query via the GraphQL API. 
-
-- Event Handlers (e.g. `handlers.ts`) is a component or function that listens for specific events in a blockchain system and performs actions in response to those events.
-
-<img alt="envio-conceptual-design" src="/img/envio-conceptual-design.png"/>
-
-
-#### How does Envio compare to traditional blockchain indexing solutions?
-
-For one, Envio allows you to receive the data you need from multiple data sources, in a unified database, and eradicates the need to deploy and maintain multiple API instance, when compared to traditional blockchain indexing solutions. Envio allows the aggregation of data (i.e. same db table) from multiple data sources, which is a great use case for multi-chain applications. This is also illustrated by the diagram below. 
-
-<img alt="envio-solution-architecture" src="/img/envio-solution-architecture.png"/>
-
-
-
 
 
 

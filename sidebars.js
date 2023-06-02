@@ -24,7 +24,10 @@ module.exports = {
           type: "doc",
           id: "event-handlers",
         },
-        
+        {
+          type: "doc",
+          id: "cli-commands",
+        },
         {
           type: "doc",
           id: "blockchain-indexing",
