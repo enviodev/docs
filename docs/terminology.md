@@ -26,7 +26,7 @@ Ethereum Virtual Machine, a runtime environment that executes smart contracts on
 ### Event
 A specific occurrence or action within a blockchain system, often used to trigger actions or notify interested parties.
 ### Event Handler
-A component or function that listens for specific events in a blockchain system and performs actions in response to those events.
+A function that listens for a specific event from a smart contract and either updates or inserts new data into your Envio API.
 ### GraphQL
  A query language for interacting with APIs, commonly used in blockchain systems for retrieving specific data from the blockchain.
 ### Hosted Service: 
