@@ -30,7 +30,7 @@ A function that listens for a specific event from a smart contract and either up
 ### GraphQL
  A query language for interacting with APIs, commonly used in blockchain systems for retrieving specific data from the blockchain.
 ### Hosted Service: 
-A managed service database platform for building, hosting and querying Envio's Indexers with guarantee uptime and performance service level agreements. 
+A managed service platform for building, hosting and querying Envio's Indexers with guaranteed uptime and performance service level agreements. 
 ### Indexer 
 a specialized database management system that indexes and organises blockchain data, making it easier for developers to efficiently query, retrieve, and utilise on-chain dat
 ### JavaScript
