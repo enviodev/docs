@@ -193,3 +193,5 @@ pnpm view-results
 Admin-secret for Hasura is `testing` 
 
 Alternatively you can open the file `index.html` for a cleaner experience (no Hasura stuff). Unfortunately, Hasura is currently not configured to make the data public.
+
+---

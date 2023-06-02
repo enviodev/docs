@@ -2,7 +2,7 @@
 id: common-issues
 title: Common Issues
 sidebar_label: Common Issues
-slug: /
+slug: /common-issues
 ---
 
 

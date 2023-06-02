@@ -26,11 +26,14 @@ const config = {
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/Float-Capital/indexer-docs/tree/dev/docs/",
+          editUrl: "https://github.com/Float-Capital/indexer-docs/tree/main/",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
+        },
+        gtag: {
+          trackingID: "G-J0WZ32ZV5B",
+          anonymizeIP: true,
         },
       }),
     ],
