@@ -9,7 +9,7 @@ Blockchain technology has revolutionized the way we store and access data. The d
 
 ### The elephant in the room
 
-<img alt="elephant in the room" src="/img/elephant-in-the-room-2.png" width="400px" height="100%"/>
+<img alt="elephant in the room" src="/img/elephant-in-the-room-2.png" width="400px" height="100%" style="margin:auto" />
 
 All of these applications produce and store a variety of underutilized data across multiple networks, which is inherently difficult, complex and computationally expensive to retrieve & read, especially when it comes down to:
 
