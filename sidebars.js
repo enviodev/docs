@@ -30,10 +30,6 @@ module.exports = {
         },
         {
           type: "doc",
-          id: "blockchain-indexing",
-        },
-        {
-          type: "doc",
           id: "terminology",
         },
       ],
