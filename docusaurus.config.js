@@ -79,6 +79,11 @@ const config = {
           },
         ],
       },
+      algolia: {
+        apiKey: '0f966036bca0e26d512dc59f023d64c5',
+        indexName: 'envio',
+        appId: '584MK2OMPZ',
+      },
       footer: {
         style: "dark",
         links: [
