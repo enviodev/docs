@@ -1,7 +1,7 @@
 ---
 id: greeter-hardhat-tutorial
 title: Greeter Envio indexer tutorial using Hardhat
-sidebar_label: Greeter contract tutorial
+sidebar_label: Greeter Contract Tutorial
 slug: /greeter-hardhat-tutorial
 ---
 
