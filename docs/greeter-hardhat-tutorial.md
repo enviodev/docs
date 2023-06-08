@@ -78,7 +78,6 @@ cd hardhat-template
 rm -r -f deployments
 pnpm i
 cp .env.example .env
-*Need to add ganache to docker compose thats copied across :/
 pnpm hardhat deploy
 pnpm hardhat task:setGreeting --account "1" --greeting "Hola"
 pnpm hardhat task:setGreeting --account "2" --greeting "gm"
