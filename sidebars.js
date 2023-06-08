@@ -28,6 +28,10 @@ module.exports = {
           type: "doc",
           id: "cli-commands",
         },
+	{
+	  type: "doc",
+	  id: "greeter-hardhat-tutorial",
+	},
       ],
     },
     {
