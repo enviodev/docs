@@ -75,7 +75,7 @@ Now you can configure the files to your configuration
 
 - How to specify the config file [<ins>here</ins>](./configuration-file).
 - How to specify the schema file [<ins>here</ins>](./schema).
-- How to specify the event handlers file [[<ins>here</ins>](./event-handlers).
+- How to specify the event handlers file [<ins>here</ins>](./event-handlers).
 
 
 ---

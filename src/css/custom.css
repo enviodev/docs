@@ -32,3 +32,10 @@
   color:white;
 }
  
+article a {
+  text-decoration: underline;
+}
+
+article a:hover {
+  opacity: 60%;
+}
