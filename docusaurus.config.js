@@ -123,7 +123,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} <a href='https://envio.dev'>Envio</a>`,
+        copyright: `Copyright © ${new Date().getFullYear()} Envio`,
       },
       prism: {
         theme: lightCodeTheme,
