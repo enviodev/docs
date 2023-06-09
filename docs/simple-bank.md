@@ -42,9 +42,9 @@ networks:
         address: ["0x2B2f78c5BF6D9C12Ee1225D5F374aa91204580c3"]
         handler: src/EventHandlers.js
         events:
-          - name: "AccountCreated"
+          - event: "AccountCreated"
             requiredEntities: [] # empty signifies no requirements
-          - name: "DepositMade"
+          - event: "DepositMade"
             requiredEntities: 
               - name: "Account"
                 labels:
@@ -111,7 +111,7 @@ Inspecting the config of the `DepositMade` event from the above example config i
 
 ```yaml
 events:
-  - name: "DepositMade"
+  - event: "DepositMade"
     requiredEntities: 
       - name: "Account"
         labels:
