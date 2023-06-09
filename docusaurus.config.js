@@ -49,8 +49,8 @@ const config = {
           src: "img/envio-black-logo.png",
           srcDark: "img/envio-white-logo.png",
           style: {
-            width: 100,
-            height: 50,
+            width: 96,
+            height: 40,
           },
         },
         items: [
