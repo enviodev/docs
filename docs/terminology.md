@@ -48,12 +48,11 @@ JavaScript is a high-level, interpreted programming language that is primarily u
 ### Node
 A device or computer that participates in a blockchain network, maintaining a copy of the blockchain and validating transactions.
 ### Ploffen
-
-Ploffen means "Pop" in Dutch and is a fun game based on an ERC20 token contract, where users can deposit a game token (i.e. make a contribution) into a perpetual savings pool. 
+Ploffen means "Pop" in Dutch and is a fun game based on an ERC20 token contract, where users can deposit a game token (i.e. make a contribution) into a savings pool. 
 
 The last user to add a contribution to the savings pool has a chance of winning the entire savings pool if no other user doesn't subsequently deposit a contribution within 1 hour of the previous contribution made. For example, if 30 persons play the game, and each person contributes a small amount, the last person can stand a chance of winning the *total contributions* made by all 30 persons in the savings pool. 
 
-The Ploffen project example demonstrates a basic Hardhat use case for developers. It comes with a sample contract, a test for that contract, a script that deploys that contract, as well as the Envio integration to index emitted events. 
+The Ploffen project demonstrates a Hardhat framework example. It comes with a sample contract, a test for that contract, a script that deploys that contract, as well as the Envio integration to index emitted events from the Ploffen smart contract. 
 <!-- Add gh repo link once public  -->
 ### Query
 A request for data. In the case of Envio, a query is a request for data from a Envio API that will be answered by an Envio Indexer.
