@@ -18,7 +18,17 @@ A URL that can be used to query an Envio custom API.
 ### Envio CLI
 A command line interface tool for building and deploying to Envio indexers.
 ### Event
-A specific occurrence or action within a blockchain system, often used to trigger actions.
+An event is specific occurrence or action within a blockchain system that is specified in smart contracts, and can be used to emit data from the blockchain. Conversely, smart contracts can emit events to essentially communicate that something has happened on the blockchain.
+
+Web applications or any kind of application (e.g. mobile app, backend job, etc.) can listen to events and take actions when they occur. Events are typically data that are not stored on-chain as it would be considerably more expensive to store.
+
+Here is an example of declaring an event, and then emitting the same event once the event occurs:
+
+Declaring an event:  
+`event Deposit(address indexed _from, bytes32 indexed _id, uint _value);`
+
+Emitting an event:   
+`emit Deposit(msg.sender, _id, msg.value);`
 ### Event Handler
 A function that listens for a specific event from a smart contract and either updates or inserts new data into your Envio API.
 ### EVM
@@ -29,7 +39,7 @@ The ability for a blockchain to run the EVM and execute Ethereum smart contracts
 A query language for interacting with APIs, commonly used in blockchain systems for retrieving specific data from the blockchain platforms. As an alternative to REST, GraphQL lets developers construct requests that pull data from multiple data sources in a single API call.
 ### GraphQL API
 The data presentation part of Envio indexer. Typically, it's a GraphQL API auto-generated from the schema file.
-### Hosted Service: 
+### Hosted Service
 A managed service platform for building, hosting and querying Envio's Indexers with guaranteed uptime and performance service level agreements. 
 ### Indexer 
 A specialized database management system (DBMS) that indexes and organises blockchain data, making it easier for developers to efficiently query, retrieve, and utilise on-chain data. Web2 apps usually rely on indexers like Google to pre-sort information into indices for data retrieval and filtering. In blockchain and in Web3, applications need to indexers to achieve data retrieval in the same way.
@@ -38,7 +48,13 @@ JavaScript is a high-level, interpreted programming language that is primarily u
 ### Node
 A device or computer that participates in a blockchain network, maintaining a copy of the blockchain and validating transactions.
 ### Ploffen
-Ploffen, means Pop in Dutch.
+
+Ploffen means "Pop" in Dutch and is a fun game based on an ERC20 token contract, where users can deposit a game token (i.e. make a contribution) into a perpetual savings pool. 
+
+The last user to add a contribution to the savings pool has a chance of winning the entire savings pool if no other user doesn't subsequently deposit a contribution within 1 hour of the previous contribution made. For example, if 30 persons play the game, and each person contributes a small amount, the last person can stand a chance of winning the *total contributions* made by all 30 persons in the savings pool. 
+
+The Ploffen project example demonstrates a basic Hardhat use case for developers. It comes with a sample contract, a test for that contract, a script that deploys that contract, as well as the Envio integration to index emitted events. 
+<!-- Add gh repo link once public  -->
 ### Query
 A request for data. In the case of Envio, a query is a request for data from a Envio API that will be answered by an Envio Indexer.
 ### ReScript
@@ -54,7 +70,7 @@ A digital representation of an asset or utility within a blockchain system that 
 ### Transaction
 An action or set of actions recorded on the blockchain, typically involving the transfer of assets, execution of smart contracts, or other network interactions.
 ### TypeScript
-TypeScript is a superset of JavaScript that adds static typing and other advanced features to the language. It compiles down to plain JavaScript, making it compatible with existing JavaScript codebases. TypeScript helps developers catch errors during development by providing type checking and improved tooling support. It enhances JavaScript by adding features like interfaces, classes, modules, and generics.
+TypeScript is a superset of JavaScript that adds static typing and other advanced features to the language. It compiles down to plain JavaScript, making it compatible with existing JavaScript codebase. TypeScript helps developers catch errors during development by providing type checking and improved tooling support. It enhances JavaScript by adding features like interfaces, classes, modules, and generics.
 
 
 
