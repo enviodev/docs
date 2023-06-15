@@ -1,15 +1,11 @@
 ---
-id: indexer-basics
-title: Indexer Basics
-sidebar_label: Indexer Basics
-slug: /indexer-basics
+id: envio-basics
+title: Envio Basics
+sidebar_label: Envio Basics
+slug: /envio-basics
 ---
 
-
-
-# Indexer Basics
-
-The following files are required to use the Indexer:
+The following files are required to use Envio:
 
 - Configuration (defaults to `config.yaml`)
 - GraphQL Schema (defaults to `schema.graphql`)

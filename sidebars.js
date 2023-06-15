@@ -10,7 +10,7 @@ module.exports = {
       items: [
         {
           type: "doc",
-          id: "indexer-basics",
+          id: "envio-basics",
         },
         {
           type: "doc",
@@ -28,10 +28,14 @@ module.exports = {
           type: "doc",
           id: "cli-commands",
         },
-	{
-	  type: "doc",
-	  id: "greeter-hardhat-tutorial",
-	},
+        {
+          type: "doc",
+          id: "greeter-hardhat-tutorial",
+        },
+        {
+          type: "doc",
+          id: "terminology",
+        },
       ],
     },
     {
