@@ -27,12 +27,12 @@ networks:
         address: ["0x2B502ab6F783c2Ae96A75dc68cf82a77ce2637c2"]
         handler: ./src/EventHandlers.bs.js
         events:
-          - name: "NewGreeting"
+          - event: "NewGreeting"
             requiredEntities:
               - name: "Greeting"
                 labels:
                   - "greetingWithChanges"
-          - name: "ClearGreeting"
+          - event: "ClearGreeting"
             requiredEntities:
               - name: "Greeting"
                 labels:
@@ -54,7 +54,7 @@ networks:
     - `address` - An array of addresses that the contract is deployed to on the network
     - `handler` - Location of the file that handles the events emitted by this contract
     - `events` - Configuration for each event emitted by this contract that the indexer will listen for
-      - `name` - Name of the event (must match the name in the ABI)
+      - `event` - Signature or name of the event (must match the name in the ABI)
       - `required_entities` - An array of entities that need to loaded and made accessible within the handler function (an empty array indicates that no entities are required)
         - `name` - The name of the required entity (must match an entity defined in `schema.graphql`)
         - `label` - A user defined label that corresponds to this entity load

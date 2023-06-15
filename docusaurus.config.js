@@ -26,11 +26,14 @@ const config = {
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/Float-Capital/indexer-docs/tree/dev/docs/",
+          editUrl: "https://github.com/Float-Capital/indexer-docs/tree/main/",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
+        },
+        gtag: {
+          trackingID: "G-J0WZ32ZV5B",
+          anonymizeIP: true,
         },
       }),
     ],
@@ -46,8 +49,8 @@ const config = {
           src: "img/envio-black-logo.png",
           srcDark: "img/envio-white-logo.png",
           style: {
-            width: 100,
-            height: 50,
+            width: 96,
+            height: 40,
           },
         },
         items: [
@@ -76,6 +79,11 @@ const config = {
           },
         ],
       },
+      algolia: {
+        apiKey: "0f966036bca0e26d512dc59f023d64c5",
+        indexName: "envio",
+        appId: "584MK2OMPZ",
+      },
       footer: {
         style: "dark",
         links: [
@@ -93,7 +101,7 @@ const config = {
             items: [
               {
                 label: "Discord",
-                href: "https://discord.gg/float-capital",
+                href: "https://discord.gg/Q9qt8gZ2fX",
               },
               {
                 label: "Twitter",
@@ -101,7 +109,7 @@ const config = {
               },
               {
                 label: "Lens",
-                href: "https://lenster.xyz/u/float.lens",
+                href: "https://lenster.xyz/u/envio.lens",
               },
             ],
           },
@@ -110,12 +118,12 @@ const config = {
             items: [
               {
                 label: "GitHub",
-                href: "https://github.com/Float-Capital/envio",
+                href: "https://github.com/envio-dev",
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} <a href='https://envio.dev'>Envio</a>`,
+        copyright: `Copyright © ${new Date().getFullYear()} Envio`,
       },
       prism: {
         theme: lightCodeTheme,

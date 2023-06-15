@@ -42,9 +42,9 @@ networks:
         address: ["0x2B2f78c5BF6D9C12Ee1225D5F374aa91204580c3"]
         handler: src/EventHandlers.js
         events:
-          - name: "AccountCreated"
+          - event: "AccountCreated"
             requiredEntities: [] # empty signifies no requirements
-          - name: "DepositMade"
+          - event: "DepositMade"
             requiredEntities: 
               - name: "Account"
                 labels:
@@ -66,7 +66,7 @@ networks:
     - `address` - An array of addresses that the contract is deployed to on the network
     - `handler` - Location of the file that handles the events emitted by this contract
     - `events` - Configuration for each event emitted by this contract that the indexer will listen for
-      - `name` - Name of the event (must match the name in the abi)
+      - `event` - Signature or name or of the event (must match the name in the abi)
       - `required_entities` - An array of entities that need to loaded and made accessible within the handler function (an empty array indicates that no entities are required)
         - `name` - The name of the required entity (must match an entity defined in the schema)
         - `label` - A user defined label that corresponds to this entity load
@@ -193,3 +193,5 @@ pnpm view-results
 Admin-secret for Hasura is `testing` 
 
 Alternatively you can open the file `index.html` for a cleaner experience (no Hasura stuff). Unfortunately, Hasura is currently not configured to make the data public.
+
+---
