@@ -60,44 +60,20 @@ npm i -g envio
 
 ## Step by step instructions
 
-Here is an end to end list of unexplained terminal commands, we will break this down in more detail below.
-
-```bash
-mkdir envio-greeter-tutorial
-cd envio-greeter-tutorial
-mkdir envio-indexer
-cd envio-indexer
-npx envio init
-> Greeter
-> Javascript
-docker-compose down -v
-docker-compose up -d
-cd ..
-git clone https://github.com/Float-Capital/hardhat-template.git
-cd hardhat-template
-rm -r -f deployments
-pnpm i
-cp .env.example .env
-pnpm hardhat deploy
-pnpm hardhat task:setGreeting --account "1" --greeting "Hola"
-pnpm hardhat task:setGreeting --account "2" --greeting "gm"
-cd ../envio-indexer
-npx envio codegen
-pnpm start
-./generated/register_tables_with_hasura.sh
-open http://localhost:8080
-cd ../hardhat-template
-pnpm hardhat task:setGreeting --account "2" --greeting "realtime indexing"
-```
-
-In human english, we will create the project folders, initialize the indexer, run our docker containers for local development, clone the contracts repository, deploy the contracts, and then start indexing!
+First we will create the project folders, then initialize the indexer, then run our docker containers for local development, then clone the contracts repository, then deploy the contracts and finally start indexing!
 
 ### 1. Create the project folders
 
 ```bash
 mkdir envio-greeter-tutorial
+```
+```bash
 cd envio-greeter-tutorial
+```
+```bash
 mkdir envio-indexer
+```
+```bash
 cd envio-indexer
 ```
 
@@ -105,11 +81,16 @@ cd envio-indexer
 
 ```bash
 npx envio init
+```
+Select based on the prompts
+```bash
 > Greeter
 > Javascript
 ```
 
 ### 3. Run our docker containers for local development
+
+> Dev note: 📢 make sure you have docker open
 
 ```bash
 docker-compose up -d
@@ -126,6 +107,8 @@ cd ..
 
 ```bash
 git clone https://github.com/Float-Capital/hardhat-template.git
+```
+```bash
 cd hardhat-template
 ```
 
@@ -133,9 +116,17 @@ cd hardhat-template
 
 ```bash 
 pnpm i
+```
+```bash
 cp .env.example .env
+```
+```bash
 pnpm hardhat deploy
+```
+```bash
 pnpm hardhat task:setGreeting --account "1" --greeting "Hola"
+```
+```bash
 pnpm hardhat task:setGreeting --account "2" --greeting "gm"
 ```
 
@@ -149,10 +140,14 @@ First lets get back to the indexer directory
 ```bash
 cd ../envio-indexer
 ```
-
+ 
+`codegen` will auto-generate all the indexing files, based on the setup files (config.yaml, schema.graphql, EventHandler.js)
 ```bash
-npx envio codegen # this will auto-generate all the indexing files, based on the setup files (config.yaml, schema.graphql).
-pnpm start # This will run the indexer and index events based on the rules set in the src/EventHandler file
+npx envio codegen 
+```
+`start` will run the indexer and index events based on the rules set in the src/EventHandler.js file 
+```bash
+pnpm start 
 ```
 
 > All indexing files are written in Rescript, and they **do not** need to be modified to run the indexer.
@@ -162,10 +157,12 @@ pnpm start # This will run the indexer and index events based on the rules set i
 Register the tables with hasura and open the dashboard to view the data
 ```bash
 ./generated/register_tables_with_hasura.sh
+```
+```bash
 open http://localhost:8080
 ```
 
-The password is 'testing' and the tables can be viewed in the 'data' tab or queried from the playground
+The hasura admin-secret is 'testing' and the tables can be viewed in the 'data' tab or queried from the playground
 
 
 You can run additional tasks from the `hardhat-template` directory to see the indexer index live events
