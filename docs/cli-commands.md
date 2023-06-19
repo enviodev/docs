@@ -1,38 +1,40 @@
----
-id: cli-commands
-title: CLI Commands
-sidebar_label: CLI Commands
-slug: /cli-commands
----
-
-
-
 # Command-Line Help for `envio`
 
 This document contains the help content for the `envio` command-line program.
 
 **Command Overview:**
 
-* [`npx envio`↴](#envio)
-* [`npx envio init`↴](#envio-init)
-* [`npx envio codegen`↴](#envio-codegen)
+* [`envio`↴](#envio)
+* [`envio init`↴](#envio-init)
+* [`envio codegen`↴](#envio-codegen)
+* [`envio start`↴](#envio-start)
+* [`envio local`↴](#envio-local)
+* [`envio local docker`↴](#envio-local-docker)
+* [`envio local docker up`↴](#envio-local-docker-up)
+* [`envio local docker down`↴](#envio-local-docker-down)
+* [`envio local db-migrate`↴](#envio-local-db-migrate)
+* [`envio local db-migrate up`↴](#envio-local-db-migrate-up)
+* [`envio local db-migrate down`↴](#envio-local-db-migrate-down)
+* [`envio local db-migrate setup`↴](#envio-local-db-migrate-setup)
 
-## `npx envio`
+## `envio`
 
-**Usage:** ` npx envio <COMMAND>`
+**Usage:** `envio <COMMAND>`
 
 ###### **Subcommands:**
 
 * `init` — Initialize a project with a template
-* `codegen` — Generate code from a `config.yaml` file
+* `codegen` — Generate code from a config.yaml file
+* `start` — Start the indexer
+* `local` — Prepare local environment for envio testing
 
 
 
-## `npx envio init`
+## `envio init`
 
 Initialize a project with a template
 
-**Usage:** `npx envio init [OPTIONS]`
+**Usage:** `envio init [OPTIONS]`
 
 ###### **Options:**
 
@@ -41,20 +43,20 @@ Initialize a project with a template
   Default value: `./`
 * `-t`, `--template <TEMPLATE>` — The file in the project containing config
 
-  Possible values: `greeter`
+  Possible values: `blank`, `greeter`, `erc20`, `subgraph-migration-experimental`
 
-* `-f`, `--js-flavor <JS_FLAVOR>`
+* `-l`, `--language <LANGUAGE>`
 
   Possible values: `javascript`, `typescript`, `rescript`
 
 
 
 
-## `npx envio codegen`
+## `envio codegen`
 
-Generate code from a `config.yaml` file
+Generate code from a config.yaml file
 
-**Usage:** `npx envio codegen [OPTIONS]`
+**Usage:** `envio codegen [OPTIONS]`
 
 ###### **Options:**
 
@@ -69,4 +71,108 @@ Generate code from a `config.yaml` file
   Default value: `config.yaml`
 
 
----
+
+## `envio start`
+
+Start the indexer
+
+**Usage:** `envio start [OPTIONS]`
+
+###### **Options:**
+
+* `-r`, `--restart` — Clear your database and restart indexing from scratch
+
+  Default value: `false`
+* `-d`, `--directory <DIRECTORY>` — The directory of the project
+
+  Default value: `./`
+
+
+
+## `envio local`
+
+Prepare local environment for envio testing
+
+**Usage:** `envio local <COMMAND>`
+
+###### **Subcommands:**
+
+* `docker` — Local Envio and ganache environment commands
+* `db-migrate` — Local Envio database commands
+
+
+
+## `envio local docker`
+
+Local Envio and ganache environment commands
+
+**Usage:** `envio local docker <COMMAND>`
+
+###### **Subcommands:**
+
+* `up` — Run docker compose up -d on generated/docker-compose.yaml
+* `down` — Run docker compose down -v on generated/docker-compose.yaml
+
+
+
+## `envio local docker up`
+
+Run docker compose up -d on generated/docker-compose.yaml
+
+**Usage:** `envio local docker up`
+
+
+
+## `envio local docker down`
+
+Run docker compose down -v on generated/docker-compose.yaml
+
+**Usage:** `envio local docker down`
+
+
+
+## `envio local db-migrate`
+
+Local Envio database commands
+
+**Usage:** `envio local db-migrate <COMMAND>`
+
+###### **Subcommands:**
+
+* `up` — Migrate latest schema to database
+* `down` — Drop database schema
+* `setup` — Setup database by dropping schema and then running migrations
+
+
+
+## `envio local db-migrate up`
+
+Migrate latest schema to database
+
+**Usage:** `envio local db-migrate up`
+
+
+
+## `envio local db-migrate down`
+
+Drop database schema
+
+**Usage:** `envio local db-migrate down`
+
+
+
+## `envio local db-migrate setup`
+
+Setup database by dropping schema and then running migrations
+
+**Usage:** `envio local db-migrate setup`
+
+
+
+<hr/>
+
+<small><i>
+    This document was generated automatically by
+    <a href="https://crates.io/crates/clap-markdown"><code>clap-markdown</code></a>.
+</i></small>
+
