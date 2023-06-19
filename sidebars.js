@@ -34,6 +34,10 @@ module.exports = {
         },
         {
           type: "doc",
+          id: "subgraph-migration-tutorial",
+        },
+        {
+          type: "doc",
           id: "terminology",
         },
       ],
