@@ -1,3 +1,11 @@
+---
+id: cli-commands
+title: CLI Commands
+sidebar_label: CLI Commands
+slug: /cli-commands
+---
+
+
 # Command-Line Help for `envio`
 
 This document contains the help content for the `envio` command-line program.
