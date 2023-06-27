@@ -20,7 +20,7 @@ in the project directory.
 
 Each event requires two functions to be registered:
 1. Loader function
-2. Handler function
+1. Handler function
 
 Names for the Loader and Handler functions are created based on the event name during the code generation process.
 
@@ -36,9 +36,9 @@ Each entity that is to be modified by the event must be defined in the `required
 
 ### Handler function
 
-Handler functions are used to modify the entities which have been loaded by the `<event>LoadEntities` function, and thus should contain all the required logic for using raw event information updating the entities.
+Handler functions are used to modify the entities which have been loaded by the `<event>LoadEntities` function, and thus should contain all the required logic for updating entities from the raw data emitted by the event.
 
-All of the raw parameters emmited in each event via `event.params`.
+All of the raw parameters emitted in each event via `event.params.<parameterName>`.
 
 Handler functions can access the loaded entities information via `context.<entityName>.<labelName>Load`.
 
