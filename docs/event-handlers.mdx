@@ -5,8 +5,8 @@ sidebar_label: Event Handlers
 slug: /event-handlers
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 # Event Handler
 
@@ -19,12 +19,13 @@ npx envio codegen
 in the project directory.
 
 Each event requires two functions to be registered:
-1. Loader function
-1. Handler function
 
-Names for the Loader and Handler functions are created based on the event name during the code generation process.
+1. `loader` function
+1. `handler` function
 
 ### Loader function
+
+Loader functions are called via `<EventName>.loader`.
 
 Loader functions are used to load the specific entities (defined in the `schema.graphql`) that should be modified by the event.
 
@@ -36,13 +37,16 @@ Each entity that is to be modified by the event must be defined in the `required
 
 ### Handler function
 
-Handler functions are used to modify the entities which have been loaded by the `<event>LoadEntities` function, and thus should contain all the required logic for updating entities from the raw data emitted by the event.
+Handler functions are called via `<EventName>.handler`.
+
+Handler functions are used to modify the entities which have been loaded by the `<EventName>.loader` function, and thus should contain all the required logic for updating entities from the raw data emitted by the event.
 
 All of the raw parameters emitted in each event via `event.params.<parameterName>`.
 
 Handler functions can access the loaded entities information via `context.<entityName>.<labelName>Load`.
 
 Handler functions can also provides the following functions per loaded entity, that can be used to interact with that entity:
+
 - set
 - delete
 
@@ -66,44 +70,41 @@ events:
 <Tabs>
   <TabItem value="javascript" label="Javascript">
 
-  ```javascript
-  let { GreeterContract } = require("../generated/src/Handlers.bs.js");
+```javascript
+let { GreeterContract } = require("../generated/src/Handlers.bs.js");
 
-  GreeterContract.registerNewGreetingLoadEntities((event, context) => {
-    context.greeting.greetingWithChangesLoad(event.params.user.toString());
-  });
-  ```
+GreeterContract.NewGreeting.loader((event, context) => {
+  context.greeting.greetingWithChangesLoad(event.params.user.toString());
+});
+```
 
   </TabItem>
   <TabItem value="typescript" label="Typescript">
 
-  ```typescript
-  import {
-    GreeterContract_registerNewGreetingLoadEntities,
-  } from "../generated/src/Handlers.gen";
+```typescript
+import { GreeterContract_NewGreeting_loader } from "../generated/src/Handlers.gen";
 
-  import { greetingEntity } from "../generated/src/Types.gen";
+import { greetingEntity } from "../generated/src/Types.gen";
 
-  GreeterContract_registerNewGreetingLoadEntities(({ event, context }) => {
-    context.greeting.greetingWithChangesLoad(event.params.user.toString());
-  });
-  ```
+GreeterContract_NewGreeting_loader(({ event, context }) => {
+  context.greeting.greetingWithChangesLoad(event.params.user.toString());
+});
+```
 
   </TabItem>
   <TabItem value="rescript" label="Rescript">
 
-  ```rescript
-  open Types
+```rescript
+open Types
 
-  Handlers.GreeterContract.registerNewGreetingLoadEntities((~event, ~context) => {
-    context.greeting.greetingWithChangesLoad(event.params.user->Ethers.ethAddressToString)
-  })
-  ```
+Handlers.GreeterContract.NewGreeting.loader((~event, ~context) => {
+  context.greeting.greetingWithChangesLoad(event.params.user->Ethers.ethAddressToString)
+})
+```
 
   </TabItem>
 </Tabs>
 
-- The load entities function `registerUpdateGreetingLoadEntities` follows a naming convention for all events: `register<EventName>LoadEntities`.
 - Within the function that is being registered the user must define the criteria for loading the `greetingWithChanges` entity which corresponds to the label defined in the config.
 - This is made available to the user through the load entity context defined as `contextUpdator`.
 - In the case of the above example the `greetingWithChanges` loads a `Greeting` entity that corresponds to the id received from the event.
@@ -113,100 +114,96 @@ events:
 <Tabs>
   <TabItem value="javascript" label="Javascript">
 
-  ```javascript
-  let { GreeterContract } = require("../generated/src/Handlers.bs.js");
+```javascript
+let { GreeterContract } = require("../generated/src/Handlers.bs.js");
 
-  GreeterContract.registerNewGreetingHandler((event, context) => {
-    let existingGreeter = context.greeting.greetingWithChangesLoad;
+GreeterContract.NewGreeting.handler((event, context) => {
+  let existingGreeter = context.greeting.greetingWithChangesLoad;
 
-    if (existingGreeter != undefined) {
-      context.greeting.update({
-        id: event.params.user.toString(),
-        latestGreeting: event.params.greeting,
-        numberOfGreetings: existingGreeter.numberOfGreetings + 1,
-      });
-    } else {
-      context.greeting.insert({
-        id: event.params.user.toString(),
-        latestGreeting: event.params.greeting,
-        numberOfGreetings: 1,
-      });
-    }
-  });
-  ```
+  if (existingGreeter != undefined) {
+    context.greeting.set({
+      id: event.params.user.toString(),
+      latestGreeting: event.params.greeting,
+      numberOfGreetings: existingGreeter.numberOfGreetings + 1,
+    });
+  } else {
+    context.greeting.set({
+      id: event.params.user.toString(),
+      latestGreeting: event.params.greeting,
+      numberOfGreetings: 1,
+    });
+  }
+});
+```
 
   </TabItem>
   <TabItem value="typescript" label="Typescript">
 
-  ```typescript
-  import {
-    GreeterContract_registerNewGreetingHandler,
-  } from "../generated/src/Handlers.gen";
+```typescript
+import { GreeterContract_registerNewGreetingHandler } from "../generated/src/Handlers.gen";
 
-  import { greetingEntity } from "../generated/src/Types.gen";
+import { greetingEntity } from "../generated/src/Types.gen";
 
-  GreeterContract_registerNewGreetingHandler(({ event, context }) => {
-    let currentGreeter = context.greeting.greetingWithChanges();
+GreeterContract_NewGreeting_handler(({ event, context }) => {
+(({ event, context }) => {
+  let currentGreeter = context.greeting.greetingWithChanges();
 
-    if (currentGreeter != null) {
-      let greetingObject: greetingEntity = {
-        id: event.params.user.toString(),
-        latestGreeting: event.params.greeting,
-        numberOfGreetings: currentGreeter.numberOfGreetings + 1,
-      };
+  if (currentGreeter != null) {
+    let greetingObject: greetingEntity = {
+      id: event.params.user.toString(),
+      latestGreeting: event.params.greeting,
+      numberOfGreetings: currentGreeter.numberOfGreetings + 1,
+    };
 
-      context.greeting.update(greetingObject);
-    } else {
-      let greetingObject: greetingEntity = {
-        id: event.params.user.toString(),
-        latestGreeting: event.params.greeting,
-        numberOfGreetings: 1,
-      };
-      context.greeting.insert(greetingObject);
-    }
-  });
-
-  ```
+    context.greeting.set(greetingObject);
+  } else {
+    let greetingObject: greetingEntity = {
+      id: event.params.user.toString(),
+      latestGreeting: event.params.greeting,
+      numberOfGreetings: 1,
+    };
+    context.greeting.set(greetingObject);
+  }
+});
+```
 
   </TabItem>
   <TabItem value="rescript" label="Rescript">
 
-  ```rescript
-  open Types
+```rescript
+open Types
 
-  Handlers.GreeterContract.registerNewGreetingHandler((~event, ~context) => {
-    let currentGreeterOpt = context.greeting.greetingWithChanges()
+Handlers.GreeterContract.NewGreeting.handler((~event, ~context) => {
+  let currentGreeterOpt = context.greeting.greetingWithChanges()
 
-    switch currentGreeterOpt {
-    | Some(existingGreeter) => {
-        let greetingObject: greetingEntity = {
-          id: event.params.user->Ethers.ethAddressToString,
-          latestGreeting: event.params.greeting,
-          numberOfGreetings: existingGreeter.numberOfGreetings + 1,
-        }
-
-        context.greeting.update(greetingObject)
-      }
-
-    | None =>
+  switch currentGreeterOpt {
+  | Some(existingGreeter) => {
       let greetingObject: greetingEntity = {
         id: event.params.user->Ethers.ethAddressToString,
         latestGreeting: event.params.greeting,
-        numberOfGreetings: 1,
+        numberOfGreetings: existingGreeter.numberOfGreetings + 1,
       }
 
-      context.greeting.insert(greetingObject)
+      context.greeting.set(greetingObject)
     }
-  })
-  ```
+
+  | None =>
+    let greetingObject: greetingEntity = {
+      id: event.params.user->Ethers.ethAddressToString,
+      latestGreeting: event.params.greeting,
+      numberOfGreetings: 1,
+    }
+
+    context.greeting.set(greetingObject)
+  }
+})
+```
 
   </TabItem>
 </Tabs>
 
-
-- The handler function `registerUpdateGreetingHandler` also follows a naming convention for all events in the form of: `register<EventName>Handler`.
-- Once the user has defined their `loadEntities` function, they are then able to retrieve the loaded entity information via the labels defined in the `config.yaml` file.
-- In the above example, if a `Greeting` entity is found matching the load criteria in the `loadEntities` function, it will be available via `greetingWithChanges`.
+- Once the user has defined their `loader` function, they are then able to retrieve the loaded entity information via the labels defined in the `config.yaml` file.
+- In the above example, if a `Greeting` entity is found matching the load criteria in the `loader` function, it will be available via `greetingWithChanges`.
 - This is made available to the user through the handler context defined simply as `context`.
 - This `context` is the gateway by which the user can interact with the indexer and the underlying database.
 - The user can then modify this retrieved entity and subsequently update the `Greeting` entity in the database.

@@ -30,25 +30,39 @@ Sample from config file from SimpleBank scenario:
 
 ```yaml
 version: 0.0.0
+name: simple_bank
 description: Simple Bank contract
-repository: 
+repository:
 networks:
-  - id: 31337
-    rpc_url: http://localhost:8545
+  - id: 1337
+    rpc_config: 
+      url: http://localhost:8545
     start_block: 0
     contracts:
       - name: SimpleBank
         abi_file_path: contracts/abis/SimpleBank.json
-        address: ["0x2B2f78c5BF6D9C12Ee1225D5F374aa91204580c3"]
+        address: "0x2B2f78c5BF6D9C12Ee1225D5F374aa91204580c3"
         handler: src/EventHandlers.js
         events:
           - event: "AccountCreated"
             requiredEntities: [] # empty signifies no requirements
           - event: "DepositMade"
-            requiredEntities: 
+            requiredEntities:
               - name: "Account"
                 labels:
                   - "accountBalanceChanges"
+              - name: "Bank"
+                labels:
+                  - "totalBalanceChanges"
+          - event: "WithdrawalMade"
+            requiredEntities: # if this field isn't specified it should default to include all entities
+              - name: "Account"
+                labels:
+                  - "accountBalanceChanges"
+              - name: "Bank"
+                labels:
+                  - "totalBalanceChanges"
+
 ```
 
 **Field Descriptions**
@@ -96,15 +110,18 @@ The entity and event types will then be available in the handler files.
 
 A user can specify a specific handler file per contract that processes events emitted by that contract.
 Each event handler requires two functions to be registered in order to enable full functionality within the indexer.
-1. An `<event>LoadEntities` function
-2. An `<event>Handler` function
+1. A `loader` function
+2. A `handler` function
 
-### Example of registering a `loadEntities` function for the `DepositMade` event from the above example config in Typescript:
+### Example of registering a `loader` function for the `DepositMade` event from the above example config in Typescript:
 
 ```typescript
-SimpleBankContract_registerDepositMadeLoadEntities(({ event, context }) => {
-  context.account.accountBalanceChangesLoad(event.params.userAddress.toString());
- });
+SimpleBankContract_DepositMade_loader(({ event, context }) => {
+  context.account.accountBalanceChangesLoad(
+    event.params.userAddress.toString()
+  );
+  context.bank.totalBalanceChangesLoad(event.srcAddress.toString());
+});
 ```
 
 Inspecting the config of the `DepositMade` event from the above example config indicates that there is a defined `requiredEntities` field of the following:
@@ -118,40 +135,53 @@ events:
           - "accountBalanceChanges"
 ```
 
-The register function `registerDepositMadeLoadEntities` follows a naming convention for all events: `register<EventName>LoadEntities`.
+The register function `loader` follows a naming convention for all events: `<EventName>.loader`.
  
 Within the function that is being registered the user must define the criteria for loading the `accountBalanceChanges` entity which corresponds to the label defined in the config. This is made available to the user through the load entity context defined as `contextUpdator`.
 
 In the case of the above example the `accountBalanceChanges` loads a `Account` entity that corresponds to the id received from the event.
 
-### Example of registering a `Handler` function for the `DepositMade` event and using the loaded entity `accountBalanceChanges`:
+### Example of registering a `handler` function for the `DepositMade` event and using the loaded entity `accountBalanceChanges`:
 
 ```typescript
-SimpleBankContract_registerDepositMadeHandler(({ event, context }) => {
-   let {userAddress, amount} = event.params;
-   
-   let previousAccountBalance = context.account.accountBalanceChanges()?.balance ?? 0;
-   let nextAccountBalance = Number(previousAccountBalance) + Number(amount);
-   
-   let previousAccountDepositCount = context.account.accountBalanceChanges()?.depositCount ?? 0;
-   let nextAccountDepositCount = previousAccountDepositCount + 1;
-   
-   let previousAccountWithdrawalCount = context.account.accountBalanceChanges()?.withdrawalCount ?? 0;
-   
-   let account: accountEntity = {
-     id: userAddress.toString(),
-     address: userAddress.toString(),
+SimpleBankContract_DepositMade_handler(({ event, context }) => {
+  let { userAddress, amount } = event.params;
+
+  let previousAccountBalance =
+    context.account.accountBalanceChanges()?.balance ?? 0;
+  let nextAccountBalance = Number(previousAccountBalance) + Number(amount);
+
+  let previousAccountDepositCount =
+    context.account.accountBalanceChanges()?.depositCount ?? 0;
+  let nextAccountDepositCount = previousAccountDepositCount + 1;
+
+  let previousAccountWithdrawalCount =
+    context.account.accountBalanceChanges()?.withdrawalCount ?? 0;
+
+  let account: accountEntity = {
+    id: userAddress.toString(),
+    address: userAddress.toString(),
     balance: nextAccountBalance,
     depositCount: nextAccountDepositCount,
     withdrawalCount: previousAccountWithdrawalCount,
   };
-  
-  context.account.update(account);
+
+  let perviousBankBalance =
+    context.bank.totalBalanceChanges()?.totalBalance ?? 0;
+  let nextBankBalance = Number(perviousBankBalance) + Number(amount);
+
+  let bank: bankEntity = {
+    id: event.srcAddress.toString(),
+    totalBalance: nextBankBalance,
+  };
+
+  context.account.set(account);
+  context.bank.set(bank);
 });
 ```
 
-The handler functions also follow a naming convention for all events in the form of: `register<EventName>Handler`.
-Once the user has defined their `loadEntities` function they are then able to retrieve the loaded entity information via the labels defined in the `config.yaml` file. 
+The handler functions also follow a naming convention for all events in the form of: `<EventName>.handler`.
+Once the user has defined their `loader` function they are then able to retrieve the loaded entity information via the labels defined in the `config.yaml` file. 
 In the above example, if a `Account` entity is found matching the load criteria in the `loadEntities` function, it will be available via `accountBalanceChanges`. This is made available to the user through the handler context defined simply as `context`. This context is the gateway by which the user can interact with the indexer and the underlying database.
 The user can then modify this retrieved entity and subsequently update the `Account` entity in the database. This is done via the context using the update function (`context.account.update(account)`).
 The user has access to a `Account` type that has all the fields defined in the schema.
