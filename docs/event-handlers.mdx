@@ -87,9 +87,9 @@ Handler functions are called via
   </TabItem>
 </Tabs>
 
-Handler functions are used to modify the entities which have been loaded by the `<EventName>.loader` function, and thus should contain all the required logic for updating entities with the raw data emitted by the event.
+Handler functions are used to modify the entities which have been loaded by the loader function, and thus should contain all the required logic for updating entities with the raw data emitted by the event.
 
-All of the meta data emitted in each event are accessible via `event.params.<metaData>`.
+All of the parameters emitted in each event are accessible via `event.params.<parameterName>`.
 
 Additional raw event information can also be accessed via `event.<rawInfo>`.
 
