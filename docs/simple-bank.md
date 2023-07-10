@@ -29,8 +29,8 @@ These files are auto-generated according to a template by running `npx envio ini
 Sample from config file from SimpleBank scenario:
 
 ```yaml
-version: 0.0.0
 name: simple_bank
+version: 0.0.0
 description: Simple Bank contract
 repository:
 networks:

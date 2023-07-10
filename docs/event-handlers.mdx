@@ -25,7 +25,31 @@ Each event requires two functions to be registered:
 
 ### Loader function
 
-Loader functions are called via `<EventName>.loader`.
+Loader functions are called via
+
+<Tabs>
+  <TabItem value="javascript" label="Javascript">
+
+```javascript
+<ContractName>Contract.<EventName>.loader
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="Typescript">
+
+```typescript
+<ContractName>Contract_<EventName>_loader
+```
+
+  </TabItem>
+  <TabItem value="rescript" label="Rescript">
+
+```rescript
+<ContractName>Contract.<EventName>.loader
+```
+
+  </TabItem>
+</Tabs>
 
 Loader functions are used to load the specific entities (defined in the `schema.graphql`) that should be modified by the event.
 
@@ -37,13 +61,37 @@ Each entity that is to be modified by the event must be defined in the `required
 
 ### Handler function
 
-Handler functions are called via `<EventName>.handler`.
+Handler functions are called via
+
+<Tabs>
+  <TabItem value="javascript" label="Javascript">
+
+```jacvascript
+<ContractName>Contract.<EventName>.handler
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="Typescript">
+
+```typescript
+<ContractName>Contract_<EventName>_handler
+```
+
+  </TabItem>
+  <TabItem value="rescript" label="Rescript">
+
+```rescript
+<ContractName>Contract.<EventName>.handler
+```
+
+  </TabItem>
+</Tabs>
 
 Handler functions are used to modify the entities which have been loaded by the `<EventName>.loader` function, and thus should contain all the required logic for updating entities with the raw data emitted by the event.
 
-All of the parameters emitted in each event are acceesible via `event.params.<parameterName>`.
+All of the meta data emitted in each event are accessible via `event.params.<metaData>`.
 
-Additional raw event information can also be accessed via `event.<parameterName>`.
+Additional raw event information can also be accessed via `event.<rawInfo>`.
 
 Below is a list of raw event information that can be accessed:
 - `blockHash`
@@ -154,7 +202,7 @@ GreeterContract.NewGreeting.handler((event, context) => {
   <TabItem value="typescript" label="Typescript">
 
 ```typescript
-import { GreeterContract_registerNewGreetingHandler } from "../generated/src/Handlers.gen";
+import { GreeterContract_NewGreeting_handler } from "../generated/src/Handlers.gen";
 
 import { greetingEntity } from "../generated/src/Types.gen";
 
