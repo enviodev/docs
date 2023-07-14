@@ -14,9 +14,9 @@ The `config.yaml` contains various information about the smart contract project,
 Example `config.yaml` from Greeter scenario:
 
 ```yaml
+name: greeter
 version: 0.0.0
 description: Greeter indexer
-repository: https://github.com/PaulRBerg/hardhat-template
 networks:
   - id: 1337
     rpc_url: http://localhost:8545
@@ -43,7 +43,6 @@ networks:
 
 - `version` - Version of the config schema used by the indexer
 - `description` - Description of the project
-- `repository` - Repository of the project
 - `networks` - Configuration of the blockchain networks that the project is deployed on
   - `id` - Chain identifier of the network
   - `rpc_url` - RPC URL that will be used to subscribe to blockchain data on this network

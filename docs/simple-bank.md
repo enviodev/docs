@@ -29,10 +29,9 @@ These files are auto-generated according to a template by running `npx envio ini
 Sample from config file from SimpleBank scenario:
 
 ```yaml
-name: simple_bank
+name: simplebank
 version: 0.0.0
 description: Simple Bank contract
-repository:
 networks:
   - id: 1337
     rpc_config: 
@@ -69,7 +68,6 @@ networks:
 
 - `version` - Version of the config schema used by the indexer
 - `description` - Description of the project
-- `repository` - Repository of the project
 - `networks` - Configuration of the blockchain networks that the project is deployed on
   - `id` - Chain identifier of the network
   - `rpc_url` - RPC URL that will be used to subscribe to blockchain data on this network
