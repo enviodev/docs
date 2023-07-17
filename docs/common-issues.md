@@ -18,7 +18,7 @@ ports:
 
 Then run 
 ```
-PG_PORT:5433 npx envio codegen
+PG_PORT:5433 envio codegen
 PG_PORT:5433 pnpm start
 ```
 

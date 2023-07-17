@@ -80,7 +80,7 @@ cd envio-indexer
 ### 2. Initialize the indexer
 
 ```bash
-npx envio init
+envio init
 ```
 Select based on the prompts
 ```bash
@@ -143,7 +143,7 @@ cd ../envio-indexer
  
 `codegen` will auto-generate all the indexing files, based on the setup files (config.yaml, schema.graphql, EventHandler.js)
 ```bash
-npx envio codegen 
+envio codegen 
 ```
 `start` will run the indexer and index events based on the rules set in the src/EventHandler.js file 
 ```bash

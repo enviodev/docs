@@ -19,7 +19,7 @@ npm i -g envio
 
 `cd` into the folder of your choice and run 
 ```bash
-npx envio init
+envio init
 ```
 
 Then choose a template out of the possible options
@@ -41,7 +41,7 @@ This will generate the config, schema and event handlers files according to the 
 ## Generate code for your indexer
 
 ```bash
-npx envio codegen
+envio codegen
 ```
 
 ## Run the indexer locally

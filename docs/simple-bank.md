@@ -22,7 +22,7 @@ The following files are required to use the Indexer:
 - GraphQL Schema (defaults to `schema.graphql`)
 - Event Handlers (defaults to `src/EventHandlers.*` depending on the language chosen) 
 
-These files are auto-generated according to a template by running `npx envio init` command.
+These files are auto-generated according to a template by running `envio init` command.
 
 ## Configuration Setup
 
@@ -70,7 +70,8 @@ networks:
 - `description` - Description of the project
 - `networks` - Configuration of the blockchain networks that the project is deployed on
   - `id` - Chain identifier of the network
-  - `rpc_url` - RPC URL that will be used to subscribe to blockchain data on this network
+  - `rpc_config` - RPC Config that will be used to subscribe to blockchain data on this network
+    - `url` -  URL of the RPC endpoint
   - `start_block` - Initial block from which the indexer will start listening for events
   - `contracts` - Configuration for each contract deployed on the network
     - `name` - User defined contract name
@@ -102,7 +103,7 @@ type Account @entity {
 ## Writing Event Handlers
 
 Once the configuration and graphQL schema files are in place, run
-`npx envio codegen` in the project directory.
+`envio codegen` in the project directory.
 
 The entity and event types will then be available in the handler files. 
 

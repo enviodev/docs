@@ -14,29 +14,31 @@ The `config.yaml` contains various information about the smart contract project,
 Example `config.yaml` from Greeter scenario:
 
 ```yaml
-name: greeter
-version: 0.0.0
-description: Greeter indexer
+name: ERC20
+version: 1.0.0
+description: ERC-20 indexer
 networks:
   - id: 1337
-    rpc_url: http://localhost:8545
+    rpc_config:
+      url: http://localhost:8545
     start_block: 0
     contracts:
-      - name: Greeter
-        abi_file_path: abis/greeter-abi.json
-        address: ["0x2B502ab6F783c2Ae96A75dc68cf82a77ce2637c2"]
+      - name: ERC20
+        abi_file_path: abis/erc20.json
+        address: ["0x2B2f78c5BF6D9C12Ee1225D5F374aa91204580c3"]
         handler: ./src/EventHandlers.bs.js
         events:
-          - event: "NewGreeting"
+          - event: "Approval"
             requiredEntities:
-              - name: "Greeting"
+              - name: "Account"
                 labels:
-                  - "greetingWithChanges"
-          - event: "ClearGreeting"
+                  - "ownerAccountChanges"
+          - event: "Transfer"
             requiredEntities:
-              - name: "Greeting"
+              - name: "Account"
                 labels:
-                  - "greetingWithChanges"
+                  - "senderAccountChanges"
+                  - "receiverAccountChanges"
 ```
 
 **Field Descriptions**
@@ -45,7 +47,8 @@ networks:
 - `description` - Description of the project
 - `networks` - Configuration of the blockchain networks that the project is deployed on
   - `id` - Chain identifier of the network
-  - `rpc_url` - RPC URL that will be used to subscribe to blockchain data on this network
+  - `rpc_config` - RPC Config that will be used to subscribe to blockchain data on this network
+    - `url` -  URL of the RPC endpoint
   - `start_block` - Initial block from which the indexer will start listening for events
   - `contracts` - Configuration for each contract deployed on the network
     - `name` - User-defined contract name
