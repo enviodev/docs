@@ -14,31 +14,31 @@ The `config.yaml` contains various information about the smart contract project,
 Example `config.yaml` from Greeter scenario:
 
 ```yaml
-name: ERC20
-version: 1.0.0
-description: ERC-20 indexer
+name: greeterrescript
+version: 0.0.0
+description: Greeter indexer
 networks:
   - id: 1337
     rpc_config:
       url: http://localhost:8545
     start_block: 0
     contracts:
-      - name: ERC20
-        abi_file_path: abis/erc20.json
-        address: ["0x2B2f78c5BF6D9C12Ee1225D5F374aa91204580c3"]
+      - name: Greeter
+        abi_file_path: abis/greeter-abi.json
+        address: "0x2B502ab6F783c2Ae96A75dc68cf82a77ce2637c2"
         handler: ./src/EventHandlers.bs.js
         events:
-          - event: "Approval"
+          - event: "NewGreeting"
             requiredEntities:
-              - name: "Account"
+              - name: "Greeting"
                 labels:
-                  - "ownerAccountChanges"
-          - event: "Transfer"
+                  - "greetingWithChanges"
+          - event: "ClearGreeting"
             requiredEntities:
-              - name: "Account"
+              - name: "Greeting"
                 labels:
-                  - "senderAccountChanges"
-                  - "receiverAccountChanges"
+                  - "greetingWithChanges"
+
 ```
 
 **Field Descriptions**
