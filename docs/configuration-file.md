@@ -38,7 +38,6 @@ networks:
               - name: "Greeting"
                 labels:
                   - "greetingWithChanges"
-
 ```
 
 **Field Descriptions**
