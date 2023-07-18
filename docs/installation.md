@@ -21,7 +21,7 @@ npm i -g envio
 
 Command to see available CLI commands
 ```bash
-npx envio --help
+envio --help
 ```
 
 
