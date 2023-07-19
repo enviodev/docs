@@ -2,8 +2,8 @@
 module.exports = {
   someSidebar: [
     "overview",
-    "quickstart",
     "installation",
+    "quickstart",
     {
       type: "category",
       label: "Guides",
@@ -42,28 +42,28 @@ module.exports = {
         },
       ],
     },
-    {
-      type: "category",
-      label: "Example Scenarios",
-      items: [
-        {
-          type: "doc",
-          id: "simple-bank",
-        },
-        // {
-        //   type: "doc",
-        //   id: "greeter",
-        // },
-        // {
-        //   type: "doc",
-        //   id: "nft-factory",
-        // },
-        // {
-        //   type: "doc",
-        //   id: "ploffen",
-        // },
-      ],
-    },
+    // {
+    //   type: "category",
+    //   label: "Example Scenarios",
+    //   items: [
+    //     {
+    //       type: "doc",
+    //       id: "simple-bank",
+    //     },
+    //     {
+    //       type: "doc",
+    //       id: "greeter",
+    //     },
+    //     {
+    //       type: "doc",
+    //       id: "nft-factory",
+    //     },
+    //     {
+    //       type: "doc",
+    //       id: "ploffen",
+    //     },
+    //   ],
+    // },
 
     {
       type: "category",

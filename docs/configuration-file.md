@@ -1,17 +1,36 @@
 ---
 id: configuration-file
-title: Configuration File
-sidebar_label: Configuration File
+title: Setting up Configuration File
+sidebar_label: Setting up Configuration File
 slug: /configuration-file
 ---
 
+# Setting up Configuration File
 
+The `config.yaml` outlines the specifications for the indexer including details including network and contract specifications and the event information to be used in the indexing process.
 
-# Configuration File
+## Field Descriptions
 
-The `config.yaml` contains various information about the smart contract project, including network specifications and event information to be fed into the indexing process.
+- `name` - Name of the project
+- `version` - Version of the config used by the indexer
+- `description` - Description of the project
+- `networks` - Configuration of the blockchain networks that the project is deployed on
+  - `id` - Chain identifier of the network
+  - `rpc_config` - RPC Config that will be used to subscribe to blockchain data on this network
+    - `url` - URL of the RPC endpoint
+  - `start_block` - Initial block from which the indexer will start listening for events
+  - `contracts` - Configuration for each contract deployed on the network
+    - `name` - User-defined contract name
+    - `abi_file_path` - File location of the contract ABI
+    - `address` - An array of addresses that the contract is deployed to on the network
+    - `handler` - Location of the file that handles the events emitted by this contract
+    - `events` - Configuration for each event emitted by this contract that the indexer will listen for
+      - `event` - Signature or name of the event (must match the name in the ABI)
+      - `required_entities` - An array of entities that need to loaded and made accessible within the handler function (an empty array indicates that no entities are required)
+        - `name` - The name of the required entity (must match an entity defined in `schema.graphql`)
+        - `label` - A user defined label that corresponds to this entity load
 
-Example `config.yaml` from Greeter scenario:
+## Example `config.yaml` from Greeter template:
 
 ```yaml
 name: greeterrescript
@@ -39,25 +58,5 @@ networks:
                 labels:
                   - "greetingWithChanges"
 ```
-
-**Field Descriptions**
-
-- `version` - Version of the config schema used by the indexer
-- `description` - Description of the project
-- `networks` - Configuration of the blockchain networks that the project is deployed on
-  - `id` - Chain identifier of the network
-  - `rpc_config` - RPC Config that will be used to subscribe to blockchain data on this network
-    - `url` -  URL of the RPC endpoint
-  - `start_block` - Initial block from which the indexer will start listening for events
-  - `contracts` - Configuration for each contract deployed on the network
-    - `name` - User-defined contract name
-    - `abi_file_path` - File location of the contract ABI
-    - `address` - An array of addresses that the contract is deployed to on the network
-    - `handler` - Location of the file that handles the events emitted by this contract
-    - `events` - Configuration for each event emitted by this contract that the indexer will listen for
-      - `event` - Signature or name of the event (must match the name in the ABI)
-      - `required_entities` - An array of entities that need to loaded and made accessible within the handler function (an empty array indicates that no entities are required)
-        - `name` - The name of the required entity (must match an entity defined in `schema.graphql`)
-        - `label` - A user defined label that corresponds to this entity load
 
 ---

@@ -19,7 +19,7 @@ ports:
 Then run 
 ```
 PG_PORT:5433 envio codegen
-PG_PORT:5433 pnpm start
+PG_PORT:5433 envio start
 ```
 
 
@@ -31,8 +31,5 @@ Re-export smart contract ABI's using [Hardhat ABI exporter](https://www.npmjs.co
 pnpm hardhat export-abi
 ```
 Ensure that the directory for ABI in `config.yaml` is pointing to the correct folder where ABIs have been freshly generated.
-
-
-
 
 ---
