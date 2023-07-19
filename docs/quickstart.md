@@ -73,6 +73,13 @@ Install the relevant packages
 pnpm i
 ```
 
+Run Docker for local environments and set up databse
+```bash
+envio local docker up
+envio local db-migrate setup
+
+```
+
 Run the indexer
 
 ```bash
