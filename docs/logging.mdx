@@ -1,0 +1,206 @@
+---
+id: logging
+title: Logging
+sidebar_label: Logging
+slug: /logging
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# Logging
+
+Logging is an important part of the indexer. It is used to track the progress of the indexer and to debug any issues that may arise. The indexer uses the [pino](https://github.com/pinojs/pino/). Additionally these logs can be plugged into a tool such as [kibana](https://www.elastic.co/what-is/kibana) to generate metrics and other insights.
+
+- [Users - logging for your event handlers](#users)
+- [Metrics, Debugging, and Troubleshooting - how to use logs as a power tool](#metrics-debugging-and-troubleshooting)
+- [Developer Logging - how to utilize logs within the envio codebase](#developer-logging)
+
+## Users
+
+Users should use the functions provided in their context for logging. These are as follows:
+
+- `<context>.log.debug`
+- `<context>.log.info`
+- `<context>.log.warn`
+- `<context>.log.error`
+- `<context>.log.errorWithExn` : same as `error`, but takes in the exception as the first argument to neatly integrate the stacktrace and error message into the log.
+
+<Tabs>
+  <TabItem value="javascript" label="Javascript">
+
+```javascript
+// inside your handler
+context.log.debug(`We are processing the event, ${event.blockHash} (debug)`);
+context.log.info(`We are processing the event, ${event.blockHash} (info)`);
+context.log.warn(`We are processing the event, ${event.blockHash} (warn)`);
+context.log.error(`We are processing the event, ${event.blockHash} (error)`);
+context.log.errorWithExn(
+  new Error("some error processing the event"),
+  `We are processing the event, ${event.blockHash} (error)`
+);
+
+// You can also pass objects to these logs if you want more information to be available in them. eg.:
+context.log.info({
+  msg: "We are processing the event",
+  type: "info",
+  extra: "I think this info will help me debug",
+  data: { blockHash: event.blockHash },
+});
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="Typescript">
+
+```typescript
+// inside your handler
+context.log.debug(`We are processing the event, ${event.blockHash} (debug)`);
+context.log.info(`We are processing the event, ${event.blockHash} (info)`);
+context.log.warn(`We are processing the event, ${event.blockHash} (warn)`);
+context.log.error(`We are processing the event, ${event.blockHash} (error)`);
+context.log.errorWithExn(
+  new Error("some error processing the event"),
+  `We are processing the event, ${event.blockHash} (error)`
+);
+```
+
+<!-- TODO: if we move away from gentype we will be able to make the log argument be an `any` type in typescript - this section will be irrelevant then -->
+
+Unfortunately curretnly our typescript bindings only accept strings as arguments to the logs. We have an open issue in our repo to make this unnecessary for the typescript bindings and make it use the `any` type rather than string, but complex logging is done like this:
+
+```typescript
+import Logs from "generated/src/Logs.bs.js";
+
+// inside your handler
+Logs.debug(context.log, {
+  msg: "We are processing the event",
+  type: "debug",
+  data: { blockHash: event.blockHash },
+});
+Logs.info(context.log, {
+  msg: "We are processing the event",
+  type: "info",
+  data: { blockHash: event.blockHash },
+});
+Logs.warn(context.log, {
+  msg: "We are processing the event",
+  type: "warn",
+  data: { blockHash: event.blockHash },
+});
+Logs.error(context.log, {
+  msg: "We are processing the event",
+  type: "error",
+  data: { blockHash: event.blockHash },
+});
+Logs.errorWithExn(context.log, new Error("some error in code"), {
+  msg: "We are processing the event",
+  type: "error",
+  data: { blockHash: event.blockHash },
+});
+```
+
+  </TabItem>
+  <TabItem value="rescript" label="Rescript">
+
+```rescript
+  // inside your handler
+
+  exception ExmapleException(string) // Example of an exception
+
+  /// Some examples of user logging
+  context.log.debug(`We are processing the event, ${event.blockHash} (debug)`)
+  context.log.info(`We are processing the event, ${event.blockHash} (info)`)
+  context.log.warn(`We are processing the event, ${event.blockHash} (warn)`)
+  context.log.error(`We are processing the event, ${event.blockHash} (error)`)
+  context.log.errorWithExn(
+    ExmapleException("some error processing the event"),
+    `We are processing the event, ${event.blockHash} (error)`,
+  )
+```
+
+Unfortunately records in rescript are strictly typed and not polymorphic. So if you want to pass anything that isn't a string to your log messages, you'll need to use this separate log object. as detailed below.
+
+```rescript
+  context.log->Logs.debug({
+    "msg": "We are processing the event",
+    "type": "debug",
+    "data": {"blockHash": event.blockHash},
+  })
+  context.log->Logs.info({
+    "msg": "We are processing the event",
+    "type": "info",
+    "data": {"blockHash": event.blockHash},
+  })
+  context.log->Logs.warn({
+    "msg": "We are processing the event",
+    "type": "warn",
+    "data": {"blockHash": event.blockHash},
+  })
+  context.log->Logs.error({
+    "msg": "We are processing the event",
+    "type": "error",
+    "data": {"blockHash": event.blockHash},
+  })
+  context.log->Logs.errorWithExn(
+    ExmapleException("some error processing the event"),
+    {
+      "msg": "We are processing the event",
+      "type": "error",
+      "data": {"blockHash": event.blockHash},
+    },
+  )
+```
+
+  </TabItem>
+</Tabs>
+
+## Metrics, Debugging, and Troubleshooting
+
+There are many ways to gather insights into our logs. We use the [pino](https://github.com/pinojs/pino/) logging library for javascript which is highly optimized for performance. It also outputs clear and easy to read logs for users via [pino-pretty](https://github.com/pinojs/pino-pretty).
+
+It is able to output logs in a json/machine readable format for tracing, debugging, or generating metrics via tools such as kibana. For kibana it might be useful to use the standardized [ECS](https://www.elastic.co/guide/en/ecs/current/index.html), but the pino standard logging format is also fine.
+
+The default autput format is pino-pretty. But please feel free to use the following environment veriables to modify output formats:
+
+```bash
+LOG_STRATEGY="console-pretty" # this is the default format - it logs to the terminal directly with colours for log levels in a human readable format.
+LOG_STRATEGY="ecs-file" # this logs to a file specidied at `LOG_FILE` with the ECS log format which is the standard output format for the EKS stack
+LOG_STRATEGY="ecs-console" # this logs to the console in the raw ECS format
+LOG_STRATEGY="file-only" # this logs to file in default pino format. This is a more efficient logger performance wise.
+LOG_STRATEGY="console-raw" # This logs directly to console in pino format.
+LOG_STRATEGY="both-prettyconsole" # This pretty prints to console, and logs to file at `LOG_FILE` with default pino format
+LOG_FILE="<path-to-log-file>"
+```
+
+**View the logs in hosting dashboard** - this feature is a WIP - follow us on [twitter](https://twitter.com/envio_indexer) for product updates.
+
+If there are specific dashboards you'd like to have to improve your experience in development or production please [let us know](https://discord.gg/DhfFhzuJQh). We are working on some Kibana dashboards for self hosting and UI dasboards into our hosting solution too.
+
+## Developer Logging
+
+The indexer supports the following log levels (in ascending order):
+
+```
+- trace
+- debug
+- info
+- udebug
+- uinfo
+- uwarn
+- uerror
+- warn
+- error
+- fatal
+```
+
+The log levels prefixed with `u` are user level logs. These are logs emitted from the context for a handler or a loader.
+
+You can set the log levels with the following environment variables:
+
+```
+LOG_LEVEL - the log level used for logs going to the console (default: "info")
+FILE_LOG_LEVEL - the log level used for logs going to file (default: "trace")
+BASE_LOG_LEVEL - this is an override log level. If it is lower than `LOG_LEVEL` or `FILE_LOG_LEVEL` it does nothing. However if it is higher than either or both it will override that level. (default: "trace" , ie it does nothing by default)
+```
+
+---

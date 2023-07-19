@@ -30,6 +30,10 @@ module.exports = {
         },
         {
           type: "doc",
+          id: "logging",
+        },
+        {
+          type: "doc",
           id: "greeter-hardhat-tutorial",
         },
         {
