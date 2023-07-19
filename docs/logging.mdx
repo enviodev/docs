@@ -39,6 +39,14 @@ context.log.errorWithExn(
   new Error("some error processing the event"),
   `We are processing the event, ${event.blockHash} (error)`
 );
+
+// You can also pass objects to these logs if you want more information to be available in them. eg.:
+context.log.info({
+  msg: "We are processing the event",
+  type: "info",
+  extra: "I think this info will help me debug",
+  data: { blockHash: event.blockHash },
+});
 ```
 
   </TabItem>
