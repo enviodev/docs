@@ -1,14 +1,14 @@
 ---
 id: event-handlers
-title: Event Handlers
-sidebar_label: Event Handlers
+title: Writing Event Handlers
+sidebar_label: Writing Event Handlers
 slug: /event-handlers
 ---
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-# Event Handler
+# Writing Event Handlers
 
 Once the configuration and schema files are in place, run
 
@@ -38,7 +38,7 @@ Loader functions are called via
   <TabItem value="typescript" label="Typescript">
 
 ```typescript
-<ContractName>Contract_<EventName>_loader
+<ContractName>Contract_ < EventName > _loader;
 ```
 
   </TabItem>
@@ -74,7 +74,7 @@ Handler functions are called via
   <TabItem value="typescript" label="Typescript">
 
 ```typescript
-<ContractName>Contract_<EventName>_handler
+<ContractName>Contract_ < EventName > _handler;
 ```
 
   </TabItem>
@@ -94,6 +94,7 @@ All of the parameters emitted in each event are accessible via `event.params.<pa
 Additional raw event information can also be accessed via `event.<rawInfo>`.
 
 Below is a list of raw event information that can be accessed:
+
 - `blockHash`
 - `blockNumber`
 - `blockTimestamp`

@@ -1,15 +1,17 @@
 ---
 id: schema-file
-title: Schema File
-sidebar_label: Schema File
+title: Defining the Schema
+sidebar_label: Defining the Schema
 slug: /schema
 ---
 
-# Schema File
+# Defining the Schema
 
 The `schema.graphql` file serves as a representation of your application's data model. It defines entity types that directly correspond to database tables, and the event handlers you create are responsible for creating and updating records within those tables. Additionally, the GraphQL API is automatically generated based on the entity types specified in the `schema.graphql` file, to allow access for the indexed data.
 
-Entity types are identified with the @entity directive within the `schema.graphql` file. For instance:
+Entity types are identified with the @entity directive within the `schema.graphql` file.
+
+Example schema from the Greeter template:
 
 ```graphql
 type Greeting @entity {
