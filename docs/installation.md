@@ -17,7 +17,7 @@ The following are the prerequisite packages required for Envio:
 2. [<ins>pnpm</ins>](https://pnpm.io/installation)
 3. [<ins>Docker Desktop</ins>](https://www.docker.com/products/docker-desktop/)
 
-Docker is required specifically for testing Envio indexer locally.
+Docker is required specifically for running the Envio indexer locally.
 
 ## Install Envio
 

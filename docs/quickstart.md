@@ -61,7 +61,7 @@ envio codegen
 
 ## Write the event handlers for your project
 
-Once indexing files have been generated, you are ready to write the event handlers for your project.
+Once the indexing files have been generated, you are ready to write the event handlers for your project.
 
 Click [<ins>here</ins>](./event-handlers) for a guide on how to define your event handlers.
 
@@ -69,11 +69,8 @@ Click [<ins>here</ins>](./event-handlers) for a guide on how to define your even
 
 Install the relevant packages
 
-```bash
-pnpm i
-```
 
-Run Docker for local environments and set up databse
+Run Docker for local environments and set up the database
 ```bash
 envio local docker up
 envio local db-migrate setup
