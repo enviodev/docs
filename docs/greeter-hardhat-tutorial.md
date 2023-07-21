@@ -6,14 +6,11 @@ slug: /greeter-hardhat-tutorial
 ---
 
 
-This tutorial will take you through a step by step guide to building, deploying and indexing a Greeter smart contract using Envio and Hardhat. 
-
-The final code for this tutorial can be seen **<em>[here](https://github.com/Float-Capital/envio-greeter-tutorial/)</em>**
-
+This tutorial will take you through a step by step guide to indexing a Greeter smart contract that is deployed on Polygon using Envio. 
 
 <!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
 
-- [Background](#background)
+<!-- - [Background](#background)
   * [Greeter contract](#greeter-contract)
   * [Hardhat](#hardhat)
   * [Envio](#envio)
@@ -27,7 +24,7 @@ The final code for this tutorial can be seen **<em>[here](https://github.com/Flo
   * [4. Clone the contracts repository](#4-clone-the-contracts-repository)
   * [5. Deploy the contracts](#5-deploy-the-contracts)
   * [6. Start indexing!](#6-start-indexing)
-  * [A couple extras](#a-couple-extras)
+  * [A couple extras](#a-couple-extras) -->
 
 <!-- TOC end -->
 
@@ -37,15 +34,11 @@ The final code for this tutorial can be seen **<em>[here](https://github.com/Flo
 
 The Greeter contract is a very simple smart contract that allows user to write a greeting message on the blockchain.
 
-### [Hardhat](https://hardhat.org/)
-
-Hardhat is a development toolkit for smart contracts. In this tutorial we will be using it to deploy and interact with our smart contracts.
-
 ### [Envio](https://envio.dev)
 
 Envio is a framework for developing a backend to index and aggregate blockchain data into a graphQL query-able database. 
 
-## Pre-requisites
+## Prerequisites
 
 ### Environment tooling
 
@@ -60,112 +53,79 @@ npm i -g envio
 
 ## Step by step instructions
 
-First we will create the project folders, then initialize the indexer, then run our docker containers for local development, then clone the contracts repository, then deploy the contracts and finally start indexing!
+### Initialize the project 
 
-### 1. Create the project folders
+Initialize the project using the Greeter template.
 
-```bash
-mkdir envio-greeter-tutorial
-```
-```bash
-cd envio-greeter-tutorial
-```
-```bash
-mkdir envio-indexer
-```
-```bash
-cd envio-indexer
-```
-
-### 2. Initialize the indexer
-
+Run
 ```bash
 envio init
 ```
-Select based on the prompts
+
+Choose `Greeter` when prompted to choose template.
+
 ```bash
-> Greeter
-> Javascript
+? Which template would you like to use?
+  "Blank"
+> "Greeter"
+  "Erc20"
+[↑↓ to move, enter to select, type to filter]
 ```
 
-### 3. Run our docker containers for local development
+Then choose a language of your choice for the event handlers.
+
+```bash
+? Which language would you like to use?
+> "Javascript"
+  "Typescript"
+  "Rescript"
+[↑↓ to move, enter to select, type to filter]
+```
+
+### Set up the local docker environment
 
 > Dev note: 📢 make sure you have docker open
 
+The following commands will start the docker and create databases for indexed data.
+
+Run
 ```bash
-docker-compose up -d
+envio local docker up
+envio local db-migrate setup
 ```
 
-> Dev note: 📢 run `docker-compose down -v` if you have stale containers running already
+### Generate the indexing files
 
-### 4. Clone the contracts repository
+After selecting the template and the language, the setup files will be ready to generate the indexing files.
 
-First lets move back to the root of our project directory
+Run
 ```bash
-cd ..
+envio codegen
 ```
 
+### Start the indexer
+
+Once the setup and indexing files are in place, you are ready to run the indexer.
+
+Run
 ```bash
-git clone https://github.com/Float-Capital/hardhat-template.git
-```
-```bash
-cd hardhat-template
+envio start
 ```
 
-### 5. Deploy the contracts
+The indexer will then start indexing the contract specified in the `config.yaml` file from the `start_block` specified.
 
-```bash 
-pnpm i
-```
-```bash
-cp .env.example .env
-```
-```bash
-pnpm hardhat deploy
-```
-```bash
-pnpm hardhat task:setGreeting --account "1" --greeting "Hola"
-```
-```bash
-pnpm hardhat task:setGreeting --account "2" --greeting "gm"
-```
+### Write to contract on Polygonscan
 
-> Dev note: 📢 run `rm -r -f deployments` to delete prior deployment data if you are re-deploying the contracts at a later point.
+Once the indexer is running, you can call functions on the Greeter contract that is deployed on Polygon.
 
-> Dev note: 📢 Check that the address of the deployment aligns with the address of smart contract in the `config.yaml` file, and if not, make sure they are the same.
+Navigate to the contract on [Polygonscan](https://polygonscan.com/address/0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c#writeContract) and call `setGreeting` function.
 
-### 6. Start indexing!
+### View the indexed results
 
-First lets get back to the indexer directory
-```bash
-cd ../envio-indexer
-```
- 
-`codegen` will auto-generate all the indexing files, based on the setup files (config.yaml, schema.graphql, EventHandler.js)
-```bash
-envio codegen 
-```
-`start` will run the indexer and index events based on the rules set in the src/EventHandler.js file 
-```bash
-pnpm start 
-```
+You can view the indexed results on a local Hasura server.
 
-> All indexing files are written in Rescript, and they **do not** need to be modified to run the indexer.
-
-### A couple extras
-
-Register the tables with hasura and open the dashboard to view the data
-```bash
-./generated/register_tables_with_hasura.sh
-```
 ```bash
 open http://localhost:8080
 ```
 
-The hasura admin-secret is 'testing' and the tables can be viewed in the 'data' tab or queried from the playground
-
-
-You can run additional tasks from the `hardhat-template` directory to see the indexer index live events
-```bash
-pnpm hardhat task:setGreeting --account "2" --greeting "realtime indexing"
-```
+The hasura admin-secret is `testing` and the tables can be viewed in the `data` tab or queried from the playground
