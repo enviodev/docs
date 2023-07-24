@@ -2,8 +2,24 @@
 module.exports = {
   someSidebar: [
     "overview",
-    "installation",
-    "quickstart",
+    {
+      type: "category",
+      label: "Getting Started",
+      items: [
+        {
+          type: "doc",
+          id: "installation",
+        },
+        {
+          type: "doc",
+          id: "quickstart",
+        },
+        {
+          type: "doc",
+          id: "greeter-hardhat-tutorial",
+        },
+      ],
+    },
     {
       type: "category",
       label: "Guides",
@@ -28,13 +44,15 @@ module.exports = {
           type: "doc",
           id: "cli-commands",
         },
+      ],
+    },
+    {
+      type: "category",
+      label: "Advanced",
+      items: [
         {
           type: "doc",
-          id: "logging",
-        },
-        {
-          type: "doc",
-          id: "greeter-hardhat-tutorial",
+          id: "generated-files",
         },
         {
           type: "doc",
@@ -73,10 +91,10 @@ module.exports = {
         //   type: "doc",
         //   id: "faqs",
         // },
-        // {
-        //   type: "doc",
-        //   id: "logging",
-        // },
+        {
+          type: "doc",
+          id: "logging",
+        },
         {
           type: "doc",
           id: "common-issues",
