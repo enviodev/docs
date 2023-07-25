@@ -16,7 +16,7 @@ module.exports = {
         },
         {
           type: "doc",
-          id: "greeter-hardhat-tutorial",
+          id: "greeter-tutorial",
         },
       ],
     },
