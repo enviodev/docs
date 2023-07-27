@@ -30,7 +30,6 @@ Sample from config file from SimpleBank scenario:
 
 ```yaml
 name: simplebank
-version: 0.0.0
 description: Simple Bank contract
 networks:
   - id: 1337
@@ -66,7 +65,7 @@ networks:
 
 **Field Descriptions**
 
-- `version` - Version of the config schema used by the indexer
+- `name` - Name of the project
 - `description` - Description of the project
 - `networks` - Configuration of the blockchain networks that the project is deployed on
   - `id` - Chain identifier of the network

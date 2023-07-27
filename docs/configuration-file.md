@@ -12,7 +12,6 @@ The `config.yaml` outlines the specifications for the indexer including details 
 ## Field Descriptions
 
 - `name` - Name of the project
-- `version` - Version of the config used by the indexer
 - `description` - Description of the project
 - `networks` - Configuration of the blockchain networks that the project is deployed on
   - `id` - Chain identifier of the network
@@ -34,7 +33,6 @@ The `config.yaml` outlines the specifications for the indexer including details 
 
 ```yaml
 name: greeterrescript
-version: 0.0.0
 description: Greeter indexer
 networks:
   - id: 1337
