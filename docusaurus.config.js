@@ -72,11 +72,11 @@ const config = {
             label: "Blog",
             position: "left",
           },
-          {
-            href: "https://github.com/Float-Capital/envio",
-            label: "GitHub",
-            position: "right",
-          },
+          // {
+          //   href: "https://github.com/Float-Capital/envio",
+          //   label: "GitHub",
+          //   position: "right",
+          // },
         ],
       },
       algolia: {
@@ -120,10 +120,10 @@ const config = {
                 label: "Blog",
                 to: "blog",
               },
-              {
-                label: "GitHub",
-                href: "https://github.com/envio-dev",
-              },
+              // {
+              //   label: "GitHub",
+              //   href: "https://github.com/Float-Capital/envio",
+              // },
             ],
           },
         ],
