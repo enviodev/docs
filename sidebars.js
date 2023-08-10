@@ -42,6 +42,10 @@ module.exports = {
         },
         {
           type: "doc",
+          id: "subgraph-migration",
+        },
+        {
+          type: "doc",
           id: "cli-commands",
         },
       ],
