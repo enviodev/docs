@@ -42,6 +42,10 @@ module.exports = {
         },
         {
           type: "doc",
+          id: "subgraph-migration",
+        },
+        {
+          type: "doc",
           id: "cli-commands",
         },
       ],
@@ -53,6 +57,10 @@ module.exports = {
         {
           type: "doc",
           id: "generated-files",
+        },
+        {
+          type: "doc",
+          id: "sync-config",
         },
         {
           type: "doc",

@@ -19,6 +19,27 @@ Follow the installation steps outlined [<ins>here</ins>](./installation).
 envio init
 ```
 
+Name your indexer 
+
+```bash
+? Name your indexer:
+```
+
+Choose the directory where you would like to setup your project (default is the current directory)
+```bash
+? Set the directory:  (.) .
+```
+
+Select to start from a template
+
+```bash
+? Would you like to start from a template or migrate from a subgraph?
+> "Template"
+  "SubgraphMigration"
+[↑↓ to move, enter to select, type to filter]
+
+```
+
 Then choose a template out of the possible options
 
 ```bash
@@ -49,25 +70,13 @@ This step can be skipped if you want to continue building an indexer with the te
 - How to specify the [<ins>config</ins>](./configuration-file) file.
 - How to specify the [<ins>schema</ins>](./schema) file.
 
-## Generate code for your indexer
-
-Once you have specified the config and schema files, you are ready to generate the files required for indexing.
-
-You can run:
-
-```bash
-envio codegen
-```
-
 ## Write the event handlers for your project
 
 Once the indexing files have been generated, you are ready to write the event handlers for your project.
 
 Click [<ins>here</ins>](./event-handlers) for a guide on how to define your event handlers.
 
-## Run the indexer locally
-
-Install the relevant packages 
+## Run the indexer locally 
 
 Run the indexer
 
