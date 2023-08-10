@@ -4,9 +4,7 @@ title: Envio CLI
 sidebar_label: Envio CLI
 slug: /cli-commands
 ---
-
-
-# Command-Line Help for Envio
+# Command-Line Help for `envio`
 
 This document contains the help content for the `envio` command-line program.
 
@@ -14,15 +12,10 @@ This document contains the help content for the `envio` command-line program.
 
 * [`envio`↴](#envio)
 * [`envio init`↴](#envio-init)
+* [`envio dev`↴](#envio-dev)
+* [`envio dev restart`↴](#envio-dev-restart)
+* [`envio dev stop`↴](#envio-dev-stop)
 * [`envio codegen`↴](#envio-codegen)
-* [`envio local`↴](#envio-local)
-* [`envio local docker`↴](#envio-local-docker)
-* [`envio local docker up`↴](#envio-local-docker-up)
-* [`envio local docker down`↴](#envio-local-docker-down)
-* [`envio local db-migrate`↴](#envio-local-db-migrate)
-* [`envio local db-migrate up`↴](#envio-local-db-migrate-up)
-* [`envio local db-migrate down`↴](#envio-local-db-migrate-down)
-* [`envio local db-migrate setup`↴](#envio-local-db-migrate-setup)
 * [`envio start`↴](#envio-start)
 
 ## `envio`
@@ -32,8 +25,8 @@ This document contains the help content for the `envio` command-line program.
 ###### **Subcommands:**
 
 * `init` — Initialize a project with a template
+* `dev` — Development commands for starting, stopping, and restarting the local environment
 * `codegen` — Generate code from a config.yaml & schema.graphql file
-* `local` — Prepare local environment for envio testing
 * `start` — Start the indexer
 
 
@@ -47,16 +40,45 @@ Initialize a project with a template
 ###### **Options:**
 
 * `-d`, `--directory <DIRECTORY>` — The directory of the project
-
-  Default value: `./`
+* `-n`, `--name <NAME>`
 * `-t`, `--template <TEMPLATE>` — The file in the project containing config
 
   Possible values: `blank`, `greeter`, `erc20`
 
+* `-s`, `--subgraph-migration <SUBGRAPH_MIGRATION>` — Subgraph ID to start a migration from
 * `-l`, `--language <LANGUAGE>`
 
   Possible values: `javascript`, `typescript`, `rescript`
 
+
+
+
+## `envio dev`
+
+Development commands for starting, stopping, and restarting the local environment
+
+**Usage:** `envio dev [COMMAND]`
+
+###### **Subcommands:**
+
+* `restart` — Restart and resync the local dev environment from scratch
+* `stop` — Delete the database and stop all processes
+
+
+
+## `envio dev restart`
+
+Restart and resync the local dev environment from scratch
+
+**Usage:** `envio dev restart`
+
+
+
+## `envio dev stop`
+
+Delete the database and stop all processes
+
+**Usage:** `envio dev stop`
 
 
 
@@ -70,93 +92,13 @@ Generate code from a config.yaml & schema.graphql file
 
 * `-d`, `--directory <DIRECTORY>` — The directory of the project
 
-  Default value: `./`
+  Default value: `.`
 * `-o`, `--output-directory <OUTPUT_DIRECTORY>` — The directory within the project that generated code should output to
 
   Default value: `generated/`
 * `-c`, `--config <CONFIG>` — The file in the project containing config
 
   Default value: `config.yaml`
-
-
-
-## `envio local`
-
-Prepare local environment for envio testing
-
-**Usage:** `envio local <COMMAND>`
-
-###### **Subcommands:**
-
-* `docker` — Local Envio and ganache environment commands
-* `db-migrate` — Local Envio database commands
-
-
-
-## `envio local docker`
-
-Local Envio and ganache environment commands
-
-**Usage:** `envio local docker <COMMAND>`
-
-###### **Subcommands:**
-
-* `up` — Run docker compose up -d on generated/docker-compose.yaml
-* `down` — Run docker compose down -v on generated/docker-compose.yaml
-
-
-
-## `envio local docker up`
-
-Run docker compose up -d on generated/docker-compose.yaml
-
-**Usage:** `envio local docker up`
-
-
-
-## `envio local docker down`
-
-Run docker compose down -v on generated/docker-compose.yaml
-
-**Usage:** `envio local docker down`
-
-
-
-## `envio local db-migrate`
-
-Local Envio database commands
-
-**Usage:** `envio local db-migrate <COMMAND>`
-
-###### **Subcommands:**
-
-* `up` — Migrate latest schema to database
-* `down` — Drop database schema
-* `setup` — Setup database by dropping schema and then running migrations
-
-
-
-## `envio local db-migrate up`
-
-Migrate latest schema to database
-
-**Usage:** `envio local db-migrate up`
-
-
-
-## `envio local db-migrate down`
-
-Drop database schema
-
-**Usage:** `envio local db-migrate down`
-
-
-
-## `envio local db-migrate setup`
-
-Setup database by dropping schema and then running migrations
-
-**Usage:** `envio local db-migrate setup`
 
 
 
@@ -173,8 +115,6 @@ Start the indexer
   Default value: `false`
 * `-d`, `--directory <DIRECTORY>` — The directory of the project
 
-  Default value: `./`
+  Default value: `.`
 
 
-
-<hr/>

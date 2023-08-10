@@ -10,7 +10,7 @@ slug: /common-issues
 # Common issues
 
 ## Postgres running locally
-If Postgres is running locally, then make the following change to the `docker-compose.yaml` file
+If Postgres is running locally, then make the following change to the `docker-compose.yaml` file inside the generated folder 
 ```yaml
 ports:
   - "${PG_PORT:-5433}:5432"
@@ -19,7 +19,7 @@ ports:
 Then run 
 ```
 PG_PORT:5433 envio codegen
-PG_PORT:5433 envio start
+PG_PORT:5433 envio dev
 ```
 
 

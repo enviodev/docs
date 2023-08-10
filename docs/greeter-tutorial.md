@@ -62,6 +62,27 @@ Run
 envio init
 ```
 
+Name your indexer 
+
+```bash
+? Name your indexer:
+```
+
+Choose the directory where you would like to setup your project (default is the current directory)
+```bash
+? Set the directory:  (.) .
+```
+
+Select to start from a template
+
+```bash
+? Would you like to start from a template or migrate from a subgraph?
+> "Template"
+  "SubgraphMigration"
+[↑↓ to move, enter to select, type to filter]
+
+```
+
 Choose `Greeter` when prompted to choose template.
 
 ```bash
@@ -82,34 +103,15 @@ Then choose a language of your choice for the event handlers.
 [↑↓ to move, enter to select, type to filter]
 ```
 
-### Set up the local docker environment
+### Start the indexer
 
 > Dev note: 📢 make sure you have docker open
 
-The following commands will start the docker and create databases for indexed data.
+The following commands will start the docker and create databases for indexed data, make sure to re-run `dev` if you make changes to the files
 
 Run
 ```bash
-envio local docker up
-envio local db-migrate setup
-```
-
-### Generate the indexing files
-
-After selecting the template and the language, the setup files will be ready to generate the indexing files.
-
-Run
-```bash
-envio codegen
-```
-
-### Start the indexer
-
-Once the setup and indexing files are in place, you are ready to run the indexer.
-
-Run
-```bash
-envio start
+envio dev
 ```
 
 The indexer will then start indexing the contract specified in the `config.yaml` file from the `start_block` specified.

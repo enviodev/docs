@@ -67,20 +67,12 @@ Click [<ins>here</ins>](./event-handlers) for a guide on how to define your even
 
 ## Run the indexer locally
 
-Install the relevant packages
-
-
-Run Docker for local environments and set up the database
-```bash
-envio local docker up
-envio local db-migrate setup
-
-```
+Install the relevant packages 
 
 Run the indexer
 
 ```bash
-envio start
+envio dev
 ```
 
 ## Open the Hasura dashboard
