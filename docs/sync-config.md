@@ -1,20 +1,22 @@
 ---
 id: sync-config
-title: RPC Sync Config
-sidebar_label: RPC Sync Config
+title: RPC Sync Configuration
+sidebar_label: RPC Sync Configuration
 slug: /sync-config
 ---
 
-# RPC Sync Config
+# RPC Sync Configuration
 
 For syncing of events to be indexed, users are required to use RPC endpoints to retrieve events from each different chain.
 
-Sync configuration per RPC endpoint is set to default values, however users can also configure their own sync behaviour for each RPC endpoint used for additional control.
+RPC sync configuration is **optional** for the user, and if not defined, the indexer will use default values for the RPC endpoint.
+
+Users can configure their own sync behaviour for each RPC endpoint used for additional control.
 
 The following attributes can be defined for the sync config of each RPC endpoint:
 - `initial_block_interval`: Initial block interval which the indexer will use to make RPC requests
 - `backoff_multiplicative`: After an RPC error, factor to scale back the number of blocks requested at once
-- `acceleration_additive`: Without RPC errors or timeouts, how much to increase the number of blocks requested by for the next batch
+- `acceleration_additive`: Without RPC errors or timeouts, how much to increase the number of blocks requested for the next batch
 - `interval_ceiling`: Maximum block interval that is allowed for any request on the RPC
 - `backoff_millis`: After an error, how long to wait before retrying in milliseconds
 - `query_timeout_millis`: How long to wait in milliseconds before cancelling an RPC request due to timeout
