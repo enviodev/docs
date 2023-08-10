@@ -56,6 +56,10 @@ module.exports = {
         },
         {
           type: "doc",
+          id: "sync-config",
+        },
+        {
+          type: "doc",
           id: "terminology",
         },
       ],
