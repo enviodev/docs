@@ -63,7 +63,7 @@ The migration will also import schema and ABI files for the associated contracts
 
 ## Write event handlers
 
-Function names for event handlers will be generated from `envio init` and the existing event handlers file for hosted subgraph can be written in the language chosen.
+Function names for event handlers will be generated from `envio init` and the existing event handlers file for the hosted subgraph can be written in the language chosen.
 
 Migration script automatically populates the events section of the config file.
 Linking of specific events to entities needs to be done manually. This is required to indicate the entities each event is required to load and update.
@@ -72,7 +72,7 @@ Linking of specific events to entities needs to be done manually. This is requir
 
 > Dev note: 📢 make sure you have docker open
 
-The following commands will start the docker and create databases for indexed data, make sure to re-run `dev` if you make changes to the files
+The following command will start the docker and create databases for indexed data.
 
 Run
 ```bash
@@ -83,4 +83,6 @@ The indexer will then start indexing the contract specified in the `config.yaml`
 
 ## Troubleshooting
 
-The subgraph migration functionality may timeout if the fetching from IPFS gateway takes longer than the maximum time.
+The subgraph migration functionality may timeout if fetching from the IPFS gateway takes longer than the maximum time allowed. This can cause the script to fail.
+
+If you encounter this issue, it means that the automatic migration of the configuration files for the subgraph has been unsuccessful. As a workaround, you'll need to perform the migration of the configuration files for the subgraph manually. Refer to the sections above on how to set up configuration, schema and event handler files.

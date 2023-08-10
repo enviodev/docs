@@ -17,16 +17,11 @@ To get started with Envio, developers can utilize the Envio CLI, allowing for ea
 
 The rest of the documentation guides users through the simple steps of configuring and running an Envio indexer.
 
-## Disclaimer
 
-The project is not ready for production use.
+> ### Disclaimer
+> Envio is fully capable of indexing, however, it is still under active development to improve performance and stability.
+> It has not been audited for security purposes.
+> We appreciate your patience until we get there. Until then, we are happy to answer all questions in our [Discord](https://discord.gg/Q9qt8gZ2fX).
 
-Envio is fully capable of indexing, however, there are still some missing features, and we are still working on performance and stability. Because of this, we are still introducing breaking changes.
-
-It has not been audited for security purposes and should not be used in production yet.
-
-We will be updating the documentation with the completion status of each component, as well as include more contributing guidelines (design docs, architecture diagrams, repository layouts) and "good first issues".
-
-We appreciate your patience until we get there. Until then, we are happy to answer all questions in our Discord.
 
 ---
