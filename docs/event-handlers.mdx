@@ -106,7 +106,7 @@ Below is a list of raw event information that can be accessed:
 - `transactionHash`
 - `transactionIndex`
 
-Handler functions can access the loaded entities information via `context.<entityName>.<labelName>Load`.
+Handler functions can access the loaded entities information via `context.<entityName>.<labelName>()`.
 
 Handler functions can also provides the following functions per loaded entity, that can be used to interact with that entity:
 
@@ -181,19 +181,21 @@ Handlers.GreeterContract.NewGreeting.loader((~event, ~context) => {
 let { GreeterContract } = require("../generated/src/Handlers.bs.js");
 
 GreeterContract.NewGreeting.handler((event, context) => {
-  let existingGreeter = context.greeting.greetingWithChangesLoad;
+  let existingGreeter = context.greeting.greetingWithChanges();
 
   if (existingGreeter != undefined) {
     context.greeting.set({
       id: event.params.user.toString(),
       latestGreeting: event.params.greeting,
       numberOfGreetings: existingGreeter.numberOfGreetings + 1,
+      greetings: [...existingGreeter.numberOfGreetings, event.params.greeting],
     });
   } else {
     context.greeting.set({
       id: event.params.user.toString(),
       latestGreeting: event.params.greeting,
       numberOfGreetings: 1,
+      greetings: [event.params.greeting],
     });
   }
 });
@@ -216,6 +218,7 @@ GreeterContract_NewGreeting_handler(({ event, context }) => {
       id: event.params.user.toString(),
       latestGreeting: event.params.greeting,
       numberOfGreetings: currentGreeter.numberOfGreetings + 1,
+      greetings: [...existingGreeter.numberOfGreetings, event.params.greeting],
     };
 
     context.greeting.set(greetingObject);
@@ -224,6 +227,7 @@ GreeterContract_NewGreeting_handler(({ event, context }) => {
       id: event.params.user.toString(),
       latestGreeting: event.params.greeting,
       numberOfGreetings: 1,
+      greetings: [event.params.greeting],
     };
     context.greeting.set(greetingObject);
   }
@@ -245,6 +249,7 @@ Handlers.GreeterContract.NewGreeting.handler((~event, ~context) => {
         id: event.params.user->Ethers.ethAddressToString,
         latestGreeting: event.params.greeting,
         numberOfGreetings: existingGreeter.numberOfGreetings + 1,
+        greetings: existingGreeter.greetings->Belt.Array.concat([event.params.greeting]),
       }
 
       context.greeting.set(greetingObject)
@@ -255,6 +260,7 @@ Handlers.GreeterContract.NewGreeting.handler((~event, ~context) => {
       id: event.params.user->Ethers.ethAddressToString,
       latestGreeting: event.params.greeting,
       numberOfGreetings: 1,
+      greetings: [event.params.greeting],
     }
 
     context.greeting.set(greetingObject)
