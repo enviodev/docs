@@ -39,7 +39,7 @@ As a developer, you can define which blockchain data is being indexed and how it
 Here’s an example of a config.yaml file for indexing a live [Greeter smart contract example](https://docs.envio.dev/docs/greeter-tutorial) deployed on Polygon. 
 
 
-``` yaml
+```yaml
 name: Greeter
 description: Greeter indexer
 networks:
