@@ -56,13 +56,9 @@ networks:
           - event: "NewGreeting"
             requiredEntities:
               - name: "Greeting"
-                labels:
-                  - "greetingWithChanges"
           - event: "ClearGreeting"
             requiredEntities:
-              - name: "Greeting"
-                labels:
-                  - "greetingWithChanges"
+              - name: "Greeting"                
 ```
 
 
