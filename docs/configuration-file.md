@@ -57,6 +57,12 @@ networks:
                   - "greetingWithChanges"
 ```
 
+After you have set up your config file you can run `envio codegen` to generate the functions that you will use in your handlers.
+
+```bash
+envio codegen
+```
+
 ### Human readable ABI format
 
 In the configuration you can optionally pass the file path to the abi for a contract in the `abi_file_path` field or you can specify the specific function signature in the event field.
@@ -79,3 +85,4 @@ An example is shown below of this feature from the above example
 More information on Human Readable ABI parsing is available [here](https://docs.rs/ethers-core/latest/ethers_core/abi/struct.AbiParser.html)
 
 > Dev note: 📢 An error in the abi or the event signature will result in the events not matching and hence not reflecting in the raw_events table or propagating into the event handler logic
+

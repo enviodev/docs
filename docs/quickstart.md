@@ -72,6 +72,12 @@ This step can be skipped if you want to continue building an indexer with the te
 
 ## Write the event handlers for your project
 
+Once you have set up your config and schema file you can run `envio codegen` to generate the functions that you will use in your handlers.
+
+```bash
+envio codegen
+```
+
 Once the indexing files have been generated, you are ready to write the event handlers for your project.
 
 Click [<ins>here</ins>](./event-handlers) for a guide on how to define your event handlers.

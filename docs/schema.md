@@ -37,4 +37,10 @@ In GraphQL, scalars represent fundamental data types such as strings and numbers
 
 You can find out more on GraphQL [here](https://graphql.org/learn/).
 
+Once you have set up your config and schema file you can run `envio codegen` to generate the functions that you will use in your handlers.
+
+```bash
+envio codegen
+```
+
 ---
