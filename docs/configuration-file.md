@@ -20,11 +20,11 @@ The `config.yaml` outlines the specifications for the indexer including details 
   - `start_block` - Initial block from which the indexer will start listening for events
   - `contracts` - Configuration for each contract deployed on the network
     - `name` - User-defined contract name
-    - `abi_file_path` - File location of the contract ABI
+    - `abi_file_path` - File location of the contract ABI [Optional]
     - `address` - An array of addresses that the contract is deployed to on the network
     - `handler` - Location of the file that handles the events emitted by this contract
     - `events` - Configuration for each event emitted by this contract that the indexer will listen for
-      - `event` - Signature or name of the event (must match the name in the ABI)
+      - `event` - Event signature or name of the event (must match the name in the ABI)
       - `required_entities` - An array of entities that need to loaded and made accessible within the handler function (an empty array indicates that no entities are required)
         - `name` - The name of the required entity (must match an entity defined in `schema.graphql`)
         - `label` - A user defined label that corresponds to this entity load
@@ -57,4 +57,25 @@ networks:
                   - "greetingWithChanges"
 ```
 
----
+### Human readable ABI format
+
+In the configuration you can optionally pass the file path to the abi for a contract in the `abi_file_path` field or you can specify the specific function signature in the event field.
+
+An example is shown below of this feature from the above example
+```yaml
+        events:
+          - event: "NewGreeting(address user, string greeting)"
+            requiredEntities:
+              - name: "Greeting"
+                labels:
+                  - "greetingWithChanges"
+          - event: "ClearGreeting(address user)"
+            requiredEntities:
+              - name: "Greeting"
+                labels:
+                  - "greetingWithChanges"
+```
+
+More information on Human Readable ABI parsing is available [here](https://docs.rs/ethers-core/latest/ethers_core/abi/struct.AbiParser.html)
+
+> Dev note: 📢 An error in the abi or the event signature will result in the events not matching and hence not reflecting in the raw_events table or propagating into the event handler logic
