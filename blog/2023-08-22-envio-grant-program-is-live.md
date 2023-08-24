@@ -31,9 +31,9 @@ Here are a few example ideas you can ship using Envio:
     - Create a new file in the **[project proposal folder](https://github.com/Float-Capital/envio-grant-program/edit/main/project%20proposals/)**
     - Outline your proposal using the [template](https://github.com/Float-Capital/envio-grant-program/blob/main/project%20proposals/proposal%20template) provided as guidance
     - Create a Pull Request (PR) to merge your project proposal into the repository
-- Alternatively, you can use the [form](https://forms.gle/8rMndoELXQY4QYBu9) to submit your project proposal
-- Applications are reviewed on a case-by-case basis. The more creative, complex, or impactful the project idea, the higher the grant amount you will receive.
-- Please allow for up to 2 working days (48 hours) for your project proposal to be reviewed
+- Alternatively, you can use the [form](https://forms.gle/8rMndoELXQY4QYBu9) to submit your project proposal.
+- Applications are reviewed on a case-by-case basis. The more creative, complex, or impactful the project idea, the higher the grant amount will be.
+- Please allow for up to 2 working days (48 hours) for your project proposal to be reviewed.
 - Join our [Discord](https://discord.gg/mZHNWgNCAc) for updates and announcements on the “Build Bigger. Ship Faster” Grant Program, and introduce yourself to the team 👋
 
 ## Submissions
