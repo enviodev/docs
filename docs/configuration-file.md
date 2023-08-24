@@ -76,6 +76,6 @@ An example is shown below of this feature from the above example
                   - "greetingWithChanges"
 ```
 
-More information on Human Readable ABI parsing is available [here](https://docs.ethers.org/v5/api/utils/abi/formats/#abi-formats--human-readable-abi)
+More information on Human Readable ABI parsing is available [here](https://docs.rs/ethers-core/latest/ethers_core/abi/struct.AbiParser.html)
 
 > Dev note: 📢 An error in the abi or the event signature will result in the events not matching and hence not reflecting in the raw_events table or propagating into the event handler logic
