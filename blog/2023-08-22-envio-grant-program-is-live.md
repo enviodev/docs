@@ -26,7 +26,7 @@ Here are a few example ideas you can ship using Envio:
 
 ## How do I get involved?
 
-- Apply for the Envio “Build Bigger. Ship Faster" program by submitting a project proposal in Github or via the [form](https://forms.gle/8rMndoELXQY4QYBu9). Recommended steps:
+- Apply for the Envio “Build Bigger. Ship Faster" program by submitting a project proposal in Github by following the steps below:
     - Fork the [envio-grant-program repository](https://github.com/Float-Capital/envio-grant-program/tree/main)
     - Create a new file in the **[project proposal folder](https://github.com/Float-Capital/envio-grant-program/edit/main/project%20proposals/)**
     - Outline your proposal using the [template](https://github.com/Float-Capital/envio-grant-program/blob/main/project%20proposals/proposal%20template) provided as guidance
