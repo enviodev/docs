@@ -9,9 +9,11 @@ import clsx from "clsx";
 import { MDXProvider } from "@mdx-js/react";
 import Translate, { translate } from "@docusaurus/Translate";
 import Link from "@docusaurus/Link";
-import { usePluralForm } from "@docusaurus/theme-common";
+import { usePluralForm, PageMetadata } from "@docusaurus/theme-common";
 import MDXComponents from "@theme/MDXComponents";
-import { PageMetadata } from '@docusaurus/theme-common';
+import { useBlogPost } from "@docusaurus/theme-common/internal";
+import { BlogPostProvider } from "@docusaurus/theme-common/internal";
+
 import EditThisPage from "@theme/EditThisPage";
 import styles from "./styles.module.css"; // Very simple pluralization: probably good enough for now
 
@@ -37,11 +39,16 @@ function useReadingTimePlural() {
 }
 
 function BlogPostItem(props) {
+  console.log("BlogPostItem props: ", props);
+
   const readingTimePlural = useReadingTimePlural();
+
+  const { metadata } = useBlogPost();
+  
   const {
     children,
     frontMatter,
-    metadata,
+    // metadata,
     truncated,
     isBlogPostPage = false,
   } = props;
@@ -113,55 +120,57 @@ function BlogPostItem(props) {
 
   return (
     <>
-      <PageMetadata
-        {...{
-          keywords,
-          image,
-        }}
-      />
 
-      <article className={!isBlogPostPage ? "margin-bottom--xl" : undefined}>
+        <PageMetadata
+          {...{
+            keywords,
+            image,
+          }}
+        />
 
-        <div className="markdown">
-          <MDXProvider components={MDXComponents}>{children}</MDXProvider>
-        </div>
-        
-        {renderPostHeader()}
-        {(tags.length > 0 || truncated) && (
-          <footer
-            className={clsx("row docusaurus-mt-lg", {
-              [styles.blogPostDetailsFull]: isBlogPostPage,
-            })}
-          >
-            {tags.length > 0 && (
-              <div className="col">
-                <b>
-                  <Translate
-                    id="theme.tags.tagsListLabel"
-                    description="The label alongside a tag list"
-                  >
-                    Tags:
-                  </Translate>
-                </b>
-                {tags.map(({ label, permalink: tagPermalink }) => (
-                  <Link
-                    key={tagPermalink}
-                    className="margin-horiz--sm"
-                    to={tagPermalink}
-                  >
-                    {label}
-                  </Link>
-                ))}
-              </div>
-            )}
-            {isBlogPostPage && editUrl && (
-              <div className="col margin-top--sm">
-                <EditThisPage editUrl={editUrl} />
-              </div>
-            )}
-          </footer>
-        )}
-      </article>
+        <article className={!isBlogPostPage ? "margin-bottom--xl" : undefined}>
+
+          <div className="markdown">
+            <MDXProvider components={MDXComponents}>{children}</MDXProvider>
+          </div>
+          
+          {renderPostHeader()}
+          {(tags.length > 0 || truncated) && (
+            <footer
+              className={clsx("row docusaurus-mt-lg", {
+                [styles.blogPostDetailsFull]: isBlogPostPage,
+              })}
+            >
+              {tags.length > 0 && (
+                <div className="col">
+                  <b>
+                    <Translate
+                      id="theme.tags.tagsListLabel"
+                      description="The label alongside a tag list"
+                    >
+                      Tags:
+                    </Translate>
+                  </b>
+                  {tags.map(({ label, permalink: tagPermalink }) => (
+                    <Link
+                      key={tagPermalink}
+                      className="margin-horiz--sm"
+                      to={tagPermalink}
+                    >
+                      {label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+              {isBlogPostPage && editUrl && (
+                <div className="col margin-top--sm">
+                  <EditThisPage editUrl={editUrl} />
+                </div>
+              )}
+
+            </footer>
+          )}
+        </article>  
     </>
   );
 }
