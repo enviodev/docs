@@ -20,7 +20,7 @@ The challenge is to demonstrate how you can build something brilliant using Envi
 
 ## Wondering what to build? 👀
 
-Here are a few example use cases you can ship using Envio:
+Here are a few example use-cases you can ship using Envio:
 
 - A simple decentralized application (DApp)
 - A useful dashboard (e.g. DeFi staking opportunity dashboard, aggregating protocol fees, etc).
