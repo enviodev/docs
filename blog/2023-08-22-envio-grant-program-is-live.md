@@ -10,7 +10,7 @@ slug: /envio-grant-program-now-live
 
 # Envio launches “Build Bigger. Ship Faster” Grant Program.
 
-To commemorate the launch of our Alpha release, Envio invites all blockchain developers to apply to the **Envio "Build Bigger. Ship Faster" Grant Program**. The premise is simple yet incredibly rewarding: integrate a useful or interesting use-case with Envio, share your invaluable feedback, and receive from a grant pool of **$10,000 USDC**.
+To commemorate the launch of our Alpha release, Envio invites all blockchain developers to apply to the **Envio "Build Bigger. Ship Faster" Grant Program**. The premise is simple yet incredibly rewarding: integrate a useful or an interesting use-case with Envio and share your invaluable feedback to receive from a grant pool of **$10,000 USDC**.
 
 As any seasoned blockchain developer knows, dealing with disorganized, slow-to-retrieve data stored on the  blockchain can be a daunting task. These difficulties pose significant obstacles for developers, diverting their attention towards infrastructure and maintenance tasks instead of focusing on the core objective of building brilliant dApps. 
 
@@ -35,7 +35,7 @@ Here are a few example use-cases you can ship using Envio:
     - Create a new file in the **[project proposal folder](https://github.com/Float-Capital/envio-grant-program/edit/main/project%20proposals/)**
     - Outline your proposal using the [template](https://github.com/Float-Capital/envio-grant-program/blob/main/project%20proposals/proposal%20template) provided as guidance
     - Create a Pull Request (PR) to merge your project proposal into the repository
-- The more creative, complex, or impactful the project idea, the higher the grant amount will be.
+- The more creative, complex or impactful the project idea, the higher the grant amount will be.
 - Applications are reviewed on a case-by-case basis. Please allow for up to 2 working days (48 hours) for your project proposal to be reviewed and for us to get into touch with you.
 - Join our [Discord](https://discord.gg/mZHNWgNCAc) for updates and announcements on the “Build Bigger. Ship Faster” Grant Program, and introduce yourself to the team 👋
 
