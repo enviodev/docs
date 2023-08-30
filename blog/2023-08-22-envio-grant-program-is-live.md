@@ -10,7 +10,7 @@ slug: /envio-grant-program-now-live
 
 # Envio launches “Build Bigger. Ship Faster” Grant Program.
 
-To commemorate the launch of our Alpha release, Envio invites all blockchain developers to apply to the **Envio "Build Bigger. Ship Faster" Grant Program**. The premise is simple yet incredibly rewarding: integrate a useful or interesting use case with Envio, share your invaluable feedback, and receive up to **$10,000 USDC**.
+To commemorate the launch of our Alpha release, Envio invites all blockchain developers to apply to the **Envio "Build Bigger. Ship Faster" Grant Program**. The premise is simple yet incredibly rewarding: integrate a useful or interesting use-case with Envio, share your invaluable feedback, and receive from a grant pool of **$10,000 USDC**.
 
 As any seasoned blockchain developer knows, dealing with disorganized, slow-to-retrieve data stored on the  blockchain can be a daunting task. These difficulties pose significant obstacles for developers, diverting their attention towards infrastructure and maintenance tasks instead of focusing on the core objective of building brilliant dApps. 
 
