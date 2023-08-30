@@ -19,9 +19,10 @@ The rest of the documentation guides users through the simple steps of configuri
 
 
 > ### Disclaimer
-> Envio is fully capable of indexing, however, it is still under active development to improve performance and stability.
-> It has not been audited for security purposes.
-> We appreciate your patience until we get there. Until then, we are happy to answer all questions in our [Discord](https://discord.gg/Q9qt8gZ2fX).
+> - Envio is fully capable of indexing, however, it is still under active development to improve performance and stability.
+> - It has not been audited for security purposes.
+> - Envio currently supports Linux and MacOS and not Windows (only Windows Subsystem for Linux is supported).
+> - We appreciate your patience until we get there. Until then, we are happy to answer all questions in our [Discord](https://discord.gg/Q9qt8gZ2fX).
 
 
 ---
