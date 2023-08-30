@@ -84,6 +84,8 @@ Click [<ins>here</ins>](./event-handlers) for a guide on how to define your even
 
 ## Run the indexer locally 
 
+Before running the Envio CLI command to start the indexer locally, please make sure you have [Docker](https://www.docker.com/products/docker-desktop/) running.
+
 Run the indexer
 
 ```bash
