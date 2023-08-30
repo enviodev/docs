@@ -22,7 +22,7 @@ The challenge is to demonstrate how you can build something brilliant using Envi
 
 Here are a few example use-cases you can ship using Envio:
 
-- A simple decentralized application (DApp)
+- A simple decentralized application (DApp).
 - A useful dashboard (e.g. DeFi staking opportunity dashboard, aggregating protocol fees, etc).
 - Upgrade or migrate an existing use case subgraph to battle-test Envio's capabilities (e.g. GMX v2, Uniswap V3 subgraph).
 - An indexer template for popular OpenZeppelin Standards other than ERC20, ERC721, ERC1155 (e.g. Governance contracts).
