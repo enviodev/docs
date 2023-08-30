@@ -14,7 +14,7 @@ To commemorate the launch of our Alpha release, Envio invites all blockchain dev
 
 As any seasoned blockchain developer knows, dealing with disorganized, slow-to-retrieve data stored on the  blockchain can be a daunting task. These difficulties pose significant obstacles for developers, diverting their attention towards infrastructure and maintenance tasks instead of focusing on the core objective of building brilliant dApps. 
 
-This is where Envio comes in. With its developer-friendly indexing solution, Envio makes receiving, transforming, loading on-chain data a breeze. Whether you're launching a multi-chain NFT marketplace, starting a DAO, diving into GameFi, or pioneering the next big P2E project, data indexers lik Envio serve as an essential building block tailored to your application’s unique data needs.
+This is where Envio comes in. With its developer-friendly indexing solution, Envio makes receiving, transforming, loading on-chain data a breeze. Whether you're launching a multi-chain NFT marketplace, starting a DAO, diving into GameFi, or pioneering the next big P2E project, data indexers like Envio serve as an essential building block tailored to your application’s unique data needs.
 
 The challenge is to demonstrate how you can build something brilliant using Envio’s customizable, developer-friendly indexing solution.
 
