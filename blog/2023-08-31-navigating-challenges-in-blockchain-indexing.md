@@ -28,7 +28,7 @@ Teams that deploy their dApps to multiple chains necessarily desire a quick and 
 
 ### Development hurdles
 
-Developing indexers often involves manual coding, which can lead to errors and slowed productivity. Blockchain developers require infrastructure tools that automate code generation, boosting efficiency. There is a huge desire for a solution that not only provides automatic code generation but simplifies the overall development lifecycle.
+Developing and hosting your own indexing infrastructure can be a monumental task, requiring specialised skills, demanding up a lot time and development resources, and can also result in unprecedented IT costs and ongoing maintenance. Blockchain developers require cost-effective infrastructure tools that abstract away the complexities of managing hosted infrastructure and automate a lot the set up process to simplify the overall development lifecycle.
 
 ### Troubleshooting
 
