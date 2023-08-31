@@ -90,4 +90,4 @@ More information on Human Readable ABI parsing is available [here](https://docs.
 ### Additional guidelines
 - Contract name field (`Greeter` in the example above) should contain a single word, as it is used to create a namespace for functions in the indexer.
 - Address field should contain the address of the proxy contract, which emits the events on the specified blockchain.
-- Should the human readable ABI format not be used, then the ABI which is referenced in config file needs to copied from the implementation contract.
+- Should the human readable ABI format not be used, then the ABI which is referenced in config file needs to be copied from the implementation contract.
