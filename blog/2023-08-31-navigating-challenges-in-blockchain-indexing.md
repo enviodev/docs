@@ -28,7 +28,7 @@ Teams that deploy their dApps to multiple chains necessarily desire a quick and 
 
 ### Development hurdles
 
-Developing and hosting your own indexing infrastructure can be a monumental task, requiring specialised skills, demanding up a lot time and development resources, and can also result in unprecedented IT costs and ongoing maintenance. Blockchain developers require cost-effective infrastructure tools that abstract away the complexities of managing hosted infrastructure and automate a lot the set up process to simplify the overall development lifecycle.
+Developing and hosting your own indexing infrastructure can be a monumental task, requiring specialised skills which takes up significant development resources. Blockchain developers require cost-effective infrastructure tools that abstract away the complexities of managing hosted infrastructure and automate much of the set up process to simplify the overall development lifecycle.
 
 ### Troubleshooting
 
