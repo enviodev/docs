@@ -68,26 +68,27 @@ envio codegen
 In the configuration you can optionally pass the file path to the abi for a contract in the `abi_file_path` field or you can specify the event signature in the event field.
 
 An example is shown below of this feature from the above example
+
 ```yaml
-        events:
-          - event: "NewGreeting(address user, string greeting)"
-            requiredEntities:
-              - name: "Greeting"
-                labels:
-                  - "greetingWithChanges"
-          - event: "ClearGreeting(address user)"
-            requiredEntities:
-              - name: "Greeting"
-                labels:
-                  - "greetingWithChanges"
+events:
+  - event: "NewGreeting(address user, string greeting)"
+    requiredEntities:
+      - name: "Greeting"
+        labels:
+          - "greetingWithChanges"
+  - event: "ClearGreeting(address user)"
+    requiredEntities:
+      - name: "Greeting"
+        labels:
+          - "greetingWithChanges"
 ```
 
 More information on Human Readable ABI parsing is available [here](https://docs.rs/ethers-core/latest/ethers_core/abi/struct.AbiParser.html)
 
 > Dev note: 📢 An error in the ABI or the event signature will result in the events not matching and hence may not reflect in the `raw_events_table` or propagate correctly into the event handler logic.
 
-
 ### Additional guidelines
+
 - Contract name field (`Greeter` in the example above) should contain a single word, as it is used to create a namespace for functions in the indexer.
 - Address field should contain the address of the proxy contract, which emits the events on the specified blockchain.
-- Should the human readable ABI format not be used, then the ABI which is referenced in config file needs to be copied from the implementation contract.
+- Should the human readable ABI format not be used, then the ABI which is referenced in config file needs to be copied from the implementation contract into the specified abi directory.
