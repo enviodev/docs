@@ -43,4 +43,9 @@ Once you have set up your config and schema file you can run `envio codegen` to 
 envio codegen
 ```
 
+## Helpful tips
+
+- Use meaningful words for entity names (i.e. `Greeting`) and implement them in capitalized `CamelCase`.
+- Use uncapitalized `camelCase` for field names (i.e. `latestGreeting` and `numberOfGreetings`) inside entities.
+
 ---
