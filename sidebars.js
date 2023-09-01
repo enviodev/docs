@@ -64,6 +64,10 @@ module.exports = {
         },
         {
           type: "doc",
+          id: "dynamic-contracts"
+        },
+        {
+          type: "doc",
           id: "terminology",
         },
       ],
