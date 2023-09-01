@@ -46,6 +46,10 @@ module.exports = {
         },
         {
           type: "doc",
+          id: "hosted-solution",
+        },
+        {
+          type: "doc",
           id: "cli-commands",
         },
       ],
