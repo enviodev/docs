@@ -1,7 +1,4 @@
-<!-- Syntax here is outdated, this doc isnt live either    -->
-
-
-<!-- ---
+---
 id: simple-bank
 title: SimpleBank
 sidebar_label: SimpleBank
@@ -50,11 +47,19 @@ networks:
           - event: "DepositMade"
             requiredEntities:
               - name: "Account"
+                labels:
+                  - "accountBalanceChanges"
               - name: "Bank"
+                labels:
+                  - "totalBalanceChanges"
           - event: "WithdrawalMade"
             requiredEntities: # if this field isn't specified it should default to include all entities
               - name: "Account"
+                labels:
+                  - "accountBalanceChanges"
               - name: "Bank"
+                labels:
+                  - "totalBalanceChanges"
 
 ```
 
@@ -76,6 +81,7 @@ networks:
       - `event` - Signature or name or of the event (must match the name in the abi)
       - `required_entities` - An array of entities that need to loaded and made accessible within the handler function (an empty array indicates that no entities are required)
         - `name` - The name of the required entity (must match an entity defined in the schema)
+        - `label` - A user defined label that corresponds to this entity load
 
 ## GraphQL Schema definition
 
@@ -216,4 +222,4 @@ Admin-secret for Hasura is `testing`
 
 Alternatively you can open the file `index.html` for a cleaner experience (no Hasura stuff). Unfortunately, Hasura is currently not configured to make the data public.
 
---- -->
+---
