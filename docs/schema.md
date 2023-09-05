@@ -43,4 +43,38 @@ Once you have set up your config and schema file you can run `envio codegen` to 
 envio codegen
 ```
 
+## Defining One-to-Many Relationships
+
+```graphql
+type Nftcollection @entity {
+  id: ID!
+  contractAddress: Bytes!
+  name: String!
+  symbol: String!
+  maxSupply: BigInt!
+  currentSupply: Int!
+  tokens: [Token!]! @derivedFrom(field: "collection")
+}
+```
+
+```graphql
+type Token @entity {
+  id: ID!
+  tokenId: BigInt!
+  collection: NftCollection!
+  owner: User!
+}
+```
+
+Assume that each `Nftcollection` can have multiple `Token` objects. This is represented by the `[Token!]` in `Nftcollection` definition, where the field's type is set to another entity type.
+
+When you create a `Token` entity, the value of the `collection` field is set to the `id` of its associated `Nftcollection` entity.
+
+Note that in the `Nftcollection` schema, the `tokens` field can't be directly accessed or modified. Fields marked with the `@derivedFrom` directive function are virtual fields and are only accessible when executing GraphQL API queries. This is commonly known as **reverse lookup**, as the relationship is established on the "many" end of the association.
+
+## Other design tips
+
+- Use meaningful words for entity names and only the first letter should be capitalized (i.e. `Greeting`).
+- Use uncapitalized `camelCase` for field names (i.e. `latestGreeting` and `numberOfGreetings`) inside entities.
+
 ---
