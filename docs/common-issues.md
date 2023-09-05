@@ -41,18 +41,21 @@ envio dev
 
 ## Postgres running locally
 
-If Postgres is running locally, then make the following change to the `docker-compose.yaml` file inside the generated folder
+If Postgres is running locally on port 5432, then you can run the whole system with a different postgres port by setting the `PG_PORT` environment variable. For example, if you want to run Postgres on port 5433, then set `PG_PORT` to 5433.
 
-```yaml
-ports:
-  - "${PG_PORT:-5433}:5432"
-```
-
-Then run
+In practice this could look like this:
 
 ```
-PG_PORT:5433 envio codegen
-PG_PORT:5433 envio dev
+PG_PORT=5433 envio codegen
+PG_PORT=5433 envio dev
+```
+
+or 
+
+```
+export PG_PORT=5433
+envio codegen
+envio dev
 ```
 
 ## Smart contract updated after the initial codegen
