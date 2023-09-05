@@ -72,6 +72,10 @@ module.exports = {
         },
         {
           type: "doc",
+          id: "persisted_files"
+        },
+        {
+          type: "doc",
           id: "terminology",
         },
       ],

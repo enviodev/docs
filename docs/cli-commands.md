@@ -14,8 +14,7 @@ This document contains the help content for the `envio` command-line program.
 - [`envio`↴](#envio)
 - [`envio init`↴](#envio-init)
 - [`envio dev`↴](#envio-dev)
-- [`envio dev restart`↴](#envio-dev-restart)
-- [`envio dev stop`↴](#envio-dev-stop)
+- [`envio stop`↴](#envio-stop)
 - [`envio codegen`↴](#envio-codegen)
 - [`envio start`↴](#envio-start)
 
@@ -27,6 +26,7 @@ This document contains the help content for the `envio` command-line program.
 
 - `init` — Initialize a project with a template
 - `dev` — Development commands for starting, stopping, and restarting the local environment
+- `stop` — Stop the local environment - delete the database and stop all processes (including Docker) for the current directory
 - `codegen` — Generate code from a config.yaml & schema.graphql file
 - `start` — Start the indexer
 
@@ -53,24 +53,13 @@ Initialize a project with a template
 
 Development commands for starting, stopping, and restarting the local environment
 
-**Usage:** `envio dev [COMMAND]`
+**Usage:** `envio dev`
 
-###### **Subcommands:**
+## `envio stop`
 
-- `restart` — Restart and resync the local dev environment from scratch
-- `stop` — Delete the database and stop all processes
+Stop the local environment - delete the database and stop all processes (including Docker) for the current directory
 
-## `envio dev restart`
-
-Restart and resync the local dev environment from scratch
-
-**Usage:** `envio dev restart`
-
-## `envio dev stop`
-
-Delete the database and stop all processes
-
-**Usage:** `envio dev stop`
+**Usage:** `envio stop`
 
 ## `envio codegen`
 
