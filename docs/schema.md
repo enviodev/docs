@@ -46,7 +46,7 @@ envio codegen
 ## Defining One-to-Many Relationships
 
 ```graphql
-type NftCollection @entity {
+type Nftcollection @entity {
   id: ID!
   contractAddress: Bytes!
   name: String!
@@ -66,11 +66,11 @@ type Token @entity {
 }
 ```
 
-Assume that each `NftCollection` can have multiple `Token` objects. This is represented by the `[Token!]` in `NftCollection` definition, where the field's type is set to another entity type.
+Assume that each `Nftcollection` can have multiple `Token` objects. This is represented by the `[Token!]` in `Nftcollection` definition, where the field's type is set to another entity type.
 
-When you create a `Token` entity, the value of the `collection` field is set to the `id` of its associated `NftCollection` entity.
+When you create a `Token` entity, the value of the `collection` field is set to the `id` of its associated `Nftcollection` entity.
 
-Note that in the `NftCollection` schema, the `tokens` field can't be directly accessed or modified. Fields marked with the `@derivedFrom` directive function are virtual fields and are only accessible when executing GraphQL API queries. This is commonly known as **reverse lookup**, as the relationship is established on the "many" end of the association.
+Note that in the `Nftcollection` schema, the `tokens` field can't be directly accessed or modified. Fields marked with the `@derivedFrom` directive function are virtual fields and are only accessible when executing GraphQL API queries. This is commonly known as **reverse lookup**, as the relationship is established on the "many" end of the association.
 
 ## Other design tips
 
