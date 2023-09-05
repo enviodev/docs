@@ -27,7 +27,6 @@ The `config.yaml` outlines the specifications for the indexer including details 
       - `event` - Event signature or name of the event (must match the name in the ABI)
       - `required_entities` - An array of entities that need to loaded and made accessible within the handler function (an empty array indicates that no entities are required)
         - `name` - The name of the required entity (must match an entity defined in `schema.graphql`)
-        - `label` - A user defined label that corresponds to this entity load
 
 ## Example `config.yaml` from Greeter template:
 
@@ -48,13 +47,9 @@ networks:
           - event: "NewGreeting"
             requiredEntities:
               - name: "Greeting"
-                labels:
-                  - "greetingWithChanges"
           - event: "ClearGreeting"
             requiredEntities:
               - name: "Greeting"
-                labels:
-                  - "greetingWithChanges"
 ```
 
 After you have set up your config file you can run `envio codegen` to generate the functions that you will use in your handlers.
