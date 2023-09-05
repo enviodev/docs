@@ -53,7 +53,7 @@ Loader functions are called via
 
 Loader functions are used to load the specific entities (defined in the `schema.graphql`) that should be modified by the event.
 
-Entities with specific IDs can be loaded via `context.<entityName>.Load(<id>)`.
+Entities with specific IDs can be loaded via `context.<entityName>.<labelName>Load(<id>)`.
 
 A single event can be used to modify single or multiple entities.
 
@@ -106,7 +106,7 @@ Below is a list of raw event information that can be accessed:
 - `transactionHash`
 - `transactionIndex`
 
-Handler functions can access the loaded entities information via `context.<entityName>.get(<id>)`.
+Handler functions can access the loaded entities information via `context.<entityName>.<labelName>()`.
 
 Handler functions can also provides the following functions per loaded entity, that can be used to interact with that entity:
 
@@ -124,6 +124,8 @@ events:
   - name: "NewGreeting"
     requiredEntities:
       - name: "Greeting"
+        labels:
+          - "greetingWithChanges"
 ```
 
 ### Example of a Loader function for the `NewGreeting` event:
@@ -135,7 +137,7 @@ events:
 let { GreeterContract } = require("../generated/src/Handlers.bs.js");
 
 GreeterContract.NewGreeting.loader((event, context) => {
-  context.greeting.load(event.params.user.toString());
+  context.greeting.greetingWithChangesLoad(event.params.user.toString());
 });
 ```
 
@@ -148,7 +150,7 @@ import { GreeterContract_NewGreeting_loader } from "../generated/src/Handlers.ge
 import { greetingEntity } from "../generated/src/Types.gen";
 
 GreeterContract_NewGreeting_loader(({ event, context }) => {
-  context.greeting.load(event.params.user.toString());
+  context.greeting.greetingWithChangesLoad(event.params.user.toString());
 });
 ```
 
@@ -159,18 +161,18 @@ GreeterContract_NewGreeting_loader(({ event, context }) => {
 open Types
 
 Handlers.GreeterContract.NewGreeting.loader((~event, ~context) => {
-  context.greeting.load(event.params.user->Ethers.ethAddressToString)
+  context.greeting.greetingWithChangesLoad(event.params.user->Ethers.ethAddressToString)
 })
 ```
 
   </TabItem>
 </Tabs>
 
-- Within the function that is being registered, the user must define the criteria for loading the greeting entity.
+- Within the function that is being registered, the user must define the criteria for loading the `greetingWithChanges` entity which corresponds to the label defined in the config.
 - This is made available to the user through the load entity context defined as `contextUpdator`.
-- In the case of the above example, we load a `Greeting` entity that corresponds to the id passed from the event.
+- In the case of the above example, the `greetingWithChanges` loads a `Greeting` entity that corresponds to the id received from the event.
 
-### Example of registering a Handler function for the `NewGreeting` event:
+### Example of registering a Handler function for the `NewGreeting` event and using the label `greetingWithChanges`:
 
 <Tabs>
   <TabItem value="javascript" label="Javascript">
@@ -179,7 +181,7 @@ Handlers.GreeterContract.NewGreeting.loader((~event, ~context) => {
 let { GreeterContract } = require("../generated/src/Handlers.bs.js");
 
 GreeterContract.NewGreeting.handler((event, context) => {
-  let existingGreeter = context.greeting.get(event.params.user.toString());
+  let existingGreeter = context.greeting.greetingWithChanges();
 
   if (existingGreeter != undefined) {
     context.greeting.set({
@@ -209,7 +211,7 @@ import { greetingEntity } from "../generated/src/Types.gen";
 
 GreeterContract_NewGreeting_handler(({ event, context }) => {
 (({ event, context }) => {
-  let currentGreeter = context.greeting.get(event.params.user.toString());
+  let currentGreeter = context.greeting.greetingWithChanges();
 
   if (currentGreeter != null) {
     let greetingObject: greetingEntity = {
@@ -239,7 +241,7 @@ GreeterContract_NewGreeting_handler(({ event, context }) => {
 open Types
 
 Handlers.GreeterContract.NewGreeting.handler((~event, ~context) => {
-  let currentGreeterOpt = context.greeting.get(event.params.user->Ethers.ethAddressToString)
+  let currentGreeterOpt = context.greeting.greetingWithChanges()
 
   switch currentGreeterOpt {
   | Some(existingGreeter) => {
@@ -269,7 +271,7 @@ Handlers.GreeterContract.NewGreeting.handler((~event, ~context) => {
   </TabItem>
 </Tabs>
 
-- Once the user has defined their `loader` function, they are then able to retrieve the loaded entity information.
+- Once the user has defined their `loader` function, they are then able to retrieve the loaded entity information via the labels defined in the `config.yaml` file.
 - In the above example, if a `Greeting` entity is found matching the load criteria in the `loader` function, it will be available via `greetingWithChanges`.
 - This is made available to the user through the handler context defined simply as `context`.
 - This `context` is the gateway by which the user can interact with the indexer and the underlying database.
