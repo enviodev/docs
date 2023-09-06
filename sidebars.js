@@ -64,15 +64,19 @@ module.exports = {
         },
         {
           type: "doc",
+          id: "hypersync",
+        },
+        {
+          type: "doc",
           id: "sync-config",
         },
         {
           type: "doc",
-          id: "dynamic-contracts"
+          id: "dynamic-contracts",
         },
         {
           type: "doc",
-          id: "persisted_files"
+          id: "persisted_files",
         },
         {
           type: "doc",
