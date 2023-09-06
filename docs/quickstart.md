@@ -19,13 +19,14 @@ Follow the installation steps outlined [<ins>here</ins>](./installation).
 envio init
 ```
 
-Name your indexer 
+Name your indexer
 
 ```bash
 ? Name your indexer:
 ```
 
 Choose the directory where you would like to setup your project (default is the current directory)
+
 ```bash
 ? Set the directory:  (.) .
 ```
@@ -64,13 +65,16 @@ This will create the config, schema and event handlers files according to the te
 
 ## Specify the config and schema files according to your project
 
+> This step can be skipped if you want to continue building an indexer for the template chosen in the previous step.
+
 Now you can configure the files to your configuration.
-This step can be skipped if you want to continue building an indexer with the template chosen in the previous step.
 
 - How to specify the [<ins>config</ins>](./configuration-file) file.
 - How to specify the [<ins>schema</ins>](./schema) file.
 
 ## Write the event handlers for your project
+
+> This step can be skipped if you want to continue building an indexer for the template chosen in the previous step.
 
 Once you have set up your config and schema file you can run `envio codegen` to generate the functions that you will use in your handlers.
 
@@ -82,7 +86,7 @@ Once the indexing files have been generated, you are ready to write the event ha
 
 Click [<ins>here</ins>](./event-handlers) for a guide on how to define your event handlers.
 
-## Run the indexer locally 
+## Run the indexer locally
 
 Before running the Envio CLI command to start the indexer locally, please make sure you have [Docker](https://www.docker.com/products/docker-desktop/) running.
 
@@ -92,18 +96,16 @@ Run the indexer
 envio dev
 ```
 
-## Open the Hasura dashboard
+This will automatically open up the Hasura dashboard where you can view the data that has been indexed.
 
-<!-- ```bash
-pnpm open-dashboard
-``` -->
+Admin-secret for local Hasura is `testing`.
 
-<!-- todo, swap the bellow command with above -->
+## Stopping the indexer
 
-Open the [<ins>local hasura server</ins>](http://localhost:8080/console).
+To delete the docker images used for the local development environment, run
 
-Admin-secret for local Hasura is `testing`
-
-Alternatively you can open the file `index.html` for a cleaner experience (no Hasura stuff). Unfortunately, Hasura is currently not configured to make the data public.
+```bash
+envio stop
+```
 
 ---
