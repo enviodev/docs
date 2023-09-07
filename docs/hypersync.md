@@ -20,19 +20,10 @@ Below is a list of networks our hypersync feature supports
 ```rust
 pub enum SupportedNetwork {
     EthereumMainnet,
-    EthereumGoerliTestnet,
-    EthereumSepoliaTestnet,
-    Polygon,
-    PolygonMumbaiTestnet,
-    ArbitrumOne,
-    ArbitrumNova,
-    ArbitrumGoerli,
-    BaseGoerli,
-    BinanceChain,
-    BinanceChainTestnet,
+    EthereumGoerliTestnet,    
+    Polygon,    
+    BaseGoerli,    
     AvalancheCChain,
-    Fantom,
-    Optimism,
 }
 
 ```
