@@ -33,21 +33,6 @@ pub enum SupportedNetwork {
     AvalancheCChain,
     Fantom,
     Optimism,
-    Moonbeam,
-    Moonriver,
-    Moonbase,
-    Astar,
-    ScrollAlphaTestnet,
-    ZkSync,
-    ZkSyncTestnet,
-    SKALECalypso,
-    SKALECalypsoStaging,
-    SKALENebula,
-    SKALENebulaStaging,
-    BOBAEthereum,
-    BOBAMoonbeam,
-    MantleTestnet,
-    Exosama,
 }
 
 ```
