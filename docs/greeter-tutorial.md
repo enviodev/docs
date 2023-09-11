@@ -6,7 +6,7 @@ slug: /greeter-tutorial
 ---
 
 
-This tutorial will take you through a step by step guide to indexing a Greeter smart contract that is deployed on Polygon using Envio. 
+This tutorial will take you through a step by step guide to indexing a live Greeter smart contract using Envio.  
 
 <!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
 
@@ -32,7 +32,9 @@ This tutorial will take you through a step by step guide to indexing a Greeter s
 
 ### [Greeter contract](https://github.com/Float-Capital/hardhat-template)
 
-The Greeter contract is a very simple smart contract that allows user to write a greeting message on the blockchain.
+The Greeter contract is a very simple smart contract that allows a user to write a greeting message on the blockchain.
+
+The Greeter contract is deployed on both the Polygon and Linea blockchains. You can try indexing the Greeter contract on one blockchain (e.g. either Polygon or Linea), or on both blockchains at the same time (e.g. in the case of a multi-chain example).
 
 ### [Envio](https://envio.dev)
 
@@ -114,13 +116,17 @@ Run
 envio dev
 ```
 
-The indexer will then start indexing the contract specified in the `config.yaml` file from the `start_block` specified.
+The indexer will then start indexing the contract/s specified in the `config.yaml` file from the `start_block` specified.
 
-### Write to contract on Polygonscan
+### Write to contract on Blockchain Explorer
 
-Once the indexer is running, you can call functions on the Greeter contract that is deployed on Polygon.
+Once the indexer is running, you can call functions on the Greeter contract that is deployed on Polygon and/or Linea, using the respective network's blockchain explorer. 
 
-Navigate to the contract on [Polygonscan](https://polygonscan.com/address/0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c#writeContract) and call `setGreeting` function.
+For Polygon, navigate to the contract on [Polygonscan](https://polygonscan.com/address/0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c#writeContract) and the call `setGreeting` function.
+
+For Linea, navigate to the contract on [Lineascan](https://lineascan.build/address/0xdEe21B97AB77a16B4b236F952e586cf8408CF32A#writeContract) and call the `setGreeting` function.
+
+In the case of a multi-chain indexing example, you can call the `setGreeting` function on *both* contracts.
 
 ### View the indexed results
 
