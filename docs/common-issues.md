@@ -50,7 +50,7 @@ PG_PORT=5433 envio codegen
 PG_PORT=5433 envio dev
 ```
 
-or 
+or
 
 ```
 export PG_PORT=5433
@@ -70,5 +70,19 @@ pnpm hardhat export-abi
 ```
 
 Ensure that the directory for ABI in `config.yaml` is pointing to the correct folder where ABIs have been freshly generated.
+
+## RPC-related issues
+
+If you keep receiving the warning messages below and unable to see any of the indexed data, there is likely an issue with the RPC endpoint being used.
+
+Warning messages:
+
+- `Error getting events, will retry after backoff time`
+- `Failed Combined Query Filter from block`
+- `Issue while running fetching batch of events from the RPC. Will wait ()ms and try again.`
+
+It is recommend to use [Hypersync](./hypersync.md) instead, if the network being indexed from is supported.
+
+Otherwise, use a different RPC endpoint that is valid in the `config.yaml` file.
 
 ---
