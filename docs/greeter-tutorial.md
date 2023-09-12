@@ -120,7 +120,7 @@ The indexer will then start indexing the contract's specified in the `config.yam
 
 ### Write to the contracts on Polygon and Linea using the block explorers
 
-Once the indexer is running, you can call functions on the Greeter contract that is deployed on Polygon and/or Linea, using the respective network's blockchain explorer. 
+Once the indexer is running, you can call functions on the Greeter contract that is deployed on Polygon and Linea, using the respective network's blockchain explorer. 
 
 For Polygon, navigate to the contract on [Polygonscan](https://polygonscan.com/address/0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c#writeContract) and the call `setGreeting` function.
 
