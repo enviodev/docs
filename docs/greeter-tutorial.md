@@ -116,7 +116,7 @@ Run
 envio dev
 ```
 
-The indexer will then start indexing the contract/s specified in the `config.yaml` file from the `start_block` specified.
+The indexer will then start indexing the contract's specified in the `config.yaml` file from the `start_block` specified for each network.
 
 ### Write to contract on Blockchain Explorer
 
