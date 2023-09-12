@@ -34,7 +34,7 @@ This tutorial will take you through a step by step guide to indexing a live Gree
 
 The Greeter contract is a very simple smart contract that allows a user to write a greeting message on the blockchain.
 
-The Greeter contract is deployed on both the Polygon and Linea blockchains. You can try indexing the Greeter contract on one blockchain (e.g. either Polygon or Linea), or on both blockchains at the same time (e.g. in the case of a multi-chain example).
+The Greeter contract is deployed on both the Polygon and the Linea blockchain. Following this tutorial will index events from both chains.
 
 ### [Envio](https://envio.dev)
 
