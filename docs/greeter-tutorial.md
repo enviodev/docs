@@ -118,7 +118,7 @@ envio dev
 
 The indexer will then start indexing the contract's specified in the `config.yaml` file from the `start_block` specified for each network.
 
-### Write to contract on Blockchain Explorer
+### Write to the contracts on Polygon and Linea using the block explorers
 
 Once the indexer is running, you can call functions on the Greeter contract that is deployed on Polygon and/or Linea, using the respective network's blockchain explorer. 
 
