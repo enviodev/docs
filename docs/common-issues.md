@@ -73,7 +73,7 @@ Ensure that the directory for ABI in `config.yaml` is pointing to the correct fo
 
 ## RPC-related issues
 
-If you keep receiving the warning messages below and unable to see any of the indexed data, there is likely an issue with the RPC endpoint being used.
+If you keep receiving the warning messages below and are unable to see any of the indexed data, there is likely an issue with the RPC endpoint being used.
 
 Warning messages:
 
