@@ -23,7 +23,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          sidebarPath: require.resolve("./sidebars.js")
+          sidebarPath: require.resolve("./sidebars.js"),
         },
         blog: {
           showReadingTime: true,
@@ -50,8 +50,8 @@ const config = {
         title: "",
         logo: {
           alt: "Envio Logo",
-          src: "img/envio-black-logo.png",
-          srcDark: "img/envio-white-logo.png",
+          src: "img/envio-logo.png",
+          srcDark: "img/envio-logo.png",
           style: {
             width: 96,
             height: 40,
