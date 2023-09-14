@@ -38,7 +38,7 @@ Loader functions are called via
   <TabItem value="typescript" label="Typescript">
 
 ```typescript
-<ContractName>Contract_<EventName>_loader
+<ContractName>Contract_ < EventName > _loader;
 ```
 
   </TabItem>
@@ -53,7 +53,9 @@ Loader functions are called via
 
 Loader functions are used to load the specific entities (defined in the `schema.graphql`) that should be modified by the event.
 
-Entities with specific IDs can be loaded via `context.<entityName>.Load(<id>)`.
+Entities with specific IDs can be loaded via `context.<entityName>.<label>Load(<id>)`.
+
+If no label name has been defined in the `config.yaml` file, then entities can be loaded via `context.<entityName>.load()`.
 
 A single event can be used to modify single or multiple entities.
 
@@ -74,7 +76,7 @@ Handler functions are called via
   <TabItem value="typescript" label="Typescript">
 
 ```typescript
-<ContractName>Contract_<EventName>_handler
+<ContractName>Contract_ < EventName > _handler;
 ```
 
   </TabItem>
@@ -106,7 +108,9 @@ Below is a list of raw event information that can be accessed:
 - `transactionHash`
 - `transactionIndex`
 
-Handler functions can access the loaded entities information via `context.<entityName>.get(<id>)`.
+hHandler functions can access the loaded entities information via `context.<entityName>.<label>Load`.
+
+If no label name has been defined in the `config.yaml` file, handler functions can access the loaded entities information via `context.<entityName>.get()`.
 
 Handler functions can also provides the following functions per loaded entity, that can be used to interact with that entity:
 

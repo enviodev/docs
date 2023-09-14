@@ -27,6 +27,7 @@ The `config.yaml` outlines the specifications for the indexer including details 
       - `event` - Event signature or name of the event (must match the name in the ABI)
       - `required_entities` - An array of entities that need to loaded and made accessible within the handler function (an empty array indicates that no entities are required)
         - `name` - The name of the required entity (must match an entity defined in `schema.graphql`)
+        - `labels` - This is an optional given for loaded entities in the loaders that can be used in the event handlers (useful in differentiating entities that should be modified differently by the same event)
 
 ## Example `config.yaml` from Greeter template:
 
@@ -35,21 +36,23 @@ name: Greeter
 description: Greeter indexer
 networks:
   - id: 137 # Polygon
-    rpc_config:
-      url: https://polygon.llamarpc.com # We recommend you change this to a dedicated RPC provider
     start_block: 45336336
     contracts:
-      - name: Greeter
+      - name: PolygonGreeter
         abi_file_path: abis/greeter-abi.json
         address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
-        handler: ./src/EventHandlers.bs.js
+        handler: ./src/EventHandlers.js
         events:
           - event: "NewGreeting"
             requiredEntities:
               - name: "Greeting"
+                labels:
+                  - "greetingWithChanges"
           - event: "ClearGreeting"
             requiredEntities:
               - name: "Greeting"
+                labels:
+                  - "greetingWithChanges"
 ```
 
 After you have set up your config file you can run `envio codegen` to generate the functions that you will use in your handlers.
@@ -87,3 +90,4 @@ More information on Human Readable ABI parsing is available [here](https://docs.
 - Contract name field (`Greeter` in the example above) should contain a single word, as it is used to create a namespace for functions in the indexer.
 - Address field should contain the address of the proxy contract, which emits the events on the specified blockchain.
 - Should the human readable ABI format not be used, then the ABI which is referenced in config file needs to be copied from the implementation contract into the specified abi directory.
+- If an event update an entity in one way only, then `label` in configuration file is not required.
