@@ -55,7 +55,7 @@ Loader functions are used to load the specific entities (defined in the `schema.
 
 Entities with specific IDs can be loaded via `context.<entityName>.<label>Load(<id>)`.
 
-If no label name has been defined in the `config.yaml` file, then entities can be loaded via `context.<entityName>.load()`.
+If no label name has been defined in the `config.yaml` file, then entities can be loaded via `context.<entityName>.load(<id>)`.
 
 A single event can be used to modify single or multiple entities.
 
@@ -108,9 +108,9 @@ Below is a list of raw event information that can be accessed:
 - `transactionHash`
 - `transactionIndex`
 
-hHandler functions can access the loaded entities information via `context.<entityName>.<label>Load`.
+Handler functions can access the loaded entities information via `context.<entityName>.<label>Load`.
 
-If no label name has been defined in the `config.yaml` file, handler functions can access the loaded entities information via `context.<entityName>.get()`.
+If no label name has been defined in the `config.yaml` file, handler functions can access the loaded entities information via `context.<entityName>.get(<id>)`.
 
 Handler functions can also provides the following functions per loaded entity, that can be used to interact with that entity:
 
