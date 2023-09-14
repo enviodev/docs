@@ -27,9 +27,9 @@ The `config.yaml` outlines the specifications for the indexer including details 
       - `event` - Event signature or name of the event (must match the name in the ABI)
       - `required_entities` - An array of entities that need to loaded and made accessible within the handler function (an empty array indicates that no entities are required)
         - `name` - The name of the required entity (must match an entity defined in `schema.graphql`)
-        - `labels` - This is an optional given for loaded entities in the loaders that can be used in the event handlers (useful in differentiating entities that should be modified differently by the same event)
+        - `labels` - This is an optional name given for loaded entities in the loaders that can be used in the event handlers (useful in differentiating entities that should be modified differently by the same event)
 
-## Example `config.yaml` from Greeter template:
+## Example `config.yaml` from Greeter template using Rescript language:
 
 ```yaml
 name: Greeter
@@ -41,7 +41,7 @@ networks:
       - name: PolygonGreeter
         abi_file_path: abis/greeter-abi.json
         address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
-        handler: ./src/EventHandlers.js
+        handler: ./src/EventHandlers.bs.js
         events:
           - event: "NewGreeting"
             requiredEntities:
