@@ -28,7 +28,9 @@ Here are a few use-cases you can ship using Envio:
 - An indexer template for popular OpenZeppelin Standards other than ERC20, ERC721, ERC1155 (e.g. Governance contracts).
 - An indexer template with data handling logic for easily aggregating/calculating SUM / AVG / MIN / MAX values for DApps.
 
-## How to get involved
+You are more than welcome to apply for a grant with your own idea, or you can take a look at some of the [bounties](https://discord.com/channels/1093188574305857656/1153324195342729336) in our Discord for further inspiration. 
+
+## How to apply for a grant
 
 - Apply for the Envio “Build Bigger. Ship Faster" grant program by completing the [form](https://forms.gle/8rMndoELXQY4QYBu9), or submitting your proposal in the Github repository:
     - Fork the [envio-grant-program repository](https://github.com/Float-Capital/envio-grant-program/tree/main).
@@ -71,7 +73,7 @@ Envio supports indexing any EVM blockchain and allows you to:
 - **Publish queries to APIs:** Publish datasets and queries directly to APIs, build dApps on top of Envio, and scale easily.
 - **Join on-chain and off-chain data:** Connect indexed blockchain data as well as ingest off-chain data to create flexible API for rich data beyond just what is emitted simply from events on-chain. e.g. modules that efficiently index off-chain NFT metadata
 
-Envio is a purpose-built, modern EVM blockchain indexing solution. Envio supports indexing any on-chain event for any EVM blockchain, such as Polygon, Avalanche, Linea Build, Arbitrum, Base, ZkSync, etc.
+Envio is a purpose-built, modern EVM blockchain indexing solution. Envio supports indexing any on-chain event for any EVM blockchain, such as Polygon, Avalanche, Linea, Arbitrum, Base, ZkSync, etc.
 
 ### **Ship with us.**
 
