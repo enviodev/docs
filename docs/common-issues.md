@@ -87,6 +87,6 @@ Otherwise, use a different RPC endpoint that is valid in the `config.yaml` file.
 
 ## Using correct version of `Node.js`
 
-If you are using a version of Node.js that is v16 or older, please update to v18 or newer version.
+If you are using a version of Node.js that is v16 or older, please update to v18 or newer.
 
 ---
