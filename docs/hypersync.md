@@ -31,4 +31,6 @@ pub enum SupportedNetwork {
 
 ```
 
+> Disclaimer: currently the hypersync feature is not real-time - it intentionally lags 10 blocks behind the latest block to allow for chain reorganizations in the future.
+
 Don't see your network here? Pop us a message in [discord](https://discord.gg/Q9qt8gZ2fX)
