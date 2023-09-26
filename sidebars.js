@@ -123,6 +123,10 @@ module.exports = {
           type: "doc",
           id: "common-issues",
         },
+        {
+          type: "doc",
+          id: "error-codes",
+        },
         // {
         //   type: "doc",
         //   id: "error-codes",
