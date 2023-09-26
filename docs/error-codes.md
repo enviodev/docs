@@ -67,7 +67,7 @@ The config file contains RPC URLs in an incorrect format.
 
 Failed to read schema file.
 
-Please ensure that the schema file is placed correctly in the directory.
+Please ensure that the schema file is placed in the correct directory.
 
 ### `EE201`: Parse Schema Error
 
@@ -127,7 +127,7 @@ Please include a `!` after your scalar.
 
 Nullable multi-dimensional list types are unsupported.
 
-Please include a `!` for your inner list type eg. [[Int!]!]
+Please include a `!` for your inner list type eg. `[[Int!]!]`
 
 ### `EE300`: Event ABI Error
 
@@ -191,6 +191,12 @@ Please contact us on in our [Discord](https://discord.gg/Q9qt8gZ2fX) for further
 
 # Database Related Errors
 
+For all of the database related errors, rerun DB migrations using the following command:
+
+```bash
+envio local db-migrate setup
+```
+
 ### `EE700`: Parse DB Row
 
 Unable to parse row from the database.
@@ -223,13 +229,19 @@ Error dropping tables except for raw events.
 
 Error clearing metadata.
 
-### `EE807`: Tracking Table
+Indexing may still work - but you may have issues querying the data in Hasura.
 
-Error in tracking table.
+### `EE807`: Tracking a Table
+
+Error in tracking a table.
+
+Indexing may still work - but you may have issues querying the data in Hasura.
 
 ### `EE808`: View Permissions
 
 Error setting up view permissions.
+
+Indexing may still work - but you may have issues querying the data in Hasura.
 
 # Contract Related Errors
 
@@ -237,9 +249,13 @@ Error setting up view permissions.
 
 Undefined contract specified.
 
+Please verify the contract name defined in the `config.yaml` file.
+
 ### `EE901`: Interface Mapping Error
 
 Unexpected case - contract name not found in interface mapping.
+
+Please contact us on in our [Discord](https://discord.gg/Q9qt8gZ2fX) for further assistance.
 
 # Network Related Errors
 
