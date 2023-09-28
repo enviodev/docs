@@ -21,7 +21,7 @@ The configuration file contains non-unique contract names.
 
 Use unique contract names in the configuration file.
 
-### `EE102`: Reserved Words
+### `EE102`: Reserved Words in the Configuration file
 
 Using reserved programming words in the configuration file.
 
@@ -152,6 +152,16 @@ Include a `!` after your scalar.
 Nullable multi-dimensional list types are unsupported.
 
 Include a `!` for your inner list type eg. `[[Int!]!]`
+
+### `EE210`: Reserved Words in the Schema file
+
+Using reserved programming words in the schema file.
+
+Envio prohibits use of reserved words from JavaScript and ReScript in the schema file as it may conflict with the auto-generated code.
+
+Some examples of reserved words are `catch`, `debugger`, `lazy`, `open` etc.
+
+Avoid using reserved words in the schema file.
 
 ### `EE300`: Event ABI Error
 
