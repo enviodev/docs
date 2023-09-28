@@ -23,13 +23,19 @@ Use unique contract names in the configuration file.
 
 ### `EE102`: Reserved Words
 
-Using reserved words in the configuration file.
+Using reserved programming words in the configuration file.
+
+Envio prohibits use of reserved words from JavaScript, TypeScript and Rescript in the configuration file as it may conflict with the auto-generated code.
+
+Some examples are `for`, `return`, `require`, `try` etc.
 
 Avoid using reserved words in the configuration file.
 
 ### `EE103`: Parse Event Error
 
 Unable to parse event signature due to an error.
+
+Refer to the [<ins>configuration</ins>](./configuration-file) page on how to correctly define a human readable ABI.
 
 ### `EE104`: Resolve Config Path
 
@@ -41,7 +47,7 @@ Ensure correct directory and config file existence.
 
 Failed to deserialize the config file.
 
-Visit documentation for more information.
+Refer to the [<ins>configuration</ins>](./configuration-file) page for more information.
 
 ### `EE106`: Undefined Network Config
 
@@ -67,13 +73,13 @@ The config file contains RPC URLs in an incorrect format.
 
 Failed to read schema file.
 
-Please ensure that the schema file is placed in the correct directory.
+Ensure that the schema file is placed in the correct directory.
 
 ### `EE201`: Parse Schema Error
 
 Failed to parse the schema.
 
-Please ensure that there are no syntax errors in `schema.graphql` file in the directory.
+Ensure that there are no syntax errors in `schema.graphql` file in the directory.
 
 ### `EE202`: Multiple DerivedFrom
 
@@ -83,7 +89,7 @@ Cannot use more than one `@derivedFrom` directive on an entity.
 
 No `field` argument supplied to `@derivedFrom`.
 
-Please provide a `field` value for the `@derivedFrom` directive used.
+Provide a `field` value for the `@derivedFrom` directive used.
 
 ### `EE204`: Invalid DerivedFrom Argument
 
@@ -93,13 +99,13 @@ Please provide a `field` value for the `@derivedFrom` directive used.
 
 Derived entity does not exist in the schema.
 
-Please use a derived entity that exists in the schema provided.
+Use a derived entity that exists in the schema provided.
 
 ### `EE206`: Non-existent Derived Field
 
 Derived field does not exist on specified entity.
 
-Please use a field that exists in the specified entity.
+Use a field that exists in the specified entity.
 
 ### `EE207`: Undefined Type
 
@@ -107,7 +113,7 @@ sdfsd
 
 Failed to parse undefined type in the schema.
 
-Please use one of the following types in the schema:
+Use one of the following types in the schema:
 
 - `ID`
 - `String`
@@ -121,19 +127,19 @@ Please use one of the following types in the schema:
 
 Nullable scalars inside lists are unsupported.
 
-Please include a `!` after your scalar.
+Include a `!` after your scalar.
 
 ### `EE209`: Unsupported Multidimensional Lists
 
 Nullable multi-dimensional list types are unsupported.
 
-Please include a `!` for your inner list type eg. `[[Int!]!]`
+Include a `!` for your inner list type eg. `[[Int!]!]`
 
 ### `EE300`: Event ABI Error
 
 Cannot parse the provided ABI for contract.
 
-Please use an event that belongs in your ABI for the configuration file.
+Use an event that belongs in your ABI for the configuration file.
 
 ### `EE301`: Missing ABI File Path
 
@@ -147,31 +153,31 @@ Provide a valid `abi_file_path` for named events.
 
 Unable to find an event named in your ABI.
 
-Please use an event that belongs in your ABI for the configuration file.
+Use an event that belongs in your ABI for the configuration file.
 
 ### `EE304`: Mismatched Event Signature
 
 Event signature does not exist in provided ABI file.
 
-Please make sure that the same event signature from the ABI is used in the configuration file.
+Ensure that the same event signature from the ABI is used in the configuration file.
 
 ### `EE305`: ABI Config Mismatch
 
 Event signature in ABI does not match the config.
 
-Please make sure that the same event signature from the ABI is used in the configuration file.
+Ensure that the same event signature from the ABI is used in the configuration file.
 
 ### `EE400`: Invalid Directory Name
 
 Specified directory is invalid.
 
-Please use a different directory without special characters.
+Use a different directory without special characters.
 
 ### `EE401`: Existing Directory
 
 Specified directory already exists.
 
-Please use a different directory for initialization.
+Use a different directory for initialization.
 
 # Event Related Errors
 
@@ -179,7 +185,7 @@ Please use a different directory for initialization.
 
 Issue importing the Event Handler file.
 
-Please make sure that the file is in the correct directory as per the configuration file.
+Ensure that the file is in the correct directory as per the configuration file.
 
 The Event Handler file should be compiling as well.
 
@@ -187,7 +193,7 @@ The Event Handler file should be compiling as well.
 
 Hit a top-level error catcher while processing events.
 
-Please contact us on in our [Discord](https://discord.gg/Q9qt8gZ2fX) for further assistance.
+Contact us on in our [Discord](https://discord.gg/Q9qt8gZ2fX) for further assistance.
 
 # Database Related Errors
 
@@ -249,13 +255,13 @@ Indexing may still work - but you may have issues querying the data in Hasura.
 
 Undefined contract specified.
 
-Please verify the contract name defined in the `config.yaml` file.
+Verify that contract name is defined in the configuration file.
 
 ### `EE901`: Interface Mapping Error
 
 Unexpected case - contract name not found in interface mapping.
 
-Please contact us on in our [Discord](https://discord.gg/Q9qt8gZ2fX) for further assistance.
+Contact us on in our [Discord](https://discord.gg/Q9qt8gZ2fX) for further assistance.
 
 # Network Related Errors
 
@@ -263,7 +269,7 @@ Please contact us on in our [Discord](https://discord.gg/Q9qt8gZ2fX) for further
 
 Undefined chain ID used for chain manager.
 
-Please use a valid chain ID in the configuration file.
+Use a valid chain ID in the configuration file.
 
 # General Errors
 
@@ -271,6 +277,6 @@ Please use a valid chain ID in the configuration file.
 
 Top-level promise timeout reached.
 
-Please contact us on in our [Discord](https://discord.gg/Q9qt8gZ2fX) for further assistance.
+Contact us on in our [Discord](https://discord.gg/Q9qt8gZ2fX) for further assistance.
 
 ---
