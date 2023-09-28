@@ -13,7 +13,7 @@ This section provides an exhaustive list of potential errors you could face whil
 
 Invalid smart contract addresses present in the configuration file.
 
-Use smart contract addresses in the valid format belonging to the correct chain specified.
+Use smart contract addresses in the valid format belonging to the correct chain.
 
 ### `EE101`: Unique Contract Names
 
@@ -25,9 +25,9 @@ Use unique contract names in the configuration file.
 
 Using reserved programming words in the configuration file.
 
-Envio prohibits use of reserved words from JavaScript, TypeScript and Rescript in the configuration file as it may conflict with the auto-generated code.
+Envio prohibits use of reserved words from JavaScript, TypeScript and ReScript in the configuration file as it may conflict with the auto-generated code.
 
-Some examples are `for`, `return`, `require`, `try` etc.
+Some examples of reserved words are `for`, `return`, `require`, `try` etc.
 
 Avoid using reserved words in the configuration file.
 
@@ -41,7 +41,7 @@ Refer to the [<ins>configuration</ins>](./configuration-file) page on how to cor
 
 Failed to resolve the config path.
 
-Ensure correct directory and config file existence.
+Ensure that the configuration file exists in the correct directory.
 
 ### `EE105`: Deserialize Config
 
@@ -55,19 +55,31 @@ Undefined network configuration.
 
 Provide `rpc_config`.
 
+Refer to the [<ins>RPC sync</ins>](./sync-config) page for more information.
+
 ### `EE107`: Hypersync Endpoint Unhealthy
 
 Hypersync endpoint is unhealthy.
 
 Provide `rpc_config` or `hypersync_config`.
 
+Refer to the [<ins>RPC sync</ins>](./sync-config) or [<ins>Hypersync</ins>](./hypersync) page for more information.
+
 ### `EE108`: Valid Postgres Database
 
 Provide a valid postgres database name.
 
+Requirements for a valid name:
+
+- It must start with a letter or underscore.
+- It can contain letters, numbers, and underscores (no spaces).
+- It must have a maximum length of 63 characters.
+
 ### `EE109`: Incorrect RPC URL
 
 The config file contains RPC URLs in an incorrect format.
+
+The RPC URLs need to start with either `http://` or `https://`.
 
 ### `EE200`: Read Schema Error
 
@@ -81,19 +93,27 @@ Failed to parse the schema.
 
 Ensure that there are no syntax errors in `schema.graphql` file in the directory.
 
-### `EE202`: Multiple DerivedFrom
+Refer to the [<ins>schema</ins>](./schema) page for more information.
+
+### `EE202`: Multiple `@derivedFrom`
 
 Cannot use more than one `@derivedFrom` directive on an entity.
 
-### `EE203`: Missing Field Argument
+Refer to the [<ins>schema</ins>](./schema) page for more information.
+
+### `EE203`: Missing Field Argument for `@derivedFrom`
 
 No `field` argument supplied to `@derivedFrom`.
 
 Provide a `field` value for the `@derivedFrom` directive used.
 
-### `EE204`: Invalid DerivedFrom Argument
+Refer to the [<ins>schema</ins>](./schema) page for more information.
+
+### `EE204`: Invalid `@derivedFrom` Argument
 
 `field` argument in `@derivedFrom` needs to contain a string.
+
+Refer to the [<ins>schema</ins>](./schema) page for more information.
 
 ### `EE205`: Non-existent Derived Entity
 
@@ -108,8 +128,6 @@ Derived field does not exist on specified entity.
 Use a field that exists in the specified entity.
 
 ### `EE207`: Undefined Type
-
-sdfsd
 
 Failed to parse undefined type in the schema.
 
@@ -171,7 +189,7 @@ Ensure that the same event signature from the ABI is used in the configuration f
 
 Specified directory is invalid.
 
-Use a different directory without special characters.
+Use a different directory without special characters such as `/` `\` `:` `*` `?` `"` `<` `>` `|`.
 
 ### `EE401`: Existing Directory
 
@@ -188,6 +206,8 @@ Issue importing the Event Handler file.
 Ensure that the file is in the correct directory as per the configuration file.
 
 The Event Handler file should be compiling as well.
+
+Refer to the [<ins>event handlers</ins>](./event-handlers) page for more information.
 
 ### `EE600`: Top Level Error
 
