@@ -61,7 +61,7 @@ After you have set up your config file you can run `envio codegen` to generate t
 envio codegen
 ```
 
-### Human readable ABI format
+## Human readable ABI format
 
 In the configuration you can optionally pass the file path to the abi for a contract in the `abi_file_path` field or you can specify the event signature in the event field.
 
@@ -85,7 +85,7 @@ More information on Human Readable ABI parsing is available [here](https://docs.
 
 > Dev note: 📢 An error in the ABI or the event signature will result in the events not matching and hence may not reflect in the `raw_events_table` or propagate correctly into the event handler logic.
 
-### Additional guidelines
+## Additional guidelines
 
 - Contract name field (`Greeter` in the example above) should contain a single word, as it is used to create a namespace for functions in the indexer.
 - Address field should contain the address of the proxy contract, which emits the events on the specified blockchain.
