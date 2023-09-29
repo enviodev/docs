@@ -207,6 +207,12 @@ Specified directory already exists.
 
 Use a different directory for initialization.
 
+### `EE402`: Invalid Subgraph ID
+
+Invalid ID provided for subgraph migration.
+
+Provide a subgraph ID that starts with `Qm`.
+
 # Event Related Errors
 
 ### `EE500`: Event Handler File Not Found
