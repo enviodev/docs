@@ -27,7 +27,7 @@ Using reserved programming words in the configuration file.
 
 Envio prohibits use of reserved words from JavaScript, TypeScript and ReScript in the configuration file as it may conflict with the auto-generated code.
 
-Some examples of reserved words are `for`, `return`, `require`, `try` etc.
+Please refer to [<ins>reserved words</ins>](./reserved-words) page for the full list of reserved words.
 
 Avoid using reserved words in the configuration file.
 
@@ -157,9 +157,9 @@ Include a `!` for your inner list type eg. `[[Int!]!]`
 
 Using reserved programming words in the schema file.
 
-Envio prohibits use of reserved words from JavaScript, TypeScript and ReScript in the schema file as it may conflict with the auto-generated code.
+Envio prohibits use of reserved words from JavaScript and ReScript in the schema file as it may conflict with the auto-generated code.
 
-Some examples of reserved words are `catch`, `debugger`, `lazy`, `open` etc.
+Please refer to [<ins>reserved words</ins>](./reserved-words) page for the full list of reserved words.
 
 Avoid using reserved words in the schema file.
 
