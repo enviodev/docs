@@ -51,7 +51,7 @@ Refer to the [<ins>configuration</ins>](./configuration-file) page for more info
 
 ### `EE106`: Undefined Network Config
 
-Undefined network configuration.
+There is no `hypersync_config` defined for the network ID defined in the configuration file.
 
 Provide `rpc_config`.
 
@@ -61,7 +61,7 @@ Refer to the [<ins>RPC sync</ins>](./sync-config) page for more information.
 
 Hypersync endpoint is unhealthy.
 
-Provide `rpc_config` or `hypersync_config`.
+Provide `rpc_config`.
 
 Refer to the [<ins>RPC sync</ins>](./sync-config) or [<ins>Hypersync</ins>](./hypersync) page for more information.
 
@@ -157,7 +157,7 @@ Include a `!` for your inner list type eg. `[[Int!]!]`
 
 Using reserved programming words in the schema file.
 
-Envio prohibits use of reserved words from JavaScript and ReScript in the schema file as it may conflict with the auto-generated code.
+Envio prohibits use of reserved words from JavaScript, TypeScript and ReScript in the schema file as it may conflict with the auto-generated code.
 
 Some examples of reserved words are `catch`, `debugger`, `lazy`, `open` etc.
 
