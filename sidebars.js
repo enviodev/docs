@@ -127,10 +127,10 @@ module.exports = {
           type: "doc",
           id: "error-codes",
         },
-        // {
-        //   type: "doc",
-        //   id: "error-codes",
-        // },
+        {
+          type: "doc",
+          id: "reserved-words",
+        },
       ],
     },
   ],
