@@ -74,7 +74,7 @@ Note that in the `Nftcollection` schema, the `tokens` field can't be directly ac
 
 ## Other design tips
 
-- Use meaningful words for entity names and only the first letter should be capitalized (i.e. `Greeting`).
+- Use meaningful entity names and only the first letter should be capitalized (i.e. `Nftcollection`).
 - Use uncapitalized `camelCase` for field names (i.e. `latestGreeting` and `numberOfGreetings`) inside entities.
 
 ---

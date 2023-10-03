@@ -160,7 +160,7 @@ There are many ways to gather insights into our logs. We use the [pino](https://
 
 It is able to output logs in a json/machine readable format for tracing, debugging, or generating metrics via tools such as kibana. For kibana it might be useful to use the standardized [ECS](https://www.elastic.co/guide/en/ecs/current/index.html), but the pino standard logging format is also fine.
 
-The default autput format is pino-pretty. But please feel free to use the following environment veriables to modify output formats:
+The default output format is pino-pretty. But please feel free to use the following environment variables to modify output formats:
 
 ```bash
 LOG_STRATEGY="console-pretty" # this is the default format - it logs to the terminal directly with colours for log levels in a human readable format.
@@ -171,8 +171,6 @@ LOG_STRATEGY="console-raw" # This logs directly to console in pino format.
 LOG_STRATEGY="both-prettyconsole" # This pretty prints to console, and logs to file at `LOG_FILE` with default pino format
 LOG_FILE="<path-to-log-file>"
 ```
-
-**View the logs in hosting dashboard** - this feature is a WIP - follow us on [twitter](https://twitter.com/envio_indexer) for product updates.
 
 If there are specific dashboards you'd like to have to improve your experience in development or production please [let us know](https://discord.gg/DhfFhzuJQh). We are working on some Kibana dashboards for self hosting and UI dasboards into our hosting solution too.
 

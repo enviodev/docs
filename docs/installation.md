@@ -13,7 +13,7 @@ This page outlines the prerequisite packages required for Envio and steps on how
 
 The following are the prerequisite packages required for Envio:
 
-1. [<ins>Node.js</ins>](https://nodejs.org/en/download/current)
+1. [<ins>Node.js</ins>](https://nodejs.org/en/download/current) (use [v18](https://nodejs.org/download/release/v18.18.0/) or newer)
 2. [<ins>pnpm</ins>](https://pnpm.io/installation)
 3. [<ins>Docker Desktop</ins>](https://www.docker.com/products/docker-desktop/)
 

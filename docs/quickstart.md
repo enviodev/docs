@@ -76,6 +76,8 @@ Now you can configure the files to your configuration.
 
 > This step can be skipped if you want to continue building an indexer for the template chosen in the previous step.
 
+Remember to `cd` into your project directory if you have defined one during `envio init`.
+
 Once you have set up your config and schema file you can run `envio codegen` to generate the functions that you will use in your handlers.
 
 ```bash
@@ -87,6 +89,8 @@ Once the indexing files have been generated, you are ready to write the event ha
 Click [<ins>here</ins>](./event-handlers) for a guide on how to define your event handlers.
 
 ## Run the indexer locally
+
+Remember to `cd` into your project directory if you have defined one during `envio init`.
 
 Before running the Envio CLI command to start the indexer locally, please make sure you have [Docker](https://www.docker.com/products/docker-desktop/) running.
 
