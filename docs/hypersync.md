@@ -20,6 +20,7 @@ Below is a list of networks our hypersync feature supports
 ```rust
 pub enum SupportedNetwork {
     EthereumMainnet,
+    EthereumGoerli,
     Polygon,
     ArbitrumOne,
     Base,
