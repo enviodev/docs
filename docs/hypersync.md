@@ -23,11 +23,11 @@ pub enum SupportedNetwork {
     EthereumGoerli,
     Polygon,
     ArbitrumOne,
-    Base,
     BinanceChain,
     AvalancheCChain,
     Optimism,
     Linea,
+    Gnosis,
 }
 
 ```
