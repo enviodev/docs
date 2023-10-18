@@ -46,7 +46,7 @@ envio codegen
 ## Defining One-to-Many Relationships
 
 ```graphql
-type Nftcollection @entity {
+type NftCollection @entity {
   id: ID!
   contractAddress: Bytes!
   name: String!
@@ -66,15 +66,14 @@ type Token @entity {
 }
 ```
 
-Assume that each `Nftcollection` can have multiple `Token` objects. This is represented by the `[Token!]` in `Nftcollection` definition, where the field's type is set to another entity type.
+Assume that each `NftCollection` can have multiple `Token` objects. This is represented by the `[Token!]` in `NftCollection` definition, where the field's type is set to another entity type.
 
-When you create a `Token` entity, the value of the `collection` field is set to the `id` of its associated `Nftcollection` entity.
+When you create a `Token` entity, the value of the `collection` field is set to the `id` of its associated `NftCollection` entity.
 
-Note that in the `Nftcollection` schema, the `tokens` field can't be directly accessed or modified. Fields marked with the `@derivedFrom` directive function are virtual fields and are only accessible when executing GraphQL API queries. This is commonly known as **reverse lookup**, as the relationship is established on the "many" end of the association.
+Note that in the `NftCollection` schema, the `tokens` field can't be directly accessed or modified. Fields marked with the `@derivedFrom` directive function are virtual fields and are only accessible when executing GraphQL API queries. This is commonly known as **reverse lookup**, as the relationship is established on the "many" end of the association.
 
-## Other design tips
+## Other design tip(s)
 
-- Use meaningful entity names and only the first letter should be capitalized (i.e. `Nftcollection`).
-- Use uncapitalized `camelCase` for field names (i.e. `latestGreeting` and `numberOfGreetings`) inside entities.
+- Use lower case for the first letter of field names (i.e. `latestGreeting` and `numberOfGreetings`) inside entities.
 
 ---
