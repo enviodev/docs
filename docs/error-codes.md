@@ -5,7 +5,27 @@ sidebar_label: Error Codes
 slug: /error-codes
 ---
 
-This section provides an exhaustive list of potential errors you could face while using Envio, along with explanations for each.
+This section provides an exhaustive list of potential errors you could face while using Envio, along with explanations for each error.
+
+Below table indicates the different error categories and sub-categories:
+
+| Hundreds Digit of Error Code | Sub-category                     | Category                      |
+| ---------------------------- | -------------------------------- | ----------------------------- |
+| 1\*\*                        | Configuration File               | Initialization related errors |
+| 2\*\*                        | Schema File                      | Initialization related errors |
+| 3\*\*                        | ABI File                         | Initialization related errors |
+| 4\*\*                        | Initialization Arguments         | Initialization related errors |
+| 5\*\*                        | Event Handling                   | Event Related Errors          |
+| 6\*\*                        | Event Syncing                    | Event Related Errors          |
+| 7\*\*                        | Database Functions               | Database Related Errors       |
+| 8\*\*                        | Database Migrations and Tracking | Database Related Errors       |
+| 9\*\*                        | Contract Interface Manager       | Contract Related Errors       |
+| 10\*\*                       | Chain Manager                    | Network Related Errors        |
+| 11\*\*                       | Lazy Loader                      | General Errors                |
+
+<sub>"Sub-category" indicates the specific file or function in which the error is being encountered.</sub>
+<br></br>
+<sub>"Category" indicates the broader part of indexing process in which the error is being encountered.</sub>
 
 # Initialization related errors
 
