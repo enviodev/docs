@@ -1,6 +1,6 @@
 ---
-title: Benchmarking sync speeds of historical blocks across current indexing solutions
-sidebar_label: Benchmarking sync speeds of historical blocks across current indexing solutions
+title: "Race to the Blocks: Benchmarking Blockchain Indexer Sync Speeds"
+sidebar_label: "Race to the Blocks: Benchmarking Blockchain Indexer Sync Speeds"
 slug: /indexer-benchmarking-results
 ---
 
@@ -11,7 +11,8 @@ slug: /indexer-benchmarking-results
 
 ## Introduction
 
-This blog article presents the findings from benchmarking tests conducted at Envio to assess the performance of various web3 indexing solutions. At Envio, our goal is to develop a high-performance blockchain indexing solution, and we believe that validating this goal through rigorous data-driven testing is essential.
+This blog article presents the findings from benchmarking tests conducted at Envio to assess the syncing performance of various web3 indexing solutions. At Envio, our goal is to develop a high-performance blockchain indexing solution, and we believe that validating this goal through rigorous data-driven testing is essential.
+Sync performance simply put, is how long it takes for an indexer to catch up to the head of the blockchain using a historical block as a start point.
 
 In summary, we indexed the Uniswap V3 ETH-USDC pool contract on on Ethereum Mainnet, starting from its deployment block. This specific smart contract was chosen due to its high event density, providing an ideal testbed for evaluating indexing performance in a high event density context.
 
@@ -21,7 +22,7 @@ You can review the smart contract on Etherscan [here](https://etherscan.io/addre
 
 To ensure that the sync speeds from different indexers were as comparable as possible, we ensured that the configurations of all indexers for different solutions were identical. This included:
 
-- Indexing from the same start block for all indexers (12,376,729 - the deployment block for the contract) until the end block at the time of experimentation (18,342,024), with an approximate total of 5,360,824 raw events indexed.
+- Indexing from the same start block for all indexers (12,376,729 - the deployment block for the contract) until the end block at the time of experimentation (18,342,024), with an approximate total of 5,395,050 raw events indexed (0.9044 events per block that is).
 - Employing the same schema (outlined below).
 - Specifying identical event handler logic (explained further).
 
@@ -47,7 +48,7 @@ type Swap @entity {
 
 ### Event handler logic
 
-For this initial iteration, the event handling logic was kept straightforward and lightweight. Indexers would listen to the `Swap` event emitted by the contract and append the details of each swap to the `Swap` entity table defined in the schema.
+For this initial iteration, the event handling logic was kept straightforward and lightweight. Indexers would listen to the `Swap` event emitted by the smart contract and append the details of each swap to the `Swap` entity table defined in the schema.
 
 ## Indexers Used
 
@@ -57,6 +58,7 @@ We employed four separate indexers for this benchmarking test:
   - v0.0.20 with hypersync
   - v0.0.20 with RPC sync
   - v0.0.19 with hypersync
+- [Subsquid](https://subsquid.io/)
 - [theGraph](https://thegraph.com/hosted-service) on hosted solution
 - [Ponder](https://ponder.sh/)
 
@@ -64,21 +66,22 @@ We employed four separate indexers for this benchmarking test:
 
 Below is a table of benchmark results measured per indexer:
 
-| Indexer                     | Blocks processed per second |
-| --------------------------- | --------------------------- |
-| Envio (v0.0.20) - Hypersync | 10,281                      |
-| Envio (v0.0.20) - RPC sync  | 103                         |
-| Envio (v0.0.19) - Hypersync | 4,734                       |
-| theGraph                    | 99                          |
-| Ponder                      | 22                          |
+| Indexer                     | Events indexed per second |
+| --------------------------- | ------------------------- |
+| Envio (v0.0.20) - Hypersync | 9,299                     |
+| Envio (v0.0.20) - RPC sync  | 93                        |
+| Envio (v0.0.19) - Hypersync | 4,282                     |
+| Subsquid                    | 4,386                     |
+| theGraph                    | 90                        |
+| Ponder                      | 20                        |
 
-The results indicate that Envio v0.0.20 performed **at least 100 times faster** than theGraph, as measured by relative blocks processed per second. Envio v0.0.19 was **around 40 times faster** than theGraph. Notably, Envio v0.0.20's syncing speed was comparable to theGraph when the RPC sync was used instead of Envio's hypersync feature.
+The results indicate that Envio v0.0.20 on Hypersync performed **at least 100 times faster** than theGraph and **at least 2 times faster** than Subsquid, as measured by relative events indexed per second. Envio v0.0.19 was **around 40 times faster** than theGraph. Notably, Envio v0.0.20's syncing speed was comparable to theGraph when the RPC sync was used instead of Envio's hypersync feature.
 
 ### Caveats
 
 It is essential to consider certain caveats while interpreting these results:
 
-Versions of Envio were run on local machines, while theGraph indexer was deployed on a hosted service, introducing potential variations.
+Versions of Envio and Subsquid were run on local machines, while theGraph indexer was deployed on a hosted service, introducing potential variations.
 Ponder indexing performance was extrapolated based on initial indexing progress when syncing historical blocks.
 
 ## Next steps
@@ -87,7 +90,7 @@ The logical progression from this benchmarking exercise is to measure the relati
 
 ## Conclusion
 
-In conclusion, this blog article provides a data-driven analysis of the comparative performance of various indexing solutions. The results clearly demonstrate Envio's competitive edge in terms of indexing speed. As we continue our journey in the web3 space, we remain committed to delivering the best possible solutions for blockchain developers.
+In conclusion, this blog article provides a data-driven analysis of the comparative performance of various indexing solutions. The results clearly demonstrate Envio's competitive edge in terms of syncing speed on hypersync. As we continue our journey in the web3 space, we remain committed to delivering the best possible solutions for blockchain developers.
 
 ### Ship with us.
 
