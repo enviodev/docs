@@ -165,11 +165,7 @@ Output:
 
 After submitting the grant, we asked Joss what his experience was like using Envio to support his use case and what he enjoyed about Envio indexing capabilities:
 
-> As a next step I intend to run this data through a price oracle so I can know the USD amounts being liquidated and generate some cool data graphics. […]
-
-I’ve made a number of theGraph indexers in the past but this was my first time using Envio. The transition was smooth and intuitive. The most noticeable difference between theGraph and Envio is indexing speed. Anyone who has used theGraph is familiar with the feeling of a cortisol spike when their subgraph abruptly fails after syncing for 26 hours. Since Envio is so ridiculously fast these errors were caught in minutes instead of days. I felt spoiled. I found myself frequently and nonchalantly running `envio dev` to deploy the indexer and check for errors. The iterative developer experience was so much easier thanks to Envio.
-
->
+> _As a next step I intend to run this data through a price oracle so I can know the USD amounts being liquidated and generate some cool data graphics. […] I’ve made a number of theGraph indexers in the past but this was my first time using Envio. The transition was smooth and intuitive. The most noticeable difference between theGraph and Envio is indexing speed. Anyone who has used theGraph is familiar with the feeling of a cortisol spike when their subgraph abruptly fails after syncing for 26 hours. Since Envio is so ridiculously fast these errors were caught in minutes instead of days. I felt spoiled. I found myself frequently and nonchalantly running `envio dev` to deploy the indexer and check for errors. The iterative developer experience was so much easier thanks to Envio. -_ Joss
 
 ### About Compound
 
