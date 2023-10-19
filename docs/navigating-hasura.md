@@ -5,6 +5,8 @@ sidebar_label: Navigating Hasura
 slug: /navigating-hasura
 ---
 
+> This page is only relevant when testing on local machine or using a self-hosted version of Envio that uses Hasura.
+
 ## Introduction
 
 This page explains how to navigate the Hasura dashboard, focusing on two key tabs: the API and Data tabs. These tabs allow you to interact with and view indexed results.
