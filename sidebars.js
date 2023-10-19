@@ -52,6 +52,10 @@ module.exports = {
           type: "doc",
           id: "cli-commands",
         },
+        {
+          type: "doc",
+          id: "navigating-hasura",
+        },
       ],
     },
     {
@@ -84,37 +88,11 @@ module.exports = {
         },
       ],
     },
-    // {
-    //   type: "category",
-    //   label: "Example Scenarios",
-    //   items: [
-    //     {
-    //       type: "doc",
-    //       id: "simple-bank",
-    //     },
-    //     {
-    //       type: "doc",
-    //       id: "greeter",
-    //     },
-    //     {
-    //       type: "doc",
-    //       id: "nft-factory",
-    //     },
-    //     {
-    //       type: "doc",
-    //       id: "ploffen",
-    //     },
-    //   ],
-    // },
 
     {
       type: "category",
       label: "Troubleshoot",
       items: [
-        // {
-        //   type: "doc",
-        //   id: "faqs",
-        // },
         {
           type: "doc",
           id: "logging",
