@@ -14,18 +14,17 @@ Joss applied for a grant with Envio to build an indexer that would assist him wi
 
 When asked what motivated him to build the indexer, Joss provided an insightful response:
 
-> *Liquidation bots are a crucial component of CompoundV2 and you can think of liquidations in DeFi as a “high-stakes race”, where bots compete to execute smart contract functions before anyone else. This function comes into play when a user's position becomes under-collateralized, i.e. they are borrowing more value than they've supplied as collateral. The first bot triggers this function and receives a reward proportionate to the severity of the under-collateralized account's status […] This competitive environment demands hyper-performance and ingenuity, pushing bot developers to efficiently program and optimize to keep ahead […]. I humbly knew I wasn’t going to be able to build a bot in my free time that competes with bots funded by fully staffed LLCs, but I did notice an opportunity.  Compound V2 is one of the most forked lending protocols and many of the smaller protocols that forked Compound V2 don’t have the community, market cap, or presence to catch the attention of the maintainers of the leviathan liquidation bots […]. The problem I needed to solve was identifying potential target protocols to deploy my liquidation bot onto.  A good target would be one without much liquidator bot activity but large liquidations occurring* - Joss
-> 
+> _Liquidation bots are a crucial component of CompoundV2 and you can think of liquidations in DeFi as a “high-stakes race”, where bots compete to execute smart contract functions before anyone else. This function comes into play when a user's position becomes under-collateralized, i.e. they are borrowing more value than they've supplied as collateral. The first bot triggers this function and receives a reward proportionate to the severity of the under-collateralized account's status […] This competitive environment demands hyper-performance and ingenuity, pushing bot developers to efficiently program and optimize to keep ahead […]. I humbly knew I wasn’t going to be able to build a bot in my free time that competes with bots funded by fully staffed LLCs, but I did notice an opportunity.  Compound V2 is one of the most forked lending protocols and many of the smaller protocols that forked Compound V2 don’t have the community, market cap, or presence to catch the attention of the maintainers of the leviathan liquidation bots […]. The problem I needed to solve was identifying potential target protocols to deploy my liquidation bot onto.  A good target would be one without much liquidator bot activity but large liquidations occurring_ - Joss
 
 With that context all cleared up, let’s dive into how Joss approached building his indexer using Envio 👇
 
-For milestone A of the project, our grantee created an indexer for a single Compound V2 fork. To do this, Joss first decided on what data he wanted to collect. He was interested in the `LiquidateBorrow` event that is emitted by the Compound V2 fork’s smart contract each time a liquidation bot succeeded. The signature of LiquidateBorrow event emits the following information:
+For milestone A of the project, our grantee created an indexer for a single Compound V2 fork. To do this, Joss first decided on what data he wanted to collect. He was interested in the `LiquidateBorrow` event that is emitted by the Compound V2 fork’s smart contract each time a liquidation bot succeeded. The signature of LiquidateBorrow event is as follows:
 
 ```solidity
 LiquidateBorrow(address liquidator, address borrower, uint repayAmount, address cTokenCollateral, uint seizeTokens)
 ```
 
-This would allow Joss to collect information about liquidator addresses, amounts won by each liquidator, all liquidated accounts, amounts lost by each liquidated account, most popular tokens to liquidate, etc. Next our grantee defined the chain and contract addresses in the config (config.yaml), and the logic for the event handlers (EventHandlers.ts) to sort the said event data into the defined schema (schema.graphql).
+This would allow Joss to collect information about liquidator addresses, amounts won by each liquidator, all liquidated accounts, amounts lost by each liquidated account, most popular tokens to liquidate, etc. Next our grantee defined the chain and contract addresses in the config (`config.yaml`), and the logic for the event handlers (`EventHandlers.ts`) to sort the said event data into the defined schema (`schema.graphql`).
 
 For milestone B, our grantee extended the indexer to support indexing events from multiple CompoundV2 forks across various chains. This process involved pasting more addresses into the config with no further changes to the handlers being required. The following CompoundV2 forks were indexed across various chains:
 
@@ -39,8 +38,7 @@ For milestone B, our grantee extended the indexer to support indexing events fro
 - [Iron Bank](https://app.ib.xyz/lending) - Optimism
 - [Strike Finance](https://strike.org/) - ETH Mainnet
 
->*I indexed 9 for the largest Compound V2 forks across 4 chains for a total of 124 contracts indexed.  (the LiquidateBorrow event is emitted by multiple cToken contracts on each Compound V2 fork, hence the need for multiple addresses indexed for each) -* Joss
->
+> _I indexed 9 for the largest Compound V2 forks across 4 chains for a total of 124 contracts indexed.  (the LiquidateBorrow event is emitted by multiple cToken contracts on each Compound V2 fork, hence the need for multiple addresses indexed for each) -_ Joss
 
 The entire project and all files can be viewed in this Github [repo](https://github.com/JossDuff/liquidation-metrics/tree/main). Below are some example queries that allow Joss to quickly generate this relevant data for any Compound V2 fork he finds while browsing the DeFi ecosystem.
 
@@ -58,7 +56,7 @@ query MyQuery {
 }
 ```
 
-Output: 
+Output:
 
 ```json
 {
@@ -170,6 +168,7 @@ After submitting the grant, we asked Joss what his experience was like using Env
 > As a next step I intend to run this data through a price oracle so I can know the USD amounts being liquidated and generate some cool data graphics. […]
 
 I’ve made a number of theGraph indexers in the past but this was my first time using Envio. The transition was smooth and intuitive. The most noticeable difference between theGraph and Envio is indexing speed. Anyone who has used theGraph is familiar with the feeling of a cortisol spike when their subgraph abruptly fails after syncing for 26 hours. Since Envio is so ridiculously fast these errors were caught in minutes instead of days. I felt spoiled. I found myself frequently and nonchalantly running `envio dev` to deploy the indexer and check for errors. The iterative developer experience was so much easier thanks to Envio.
+
 >
 
 ### About Compound
