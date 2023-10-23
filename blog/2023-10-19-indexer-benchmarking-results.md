@@ -112,7 +112,7 @@ Variations including but not limited to:
 - Number and complexity of entities in the schema
 - Complexity of logic in the event handlers, including loading and updating of existing entities
 
-Different indexers may excel under different scenarios, making them more suitable for specific use cases.
+Different indexers may excel under different scenarios, making them more suitable for specific use cases. We encourage our users to suggest new ideas and build out scenarios for future benchmarking.
 
 ## Conclusion
 
