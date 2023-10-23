@@ -15,9 +15,9 @@ Sync performance simply put, is how long it takes for an indexer to catch up to 
 
 **Why is indexing speed important?**
 
-Indexing speed is important because it inherently creates a friction to deploy, debug and iterate on newer versions of the indexer. Longer the total sync time, the longer it takes to innovate and resolve issues on existing deployments.
+Indexing speed is important because it inherently creates a friction to deploy, debug and iterate on newer versions of the indexer. The longer the total sync time, the longer it takes to innovate and resolve issues on existing deployments.
 
-In summary, we indexed the Uniswap V3 ETH-USDC pool contract on on Ethereum Mainnet, starting from its deployment block. This specific smart contract was chosen due to its high event density, providing an ideal testbed for evaluating indexing performance in a high event-density context.
+In summary, we indexed the Uniswap V3 ETH-USDC pool contract on Ethereum Mainnet, starting from its deployment block. This specific smart contract was chosen due to its high event density, providing an ideal testbed for evaluating indexing performance in a high event-density context.
 
 You can review the smart contract on Etherscan [here](https://etherscan.io/address/0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640).
 
@@ -116,9 +116,9 @@ Different indexers may excel under different scenarios, making them more suitabl
 
 ## Conclusion
 
-In conclusion, this blog article provides a data-driven analysis of the comparative performance of various indexing solutions. The results clearly demonstrate Envio's competitive edge in terms of syncing speed over the alternative indexing solutions As we continue our journey in the web3 space, we remain committed to delivering the best possible solutions for blockchain developers.
+In conclusion, this blog article provides a data-driven analysis of the comparative performance of various indexing solutions. The results clearly demonstrate Envio's competitive edge in terms of syncing speed over the alternative indexing solutions. As we continue our journey in the web3 space, we remain committed to delivering the best possible solutions for blockchain developers.
 
-We remain devoted to finding data-driven results and comparisons at Envio, and others to benchmark Envio's performance going forward.
+We remain devoted to finding data-driven results and comparisons at Envio, and encourage others to benchmark Envio's performance going forward.
 
 ### Ship with us.
 
