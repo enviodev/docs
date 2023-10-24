@@ -4,14 +4,14 @@ sidebar_label: "Race to the Blocks: Benchmarking Blockchain Indexer Sync Speeds"
 slug: /indexer-benchmarking-results
 ---
 
-<!-- <img src="/blog-assets/envio-univ3-benchmark-results.png" alt="future of blockchain indexing" width="100%"/> -->
+<img src="/blog-assets/envio-benchmarking-blockchain-indexing-sync-speeds.png" alt="benchmarking sync speeds" width="100%"/>
 
 <!--truncate-->
 
 ## Introduction
 
 This blog article presents the findings from benchmarking tests conducted at Envio to assess the syncing performance of various web3 indexing solutions. At Envio, our goal is to develop a high-performance blockchain indexing solution, and we believe that validating this goal through a rigorous data-driven approach is essential.
-Sync performance simply put, is how long it takes for an indexer to catch up to the head of the blockchain using a historical block as a start point.
+Sync speed simply put, is how long it takes for an indexer to catch up to the head of the blockchain using a historical block as a starting point.
 
 **Why is indexing speed important?**
 
@@ -19,7 +19,7 @@ Indexing speed is important because it inherently creates a friction to deploy, 
 
 In summary, we indexed the Uniswap V3 ETH-USDC pool contract on Ethereum Mainnet, starting from its deployment block. This specific smart contract was chosen due to its high event density, providing an ideal testbed for evaluating indexing performance in a high event-density context.
 
-You can review the smart contract on Etherscan [here](https://etherscan.io/address/0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640).
+You can review the smart contract on [Etherscan](https://etherscan.io/address/0x88e6A0c2dDD26FEEb64F039a2c41296FcB3f5640).
 
 ## Methodology
 
