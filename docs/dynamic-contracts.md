@@ -17,7 +17,7 @@ Contract factories are currently supported in the `loader` function of the event
 context.contractRegistration.add<your-contract-name>(<address-of-the-contract>)
 ```
 
-The syntax is the exact same for JavaScript, TypesScript and ReScript.
+The syntax is the exact same for JavaScript, TypeScript and ReScript.
 
 ## Important Note
 
