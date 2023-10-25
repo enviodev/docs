@@ -34,20 +34,19 @@ Choose the directory where you would like to setup your project (default is the 
 Select to start from a template
 
 ```bash
-? Would you like to start from a template or migrate from a subgraph?
-> "Template"
-  "SubgraphMigration"
+? Choose an initialization option
+> Template
+  SubgraphMigration
+  ContractImport
 [↑↓ to move, enter to select, type to filter]
-
 ```
 
 Then choose a template out of the possible options
 
 ```bash
 ? Which template would you like to use?
-> "Blank"
-  "Greeter"
-  "Erc20"
+> Greeter
+  Erc20
 [↑↓ to move, enter to select, type to filter]
 ```
 
@@ -55,9 +54,9 @@ Then choose a language from **Javascript**, **Typescript** or **Rescript** to wr
 
 ```bash
 ? Which language would you like to use?
-> "Javascript"
-  "Typescript"
-  "Rescript"
+> Javascript
+  Typescript
+  Rescript
 [↑↓ to move, enter to select, type to filter]
 ```
 
