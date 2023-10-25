@@ -12,17 +12,19 @@ This page will show you how to migrate an existing subgraph from theGraph's host
 ## Migrate the project configuration using Subgraph ID
 
 ### Initialize `envio`
+
 ```bash
 envio init
 ```
 
-### Name your indexer 
+### Name your indexer
 
 ```bash
 ? Name your indexer:
 ```
 
 ### Choose the project directory (default is the current directory)
+
 ```bash
 ? Set the directory:  (.) .
 ```
@@ -30,17 +32,17 @@ envio init
 ### Select `SubgraphMigration`
 
 ```bash
-? Would you like to start from a template or migrate from a subgraph?  
-  "Template"
-> "SubgraphMigration"
+? Choose an initialization option
+  Template
+> SubgraphMigration
+  ContractImport
 [↑↓ to move, enter to select, type to filter]
-
 ```
 
-### Enter in the subgraph ID 
+### Enter in the subgraph ID
 
 ```bash
-? [BETA VERSION] What is the subgraph ID?  
+? [BETA VERSION] What is the subgraph ID?
 ```
 
 The subgraph ID can be found on [theGraph](https://thegraph.com/hosted-service).
@@ -51,9 +53,9 @@ The subgraph ID can be found on [theGraph](https://thegraph.com/hosted-service).
 
 ```bash
 ? Which language would you like to use?
-> "Javascript"
-  "Typescript"
-  "Rescript"
+> Javascript
+  Typescript
+  Rescript
 [↑↓ to move, enter to select, type to filter]
 ```
 
@@ -75,6 +77,7 @@ Linking of specific events to entities needs to be done manually. This is requir
 The following command will start the docker and create databases for indexed data.
 
 Run
+
 ```bash
 envio dev
 ```
