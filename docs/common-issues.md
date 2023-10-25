@@ -11,7 +11,7 @@ slug: /common-issues
 
 This indicates that the indexer is unable to find the necessary files to start the indexer.
 
-Run
+Delete `./generated` folder and run
 
 ```bash
 envio codegen
