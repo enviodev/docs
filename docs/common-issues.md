@@ -7,6 +7,18 @@ slug: /common-issues
 
 # Common issues
 
+## `Cannot find module` errors on `envio start`
+
+This error indicates that the indexer is unable to find the necessary files to start the indexer.
+
+Delete the `generated` folder and run
+
+```bash
+envio codegen
+```
+
+> Always run `envio codegen` straight after cloning an indexer repo using Envio.
+
 ## Indexer not starting at the specified start block
 
 If the indexer starts running but does not index the smart contracts from the `start_block` in the configuration file, then the indexer needs to be stopped before starting it again.
