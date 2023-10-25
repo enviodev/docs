@@ -9,7 +9,7 @@ slug: /common-issues
 
 ## `Cannot find module` errors on `envio start`
 
-This indicates that the indexer is unable to find the necessary files to start the indexer.
+This error indicates that the indexer is unable to find the necessary files to start the indexer.
 
 Delete `./generated` folder and run
 
