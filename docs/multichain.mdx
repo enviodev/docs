@@ -12,7 +12,7 @@ This page explains how to index from multiple chains in a single indexer.
 
 This means that events from contracts deployed on multiple chains can be used to create and update entities defined in the schema file.
 
-Users are required to populate `network` section in `config.yaml` file for each chain and contract to index from.
+Users are required to populate the `network` section in `config.yaml` file for each chain and specify a contract to index from.
 
 Users can then specify event loader/handler for each of the contracts specified in `config.yaml` file.
 
@@ -39,8 +39,6 @@ networks:
             requiredEntities:
               - name: "Greeting"
   - id: 59144 # Linea
-    rpc_config:
-      url: https://rpc.linea.build # We recommend you change this to a dedicated RPC provider
     start_block: 367801
     contracts:
       - name: LineaGreeter
@@ -56,7 +54,7 @@ networks:
               - name: "Greeting"
 ```
 
-Greeter indexer listens to `NewGreeting` and `ClearGreeting` events from both `PolygonGreeter` and `LineaGreeter` contracts to update the `Greeting` entity.
+The Greeter indexer listens to `NewGreeting` and `ClearGreeting` events from both `PolygonGreeter` and `LineaGreeter` contracts to update the `Greeting` entity.
 
 ### Schema file
 
