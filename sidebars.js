@@ -64,6 +64,10 @@ module.exports = {
       items: [
         {
           type: "doc",
+          id: "multichain-indexing",
+        },
+        {
+          type: "doc",
           id: "generated-files",
         },
         {
