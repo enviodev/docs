@@ -11,13 +11,13 @@ slug: /common-issues
 
 This error indicates that the indexer is unable to find the necessary files to start the indexer.
 
-Delete `./generated` folder and run
+Delete the `generated` folder and run
 
 ```bash
 envio codegen
 ```
 
-> Always run `envio codegen` straight after cloning an indexer repo  using Envio.
+> Always run `envio codegen` straight after cloning an indexer repo using Envio.
 
 ## Indexer not starting at the specified start block
 
