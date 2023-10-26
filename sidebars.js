@@ -46,6 +46,10 @@ module.exports = {
         },
         {
           type: "doc",
+          id: "contract-import",
+        },
+        {
+          type: "doc",
           id: "hosted-solution",
         },
         {
