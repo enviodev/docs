@@ -65,7 +65,7 @@ networks:
 🏗️ GraphQL Schema: The GraphQL schema file (e.g., schema.graphql) outlines your application's data model. It defines the available data types that directly correspond to database tables, and the event handlers you create are responsible for creating and updating records within those tables. Additionally, the GraphQL API is automatically generated based on the entity types specified in the schema.graphql file, to allow access to the indexed data. Here's example schema from the live Greeter Contract contract:
 
 ``` graphql
-type Greeting @entity {
+type Greeting {
  id: ID!
  latestGreeting: String!
  numberOfGreetings: Int!

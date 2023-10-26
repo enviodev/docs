@@ -84,7 +84,7 @@ The `schema.graphql` file contains the definitions of all user-defined entities.
 Example schema definition for Simple scenario:
 
 ```graphql
-type Account @entity {
+type Account {
   id: ID!
   address: Bytes!
   balance: Float!

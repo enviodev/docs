@@ -59,7 +59,7 @@ The Greeter indexer listens to `NewGreeting` and `ClearGreeting` events from bot
 ### Schema file
 
 ```graphql
-type Greeting @entity {
+type Greeting {
   id: ID!
   greetings: [String!]!
   latestGreeting: String!

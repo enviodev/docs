@@ -34,7 +34,7 @@ To ensure that the sync speeds from different indexers were as comparable as pos
 The schema used for all indexers during benchmarking was defined as follows:
 
 ```graphql
-type Swap @entity {
+type Swap {
   id: Bytes!
   sender: Bytes! # address
   recipient: Bytes! # address
