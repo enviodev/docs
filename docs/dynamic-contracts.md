@@ -77,3 +77,4 @@ For more information on how to write the event handlers file, go [here](./event-
 
 When a dynamic contract is loaded, we load all the events in the block in which the contract was registered (even if they were from a previous transaction). Please let us know if this is an issue for you, as the team also has a solution where it only loads events after the event that loaded the contract. We decided this was better since many contracts emit an event upon creation, and this occurs before the contract is loaded (for example, in Uniswap v2).
 
+
