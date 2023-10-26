@@ -72,7 +72,3 @@ context.contractRegistration.addSimpleNft(event.params.contractAddress);
 > The syntax is exactly same for JavaScript, TypeScript and ReScript.
 
 For more information on how to write the event handlers file, go [here](./event-handlers.mdx).
-
-## Important Note
-
-Events may be lost from the newly registered contract if they were emitted before the event that registers the new contract (even in the same block). For example, if there is an event inside the constructor or initializer of the function, and that was emitted before the event that is used to register the contract, that event will be lost. All other events will be indexed correctly.
