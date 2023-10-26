@@ -143,6 +143,5 @@ The indexer will then start indexing the contract specified in the `config.yaml`
 
 ## Troubleshooting
 
-The contract import functionality uses an etherscan client to retrieve the contract details.
 Should the request for the contract details fail, the process will backoff and retry in duration that increases exponentially with each retry.
 If the backoff duration exceeds 32 seconds, the process will fail - please contact the team on [Discord](https://discord.gg/mZHNWgNCAc) for more help.
