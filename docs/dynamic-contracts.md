@@ -75,4 +75,5 @@ For more information on how to write the event handlers file, go [here](./event-
 
 ## Important Note
 
-Events may be lost from the newly registered contract if they were emitted before the event that registers the new contract (even in the same block). For example, if there is an event inside the constructor or initializer of the function, and that was emitted before the event that is used to register the contract, that event will be lost. All other events will be indexed correctly.
+When a dynamic contract is loaded, we load all the events in the block in which the contract was registered (even if they were from a previous transaction). Please let us know if this is an issue for you, as the team also has a solution where it only loads events after the event that loaded the contract. We decided this was better since many contracts emit an event upon creation, and this occurs before the contract is loaded (for example, in Uniswap v2).
+
