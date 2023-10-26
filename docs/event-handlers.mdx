@@ -69,6 +69,13 @@ If you want to load a label with multiple entities grouped together as an array,
 <summary>A full example using labels:</summary>
 
 ```yaml
+# config.yaml
+networks:
+  - id: 12345 #Your chain Id
+    contracts:
+      - name: Greeter
+        # ... other fields
+        events:
           - event: "TestEvent"
             requiredEntities:
               - name: "A"
@@ -76,22 +83,71 @@ If you want to load a label with multiple entities grouped together as an array,
                   - "allAs"
                 label:
                   - "singleA"
+        # ... rest of your config file
 ```
 
-With that config you could use this in your loaders:
-
-```javascript
-  context.A.allALoad(["id1", "id2", "id3"])
-  context.A.singleALoad("singleId")
+```graphql
+# schema.graphql 
+type A {
+  id: ID!
+  someField: String!
+}
 ```
 
-And in your handlers:
+With that config you could use this in your loaders (and handlers):
+<Tabs>
+  <TabItem value="javascript" label="Javascript">
+
 ```javascript
+GreeterContract.TestEvent.loader((~event, ~context) => {
+    context.A.allALoad(["id1", "id2", "id3"])
+    context.A.singleALoad("singled")
+    // ... other loaders
+})
+GreeterContract.TestEvent.handler((~event, ~context) => {
   let arrayOfAs = context.A.allA
   let singleA = context.A.singleA
 
-  // rest of the handler that uses or updates these entities.
+  // ... rest of the handler that uses or updates these entities.
+})
 ```
+
+  </TabItem>
+  <TabItem value="typescript" label="Typescript">
+
+```typescript
+GreeterContract_TestEvent_loader(({event, context}) => {
+    context.A.allALoad(["id1", "id2", "id3"])
+    context.A.singleALoad("singled")
+    // ... other loaders
+})
+GreeterContract_TestEvent_handler(({event, context}) => {
+  let arrayOfAs = context.A.allA
+  let singleA = context.A.singleA
+
+  // ... rest of the handler that uses or updates these entities.
+})
+```
+
+  </TabItem>
+  <TabItem value="rescript" label="Rescript">
+
+```rescript
+GreeterContract.TestEvent.loader((event, context) => {
+    context.a.allALoad(["id1", "id2", "id3"])
+    context.a.singleALoad("singled")
+    // ... other loaders
+})
+GreeterContract.TestEvent.handler((event, context) => {
+  let arrayOfAs = context.a.allA
+  let singleA = context.a.singleA
+
+  // ... rest of the handler that uses or updates these entities.
+})
+```
+
+  </TabItem>
+</Tabs>
 </details>
 
 ### Handler function
