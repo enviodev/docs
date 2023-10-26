@@ -55,13 +55,44 @@ Loader functions are used to load the specific entities (defined in the `schema.
 
 Entities with specific IDs can be loaded via `context.<EntityName>.<label>Load(<id>)`.
 
-If no label name has been defined in the `config.yaml` file, then entities can be loaded via `context.<EntityName>.load(<id>)`.
+If no labels has been defined in the `config.yaml` file, then entities can be loaded via `context.<EntityName>.load(<id>)`. You can call this `.load` function to load as many entities as you want to be available in your handler.
 
 > Dev note: 📢 For indexers built using `ReScript`, use a lower case for first letter of entityName when accessing it via context (i.e. `context.greeting` instead of `context.Greeting`).
 
-A single event can be used to modify single or multiple entities.
+A single event can be used to load single or multiple entities in the loader (and modify/create as many entities as you want in the handler).
 
-Each entity that is to be modified by the event must be defined in the `requiredEntities` field of the event in the `config.yaml` file.
+Each entity that is to be loaded by the event must be defined in the `requiredEntities` field of the event in the `config.yaml` file.
+
+If you want to load a label with multiple entities grouped together as an array, an arary label is the aproach to go with. This is done by adding `arrayLabels` with a list of array labels to use with the entity to the label definition in the `config.yaml` file.
+
+<details>
+<summary>A full example using labels:</summary>
+
+```yaml
+          - event: "TestEvent"
+            requiredEntities:
+              - name: "A"
+                arrayLabels:
+                  - "allAs"
+                label:
+                  - "singleA"
+```
+
+With that config you could use this in your loaders:
+
+```javascript
+  context.A.allALoad(["id1", "id2", "id3"])
+  context.A.singleALoad("singleId")
+```
+
+And in your handlers:
+```javascript
+  let arrayOfAs = context.A.allA
+  let singleA = context.A.singleA
+
+  // rest of the handler that uses or updates these entities.
+```
+</details>
 
 ### Handler function
 
