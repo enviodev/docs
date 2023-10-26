@@ -91,4 +91,4 @@ By builders, for builders. Envio is a dev-friendly, speed-optimized, modern bloc
 
 If you're a blockchain developer looking to enhance your development process and unlock the true potential of Web3 infrastructure, look no further. Join our growing community of elite developers, check out our [docs](https://docs.envio.dev/docs/overview), and let's work together to revolutionize the blockchain world and propel your project to the next level.
 
-Follow Envio on [Twitter](https://twitter.com/envio_indexer) and/or [Hey](https://lenster.xyz/u/envio) (formerly Lenster) for updates on new features, or jump into our [Discord](http://discord.gg/gt7yEUZKeB) for any questions.
+Follow Envio on [Twitter](https://twitter.com/envio_indexer) and/or [Hey](https://lenster.xyz/u/envio) (formerly known as Lenster) for updates on new features, or jump into our [Discord](http://discord.gg/gt7yEUZKeB) for any questions.
