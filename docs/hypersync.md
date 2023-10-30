@@ -22,13 +22,13 @@ Here is a table of currently supported networks on Hypersync:
 | Ethereum Mainnet | 1          |
 | Ethereum Goerli  | 5          |
 | Optimism         | 10         |
-| Base             | 8453       |
 | BSC              | 56         |
 | Gnosis           | 100        |
 | Polygon          | 137        |
+| Base             | 8453       |
 | ArbitrumOne      | 42161      |
 | Avalanche        | 43114      |
-| BaseTestnet      | 84531      |
 | Linea            | 59144      |
+| BaseTestnet      | 84531      |
 
 Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9qt8gZ2fX)
