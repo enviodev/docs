@@ -29,6 +29,6 @@ Here is a table of currently supported networks on Hypersync:
 | ArbitrumOne      | 42161      |
 | Avalanche        | 43114      |
 | Linea            | 59144      |
-| Sepolia Testnet  | 11155111   |
+| Ethereum Sepolia  | 11155111   |
 
 Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9qt8gZ2fX)
