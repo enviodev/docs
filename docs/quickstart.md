@@ -111,4 +111,12 @@ To delete the docker images used for the local development environment, run
 envio stop
 ```
 
+## What next?
+
+Once you have successfully finished the Quickstart tutorial, you are ready to become a blockchain indexing wizard!
+
+Jump into [Importing Contracts](./contract-import.md) page to generate a basic indexing template for a contract that is deployed on blockchain!
+
+You can also start to modify the handlers to your own custom indexing logic.
+
 ---
