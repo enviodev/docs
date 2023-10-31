@@ -139,3 +139,11 @@ open http://localhost:8080
 ```
 
 The hasura admin-secret is `testing` and the tables can be viewed in the `data` tab or queried from the playground
+
+### What next?
+
+Once you have successfully finished the Greeter tutorial, you are ready to become a blockchain indexing wizard!
+
+Jump into [Importing Contracts](./contract-import.md) page to generate a basic indexing template for a contract that is deployed on blockchain!
+
+You can also start to modify the handlers to your own custom indexing logic.
