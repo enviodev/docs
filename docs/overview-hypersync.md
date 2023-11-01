@@ -5,13 +5,13 @@ sidebar_label: Overview
 slug: /overview-hypersync
 ---
 
-HyperSync is the state of the art way to extract on-chain data to JSON, Arrow or Parquet.
+HyperSync is the state of the art way to extract on-chain data to JSON, Arrow or Parquet files.
 
 HyperIndex heavily relies on HyperSync in order to index more than 100x faster than traditional indexing tools.
 
-This API has been designed from the ground up to provide both speed and felxiblity.
+This API has been designed from the ground up to provide both speed and flexibility.
 
-The goal is that this API will be the defacto faster and most flexible way for you to extract any onchain data that you need.
+The goal is that this API will be the defacto way for you to extract any on-chain data that you need in a faster and more flexible way.
 
 > ### Disclaimer
 >
