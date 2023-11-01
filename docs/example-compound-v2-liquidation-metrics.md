@@ -7,7 +7,7 @@ slug: /example-liquidation-metrics
 
 # Compound V2 Liquidation Metrics
 
-This [repo](https://github.com/enviodev/liquidation-metrics/tree/main) contains an example Envio indexer built using TypeScript for the Compound V2 forks across multiple chains.
+This [repo](https://github.com/enviodev/liquidation-metrics) contains an example Envio indexer built using TypeScript for the Compound V2 forks across multiple chains.
 
 This repo was forked from the [original indexer](https://github.com/JossDuff/liquidation-metrics/) built by Joss Duff, one of Envio's first grantees.
 
@@ -31,7 +31,7 @@ The indexer has been built using v0.0.21 of Envio.
 
 ## Steps to run the indexer
 
-1. Clone the [repo](https://github.com/enviodev/liquidation-metrics/tree/main)
+1. Clone the [repo](https://github.com/enviodev/liquidation-metrics)
 1. Install any other pre-requisite packages for Envio listed [here](https://docs.envio.dev/docs/installation#prerequisites)
 1. Install Envio via `npm i -g envio@v0.0.21`
 1. Generate indexing code via `envio codegen`
