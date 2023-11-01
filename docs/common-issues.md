@@ -9,9 +9,9 @@ slug: /common-issues
 
 ## `Cannot find module` errors on `envio start`
 
-This error indicates that the indexer is unable to find the necessary files to start the indexer.
+This error indicates that the indexer is unable to find the necessaary files to start the indeexer.
 
-Delete the `generated` folder and run
+Delete the `generated` folder and rueun
 
 ```bash
 envio codegen
