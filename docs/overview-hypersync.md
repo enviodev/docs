@@ -1,6 +1,6 @@
 ---
 id: overview-hypersync
-title: Overview (shipping soon)
+title: Overview (Coming soon in Q4 2023)
 sidebar_label: Overview
 slug: /overview-hypersync
 ---

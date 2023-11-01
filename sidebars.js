@@ -2,7 +2,7 @@ module.exports = {
   someSidebar: [
     {
       type: "category",
-      label: "HyperIndex (shipped)",
+      label: "HyperIndex (Live)",
       items: [
         "overview",
         {
@@ -70,12 +70,12 @@ module.exports = {
     },
     {
       type: "category",
-      label: "HyperRPC (alpha available)",
+      label: "HyperRPC (Alpha available)",
       items: ["overview-hyperrpc"],
     },
     {
       type: "category",
-      label: "HyperSync (shipping Q4 2023)",
+      label: "HyperSync (Coming soon in Q4 2023)",
       items: ["overview-hypersync"],
     },
   ],
