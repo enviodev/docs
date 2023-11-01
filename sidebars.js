@@ -1,139 +1,82 @@
-// Sections to be populated still have been commented out of the sidebar so long
 module.exports = {
   someSidebar: [
-    "overview",
     {
       type: "category",
-      label: "Getting Started",
+      label: "HyperIndex (Live)",
       items: [
+        "overview",
         {
-          type: "doc",
-          id: "installation",
+          type: "category",
+          label: "Getting Started",
+          items: ["installation", "quickstart", "greeter-tutorial"],
         },
         {
-          type: "doc",
-          id: "quickstart",
+          type: "category",
+          label: "Guides",
+          items: [
+            "envio-basics",
+            "configuration-file",
+            "schema-file",
+            "event-handlers",
+            "subgraph-migration",
+            "contract-import",
+            "hosted-solution",
+            "cli-commands",
+            "navigating-hasura",
+          ],
         },
         {
-          type: "doc",
-          id: "greeter-tutorial",
+          type: "category",
+          label: "Advanced",
+          items: [
+            "multichain-indexing",
+            "generated-files",
+            "hypersync",
+            "sync-config",
+            "dynamic-contracts",
+            "persisted_files",
+            "terminology",
+          ],
         },
+        {
+          type: "category",
+          label: "Troubleshoot",
+          items: ["logging", "common-issues", "error-codes", "reserved-words"],
+        },
+        // {
+        //   type: "category",
+        //   label: "Education",
+        //   items: [
+        //     "what-is-indexer",
+        //     "system-architecture",
+        //     "indexing-process",
+        //     "litepaper",
+        //   ],
+        // },
+        // "working-with-foundry",
+        // "integrating-existing-contract",
+        // "migrating-from-the-graph",
+        // {
+        //   type: "category",
+        //   label: "Advanced",
+        //   items: [
+        //     "runtime",
+        //     "using-as-backend",
+        //     "using-testing-framework",
+        //     "dashboard-alerts",
+        //   ],
+        // },
       ],
     },
     {
       type: "category",
-      label: "Guides",
-      items: [
-        {
-          type: "doc",
-          id: "envio-basics",
-        },
-        {
-          type: "doc",
-          id: "configuration-file",
-        },
-        {
-          type: "doc",
-          id: "schema-file",
-        },
-        {
-          type: "doc",
-          id: "event-handlers",
-        },
-        {
-          type: "doc",
-          id: "subgraph-migration",
-        },
-        {
-          type: "doc",
-          id: "contract-import",
-        },
-        {
-          type: "doc",
-          id: "hosted-solution",
-        },
-        {
-          type: "doc",
-          id: "cli-commands",
-        },
-        {
-          type: "doc",
-          id: "navigating-hasura",
-        },
-      ],
+      label: "HyperRPC (Alpha available)",
+      items: ["overview-hyperrpc"],
     },
     {
       type: "category",
-      label: "Advanced",
-      items: [
-        {
-          type: "doc",
-          id: "multichain-indexing",
-        },
-        {
-          type: "doc",
-          id: "generated-files",
-        },
-        {
-          type: "doc",
-          id: "hypersync",
-        },
-        {
-          type: "doc",
-          id: "sync-config",
-        },
-        {
-          type: "doc",
-          id: "dynamic-contracts",
-        },
-        {
-          type: "doc",
-          id: "persisted_files",
-        },
-        {
-          type: "doc",
-          id: "terminology",
-        },
-      ],
-    },
-
-    {
-      type: "category",
-      label: "Troubleshoot",
-      items: [
-        {
-          type: "doc",
-          id: "logging",
-        },
-        {
-          type: "doc",
-          id: "common-issues",
-        },
-        {
-          type: "doc",
-          id: "error-codes",
-        },
-        {
-          type: "doc",
-          id: "reserved-words",
-        },
-      ],
+      label: "HyperSync (Coming soon in Q4 2023)",
+      items: ["overview-hypersync"],
     },
   ],
 };
-
-//   Education: [
-//     "what-is-indexer",
-//     "system-architecture",
-//     "indexing-process",
-//     "litepaper",
-// ],
-// "working-with-foundry",
-// "integrating-existing-contract",
-// "migrating-from-the-graph",
-//   Advanced: [
-//     "runtime",
-//     "using-as-backend",
-//     "using-testing-framework",
-//     "dashboard-alerts",
-// ],
