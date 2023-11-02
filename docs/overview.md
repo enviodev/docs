@@ -5,7 +5,7 @@ sidebar_label: Overview
 slug: /overview
 ---
 
-Envio (now reffered to as HyperIndex) is a real-time indexer built specifically for EVM-compatible blockchains, providing developers with a seamless and efficient indexing solution. Designed to optimize the user experience, Envio offers automatic code generation and flexible language support.
+Envio (now referred to as HyperIndex) is a real-time indexer built specifically for EVM-compatible blockchains, providing developers with a seamless and efficient indexing solution. Designed to optimize the user experience, Envio offers automatic code generation and flexible language support.
 Indexers on Envio can be written in JavaScript, TypeScript or ReScript.
 
 Indexing blockchain data becomes effortless with Envio, offering fast syncing speed and simplified setup steps. Detailed logging and error messaging are provided for effective troubleshooting and debugging.
