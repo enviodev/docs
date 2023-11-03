@@ -12,6 +12,16 @@ module.exports = {
         },
         {
           type: "category",
+          label: "Examples",
+          items: [
+            "example-liquidation-metrics",
+            "example-uniswap-v3",
+            "example-aave-token",
+            "example-reNFT",
+          ],
+        },
+        {
+          type: "category",
           label: "Guides",
           items: [
             "envio-basics",
