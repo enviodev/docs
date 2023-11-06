@@ -1,7 +1,7 @@
 ---
 id: hosted-service
 title: Hosted Service
-sidebar_label: Hosted service
+sidebar_label: Hosted Service
 slug: /hosted-service
 ---
 
@@ -28,8 +28,7 @@ Envio's hosted service is the easiest way to deploy and host your indexer. We pr
 1. Deploy your indexer via git
 ![add org](/img/hosted-service/push.jpg)
 
->  For subsequent releases, we recommend setting branch protection rules that prevent direct pushes to your release branch. Instead , making pull requests from a feature branch into the release branch is recommended📓
-
+> For subsequent releases, we recommend setting branch protection rules that prevent direct pushes to your release branch. Instead, making pull requests from a feature branch into the release branch is recommended📓
 
 ## Deployment limits
 
@@ -37,7 +36,6 @@ Developers can deploy 3 indexers per organisation and 3 deployments per indexer.
 
 ## Pricing
 
-The hosted service is currently a free service. We are currently refining the pricing tiers and are dedicated to working along app teams and developers to ensure pricing is sustainable. 
-
+The hosted service is currently a free service. We are currently refining the pricing tiers and are dedicated to working along app teams and developers to ensure that the pricing is sustainable.
 
 ---
