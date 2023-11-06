@@ -30,7 +30,7 @@ module.exports = {
             "event-handlers",
             "subgraph-migration",
             "contract-import",
-            "hosted-solution",
+            "hosted-service",
             "cli-commands",
             "navigating-hasura",
           ],
