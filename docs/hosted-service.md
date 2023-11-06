@@ -5,18 +5,18 @@ sidebar_label: Hosted service
 slug: /hosted-service
 ---
 
-<sub><sup> Our hosted service is still in beta 👷 </sup></sub>
+<sub><sup> NOTE: Our hosted service is still in beta 👷 </sup></sub>
 
 ## Overview
 
-Envio's hosted service is the easiest way to deploy and host your indexer. We provide the infrastructure for hosting. 
+Envio's hosted service is the easiest way to deploy and host your indexer. We provide the entire infrastructure for hosting and users are just required to push the latest versions of their indexer to GitHub for deployment.
 
 ## Deploying an indexer to the hosted service
 
 1. [Login with GitHub](https://envio.dev/app/login)
 1. Add an organisation or your personal GitHub user profile
 ![add org](/img/hosted-service/add-org.jpg)
-1. Connect our github app to an indexer
+1. Connect the Envio Deployments GitHub app to an organisation
 ![add org](/img/hosted-service/connect-org.jpg)
 1. Add & configure your indexer
 ![add org](/img/hosted-service/add-indexer.jpg)
@@ -28,10 +28,10 @@ Envio's hosted service is the easiest way to deploy and host your indexer. We pr
 1. Deploy your indexer via git
 ![add org](/img/hosted-service/push.jpg)
 
->  For subsequent releases we recommend setting branch protection rules that prevent direct pushes to your release branch and rather making pull requests from a feature branch into the release branch📓
+>  For subsequent releases, we recommend setting branch protection rules that prevent direct pushes to your release branch. Instead , making pull requests from a feature branch into the release branch is recommended📓
 
 
-## Limits
+## Deployment limits
 
 Developers can deploy 3 indexers per organisation and 3 deployments per indexer. Deployments can be deleted in the hosted service to make space for more deployments.
 
