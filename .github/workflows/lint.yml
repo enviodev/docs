@@ -7,24 +7,36 @@ on:
       - main
 
 jobs:
-  lint:
-    name: Lint Code Base, Spelling, Link Check
+  setup:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install yarn
-        run: npm i -g yarn
-
-      - name: Lint
-        uses: Consensys/docs-gha/lint@main
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          node-version: "18" # Use the Node.js version that matches your project requirements
 
+      - name: Install Yarn
+        run: yarn install
+
+  lint:
+    name: Lint Code Base, Spelling, Link Check
+    needs: setup
+    runs-on: ubuntu-latest
+    permissions:
+        contents: read
+        steps:
+            - uses: actions/checkout@v3
+            
+            - name: Lint
+            uses: Consensys/docs-gha/lint@main
+            with:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                
   linkCheck:
     name: Link Checking
+    needs: setup
     runs-on: ubuntu-latest
     strategy:
       matrix:
