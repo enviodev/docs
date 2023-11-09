@@ -48,10 +48,6 @@ Envio leverages a comprehensive stack of technologies, including [GitHub](https:
 
 In essence, Envio offers the easiest way to deploy and host your indexer, handling the entire infrastructure and eliminating worries about complex infrastructure setup and management. This approach allows developers to focus on their dApp's core functionality, ensuring a top-tier user experience.
 
-### Deploying An Indexer To Envio’s Hosted Service
-
-Developers can deploy 3 indexers per organisation and 3 deployments per indexer. Deployments can be deleted in the hosted service to make space for more deployments.
-
 For more information on how to deploy an indexer to Envio’s hosted service visit our [docs](https://docs.envio.dev/docs/hosted-service).
 
 As Web3 continues to evolve, Envio's dedicated hosted service remains a prime choice for those seeking to simplify their development process, unlock the true potential of Web3 infrastructure, and join a growing community dedicated to enhancing the Web3 ecosystem.
