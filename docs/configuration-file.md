@@ -29,37 +29,24 @@ The `config.yaml` outlines the specifications for the indexer including details 
         - `name` - The name of the required entity (must match an entity defined in `schema.graphql`)
         - `labels` - This is an optional name given for loaded entities in the loaders that can be used in the event handlers (useful in differentiating entities that should be modified differently by the same event)
 
-## Example `config.yaml` from Greeter template using Rescript language:
+After you have set up your config file and the scheme, you are ready to generate the indexing code required to write the event handlers.
 
-```yaml
-name: Greeter
-description: Greeter indexer
-networks:
-  - id: 137 # Polygon
-    start_block: 45336336
-    contracts:
-      - name: PolygonGreeter
-        abi_file_path: abis/greeter-abi.json
-        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
-        handler: ./src/EventHandlers.bs.js
-        events:
-          - event: "NewGreeting"
-            requiredEntities:
-              - name: "Greeting"
-                labels:
-                  - "greetingWithChanges"
-          - event: "ClearGreeting"
-            requiredEntities:
-              - name: "Greeting"
-                labels:
-                  - "greetingWithChanges"
-```
-
-After you have set up your config file you can run `envio codegen` to generate the functions that you will use in your handlers.
+Run:
 
 ```bash
 envio codegen
 ```
+
+## Contract Addresses
+
+For the `address` field in the configuration file, the address that emits the events should be used.
+
+If the contract uses a transparent proxy pattern, the address of the proxy contract should be used in the configuration file as this is the contract that emits the events.
+However, the ABI of the contract should be retrieved from the implementation contract.
+
+If the contract does not use a proxy contract, then the same address from which ABI was obtained should be used in the configuration file.
+
+Should there be multiple contract addresses from which events should be indexed from, they can be entered as an array in format `["0xAddress1", "0xAddress2"]` for the `address` field.
 
 ## Human readable ABI format
 
@@ -90,3 +77,29 @@ More information on Human Readable ABI parsing is available [here](https://docs.
 - Contract name field (`Greeter` in the example above) should contain a single word, as it is used to create a namespace for functions in the indexer.
 - Address field should contain the address of the proxy contract, which emits the events on the specified blockchain.
 - Should the human readable ABI format not be used, then the ABI which is referenced in config file needs to be copied from the implementation contract into the specified abi directory.
+
+## Example `config.yaml` from Greeter template using Rescript language:
+
+```yaml
+name: Greeter
+description: Greeter indexer
+networks:
+  - id: 137 # Polygon
+    start_block: 45336336
+    contracts:
+      - name: PolygonGreeter
+        abi_file_path: abis/greeter-abi.json
+        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
+        handler: ./src/EventHandlers.bs.js
+        events:
+          - event: "NewGreeting"
+            requiredEntities:
+              - name: "Greeting"
+                labels:
+                  - "greetingWithChanges"
+          - event: "ClearGreeting"
+            requiredEntities:
+              - name: "Greeting"
+                labels:
+                  - "greetingWithChanges"
+```
