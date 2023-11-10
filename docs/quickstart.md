@@ -101,7 +101,7 @@ envio dev
 
 This will automatically open up the Hasura dashboard where you can view the data that has been indexed.
 
-Admin-secret for local Hasura is `testing`.
+Admin-secret / password for local Hasura is `testing`.
 
 ## Stopping the indexer
 

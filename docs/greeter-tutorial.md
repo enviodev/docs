@@ -138,7 +138,7 @@ You can view the indexed results on a local Hasura server.
 open http://localhost:8080
 ```
 
-The hasura admin-secret is `testing` and the tables can be viewed in the `data` tab or queried from the playground
+The hasura admin-secret / password is `testing` and the tables can be viewed in the `data` tab or queried from the playground
 
 ### What next?
 
