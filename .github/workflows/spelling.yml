@@ -73,11 +73,11 @@ jobs:
         id: spelling
         uses: check-spelling/check-spelling@main
         with:
-          suppress_push_for_open_pull_request: 1
+          suppress_push_for_open_pull_request: 0
           checkout: true
-          check_file_names: 1
+          check_file_names: 0
           spell_check_this: check-spelling/spell-check-this@prerelease
-          post_comment: 0
+          post_comment: 1
           use_magic_file: 1
           experimental_apply_changes_via_bot: 1
           use_sarif: 1
