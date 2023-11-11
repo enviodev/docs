@@ -11,13 +11,20 @@ This unique RPC has been designed from the ground up to optimize for performance
 
 Its optimizations mean that while it is suitable for heavy-lifting data extraction, it cannot be used for regular RPC calls to post transactions. Currently method support is limited to:
 
+> - `eth_chainId`
+> - `eth_blockNumber`
 > - `eth_getBlockByNumber`
+> - `eth_getBlockByHash`
+> - `eth_getTransactionByHash`
+> - `eth_getTransactionByBlockHashAndIndex`
+> - `eth_getTransactionByBlockNumberAndIndex`
+> - `eth_getTransactionReceipt`
 > - `eth_getBlockReceipts`
 > - `eth_getLogs`
-> - `eth_getFilterLogs` (Coming soon)
-> - `eth_uninstallFilter` (Coming soon)
-> - `eth_newFilter` (Coming soon)
-> - `eth_blockNumber`
+> - `eth_getFilterLogs`
+> - `eth_getFilterChanges`
+> - `eth_uninstallFilter`
+> - `eth_newFilter`
 
 These methods are already supported on a wide selection of chains (the most up-to-date list can be found [here](./hypersync.md))
 
