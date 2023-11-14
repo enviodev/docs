@@ -21,13 +21,23 @@ envio init
 ### Name your indexer
 
 ```bash
-? Name your indexer:
+? Name your indexer: (My Envio Indexer)
 ```
 
 ### Choose the project directory (default is the current directory)
 
 ```bash
 ? Set the directory:  (.) .
+```
+
+### Choose a language of your choice for the event handlers
+
+```bash
+? Which language would you like to use?
+> "Javascript"
+  "Typescript"
+  "Rescript"
+[↑↓ to move, enter to select, type to filter]
 ```
 
 ### Select `ContractImport` initialization option
@@ -40,51 +50,52 @@ envio init
 [↑↓ to move, enter to select, type to filter]
 ```
 
+### Select `Explorer or Local` option
+
+```bash
+? Would you like to import from a block explorer or a local abi?
+> Explorer
+  Local
+```
+
+In this example we will select explorer. If it is a verified, deployed contract on one of our supported chains this is the quickest setup as it will retrieve all needed contract information from a block explorer.
+
 ### Select the blockchain that the contract is deployed on
 
 ```bash
 ? Which blockchain would you like to import a contract from?
-> Mainnet
-  Goerli
-  Optimism
-  Bsc
-  Matic
-  OptimismGoerli
-  ArbitrumOne
+> etherem_mainnet
+  goerli
+  optimism
+  base
+  bsc
+  gnosis
+  polygon
 [↑↓ to move, enter to select, type to filter]
 ```
 
 List of supported networks:
 
-- `Mainnet`
-- `Goerli`
-- `Optimism`
-- `Bsc`
-- `Matic`
-- `OptimismGoerli`
-- `ArbitrumOne`
-- `ArbitrumGoerli`
-- `Avalanche`
-- `Mumbai`
-- `Sepolia`
+- `ethereum-mainnet`
+- `goerli`
+- `optimism`
+- `base`
+- `bsc`
+- `gnosis`
+- `polygon`
+- `arbitrum-one`
+- `avalanche`
+- `linea`
 
 > In the experimental state, this feature supports importing a single contract from a single blockchain.
 
 ### Enter in the address of the contract to import
 
 ```bash
-? [BETA VERSION] What is the address of the contract?
+? What is the address of the contract? (Use the proxy address if your abi is a proxy implementation)
 ```
 
-### Choose a language of your choice for the event handlers
-
-```bash
-? Which language would you like to use?
-> "Javascript"
-  "Typescript"
-  "Rescript"
-[↑↓ to move, enter to select, type to filter]
-```
+Note if you are using a proxy contract with an implementation, the address should be for the proxy.
 
 ## Configuration file
 
