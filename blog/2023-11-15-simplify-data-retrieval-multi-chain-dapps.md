@@ -68,7 +68,7 @@ numberOfGreetings: Int!
 }
 ```
 
-Envio allows users to specify a single handler to process common events across contracts deployed on multiple networks. The code snippet example below uses Typescript as the preferred language.
+Envio allows users to specify a single handler to process common events across contracts deployed on multiple networks. The code snippet example below uses TypeScript as the preferred language.
 
 ```typescript
 import {
