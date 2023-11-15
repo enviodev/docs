@@ -55,7 +55,7 @@ contracts:
 address: "0xdEe21B97AB77a16B4b236F952e586cf8408CF32A"
 ```
 
-The Greeter indexer listens to `NewGreeting` events from both the Polygon and [Linea Greeter contracts](https://docs.linea.build/blog/index-greeter-contract-using-envio) to update the Greeting entity.
+The Greeter indexer listens to `NewGreeting` events from both the Polygon and Linea [Greeter contracts](https://docs.linea.build/blog/index-greeter-contract-using-envio) to update the Greeting entity.
 
 Through Envio's multi-chain indexing, builders can specify their event handler to operate against a common schema. The schema.graphql file would look like this:
 
