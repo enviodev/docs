@@ -26,7 +26,7 @@ To witness the power of this advancement in action, let's explore a practical ex
 
 The Greeter contract is a very simple smart contract that allows a user to write a greeting message on the blockchain and is deployed on both the [Polygon](https://polygon.technology/) and the [Linea](https://linea.xyz/) blockchain, respectively. For this example, we will only look at the `NewGreeting` event.
 
-In the config.yaml file, a user would specify the networks, contract specifications and event information to be used in the indexing process.
+In the `config.yaml` file, a user would specify the networks, contract specifications and event information to be used in the indexing process.
 
 ```yaml
 name: Greeter
