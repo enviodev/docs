@@ -126,7 +126,7 @@ Once you have verified that the indexer is working for the Greeter contracts, th
 
 Deploying an indexer onto the hosted service allows you to extract information via graphQL queries into your front-end or some back-end application.
 
-Navigate to the [Explorer](https://envio.dev/explorer) page to start deploying your indexer and refer to this [documentation](http://localhost:3000/docs/hosted-service) for more information on deploying your indexer.
+Navigate to the [hosted service](https://envio.dev/app/login) to start deploying your indexer and refer to this [documentation](http://localhost:3000/docs/hosted-service) for more information on deploying your indexer.
 
 ### What next?
 
