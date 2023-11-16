@@ -7,26 +7,6 @@ slug: /greeter-tutorial
 
 This tutorial will take you through a step by step guide to indexing a live Greeter smart contract using Envio.
 
-<!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
-
-<!-- - [Background](#background)
-  * [Greeter contract](#greeter-contract)
-  * [Hardhat](#hardhat)
-  * [Envio](#envio)
-- [Pre-requisites](#pre-requisites)
-  * [Environment tooling](#environment-tooling)
-  * [Install Envio](#install-envio)
-- [Step by step instructions](#step-by-step-instructions)
-  * [1. Create the project folders](#1-create-the-project-folders)
-  * [2. Initialize the indexer](#2-initialize-the-indexer)
-  * [3. Run our docker containers for local development](#3-run-our-docker-containers-for-local-development)
-  * [4. Clone the contracts repository](#4-clone-the-contracts-repository)
-  * [5. Deploy the contracts](#5-deploy-the-contracts)
-  * [6. Start indexing!](#6-start-indexing)
-  * [A couple extras](#a-couple-extras) -->
-
-<!-- TOC end -->
-
 ## Background
 
 ### [Greeter contract](https://github.com/Float-Capital/hardhat-template)
@@ -139,6 +119,14 @@ open http://localhost:8080
 ```
 
 The hasura admin-secret / password is `testing` and the tables can be viewed in the `data` tab or queried from the playground
+
+### Deploy the indexer onto the hosted service
+
+Once you have verified that the indexer is working for the Greeter contracts, then you are ready to deploy the indexer onto our hosted service.
+
+Deploying an indexer onto the hosted service allows you to extract information via graphQL queries into your front-end or some back-end application.
+
+Navigate to the [hosted service](https://envio.dev/app/login) to start deploying your indexer and refer to this [documentation](http://localhost:3000/docs/hosted-service) for more information on deploying your indexer.
 
 ### What next?
 
