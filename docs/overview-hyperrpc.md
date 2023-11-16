@@ -26,7 +26,7 @@ Its optimizations mean that while it is suitable for heavy-lifting data extracti
 > - `eth_uninstallFilter`
 > - `eth_newFilter`
 
-It is recommended for best performance of filter related methods to use the 'stateful' rpc endpoints, since the filter is a stateful object. These include `eth_getFilterLogs`, `eth_getFilterChanges`, `eth_uninstallFilter`, `eth_newFilter`. Please note, the performance of the stateful rpc endpoints might not be quite as good for other calls as the standard rpc endpoint.
+It is recommended for best performance of filter related methods to use the 'stateful' rpc endpoints, since the filter methods are stateful. These include `eth_getFilterLogs`, `eth_getFilterChanges`, `eth_uninstallFilter`, `eth_newFilter`. Please note, the performance of the stateful rpc endpoints might not be quite as good for other calls as the standard rpc endpoint.
 These methods are already supported on a wide selection of chains (the most up-to-date list can be found [here](./hypersync.md))
 
 Testing the endpoint and providing feedback is hugely valuable. To access these endpoints for free please join our [Discord](https://discord.gg/Q9qt8gZ2fX) and reach out or alternatively log in via GitHub on the main website to access your endpoints.
