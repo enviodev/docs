@@ -8,7 +8,7 @@ slug: /envio-bounty-graduate-poap-multi-chain-indexer
 
 <!--truncate-->
 
-We are thrilled to announce significant milestone in our Envio Bounty Program. In the ever-evolving world of blockchain development, the importance of seamless access to on-chain data cannot be overstated. [Envio](https://envio.dev/) recently ran an exciting round of bounties. The first bounty was completed by the very talented "Mogithehurt," who focused on building a multi-chain [POAP](https://poap.xyz/) indexer that indexes the POAP smart contracts, showcasing the true power of Envio's indexing capabilities! ⚡
+We are thrilled to announce a significant milestone in our Envio Bounty Program. In the ever-evolving world of blockchain development, the importance of seamless access to on-chain data cannot be overstated. [Envio](https://envio.dev/) recently ran an exciting round of bounties. The first bounty was completed by the very talented "Mogithehurt," who focused on building a multi-chain [POAP](https://poap.xyz/) indexer that indexes the POAP smart contracts, showcasing the true power of Envio's indexing capabilities! ⚡
 
 ### User Story
 
@@ -18,19 +18,19 @@ The bounty aimed to address the needs of blockchain developers by providing a so
 
 The core of the bounty project involved building a [POAP](https://poap.xyz/) multi-chain indexer that would index the POAP smart contracts on specific chains, namely [Ethereum Mainnet](https://ethereum.org/en/) and [Gnosis Chain](https://www.gnosis.io/).
 
-The queryable information included in the bounty project encompassed essential aspects of POAP events and collections. The indexer needed to provide insights into the number of POAPs, details of individual POAPs, information on POAP transfers, and identification of holders. The implementation required the creation of a comprehensive GraphQL schema, a well-structured config.yaml file, and the development of indexing logic, with options for implementation in [JavaScript](https://www.javascript.com/), [TypeScript](https://www.typescriptlang.org/), or [Rescript](https://rescript-lang.org/).
+The queryable information included in the bounty project encompassed essential aspects of POAP events and collections. The indexer needed to provide insights into the number of POAPs, details of individual POAPs, information on POAP transfers, and identification of holders. The implementation required the creation of a comprehensive GraphQL schema, a well-structured configuration file, and the development of indexing logic, with options for implementation in [JavaScript](https://www.javascript.com/), [TypeScript](https://www.typescriptlang.org/), or [Rescript](https://rescript-lang.org/).
 
 #### The Benefit of Hypersync
 
-To ensure optimized performance and a seamless developer experience, the use of Envio’s [HyperSync](https://docs.envio.dev/docs/hypersync) endpoint was recommended instead of JSON-RPC endpoint for blazingly fast retrieval of on-chain data. The Hypersync endpoint is automatically utilized in the Envio Indexer for supported networks such as Ethereum Mainnet and Gnosis. This enables the indexing of all POAP events within minutes, a task that would otherwise require several hours or even days!
+To ensure optimized performance and a seamless developer experience, the use of Envio’s [HyperSync](https://docs.envio.dev/docs/hypersync) endpoint was recommended over JSON-RPC endpoint for blazingly fast retrieval of on-chain data. The Hypersync endpoint is automatically utilized in the Envio Indexer for supported networks such as Ethereum Mainnet and Gnosis. This enables the indexing of all POAP events within minutes, a task that would otherwise require several hours or even days!
 
-#### The Benefit of Multi-chain
+#### The Benefit of multi-chain indexing
 
 Envio's multi-chain feature provides builders with a seamless means of accessing fragmented data across multiple chains. With Envio's multi-chain indexing, builders can specify their event handler to operate against a common schema. In the case of this bounty, it allowed the writing of POAP event data into the same database and accessing the data from the POAP smart contracts on Ethereum Mainnet and Gnosis Chain through a unified [GraphQL](https://graphql.org/) API. For more information on Envio’s multi-chain indexing, you can view it in the Envio docs [here](https://docs.envio.dev/docs/multichain-indexing).
 
 #### From Indexer Development to Indexer Deployment
 
-Our bounty participant “Mogithehurt”, then proceeded to deploy their indexer to Envio’s hosted service by pushing their latest version of the [indexer project](https://github.com/mogithehurt/envio-poap-indexer) to GitHub for deployment. The POAP indexer can now be viewed in Envio’s [Explorer](https://envio.dev/explorer). In essence, Envio offers the easiest way to deploy and host your indexer, handling the entire infrastructure and eliminating worries about complex infrastructure setup and management. This approach allows developers to focus on their application’s core functionality, ensuring a top-tier user experience. For more information on how to deploy an indexer to Envio’s hosted service visit our [docs](https://docs.envio.dev/docs/hosted-service).
+Our bounty participant “Mogithehurt”, then proceeded to deploy their indexer to Envio’s hosted service by pushing their latest version of the [indexer project](https://github.com/mogithehurt/envio-poap-indexer) to GitHub for deployment. The POAP indexer can now be viewed in Envio’s [Explorer](https://envio.dev/explorer). Envio offers the easiest way to deploy and host your indexer, handling the entire infrastructure and eliminating worries about complex infrastructure setup and management. This approach allows developers to focus on their application’s core functionality, ensuring a top-tier user experience. For more information on how to deploy an indexer to Envio’s hosted service visit our [docs](https://docs.envio.dev/docs/hosted-service).
 
 ### Bounty Reward
 
