@@ -86,6 +86,14 @@ List of supported networks:
 - `arbitrum-one`
 - `avalanche`
 - `linea`
+- `sepolia`
+- `celo`
+- `polygon-zkevm`
+- `taiko-jolnr`
+- `scroll`
+- `metis`
+- `manta`
+- `kroma`
 
 > In the experimental state, this feature supports importing a single contract from a single blockchain.
 
