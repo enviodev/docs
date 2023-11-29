@@ -8,7 +8,6 @@ slug: /envio-developer-community-update-no-3
 
 <!--truncate-->
 
-# Envio Community Update No. 03
 
 Ahoy Developers!
 
