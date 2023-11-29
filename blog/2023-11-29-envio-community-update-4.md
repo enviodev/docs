@@ -12,7 +12,7 @@ Ahoy Developers!
 
 We’re back with our fourth monthly community update, and we're excited to share an insider's view into the fantastic endeavors the Envio team has set sail on over the past month. We'll be unpacking past events, navigating through the latest technical developments, and raising a toast to some exciting milestones.🍻
 
-We’re excited to announce that Envio HyperSync has added significant updates to existing networks and added new and enhanced indexing support for [Arbitrum](https://arbitrum.io/), [Avalanche](https://www.avax.network/), [Base](https://base.org/), [BSC](https://www.bnbchain.org/en), [Gnosis](https://www.gnosis.io/), [Kroma](https://kroma.network/), [Linea](https://linea.build/), [Manta](https://manta.network/), [Metis](https://www.metis.io/), [Optimism](https://www.optimism.io/), [PolygonZkevm](https://polygon.technology/polygon-zkevm), [Scroll](https://scroll.io/), Sepolia, and [TaikoJolnr](https://taiko.xyz/).
+We’re excited to announce that Envio HyperSync has added significant updates to existing networks and added new and enhanced indexing support for [Arbitrum](https://arbitrum.io/), [Avalanche](https://www.avax.network/), [Base](https://base.org/), [BSC](https://www.bnbchain.org/en), [Gnosis](https://www.gnosis.io/), [Kroma](https://kroma.network/), [Linea](https://linea.build/), [Manta](https://manta.network/), [Metis](https://www.metis.io/), [Optimism](https://www.optimism.io/), [PolygonZkevm](https://polygon.technology/polygon-zkevm), [Scroll](https://scroll.io/), [Sepolia](https://sepolia.etherscan.io/), and [TaikoJolnr](https://taiko.xyz/).
 
 We’re also pleased to announce that Envio has also been officially listed on the [Base](https://base.org/ecosystem?tag=infra), [Cronos](https://discover.cronos.org/projects/envio), [Gnosis](https://gnosischain.world/#Analytics), and [Optimism](https://www.optimism.io/apps/tools) project ecosystem listings. Developers can anticipate an expansion in network support for various EVM-compatible chains soon.
 
@@ -42,7 +42,7 @@ Over the past month, we released four new versions of Envio (v.0.0.20 - v.0.0.24
 
 ### What's changed:
 
-v0.0.20
+### v0.0.20
 
 **Changes:**
 
