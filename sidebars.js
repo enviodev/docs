@@ -18,6 +18,7 @@ module.exports = {
             "example-uniswap-v3",
             "example-aave-token",
             "example-reNFT",
+            "example-token-vaults"
           ],
         },
         {
