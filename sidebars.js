@@ -41,6 +41,7 @@ module.exports = {
           label: "Advanced",
           items: [
             "multichain-indexing",
+            "linked-entity-loaders",
             "generated-files",
             "hypersync",
             "sync-config",

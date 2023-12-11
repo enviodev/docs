@@ -1,0 +1,145 @@
+---
+id: linked-entity-loaders
+title: Load Linked Entities
+sidebar_label: Load Linked Entities
+slug: /linked-entity-loaders
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+## Introduction
+
+> _TLDR: When you have a schema that has entities that link/reference other entities (linked entities), you can use the `loaders` argument to load those linked entities from your handler._
+
+Sometimes the entities that you want loaded in your handler are nested 1 or more layers deep on the entity that you have the ID for in the loader.
+
+Another prominant use case for linked entities: You may have a global entity (an entity that has a hardcoded ID) that references other entities. Without linked entity loaders you wouldn't be able to load and access those referenced entities, so these types of loaders are extremely important for many types of advanced indexers.
+
+## An example
+
+The below schema shows 4 user defined entities that reference/link to each other. What if the event only contains the ID of entity A, but we care about the array of important information entities (`ImportantEntityICareAbout`) that is linked via `A->B->C->ImportantEntityICareAbout`?
+
+```
+# schema.graphql
+type A {
+  id: ID!
+  b: B!
+  optionalBigInt: BigInt
+}
+type B {
+  id: ID!
+  c: [C!]!
+}
+type C {
+  id: ID!
+  a: A!
+  importantData: ImportantEntityICareAbout!
+}
+type ImportantEntityICareAbout {
+  id: ID!
+  otherData: String!
+}
+```
+
+For illusttration you'd need a config with an Event and a labeled loader for a single entity:
+```yaml
+networks:
+  - id: 123456
+    contracts:
+      - name: Gravatar
+        events:
+          - event: "TestEvent"
+            requiredEntities:
+              - name: "A"
+                labels:
+                  - "exampleA"
+```
+
+Then in your loaders you'd have something that looks like this:
+
+<Tabs>
+  <TabItem value="javascript" label="Javascript">
+
+```javascript
+    context.a.exampleALoad(
+      id,
+      {loadB: {loadC: {loadImportantData: true}, loadA: {}}},
+    )
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="Typescript">
+
+```typescript
+    context.A.exampleALoad(
+      id,
+      {loaders: {loadB: {loadC: {loadImportantData: true}, loadA: {}}}},
+    )
+```
+  </TabItem>
+  <TabItem value="rescript" label="Rescript">
+
+```rescript
+    context.a.exampleALoad(
+      id,
+      ~loaders: {loadB: {loadC: {loadImportantData: true}, loadA: {}}},
+    )
+```
+  </TabItem>
+</Tabs>
+
+If the entity you want to load has linked entities of its own, then you need to put a `{}` (empty object next to the name to indidace stopping the recursive loading at that point), otherwise you must put a `true`. Thus in the above example we put `true` next to the `loadImportantData`, and a `{}` next to the inner `loadA`.
+
+**Note:** The syntax is the same for array labels too (only difference is that the first argument is an array rather than a single id).
+
+### Using the loaded entities in your handler
+
+<Tabs>
+  <TabItem value="javascript" label="Javascript">
+
+```javascript
+    let linkedB = context.a.getB(
+      context.a.exampleA
+    );
+    let linkedC = context.b.getC(
+      linkedB
+    );
+    let otherDataArray = context.c.getOtherData(
+      linkedC
+    );
+    // Use otherDataArray like you would any other entity.
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="Typescript">
+
+```typescript
+    let linkedB = context.A.getB(
+      context.A.exampleA
+    );
+    let linkedC = context.B.getC(
+      linkedB
+    );
+    let otherDataArray = context.C.getOtherData(
+      linkedC
+    );
+    // Use otherDataArray like you would any other entity.
+```
+  </TabItem>
+  <TabItem value="rescript" label="Rescript">
+
+```rescript
+    let linkedB = context.a.getB(
+      context.a.exampleA
+    );
+    let linkedC = context.b.getC(
+      linkedB
+    );
+    let otherDataArray = context.c.getOtherData(
+      linkedC
+    );
+    // Use otherDataArray like you would any other entity.
+```
+  </TabItem>
+</Tabs>
