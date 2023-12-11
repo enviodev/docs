@@ -14,11 +14,12 @@ module.exports = {
           type: "category",
           label: "Examples",
           items: [
+            "example-sablier-v2",
             "example-liquidation-metrics",
             "example-uniswap-v3",
             "example-aave-token",
             "example-reNFT",
-            "example-token-vaults"
+            "example-token-vaults",
           ],
         },
         {
