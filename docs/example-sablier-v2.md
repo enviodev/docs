@@ -11,6 +11,8 @@ This [repo](https://github.com/enviodev/sablier-v2) contains an example Envio in
 
 Sablier V2 is a protocol designed for on-chain money streaming and token distribution. DAOs and businesses use Sablier for vesting, payroll, airdrops, and more.
 
+The majority of the implementation is complete and repo is undergoing final development stage.
+
 ## Steps to run the indexer
 
 1. Clone the [repo](https://github.com/enviodev/sablier-v2)
