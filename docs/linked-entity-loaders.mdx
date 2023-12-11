@@ -18,7 +18,7 @@ Another prominant use case for linked entities: You may have a global entity (an
 
 ## An example
 
-The below schema shows 4 user defined entities that reference/link to each other. What if the event only contains the ID of entity A, but we care about the array of important information entities (`ImportantEntityICareAbout`) that is linked via `A->B->C->ImportantEntityICareAbout`?
+The below schema shows 4 user-defined entities that reference/link to each other. What if the event only contains the ID of entity A, but we care about the important information entity `ImportantEntityICareAbout` that is linked via `A->B->C->ImportantEntityICareAbout`?
 
 ```
 # schema.graphql
@@ -56,7 +56,7 @@ networks:
                   - "exampleA"
 ```
 
-Then in your loaders you'd have something that looks like this:
+Then, in your loaders you'd have something that looks like this:
 
 <Tabs>
   <TabItem value="javascript" label="Javascript">
@@ -89,7 +89,7 @@ Then in your loaders you'd have something that looks like this:
   </TabItem>
 </Tabs>
 
-If the entity you want to load has linked entities of its own, then you need to put a `{}` (empty object next to the name to indidace stopping the recursive loading at that point), otherwise you must put a `true`. Thus in the above example we put `true` next to the `loadImportantData`, and a `{}` next to the inner `loadA`.
+If the entity you want to load has linked entities of its own, then you need to put a `{}` (empty object next to the name to indicate stopping the recursive loading at that point), otherwise you must put a `true`. Thus in the above example, we put `true` next to the `loadImportantData`, and a `{}` next to the inner `loadA`.
 
 **Note:** The syntax is the same for array labels too (only difference is that the first argument is an array rather than a single id).
 
