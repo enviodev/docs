@@ -114,7 +114,7 @@ The `Contract Import` process will prompt the user whether they would like to fi
 Choosing `Local ABI` option will allow you to point to a JSON file containing the smart contract ABI.
 The `Contract Import` process will then populate the required files from the ABI.
 
-Select this option if the proxy contract has not been verified, which will cause the fetch request from Etherscan client to fail.
+> Select this option if the proxy contract has not been verified, which will cause the fetch request from Etherscan client to fail.
 
 #### Specify the directory of JSON file containing ABI
 
