@@ -48,32 +48,13 @@ envio init
 Name your indexer
 
 ```bash
-? Name your indexer:
+? Name your indexer: (My Envio Indexer)
 ```
 
 Choose the directory where you would like to setup your project (default is the current directory)
 
 ```bash
 ? Set the directory:  (.) .
-```
-
-Select to start from a template
-
-```bash
-? Choose an initialization option
-> Template
-  SubgraphMigration
-  ContractImport
-[↑↓ to move, enter to select, type to filter]
-```
-
-Choose `Greeter` when prompted to choose template.
-
-```bash
-? Which template would you like to use?
-> Greeter
-  Erc20
-[↑↓ to move, enter to select, type to filter]
 ```
 
 Then choose a language of your choice for the event handlers.
@@ -83,6 +64,25 @@ Then choose a language of your choice for the event handlers.
 > Javascript
   Typescript
   Rescript
+[↑↓ to move, enter to select, type to filter]
+```
+
+Select to start from a template
+
+```bash
+? Choose an initialization option
+> Template
+  Contract Import
+  Subgraph Migration (Experimental)
+[↑↓ to move, enter to select, type to filter]
+```
+
+Choose `Greeter` when prompted to choose template.
+
+```bash
+? Which template would you like to use?
+> Greeter
+  Erc20
 [↑↓ to move, enter to select, type to filter]
 ```
 

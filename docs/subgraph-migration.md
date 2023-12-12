@@ -29,13 +29,13 @@ envio init
 ? Set the directory:  (.) .
 ```
 
-### Select `SubgraphMigration`
+### Select `Subgraph Migration`
 
 ```bash
 ? Choose an initialization option
   Template
-> SubgraphMigration
-  ContractImport
+  Contract Import
+> Subgraph Migration (Experimental)
 [↑↓ to move, enter to select, type to filter]
 ```
 
