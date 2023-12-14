@@ -4,7 +4,7 @@ sidebar_label: 'Envio Bounty Graduate: ERC4626 Indexer for Tokenized Vault Contr
 slug: /envio-bounty-erc4626-tokenized-vault-indexer
 ---
 
-<!-- <img src="/blog-assets/envio-bounty-poap-indexer.png" alt="Cover Image for Envio Bounty Graduate: ERC4626 Tokenized Vault Indexer" width="100%"/> -->
+<img src="/blog-assets/envio-erc4626-indexer-cover.png" alt="Cover Image for Envio Bounty Graduate: ERC4626 Tokenized Vault Indexer" width="100%"/>
 
 <!--truncate-->
 
