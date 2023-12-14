@@ -20,7 +20,6 @@ module.exports = {
             "example-aave-token",
             "example-reNFT",
             "example-token-vaults",
-            "example-onchain-governance"
           ],
         },
         {
