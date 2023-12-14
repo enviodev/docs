@@ -40,6 +40,7 @@ Here is a table of currently supported networks on Hypersync:
 | Celo             | 42220      |
 | Avalanche        | 43114      |
 | Linea            | 59144      |
+| Mumbai           | 80001      |
 | Taiko Jolnr      | 167007     |
 | Sepolia          | 11155111   |
 
