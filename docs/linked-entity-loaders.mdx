@@ -1,7 +1,7 @@
 ---
 id: linked-entity-loaders
-title: Load Linked Entities
-sidebar_label: Load Linked Entities
+title: Loading Linked Entities
+sidebar_label: Loading Linked Entities
 slug: /linked-entity-loaders
 ---
 
@@ -12,16 +12,16 @@ import TabItem from "@theme/TabItem";
 
 > _TLDR: When you have a schema that has entities that link/reference other entities (linked entities), you can use the `loaders` argument to load those linked entities from your handler._
 
-Sometimes the entities that you want loaded in your handler are nested 1 or more layers deep on the entity that you have the ID for in the loader.
+Sometimes the entities that you want loaded in your handler are nested one or more layers deep on the entity that you have the ID for in the loader.
 
-Another prominant use case for linked entities: You may have a global entity (an entity that has a hardcoded ID) that references other entities. Without linked entity loaders you wouldn't be able to load and access those referenced entities, so these types of loaders are extremely important for many types of advanced indexers.
+Another prominant use case for linked entities: You may have a global entity (an entity that has a hardcoded ID) that references other entities. Without linked entity loaders, you wouldn't be able to load and access those referenced entities, so these types of loaders are extremely important for many types of advanced indexers.
 
-## An example
+## Example
 
 The below schema shows 4 user-defined entities that reference/link to each other. What if the event only contains the ID of entity A, but we care about the important information entity `ImportantEntityICareAbout` that is linked via `A->B->C->ImportantEntityICareAbout`?
 
+### `schema.graphql`
 ```
-# schema.graphql
 type A {
   id: ID!
   b: B!
@@ -42,7 +42,7 @@ type ImportantEntityICareAbout {
 }
 ```
 
-For illusttration you'd need a config with an Event and a labeled loader for a single entity:
+### `config.yaml`
 ```yaml
 networks:
   - id: 123456
@@ -56,35 +56,81 @@ networks:
                   - "exampleA"
 ```
 
-Then, in your loaders you'd have something that looks like this:
 
+### Event Handler file
 <Tabs>
   <TabItem value="javascript" label="Javascript">
 
 ```javascript
-    context.a.exampleALoad(
-      id,
-      {loadB: {loadC: {loadImportantData: true}, loadA: {}}},
-    )
+GravatarContract.TestEvent.loader((~event, ~context) => {
+  context.A.exampleALoad(
+    id,
+    {loadB: {loadC: {loadImportantData: true}, loadA: {}}},
+  )
+  // ... other loaders
+})
+GravatarContract.TestEvent.loader((~event, ~context) => {
+  let linkedB = context.A.getB(
+    context.a.exampleA
+  );
+  let linkedC = context.B.getC(
+    linkedB
+  );
+  let otherDataArray = context.C.getOtherData(
+    linkedC
+  );
+  // ... rest of the handler that uses or updates these entities.
+})
 ```
 
   </TabItem>
   <TabItem value="typescript" label="Typescript">
 
 ```typescript
-    context.A.exampleALoad(
-      id,
-      {loaders: {loadB: {loadC: {loadImportantData: true}, loadA: {}}}},
-    )
+
+GravatarContract_TestEvent_loader(({ event, context }) => {
+  context.A.exampleALoad(
+    id,
+    {loaders: {loadB: {loadC: {loadImportantData: true}, loadA: {}}}},
+  )
+  // ... other loaders
+});
+GravatarContract_TestEvent_handler(({ event, context }) => {
+  let linkedB = context.A.getB(
+    context.A.exampleA
+  );
+  let linkedC = context.B.getC(
+    linkedB
+  );
+  let otherDataArray = context.C.getOtherData(
+    linkedC
+  );
+  // ... rest of the handler that uses or updates these entities.
+});
 ```
   </TabItem>
   <TabItem value="rescript" label="Rescript">
 
 ```rescript
-    context.a.exampleALoad(
-      id,
-      ~loaders: {loadB: {loadC: {loadImportantData: true}, loadA: {}}},
-    )
+GravatarContract.TestEvent.loader((event, context) => {
+  context.a.exampleALoad(
+    id,
+    ~loaders: {loadB: {loadC: {loadImportantData: true}, loadA: {}}},
+  )
+  // ... other loaders
+})
+GravatarContract.TestEvent.handler((event, context) => {
+  let linkedB = context.a.getB(
+    context.a.exampleA
+  );
+  let linkedC = context.b.getC(
+    linkedB
+  );
+  let otherDataArray = context.c.getOtherData(
+    linkedC
+  );
+  // ... rest of the handler that uses or updates these entities.
+})
 ```
   </TabItem>
 </Tabs>
@@ -93,53 +139,3 @@ If the entity you want to load has linked entities of its own, then you need to 
 
 **Note:** The syntax is the same for array labels too (only difference is that the first argument is an array rather than a single id).
 
-### Using the loaded entities in your handler
-
-<Tabs>
-  <TabItem value="javascript" label="Javascript">
-
-```javascript
-    let linkedB = context.a.getB(
-      context.a.exampleA
-    );
-    let linkedC = context.b.getC(
-      linkedB
-    );
-    let otherDataArray = context.c.getOtherData(
-      linkedC
-    );
-    // Use otherDataArray like you would any other entity.
-```
-
-  </TabItem>
-  <TabItem value="typescript" label="Typescript">
-
-```typescript
-    let linkedB = context.A.getB(
-      context.A.exampleA
-    );
-    let linkedC = context.B.getC(
-      linkedB
-    );
-    let otherDataArray = context.C.getOtherData(
-      linkedC
-    );
-    // Use otherDataArray like you would any other entity.
-```
-  </TabItem>
-  <TabItem value="rescript" label="Rescript">
-
-```rescript
-    let linkedB = context.a.getB(
-      context.a.exampleA
-    );
-    let linkedC = context.b.getC(
-      linkedB
-    );
-    let otherDataArray = context.c.getOtherData(
-      linkedC
-    );
-    // Use otherDataArray like you would any other entity.
-```
-  </TabItem>
-</Tabs>
