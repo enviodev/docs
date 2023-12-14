@@ -23,7 +23,7 @@ Each event requires two functions to be registered:
 1. `loader` function
 1. `handler` function
 
-### Loader function
+## Loader function
 
 Loader functions are called via
 
@@ -63,94 +63,11 @@ A single event can be used to load single or multiple entities in the loader (an
 
 Each entity that is to be loaded by the event must be defined in the `requiredEntities` field of the event in the `config.yaml` file.
 
-If you want to load a label with multiple entities grouped together as an array, an arary label is the aproach to go with. This is done by adding `arrayLabels` with a list of array labels to use with the entity to the label definition in the `config.yaml` file.
+### Loading an array of an entity
 
-<details>
-<summary>A full example using labels:</summary>
+If you wish to load an array of an entity, then `arrayLabels` should be used in the `config.yaml` file, here is an [here](./array-label).
 
-```yaml
-# config.yaml
-networks:
-  - id: 12345 #Your chain Id
-    contracts:
-      - name: Greeter
-        # ... other fields
-        events:
-          - event: "TestEvent"
-            requiredEntities:
-              - name: "A"
-                arrayLabels:
-                  - "allAs"
-                label:
-                  - "singleA"
-        # ... rest of your config file
-```
-
-```graphql
-# schema.graphql 
-type A {
-  id: ID!
-  someField: String!
-}
-```
-
-With that config you could use this in your loaders (and handlers):
-<Tabs>
-  <TabItem value="javascript" label="Javascript">
-
-```javascript
-GreeterContract.TestEvent.loader((~event, ~context) => {
-    context.A.allALoad(["id1", "id2", "id3"])
-    context.A.singleALoad("singled")
-    // ... other loaders
-})
-GreeterContract.TestEvent.handler((~event, ~context) => {
-  let arrayOfAs = context.A.allA
-  let singleA = context.A.singleA
-
-  // ... rest of the handler that uses or updates these entities.
-})
-```
-
-  </TabItem>
-  <TabItem value="typescript" label="Typescript">
-
-```typescript
-GreeterContract_TestEvent_loader(({event, context}) => {
-    context.A.allALoad(["id1", "id2", "id3"])
-    context.A.singleALoad("singled")
-    // ... other loaders
-})
-GreeterContract_TestEvent_handler(({event, context}) => {
-  let arrayOfAs = context.A.allA
-  let singleA = context.A.singleA
-
-  // ... rest of the handler that uses or updates these entities.
-})
-```
-
-  </TabItem>
-  <TabItem value="rescript" label="Rescript">
-
-```rescript
-GreeterContract.TestEvent.loader((event, context) => {
-    context.a.allALoad(["id1", "id2", "id3"])
-    context.a.singleALoad("singled")
-    // ... other loaders
-})
-GreeterContract.TestEvent.handler((event, context) => {
-  let arrayOfAs = context.a.allA
-  let singleA = context.a.singleA
-
-  // ... rest of the handler that uses or updates these entities.
-})
-```
-
-  </TabItem>
-</Tabs>
-</details>
-
-### Handler function
+## Handler function
 
 Handler functions are called via
 
