@@ -19,7 +19,7 @@ module.exports = {
             "example-uniswap-v3",
             "example-aave-token",
             "example-reNFT",
-            "example-token-vaults"
+            "example-token-vaults",
           ],
         },
         {
@@ -30,6 +30,7 @@ module.exports = {
             "configuration-file",
             "schema-file",
             "event-handlers",
+            "supported-networks",
             "subgraph-migration",
             "contract-import",
             "hosted-service",
