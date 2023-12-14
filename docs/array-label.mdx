@@ -1,0 +1,103 @@
+---
+id: array-label
+title: Loading Entity Array
+sidebar_label: Loading Entity Array
+slug: /array-label
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+
+## Introduction
+
+For the indexer, you may want to load an array of an entity. This can be achieved by using `arrayLabels` in `config.yaml` file.
+For example, you may want to load two token entities for an event from an AMM pool that you are indexing.
+
+
+## Example
+
+The below example illustrates how to define an `arrayLabel` as well as a `label` for entity `A` that we want to load for `TestEvent` event.
+
+### `config.yaml`
+```yaml
+networks:
+  - id: 12345 #Your chain Id
+    contracts:
+      - name: Greeter
+        # ... other fields
+        events:
+          - event: "TestEvent"
+            requiredEntities:
+              - name: "A"
+                arrayLabels:
+                  - "allAs"
+                label:
+                  - "singleA"
+        # ... rest of your config file
+```
+
+### `schema.graphql`
+```graphql
+type A {
+  id: ID!
+  someField: String!
+}
+```
+
+### Event Handler file
+<Tabs>
+<TabItem value="javascript" label="Javascript">
+
+```javascript
+GreeterContract.TestEvent.loader((~event, ~context) => {
+    context.A.allALoad(["id1", "id2", "id3"])
+    context.A.singleALoad("singled")
+    // ... other loaders
+})
+GreeterContract.TestEvent.handler((~event, ~context) => {
+  let arrayOfAs = context.A.allA
+  let singleA = context.A.singleA
+
+  // ... rest of the handler that uses or updates these entities.
+})
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="Typescript">
+
+```typescript
+GreeterContract_TestEvent_loader(({ event, context }) => {
+  context.A.allALoad(["id1", "id2", "id3"]);
+  context.A.singleALoad("singled");
+  // ... other loaders
+});
+GreeterContract_TestEvent_handler(({ event, context }) => {
+  let arrayOfAs = context.A.allA;
+  let singleA = context.A.singleA;
+
+  // ... rest of the handler that uses or updates these entities.
+});
+```
+
+  </TabItem>
+  <TabItem value="rescript" label="Rescript">
+
+```rescript
+GreeterContract.TestEvent.loader((event, context) => {
+    context.a.allALoad(["id1", "id2", "id3"])
+    context.a.singleALoad("singled")
+    // ... other loaders
+})
+GreeterContract.TestEvent.handler((event, context) => {
+  let arrayOfAs = context.a.allA
+  let singleA = context.a.singleA
+
+  // ... rest of the handler that uses or updates these entities.
+})
+```
+
+  </TabItem>
+</Tabs>
+
+---
