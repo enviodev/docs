@@ -1,0 +1,98 @@
+---
+id: testing
+title: Testing
+sidebar_label: Testing
+slug: /testing
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+## Introduction
+
+Envio has a few helpers to assist developers write tests for their code. This library is specifically crafted to allow developers to mock database state and mock events and assert handler logic.  
+ 
+The testing library is simply a series of helper functions that can help writing tests, this means that any JavaScript based testing framework can be used, in the examples we use [Mocha](https://mochajs.org/).
+
+## Learn by doing
+
+Tests are written in all programming languages of the Greeter template and can be explored by following the following steps
+
+Create folder and generate greeter template in typescript
+```bash
+mkdir greeter && envio init template -l typescript -t greeter
+```
+
+Run tests
+```bash
+pnpm test
+```
+
+See the `test/test.ts` file to understand how the tests are written.
+
+## Getting Started
+
+This doc assumes you have a functioning indexer setup with which you intend to write tests for.
+
+Install preferred testing framework, for example mocha
+
+<Tabs>
+  <TabItem value="javascript" label="Javascript">
+
+```bash
+pnpm i mocha
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="Typescript">
+
+```bash
+pnpm i mocha @types/mocha
+```
+  </TabItem>
+  <TabItem value="rescript" label="Rescript">
+
+```bash
+pnpm i mocha rescript-mocha
+```
+
+  </TabItem>
+</Tabs>
+
+Validate you're using Envio v0.0.26 or above
+```bash
+envio -V
+```
+
+Create a test folder and a test file test.js
+
+
+Add a test command to your package.json
+```json
+"test": "mocha",
+```
+
+
+
+## Writing tests
+
+
+
+## API
+
+
+
+## Assertions
+
+
+
+## Examples
+
+
+
+## Troubleshooting
+
+The testing code is available in versions ^v0.0.26 
+
+If you encounter any issues or have questions please reach out to us on [discord]("https://discord.gg/Q9qt8gZ2fX")
+

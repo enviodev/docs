@@ -31,6 +31,7 @@ module.exports = {
             "schema-file",
             "event-handlers",
             "supported-networks",
+            "testing",
             "subgraph-migration",
             "contract-import",
             "hosted-service",
