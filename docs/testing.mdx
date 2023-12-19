@@ -14,13 +14,13 @@ Envio has a few helpers to assist developers write tests for their code. This li
  
 The testing library is simply a series of helper functions that can help writing tests, this means that any JavaScript based testing framework can be used, in the examples we use [Mocha](https://mochajs.org/).
 
-## Learn by doing
 
+## Learn by doing
 Tests are written in all programming languages of the Greeter template and can be explored by following the following steps
 
-Create folder and generate greeter template in typescript
+Generate greeter template in typescript
 ```bash
-mkdir greeter && envio init template -l typescript -t greeter
+envio init template -l typescript -d greeter -t greeter -n greeter
 ```
 
 Run tests
@@ -76,23 +76,415 @@ Add a test command to your package.json
 
 ## Writing tests
 
+### Test library design
 
+The library is designed to allow developers to mimic the database and mock events and assert different outcomes. The mock database is immutable and each action returns a new instance of a mocked database, this makes it robust and easy to test against previous states of the database.
+
+### Example steps of what most tests will look like
+1. Initialize the mock database
+1. Create a mock event
+1. Process the mock event on the mock database
+1. Assert some expected outcome 
+
+
+Run codegen when changes are made to the config or schema to regenerate the code helpers
+```bash
+envio codegen
+```
 
 ## API
 
+The `TestHelpers` code generated file exposes a few different functions
 
+#### > createMockDb
+The ability to create an instance of the MockDb 
+
+```javascript
+let mockDbInitial = MockDb.createMockDb()
+```
+
+#### > set
+The ability to set an entity of a MockDb (returns a new MockDb) 
+
+```javascript 
+const updatedMockDb = mockDbInitial.entities.EntityName.set(entity)
+```
+
+<span style={{fontSize:"12px"}}>
+Where EntityName is the entity defined in the Schema
+</span>
+
+#### > get
+1. Ability to get an entity from the MockDb 
+
+```javascript 
+updatedMockDb.entities.EntityName.get(id)
+```
+
+<span style={{fontSize:"12px"}}>
+Where EntityName is the entity defined in the Schema
+</span>
+
+#### > createMockEvent
+The ability to create an instance of an event 
+
+```javascript
+ContractName.EventName.createMockEvent({params})
+```
+
+<div style={{fontSize:"12px"}}>
+Where ContactName is the name of the contract defined in the config
+</div>
+<div style={{fontSize:"12px"}}>
+Where EventName is the name of the event being emitted
+</div>
+<div style={{fontSize:"12px"}}>
+Where params is an object of the parameters emitted in the event
+</div>
+
+
+#### > processEvent
+The ability to process an event on a mockDb 
+
+```javascript 
+ContractName.EventName.processEvent({event: mockNewGreetingEvent, mockDb: mockDbInitial})
+```
+
+<div style={{fontSize:"12px"}}>
+Where ContactName is the name of the contract defined in the config
+</div>
+<div style={{fontSize:"12px"}}>
+Where EventName is the name of the event being emitted
+</div>
+
+<Tabs>
+  <TabItem value="javascript" label="Javascript">
+
+```javascript
+
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="Typescript">
+
+```bash
+pnpm i mocha @types/mocha
+```
+  </TabItem>
+  <TabItem value="rescript" label="Rescript">
+
+```bash
+pnpm i mocha rescript-mocha
+```
+
+  </TabItem>
+</Tabs>
 
 ## Assertions
 
-
+In the examples we use NodeJS's built in assert module but you can use other popular JavaScript based assertion libraries like [chai](https://www.chaijs.com/) or [expect](https://github.com/Automattic/expect.js).
 
 ## Examples
 
+### A NewGreeting event creates a Greeting entity
+
+<Tabs>
+  <TabItem value="javascript" label="Javascript">
+
+```javascript
+ it("A NewGreeting event creates a Greeting entity", () => {
+    // Initializing the mock database
+    const mockDbInitial = MockDb.createMockDb();
+
+    // Initializing values for mock event
+    const userAddress = Addresses.defaultAddress;
+    const greeting = "Hi there";
+
+    // Creating a mock event
+    const mockNewGreetingEvent = Greeter.NewGreeting.createMockEvent({
+      greeting: greeting,
+      user: userAddress,
+    });
+
+    // Processing the mock event on the mock database
+    const updatedMockDb = Greeter.NewGreeting.processEvent({
+      event: mockNewGreetingEvent,
+      mockDb: mockDbInitial,
+    });
+
+    // Expected entity that should be created
+    const expectedGreetingEntity = {
+      id: userAddress,
+      latestGreeting: greeting,
+      numberOfGreetings: 1,
+      greetings: [greeting],
+    };
+
+    // Getting the entity from the mock database
+    const dbEntity = updatedMockDb.entities.Greeting.get(userAddress);
+
+    // Asserting that the entity in the mock database is the same as the expected entity
+    assert.deepEqual(expectedGreetingEntity, dbEntity);
+  });
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="Typescript">
+
+```typescript
+it("A NewGreeting event creates a Greeting entity", () => {
+    // Initializing the mock database
+    const mockDbInitial = MockDb.createMockDb();
+
+    // Initializing values for mock event
+    const userAddress = Addresses.defaultAddress;
+    const greeting = "Hi there";
+
+    // Creating a mock event
+    const mockNewGreetingEvent = Greeter.NewGreeting.createMockEvent({
+      greeting: greeting,
+      user: userAddress,
+    });
+
+    // Processing the mock event on the mock database
+    const updatedMockDb = Greeter.NewGreeting.processEvent({
+      event: mockNewGreetingEvent,
+      mockDb: mockDbInitial,
+    });
+
+    // Expected entity that should be created
+    const expectedGreetingEntity: GreetingEntity = {
+      id: userAddress,
+      latestGreeting: greeting,
+      numberOfGreetings: 1,
+      greetings: [greeting],
+    };
+
+    // Getting the entity from the mock database
+    const dbEntity = updatedMockDb.entities.Greeting.get(userAddress);
+
+    // Asserting that the entity in the mock database is the same as the expected entity
+    assert.deepEqual(expectedGreetingEntity, dbEntity);
+  });
+```
+  </TabItem>
+  <TabItem value="rescript" label="Rescript">
+
+```rescript
+it("A NewGreeting event creates a Greeting entity", () => {
+    // Initializing the mock database
+    let mockDbInitial = TestHelpers.MockDb.createMockDb()
+
+    // Initializing values for mock event
+    let userAddress = Ethers.Addresses.defaultAddress
+    let greeting = "Hi there"
+
+    // Creating a mock event
+    let mockNewGreetingEvent = TestHelpers.Greeter.NewGreeting.createMockEvent({
+      greeting,
+      user: userAddress,
+    })
+
+    // Processing the mock event on the mock database
+    let updatedMockDb = TestHelpers.Greeter.NewGreeting.processEvent({
+      event: mockNewGreetingEvent,
+      mockDb: mockDbInitial,
+    })
+
+    // Expected entity that should be created
+    let expectedGreetingEntity: Types.greetingEntity = {
+      id: userAddress->Ethers.ethAddressToString,
+      latestGreeting: greeting,
+      numberOfGreetings: 1,
+      greetings: [greeting],
+    }
+
+    // Getting the entity from the mock database
+    let dbEntity =
+      updatedMockDb.entities.greeting.get(userAddress->Ethers.ethAddressToString)->Option.getExn
+
+    // Asserting that the entity in the mock database is the same as the expected entity
+    Assert.deep_equal(expectedGreetingEntity, dbEntity)
+  })
+```
+
+  </TabItem>
+</Tabs>
+
+### 2 Greetings from the same users results in that user having a greeter count of 2
+
+<Tabs>
+  <TabItem value="javascript" label="Javascript">
+
+```javascript
+  it("2 Greetings from the same users results in that user having a greeter count of 2", () => {
+    // Initializing the mock database
+    const mockDbInitial = MockDb.createMockDb();
+    // Initializing values for mock event
+    const userAddress = Addresses.defaultAddress;
+    const greeting = "Hi there";
+    const greetingAgain = "Oh hello again";
+
+    // Creating a mock event
+    const mockNewGreetingEvent = Greeter.NewGreeting.createMockEvent({
+      greeting: greeting,
+      user: userAddress,
+    });
+
+    // Creating a mock event
+    const mockNewGreetingEvent2 = Greeter.NewGreeting.createMockEvent({
+      greeting: greetingAgain,
+      user: userAddress,
+    });
+
+    // Processing the mock event on the mock database
+    const updatedMockDb = Greeter.NewGreeting.processEvent({
+      event: mockNewGreetingEvent,
+      mockDb: mockDbInitial,
+    });
+
+    // Processing the mock event on the updated mock database
+    const updatedMockDb2 = Greeter.NewGreeting.processEvent({
+      event: mockNewGreetingEvent2,
+      mockDb: updatedMockDb,
+    });
+
+    // Getting the entity from the mock database
+    const dbEntity = updatedMockDb2.entities.Greeting.get(userAddress);
+
+    // Asserting that the field value of the entity in the mock database is the same as the expected field value
+    assert.equal(2, dbEntity?.numberOfGreetings);
+  });
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="Typescript">
+
+```typescript
+it("2 Greetings from the same users results in that user having a greeter count of 2", () => {
+    // Initializing the mock database
+    const mockDbInitial = MockDb.createMockDb();
+    // Initializing values for mock event
+    const userAddress = Addresses.defaultAddress;
+    const greeting = "Hi there";
+    const greetingAgain = "Oh hello again";
+
+    // Creating a mock event
+    const mockNewGreetingEvent = Greeter.NewGreeting.createMockEvent({
+      greeting: greeting,
+      user: userAddress,
+    });
+
+    // Creating a mock event
+    const mockNewGreetingEvent2 = Greeter.NewGreeting.createMockEvent({
+      greeting: greetingAgain,
+      user: userAddress,
+    });
+
+    // Processing the mock event on the mock database
+    const updatedMockDb = Greeter.NewGreeting.processEvent({
+      event: mockNewGreetingEvent,
+      mockDb: mockDbInitial,
+    });
+
+    // Processing the mock event on the updated mock database
+    const updatedMockDb2 = Greeter.NewGreeting.processEvent({
+      event: mockNewGreetingEvent2,
+      mockDb: updatedMockDb,
+    });
+
+    // Getting the entity from the mock database
+    const dbEntity = updatedMockDb2.entities.Greeting.get(userAddress);
+
+    // Asserting that the field value of the entity in the mock database is the same as the expected field value
+    assert.equal(2, dbEntity?.numberOfGreetings);
+  });
+```
+  </TabItem>
+  <TabItem value="rescript" label="Rescript">
+
+```rescript
+it("2 Greetings from the same users results in that user having a greeter count of 2", () => {
+    // Initializing the mock database
+    let mockDbInitial = TestHelpers.MockDb.createMockDb()
+
+    // Initializing values for mock event
+    let userAddress = Ethers.Addresses.defaultAddress
+    let greeting = "Hi there"
+    let greetingAgain = "Oh hello again"
+
+    // Creating a mock event
+    let mockNewGreetingEvent = TestHelpers.Greeter.NewGreeting.createMockEvent({
+      greeting,
+      user: userAddress,
+    })
+
+    // Creating a mock event
+    let mockNewGreetingEvent2 = TestHelpers.Greeter.NewGreeting.createMockEvent({
+      greeting: greetingAgain,
+      user: userAddress,
+    })
+
+    // Processing the mock event on the mock database
+    let updatedMockDb = TestHelpers.Greeter.NewGreeting.processEvent({
+      event: mockNewGreetingEvent,
+      mockDb: mockDbInitial,
+    })
+
+    // Processing the mock event on the updated mock database
+    let updatedMockDb2 = TestHelpers.Greeter.NewGreeting.processEvent({
+      event: mockNewGreetingEvent2,
+      mockDb: updatedMockDb,
+    })
+
+    let expectedGreetingCount = 2
+
+    // Getting the entity from the mock database
+    let dbEntity =
+      updatedMockDb2.entities.greeting.get(userAddress->Ethers.ethAddressToString)->Option.getExn
+
+    // Asserting that the field value of the entity in the mock database is the same as the expected field value
+    Assert.equal(dbEntity.numberOfGreetings, expectedGreetingCount)
+  })
+```
+
+  </TabItem>
+</Tabs>
 
 
 ## Troubleshooting
 
-The testing code is available in versions ^v0.0.26 
+The testing code is available in versions ^v0.0.26
+
+Make sure to import relevant files and packages into your tests file, it might look something like this;
+
+<!-- There is something super buggy with docusaurus or the tabs library that I can't add js imports code in the tab -->
+<Tabs>
+   <TabItem value="javascript" label="Javascript">
+      <img src="/img/test-snippet.jpg" alt="javascript test snippets" width="100%"/>
+  </TabItem>
+
+  <TabItem value="typescript" label="Typescript">
+
+```typescript
+import assert from "assert";
+import { MockDb, Greeter } from "../generated/src/TestHelpers.gen";
+import { GreetingEntity } from "../generated/src/Types.gen";
+import { Addresses } from "../generated/src/bindings/Ethers.gen";
+```
+
+  </TabItem>
+  <TabItem value="rescript" label="Rescript">
+
+```rescript
+open RescriptMocha
+open Mocha
+open Belt
+```
+
+  </TabItem>
+</Tabs>
+
 
 If you encounter any issues or have questions please reach out to us on [discord]("https://discord.gg/Q9qt8gZ2fX")
 
