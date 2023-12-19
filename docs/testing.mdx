@@ -56,6 +56,10 @@ pnpm i mocha @types/mocha
 pnpm i mocha rescript-mocha
 ```
 
+<div style={{fontSize:"12px"}}>
+Make sure to update your bsconfig file to add the test folder as a source and add rescript-mocha as a bs-dependency
+</div>
+
   </TabItem>
 </Tabs>
 
@@ -72,13 +76,16 @@ Add a test command to your package.json
 "test": "mocha",
 ```
 
-
+Make sure to run codegen when changes are made to the config or schema to regenerate the TestHelpers
+```bash
+envio codegen
+```
 
 ## Writing tests
 
 ### Test library design
 
-The library is designed to allow developers to mimic the database and mock events and assert different outcomes. The mock database is immutable and each action returns a new instance of a mocked database, this makes it robust and easy to test against previous states of the database.
+The library is designed to allow developers to mock the database, mock events and assert different outcomes to the database from these events. The mock database is immutable and each action returns a new instance of a mocked database, this makes it robust and easy to test against previous states of the database.
 
 ### Example steps of what most tests will look like
 1. Initialize the mock database
@@ -87,10 +94,6 @@ The library is designed to allow developers to mimic the database and mock event
 1. Assert some expected outcome 
 
 
-Run codegen when changes are made to the config or schema to regenerate the code helpers
-```bash
-envio codegen
-```
 
 ## API
 
@@ -100,11 +103,11 @@ The `TestHelpers` code generated file exposes a few different functions
 The ability to create an instance of the MockDb 
 
 ```javascript
-let mockDbInitial = MockDb.createMockDb()
+const mockDbInitial = MockDb.createMockDb()
 ```
 
 #### > set
-The ability to set an entity of a MockDb (returns a new MockDb) 
+The ability to set an entity of a MockDb 
 
 ```javascript 
 const updatedMockDb = mockDbInitial.entities.EntityName.set(entity)
@@ -118,7 +121,7 @@ Where EntityName is the entity defined in the Schema
 1. Ability to get an entity from the MockDb 
 
 ```javascript 
-updatedMockDb.entities.EntityName.get(id)
+const entity = updatedMockDb.entities.EntityName.get(id)
 ```
 
 <span style={{fontSize:"12px"}}>
@@ -129,7 +132,7 @@ Where EntityName is the entity defined in the Schema
 The ability to create an instance of an event 
 
 ```javascript
-ContractName.EventName.createMockEvent({params})
+const eventMock = ContractName.EventName.createMockEvent({params})
 ```
 
 <div style={{fontSize:"12px"}}>
@@ -147,7 +150,7 @@ Where params is an object of the parameters emitted in the event
 The ability to process an event on a mockDb 
 
 ```javascript 
-ContractName.EventName.processEvent({event: mockNewGreetingEvent, mockDb: mockDbInitial})
+const updatedMockDbFromEvent = ContractName.EventName.processEvent({event: eventMock, mockDb: updatedMockDb})
 ```
 
 <div style={{fontSize:"12px"}}>
@@ -157,28 +160,6 @@ Where ContactName is the name of the contract defined in the config
 Where EventName is the name of the event being emitted
 </div>
 
-<Tabs>
-  <TabItem value="javascript" label="Javascript">
-
-```javascript
-
-```
-
-  </TabItem>
-  <TabItem value="typescript" label="Typescript">
-
-```bash
-pnpm i mocha @types/mocha
-```
-  </TabItem>
-  <TabItem value="rescript" label="Rescript">
-
-```bash
-pnpm i mocha rescript-mocha
-```
-
-  </TabItem>
-</Tabs>
 
 ## Assertions
 
@@ -485,6 +466,7 @@ open Belt
   </TabItem>
 </Tabs>
 
+When working in rescript make sure to update your bsconfig file to add the test folder as a source and add rescript-mocha as a bs-dependency
 
 If you encounter any issues or have questions please reach out to us on [discord]("https://discord.gg/Q9qt8gZ2fX")
 
