@@ -18,15 +18,13 @@ With each passing month, our community has flourished, and the collaborative spi
 
 ### Reflection
 
-In 2023, our journey was defined by a series of strategic version releases, each contributing to Envio’s evolution. Beginning with v0.0.16, our focus on security and user experience set the stage for subsequent advancements.
+In 2023, our journey was defined by a series of strategic version releases, each contributing to Envio’s evolution.
 
 Versions from v0.0.20 to v0.0.24 showcased our commitment to performance optimization and ecosystem growth. These releases introduced significant improvements in [Hypersync](https://docs.envio.dev/docs/hypersync) performance allowing 100x faster sync speeds than JSON-RPC, and innovative features like our no-code [Contract Import](https://docs.envio.dev/docs/contract-import) tool that allows users to generate and index an existing contract that has been deployed on the blockchain, and with the addition of expanded support for diverse networks.
 
 Continuing the momentum, v0.0.25 refined existing features, resolving challenges like tuples in event parameters. In addition, the 'envio dev' command was optimized for efficient codegen management, demonstrating Envio's responsiveness to our user's needs.
 
 The latest release, v0.0.26, introduced "TestHelpers" for enhanced unit testing and extended contract-import functionality, supporting multiple contracts across chains and expanding Envio’s ecosystem horizons with the chains supported by Hypersync. We’ve also added significant updates to existing networks and added new and enhanced Hypersync support for [Lukso](https://lukso.network/), [OkbcTestnet](https://www.okx.com/), Holesky, and [GnosisChiado](https://docs.gnosischain.com/about/networks/chiado). ⚡⚡⚡
-
-Collectively, these versions represent a dynamic platform that has evolved strategically, showcasing Envio's dedication to excellence, innovation, and developer satisfaction.
 
 Envio Hypersync is now supported across 25+ EVM blockchains. For a full list of currently supported chains on Hypersync visit our [docs](https://docs.envio.dev/docs/hypersync).
 
@@ -40,7 +38,7 @@ Looking ahead, we remain committed to participating in upcoming events in 2024 t
 
 ### Bounty & Grant Programs
 
-As phase 1 of the [Envio bounty program](https://x.com/envio_indexer/status/1704136858874052974?s=20) comes to a close we are incredibly proud and grateful for all the hard work and dedication would like to personally thank every graduate and participant who took on the challenge and gave us some incredible feedback. Our "[Build Bigger. Ship Faster" Grant Program](https://docs.envio.dev/blog/envio-grant-program-now-live) and phase 1 of our Bounty Program provided various opportunities for developers of all skill sets to showcase their talents. Notable contributions from our bounty graduates include "Mogithehurt" for building a [multi-chain POAP indexer](https://docs.envio.dev/blog/envio-bounty-graduate-poap-multi-chain-indexer), “en0c” for shipping an [ERC4626 indexer for tokenized vault contracts,](https://docs.envio.dev/blog/envio-bounty-erc4626-tokenized-vault-indexer) “brymes” for the [ENS indexer](https://github.com/Brymes/Envio-ENS-Indexer), and “codingsh” developing an indexer for [on-chain governance contracts](https://github.com/developerfred/envio-indexer-template-gov/tree/codingsh-onchain-indexer). These initiatives emphasized our commitment to empowering developers, fostering creativity, and rewarding impactful contributions.
+As phase 1 of the [Envio bounty program](https://x.com/envio_indexer/status/1704136858874052974?s=20) comes to a close we are incredibly proud and grateful for all the hard work and dedication would like to personally thank every graduate and participant who took on the challenge and gave us some incredible feedback. Our "[Build Bigger. Ship Faster" Grant Program](https://docs.envio.dev/blog/envio-grant-program-now-live) and phase 1 of our Bounty Program provided various opportunities for developers of all skill sets to showcase their talents. Notable contributions from our bounty graduates include "Mogithehurt" for building a [multi-chain POAP indexer](https://docs.envio.dev/blog/envio-bounty-graduate-poap-multi-chain-indexer) and “en0c” for shipping an [ERC4626 indexer for tokenized vault contracts](https://docs.envio.dev/blog/envio-bounty-erc4626-tokenized-vault-indexer). These initiatives emphasized our commitment to empowering developers, fostering creativity, and rewarding impactful contributions.
 
 We plan to launch phase 2 of the Envio bounty program in Q1 of 2024 where you can expect to see some exciting bounties that are focused on the creation of interesting use cases and templates so be sure to keep an eye out in our [Discord](https://discord.com/invite/Q9qt8gZ2fX) and/or our [Dework](https://app.dework.xyz/envio) profile for new bounty submissions and announcements.
 
