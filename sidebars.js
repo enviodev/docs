@@ -90,7 +90,7 @@ module.exports = {
     },
     {
       type: "category",
-      label: "HyperSync (Coming soon in Q4 2023)",
+      label: "HyperSync (Alpha available)",
       items: [
         "overview-hypersync",
         "hypersync-clients",
