@@ -5,7 +5,7 @@ sidebar_label: Hypersync Clients
 slug: /hypersync-clients
 ---
 
-HyperSync is the state of the art way to extract on-chain data. There are high-performance clients for JavaScript/TypeScript (NodeJS only for now), Python and Rust now. 
+HyperSync is the state of the art way to extract on-chain data. There are high-performance clients for JavaScript/TypeScript (NodeJS only for now), Python and Rust now. Please get in touch if there are features that you would appreciate, for example if you require a browser-based javascript client, additional data, or even usage in another language.
 
 The clients use a common rust base for high performance and uniform experience across different languages. All clients use our optimized binary transport and purpose built api for maximum efficiency.
 
