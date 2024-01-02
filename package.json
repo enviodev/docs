@@ -15,9 +15,9 @@
     "preinstall": "npx only-allow yarn"
   },
   "dependencies": {
-    "@docusaurus/core": "2.4.0",
-    "@docusaurus/plugin-google-gtag": "^2.4.1",
-    "@docusaurus/preset-classic": "2.4.0",
+    "@docusaurus/core": "3.0.1",
+    "@docusaurus/plugin-google-gtag": "^3.0.1",
+    "@docusaurus/preset-classic": "3.0.1",
     "@mdx-js/react": "^1.6.22",
     "clsx": "^1.2.1",
     "docusaurus": "^2.0.0-alpha.66",
