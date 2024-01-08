@@ -71,19 +71,9 @@ Refer to the [<ins>configuration</ins>](./configuration-file) page for more info
 
 ### `EE106`: Undefined Network Config
 
-There is no `hypersync_config` defined for the network ID defined in the configuration file.
+There is no `hypersync_config` or `rpc_config` defined for the network ID defined in the configuration file.
 
-Provide `rpc_config`.
-
-Refer to the [<ins>RPC Sync</ins>](./rpc-sync) page for more information.
-
-### `EE107`: HyperSync Endpoint Unhealthy
-
-HyperSync endpoint is unhealthy.
-
-Provide `rpc_config`.
-
-Refer to the [<ins>RPC Sync</ins>](./rpc-sync) or [<ins>HyperSync</ins>](./hypersync) page for more information.
+Refer to the [<ins>HyperSync</ins>](./hypersync) or [<ins>RPC Sync</ins>](./rpc-config) page for more information.
 
 ### `EE108`: Valid Postgres Database
 
@@ -135,20 +125,9 @@ Refer to the [<ins>schema</ins>](./schema) page for more information.
 
 Refer to the [<ins>schema</ins>](./schema) page for more information.
 
-### `EE205`: Non-existent Derived Entity
-
-Derived entity does not exist in the schema.
-
-Use a derived entity that exists in the schema provided.
-
-### `EE206`: Non-existent Derived Field
-
-Derived field does not exist on specified entity.
-
-Use a field that exists in the specified entity.
-
 ### `EE207`: Undefined Type
 
+11
 Failed to parse undefined type in the schema.
 
 Use one of the following types in the schema:
@@ -182,6 +161,10 @@ Envio prohibits use of reserved words from JavaScript and ReScript in the schema
 Please refer to [<ins>reserved words</ins>](./reserved-words) page for the full list of reserved words.
 
 Avoid using reserved words in the schema file.
+
+### `EE211`: Unsupported Arrays of Entities
+
+Please use one of the methods for referencing entities outlined in the [<ins>documentation</ins>](./schema.md).
 
 ### `EE300`: Event ABI Error
 
