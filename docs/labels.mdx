@@ -1,25 +1,25 @@
 ---
-id: array-label
-title: Loading Entity Array
-sidebar_label: Loading Entity Array
-slug: /array-label
+id: labels
+title: Loading Entities with Labels
+sidebar_label: Entity labels
+slug: /labels
 ---
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-
 ## Introduction
 
-For the indexer, you may want to load an array of an entity. This can be achieved by using `arrayLabels` in `config.yaml` file.
-For example, you may want to load two token entities for an event from an AMM pool that you are indexing.
+In the basic section to get values loaded into your handler into you have used the `get` function. This is great when starting out, but when your indexer is further along you may want to use labels to make the connection between the `load` and `get` parts explicit. This can make your code look cleaner, and avoid sneaky bugs where the wrong entity is being loaded or the `load` and `get` function aren't matching up.
 
+For loading a single entity you will use a label, but for an array you can use the tag `arrayLabels` in `config.yaml` file. This is useful for groups of entitites that you want to have in your handler, and the entities stay ordered for easy iteration. For example, you may want to load two token entities for an event from an AMM pool that you are indexing.
 
 ## Example
 
 The below example illustrates how to define an `arrayLabel` as well as a `label` for entity `A` that we want to load for `TestEvent` event.
 
 ### `config.yaml`
+
 ```yaml
 networks:
   - id: 12345 #Your chain Id
@@ -38,6 +38,7 @@ networks:
 ```
 
 ### `schema.graphql`
+
 ```graphql
 type A {
   id: ID!
@@ -46,6 +47,7 @@ type A {
 ```
 
 ### Event Handler file
+
 <Tabs>
 <TabItem value="javascript" label="Javascript">
 
