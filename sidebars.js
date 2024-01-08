@@ -30,6 +30,8 @@ module.exports = {
             "configuration-file",
             "schema-file",
             "event-handlers",
+            "supported-networks",
+            "testing",
             "subgraph-migration",
             "contract-import",
             "hosted-service",
@@ -41,7 +43,7 @@ module.exports = {
           type: "category",
           label: "Advanced",
           items: [
-            "array-label",
+            "labels",
             "linked-entity-loaders",
             "dynamic-contracts",
             "multichain-indexing",
@@ -89,8 +91,11 @@ module.exports = {
     },
     {
       type: "category",
-      label: "HyperSync (Coming soon in Q4 2023)",
-      items: ["overview-hypersync"],
+      label: "HyperSync (Alpha available)",
+      items: [
+        "overview-hypersync",
+        "hypersync-clients",
+      ],
     },
   ],
 };
