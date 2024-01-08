@@ -38,7 +38,7 @@ Loader functions are called via
   <TabItem value="typescript" label="Typescript">
 
 ```typescript
-<ContractName>Contract_<EventName>_loader
+<ContractName>Contract_ < EventName > _loader;
 ```
 
   </TabItem>
@@ -55,7 +55,7 @@ Loader functions are used to load the specific entities (defined in the `schema.
 
 Entities with specific IDs can be loaded via `context.<EntityName>.<label>Load(<id>)`.
 
-If no labels has been defined in the `config.yaml` file, then entities can be loaded via `context.<EntityName>.load(<id>)`. You can call this `.load` function to load as many entities as you want to be available in your handler.
+If no [labels](./labels) has been defined in the `config.yaml` file, then entities can be loaded via `context.<EntityName>.load(<id>)`. You can call this `.load` function to load as many entities as you want to be available in your handler.
 
 > Dev note: 📢 For indexers built using `ReScript`, use a lower case for first letter of entityName when accessing it via context (i.e. `context.greeting` instead of `context.Greeting`).
 
@@ -63,9 +63,11 @@ A single event can be used to load single or multiple entities in the loader (an
 
 Each entity that is to be loaded by the event must be defined in the `requiredEntities` field of the event in the `config.yaml` file.
 
-### Loading an array of an entity
+**Note**: that if no `required_entities` are set, then all entities can be used in your loader, but if it is set only entities in your required_entities can be used.
 
-If you wish to load an array of an entity, then `arrayLabels` should be used in the `config.yaml` file, here is an [here](./array-label).
+### labels and arrayLabels
+
+To make your code more robust and explicit you can use the advanced [here](./labels) features.
 
 ## Handler function
 
@@ -82,7 +84,7 @@ Handler functions are called via
   <TabItem value="typescript" label="Typescript">
 
 ```typescript
-<ContractName>Contract_<EventName>_handler
+<ContractName>Contract_ < EventName > _handler;
 ```
 
   </TabItem>
@@ -114,12 +116,10 @@ Below is a list of raw event information that can be accessed:
 - `transactionHash`
 - `transactionIndex`
 
-Handler functions can access the loaded entities information via `context.<EntityName>.<label>Load`.
-
-If no label name has been defined in the `config.yaml` file, handler functions can access the loaded entities information via `context.<EntityName>.get(<id>)`.
+Handler functions can access the loaded entities that were loaded in the handler via `context.<EntityName>.<label>Load`, they can access these loaded entities via `context.<EntityName>.get(<id>)`.
 
 > Dev note: 📢 For indexers built using `ReScript`, use a lower case for first letter of entityName when accessing it via context (i.e. `context.greeting` instead of `context.Greeting`).
-Handler functions can also provides the following functions per loaded entity, that can be used to interact with that entity:
+> Handler functions can also provides the following functions per loaded entity, that can be used to interact with that entity:
 
 - set
 - delete
@@ -133,8 +133,6 @@ Inspecting the `config.yaml` of the `NewGreeting` event, it indicates that there
 ```yaml
 events:
   - name: "NewGreeting"
-    requiredEntities:
-      - name: "Greeting"
 ```
 
 ### Example of a Loader function for the `NewGreeting` event:
