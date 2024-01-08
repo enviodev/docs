@@ -119,7 +119,8 @@ Below is a list of raw event information that can be accessed:
 Handler functions can access the loaded entities that were loaded in the handler via `context.<EntityName>.<label>Load`, they can access these loaded entities via `context.<EntityName>.get(<id>)`.
 
 > Dev note: 📢 For indexers built using `ReScript`, use a lower case for first letter of entityName when accessing it via context (i.e. `context.greeting` instead of `context.Greeting`).
-> Handler functions can also provides the following functions per loaded entity, that can be used to interact with that entity:
+
+Handler functions can also provides the following functions per loaded entity, that can be used to interact with that entity:
 
 - set
 - delete
