@@ -45,3 +45,35 @@ Here is a table of currently supported networks on Hypersync:
 | Sepolia          | 11155111   |
 
 Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9qt8gZ2fX)
+
+## Greeter example
+
+```yaml
+name: Greeter
+description: Greeter indexer
+networks:
+  - id: 137 # Polygon
+    start_block: 0
+    contracts:
+      - name: PolygonGreeter
+        abi_file_path: abis/greeter-abi.json
+        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
+        handler: ./src/EventHandlers.bs.js
+        events:
+          - event: "NewGreeting"
+            requiredEntities:
+              - name: "Greeting"
+                labels:
+                  - "greetingWithChanges"
+          - event: "ClearGreeting"
+            requiredEntities:
+              - name: "Greeting"
+                labels:
+                  - "greetingWithChanges"
+```
+
+In the example above, absence of `rpc_config` will automatically direct Envio to HyperSync for the defined network (Polygon).
+
+For HyperSync users can use `start_block` of 0 regardless of when the deployments for the contracts to be indexed were, as HyperSync can very quickly detect the first block where it needs to start indexing from automatically.
+
+---
