@@ -10,15 +10,14 @@ import TabItem from "@theme/TabItem";
 
 ## Introduction
 
-Envio has a few helpers to assist developers write tests for their code. This library is specifically crafted to allow developers to mock database state and mock events and assert handler logic.  
+Envio comes with a built-in testing library to assist developers write tests for their indexer. This library is specifically crafted to mock database states as well as events and assert event handler logic.  
  
-The testing library is simply a series of helper functions that can help writing tests, this means that any JavaScript based testing framework can be used, in the examples we use [Mocha](https://mochajs.org/).
-
+The testing library is simply a series of helper functions that can be used to write tests, which means that any JavaScript-based testing framework can be used. In the examples below, we use [Mocha](https://mochajs.org/).
 
 ## Learn by doing
-Tests are written in all programming languages of the Greeter template and can be explored by following the following steps
+Tests are written in JavaScript, TyesScript and ReScript for the Greeter template and can be explored by following the steps below
 
-Generate greeter template in typescript
+Generate `greeter` template in TypeScript using Envio CLI
 ```bash
 envio init template -l typescript -d greeter -t greeter -n greeter
 ```
@@ -32,9 +31,9 @@ See the `test/test.ts` file to understand how the tests are written.
 
 ## Getting Started
 
-This doc assumes you have a functioning indexer setup with which you intend to write tests for.
+This page assumes you have a functioning indexer setup for which you intend to write tests.
 
-Install preferred testing framework, for example mocha
+Install preferred testing framework, for example [Mocha](https://mochajs.org/)
 
 <Tabs>
   <TabItem value="javascript" label="Javascript">
@@ -57,18 +56,18 @@ pnpm i mocha rescript-mocha
 ```
 
 <div style={{fontSize:"12px"}}>
-Make sure to update your bsconfig file to add the test folder as a source and add rescript-mocha as a bs-dependency
+Make sure to update your `bsconfig` file to add the test folder as a source and add `rescript-mocha` as a `bs-dependency`
 </div>
 
   </TabItem>
 </Tabs>
 
-Validate you're using Envio v0.0.26 or above
+Validate you're using Envio `v0.0.26` or above
 ```bash
 envio -V
 ```
 
-Create a test folder and a test file test.js
+Create a `test` folder and a test file `test.js` inside it
 
 
 Add a test command to your package.json
@@ -76,7 +75,7 @@ Add a test command to your package.json
 "test": "mocha",
 ```
 
-Make sure to run codegen when changes are made to the config or schema to regenerate the TestHelpers
+Make sure to run `envio codegen` when changes are made to the config or schema files to regenerate the testing library (`TestHelpers` file).
 ```bash
 envio codegen
 ```
@@ -85,28 +84,29 @@ envio codegen
 
 ### Test library design
 
-The library is designed to allow developers to mock the database, mock events and assert different outcomes to the database from these events. The mock database is immutable and each action returns a new instance of a mocked database, this makes it robust and easy to test against previous states of the database.
+The library is designed to allow developers to mock the database, mock events and assert different outcomes to the database from these events. 
+
+The mock database is immutable and each action returns a new instance of the mocked database.
+This makes it robust and easy to test against previous states of the database.
 
 ### Example steps of what most tests will look like
 1. Initialize the mock database
 1. Create a mock event
 1. Process the mock event on the mock database
-1. Assert some expected outcome 
-
-
+1. Assert against the expected database state 
 
 ## API
 
-The `TestHelpers` code generated file exposes a few different functions
+The generated `TestHelpers` file exposes a few different functions:
 
-#### > createMockDb
+#### > `createMockDb`
 The ability to create an instance of the MockDb 
 
 ```javascript
 const mockDbInitial = MockDb.createMockDb()
 ```
 
-#### > set
+#### > `set`
 The ability to set an entity of a MockDb 
 
 ```javascript 
@@ -117,7 +117,7 @@ const updatedMockDb = mockDbInitial.entities.EntityName.set(entity)
 Where EntityName is the entity defined in the Schema
 </span>
 
-#### > get
+#### > `get`
 1. Ability to get an entity from the MockDb 
 
 ```javascript 
@@ -128,46 +128,47 @@ const entity = updatedMockDb.entities.EntityName.get(id)
 Where EntityName is the entity defined in the Schema
 </span>
 
-#### > createMockEvent
+#### > `createMockEvent`
 The ability to create an instance of an event 
 
 ```javascript
-const eventMock = ContractName.EventName.createMockEvent({params})
+const mockEvent = ContractName.EventName.createMockEvent({params})
 ```
 
 <div style={{fontSize:"12px"}}>
-Where ContactName is the name of the contract defined in the config
+Where `ContactName` is the name of the contract defined in the config
 </div>
 <div style={{fontSize:"12px"}}>
-Where EventName is the name of the event being emitted
+Where `EventName` is the name of the event being emitted
 </div>
 <div style={{fontSize:"12px"}}>
-Where params is an object of the parameters emitted in the event
+Where `params` is an object of the parameters emitted in the event
 </div>
 
+{/* Add note sectino about adding in mockEventData to paraas for other event related details */}
 
-#### > processEvent
+#### > `processEvent`
 The ability to process an event on a mockDb 
 
 ```javascript 
-const updatedMockDbFromEvent = ContractName.EventName.processEvent({event: eventMock, mockDb: updatedMockDb})
+const updatedMockDbFromEvent = ContractName.EventName.processEvent({event: mockEvent, mockDb: updatedMockDb})
 ```
 
 <div style={{fontSize:"12px"}}>
-Where ContactName is the name of the contract defined in the config
+Where `ContactName` is the name of the contract defined in the config
 </div>
 <div style={{fontSize:"12px"}}>
-Where EventName is the name of the event being emitted
+Where `EventName` is the name of the event being emitted
 </div>
 
 
 ## Assertions
 
-In the examples we use NodeJS's built in assert module but you can use other popular JavaScript based assertion libraries like [chai](https://www.chaijs.com/) or [expect](https://github.com/Automattic/expect.js).
+In the examples we use NodeJS's built-in assert module but you can use other popular JavaScript based assertion libraries like [chai](https://www.chaijs.com/) or [expect](https://github.com/Automattic/expect.js).
 
 ## Examples
 
-### A NewGreeting event creates a Greeting entity
+### A `NewGreeting` event creates a `Greeting` entity
 
 <Tabs>
   <TabItem value="javascript" label="Javascript">
@@ -202,10 +203,10 @@ In the examples we use NodeJS's built in assert module but you can use other pop
     };
 
     // Getting the entity from the mock database
-    const dbEntity = updatedMockDb.entities.Greeting.get(userAddress);
+    const actualGeetingEntity = updatedMockDb.entities.Greeting.get(userAddress);
 
     // Asserting that the entity in the mock database is the same as the expected entity
-    assert.deepEqual(expectedGreetingEntity, dbEntity);
+    assert.deepEqual(expectedGreetingEntity, actualGeetingEntity);
   });
 ```
 
@@ -242,10 +243,10 @@ it("A NewGreeting event creates a Greeting entity", () => {
     };
 
     // Getting the entity from the mock database
-    const dbEntity = updatedMockDb.entities.Greeting.get(userAddress);
+    const actualGeetingEntity = updatedMockDb.entities.Greeting.get(userAddress);
 
     // Asserting that the entity in the mock database is the same as the expected entity
-    assert.deepEqual(expectedGreetingEntity, dbEntity);
+    assert.deepEqual(expectedGreetingEntity, actualGeetingEntity);
   });
 ```
   </TabItem>
@@ -281,11 +282,11 @@ it("A NewGreeting event creates a Greeting entity", () => {
     }
 
     // Getting the entity from the mock database
-    let dbEntity =
+    let actualGeetingEntity =
       updatedMockDb.entities.greeting.get(userAddress->Ethers.ethAddressToString)->Option.getExn
 
     // Asserting that the entity in the mock database is the same as the expected entity
-    Assert.deep_equal(expectedGreetingEntity, dbEntity)
+    Assert.deep_equal(expectedGreetingEntity, actualGeetingEntity)
   })
 ```
 
@@ -331,10 +332,10 @@ it("A NewGreeting event creates a Greeting entity", () => {
     });
 
     // Getting the entity from the mock database
-    const dbEntity = updatedMockDb2.entities.Greeting.get(userAddress);
+    const actualGeetingEntity = updatedMockDb2.entities.Greeting.get(userAddress);
 
     // Asserting that the field value of the entity in the mock database is the same as the expected field value
-    assert.equal(2, dbEntity?.numberOfGreetings);
+    assert.equal(2, actualGeetingEntity?.numberOfGreetings);
   });
 ```
 
@@ -375,10 +376,10 @@ it("2 Greetings from the same users results in that user having a greeter count 
     });
 
     // Getting the entity from the mock database
-    const dbEntity = updatedMockDb2.entities.Greeting.get(userAddress);
+    const actualGeetingEntity = updatedMockDb2.entities.Greeting.get(userAddress);
 
     // Asserting that the field value of the entity in the mock database is the same as the expected field value
-    assert.equal(2, dbEntity?.numberOfGreetings);
+    assert.equal(2, actualGeetingEntity?.numberOfGreetings);
   });
 ```
   </TabItem>
@@ -421,11 +422,11 @@ it("2 Greetings from the same users results in that user having a greeter count 
     let expectedGreetingCount = 2
 
     // Getting the entity from the mock database
-    let dbEntity =
+    let actualGeetingEntity =
       updatedMockDb2.entities.greeting.get(userAddress->Ethers.ethAddressToString)->Option.getExn
 
     // Asserting that the field value of the entity in the mock database is the same as the expected field value
-    Assert.equal(dbEntity.numberOfGreetings, expectedGreetingCount)
+    Assert.equal(actualGeetingEntity.numberOfGreetings, expectedGreetingCount)
   })
 ```
 
@@ -435,16 +436,20 @@ it("2 Greetings from the same users results in that user having a greeter count 
 
 ## Troubleshooting
 
-The testing code is available in versions ^v0.0.26
+The testing code is available in versions of Envio `v0.0.26` and above.
 
 Make sure to import relevant files and packages into your tests file, it might look something like this;
 
-<!-- There is something super buggy with docusaurus or the tabs library that I can't add js imports code in the tab -->
 <Tabs>
    <TabItem value="javascript" label="Javascript">
-      <img src="/img/test-snippet.jpg" alt="javascript test snippets" width="100%"/>
-  </TabItem>
 
+```javascript
+const assert = require("assert");
+const { MockDb, Greeter } = require("../generated/src/TestHelpers.bs");
+const { Addresses } = require("../generated/src/bindings/Ethers.bs");
+```
+
+  </TabItem>
   <TabItem value="typescript" label="Typescript">
 
 ```typescript
@@ -466,7 +471,7 @@ open Belt
   </TabItem>
 </Tabs>
 
-When working in rescript make sure to update your bsconfig file to add the test folder as a source and add rescript-mocha as a bs-dependency
+> Dev note: 📢 When working in ReScript make sure to update your `bsconfig` file to add the test folder as a source and add `rescript-mocha` as a `bs-dependency`
 
-If you encounter any issues or have questions please reach out to us on [discord](https://discord.gg/Q9qt8gZ2fX)
+If you encounter any issues or have questions, please reach out to us on [Discord](https://discord.gg/Q9qt8gZ2fX)
 
