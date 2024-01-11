@@ -26,17 +26,16 @@ module.exports = {
           type: "category",
           label: "Guides",
           items: [
-            "envio-basics",
+            "hyperindex-basics",
             "configuration-file",
             "schema-file",
             "event-handlers",
-            "supported-networks",
-            "testing",
-            "subgraph-migration",
             "contract-import",
+            "subgraph-migration",
+            "testing",
+            "navigating-hasura",
             "hosted-service",
             "cli-commands",
-            "navigating-hasura",
           ],
         },
         {
@@ -48,7 +47,7 @@ module.exports = {
             "dynamic-contracts",
             "multichain-indexing",
             "hypersync",
-            "sync-config",
+            "rpc-sync",
             "persisted_files",
             "generated-files",
             "terminology",
@@ -92,10 +91,7 @@ module.exports = {
     {
       type: "category",
       label: "HyperSync (Alpha available)",
-      items: [
-        "overview-hypersync",
-        "hypersync-clients",
-      ],
+      items: ["overview-hypersync", "hypersync-clients"],
     },
   ],
 };

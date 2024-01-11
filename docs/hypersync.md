@@ -5,17 +5,17 @@ sidebar_label: HyperSync
 slug: /hypersync
 ---
 
-# Hypersync
+# HyperSync
 
 > Beam me up, scotty! 🖖
 
-Envio hypersync is our blazingly fast indexed layer on top of the blockchain that allows for hyper speed syncing.
+Envio HyperSync is our blazing-fast indexed layer on top of the blockchain that allows for hyper speed syncing.
 
 What would usually take hours to sync ~100,000 events can now be done in the order of less than a minute.
 
 Since this service is a layer above the blockchain we maintain and host this service for each supported network.
 
-Here is a table of currently supported networks on Hypersync:
+Here is a table of currently supported networks on HyperSync:
 
 | Network Name     | Network ID |
 | ---------------- | ---------- |
