@@ -75,15 +75,15 @@ There is no `hypersync_config` defined for the network ID defined in the configu
 
 Provide `rpc_config`.
 
-Refer to the [<ins>RPC sync</ins>](./sync-config) page for more information.
+Refer to the [<ins>RPC Sync</ins>](./rpc-sync) page for more information.
 
-### `EE107`: Hypersync Endpoint Unhealthy
+### `EE107`: HyperSync Endpoint Unhealthy
 
-Hypersync endpoint is unhealthy.
+HyperSync endpoint is unhealthy.
 
 Provide `rpc_config`.
 
-Refer to the [<ins>RPC sync</ins>](./sync-config) or [<ins>Hypersync</ins>](./hypersync) page for more information.
+Refer to the [<ins>RPC Sync</ins>](./rpc-sync) or [<ins>HyperSync</ins>](./hypersync) page for more information.
 
 ### `EE108`: Valid Postgres Database
 
