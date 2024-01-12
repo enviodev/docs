@@ -51,6 +51,7 @@ module.exports = {
             "persisted_files",
             "generated-files",
             "terminology",
+            "async-mode",
           ],
         },
         {
