@@ -145,7 +145,20 @@ Where `EventName` is the name of the event being emitted
 Where `params` is an object of the parameters emitted in the event
 </div>
 
-{/* Add note sectino about adding in mockEventData to paraas for other event related details */}
+
+Users can also define specific event log details by using `mockEventData` object as a parameter inside `params` object. 
+This is useful when you want to test against specific event log details like block number, transaction hash, etc.
+
+Event log details that can be defined inside `mockEventData` object are:
+- `blockNumber` 
+- `blockTimestamp` 
+- `blockHash` 
+- `chainId` 
+- `srcAddress` 
+- `transactionHash` 
+- `transactionIndex` 
+- `logIndex`
+
 
 #### > `processEvent`
 The ability to process an event on a mockDb 
@@ -203,10 +216,10 @@ In the examples we use NodeJS's built-in assert module but you can use other pop
     };
 
     // Getting the entity from the mock database
-    const actualGeetingEntity = updatedMockDb.entities.Greeting.get(userAddress);
+    const actualGreetingEntity = updatedMockDb.entities.Greeting.get(userAddress);
 
     // Asserting that the entity in the mock database is the same as the expected entity
-    assert.deepEqual(expectedGreetingEntity, actualGeetingEntity);
+    assert.deepEqual(expectedGreetingEntity, actualGreetingEntity);
   });
 ```
 
@@ -243,10 +256,10 @@ it("A NewGreeting event creates a Greeting entity", () => {
     };
 
     // Getting the entity from the mock database
-    const actualGeetingEntity = updatedMockDb.entities.Greeting.get(userAddress);
+    const actualGreetingEntity = updatedMockDb.entities.Greeting.get(userAddress);
 
     // Asserting that the entity in the mock database is the same as the expected entity
-    assert.deepEqual(expectedGreetingEntity, actualGeetingEntity);
+    assert.deepEqual(expectedGreetingEntity, actualGreetingEntity);
   });
 ```
   </TabItem>
@@ -282,11 +295,11 @@ it("A NewGreeting event creates a Greeting entity", () => {
     }
 
     // Getting the entity from the mock database
-    let actualGeetingEntity =
+    let actualGreetingEntity =
       updatedMockDb.entities.greeting.get(userAddress->Ethers.ethAddressToString)->Option.getExn
 
     // Asserting that the entity in the mock database is the same as the expected entity
-    Assert.deep_equal(expectedGreetingEntity, actualGeetingEntity)
+    Assert.deep_equal(expectedGreetingEntity, actualGreetingEntity)
   })
 ```
 
@@ -332,10 +345,10 @@ it("A NewGreeting event creates a Greeting entity", () => {
     });
 
     // Getting the entity from the mock database
-    const actualGeetingEntity = updatedMockDb2.entities.Greeting.get(userAddress);
+    const actualGreetingEntity = updatedMockDb2.entities.Greeting.get(userAddress);
 
     // Asserting that the field value of the entity in the mock database is the same as the expected field value
-    assert.equal(2, actualGeetingEntity?.numberOfGreetings);
+    assert.equal(2, actualGreetingEntity?.numberOfGreetings);
   });
 ```
 
@@ -376,10 +389,10 @@ it("2 Greetings from the same users results in that user having a greeter count 
     });
 
     // Getting the entity from the mock database
-    const actualGeetingEntity = updatedMockDb2.entities.Greeting.get(userAddress);
+    const actualGreetingEntity = updatedMockDb2.entities.Greeting.get(userAddress);
 
     // Asserting that the field value of the entity in the mock database is the same as the expected field value
-    assert.equal(2, actualGeetingEntity?.numberOfGreetings);
+    assert.equal(2, actualGreetingEntity?.numberOfGreetings);
   });
 ```
   </TabItem>
@@ -422,11 +435,11 @@ it("2 Greetings from the same users results in that user having a greeter count 
     let expectedGreetingCount = 2
 
     // Getting the entity from the mock database
-    let actualGeetingEntity =
+    let actualGreetingEntity =
       updatedMockDb2.entities.greeting.get(userAddress->Ethers.ethAddressToString)->Option.getExn
 
     // Asserting that the field value of the entity in the mock database is the same as the expected field value
-    Assert.equal(actualGeetingEntity.numberOfGreetings, expectedGreetingCount)
+    Assert.equal(actualGreetingEntity.numberOfGreetings, expectedGreetingCount)
   })
 ```
 
