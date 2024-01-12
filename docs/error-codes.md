@@ -73,7 +73,7 @@ Refer to the [<ins>configuration</ins>](./configuration-file) page for more info
 
 There is no `hypersync_config` or `rpc_config` defined for the network ID defined in the configuration file.
 
-Refer to the [<ins>HyperSync</ins>](./hypersync) or [<ins>RPC Sync</ins>](./rpc-config) page for more information.
+Refer to the [<ins>HyperSync</ins>](./hypersync) or [<ins>RPC Sync</ins>](./rpc-sync) page for more information.
 
 ### `EE108`: Valid Postgres Database
 
