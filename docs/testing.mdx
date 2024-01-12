@@ -15,7 +15,7 @@ Envio comes with a built-in testing library to assist developers write tests for
 The testing library is simply a series of helper functions that can be used to write tests, which means that any JavaScript-based testing framework can be used. In the examples below, we use [Mocha](https://mochajs.org/).
 
 ## Learn by doing
-Tests are written in JavaScript, TyesScript and ReScript for the Greeter template and can be explored by following the steps below
+Tests are written in JavaScript, TypeScript and ReScript for the Greeter template and can be explored by following the steps below
 
 Generate `greeter` template in TypeScript using Envio CLI
 ```bash
@@ -70,7 +70,7 @@ envio -V
 Create a `test` folder and a test file `test.js` inside it
 
 
-Add a test command to your package.json
+Add a test command to your `package.json`
 ```json
 "test": "mocha",
 ```
@@ -132,7 +132,7 @@ Where EntityName is the entity defined in the Schema
 The ability to create an instance of an event 
 
 ```javascript
-const mockEvent = ContractName.EventName.createMockEvent({params})
+const eventMock = ContractName.EventName.createMockEvent({params})
 ```
 
 <div style={{fontSize:"12px"}}>
@@ -151,7 +151,7 @@ Where `params` is an object of the parameters emitted in the event
 The ability to process an event on a mockDb 
 
 ```javascript 
-const updatedMockDbFromEvent = ContractName.EventName.processEvent({event: mockEvent, mockDb: updatedMockDb})
+const updatedMockDbFromEvent = ContractName.EventName.processEvent({event: eventMock, mockDb: updatedMockDb})
 ```
 
 <div style={{fontSize:"12px"}}>
