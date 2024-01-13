@@ -24,7 +24,7 @@ Regardless, if possible we recommend building the indexer with only blockchain e
 
 With async-mode, [loaders](/docs/event-handlers#loader-function) become optional. If you forget to write them or add your entity to the loader, it will be loaded asyncronously from the database. Once again, this has a performance cost.
 
-We ask that you use asynchronous mode with caution. If you for example forget to return your promise in your handler there could be unexpected behavious since the next event might start getting processed before your async function has completed. The other issue, is if an external promise fails it could totally block your indexer (eg. if a 3rd party API is unreachable for example).
+We ask that you use asynchronous mode with caution. If you for example forget to return your promise in your handler there could be unexpected behaviours since the next event might start getting processed before your async function has completed. The other issue, is if an external promise fails it could totally block your indexer (eg. if a 3rd party API is unreachable for example).
 
 ## Example
 
@@ -270,7 +270,7 @@ And here is a diff to highlight the change:
 
 ## Testing
 
-Testing async functions can be tricky if you have 3rd party dependencies. We'd recommend mocking those with your mocking library of choice. In the testing framework](/docs/testing) itself, the only change is that `processEvent` is now `processEventAsync`, and it returns a promise rather than being syncronous.
+Testing async functions can be tricky if you have 3rd party dependencies. We would recommend mocking those with your mocking library of choice. In the testing framework](/docs/testing) itself, the only change is that `processEvent` is now `processEventAsync`, and it returns a promise rather than being synchronous.
 
 
 
