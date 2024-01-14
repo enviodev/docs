@@ -58,17 +58,19 @@ If Postgres is running locally on port 5432, then you can run the whole system w
 In practice this could look like this:
 
 ```
-PG_PORT=5433 envio codegen
-PG_PORT=5433 envio dev
+ENVIO_PG_PORT=5433 envio codegen
+ENVIO_PG_PORT=5433 envio dev
 ```
 
 or
 
 ```
-export PG_PORT=5433
+export ENVIO_PG_PORT=5433
 envio codegen
 envio dev
 ```
+
+NOTE: you can further customize how you connect to postgres with these additional environment variables `ENVIO_POSTGRES_PASSWORD`, `ENVIO_PG_USER` and `ENVIO_PG_DATABASE`.
 
 ## Smart contract updated after the initial codegen
 
