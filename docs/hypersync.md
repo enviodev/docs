@@ -43,6 +43,21 @@ Here is a table of currently supported networks on HyperSync:
 | Mumbai           | 80001      |
 | Taiko Jolnr      | 167007     |
 | Sepolia          | 11155111   |
+| Base Sepolia     | 420        |
+| Fantom           | 250        |
+| Optimism Sepolia | 11155420   |
+| Arbitrum Nova    | 42161      |
+| Aurora           | 1313161554 |
+| AuroraTestnet    | 1313161555 |
+| Harmony          | 1666600000 |
+| PolygonzkEVM     | 1101       |
+| Scroll           | 534352     |
+| Zora             | 7777777    |
+| PublicGoods      | 424        |
+| C1 Milkomeda     | 2001       |
+| Flare            | 14         |
+| Mantle           | 5000       |
+
 
 Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9qt8gZ2fX)
 
