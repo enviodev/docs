@@ -40,27 +40,20 @@ networks:
     contracts:
       - name: NftFactory
         abi_file_path: abis/NftFactory.json
-        address: "0x4675a6B115329294e0518A2B7cC12B70987895C4"
+        address: 0x4675a6B115329294e0518A2B7cC12B70987895C4
         handler: src/EventHandlers.ts
         events:
-          - event: "SimpleNftCreated (string name, string symbol, uint256 maxSupply, address contractAddress)"
+          - event: SimpleNftCreated (string name, string symbol, uint256 maxSupply, address contractAddress)
             requiredEntities: []
       - name: SimpleNft
         abi_file_path: abis/SimpleNft.json
         handler: src/EventHandlers.ts
         events:
-          - event: "Transfer"
+          - event: Transfer (address from, address to, uint256 tokenId)
             requiredEntities:
-              - name: "User"
-                labels:
-                  - "userFrom"
-                  - "userTo"
+              - name: User
               - name: Nftcollection
-                labels:
-                  - "nftCollectionUpdated"
               - name: Token
-                labels:n
-                  - "existingTransferredToken"
 ```
 
 ### Registering `SimpleNft` contracts in loader function for `SimpleNftCreated` event
