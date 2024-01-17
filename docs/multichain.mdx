@@ -243,4 +243,14 @@ Handlers.GreeterContract.ClearGreeting.handler((~event, ~context) => {
   </TabItem>
 </Tabs>
 
+## `UNSTABLE__TEMP_UNORDERED_HEAD_MODE` environment variable
+
+By default the indexer will process events in the order they appear, this is intended behavior and is important when events are updating an entity from multiple networks. This is important for some applications, but for others it is not. This is why we have added the `UNSTABLE__TEMP_UNORDERED_HEAD_MODE` environment variable.
+
+In order for events to be perfectly ordered across multiple networks, the indexer needs to wait for all blocks to increment from each network. This is because the indexer needs to know that there are no more events to process on a given block before it can move on to the next block. Hence there is a lag between when an event is emitted and when it is processed by the indexer based on the block interval of the slowest network.
+
+Generally, if operations to update an entity from multiple events across multiple networks are [commutative](./terminology#commutative-property) (where the ordering of operations doesnt effect the result) then the ordering of events doesn't need to be ordered and the UNSTABLE\_\_TEMP_UNORDERED_HEAD_MODE can be set to true. Likewise if there is no overlap between entities from different networks then the UNSTABLE\_\_TEMP_UNORDERED_HEAD_MODE can be set to true as the ordering of events across the networks is not important.
+
+If the UNSTABLE\_\_TEMP_UNORDERED_HEAD_MODE is set to true, then the indexer will process events as soon as they are emitted, this means that the indexer will not wait for all blocks to increment from each network before moving on to the next block. This means that events from different networks will be processed out of order, but it also means that events will be processed as soon as they are emitted.
+
 ---

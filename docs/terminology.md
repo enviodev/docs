@@ -13,6 +13,34 @@ Application Programming Interface, a set of protocols and tools for building sof
 A collection of data containing a set of transactions that are bundled together and added to the blockchain.
 ### Codegen
 The process of automatically generating code based on a given input, often used in blockchain development for generating client libraries or interfaces.
+### Commutative property
+The **commutative property** is a fundamental property of certain binary operations in mathematics. An operation is said to be commutative if the order in which you apply the operation to two operands does not affect the result. In other words, for a commutative operation:
+
+a + b = b + a
+
+Here are some common examples of commutative operations:
+
+1. **Addition (a + b):**
+   2 + 3 = 3 + 2
+
+2. **Multiplication (a \times b):**
+   2 * 3 = 3 * 2
+
+However, not all operations are commutative. Subtraction and division are examples of non-commutative operations:
+
+1. **Subtraction (a - b):**
+   5 - 3 != 3 - 5
+
+2. **Division (a / b):**
+   8 / 4 != 4 / 8
+
+3. **String Concatenation:**
+   "Hello" + "World" != "World" + "Hello"
+
+It's important to note that the commutative property is a property of the operation itself, not necessarily the numbers involved. If an operation is commutative, it means you can switch the order of the operands without changing the result.
+
+For example, in addition, it doesn't matter whether you add 2 and 3 or 3 and 2; the result is the same.
+
 ### Endpoint
 A URL that can be used to query an Envio custom API.
 ### Envio CLI
