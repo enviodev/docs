@@ -22,17 +22,24 @@ Here is a table of currently supported networks on HyperSync:
 | Ethereum Mainnet | 1          |
 | Goerli           | 5          |
 | Optimism         | 10         |
+| Flare            | 14         |
 | Lukso            | 42         |
 | Bsc              | 56         |
 | Gnosis           | 100        |
 | Polygon          | 137        |
 | Manta            | 169        |
 | Okbc Testnet     | 195        |
+| Fantom           | 250        |
 | Kroma            | 255        |
 | Boba             | 288        |
 | Zksync Era       | 324        |
+| Base Sepolia     | 420        |
+| PublicGoods      | 424        |
 | Metis            | 1088       |
+| PolygonzkEVM     | 1101       |
 | Moonbeam         | 1284       |
+| C1 Milkomeda     | 2001       |
+| Mantle           | 5000       |
 | Base             | 8453       |
 | Gnosis Chiado    | 10200      |
 | Holesky          | 17000      |
@@ -42,21 +49,13 @@ Here is a table of currently supported networks on HyperSync:
 | Linea            | 59144      |
 | Mumbai           | 80001      |
 | Taiko Jolnr      | 167007     |
+| Scroll           | 534352     |
+| Zora             | 7777777    |
 | Sepolia          | 11155111   |
-| Base Sepolia     | 420        |
-| Fantom           | 250        |
 | Optimism Sepolia | 11155420   |
-| Arbitrum Nova    | 42161      |
 | Aurora           | 1313161554 |
 | AuroraTestnet    | 1313161555 |
 | Harmony          | 1666600000 |
-| PolygonzkEVM     | 1101       |
-| Scroll           | 534352     |
-| Zora             | 7777777    |
-| PublicGoods      | 424        |
-| C1 Milkomeda     | 2001       |
-| Flare            | 14         |
-| Mantle           | 5000       |
 
 
 Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9qt8gZ2fX)
