@@ -61,8 +61,8 @@ Envio is a developer-centric, 3-command init-develop-deploy EVM blockchain data 
 
 Envio supports indexing any EVM blockchain and supports:
 
-- Flexible language support: Configure your event handling in familiar and widely supported languages, such as [Javascript](https://www.javascript.com/), [Typescript](https://www.typescriptlang.org/), or [Rescript](https://rescript-lang.org/).
-- [Hypersync](https://docs.envio.dev/docs/hypersync): To ensure blazing-fast retrieval of historical on-chain data and a seamless developer experience, Envio’s HyperSync endpoint allows for 100x faster indexing than standard RPC.
+- Flexible language support: Configure your event handling in familiar and widely supported languages, such as [JavaScript](https://www.javascript.com/), [TypeScript](https://www.typescriptlang.org/), or [ReScript](https://rescript-lang.org/).
+- [HyperSync](https://docs.envio.dev/docs/hypersync): To ensure blazing-fast retrieval of historical on-chain data and a seamless developer experience, Envio’s HyperSync endpoint allows for 100x faster indexing than standard RPC.
 - Join on-chain and off-chain data: Connect indexed blockchain data as well as ingest off-chain data to create flexible API for rich data beyond just what is emitted simply from events on-chain. e.g. modules that efficiently index off-chain NFT metadata.
 
 ## About Jarvis Network
