@@ -14,8 +14,9 @@ Entity types are identified with the directive within the `schema.graphql` file.
 Example schema from the Greeter template:
 
 ```graphql
-type Greeting {
+type User {
   id: ID!
+  greetings: [String!]!
   latestGreeting: String!
   numberOfGreetings: Int!
 }

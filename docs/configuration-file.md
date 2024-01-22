@@ -25,7 +25,7 @@ The `config.yaml` outlines the specifications for the indexer including details 
     - `handler` - Location of the file that handles the events emitted by this contract
     - `events` - Configuration for each event emitted by this contract that the indexer will listen for
       - `event` - Event signature or name of the event (must match the name in the ABI)
-      - `required_entities` - An array of entities that need to loaded and made accessible within the handler function (an empty array indicates that no entities are required)
+      - `required_entities` - An array of entities that need to loaded and made accessible within the handler function (an empty array indicates that no entities are required)(Optional, if this is left out all entities will be available)
         - `name` - The name of the required entity (must match an entity defined in `schema.graphql`)
         - `labels` - This is an optional name given for loaded entities in the loaders that can be used in the event handlers (useful in differentiating entities that should be modified differently by the same event)
 
@@ -56,16 +56,8 @@ An example is shown below of this feature from the above example
 
 ```yaml
 events:
-  - event: "NewGreeting(address user, string greeting)"
-    requiredEntities:
-      - name: "Greeting"
-        labels:
-          - "greetingWithChanges"
-  - event: "ClearGreeting(address user)"
-    requiredEntities:
-      - name: "Greeting"
-        labels:
-          - "greetingWithChanges"
+  - event: "NewGreeting(address user, string greeting)"            
+  - event: "ClearGreeting(address user)"    
 ```
 
 More information on Human Readable ABI parsing is available [here](https://docs.rs/ethers-core/latest/ethers_core/abi/struct.AbiParser.html)
@@ -89,17 +81,13 @@ networks:
     contracts:
       - name: PolygonGreeter
         abi_file_path: abis/greeter-abi.json
-        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
+        address: 0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c
         handler: ./src/EventHandlers.bs.js
         events:
-          - event: "NewGreeting"
+          - event: NewGreeting
             requiredEntities:
-              - name: "Greeting"
-                labels:
-                  - "greetingWithChanges"
-          - event: "ClearGreeting"
+              - name: User
+          - event: ClearGreeting
             requiredEntities:
-              - name: "Greeting"
-                labels:
-                  - "greetingWithChanges"
+              - name: User
 ```
