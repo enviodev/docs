@@ -71,19 +71,15 @@ networks:
     contracts:
       - name: PolygonGreeter
         abi_file_path: abis/greeter-abi.json
-        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
+        address: 0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c
         handler: ./src/EventHandlers.bs.js
         events:
-          - event: "NewGreeting"
+          - event: NewGreeting
             requiredEntities:
-              - name: "Greeting"
-                labels:
-                  - "greetingWithChanges"
-          - event: "ClearGreeting"
+              - name: User                
+          - event: ClearGreeting
             requiredEntities:
-              - name: "Greeting"
-                labels:
-                  - "greetingWithChanges"
+              - name: User
 ```
 
 In the example above, absence of `rpc_config` will automatically direct Envio to HyperSync for the defined network (Polygon).

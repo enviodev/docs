@@ -31,12 +31,12 @@ contracts:
     abi_file_path: ./abis/greeter-abi.json
     handler: ./src/EventHandlers.js
     events:
-      - event: "NewGreeting"
+      - event: NewGreeting
         requiredEntities:
-          - name: "Greeting"
-      - event: "ClearGreeting"
+          - name: User
+      - event: ClearGreeting
         requiredEntities:
-          - name: "Greeting"
+          - name: User
 networks:
   - id: 137 # Polygon
     start_block: 45336336
@@ -57,7 +57,7 @@ Notice how the global definition of the "Greeter" contract does not contain any 
 ### Schema file
 
 ```graphql
-type Greeting {
+type User {
   id: ID!
   greetings: [String!]!
   latestGreeting: String!
@@ -74,7 +74,7 @@ type Greeting {
 let { GreeterContract } = require("../generated/src/Handlers.bs.js");
 
 GreeterContract.NewGreeting.loader((event, context) => {
-  context.Greeting.load(event.params.user);
+  context.User.load(event.params.user);
 });
 
 GreeterContract.NewGreeting.handler((event, context) => {
@@ -82,17 +82,17 @@ GreeterContract.NewGreeting.handler((event, context) => {
   let latestGreeting = event.params.greeting;
   let numberOfGreetings = event.params.numberOfGreetings;
 
-  let existingGreeter = context.Greeting.get(event.params.user);
+  let existingUser = context.User.get(event.params.user);
 
-  if (existingGreeter !== undefined) {
-    context.Greeting.set({
+  if (existingUser !== undefined) {
+    context.User.set({
       id: user,
       latestGreeting: latestGreeting,
-      numberOfGreetings: existingGreeter.numberOfGreetings + 1,
-      greetings: [...existingGreeter.greetings, latestGreeting],
+      numberOfGreetings: existingUser.numberOfGreetings + 1,
+      greetings: [...existingUser.greetings, latestGreeting],
     });
   } else {
-    context.Greeting.set({
+    context.User.set({
       id: user,
       latestGreeting: latestGreeting,
       numberOfGreetings: 1,
@@ -102,17 +102,17 @@ GreeterContract.NewGreeting.handler((event, context) => {
 });
 
 GreeterContract.ClearGreeting.loader((event, context) => {
-  context.Greeting.load(event.params.user);
+  context.User.load(event.params.user);
 });
 
 GreeterContract.ClearGreeting.handler((event, context) => {
-  let existingGreeter = context.Greeting.get(event.params.user);
-  if (existingGreeter !== undefined) {
-    context.Greeting.set({
+  let existingUser = context.User.get(event.params.user);
+  if (existingUser !== undefined) {
+    context.User.set({
       id: user,
       latestGreeting: "",
-      numberOfGreetings: existingGreeter.numberOfGreetings + 1,
-      greetings: existingGreeter.greetings,
+      numberOfGreetings: existingUser.numberOfGreetings + 1,
+      greetings: existingUser.greetings,
     });
   }
 });
@@ -129,51 +129,51 @@ import {
   GreeterContract_ClearGreeting_handler,
 } from "../generated/src/Handlers.gen";
 
-import { GreetingEntity } from "../generated/src/Types.gen";
+import { UserEntity } from "../generated/src/Types.gen";
 
 GreeterContract_NewGreeting_loader(({ event, context }) => {
-  context.Greeting.load(event.params.user.toString());
+  context.User.load(event.params.user.toString());
 });
 
 GreeterContract_NewGreeting_handler(({ event, context }) => {
-  let currentGreeter = context.Greeting.get(event.params.user);
+  let currentUser = context.User.get(event.params.user);
 
-  if (currentGreeter != null) {
-    let greetingObject: GreetingEntity = {
+  if (currentUser != null) {
+    let userObject: UserEntity = {
       id: event.params.user.toString(),
       latestGreeting: event.params.greeting,
-      numberOfGreetings: currentGreeter.numberOfGreetings + 1,
-      greetings: [...currentGreeter.greetings, event.params.greeting],
+      numberOfGreetings: currentUser.numberOfGreetings + 1,
+      greetings: [...currentUser.greetings, event.params.greeting],
     };
 
-    context.Greeting.set(greetingObject);
+    context.User.set(userObject);
   } else {
-    let greetingObject: GreetingEntity = {
+    let userObject: UserEntity = {
       id: event.params.user.toString(),
       latestGreeting: event.params.greeting,
       numberOfGreetings: 1,
       greetings: [event.params.greeting],
     };
-    context.Greeting.set(greetingObject);
+    context.User.set(userObject);
   }
 });
 
 GreeterContract_ClearGreeting_loader(({ event, context }) => {
-  context.Greeting.load(event.params.user.toString());
+  context.User.load(event.params.user.toString());
 });
 
 GreeterContract_ClearGreeting_handler(({ event, context }) => {
-  let currentGreeter = context.Greeting.get(event.params.user);
+  let currentUser = context.User.get(event.params.user);
 
-  if (currentGreeter != null) {
-    let greetingObject: GreetingEntity = {
+  if (currentUser != null) {
+    let userObject: UserEntity = {
       id: event.params.user.toString(),
       latestGreeting: "",
-      numberOfGreetings: currentGreeter.numberOfGreetings,
-      greetings: currentGreeter.greetings,
+      numberOfGreetings: currentUser.numberOfGreetings,
+      greetings: currentUser.greetings,
     };
 
-    context.Greeting.set(greetingObject);
+    context.User.set(userObject);
   }
 });
 ```
@@ -189,29 +189,29 @@ Handlers.GreeterContract.NewGreeting.loader((~event, ~context) => {
 })
 
 Handlers.GreeterContract.NewGreeting.handler((~event, ~context) => {
-  let currentGreeterOpt = context.greeting.get(event.params.user->Ethers.ethAddressToString)
+  let currentUserOpt = context.greeting.get(event.params.user->Ethers.ethAddressToString)
 
-  switch currentGreeterOpt {
-  | Some(existingGreeter) => {
-      let greetingObject: greetingEntity = {
+  switch currentUserOpt {
+  | Some(existingUser) => {
+      let userObject: userEntity = {
         id: event.params.user->Ethers.ethAddressToString,
         latestGreeting: event.params.greeting,
-        numberOfGreetings: existingGreeter.numberOfGreetings + 1,
-        greetings: existingGreeter.greetings->Belt.Array.concat([event.params.greeting]),
+        numberOfGreetings: existingUser.numberOfGreetings + 1,
+        greetings: existingUser.greetings->Belt.Array.concat([event.params.greeting]),
       }
 
-      context.greeting.set(greetingObject)
+      context.greeting.set(userObject)
     }
 
   | None =>
-    let greetingObject: greetingEntity = {
+    let userObject: userEntity = {
       id: event.params.user->Ethers.ethAddressToString,
       latestGreeting: event.params.greeting,
       numberOfGreetings: 1,
       greetings: [event.params.greeting],
     }
 
-    context.greeting.set(greetingObject)
+    context.greeting.set(userObject)
   }
 })
 
@@ -221,18 +221,18 @@ Handlers.GreeterContract.ClearGreeting.loader((~event, ~context) => {
 })
 
 Handlers.GreeterContract.ClearGreeting.handler((~event, ~context) => {
-  let currentGreeterOpt = context.greeting.get(event.params.user->Ethers.ethAddressToString)
+  let currentUserOpt = context.greeting.get(event.params.user->Ethers.ethAddressToString)
 
-  switch currentGreeterOpt {
-  | Some(existingGreeter) => {
-      let greetingObject: greetingEntity = {
+  switch currentUserOpt {
+  | Some(existingUser) => {
+      let userObject: userEntity = {
         id: event.params.user->Ethers.ethAddressToString,
         latestGreeting: "",
-        numberOfGreetings: existingGreeter.numberOfGreetings,
-        greetings: existingGreeter.greetings,
+        numberOfGreetings: existingUser.numberOfGreetings,
+        greetings: existingUser.greetings,
       }
 
-      context.greeting.set(greetingObject)
+      context.greeting.set(userObject)
     }
 
   | None => ()
@@ -242,5 +242,15 @@ Handlers.GreeterContract.ClearGreeting.handler((~event, ~context) => {
 
   </TabItem>
 </Tabs>
+
+## `UNSTABLE__TEMP_UNORDERED_HEAD_MODE` environment variable
+
+By default the indexer will process events in the order they appear, this is intended behavior and is important when events are updating an entity from multiple networks. This is important for some applications, but for others it is not. This is why we have added the `UNSTABLE__TEMP_UNORDERED_HEAD_MODE` environment variable.
+
+In order for events to be perfectly ordered across multiple networks, the indexer needs to wait for all blocks to increment from each network. This is because the indexer needs to know that there are no more events to process on a given block before it can move on to the next block. Hence there is a lag between when an event is emitted and when it is processed by the indexer based on the block interval of the slowest network.
+
+Generally, if operations to update an entity from multiple events across multiple networks are [commutative](./terminology#commutative-property) (where the ordering of operations doesnt effect the result) then the ordering of events doesn't need to be ordered and the UNSTABLE\_\_TEMP_UNORDERED_HEAD_MODE can be set to true. Likewise if there is no overlap between entities from different networks then the UNSTABLE\_\_TEMP_UNORDERED_HEAD_MODE can be set to true as the ordering of events across the networks is not important.
+
+If the UNSTABLE\_\_TEMP_UNORDERED_HEAD_MODE is set to true, then the indexer will process events as soon as they are emitted, this means that the indexer will not wait for all blocks to increment from each network before moving on to the next block. This means that events from different networks will be processed out of order, but it also means that events will be processed as soon as they are emitted.
 
 ---

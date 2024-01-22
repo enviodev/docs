@@ -10,7 +10,7 @@ slug: /envio-empowers-jarvis-network
 
 We’re excited to announce that [Jarvis Network](https://jarvis.network/) has integrated [Envio](https://envio.dev/) and its multi-chain indexing capabilities to streamline the process of accessing and aggregating real-world asset price data secured by [Chainlink’s](https://chain.link/) industry-leading price data feeds across various blockchain networks, including [Polygon](https://polygon.technology/), [Optimism](https://optimism.io/), [BNB](https://www.bnbchain.org/en), and [Arbitrum](https://arbitrum.io/).
 
-Jarvis Network demonstrates a commitment to accurate price data for the creation of its synthetic assets, called jFIATs, by leveraging Chainlink data feeds for real-time exchange rates on fiat currencies. Jarvis Network allows anyone to buy, sell, or exchange jFIATs (fiat stablecoins) on multiple EVM-compatible networks.
+Jarvis Network demonstrates a commitment to accurate price data for the creation of its synthetic assets, called jFIATs, by leveraging Chainlink data feeds for real-time exchange rates on Fiat currencies. Jarvis Network allows anyone to buy, sell, or exchange jFIATs (Fiat stablecoins) on multiple EVM-compatible networks.
 
 *“jFIATS can help solve the liquidity problem for non-USD stablecoins, fostering worldwide inclusion of other global currencies and further increasing DeFi adoption” - Jarvis Network*
 
@@ -18,7 +18,7 @@ Jarvis Network demonstrates a commitment to accurate price data for the creation
 
 Chainlink Data Feeds are validated by Chainlink’s decentralized network of security-reviewed oracle nodes that aggregate data from multiple premium data providers and play an essential component in empowering DeFi Protocols like Jarvis Network to leverage reliable, tamper-proof real-world asset prices.
 
-Data Indexers like [Envio](https://envio.dev/) can organize these data feeds in a way that makes it simple for developers to search for and analyze real-time or historical data from Chainlink’s Data Feeds.  Envio acts as the intermediary, indexing multiple Chainlink data feeds and providing Jarvis Network with a unified API for the efficient retrieval of real-time and historical price information of real-world fiat currencies. This reduces development time and costs and provides a seamless developer experience for querying and aggregating this price information.
+Data Indexers like [Envio](https://envio.dev/) can organize these data feeds in a way that makes it simple for developers to search for and analyze real-time or historical data from Chainlink’s Data Feeds.  Envio acts as the intermediary, indexing multiple Chainlink data feeds and providing Jarvis Network with a unified API for the efficient retrieval of real-time and historical price information of real-world Fiat currencies. This reduces development time and costs and provides a seamless developer experience for querying and aggregating this price information.
 
 This process extends beyond swap pools on multiple networks, including Polygon, Optimism, BNB, and Arbitrum. The overarching goal is to empower users with accurate and timely information, enabling them to make well-informed decisions in the dynamic and fast-paced DeFi space.
 
@@ -35,6 +35,8 @@ The integration of indexed data goes beyond the technicalities. Jarvis Network, 
 In addition to dynamic price charts, Jarvis Network also leverages Envio’s data indexing capabilities to conduct real-time analytics for their jFIAT Liquidity Pool on [Optimism](https://www.optimism.io/) and [Arbitrum](https://arbitrum.io/). This enables Jarvis to effortlessly query and display aggregated information, including current liquidity, deposited liquidity, withdrawn liquidity, and net liquidity, for their jFIAT liquidity pools.
 
 <img src="/blog-assets/envio-empowers-jarvis-network-3.jpg" alt="Envio Empowers Jarvis Network For Liquidity Pool Analytics" width="100%"/>
+
+*“Envio's innovative Web3 indexing services have been a game-changer for us. This integration has unlocked a realm of opportunities, enabling us to harness our data like never before. With Envio's robust and efficient solutions, we've managed to index multiple smart contracts across five different blockchains seamlessly.” - Asim Ashfaq - Co-Founder at 0xEquity and full-stack Developer at Jarvis Network*
 
 ## Self-Hosting for Customization
 
