@@ -28,8 +28,13 @@ The integration of indexed data goes beyond the technicalities. Jarvis Network, 
 
 <img src="/blog-assets/envio-empowers-jarvis-network-2.png" alt="Cover Image Envio Empowers Jarvis Network" width="100%"/>
 
-
 *“Envio's innovative Web3 indexing services have been a game-changer for us. This integration has unlocked a realm of opportunities, enabling us to harness our data like never before. With Envio's robust and efficient solutions, we've managed to index multiple smart contracts across five different blockchains seamlessly.” - Asim Ashfaq - Co-Founder at 0xEquity and full-stack Developer at Jarvis Network*
+
+## Liquidity Pool Analysis
+
+In addition to dynamic price charts, Jarvis Network also leverages Envio’s data indexing capabilities to conduct real-time analytics for their jFIAT Liquidity Pool on [Optimism](https://www.optimism.io/) and [Arbitrum](https://arbitrum.io/). This enables Jarvis to effortlessly query and display aggregated information, including current liquidity, deposited liquidity, withdrawn liquidity, and net liquidity, for their jFIAT liquidity pools.
+
+<img src="/blog-assets/envio-empowers-jarvis-network-3.jpg" alt="Envio Empowers Jarvis Network For Liquidity Pool Analytics" width="100%"/>
 
 ## Self-Hosting for Customization
 
