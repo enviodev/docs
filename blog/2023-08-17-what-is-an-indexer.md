@@ -55,17 +55,17 @@ networks:
         events:
           - event: "NewGreeting"
             requiredEntities:
-              - name: "Greeting"
+              - name: "User"
           - event: "ClearGreeting"
             requiredEntities:
-              - name: "Greeting"                
+              - name: "User"                
 ```
 
 
 🏗️ GraphQL Schema: The GraphQL schema file (e.g., schema.graphql) outlines your application's data model. It defines the available data types that directly correspond to database tables, and the event handlers you create are responsible for creating and updating records within those tables. Additionally, the GraphQL API is automatically generated based on the entity types specified in the schema.graphql file, to allow access to the indexed data. Here's example schema from the live Greeter Contract contract:
 
 ``` graphql
-type Greeting {
+type User {
  id: ID!
  latestGreeting: String!
  numberOfGreetings: Int!
@@ -78,17 +78,17 @@ type Greeting {
 let { GreeterContract } = require("../generated/src/Handlers.bs.js");
 
 GreeterContract.NewGreeting.handler((event, context) => {
-  let existingGreeter = context.greeting.greetingWithChanges();
+  let existingUser = context.greeting.get(event.params.user.toString());
 
-  if (existingGreeter != undefined) {
-    context.greeting.set({
+  if (existingUser != undefined) {
+    context.user.set({
       id: event.params.user.toString(),
       latestGreeting: event.params.greeting,
-      numberOfGreetings: existingGreeter.numberOfGreetings + 1,
-      greetings: [...existingGreeter.numberOfGreetings, event.params.greeting],
+      numberOfGreetings: existingUser.numberOfGreetings + 1,
+      greetings: [...existingUser.numberOfGreetings, event.params.greeting],
     });
   } else {
-    context.greeting.set({
+    context.user.set({
       id: event.params.user.toString(),
       latestGreeting: event.params.greeting,
       numberOfGreetings: 1,

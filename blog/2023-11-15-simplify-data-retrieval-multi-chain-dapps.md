@@ -41,7 +41,7 @@ handler: ./src/EventHandlers.bs.js
 events:
 - event: "NewGreeting"
 requiredEntities:
-- name: "Greeting"
+- name: "User"
 networks:
 - id: 137 # Polygon
 start_block: 45336336
@@ -60,7 +60,7 @@ The Greeter indexer listens to `NewGreeting` events from both the Polygon and Li
 Through Envio's multi-chain indexing, builders can specify their event handler to operate against a common schema. The `schema.graphql` file would look like this:
 
 ```graphql
-type Greeting {
+type User {
 id: ID!
 greetings: [String!]!
 latestGreeting: String!
@@ -80,12 +80,12 @@ import { GreetingEntity } *from* "../generated/src/Types.gen";
 
 GreeterContract_NewGreeting_loader(({ event, context }) => {
 
-context.Greeting.load(event.params.user.toString());
+context.User.load(event.params.user.toString());
 ...
 });
 
 GreeterContract_NewGreeting_handler(({ event, context }) => {
-let currentGreeter = context.Greeting.get(event.params.user);
+let currentUser = context.User.get(event.params.user);
 ...
 
 });

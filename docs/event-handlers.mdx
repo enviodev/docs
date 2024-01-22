@@ -38,7 +38,7 @@ Loader functions are called via
   <TabItem value="typescript" label="Typescript">
 
 ```typescript
-<ContractName>Contract_<EventName>_loader;
+<ContractName>Contract_ < EventName > _loader;
 ```
 
   </TabItem>
@@ -57,12 +57,11 @@ Entities with specific IDs can be loaded via `context.<EntityName>.<label>Load(<
 
 If no [labels](./labels) has been defined in the `config.yaml` file, then entities can be loaded via `context.<EntityName>.load(<id>)`. You can call this `.load` function to load as many entities as you want to be available in your handler.
 
-> Dev note: 📢 For indexers built using `ReScript`, use a lower case for first letter of entityName when accessing it via context (i.e. `context.greeting` instead of `context.Greeting`).
+> Dev note: 📢 For indexers built using `ReScript`, use a lower case for first letter of entityName when accessing it via context (i.e. `context.user` instead of `context.User`).
 
 A single event can be used to load single or multiple entities in the loader (and modify/create as many entities as you want in the handler).
 
 Each entity that is to be loaded by the event must be defined in the `requiredEntities` field of the event in the `config.yaml` file.
-
 
 **Note**: that if no `required_entities` are set for the event, then all entities can be used in the loader for that event. However if it is set, only entities in the `required_entities` can be loaded for that event.
 
@@ -85,7 +84,7 @@ Handler functions are called via
   <TabItem value="typescript" label="Typescript">
 
 ```typescript
-<ContractName>Contract_<EventName>_handler;
+<ContractName>Contract_ < EventName > _handler;
 ```
 
   </TabItem>
@@ -119,7 +118,7 @@ Below is a list of raw event information that can be accessed:
 
 Handler functions can access the loaded entities that were loaded in the handler via `context.<EntityName>.<label>Load`, they can access these loaded entities via `context.<EntityName>.get(<id>)`.
 
-> Dev note: 📢 For indexers built using `ReScript`, use a lower case for first letter of entityName when accessing it via context (i.e. `context.greeting` instead of `context.Greeting`).
+> Dev note: 📢 For indexers built using `ReScript`, use a lower case for first letter of entityName when accessing it via context (i.e. `context.user` instead of `context.User`).
 
 Handler functions can also provides the following functions per loaded entity, that can be used to interact with that entity:
 
@@ -146,7 +145,7 @@ events:
 let { GreeterContract } = require("../generated/src/Handlers.bs.js");
 
 GreeterContract.NewGreeting.loader((event, context) => {
-  context.Greeting.load(event.params.user.toString());
+  context.User.load(event.params.user.toString());
 });
 ```
 
@@ -156,10 +155,10 @@ GreeterContract.NewGreeting.loader((event, context) => {
 ```typescript
 import { GreeterContract_NewGreeting_loader } from "../generated/src/Handlers.gen";
 
-import { greetingEntity } from "../generated/src/Types.gen";
+import { userEntity } from "../generated/src/Types.gen";
 
 GreeterContract_NewGreeting_loader(({ event, context }) => {
-  context.Greeting.load(event.params.user.toString());
+  context.User.load(event.params.user.toString());
 });
 ```
 
@@ -170,7 +169,7 @@ GreeterContract_NewGreeting_loader(({ event, context }) => {
 open Types
 
 Handlers.GreeterContract.NewGreeting.loader((~event, ~context) => {
-  context.greeting.load(event.params.user->Ethers.ethAddressToString)
+  context.user.load(event.params.user->Ethers.ethAddressToString)
 })
 ```
 
@@ -179,7 +178,7 @@ Handlers.GreeterContract.NewGreeting.loader((~event, ~context) => {
 
 - Within the function that is being registered, the user must define the criteria for loading the greeting entity.
 - This is made available to the user through the load entity context defined as `contextUpdator`.
-- In the case of the above example, we load a `Greeting` entity that corresponds to the id passed from the event.
+- In the case of the above example, we load a `User` entity that corresponds to the id passed from the event.
 
 ### Example of registering a Handler function for the `NewGreeting` event:
 
@@ -190,17 +189,17 @@ Handlers.GreeterContract.NewGreeting.loader((~event, ~context) => {
 let { GreeterContract } = require("../generated/src/Handlers.bs.js");
 
 GreeterContract.NewGreeting.handler((event, context) => {
-  let existingGreeter = context.Greeting.get(event.params.user.toString());
+  let existingUser = context.User.get(event.params.user.toString());
 
-  if (existingGreeter != undefined) {
-    context.Greeting.set({
+  if (existingUser != undefined) {
+    context.User.set({
       id: event.params.user.toString(),
       latestGreeting: event.params.greeting,
-      numberOfGreetings: existingGreeter.numberOfGreetings + 1,
-      greetings: [...existingGreeter.numberOfGreetings, event.params.greeting],
+      numberOfGreetings: existingUser.numberOfGreetings + 1,
+      greetings: [...existingUser.numberOfGreetings, event.params.greeting],
     });
   } else {
-    context.Greeting.set({
+    context.User.set({
       id: event.params.user.toString(),
       latestGreeting: event.params.greeting,
       numberOfGreetings: 1,
@@ -216,29 +215,29 @@ GreeterContract.NewGreeting.handler((event, context) => {
 ```typescript
 import { GreeterContract_NewGreeting_handler } from "../generated/src/Handlers.gen";
 
-import { greetingEntity } from "../generated/src/Types.gen";
+import { userEntity } from "../generated/src/Types.gen";
 
 GreeterContract_NewGreeting_handler(({ event, context }) => {
 (({ event, context }) => {
-  let currentGreeter = context.Greeting.get(event.params.user.toString());
+  let currentUser = context.User.get(event.params.user.toString());
 
-  if (currentGreeter != null) {
-    let greetingObject: greetingEntity = {
+  if (currentUser != null) {
+    let userObject: userEntity = {
       id: event.params.user.toString(),
       latestGreeting: event.params.greeting,
-      numberOfGreetings: currentGreeter.numberOfGreetings + 1,
-      greetings: [...existingGreeter.numberOfGreetings, event.params.greeting],
+      numberOfGreetings: currentUser.numberOfGreetings + 1,
+      greetings: [...existingUser.numberOfGreetings, event.params.greeting],
     };
 
-    context.Greeting.set(greetingObject);
+    context.User.set(userObject);
   } else {
-    let greetingObject: greetingEntity = {
+    let userObject: userEntity = {
       id: event.params.user.toString(),
       latestGreeting: event.params.greeting,
       numberOfGreetings: 1,
       greetings: [event.params.greeting],
     };
-    context.Greeting.set(greetingObject);
+    context.User.set(userObject);
   }
 });
 ```
@@ -250,29 +249,29 @@ GreeterContract_NewGreeting_handler(({ event, context }) => {
 open Types
 
 Handlers.GreeterContract.NewGreeting.handler((~event, ~context) => {
-  let currentGreeterOpt = context.greeting.get(event.params.user->Ethers.ethAddressToString)
+  let currentUserOpt = context.user.get(event.params.user->Ethers.ethAddressToString)
 
-  switch currentGreeterOpt {
-  | Some(existingGreeter) => {
-      let greetingObject: greetingEntity = {
+  switch currentUserOpt {
+  | Some(existingUser) => {
+      let userObject: userEntity = {
         id: event.params.user->Ethers.ethAddressToString,
         latestGreeting: event.params.greeting,
-        numberOfGreetings: existingGreeter.numberOfGreetings + 1,
-        greetings: existingGreeter.greetings->Belt.Array.concat([event.params.greeting]),
+        numberOfGreetings: existingUser.numberOfGreetings + 1,
+        greetings: existingUser.greetings->Belt.Array.concat([event.params.greeting]),
       }
 
-      context.greeting.set(greetingObject)
+      context.user.set(userObject)
     }
 
   | None =>
-    let greetingObject: greetingEntity = {
+    let userObject: userEntity = {
       id: event.params.user->Ethers.ethAddressToString,
       latestGreeting: event.params.greeting,
       numberOfGreetings: 1,
       greetings: [event.params.greeting],
     }
 
-    context.greeting.set(greetingObject)
+    context.user.set(userObject)
   }
 })
 ```
@@ -281,11 +280,11 @@ Handlers.GreeterContract.NewGreeting.handler((~event, ~context) => {
 </Tabs>
 
 - Once the user has defined their `loader` function, they are then able to retrieve the loaded entity information.
-- In the above example, if a `Greeting` entity is found matching the load criteria in the `loader` function, it will be available via `greetingWithChanges`.
+- In the above example, if a `User` entity is found matching the load criteria in the `loader` function, it will be available via `greetingWithChanges`.
 - This is made available to the user through the handler context defined simply as `context`.
 - This `context` is the gateway by which the user can interact with the indexer and the underlying database.
-- The user can then modify this retrieved entity and subsequently update the `Greeting` entity in the database.
-- This is done via the `context` using the function (`context.Greeting.set(greetingObject)`).
-- The user has access to a `greetingEntity` type that has all the fields defined in the schema.
+- The user can then modify this retrieved entity and subsequently update the `User` entity in the database.
+- This is done via the `context` using the function (`context.User.set(userObject)`).
+- The user has access to a `userEntity` type that has all the fields defined in the schema.
 
 ---
