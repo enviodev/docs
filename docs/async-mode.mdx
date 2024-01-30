@@ -69,15 +69,15 @@ type User {
 #### **handlers**:
 
 <Tabs>
-  <TabItem value="typescript" label="Typescript">
+<TabItem value="javascript" label="Javascript">
 
-```typescript
-GreeterContract_NewGreeting_handlerAsync(async ({ event, context }) => {
+```javascript
+GreeterContract.NewGreeting.handlerAsync(async ({ event, context }) => {
   const userId = event.params.user;
   const latestGreeting = event.params.greeting;
 
   const usersEnsOrAddress = await getEnsNameIfAvailable(userId);
-  const aiRespones = await generateAIResponse(
+  const aiResponse = await generateAIResponse(
     usersEnsOrAddress,
     latestGreeting
   );
@@ -90,14 +90,14 @@ GreeterContract_NewGreeting_handlerAsync(async ({ event, context }) => {
         latestGreeting,
         numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
         greetings: [...currentUserEntity.greetings, latestGreeting],
-        aiRespones,
+        aiResponse,
       }
     : {
         id: userId,
         latestGreeting,
         numberOfGreetings: 1,
         greetings: [latestGreeting],
-        aiRespones,
+        aiResponse,
       };
 
   context.User.set(userEntity);
@@ -113,7 +113,7 @@ And here is a diff to highlight the change:
     const latestGreeting = event.params.greeting;
 
 +   const usersEnsOrAddress = await getEnsNameIfAvailable(userId)
-+   const aiRespones = await generateAIResponse(usersEnsOrAddress, latestGreeting)
++   const aiResponse = await generateAIResponse(usersEnsOrAddress, latestGreeting)
 
 -   const currentUserEntity = context.User.get(userId);
 +   const currentUserEntity = await context.User.get(userId);
@@ -125,7 +125,7 @@ And here is a diff to highlight the change:
         latestGreeting,
         numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
         greetings: [...currentUserEntity.greetings, latestGreeting],
-+       aiRespones,
++       aiResponse,
       }
       :
       {
@@ -133,7 +133,79 @@ And here is a diff to highlight the change:
         latestGreeting,
         numberOfGreetings: 1,
         greetings: [latestGreeting],
-+       aiRespones,
++       aiResponse,
+      };
+
+    context.User.set(userEntity);
+  });
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="Typescript">
+
+```typescript
+GreeterContract_NewGreeting_handlerAsync(async ({ event, context }) => {
+  const userId = event.params.user;
+  const latestGreeting = event.params.greeting;
+
+  const usersEnsOrAddress = await getEnsNameIfAvailable(userId);
+  const aiResponse = await generateAIResponse(
+    usersEnsOrAddress,
+    latestGreeting
+  );
+
+  const currentUserEntity = await context.User.get(userId);
+
+  const userEntity: UserEntity = currentUserEntity
+    ? {
+        id: userId,
+        latestGreeting,
+        numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
+        greetings: [...currentUserEntity.greetings, latestGreeting],
+        aiResponse,
+      }
+    : {
+        id: userId,
+        latestGreeting,
+        numberOfGreetings: 1,
+        greetings: [latestGreeting],
+        aiResponse,
+      };
+
+  context.User.set(userEntity);
+});
+```
+
+And here is a diff to highlight the change:
+
+```diff
+- GreeterContract_NewGreeting_handler(({ event, context }) => {
++ GreeterContract_NewGreeting_handlerAsync(async ({ event, context }) => {
+    const userId = event.params.user;
+    const latestGreeting = event.params.greeting;
+
++   const usersEnsOrAddress = await getEnsNameIfAvailable(userId)
++   const aiResponse = await generateAIResponse(usersEnsOrAddress, latestGreeting)
+
+-   const currentUserEntity = context.User.get(userId);
++   const currentUserEntity = await context.User.get(userId);
+
+    const userEntity: UserEntity = currentUserEntity
+      ?
+      {
+        id: userId,
+        latestGreeting,
+        numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
+        greetings: [...currentUserEntity.greetings, latestGreeting],
++       aiResponse,
+      }
+      :
+      {
+        id: userId,
+        latestGreeting,
+        numberOfGreetings: 1,
+        greetings: [latestGreeting],
++       aiResponse,
       };
 
     context.User.set(userEntity);
@@ -149,7 +221,7 @@ Handlers.GreeterContract.NewGreeting.handlerAsync(async (~event, ~context) => {
   let latestGreeting = event.params.greeting
 
   let usersEnsOrAddress = await getEnsNameIfAvailable(userId)
-  let aiRespones = await generateAIResponse(usersEnsOrAddress, latestGreeting)
+  let aiResponse = await generateAIResponse(usersEnsOrAddress, latestGreeting)
 
   let maybecurrentUserEntity = await context.User.get(userId)
 
@@ -159,14 +231,14 @@ Handlers.GreeterContract.NewGreeting.handlerAsync(async (~event, ~context) => {
       latestGreeting,
       numberOfGreetings: existingUserEntity.numberOfGreetings + 1,
       greetings: existingUserEntity.greetings->Belt.Array.concat([latestGreeting]),
-      aiRespones,
+      aiResponse,
     }
   | None => {
       id: userId,
       latestGreeting,
       numberOfGreetings: 1,
       greetings: [latestGreeting],
-      aiRespones,
+      aiResponse,
     }
   }
 
@@ -183,7 +255,7 @@ And here is a diff to highlight the change:
     let latestGreeting = event.params.greeting
 
 +   let usersEnsOrAddress = await getEnsNameIfAvailable(userId)
-+   let aiRespones = await generateAIResponse(usersEnsOrAddress, latestGreeting)
++   let aiResponse = await generateAIResponse(usersEnsOrAddress, latestGreeting)
 
 -   let maybecurrentUserEntity = context.User.get(userId)
 +   let maybecurrentUserEntity = await context.User.get(userId)
@@ -194,91 +266,19 @@ And here is a diff to highlight the change:
         latestGreeting,
         numberOfGreetings: existingUserEntity.numberOfGreetings + 1,
         greetings: existingUserEntity.greetings->Belt.Array.concat([latestGreeting]),
-        aiRespones,
+        aiResponse,
       }
     | None => {
         id: userId,
         latestGreeting,
         numberOfGreetings: 1,
         greetings: [latestGreeting],
-        aiRespones,
+        aiResponse,
       }
     }
 
     context.User.set(userEntity)
   })
-```
-
-  </TabItem>
-  <TabItem value="javascript" label="Javascript">
-
-```javascript
-GreeterContract.NewGreeting.handlerAsync(async ({ event, context }) => {
-  const userId = event.params.user;
-  const latestGreeting = event.params.greeting;
-
-  const usersEnsOrAddress = await getEnsNameIfAvailable(userId);
-  const aiRespones = await generateAIResponse(
-    usersEnsOrAddress,
-    latestGreeting
-  );
-
-  const currentUserEntity = await context.User.get(userId);
-
-  const userEntity: UserEntity = currentUserEntity
-    ? {
-        id: userId,
-        latestGreeting,
-        numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
-        greetings: [...currentUserEntity.greetings, latestGreeting],
-        aiRespones,
-      }
-    : {
-        id: userId,
-        latestGreeting,
-        numberOfGreetings: 1,
-        greetings: [latestGreeting],
-        aiRespones,
-      };
-
-  context.User.set(userEntity);
-});
-```
-
-And here is a diff to highlight the change:
-
-```diff
-- GreeterContract_NewGreeting_handler(({ event, context }) => {
-+ GreeterContract_NewGreeting_handlerAsync(async ({ event, context }) => {
-    const userId = event.params.user;
-    const latestGreeting = event.params.greeting;
-
-+   const usersEnsOrAddress = await getEnsNameIfAvailable(userId)
-+   const aiRespones = await generateAIResponse(usersEnsOrAddress, latestGreeting)
-
--   const currentUserEntity = context.User.get(userId);
-+   const currentUserEntity = await context.User.get(userId);
-
-    const userEntity: UserEntity = currentUserEntity
-      ?
-      {
-        id: userId,
-        latestGreeting,
-        numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
-        greetings: [...currentUserEntity.greetings, latestGreeting],
-+       aiRespones,
-      }
-      :
-      {
-        id: userId,
-        latestGreeting,
-        numberOfGreetings: 1,
-        greetings: [latestGreeting],
-+       aiRespones,
-      };
-
-    context.User.set(userEntity);
-  });
 ```
 
   </TabItem>
