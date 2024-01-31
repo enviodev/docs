@@ -114,4 +114,4 @@ By builders, for builders. [Envio](https://envio.dev/) is a dev-friendly, speed-
 
 If you're a blockchain developer looking to enhance your development process and unlock the true potential of Web3 infrastructure, look no further. Join our growing community of elite developers, check out our docs, and let's work together to revolutionize the blockchain world and propel your project to the next level.
 
-[Website](https://envio.dev/)|[X](https://twitter.com/envio_indexer)|[Discord](https://discord.com/invite/gt7yEUZKeB)|[Hey](https://hey.xyz/u/envio)|[Medium](https://medium.com/@Envio_Indexer)|[YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA)|[Reddit](https://www.reddit.com/user/Envio_indexer)
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Hey](https://hey.xyz/u/envio) | [Medium](https://medium.com/@Envio_Indexer) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
