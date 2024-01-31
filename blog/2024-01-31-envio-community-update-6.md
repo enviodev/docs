@@ -10,7 +10,7 @@ slug: /envio-developer-community-update-no-6
 
 Great to have you back for our sixth community update and our first one of 2024! Just like the previous updates, we're thrilled to give you an insider's peek into the latest and greatest adventures of what the Envio team has been shipping over the past month.
 
-Notable feature updates include ‘Async Mode’ which eliminates the need for users to add 'required_entities' to their config to access them in their loaders. Developers can now define 'Async Mode' to execute custom effects in event handlers, bolt-on async queries like smart contract view functions or fetching data from IPFS. Async mode enables developers to write handlers without loaders, loading directly from within the handler. Chain IDs are now also accessible inside the event handler context (see the technical overview below for more details).
+Notable feature updates include ‘Async Mode’ which eliminates the need for users to add `required_entities` to their config to access them in their loaders. Developers can now define 'Async Mode' to execute custom effects in event handlers, bolt-on async queries like smart contract view functions or fetching data from IPFS. Async mode enables developers to write handlers without loaders, loading directly from within the handler. Chain IDs are now also accessible inside the event handler context (see the technical overview below for more details).
 
 ### New HyperSync Networks ⚡
 
@@ -44,8 +44,8 @@ Changes:
 
 - Async handlers allow the fetching or processing of data asynchronously when required. This allows data to be fetched from IPFS, or other contract states to be examined that aren't available in the event.
 - We have made the conversion from synchronous to asynchronous handlers extremely easy:
-- add isAsync: true to the config of any event you want to be asynchronous.
-- make the handler function a promise, and "await" any 'get' calls on the context since they are promises too in async mode.
+- add `isAsync: true` to the config of any event you want to be asynchronous.
+- make the handler function a promise, and `await` any `get` calls on the context since they are promises too in async mode.
 - Other notes:
 - You cannot have async and sync handlers for the same event.
 - Async handlers are potentially less performant than synchronous handlers, so use them only when you need to.
@@ -55,12 +55,12 @@ Changes:
 
 - Improved user log labels for better clarity for debugging and in the hosted service.
 - Added more context to user logs for future UI that can enable future UI improvements.
-- Other formatting improvements such as changing 'from' to 'fromBlock' and 'to' to 'toBlock' for consistency between logs.
+- Other formatting improvements such as changing `from` to `fromBlock` and `to` to `toBlock` for consistency between logs.
 
 **Contract Import and Error Handling:**
 
 - requiredEntities is optional for all handlers, and when omitted all entities will be available in your handlers.
-- Handled params named 'id' during contract import process, fixed tests, and removed unused imports.
+- Handled params named `id` during contract import process, fixed tests, and removed unused imports.
 - Supported nameless params in contract import for flexibility.
 - Updated and aligned error codes with documentation for consistency.
 
@@ -84,7 +84,7 @@ Changes:
 **Changes:**
 
 - Small patch release fixing issues with contract import of contracts with an event param ID.
-- Events with a param name of ID no longer break the contract import functionality, by making the entities param have the ‘name event_id’.
+- Events with a param name of ID no longer break the contract import functionality, by making the entities param have the name `event_id`.
 - Small re-wording to some user-facing logs to make them clearer.
 
 ### V0.0.29
@@ -93,7 +93,7 @@ Changes:
 
 - GraphQL Engine Non-Root Mode: Enhanced security by running the GraphQL engine as a non-root user.
 - Improved Logging: More informative logging for fetchers catching up with the chain head.
-- NPM Package Installation Ease: Users can now install npm packages in their indexer without the -w flag.
+- NPM Package Installation Ease: Users can now install npm packages in their indexer without the `-w` flag.
 
 **Enhancements and Fixes:**
 
