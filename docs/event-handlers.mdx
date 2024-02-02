@@ -113,6 +113,7 @@ Below is a list of raw event information that can be accessed:
 - `srcAddress`
 - `transactionHash`
 - `transactionIndex`
+- `txOrigin` (this is an optional parameter, that is only pressent for events fetched via hypersync, not via RPC)
 
 Handler functions can access the loaded entities that were loaded in the handler via `context.<EntityName>.<label>Load`, they can access these loaded entities via `context.<EntityName>.get(<id>)`.
 
