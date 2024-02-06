@@ -31,33 +31,57 @@ Command to see available CLI commands for Envio.
 envio --help
 ```
 
-## Initialize your indexer
+## Indexer Initalization
 
 Once you have completed the installation step, you can initialize your own indexer via the following options:
 
 ### Examples
 
-Clone one of the indexer repos under Examples tab, which have been built to demonstrate the power of Envio indexer.
+Clone one of the Example indexers that have been built using Envio.
 
-Please take note of the difference in version of Envio which the indexer was built on and the [latest version on npm](https://www.npmjs.com/package/envio).
-There may be some adjustments required to the indexer to be compatible with the latest version of Envio.
+> Please take note of the difference in version of Envio which the indexer was built on and the [latest version on npm](https://www.npmjs.com/package/envio).
+> There may be some adjustments required to the indexer to be compatible with the latest version of Envio.
 
 ### Templates
 
 Select either the `ERC20` or `Greeter` template following the `envio init` command.
 
-More information on the `Greeter` template can be found [here](./greeter-tutorial.md).
+More information on the `Greeter` template can be found [here](./greeter-tutorial).
 
 ### Contract Import
 
 Generate an indexer based on a smart contract deployed on a blockchain.
 
-More information on the Contract Import process can be found [here](./contract-import.md).
+More information on the Contract Import process can be found [here](./contract-import).
 
 ### Subgraph Migration
 
 Generate an indexer from a subgraph that is deployed to theGraph's hosted service.
 
-More information on the Subgraph Migration can be found [here](./subgraph-migration.md).
+More information on the Subgraph Migration can be found [here](./subgraph-migration).
+
+## Indexer Configuration
+
+Indexers generated using examples, templates or contract import process will work without any further configuration.
+
+Users can further configure their indexers to perform custom logic, and the process is done via modifying the 3 files below:
+- [`config.yaml`](./configuration-file)
+- [`schema.graphql`](./schema)
+- [`EventHandlers.*`](./event-handlers)
+>  (* depending on the language chosen for indexer)
+
+## Run the Indexer
+
+### Run locally
+
+Users can run the indexer locally without deploying, using [Docker](https://www.docker.com/products/docker-desktop/) and [Hasura](https://hasura.io/).
+
+More information on the running the indexer locally can be found [here](./running-locally).
+
+### Deploy to Hosted Service
+
+Once the indexer has been configured, you can deploy the indexer onto Envio's hosted service, via GitHub login.
+
+More information on the hosted service can be found [here](./hosted-service).
 
 ---
