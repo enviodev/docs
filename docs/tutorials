@@ -20,28 +20,6 @@ The Optimism Standard Bridge allows users to easily move ETH and most ERC-20 tok
 - Understanding the generated code
 - How to explore indexed data using GraphQL API
 
-> Before we dive straight into the tutorial walkthrough, let’s get a basic understanding of the fundamentals:
-
-## What is a Blockchain Indexer?
-
-A blockchain indexer is a specialized tool that plays a vital role in simplifying the development process and overall development experience for building blockchain applications. Similar to an index of a book, it takes complex information, or in this case, blockchain data that is stored on-chain, and organizes it, making it easier for developers to efficiently query, retrieve, and utilize on-chain data for their application. 
-
-## What is HyperIndex?
-
-HyperIndex is a real-time indexing framework built specifically for EVM-compatible blockchains, providing developers with a seamless and efficient solution to query their smart contract data with a GraphQL API. Designed to optimize the developer experience, Envio offers automatic code generation and flexible language support. Indexers on Envio can be written in JavaScript, TypeScript, or ReScript.
-
-##Contract Import 
-
-When initializing a new project, Contract Import can save you a lot of time by automatically generating the key boilerplate of your indexer. In other words, contract import can autogenerate a basic indexer and queryable GraphQL API for your smart contract events through automatic code generation. For more information on the contract import feature, you can visit the Envio docs here.
-
-## Multi-chain Indexing 
-
-Conventional indexing frameworks require developers to create separate indexers and, depending on the approach, host individual databases, for each chain deployment. This can quickly result in increased maintenance and costs and also result in additional logic on the client-side application to aggregate data via multiple APIs. 
-
-Multi-chain indexing solutions, like HyperIndex, give builders the option to index and aggregate data across multiple networks into a single database and allow developers to query all of their data with a unified API endpoint. You can learn more about the importance of multi-chain indexing here. 
-
-In the case of the Optimism Standard bridge, we are interested in indexing bridge deposit events across the Ethereum Mainnet (L1) Bridge contract, as well as the Optimism (L2) Bridge contract.  This can be beneficial for reconciliation purposes and for analyzing bridging activity, such as the largest deposits. 
-
 ## Tutorial Walkthrough
 
 ###Prerequisites
