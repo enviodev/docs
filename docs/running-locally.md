@@ -1,7 +1,7 @@
 ---
 id: running-locally
-title: Running Indexer Locally
-sidebar_label: Running Indexer Locally
+title: Running The Indexer Locally
+sidebar_label: Running The Indexer Locally
 slug: /running-locally
 ---
 
