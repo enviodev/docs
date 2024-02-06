@@ -13,7 +13,7 @@ The following files are required from the user to run HyperIndex:
 
 These files are auto-generated according to the template and language chosen by running the `envio init` command.
 
-Click [<ins>here</ins>](./quickstart.md) for the quickstart guide.
+Click [<ins>here</ins>](./getting-started.md) for a quickstart guide on how to get started.
 
 ## Supported Networks
 
