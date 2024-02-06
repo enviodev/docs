@@ -62,7 +62,7 @@ More information on the Subgraph Migration can be found [here](./subgraph-migrat
 
 ## Indexer Configuration
 
-Indexers generated using examples, templates or contract import process will work without any further configuration.
+Indexers generated using examples, templates or the contract import process will work without any further configuration.
 
 Users can further configure their indexers to perform custom logic, and the process is done via modifying the 3 files below:
 - [`config.yaml`](./configuration-file)
