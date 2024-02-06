@@ -1,0 +1,150 @@
+---
+id: tutorials
+title: Tutorials
+sidebar_label: Tutorials
+slug: /tutorials-op-bridge-deposits
+---
+
+# Indexing Optimism Bridge deposits with HyperIndex in under 5 minutes 
+
+## Introduction
+
+In this tutorial, we'll guide you through the process of indexing the Optimism Standard Bridge contracts on Optimism and Ethereum Mainnet in less than 5 minutes using Envio’s indexing framework, called HyperIndex. 
+The Optimism Standard Bridge allows users to easily move ETH and most ERC-20 tokens between Ethereum and Optimism Mainnet. The goal is to index these events to a single database, providing real-time insights into bridging activities on both networks, that can then be easily queried and analyzed using a unified GraphQL API.
+
+## What You’ll Learn:
+
+- What is a Blockchain Indexer and its importance
+- Introduction to HyperIndex, contract Import, multi-chain indexing
+- How to install, initialize, and run an indexer
+- Understanding the generated code
+- How to explore indexed data using GraphQL API
+
+> Before we dive straight into the tutorial walkthrough, let’s get a basic understanding of the fundamentals:
+
+## What is a Blockchain Indexer?
+
+A blockchain indexer is a specialized tool that plays a vital role in simplifying the development process and overall development experience for building blockchain applications. Similar to an index of a book, it takes complex information, or in this case, blockchain data that is stored on-chain, and organizes it, making it easier for developers to efficiently query, retrieve, and utilize on-chain data for their application. 
+
+## What is HyperIndex?
+
+HyperIndex is a real-time indexing framework built specifically for EVM-compatible blockchains, providing developers with a seamless and efficient solution to query their smart contract data with a GraphQL API. Designed to optimize the developer experience, Envio offers automatic code generation and flexible language support. Indexers on Envio can be written in JavaScript, TypeScript, or ReScript.
+
+##Contract Import 
+
+When initializing a new project, Contract Import can save you a lot of time by automatically generating the key boilerplate of your indexer. In other words, contract import can autogenerate a basic indexer and queryable GraphQL API for your smart contract events through automatic code generation. For more information on the contract import feature, you can visit the Envio docs here.
+
+## Multi-chain Indexing 
+
+Conventional indexing frameworks require developers to create separate indexers and, depending on the approach, host individual databases, for each chain deployment. This can quickly result in increased maintenance and costs and also result in additional logic on the client-side application to aggregate data via multiple APIs. 
+
+Multi-chain indexing solutions, like HyperIndex, give builders the option to index and aggregate data across multiple networks into a single database and allow developers to query all of their data with a unified API endpoint. You can learn more about the importance of multi-chain indexing here. 
+
+In the case of the Optimism Standard bridge, we are interested in indexing bridge deposit events across the Ethereum Mainnet (L1) Bridge contract, as well as the Optimism (L2) Bridge contract.  This can be beneficial for reconciliation purposes and for analyzing bridging activity, such as the largest deposits. 
+
+## Tutorial Walkthrough
+
+###Prerequisites
+
+Before we start indexing, you'll need to make sure the following prerequisites have been installed. This section outlines the prerequisite packages required for Envio and provides steps on how to install Envio on your system.
+
+Please make sure you have the following packages installed before proceeding:
+
+- Node.js (use v18, or newer)
+- pnpm (use v8 or newer)
+- Docker Desktop
+
+Click here for a quick start guide for Envio.
+
+## Initializing an Indexer
+
+Now that you have installed the prerequisite packages required, let’s jump into the practical steps of setting up the indexer for the Optimism Bridge on both networks using our no-code contract import feature. This feature allows users to quickly and easily start up an indexer with basic logic using an existing contract that has already been deployed on a blockchain.
+
+1. Open your terminal in an empty repository and initialize a new indexer by running the command ‘envio init.’ 
+
+
+2. Name your indexer. In this example, we named our indexer “optimism-bridge-indexer” but feel free to name your indexer anything you prefer.
+
+
+3. Choose a language, select contract import, and import from the block explorer. For this demonstration, we’ve chosen to use TypeScript as the language. 
+
+> Note: Indexers on Envio can be written in JavaScript, TypeScript, or ReScript.
+ 
+4. Choose “Block Explorer” then select “Optimism”, insert the Optimism bridge contract address from OP Etherscan, and select the events you would like to index. In this case, we’ll be indexing the "deposit finalized" event.  
+
+To select an event navigate using the arrow keys (↑ ↓) and click the space bar once you have made your choice. 
+
+Note: Multiple events can be selected and indexed at the same time. 
+
+Optimism bridge contract address: 0x4200000000000000000000000000000000000010
+
+5. Add another contract address, in this case, we’ve imported from the block explorer just like before, added the Optimism Gateway smart contract address on Ethereum Mainnet from Etherscan, and opted to index the events "eth deposit initiated.” Finally, review the configuration and select “I’m finished” to start generating the indexer.
+
+Ethereum Mainnet contract address: 0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1
+
+## Starting the Indexer
+
+Before starting your indexer, run the command below to ensure that no conflicting indexers are running.
+
+### Stopping the indexer: 
+
+> Note: Ignore if you’re a first-time user. 
+
+### Start the indexer:
+
+Now, let's run our indexer locally by running the command below.
+
+## Overview of Generated Code
+
+Now let's take a glance at the key files generated by Envio:
+
+1. config.yaml
+This file outlines networks, start blocks, addresses, and events we want to index, specifying Optimism and Ethereum Mainnet.
+
+2. schema.graphql
+This file saves and defines the data structures for selected events, such as "eth deposit initiated" and "deposit finalized."
+
+3. event-handler.ts
+This file defines what happens when one of these events is emitted and saves what code is going to run, allowing customization in data handling.
+
+For more information and examples on how to save and handle entities check out the advanced section in our docs. 
+
+## Exploring the Indexed Data
+
+Time to reap the rewards of your indexing efforts:
+
+1. Head over to Hasuara, type in the admin-secret password (“testing”), and click “API” in the above column to access the GraphQL endpoint to query real-time data.
+
+
+2. Now click on “Data” in the above column to monitor the indexing progress on Ethereum Mainnet and Optimism through the events sync state table to see which block number you are on. 
+
+
+In general, if you wanted to index hundreds of millions of blocks and save hundreds and thousands of events this would usually take hours if not days but with Envio’s HyperSync developers can reduce this process to a couple of minutes or even seconds! ⚡
+
+
+3. Now let’s have a look at some of the events by heading back to “API” in the above column. From there you can run a query-specific event, in this case, "deposit finalized" to explore details such as amounts, senders, and recipients.
+
+**For example:**
+Let’s look at getting 10 "deposit finalized" events, and order them by the amount we would like to appear first (in this case: desc = greatest amount), the amounts being bridged, who it’s from, who it’s to, and the different L1 and L2 tokens. 
+
+Once you have selected your desired events run the query by clicking the play button ( ▶️) to gain access to the real-time indexed data
+
+## Conclusion
+
+And just like that, you've successfully indexed the Optimism Bridge contracts on both Optimism and Ethereum Mainnet using Envio, by generating an indexer and indexing about 600,000 events in under 5 minutes! Well done friend! 👏
+
+Be sure to check out our video walkthrough below on our Youtube channel, including other tutorials that showcase Envio’s indexing features and capabilities. ⚡
+
+For any questions or dev support hop in our Discord or feel free to explore further by adding custom logic, defining users, and handling additional events by visiting the advanced section in our docs. 
+
+## About Optimism Bridge
+Optimism Bridge allows you to transfer assets between L1 and Optimism. Optimism is a leading layer 2 scaling solution for Ethereum, focusing on faster and more cost-effective transactions to enhance the scalability and usability of decentralized applications.
+
+## Ship with us 🚢
+If you're a blockchain developer looking to enhance your development process and unlock the true potential of Web3 infrastructure, look no further.
+
+Join our growing community of elite developers, check out our docs, and let's work together to revolutionize the blockchain world and propel your project to the next level.
+
+Website | X | Discord | Hey | Medium | GitHub |  YouTube | Reddit
+
+
