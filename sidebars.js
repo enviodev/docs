@@ -2,7 +2,7 @@ module.exports = {
   someSidebar: [
     {
       type: "category",
-      label: "HyperIndex (Live)",
+      label: "HyperIndex",
       items: [
         "overview",
         {
@@ -59,6 +59,7 @@ module.exports = {
           label: "Troubleshoot",
           items: ["logging", "common-issues", "error-codes", "reserved-words"],
         },
+        "licensing",
         // {
         //   type: "category",
         //   label: "Education",
@@ -86,12 +87,12 @@ module.exports = {
     },
     {
       type: "category",
-      label: "HyperRPC (Alpha available)",
+      label: "HyperRPC (alpha)",
       items: ["overview-hyperrpc"],
     },
     {
       type: "category",
-      label: "HyperSync (Alpha available)",
+      label: "HyperSync (alpha)",
       items: ["overview-hypersync", "hypersync-clients"],
     },
   ],
