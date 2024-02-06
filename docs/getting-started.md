@@ -76,7 +76,7 @@ Users can further configure their indexers to perform custom logic, and the proc
 
 Users can run the indexer locally without deploying, using [Docker](https://www.docker.com/products/docker-desktop/) and [Hasura](https://hasura.io/).
 
-More information on the running the indexer locally can be found [here](./running-locally).
+More information on running the indexer locally can be found [here](./running-locally).
 
 ### Deploy to Hosted Service
 
