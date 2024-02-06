@@ -5,11 +5,7 @@ module.exports = {
       label: "HyperIndex (Live)",
       items: [
         "overview",
-        {
-          type: "category",
-          label: "Getting Started",
-          items: ["installation", "quickstart", "greeter-tutorial"],
-        },
+        "getting-started",
         {
           type: "category",
           label: "Examples",
@@ -31,6 +27,7 @@ module.exports = {
             "schema-file",
             "event-handlers",
             "contract-import",
+            "greeter-tutorial",
             "subgraph-migration",
             "testing",
             "navigating-hasura",
