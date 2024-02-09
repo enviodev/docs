@@ -16,7 +16,19 @@ const config = {
     defaultLocale: "en",
     locales: ["en"],
   },
-
+  plugins: [
+    [
+      "@docusaurus/plugin-client-redirects",
+      {
+        redirects: [
+          {
+            from: "/docs/quickstart",
+            to: "/docs/overview",
+          },
+        ],
+      },
+    ],
+  ],
   presets: [
     [
       "classic",
