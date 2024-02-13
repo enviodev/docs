@@ -40,6 +40,14 @@ module.exports = {
         },
         {
           type: "category",
+          label: "Tutorials",
+          items: [
+            "tutorial-op-bridge-deposits",
+            "tutorial-erc20-token-transfers",
+          ],
+        },
+        {
+          type: "category",
           label: "Advanced",
           items: [
             "labels",
