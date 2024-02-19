@@ -56,8 +56,8 @@ An example is shown below of this feature from the above example
 
 ```yaml
 events:
-  - event: "NewGreeting(address user, string greeting)"            
-  - event: "ClearGreeting(address user)"    
+  - event: "NewGreeting(address user, string greeting)"
+  - event: "ClearGreeting(address user)"
 ```
 
 More information on Human Readable ABI parsing is available [here](https://docs.rs/ethers-core/latest/ethers_core/abi/struct.AbiParser.html)
@@ -85,9 +85,5 @@ networks:
         handler: ./src/EventHandlers.bs.js
         events:
           - event: NewGreeting
-            requiredEntities:
-              - name: User
           - event: ClearGreeting
-            requiredEntities:
-              - name: User
 ```

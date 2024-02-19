@@ -57,7 +57,6 @@ Here is a table of currently supported networks on HyperSync:
 | AuroraTestnet    | 1313161555 |
 | Harmony          | 1666600000 |
 
-
 Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9qt8gZ2fX)
 
 ## Greeter example
@@ -75,11 +74,7 @@ networks:
         handler: ./src/EventHandlers.bs.js
         events:
           - event: NewGreeting
-            requiredEntities:
-              - name: User                
           - event: ClearGreeting
-            requiredEntities:
-              - name: User
 ```
 
 In the example above, absence of `rpc_config` will automatically direct Envio to HyperSync for the defined network (Polygon).
