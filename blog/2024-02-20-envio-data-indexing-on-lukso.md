@@ -22,7 +22,7 @@ Envio supports indexing on LUKSO and **any EVM-compatible blockchain**, enabling
 - Contract import: Autogenerate a basic indexer and queryable GraphQL API for a single or a set of smart contracts deployed on single or multiple EVM networks in less than 5 minutes
 - HyperSync: To ensure blazing-fast retrieval of historical on-chain data and a seamless developer experience, Envio’s HyperSync endpoint allows for 100x faster indexing than standard RPC.
 - Multi-chain indexing: Aggregate data stored across multiple networks into a single database, making it super easy to present aggregated information in your front end with a unified GraphQL API.
-- Join on-chain and off-chain data: Connect indexed blockchain data as well as ingest data from external sources to create flexible API for rich data beyond just what is emitted simply from events on-chain.
+- Join on-chain and off-chain data: Connect indexed blockchain data as well as ingest data from external sources to create a flexible API for rich data beyond just what is emitted simply from events on-chain.
 
 ## What Envio Supports on LUKSO?
 
