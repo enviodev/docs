@@ -190,7 +190,7 @@ let { GreeterContract } = require("../generated/src/Handlers.bs.js");
 GreeterContract.NewGreeting.handler((event, context) => {
   let existingUser = context.User.get(event.params.user.toString());
 
-  if (existingUser != undefined) {
+  if (existingUser !== undefined) {
     context.User.set({
       id: event.params.user.toString(),
       latestGreeting: event.params.greeting,
@@ -220,7 +220,7 @@ GreeterContract_NewGreeting_handler(({ event, context }) => {
 (({ event, context }) => {
   let currentUser = context.User.get(event.params.user.toString());
 
-  if (currentUser != null) {
+  if (currentUser !== undefined) {
     let userObject: userEntity = {
       id: event.params.user.toString(),
       latestGreeting: event.params.greeting,

@@ -136,7 +136,7 @@ GreeterContract_NewGreeting_loader(({ event, context }) => {
 GreeterContract_NewGreeting_handler(({ event, context }) => {
   let currentUser = context.User.get(event.params.user);
 
-  if (currentUser != null) {
+  if (currentUser !== undefined) {
     let userObject: UserEntity = {
       id: event.params.user.toString(),
       latestGreeting: event.params.greeting,
@@ -163,7 +163,7 @@ GreeterContract_ClearGreeting_loader(({ event, context }) => {
 GreeterContract_ClearGreeting_handler(({ event, context }) => {
   let currentUser = context.User.get(event.params.user);
 
-  if (currentUser != null) {
+  if (currentUser !== undefined) {
     let userObject: UserEntity = {
       id: event.params.user.toString(),
       latestGreeting: "",
