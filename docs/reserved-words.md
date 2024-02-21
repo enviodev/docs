@@ -167,4 +167,8 @@ Reserved words in Envio are the union of reserved words from JavaScript, TypeScr
 - `while`
 - `with`
 
+## Envio Internal Reserved Types
+- `EVENT_TYPE`
+- `CONTRACT_TYPE` 
+
 ---

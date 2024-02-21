@@ -166,6 +166,18 @@ Avoid using reserved words in the schema file.
 
 Please use one of the methods for referencing entities outlined in the [<ins>documentation</ins>](./schema.md).
 
+### `EE212`: Schema contains the following reserved enum names
+
+Envio makes use of internal enums that cannot be duplicated in the schema file, please see the [<ins>envio internal reserved words</ins>](./reserved-words#envio-internal-reserved-types) list for the internal reserved types.
+
+### `EE213`: Schema enum has duplicate values
+
+Please ensure all values within each schema enum type are unique. 
+
+### `EE214`: Schema contains the following enums and entities with the same name
+
+All enum and entity definitions must have unique names within the schema. Please update the schema with unique identifier for all types and enums.
+
 ### `EE300`: Event ABI Error
 
 Cannot parse the provided ABI for contract.
