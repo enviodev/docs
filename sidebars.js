@@ -2,14 +2,10 @@ module.exports = {
   someSidebar: [
     {
       type: "category",
-      label: "HyperIndex (Live)",
+      label: "HyperIndex",
       items: [
         "overview",
-        {
-          type: "category",
-          label: "Getting Started",
-          items: ["installation", "quickstart", "greeter-tutorial"],
-        },
+        "getting-started",
         {
           type: "category",
           label: "Examples",
@@ -30,9 +26,11 @@ module.exports = {
             "configuration-file",
             "schema-file",
             "event-handlers",
+            "greeter-tutorial",
             "contract-import",
             "subgraph-migration",
             "testing",
+            "running-locally",
             "navigating-hasura",
             "hosted-service",
             "cli-commands",
@@ -67,6 +65,7 @@ module.exports = {
           label: "Troubleshoot",
           items: ["logging", "common-issues", "error-codes", "reserved-words"],
         },
+        "licensing",
         // {
         //   type: "category",
         //   label: "Education",
@@ -94,12 +93,12 @@ module.exports = {
     },
     {
       type: "category",
-      label: "HyperRPC (Alpha available)",
+      label: "HyperRPC (alpha)",
       items: ["overview-hyperrpc"],
     },
     {
       type: "category",
-      label: "HyperSync (Alpha available)",
+      label: "HyperSync (alpha)",
       items: ["overview-hypersync", "hypersync-clients"],
     },
   ],

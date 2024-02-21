@@ -12,24 +12,32 @@ import TabItem from "@theme/TabItem";
 
 The process of converting your syncronous handler to use `async-mode` requires 3 things:
 
-1. Add the `isAsync: true` to the config.yaml of any event handler that you want to be asynchronous.
+1. Add the `isAsync: true` to the `config.yaml` of any event handler that you want to be asynchronous.
 2. Rename your `handler` function to `handlerAsync`.
-   In typescript this is `<contract-name>Contract_<event-name>Event_handlerAsync`, Rescript and javascript it is `<contract-name>Contract.<event-name>Event.handlerAsync`. Full examples below.
+   In TypeScript, this is `<contract-name>Contract_<event-name>Event_handlerAsync`.
+   In JavaScript and ReScript, it is `<contract-name>Contract.<event-name>Event.handlerAsync`.
+   Full examples below.
 3. Make the handler function a promise, and "await" any `get` or `get<linked-entity>` calls on the context since they are promises too in async mode.
 
-## Implications of async-mode
+## Implications of asynchronous mode
 
-Simply put using asynchronous mode too much will make your indexer slower. If speed isn't a big concern you can use async mode more liberally.
+Simply put, using asynchronous mode too much will slow down your indexer. If speed is not a big concern, you can use async mode more liberally.
 
-Regardless, if possible we recommend building the indexer with only blockchain events; and if you are using async mode, try to use it only for the most important things that you need to fetch. If you are still in the process of developing your smart contracts we highly recommend adding more logs to your smart-contract codebase with more data so that you never have to reach for async mode to fetch onchain data.
+Regardless, if possible we recommend building the indexer with only blockchain events; and if you are using async mode, try to use it only for the most important things that you need to fetch.
+If you are still in the process of developing your smart contracts we highly recommend adding more logs to your smart-contract codebase with more data so that you never have to reach for async mode to fetch onchain data.
 
-With async-mode, [loaders](/docs/event-handlers#loader-function) become optional. If you forget to write them or add your entity to the loader, it will be loaded asyncronously from the database. Once again, this has a performance cost.
+With async-mode, [`loaders`](/docs/event-handlers#loader-function) become optional.
+If you forget to write them or add your entity to the loader, it will be loaded asyncronously from the database.
+Once again, this has a performance cost.
 
-We ask that you use asynchronous mode with caution. If you for example forget to return your promise in your handler there could be unexpected behaviours since the next event might start getting processed before your async function has completed. The other issue, is if an external promise fails it could totally block your indexer (eg. if a 3rd party API is unreachable for example).
+We ask that you use asynchronous mode with caution.
+For example, if you forget to return your promise in your handler there could be unexpected behaviours since the next event might start getting processed before your async function has completed.
+The other issue is that if an external promise fails it could totally block your indexer (eg. if a 3rd party API is unreachable for example).
 
 ## Example
 
-As an example, we will modify the 'Greeter' template (which can be generated with `envio init template -t greeter` command) to send the user who makes the greeting an address registry to get the ENS name of the user if it exists and generate an AI response message back. The two asynchronous functions we'll use are `getEnsNameIfAvailable` and `generateAIResponse`.
+As an example, we will modify the `Greeter` template (which can be generated with `envio init template -t greeter` command) to send the user who makes the greeting an address registry to get the ENS name of the user if it exists and generate an AI response message back.
+The two asynchronous functions we'll use are `getEnsNameIfAvailable` and `generateAIResponse`.
 
 > **NOTE**: \_For simplicity we aren't doing any kind of error handling on the async functions. Ladies and gentlemen, handle your errors or the resulting frustration is on you.
 
@@ -61,15 +69,15 @@ type User {
 #### **handlers**:
 
 <Tabs>
-  <TabItem value="typescript" label="Typescript">
+<TabItem value="javascript" label="Javascript">
 
-```typescript
-GreeterContract_NewGreeting_handlerAsync(async ({ event, context }) => {
+```javascript
+GreeterContract.NewGreeting.handlerAsync(async ({ event, context }) => {
   const userId = event.params.user;
   const latestGreeting = event.params.greeting;
 
   const usersEnsOrAddress = await getEnsNameIfAvailable(userId);
-  const aiRespones = await generateAIResponse(
+  const aiResponse = await generateAIResponse(
     usersEnsOrAddress,
     latestGreeting
   );
@@ -82,14 +90,14 @@ GreeterContract_NewGreeting_handlerAsync(async ({ event, context }) => {
         latestGreeting,
         numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
         greetings: [...currentUserEntity.greetings, latestGreeting],
-        aiRespones,
+        aiResponse,
       }
     : {
         id: userId,
         latestGreeting,
         numberOfGreetings: 1,
         greetings: [latestGreeting],
-        aiRespones,
+        aiResponse,
       };
 
   context.User.set(userEntity);
@@ -105,7 +113,7 @@ And here is a diff to highlight the change:
     const latestGreeting = event.params.greeting;
 
 +   const usersEnsOrAddress = await getEnsNameIfAvailable(userId)
-+   const aiRespones = await generateAIResponse(usersEnsOrAddress, latestGreeting)
++   const aiResponse = await generateAIResponse(usersEnsOrAddress, latestGreeting)
 
 -   const currentUserEntity = context.User.get(userId);
 +   const currentUserEntity = await context.User.get(userId);
@@ -117,7 +125,7 @@ And here is a diff to highlight the change:
         latestGreeting,
         numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
         greetings: [...currentUserEntity.greetings, latestGreeting],
-+       aiRespones,
++       aiResponse,
       }
       :
       {
@@ -125,7 +133,79 @@ And here is a diff to highlight the change:
         latestGreeting,
         numberOfGreetings: 1,
         greetings: [latestGreeting],
-+       aiRespones,
++       aiResponse,
+      };
+
+    context.User.set(userEntity);
+  });
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="Typescript">
+
+```typescript
+GreeterContract_NewGreeting_handlerAsync(async ({ event, context }) => {
+  const userId = event.params.user;
+  const latestGreeting = event.params.greeting;
+
+  const usersEnsOrAddress = await getEnsNameIfAvailable(userId);
+  const aiResponse = await generateAIResponse(
+    usersEnsOrAddress,
+    latestGreeting
+  );
+
+  const currentUserEntity = await context.User.get(userId);
+
+  const userEntity: UserEntity = currentUserEntity
+    ? {
+        id: userId,
+        latestGreeting,
+        numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
+        greetings: [...currentUserEntity.greetings, latestGreeting],
+        aiResponse,
+      }
+    : {
+        id: userId,
+        latestGreeting,
+        numberOfGreetings: 1,
+        greetings: [latestGreeting],
+        aiResponse,
+      };
+
+  context.User.set(userEntity);
+});
+```
+
+And here is a diff to highlight the change:
+
+```diff
+- GreeterContract_NewGreeting_handler(({ event, context }) => {
++ GreeterContract_NewGreeting_handlerAsync(async ({ event, context }) => {
+    const userId = event.params.user;
+    const latestGreeting = event.params.greeting;
+
++   const usersEnsOrAddress = await getEnsNameIfAvailable(userId)
++   const aiResponse = await generateAIResponse(usersEnsOrAddress, latestGreeting)
+
+-   const currentUserEntity = context.User.get(userId);
++   const currentUserEntity = await context.User.get(userId);
+
+    const userEntity: UserEntity = currentUserEntity
+      ?
+      {
+        id: userId,
+        latestGreeting,
+        numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
+        greetings: [...currentUserEntity.greetings, latestGreeting],
++       aiResponse,
+      }
+      :
+      {
+        id: userId,
+        latestGreeting,
+        numberOfGreetings: 1,
+        greetings: [latestGreeting],
++       aiResponse,
       };
 
     context.User.set(userEntity);
@@ -141,7 +221,7 @@ Handlers.GreeterContract.NewGreeting.handlerAsync(async (~event, ~context) => {
   let latestGreeting = event.params.greeting
 
   let usersEnsOrAddress = await getEnsNameIfAvailable(userId)
-  let aiRespones = await generateAIResponse(usersEnsOrAddress, latestGreeting)
+  let aiResponse = await generateAIResponse(usersEnsOrAddress, latestGreeting)
 
   let maybecurrentUserEntity = await context.User.get(userId)
 
@@ -151,14 +231,14 @@ Handlers.GreeterContract.NewGreeting.handlerAsync(async (~event, ~context) => {
       latestGreeting,
       numberOfGreetings: existingUserEntity.numberOfGreetings + 1,
       greetings: existingUserEntity.greetings->Belt.Array.concat([latestGreeting]),
-      aiRespones,
+      aiResponse,
     }
   | None => {
       id: userId,
       latestGreeting,
       numberOfGreetings: 1,
       greetings: [latestGreeting],
-      aiRespones,
+      aiResponse,
     }
   }
 
@@ -175,7 +255,7 @@ And here is a diff to highlight the change:
     let latestGreeting = event.params.greeting
 
 +   let usersEnsOrAddress = await getEnsNameIfAvailable(userId)
-+   let aiRespones = await generateAIResponse(usersEnsOrAddress, latestGreeting)
++   let aiResponse = await generateAIResponse(usersEnsOrAddress, latestGreeting)
 
 -   let maybecurrentUserEntity = context.User.get(userId)
 +   let maybecurrentUserEntity = await context.User.get(userId)
@@ -186,14 +266,14 @@ And here is a diff to highlight the change:
         latestGreeting,
         numberOfGreetings: existingUserEntity.numberOfGreetings + 1,
         greetings: existingUserEntity.greetings->Belt.Array.concat([latestGreeting]),
-        aiRespones,
+        aiResponse,
       }
     | None => {
         id: userId,
         latestGreeting,
         numberOfGreetings: 1,
         greetings: [latestGreeting],
-        aiRespones,
+        aiResponse,
       }
     }
 
@@ -202,80 +282,9 @@ And here is a diff to highlight the change:
 ```
 
   </TabItem>
-  <TabItem value="javascript" label="Javascript">
-
-```javascript
-GreeterContract.NewGreeting.handlerAsync(async ({ event, context }) => {
-  const userId = event.params.user;
-  const latestGreeting = event.params.greeting;
-
-  const usersEnsOrAddress = await getEnsNameIfAvailable(userId);
-  const aiRespones = await generateAIResponse(
-    usersEnsOrAddress,
-    latestGreeting
-  );
-
-  const currentUserEntity = await context.User.get(userId);
-
-  const userEntity: UserEntity = currentUserEntity
-    ? {
-        id: userId,
-        latestGreeting,
-        numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
-        greetings: [...currentUserEntity.greetings, latestGreeting],
-        aiRespones,
-      }
-    : {
-        id: userId,
-        latestGreeting,
-        numberOfGreetings: 1,
-        greetings: [latestGreeting],
-        aiRespones,
-      };
-
-  context.User.set(userEntity);
-});
-```
-
-And here is a diff to highlight the change:
-
-```diff
-- GreeterContract_NewGreeting_handler(({ event, context }) => {
-+ GreeterContract_NewGreeting_handlerAsync(async ({ event, context }) => {
-    const userId = event.params.user;
-    const latestGreeting = event.params.greeting;
-
-+   const usersEnsOrAddress = await getEnsNameIfAvailable(userId)
-+   const aiRespones = await generateAIResponse(usersEnsOrAddress, latestGreeting)
-
--   const currentUserEntity = context.User.get(userId);
-+   const currentUserEntity = await context.User.get(userId);
-
-    const userEntity: UserEntity = currentUserEntity
-      ?
-      {
-        id: userId,
-        latestGreeting,
-        numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
-        greetings: [...currentUserEntity.greetings, latestGreeting],
-+       aiRespones,
-      }
-      :
-      {
-        id: userId,
-        latestGreeting,
-        numberOfGreetings: 1,
-        greetings: [latestGreeting],
-+       aiRespones,
-      };
-
-    context.User.set(userEntity);
-  });
-```
-
-  </TabItem>
 </Tabs>
 
 ## Testing
 
-Testing async functions can be tricky if you have 3rd party dependencies. We would recommend mocking those with your mocking library of choice. In the [testing framework](/docs/testing) itself, the only change is that `processEvent` is now `processEventAsync`, and it returns a promise rather than being synchronous.
+Testing async functions can be tricky if you have 3rd party dependencies. We would recommend mocking those with your mocking library of choice.
+In the [testing framework](/docs/testing) itself, the only change is that `processEvent` is now `processEventAsync`, and it returns a promise rather than being synchronous.

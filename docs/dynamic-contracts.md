@@ -29,7 +29,7 @@ Both types of contracts will be defined in the configuration file, however addre
 
 ### Config file
 
-```yaml
+````yaml
 ame: nftindexer
 description: NFT Factory
 networks:
@@ -44,23 +44,17 @@ networks:
         handler: src/EventHandlers.ts
         events:
           - event: SimpleNftCreated (string name, string symbol, uint256 maxSupply, address contractAddress)
-            requiredEntities: []
       - name: SimpleNft
         abi_file_path: abis/SimpleNft.json
         handler: src/EventHandlers.ts
         events:
           - event: Transfer (address from, address to, uint256 tokenId)
-            requiredEntities:
-              - name: User
-              - name: Nftcollection
-              - name: Token
-```
 
 ### Registering `SimpleNft` contracts in loader function for `SimpleNftCreated` event
 
 ```javascript
 context.contractRegistration.addSimpleNft(event.params.contractAddress);
-```
+````
 
 > The syntax is exactly same for JavaScript, TypeScript and ReScript.
 
@@ -69,5 +63,3 @@ For more information on how to write the event handlers file, go [here](./event-
 ## Important Note
 
 When a dynamic contract is loaded, we load all the events in the block in which the contract was registered (even if they were from a previous transaction). Please let us know if this is an issue for you, as the team also has a solution where it only loads events after the event that loaded the contract. We decided this was better since many contracts emit an event upon creation, and this occurs before the contract is loaded (for example, in Uniswap v2).
-
-

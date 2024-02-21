@@ -32,11 +32,7 @@ contracts:
     handler: ./src/EventHandlers.js
     events:
       - event: NewGreeting
-        requiredEntities:
-          - name: User
       - event: ClearGreeting
-        requiredEntities:
-          - name: User
 networks:
   - id: 137 # Polygon
     start_block: 45336336
@@ -58,12 +54,14 @@ Notice how the global definition of the "Greeter" contract does not contain any 
 
 ```graphql
 type User {
-  id: ID!
-  greetings: [String!]!
-  latestGreeting: String!
-  numberOfGreetings: Int!
+  id: ID! # user's account address
+  greetings: [String!]! # list of greetings made by the user
+  latestGreeting: String! # most recent greeting
+  numberOfGreetings: Int! # total number of greetings made
 }
 ```
+
+> Dev note: 📢 When it makes sense, we recommend appending the chain id to the entity id when you are developing multichain indexers. For example if you deploy a contract to two different networks with the same contract address then append `-<chainId>` to the end of the id to differentiate the contracts between different networks.
 
 ### Event Handler file
 
