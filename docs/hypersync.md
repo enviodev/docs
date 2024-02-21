@@ -23,10 +23,12 @@ Here is a table of currently supported networks on HyperSync:
 | Goerli           | 5          |
 | Optimism         | 10         |
 | Flare            | 14         |
+| Rootstock        | 30         |
 | Lukso            | 42         |
 | Bsc              | 56         |
 | Gnosis           | 100        |
 | Polygon          | 137        |
+| ShimmerEVM       | 148        |
 | Manta            | 169        |
 | Okbc Testnet     | 195        |
 | Fantom           | 250        |
@@ -40,6 +42,7 @@ Here is a table of currently supported networks on HyperSync:
 | Moonbeam         | 1284       |
 | C1 Milkomeda     | 2001       |
 | Mantle           | 5000       |
+| Zeta             | 7000       |
 | Base             | 8453       |
 | Gnosis Chiado    | 10200      |
 | Holesky          | 17000      |
@@ -48,11 +51,14 @@ Here is a table of currently supported networks on HyperSync:
 | Avalanche        | 43114      |
 | Linea            | 59144      |
 | Mumbai           | 80001      |
+| Berachain Artio  | 80085      |
 | Taiko Jolnr      | 167007     |
+| Arbitrum Sepolia | 421614     |
 | Scroll           | 534352     |
 | Zora             | 7777777    |
 | Sepolia          | 11155111   |
 | Optimism Sepolia | 11155420   |
+| NeonEVM          | 245022934  |
 | Aurora           | 1313161554 |
 | AuroraTestnet    | 1313161555 |
 | Harmony          | 1666600000 |
