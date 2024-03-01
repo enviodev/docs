@@ -4,7 +4,7 @@ sidebar_label: Envio Community Update No. 07
 slug: /envio-community-update-no-7
 ---
 
-<img src="/blog-assets/envio-developer-community-update-6.png" alt="Cover Image Envio Developer Community Update No.7" width="100%"/>
+<img src="/blog-assets/envio-developer-community-update-7.jpg" alt="Cover Image Envio Developer Community Update No.7" width="100%"/>
 
 <!--truncate-->
 
