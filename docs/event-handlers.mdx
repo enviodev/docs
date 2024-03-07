@@ -95,9 +95,14 @@ Handler functions are called via
   </TabItem>
 </Tabs>
 
-Handler functions are used to modify the entities which have been loaded by the loader function, and thus should contain all the required logic for updating entities with the raw data emitted by the event.
+### Event
 
+#### Event Params
+
+Handler functions are used to modify the entities which have been loaded by the loader function, and thus should contain all the required logic for updating entities with the raw data emitted by the event.
 All of the parameters emitted in each event are accessible via `event.params.<parameterName>`.
+
+#### Raw Event Information
 
 Additional raw event information can also be accessed via `event.<rawInfo>`.
 
@@ -115,7 +120,19 @@ Below is a list of raw event information that can be accessed:
 - `transactionIndex`
 - `txOrigin` (this is an optional parameter that is only present for events fetched via HyperSync, not via RPC Sync)
 
-Handler functions can access the loaded entities that were loaded in the handler via `context.<EntityName>.<label>Load`, they can access these loaded entities via `context.<EntityName>.get(<id>)`.
+### Context
+
+Handler functions can access the loaded entities that were loaded in the handler via
+
+```javascript
+context.<EntityName>.load(<id>)
+```
+
+they can access these loaded entities via
+
+```javascript
+context.<EntityName>.get(<id>)
+```
 
 > Dev note: 📢 For indexers built using `ReScript`, use a lower case for first letter of entityName when accessing it via context (i.e. `context.user` instead of `context.User`).
 
@@ -124,7 +141,17 @@ Handler functions can also provides the following functions per loaded entity, t
 - set
 - delete
 
-which can be used as follows `context.<entityName>.set(<entityObject>)` and `context.<EntityName>.delete()`.
+which can be used as follows
+
+```javascript
+context.<entityName>.set(<entityObject>)
+```
+
+and
+
+```javascript
+context.<EntityName>.delete()
+```
 
 ### Greeter example
 
@@ -285,5 +312,59 @@ Handlers.GreeterContract.NewGreeting.handler((~event, ~context) => {
 - The user can then modify this retrieved entity and subsequently update the `User` entity in the database.
 - This is done via the `context` using the function (`context.User.set(userObject)`).
 - The user has access to a `userEntity` type that has all the fields defined in the schema.
+
+## Config data in the handler
+
+We expose the `config.yaml` data in the handler via `getConfigByChainId`. The below code snippets shows how to access the `config.yaml` data in the handler and the available data.
+
+<Tabs>
+  <TabItem value="javascript" label="Javascript">
+
+```javascript
+let { getConfigByChainId } = require("../generated/src/ConfigYAML.bs.js");
+
+GreeterContract.NewGreeting.handler((event, context) => {
+  let config = getConfigByChainId(event.chainId);
+});
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="Typescript">
+
+```typescript
+import { getConfigByChainId } from "../generated/src/ConfigYAML.gen";
+
+GreeterContract_NewGreeting_handler(({ event, context }) => {
+  let config = getConfigByChainId(event.chainId);
+});
+```
+
+  </TabItem>
+  <TabItem value="rescript" label="Rescript">
+
+```rescript
+open Types
+
+Handlers.GreeterContract.NewGreeting.handler((~event, ~context) => {
+  let config = ConfigYAML.getConfigByChainId(event.chainId)
+})
+```
+
+  </TabItem>
+</Tabs>
+
+### configYaml
+
+- `syncSource` - Source where the indexer is syncing from
+- `startBlock` - Block number from which the indexer is syncing
+- `confirmedBlockThreshold` - Number of blocks to wait before a block is considered confirmed (relevant to reorgs)
+- `contracts` - An array of contract data
+
+### contracts
+
+- `config.contracts[0].name` - Name of the contract
+- `config.contracts[0].abi` - ABI of the contract
+- `config.contracts[0].addresses` - An array of addresses of the contract
+- `config.contracts[0].events` - An array of event names emitted by the contract
 
 ---
