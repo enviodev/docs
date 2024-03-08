@@ -21,6 +21,7 @@ Envio's hosted service is the easiest way to deploy and host your indexer. We pr
 1. Add & configure your indexer
 ![add org](/img/hosted-service/add-indexer.jpg)
 ![add org](/img/hosted-service/connect-indexer.jpg)
+1. Create a unique name for your indexer based on your specifications. This name must be unique for the repository. You may have multiple indexers per repository, differentiated by the config file, root directory and/or the git release branch.
 ![add org](/img/hosted-service/configure-indexer.jpg)
 ![add org](/img/hosted-service/deploy-indexer.jpg)
 1. Create a deployment branch
