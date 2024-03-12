@@ -8,18 +8,17 @@ slug: /array-label
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-
 ## Introduction
 
 For the indexer, you may want to load an array of an entity. This can be achieved by using `arrayLabels` in `config.yaml` file.
 For example, you may want to load two token entities for an event from an AMM pool that you are indexing.
-
 
 ## Example
 
 The below example illustrates how to define an `arrayLabel` as well as a `label` for entity `A` that we want to load for `TestEvent` event.
 
 ### `config.yaml`
+
 ```yaml
 networks:
   - id: 12345 #Your chain Id
@@ -32,12 +31,13 @@ networks:
               - name: "A"
                 arrayLabels:
                   - "allAs"
-                label:
+                labels:
                   - "singleA"
         # ... rest of your config file
 ```
 
 ### `schema.graphql`
+
 ```graphql
 type A {
   id: ID!
@@ -46,6 +46,7 @@ type A {
 ```
 
 ### Event Handler file
+
 <Tabs>
 <TabItem value="javascript" label="Javascript">
 
