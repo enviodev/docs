@@ -47,17 +47,20 @@ Here is a table of currently supported networks on HyperSync:
 | Gnosis Chiado    | 10200      |
 | Holesky          | 17000      |
 | Arbitrum One     | 42161      |
+| Arbitrum Nova    | 42170      |
 | Celo             | 42220      |
 | Avalanche        | 43114      |
 | Linea            | 59144      |
 | Mumbai           | 80001      |
 | Berachain Artio  | 80085      |
+| Blast            | 81457      |
 | Taiko Jolnr      | 167007     |
 | Arbitrum Sepolia | 421614     |
 | Scroll           | 534352     |
 | Zora             | 7777777    |
 | Sepolia          | 11155111   |
 | Optimism Sepolia | 11155420   |
+| Blast Sepolia    | 168587773  |          
 | NeonEVM          | 245022934  |
 | Aurora           | 1313161554 |
 | AuroraTestnet    | 1313161555 |
