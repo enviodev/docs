@@ -25,11 +25,12 @@ The below schema shows 4 user-defined entities that reference/link to each other
 type A {
   id: ID!
   b: B!
+  c: [C!]! @derivedFrom(field: "a")
   optionalBigInt: BigInt
 }
 type B {
   id: ID!
-  c: [C!]!
+  c: C!
 }
 type C {
   id: ID!
@@ -44,7 +45,7 @@ type ImportantEntityICareAbout {
 
 ### `config.yaml`
 
-For illustration there is a `TestEvent` with a [labelled loader](./labels) for a single `A` entity with label `exampleA`:
+For illustration there is a `TestEvent`:
 ```yaml
 networks:
   - id: 123456
@@ -52,10 +53,6 @@ networks:
       - name: Gravatar
         events:
           - event: "TestEvent"
-            requiredEntities:
-              - name: "A"
-                labels:
-                  - "exampleA"
 ```
 
 
@@ -65,20 +62,22 @@ networks:
 
 ```javascript
 GravatarContract.TestEvent.loader((~event, ~context) => {
-  context.A.exampleALoad(
-    id,
+  context.A.load(
+    event.params.id,
     {loadB: {loadC: {loadImportantData: true}, loadA: {}}},
   )
   // ... other loaders
 })
+
 GravatarContract.TestEvent.loader((~event, ~context) => {
-  let linkedB = context.A.getB(
-    context.a.exampleA
+  const entityA = context.A.get(event.params.id);
+  const linkedB = context.A.getB(
+    entityA
   );
-  let linkedC = context.B.getC(
+  const linkedC = context.B.getC(
     linkedB
   );
-  let otherDataArray = context.C.getOtherData(
+  const importantDataEntity = context.C.getImportantData(
     linkedC
   );
   // ... rest of the handler that uses or updates these entities.
@@ -91,20 +90,21 @@ GravatarContract.TestEvent.loader((~event, ~context) => {
 ```typescript
 
 GravatarContract_TestEvent_loader(({ event, context }) => {
-  context.A.exampleALoad(
-    id,
-    {loaders: {loadB: {loadC: {loadImportantData: true}, loadA: {}}}},
+  context.A.load(
+    event.params.id,
+    {loadB: {loadC: {loadImportantData: true}, loadA: {}}},
   )
   // ... other loaders
 });
 GravatarContract_TestEvent_handler(({ event, context }) => {
-  let linkedB = context.A.getB(
-    context.A.exampleA
+  const entityA = context.A.get(event.params.id);
+  const linkedB = context.A.getB(
+    entityA
   );
-  let linkedC = context.B.getC(
+  const linkedC = context.B.getC(
     linkedB
   );
-  let otherDataArray = context.C.getOtherData(
+  const importantDataEntity = context.C.getImportantData(
     linkedC
   );
   // ... rest of the handler that uses or updates these entities.
@@ -116,21 +116,16 @@ GravatarContract_TestEvent_handler(({ event, context }) => {
 ```rescript
 GravatarContract.TestEvent.loader((event, context) => {
   context.a.exampleALoad(
-    id,
+    event.params.id,
     ~loaders: {loadB: {loadC: {loadImportantData: true}, loadA: {}}},
   )
   // ... other loaders
 })
 GravatarContract.TestEvent.handler((event, context) => {
-  let linkedB = context.a.getB(
-    context.a.exampleA
-  );
-  let linkedC = context.b.getC(
-    linkedB
-  );
-  let otherDataArray = context.c.getOtherData(
-    linkedC
-  );
+  let entityA = context.A.get(event.params.id)
+  let linkedB = context.A.getB(entityA)
+  let linkedC = context.B.getC(linkedB)
+  let importantDataEntity = context.C.getImportantData(linkedC)
   // ... rest of the handler that uses or updates these entities.
 })
 ```
@@ -139,5 +134,5 @@ GravatarContract.TestEvent.handler((event, context) => {
 
 If the entity you want to load has linked entities of its own, then you need to put a `{}` (empty object next to the name to indicate stopping the recursive loading at that point), otherwise you must put a `true`. Thus in the above example, we put `true` next to the `loadImportantData`, and a `{}` next to the inner `loadA`.
 
-**Note:** The syntax is the same for array labels too (only difference is that the first argument is an array rather than a single id).
+**Note:** Currently loading data from derived fields is unsupported.
 
