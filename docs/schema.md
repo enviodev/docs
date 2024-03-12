@@ -24,7 +24,51 @@ type User {
 
 Every entity type must include an `id` field that is of type `ID!`, `String!`, `Int!`, `Bytes!`, or `BigInt!`. The `id` field serves as a unique identifier for each instance of the entity.
 
-In GraphQL, scalars represent fundamental data types such as strings and numbers. Each GraphQL scalar is mapped to a corresponding JavaScript,TypeScript or ReScript type, which is used in event handler code, depending on the language chosen. The following table provides an overview of the available scalar types, along with their associated JavaScript, TypeScript and ReScript types:
+### Enums
+
+The schema file also support the use of enum types. An example of an enum definition and usage within the schema is shown below:
+
+```graphql
+enum AccountType {
+  ADMIN
+  USER
+}
+type User {
+  id: ID!
+  balance: Int!
+  accountType: AccountType!
+}
+```
+
+Enum types are generated as string union types for TypeScript and JavaScript and as polymorphic variants for ReScript. Therefore to set an enum field in an entity in TypeScript and JavaScript, the string of the enum value is used:
+
+```typescript
+import { AccountType } from "../generated/src/Enums.gen";
+
+let accountType: AccountType = "USER";
+
+let user = {
+      id: event.params.id,
+      balance: event.params.balance,
+      accountType
+    };
+```
+
+For ReScript, we use the polymorphic variant
+
+```rescript
+let accountType: Enums.accountType = #USER;
+
+let user: Types.userEntity = {
+      id: event.params.id,
+      balance: event.params.balance,
+      accountType
+    };
+```
+
+### Scalar Types
+
+In GraphQL, scalars represent fundamental data types such as strings and numbers. Each GraphQL scalar is mapped to a corresponding JavaScript, TypeScript or ReScript type, which is used in event handler code, depending on the language chosen. The following table provides an overview of the available scalar types, along with their associated JavaScript, TypeScript and ReScript types:
 
 | **Name** | **Description**                                  | **JavaScript Type** | **TypeScript Type** | **ReScript Type** |
 | -------- | ------------------------------------------------ | ------------------- | ------------------- | ----------------- |
@@ -35,6 +79,7 @@ In GraphQL, scalars represent fundamental data types such as strings and numbers
 | Boolean  | Represents a true or false value                 | boolean             | boolean             | bool              |
 | Bytes    | A UTF-8 character sequence with a 0x prefix      | string              | 0x${string}         | string            |
 | BigInt   | A signed integer (equivalent to solidity int256) | bigint              | bigint              | Js.BigInt.t       |
+
 
 You can find out more on GraphQL [here](https://graphql.org/learn/).
 
