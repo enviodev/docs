@@ -358,13 +358,12 @@ Handlers.GreeterContract.NewGreeting.handler((~event, ~context) => {
 - `syncSource` - Source where the indexer is syncing from
 - `startBlock` - Block number from which the indexer is syncing
 - `confirmedBlockThreshold` - Number of blocks to wait before a block is considered confirmed (relevant to reorgs)
-- `contracts` - An array of contract data
+- `contracts` - An object of contract data where the key is the contract name
 
 ### contracts
 
-- `config.contracts[0].name` - Name of the contract
-- `config.contracts[0].abi` - ABI of the contract
-- `config.contracts[0].addresses` - An array of addresses of the contract
-- `config.contracts[0].events` - An array of event names emitted by the contract
+- `config.contracts.<ContractName>.abi` - ABI of the contract
+- `config.contracts.<ContractName>.addresses` - An array of addresses of the contract
+- `config.contracts.<ContractName>.events` - An array of event names emitted by the contract
 
 ---
