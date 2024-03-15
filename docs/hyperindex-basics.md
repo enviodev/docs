@@ -17,7 +17,7 @@ Click [<ins>here</ins>](./getting-started.md) for a quickstart guide on how to g
 
 ## Supported Networks
 
-HyperIndex currently supports indexing on any EVM-compatible network an RPC endpoint.
+HyperIndex currently supports indexing on any EVM-compatible network with an RPC endpoint.
 
 The secret of HyperIndex’s sync speed lies in using HyperSync for data retrieval.
 
