@@ -35,7 +35,7 @@ Here is a table of currently supported networks on HyperSync:
 | Kroma            | 255        |
 | Boba             | 288        |
 | Zksync Era       | 324        |
-| Base Sepolia     | 420        |
+| Base Sepolia     | 84532      |
 | PublicGoods      | 424        |
 | Metis            | 1088       |
 | PolygonzkEVM     | 1101       |
