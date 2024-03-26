@@ -7,6 +7,8 @@ slug: /example-liquidation-metrics
 
 # Compound V2 Liquidation Metrics
 
+Note: This example is built on version 0.0.21 (current version is >= 0.0.36).
+
 This [repo](https://github.com/enviodev/liquidation-metrics) contains an example Envio indexer built using TypeScript for the Compound V2 forks across multiple chains.
 
 This repo was forked from the [original indexer](https://github.com/JossDuff/liquidation-metrics/) built by Joss Duff, one of Envio's first grantees.
@@ -18,22 +20,22 @@ Addresses of all the pool contracts are stored in the `config.yaml` file.
 ## Protocols indexed
 
 1. Compound V2 on Ethereum Mainnet
-1. Flux Finance on Ethereum Mainnet
-1. Iron Bank on Ethereum Mainnet
-1. Strike Finance on Ethereum Mainnet
-1. Iron Bank on Optimism
-1. Sonne Finance on Optimism
-1. Benqi Lending on Avalanche C-chain
-1. Iron Bank on Avalanche C-chain
-1. Venus on BSC
+2. Flux Finance on Ethereum Mainnet
+3. Iron Bank on Ethereum Mainnet
+4. Strike Finance on Ethereum Mainnet
+5. Iron Bank on Optimism
+6. Sonne Finance on Optimism
+7. Benqi Lending on Avalanche C-chain
+8. Iron Bank on Avalanche C-chain
+9. Venus on BSC
 
 The indexer has been built using v0.0.21 of Envio.
 
 ## Steps to run the indexer
 
 1. Clone the [repo](https://github.com/enviodev/liquidation-metrics)
-1. Install any other pre-requisite packages for Envio listed [here](https://docs.envio.dev/docs/installation#prerequisites)
-1. Install Envio via `npm i -g envio@v0.0.21`
-1. Generate indexing code via `envio codegen`
-1. Run the indexer via `envio dev` (make sure you have Docker running)
-1. Stop the indexer via `envio stop`
+2. Install any other pre-requisite packages for Envio listed [here](https://docs.envio.dev/docs/installation#prerequisites)
+3. Install Envio via `npm i -g envio@v0.0.21`
+4. Generate indexing code via `envio codegen`
+5. Run the indexer via `envio dev` (make sure you have Docker running)
+6. Stop the indexer via `envio stop`

@@ -1,14 +1,21 @@
 ---
 id: contract-import
-title: Importing Contracts
-sidebar_label: Importing Contracts
+title: No-Code Quickstart
+sidebar_label: No-Code Quickstart
 slug: /contract-import
 ---
 
-<sub><sup> NOTE: Contract Import functionality is in experimental state 👷‍♀️👷 </sup></sub>
+The Envio CLI allows you to quickly autogenerate a basic indexer. This is the quickest way to get going and the likely starting point for most developers.
 
-This page explains how to initialize an indexer using a contract that is already deployed on a blockchain.
-This process allows users to quickly and easily start up an indexer with basic logic using Envio given a deployed contract.
+For example, you could autogenerate an indexer for Eigenlayer AND index the entire Eigenlayer contract in under 5 minutes simply through running `envio init` and pasting the contract address: https://etherscan.io/address/0x858646372cc42e1a627fce94aa7a7033e7cf075a
+
+You can also autogenerate an indexer with a local ABI.
+
+To start, simply run:
+
+```
+envio init
+```
 
 ## Instructions
 
@@ -48,7 +55,7 @@ v polygon
 [↑↓ to move, enter to select, type to filter]
 ```
 
-List of supported networks:
+List of supported networks (this list is being rapidly added to and may be outdated):
 
 - `ethereum-mainnet`
 - `goerli`
