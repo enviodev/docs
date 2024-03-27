@@ -56,6 +56,7 @@ module.exports = {
             "example-sablier-v2",
             "example-liquidation-metrics",
             "example-uniswap-v3",
+            "example-ens",
             // "example-aave-token",
             // "example-reNFT",
             // "example-token-vaults",

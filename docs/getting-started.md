@@ -11,9 +11,9 @@ slug: /getting-started
 
 The following are the prerequisite packages required for Envio:
 
-1. [<ins>Node.js</ins>](https://nodejs.org/en/download/current) (use [v18](https://nodejs.org/download/release/v18.18.0/) or newer)
-2. [<ins>pnpm</ins>](https://pnpm.io/installation) (use v8 or newer)
-3. [<ins>Docker Desktop</ins>](https://www.docker.com/products/docker-desktop/)
+1. [`<ins>`Node.js `</ins>`](https://nodejs.org/en/download/current) (use [v18](https://nodejs.org/download/release/v18.18.0/) or newer)
+2. [`<ins>`pnpm `</ins>`](https://pnpm.io/installation) (use v8 or newer)
+3. [`<ins>`Docker Desktop `</ins>`](https://www.docker.com/products/docker-desktop/)
 
 Docker is required specifically for running the Envio indexer locally.
 
@@ -54,21 +54,17 @@ Generate an indexer based on a smart contract deployed on a blockchain.
 
 More information on the Contract Import process can be found [here](./contract-import).
 
-### Subgraph Migration
-
-Generate an indexer from a subgraph that is deployed to theGraph's hosted service.
-
-More information on the Subgraph Migration can be found [here](./subgraph-migration).
-
 ## Indexer Configuration
 
 Indexers generated using examples, templates or the contract import process will work without any further configuration.
 
 Users can further configure their indexers to perform custom logic, and the process is done via modifying the 3 files below:
+
 - [`config.yaml`](./configuration-file)
 - [`schema.graphql`](./schema)
 - [`EventHandlers.*`](./event-handlers)
->  (* depending on the language chosen for indexer)
+
+> (\* depending on the language chosen for indexer)
 
 ## Run the Indexer
 

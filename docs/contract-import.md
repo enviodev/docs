@@ -57,6 +57,8 @@ v polygon
 
 List of supported networks (this list is being rapidly added to and may be outdated):
 
+Please note: This is a list of supported networks for the no-code quickstart. Envio HyperIndex as an indexing framework natively supports any EVM network.
+
 - `ethereum-mainnet`
 - `goerli`
 - `optimism`
@@ -75,6 +77,17 @@ List of supported networks (this list is being rapidly added to and may be outda
 - `metis`
 - `manta`
 - `kroma`
+
+* `base-sepolia`
+* `fantom`
+* `optimism-sepolia`
+* `moonbeam`
+* `arbitrum-nova`
+* `arbitrum-sepolia`
+* `mumbai`
+* `holesky`
+* `blast`
+* `blast-sepolia`
 
 #### Enter in the address of the contract to import
 
