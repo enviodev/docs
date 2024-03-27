@@ -1,21 +1,20 @@
 module.exports = {
   someSidebar: [
+    // "overview-everything",
     {
       type: "category",
       label: "HyperIndex",
       items: [
         "overview",
         "getting-started",
+        "contract-import",
         {
           type: "category",
-          label: "Examples",
+          label: "Tutorials",
           items: [
-            "example-sablier-v2",
-            "example-liquidation-metrics",
-            "example-uniswap-v3",
-            "example-aave-token",
-            "example-reNFT",
-            "example-token-vaults",
+            "tutorial-op-bridge-deposits",
+            "tutorial-erc20-token-transfers",
+            "greeter-tutorial",
           ],
         },
         {
@@ -26,22 +25,12 @@ module.exports = {
             "configuration-file",
             "schema-file",
             "event-handlers",
-            "greeter-tutorial",
-            "contract-import",
-            "subgraph-migration",
+            // "subgraph-migration",
             "testing",
             "running-locally",
             "navigating-hasura",
             "hosted-service",
             "cli-commands",
-          ],
-        },
-        {
-          type: "category",
-          label: "Tutorials",
-          items: [
-            "tutorial-op-bridge-deposits",
-            "tutorial-erc20-token-transfers",
           ],
         },
         {
@@ -58,6 +47,18 @@ module.exports = {
             "generated-files",
             "terminology",
             "async-mode",
+          ],
+        },
+        {
+          type: "category",
+          label: "Examples",
+          items: [
+            "example-sablier-v2",
+            "example-liquidation-metrics",
+            "example-uniswap-v3",
+            // "example-aave-token",
+            // "example-reNFT",
+            // "example-token-vaults",
           ],
         },
         {
