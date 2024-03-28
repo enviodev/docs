@@ -25,7 +25,6 @@ After selecting the name, directory and preferred language for the indexer, choo
 ? Choose an initialization option
   Template
 > Contract Import
-  Subgraph Migration (Experimental)
 [↑↓ to move, enter to select, type to filter]
 ```
 

@@ -15,7 +15,7 @@ The `config.yaml` outlines the specifications for the indexer including details 
 - `description` - Description of the project
 - `networks` - Configuration of the blockchain networks that the project is deployed on
   - `id` - Chain identifier of the network
-  - `rpc_config` - RPC Config that will be used to subscribe to blockchain data on this network (This is optional and does not need to be specified if the network is supported with [HyperSync](./hypersync.md))
+  - `rpc_config` - (TIP: in most cases you should remove this field and rely on HyperSync for 100x speed up) RPC Config that will be used to subscribe to blockchain data on this network (This is optional and does not need to be specified if the network is supported with [HyperSync](./hypersync.md))
     - `url` - URL of the RPC endpoint
   - `start_block` - Initial block from which the indexer will start listening for events
   - `contracts` - Configuration for each contract deployed on the network
@@ -46,7 +46,7 @@ However, the ABI of the contract should be retrieved from the implementation con
 
 If the contract does not use a proxy contract, then the same address from which ABI was obtained should be used in the configuration file.
 
-Should there be multiple contract addresses from which events should be indexed from, they can be entered as an array in format `["0xAddress1", "0xAddress2"]` for the `address` field.
+Should there be multiple contract addresses from which events should be indexed from, they can be entered as an array in format `["0xAddress1", "0xAddress2"]` for the `address` field - or via a simple dash denominated list as seen in this [example](https://github.com/enviodev/univ3ethusdc-pool-multichain/blob/main/config.yaml) repo.
 
 ## Human readable ABI format
 
