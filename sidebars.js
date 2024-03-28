@@ -95,13 +95,13 @@ module.exports = {
     },
     {
       type: "category",
-      label: "HyperRPC (alpha)",
-      items: ["overview-hyperrpc"],
+      label: "HyperSync",
+      items: ["overview-hypersync", "hypersync-clients"],
     },
     {
       type: "category",
-      label: "HyperSync (alpha)",
-      items: ["overview-hypersync", "hypersync-clients"],
+      label: "HyperRPC",
+      items: ["overview-hyperrpc"],
     },
   ],
 };
