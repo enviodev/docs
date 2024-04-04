@@ -1,43 +1,46 @@
-import React from 'react';
-import clsx from 'clsx';
-import styles from './styles.module.css';
+import React from "react";
+import clsx from "clsx";
+import styles from "./styles.module.css";
 
 const FeatureList = [
   {
-    title: 'Customizable',
+    title: "HyperIndex",
     // Png: require('@site/static/img/envio-white-logo.png').default,
     description: (
       <>
-        There is disruptive innovation taking place in the blockchain space and every application is trying to bring something fresh, unique and exhilarating to the market. Whether you’re developing a multi-chain NFT marketplace, creating a DAO, in GameFi, or creating the next big P2E (play-to-earn) project on Web3, Envio is a catalyst and the perfect building block in your application development.
+        Index up to 100x faster than existing solutions. Use the contract import
+        feature for a 2min no-code quickstart.
       </>
     ),
   },
   {
-    title: 'Reliable',
+    title: "HyperSync",
     // Png: require('@site/static/img/envio-white-logo.png').default,
     description: (
       <>
-        Envio ensures reliability in terms of data accessibility, performance, and availability. Ease of use providing a user-friendly interface that simplifies the process of accessing data and business logic from smart contracts, making it easy for developers to interact with the blockchain. 
+        The successor to JSON-RPC, HyperSync is a new standard for blockchain
+        data retrieval. It's faster and more flexible.
       </>
     ),
   },
   {
-    title: 'Scalable',
+    title: "HyperRPC",
     // Png: require('@site/static/img/envio-white-logo.png').default,
     description: (
       <>
-        Multi-chain indexing for EVM-compatible smart contracts, allowing you to aggregate data from multiple blockchains, into a single unified view. Whether it's for presenting clean information in your front-end, or for data lake and analytics, Envio automatically scales to your workload needs with no need for additional management or provisioning.
+        Blazingly fast read-only RPC. A drop in solution for data heavy
+        applications.
       </>
     ),
   },
 ];
 
-function Feature({Png, Svg, title, description}) {
+function Feature({ Png, Svg, title, description }) {
   return (
-    <div className={clsx('col col--4')}>
+    <div className={clsx("col col--4")}>
       <div className="text--center">
         {/* <Svg className={styles.featureSvg} role="img" /> */}
-      <img src={Png} className={styles.featureImg}/>
+        <img src={Png} className={styles.featureImg} />
       </div>
       <div className="text--center padding-horiz--md">
         <h3>{title}</h3>

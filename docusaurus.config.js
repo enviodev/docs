@@ -4,7 +4,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Envio",
-  tagline: "A fast, reliable, customizable indexing blockchain solution.",
+  tagline: "The fastest most flexible way to get on-chain data.",
   favicon: "img/favicon.ico",
   url: "https://docs.envio.dev",
   baseUrl: "/",
