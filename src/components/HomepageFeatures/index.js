@@ -18,7 +18,7 @@ const FeatureList = [
     // Png: require('@site/static/img/envio-white-logo.png').default,
     description: (
       <>
-        The successor to Json-RPC, HyperSync is a new standard for blockchain
+        The successor to JSON-RPC, HyperSync is a new standard for blockchain
         data reitrival. It's faster and more flexible.
       </>
     ),
