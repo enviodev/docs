@@ -8,7 +8,7 @@ const FeatureList = [
     // Png: require('@site/static/img/envio-white-logo.png').default,
     description: (
       <>
-        Index up to 100x faster than existing solution. Use the contract import
+        Index up to 100x faster than existing solutions. Use the contract import
         feature for a 2min no-code quickstart.
       </>
     ),
