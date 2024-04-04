@@ -19,7 +19,7 @@ const FeatureList = [
     description: (
       <>
         The successor to JSON-RPC, HyperSync is a new standard for blockchain
-        data reitrival. It's faster and more flexible.
+        data retrieval. It's faster and more flexible.
       </>
     ),
   },
