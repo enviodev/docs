@@ -91,6 +91,10 @@ The config file contains RPC URLs in an incorrect format.
 
 The RPC URLs need to start with either `http://` or `https://`.
 
+### `EE110`: End block is greater than start block for a given network
+
+If an endblock is specified, the endBlock must be greater than the startBlock in your `config.yaml` file.
+
 ### `EE200`: Read Schema Error
 
 Failed to read schema file.
@@ -172,7 +176,7 @@ Envio makes use of internal enums that cannot be duplicated in the schema file, 
 
 ### `EE213`: Schema enum has duplicate values
 
-Please ensure all values within each schema enum type are unique. 
+Please ensure all values within each schema enum type are unique.
 
 ### `EE214`: Schema contains the following enums and entities with the same name
 
