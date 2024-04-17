@@ -5,18 +5,70 @@ sidebar_label: Overview
 slug: /overview-hypersync
 ---
 
-HyperSync is the state of the art way to extract on-chain data to JSON, Arrow or Parquet files.
+HyperSync is highly specialized data node built in rust aimed at massively improving data retrieval speeds while also providing flexiblity. It can be used via Python, Rust or NodeJs clients and supports more than [35 EVM](./hypersync.md) chains and Fuel.
 
-HyperIndex heavily relies on HyperSync in order to index more than 100x faster than traditional indexing tools.
+It is an ideal solution for indexers, block explorers, data analysts, bridges and other applications or usecases relying on on-chain information and focussed on performance. Do things like:
 
-This API has been designed from the ground up to provide both speed and flexibility.
+- Get me every ERC20 Transfer event for _any address_ on Base.
+- Get me every tx to or from a specific address.
+- Which address has spent the most on gas in the last 10k blocks.
+- Plus many more, its built to be extremely flexible and performant.
 
-The goal is that this API will be the defacto way for you to extract any on-chain data that you need in a faster and more flexible way.
+It It can be thought of as ">100x-1000x speed up" alternative to using a JSON-RPC for retrival of logs, blocks, transactions and traces.
+
+E.g. In 10 seconds HyperSync can:
+
+- Scan 200m blocks on the Arbitrum network and;
+- Retrieve and decode every PoolCreated log emitted by the Uniswap v3 Factory.
+- Thats 20m blocks per second.
+
+```python
+import hypersync
+from hypersync import LogSelection, LogField, DataType, FieldSelection, ColumnMapping, TransactionField
+import asyncio
+
+async def collect_events():
+    # choose network
+    client = hypersync.HypersyncClient("https://arbitrum.hypersync.xyz")
+
+    query = hypersync.Query(
+        from_block=0,
+        logs=[LogSelection(
+            address=["0x1F98431c8aD98523631AE4a59f267346ea31F984"], # uniswap factory
+            topics=[["0x783cca1c0412dd0d695e784568c96da2e9c22ff989357a2e8b1d9b2b4e6b7118"]], # PoolCreated log
+        )],
+        field_selection=FieldSelection(
+            log=[
+                LogField.TOPIC0,
+                LogField.TOPIC1,
+                LogField.TOPIC2,
+                LogField.TOPIC3,
+                LogField.DATA,
+                LogField.TRANSACTION_HASH,
+            ],
+            transaction=[
+                TransactionField.BLOCK_NUMBER,
+            ]
+        ),
+    )
+
+    config = hypersync.ParquetConfig(
+        path="data",
+        hex_output=True,
+        batch_size=1000000,
+        concurrency=10,
+        event_signature="PoolCreated(address indexed token0, address indexed token1, uint24 indexed fee, int24 tickSpacing, address pool)",
+    )
+
+    await client.create_parquet_folder(query, config)
+
+def main():
+    asyncio.run(collect_events())
+```
 
 > ### Disclaimer
 >
-> - HyperSync is still under active development to improve performance and stability.
-> - More details are shipping soon.
+> - Docs under construction!
 > - We appreciate your patience until we get there. Until then, we are happy to answer all questions in our [Discord](https://discord.gg/Q9qt8gZ2fX).
 
 ---

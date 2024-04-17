@@ -11,9 +11,11 @@ In this tutorial, we'll walk you through the process of quickly and efficiently 
 
 The goal is to create an indexer that tracks and analyzes all USDC token transfers on Base by extracting the `Transfer (index_topic_1 address from, index_topic_2 address to, uint256 value)` logs emitted by theUSDC contract.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/e1xznmKBLa8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Prerequisites
 
-Before we start indexing, you'll need to make sure you have the [prerequisites](https://docs.envio.dev/docs/getting-started) installed. 
+Before we start indexing, you'll need to make sure you have the [prerequisites](https://docs.envio.dev/docs/getting-started) installed.
 
 ## Initializing an Indexer
 
@@ -24,7 +26,7 @@ Now that you’re all set up and have installed the prerequisite packages requir
 <img src="/docs-assets/tutorial-base-erc20-transfer-1.png" alt="tutorial-base-erc20-transfer-1" width="100%"/>
 
 2. Name your indexer anything you’d like (e.g., “**usdc-base-transfer-indexer”**).
-    
+
 <img src="/docs-assets/tutorial-base-erc20-transfer-2.png" alt="tutorial-base-erc20-transfer-2" width="100%"/>
 
 3. Choose your preferred language (e.g., TypeScript) and select “contract import.”
@@ -37,7 +39,7 @@ Now that you’re all set up and have installed the prerequisite packages requir
 
 To select an event navigate using the arrow keys (↑ ↓) and click the space bar once you have made your choice.
 
-> Note: Multiple events can be selected and indexed at the same time. 
+> Note: Multiple events can be selected and indexed at the same time.
 
 USDC Token Contract address: [0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913](https://basescan.org/address/0x833589fcd6edb6e08f4c7c32d4f71b54bda02913)
 
@@ -99,7 +101,7 @@ Well done champions, now let’s explore the indexed data.
 
 3. Now let’s analyze some events. Simply head back to “API” in the above column. From there you can run a query-specific event, in this example "**FiatTokenV2_2 Transfer**" to explore details such as amounts, senders, recipients and values.
 
-*Once you have selected your desired events run the query by clicking the play button ( ▶️) to gain access to the real-time indexed data*
+_Once you have selected your desired events run the query by clicking the play button ( ▶️) to gain access to the real-time indexed data_
 
 **For example:**
 
@@ -114,5 +116,3 @@ Run queries to explore specific events, such as the largest USDC transfers.
 Congratulations! You've successfully generated an indexer and indexed 3.6 million USDC token transfer events in under 5 minutes on Base.
 
 Be sure to check out our [video walkthrough](https://www.youtube.com/watch?v=e1xznmKBLa8&t=572s) on Youtube, including other tutorials that showcase Envio’s indexing features and capabilities.
-
-

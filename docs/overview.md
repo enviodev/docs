@@ -17,6 +17,8 @@ To get started with Envio, developers can utilize the Envio CLI, allowing for ea
 
 The rest of the documentation guides users through the simple steps of configuring and running an Envio indexer.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cbiiWtxFnMk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 > ### Disclaimer
 >
 > - Envio is fully capable of indexing, however, it is still under active development to improve performance and stability.
