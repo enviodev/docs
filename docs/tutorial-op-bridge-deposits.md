@@ -11,6 +11,8 @@ This tutorial will guide you through the process of indexing the Optimism Standa
 
 The Optimism Standard Bridge allows users to easily move ETH and most ERC-20 tokens between Ethereum and Optimism Mainnet. The goal is to index bridge deposit events by extracting the `DepositFinalized (index_topic_1 address l1Token, index_topic_2 address l2Token, index_topic_3 address from, address to, uint256 amount, bytes extraData)` logs emitted by the contracts.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9U2MTFU9or0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Prerequisites
 
 Before we start indexing, you'll need to make sure you have the [prerequisites](https://docs.envio.dev/docs/getting-started) installed.

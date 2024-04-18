@@ -9,6 +9,8 @@ slug: /dynamic-contracts
 
 If you have a system that does not know all the contracts that need indexing at the beginning i.e. you have a factory contract that dynamically creates new contracts over time, - you can use dynamic contracts.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/O6qPXZ6kjYY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Loader Function
 
 Contract factories are currently supported in the `loader` function of the event that you want to register the contract in.

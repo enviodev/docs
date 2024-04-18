@@ -17,6 +17,10 @@ To start, simply run:
 envio init
 ```
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/zkVlGgf5XAo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/JOiLUysZf-s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Instructions
 
 After selecting the name, directory and preferred language for the indexer, choose `Contract Import` as the initialization option.

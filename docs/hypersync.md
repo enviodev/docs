@@ -5,7 +5,7 @@ sidebar_label: HyperSync
 slug: /hypersync
 ---
 
-# HyperSync
+# HyperSync powering HyperIndex
 
 > Beam me up, scotty! 🖖
 
@@ -13,9 +13,13 @@ Envio HyperSync is our blazing-fast indexed layer on top of the blockchain that 
 
 What would usually take hours to sync ~100,000 events can now be done in the order of less than a minute.
 
+HyperSync is the default method used by HyperIndex for all syncing. Visit [here](./overview-hypersync.md) to learn more about using the HyperSync python/ts/rust clients for further more custom needs of extracting data.
+
 Since this service is a layer above the blockchain we maintain and host this service for each supported network.
 
-Here is a table of currently supported networks on HyperSync:
+Here is a table of currently supported networks on HyperSync (please note we are rapidly updating supported networks and this list may be outdated):
+
+Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9qt8gZ2fX)
 
 | Network Name     | Network ID |
 | ---------------- | ---------- |
@@ -60,13 +64,11 @@ Here is a table of currently supported networks on HyperSync:
 | Zora             | 7777777    |
 | Sepolia          | 11155111   |
 | Optimism Sepolia | 11155420   |
-| Blast Sepolia    | 168587773  |          
+| Blast Sepolia    | 168587773  |
 | NeonEVM          | 245022934  |
 | Aurora           | 1313161554 |
 | AuroraTestnet    | 1313161555 |
 | Harmony          | 1666600000 |
-
-Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9qt8gZ2fX)
 
 ## Greeter example
 
