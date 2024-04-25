@@ -31,13 +31,11 @@ Both types of contracts will be defined in the configuration file, however addre
 
 ### Config file
 
-````yaml
-ame: nftindexer
+```yaml
+name: nftindexer
 description: NFT Factory
 networks:
   - id: 1337
-    rpc_config:
-      url: http://localhost:8545
     start_block: 0
     contracts:
       - name: NftFactory
@@ -51,12 +49,13 @@ networks:
         handler: src/EventHandlers.ts
         events:
           - event: Transfer (address from, address to, uint256 tokenId)
+```
 
 ### Registering `SimpleNft` contracts in loader function for `SimpleNftCreated` event
 
 ```javascript
 context.contractRegistration.addSimpleNft(event.params.contractAddress);
-````
+```
 
 > The syntax is exactly same for JavaScript, TypeScript and ReScript.
 
