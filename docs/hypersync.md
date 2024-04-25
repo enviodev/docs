@@ -55,8 +55,7 @@ Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9
 | Celo             | 42220      |
 | Avalanche        | 43114      |
 | Linea            | 59144      |
-| Mumbai           | 80001      |
-| Berachain Artio  | 80085      |
+| Amoy             | 80002      |
 | Blast            | 81457      |
 | Taiko Jolnr      | 167007     |
 | Arbitrum Sepolia | 421614     |
