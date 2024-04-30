@@ -16,6 +16,8 @@ It is an ideal solution for indexers, block explorers, data analysts, bridges an
 
 It It can be thought of as ">100x-1000x speed up" alternative to using a JSON-RPC for retrival of logs, blocks, transactions and traces.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/iu_469ELotw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 E.g. In 10 seconds HyperSync can:
 
 - Scan 200m blocks on the Arbitrum network and;
