@@ -182,11 +182,11 @@ GreeterContract_ClearGreeting_handler(({ event, context }) => {
 ```rescript
 open Types
 
-Handlers.GreeterContract.NewGreeting.loader((~event, ~context) => {
+Handlers.GreeterContract.NewGreeting.loader(({ event, context }) => {
   context.greeting.load(event.params.user->Ethers.ethAddressToString)
 })
 
-Handlers.GreeterContract.NewGreeting.handler((~event, ~context) => {
+Handlers.GreeterContract.NewGreeting.handler(({ event, context }) => {
   let currentUserOpt = context.greeting.get(event.params.user->Ethers.ethAddressToString)
 
   switch currentUserOpt {
@@ -213,12 +213,12 @@ Handlers.GreeterContract.NewGreeting.handler((~event, ~context) => {
   }
 })
 
-Handlers.GreeterContract.ClearGreeting.loader((~event, ~context) => {
+Handlers.GreeterContract.ClearGreeting.loader(({ event, context }) => {
   context.greeting.load(event.params.user->Ethers.ethAddressToString)
   ()
 })
 
-Handlers.GreeterContract.ClearGreeting.handler((~event, ~context) => {
+Handlers.GreeterContract.ClearGreeting.handler(({ event, context }) => {
   let currentUserOpt = context.greeting.get(event.params.user->Ethers.ethAddressToString)
 
   switch currentUserOpt {
@@ -249,7 +249,9 @@ To activate "Unordered Multichain Mode", add a field to your config.yaml file li
 unordered_multichain_mode: true
 networks: ...
 ```
-Or you can set it via environment variable (this would take precedence over config): 
+
+Or you can set it via environment variable (this would take precedence over config):
+
 ```sh
 UNORDERED_MULTICHAIN_MODE=true
 ```

@@ -216,7 +216,7 @@ And here is a diff to highlight the change:
   <TabItem value="rescript" label="Rescript">
 
 ```rescript
-Handlers.GreeterContract.NewGreeting.handlerAsync(async (~event, ~context) => {
+Handlers.GreeterContract.NewGreeting.handlerAsync(async ({ event, context }) => {
   let userId = event.params.user->Ethers.ethAddressToString
   let latestGreeting = event.params.greeting
 
@@ -249,8 +249,8 @@ Handlers.GreeterContract.NewGreeting.handlerAsync(async (~event, ~context) => {
 And here is a diff to highlight the change:
 
 ```diff
-- Handlers.GreeterContract.NewGreeting.handler((~event, ~context) => {
-+ Handlers.GreeterContract.NewGreeting.handlerAsync(async (~event, ~context) => {
+- Handlers.GreeterContract.NewGreeting.handler(({ event, context }) => {
++ Handlers.GreeterContract.NewGreeting.handlerAsync(async ({ event, context }) => {
     let userId = event.params.user->Ethers.ethAddressToString
     let latestGreeting = event.params.greeting
 

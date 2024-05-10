@@ -51,17 +51,17 @@ type A {
 <TabItem value="javascript" label="Javascript">
 
 ```javascript
-GreeterContract.TestEvent.loader((~event, ~context) => {
-    context.A.allALoad(["id1", "id2", "id3"])
-    context.A.singleALoad("singled")
-    // ... other loaders
-})
-GreeterContract.TestEvent.handler((~event, ~context) => {
-  let arrayOfAs = context.A.allA
-  let singleA = context.A.singleA
+GreeterContract.TestEvent.loader(({ event, context }) => {
+  context.A.allALoad(["id1", "id2", "id3"]);
+  context.A.singleALoad("singled");
+  // ... other loaders
+});
+GreeterContract.TestEvent.handler(({ event, context }) => {
+  let arrayOfAs = context.A.allA;
+  let singleA = context.A.singleA;
 
   // ... rest of the handler that uses or updates these entities.
-})
+});
 ```
 
   </TabItem>
