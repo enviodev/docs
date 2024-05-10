@@ -37,7 +37,6 @@ module.exports = {
           type: "category",
           label: "Advanced",
           items: [
-            "labels",
             "linked-entity-loaders",
             "dynamic-contracts",
             "multichain-indexing",
@@ -47,6 +46,7 @@ module.exports = {
             "generated-files",
             "terminology",
             "async-mode",
+            "labels",
           ],
         },
         {

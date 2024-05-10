@@ -8,6 +8,10 @@ slug: /labels
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
+:::caution Deprecation Warning
+This feature is planned for deprecation in a future release. We recommend not relying on it to facilitate easier upgrades in the future.
+:::
+
 ## Introduction
 
 In the basic section to get values loaded into your handler into you have used the `get` function. This is great when starting out, but when your indexer is further along you may want to use labels to make the connection between the `load` and `get` parts explicit. This can make your code look cleaner, and avoid sneaky bugs where the wrong entity is being loaded or the `load` and `get` function aren't matching up.
