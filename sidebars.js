@@ -96,7 +96,7 @@ module.exports = {
     {
       type: "category",
       label: "HyperSync",
-      items: ["overview-hypersync", "hypersync-usage", "hypersync-clients"],
+      items: ["overview-hypersync", "hypersync-usage", "hypersync-clients", "hyperfuel"],
     },
     {
       type: "category",
