@@ -63,27 +63,20 @@ networks:
   <TabItem value="javascript" label="Javascript">
 
 ```javascript
-GravatarContract.TestEvent.loader((~event, ~context) => {
-  context.A.load(
-    event.params.id,
-    {loadB: {loadC: {loadImportantData: true}, loadA: {}}},
-  )
+GravatarContract.TestEvent.loader(({ event, context }) => {
+  context.A.load(event.params.id, {
+    loadB: { loadC: { loadImportantData: true }, loadA: {} },
+  });
   // ... other loaders
-})
+});
 
-GravatarContract.TestEvent.handler((~event, ~context) => {
+GravatarContract.TestEvent.handler(({ event, context }) => {
   const entityA = context.A.get(event.params.id);
-  const linkedB = context.A.getB(
-    entityA
-  );
-  const linkedC = context.B.getC(
-    linkedB
-  );
-  const importantDataEntity = context.C.getImportantData(
-    linkedC
-  );
+  const linkedB = context.A.getB(entityA);
+  const linkedC = context.B.getC(linkedB);
+  const importantDataEntity = context.C.getImportantData(linkedC);
   // ... rest of the handler that uses or updates these entities.
-})
+});
 ```
 
   </TabItem>

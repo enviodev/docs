@@ -185,7 +185,7 @@ GreeterContract_NewGreeting_loader(({ event, context }) => {
 ```rescript
 open Types
 
-Handlers.GreeterContract.NewGreeting.loader((~event, ~context) => {
+Handlers.GreeterContract.NewGreeting.loader(({ event, context }) => {
   context.user.load(event.params.user->Ethers.ethAddressToString)
 })
 ```
@@ -265,7 +265,7 @@ GreeterContract_NewGreeting_handler(({ event, context }) => {
 ```rescript
 open Types
 
-Handlers.GreeterContract.NewGreeting.handler((~event, ~context) => {
+Handlers.GreeterContract.NewGreeting.handler(({ event, context }) => {
   let currentUserOpt = context.user.get(event.params.user->Ethers.ethAddressToString)
 
   switch currentUserOpt {
@@ -336,7 +336,7 @@ GreeterContract_NewGreeting_handler(({ event, context }) => {
 ```rescript
 open Types
 
-Handlers.GreeterContract.NewGreeting.handler((~event, ~context) => {
+Handlers.GreeterContract.NewGreeting.handler(({ event, context }) => {
   let config = ConfigYAML.getConfigByChainId(event.chainId)
 })
 ```
