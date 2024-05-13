@@ -29,7 +29,15 @@ module.exports = {
             "testing",
             "running-locally",
             "navigating-hasura",
-            "hosted-service",
+            {
+              type: "category",
+              label: "Hosted Service",
+              items: [
+                "hosted-service",
+                "hosted-service-deployment",
+                "hosted-service-billing",
+              ],
+            },
             "cli-commands",
           ],
         },
@@ -96,7 +104,12 @@ module.exports = {
     {
       type: "category",
       label: "HyperSync",
-      items: ["overview-hypersync", "hypersync-usage", "hypersync-clients", "hyperfuel"],
+      items: [
+        "overview-hypersync",
+        "hypersync-usage",
+        "hypersync-clients",
+        "hyperfuel",
+      ],
     },
     {
       type: "category",
