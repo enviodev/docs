@@ -92,7 +92,8 @@ Please note: This is a list of supported networks for the no-code quickstart. En
 - `taiko-jolnr`
 - `kroma`
 - `lukso`
-- `okbc-testnet`
+- `x-layer-testnet`
+- `x-layer`
 - `holesky`
 - `gnosis-chiado`
 - `zora`
@@ -108,6 +109,9 @@ Please note: This is a list of supported networks for the no-code quickstart. En
 - `blast`
 - `blast-sepolia`
 - `fhenix-testnet`
+- `crab`
+- `darwinia`
+- `cyber`
 
 #### Enter in the address of the contract to import
 

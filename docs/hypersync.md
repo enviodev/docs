@@ -29,12 +29,15 @@ Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9
 | Flare            | 14         |
 | Rootstock        | 30         |
 | Lukso            | 42         |
+| Crab             | 44         |
+| Darwinia         | 46         |
 | Bsc              | 56         |
 | Gnosis           | 100        |
 | Polygon          | 137        |
 | ShimmerEVM       | 148        |
 | Manta            | 169        |
-| Okbc Testnet     | 195        |
+| XLayer Testnet   | 195        |
+| XLayer           | 196        |
 | Fantom           | 250        |
 | Kroma            | 255        |
 | Boba             | 288        |
@@ -47,6 +50,7 @@ Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9
 | C1 Milkomeda     | 2001       |
 | Mantle           | 5000       |
 | Zeta             | 7000       |
+| Cyber            | 7560       |
 | Base             | 8453       |
 | Gnosis Chiado    | 10200      |
 | Holesky          | 17000      |
