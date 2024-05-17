@@ -136,12 +136,12 @@ context.<EntityName>.get(<id>)
 
 > Dev note: 📢 For indexers built using `ReScript`, use a lower case for first letter of entityName when accessing it via context (i.e. `context.user` instead of `context.User`).
 
-Handler functions can also provides the following functions per loaded entity, that can be used to interact with that entity:
+Handler functions also provide the following functions per entity, that can be used to interact with an instance of that entity:
 
 - set
-- delete
+- deleteUnsafe
 
-which can be used as follows
+Used as follows
 
 ```javascript
 context.<entityName>.set(<entityObject>)
@@ -150,8 +150,12 @@ context.<entityName>.set(<entityObject>)
 and
 
 ```javascript
-context.<EntityName>.delete()
+context.<EntityName>.deleteUnsafe(<entityObject>.id)
 ```
+
+The set function is used to either create an entity or to update an existing entity with the values defined in the `entityObject`. 
+The deleteUnsafe function is an experimental feature that allows you to remove an entity with a particular ID from the database and indexer memory. This is un `unsafe` function,
+since there may be unexpected repercussions when a deleted entity is linked to another entity. See [here](/linked-entity-loaders) for more information regarding linked entities
 
 ### Example of a Loader function for the `NewGreeting` event:
 
