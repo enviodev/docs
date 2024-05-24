@@ -131,7 +131,7 @@ MyContract.MyEvent.handler((event, context) => {
 })
 ```
 
-⭐Note: TypeScript's snake_case syntax remains backwards compatible, so MyContract_MyEvent_handler(({event, context}) => {... still works but we encourage using dot syntax for consistency.
+⭐Note: TypeScript's snake_case syntax remains backwards compatible, so `MyContract_MyEvent_handler(({event, context}) => {...` still works but we encourage using dot syntax for consistency.
 
 - **Simplified TypeScript Linked Entity Loader Types:** TypeScript linked entity loader types now remove the extra "loaders" field to align with JavaScript and ReScript types. For example:
 
