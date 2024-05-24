@@ -70,8 +70,7 @@ Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9
 | Blast Sepolia    | 168587773  |
 | NeonEVM          | 245022934  |
 | Aurora           | 1313161554 |
-| AuroraTestnet    | 1313161555 |
-| Harmony          | 1666600000 |
+| Harmony          | 1666600000/1 |
 
 ## Greeter example
 
