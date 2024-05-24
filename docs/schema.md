@@ -77,7 +77,7 @@ In GraphQL, scalars represent fundamental data types such as strings and numbers
 | Int      | A signed 32-bit integer                          | number              | number              | int               |
 | Float    | A signed floating-point value                    | number              | number              | float             |
 | Boolean  | Represents a true or false value                 | boolean             | boolean             | bool              |
-| Bytes    | A UTF-8 character sequence with a 0x prefix      | string              | 0x${string}         | string            |
+| Bytes    | A UTF-8 character sequence with a 0x prefix      | string              | string              | string            |
 | BigInt   | A signed integer (equivalent to solidity int256) | bigint              | bigint              | Js.BigInt.t       |
 
 
