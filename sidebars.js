@@ -108,6 +108,7 @@ module.exports = {
         "overview-hypersync",
         "hypersync-usage",
         "hypersync-clients",
+        "hypersync-url-endpoints",
         "hyperfuel",
       ],
     },
