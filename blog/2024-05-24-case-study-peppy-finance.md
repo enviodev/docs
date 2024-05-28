@@ -14,7 +14,7 @@ By utilizing Envio’s modern blockchain indexing, Peppy Finance has overcome it
 
 # What is Peppy Finance?
 
-Peppy Finance is a decentralized perpetual exchange built on the [Shimmer Network](https://shimmer.network/) from [IOTA](https://www.iota.org/) that allows you to trade BTC, ETH and native Shimmer tokens with up to 100x leverage directly from your wallet. The advantages of using Peppy Finance include:
+Peppy Finance is a decentralized perpetual exchange built on the [Shimmer Network](https://shimmer.network/) from [IOTA](https://www.iota.org/) that allows you to trade BTC, ETH, and native Shimmer tokens with up to 100x leverage directly from your wallet. The advantages of using Peppy Finance include:
 
 - **On-chain collateral**: Provides greater assurance that the funds are there to back the contracts.
 - **Save on Costs**: Get the lowest transaction fees combined with affordable borrowing rates.
@@ -22,7 +22,7 @@ Peppy Finance is a decentralized perpetual exchange built on the [Shimmer Networ
 
 ## About the Integration
 
-Before integrating Envio, Peppy Finance’s commitment to providing a seamless user experience was hindered by its existing data setup, which utilized TheGraph for data indexing. Peppy Finance faced challenges with data latency—specifically, the time between transaction settlement and data availability on their front end—sometimes experiencing a 10-20 second delay.
+Before integrating Envio, Peppy Finance’s commitment to providing a seamless user experience was hindered by its existing data setup. Peppy Finance faced challenges with data latency—specifically, the time between transaction settlement and data availability on their front end—sometimes experiencing a 10-20 second delay.
 
 As an interim workaround, Peppy Finance implemented custom event listeners that queried an RPC endpoint and merged this live data with the historical data from their indexer, necessitating a significant amount of additional code.
 
@@ -58,7 +58,7 @@ Envio supports the [Fuel Network](https://fuel.network/) and any EVM-compatible 
 - **[Multi-chain Support](https://docs.envio.dev/docs/multichain-indexing):** Aggregate data across multiple networks into a single database. Query all your data with a unified GraphQL API.
 - **[Join on-chain and off-chain data](https://docs.envio.dev/docs/async-mode):** Connect indexed blockchain data as well as ingest off-chain data to create flexible API for rich data beyond just what is emitted simply from events on-chain. e.g. modules that efficiently index off-chain NFT metadata.
 - **[Factory Contracts](https://docs.envio.dev/docs/dynamic-contracts)**: Automatically register and process events emitted by all child contracts that are created by the specified factory / dynamic contract..
-- **[Hosted Service](https://docs.envio.dev/docs/hosted-service)**: A managed service platform for building, hosting and querying Envio's Indexers with guaranteed uptime and performance service level agreements.
+- **[Hosted Service](https://docs.envio.dev/docs/hosted-service)**: A managed service platform for building, hosting, and querying Envio's Indexers with guaranteed uptime and performance service level agreements.
 
 ## Relevant Links
 
