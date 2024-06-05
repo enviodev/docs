@@ -1,6 +1,6 @@
 ---
 title: "Envio Bounty Graduate: POAP Multi-chain Envio Indexer"
-sidebar_label: 'Envio Bounty Graduate: POAP Multi-chain Envio Indexer'
+sidebar_label: "Envio Bounty Graduate: POAP Multi-chain Envio Indexer"
 slug: /envio-bounty-graduate-poap-multi-chain-indexer
 ---
 
@@ -18,7 +18,7 @@ The bounty aimed to address the needs of blockchain developers by providing a so
 
 The core of the bounty project involved building a [POAP](https://poap.xyz/) multi-chain indexer that would index the POAP smart contracts on specific chains, namely [Ethereum Mainnet](https://ethereum.org/en/) and [Gnosis Chain](https://www.gnosis.io/).
 
-The queryable information included in the bounty project encompassed essential aspects of POAP events and collections. The indexer needed to provide insights into the number of POAPs, details of individual POAPs, information on POAP transfers, and identification of holders. The implementation required the creation of a comprehensive GraphQL schema, a well-structured configuration file, and the development of indexing logic, with options for implementation in [JavaScript](https://www.javascript.com/), [TypeScript](https://www.typescriptlang.org/), or [Rescript](https://rescript-lang.org/).
+The queryable information included in the bounty project encompassed essential aspects of POAP events and collections. The indexer needed to provide insights into the number of POAPs, details of individual POAPs, information on POAP transfers, and identification of holders. The implementation required the creation of a comprehensive GraphQL schema, a well-structured configuration file, and the development of indexing logic, with options for implementation in [JavaScript](https://www.javascript.com/), [TypeScript](https://www.typescriptlang.org/), or [ReScript](https://rescript-lang.org/).
 
 #### The Benefit of Hypersync
 

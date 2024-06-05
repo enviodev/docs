@@ -27,7 +27,7 @@ The Azuro open-source multi-chain indexer aims to serve as an alternative endpoi
 ### Technical Scope
 
 - The scope of the multi-chain indexer is limited to Gnosis and Polygon production contract deployments.
-- The event handlers of the Envio indexer should be written in Typescript.
+- The event handlers of the Envio indexer should be written in TypeScript.
 - The indexer involves configuring schema.graphql, config.yaml, and handlers.ts files
 - Envio SDK version for the indexer should be version 0.0.29 or higher.
 

@@ -46,7 +46,7 @@ Over the past month, we released four new versions of Envio (v.0.0.20 - v.0.0.24
 
 **Changes:**
 
-- **Breaking change**: table names now use the same casing as the "@entity" definition in schema.graphql. For Javascript and Typescript projects, the entity property on the handler context now also matches the case of the "@entity" definition.
+- **Breaking change**: table names now use the same casing as the "@entity" definition in schema.graphql. For JavaScript and TypeScript projects, the entity property on the handler context now also matches the case of the "@entity" definition.
 - Using Viem for parsing event arguments.
 - Significantly improved HyperSync performance.
 - Added HyperSync support for Goerli testnet and Gnosis.

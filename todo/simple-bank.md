@@ -1,6 +1,5 @@
 <!-- Syntax here is outdated, this doc isnt live either    -->
 
-
 <!-- ---
 id: simple-bank
 title: SimpleBank
@@ -23,7 +22,7 @@ The following files are required to use the Indexer:
 
 - Configuration (defaults to `config.yaml`)
 - GraphQL Schema (defaults to `schema.graphql`)
-- Event Handlers (defaults to `src/EventHandlers.*` depending on the language chosen) 
+- Event Handlers (defaults to `src/EventHandlers.*` depending on the language chosen)
 
 These files are auto-generated according to a template by running `envio init` command.
 
@@ -36,7 +35,7 @@ name: simplebank
 description: Simple Bank contract
 networks:
   - id: 1337
-    rpc_config: 
+    rpc_config:
       url: http://localhost:8545
     start_block: 0
     contracts:
@@ -98,14 +97,14 @@ type Account {
 Once the configuration and graphQL schema files are in place, run
 `envio codegen` in the project directory.
 
-The entity and event types will then be available in the handler files. 
+The entity and event types will then be available in the handler files.
 
 A user can specify a specific handler file per contract that processes events emitted by that contract.
 Each event handler requires two functions to be registered in order to enable full functionality within the indexer.
 1. A `loader` function
 2. A `handler` function
 
-### Example of registering a `loader` function for the `DepositMade` event from the above example config in Typescript:
+### Example of registering a `loader` function for the `DepositMade` event from the above example config in TypeScript:
 
 ```typescript
 SimpleBankContract_DepositMade_loader(({ event, context }) => {
@@ -121,14 +120,14 @@ Inspecting the config of the `DepositMade` event from the above example config i
 ```yaml
 events:
   - name: "DepositMade"
-    requiredEntities: 
+    requiredEntities:
       - name: "Account"
         labels:
           - "accountBalanceChanges"
 ```
 
 The register function `loader` follows a naming convention for all events: `<EventName>.loader`.
- 
+
 Within the function that is being registered the user must define the criteria for loading the `accountBalanceChanges` entity which corresponds to the label defined in the config. This is made available to the user through the load entity context defined as `contextUpdator`.
 
 In the case of the above example the `accountBalanceChanges` loads a `Account` entity that corresponds to the id received from the event.
@@ -173,7 +172,7 @@ SimpleBankContract_DepositMade_handler(({ event, context }) => {
 ```
 
 The handler functions also follow a naming convention for all events in the form of: `<EventName>.handler`.
-Once the user has defined their `loader` function they are then able to retrieve the loaded entity information via the labels defined in the `config.yaml` file. 
+Once the user has defined their `loader` function they are then able to retrieve the loaded entity information via the labels defined in the `config.yaml` file.
 In the above example, if a `Account` entity is found matching the load criteria in the `loadEntities` function, it will be available via `accountBalanceChanges`. This is made available to the user through the handler context defined simply as `context`. This context is the gateway by which the user can interact with the indexer and the underlying database.
 The user can then modify this retrieved entity and subsequently update the `Account` entity in the database. This is done via the context using the update function (`context.account.update(account)`).
 The user has access to a `Account` type that has all the fields defined in the schema.
@@ -212,7 +211,7 @@ To view the data in the database, run
 pnpm view-results
 ```
 
-Admin-secret / password for Hasura is `testing` 
+Admin-secret / password for Hasura is `testing`
 
 Alternatively you can open the file `index.html` for a cleaner experience (no Hasura stuff). Unfortunately, Hasura is currently not configured to make the data public.
 

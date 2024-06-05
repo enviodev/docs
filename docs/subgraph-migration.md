@@ -53,9 +53,9 @@ The subgraph ID can be found on [theGraph](https://thegraph.com/hosted-service).
 
 ```bash
 ? Which language would you like to use?
-> Javascript
-  Typescript
-  Rescript
+> JavaScript
+  TypeScript
+  ReScript
 [↑↓ to move, enter to select, type to filter]
 ```
 

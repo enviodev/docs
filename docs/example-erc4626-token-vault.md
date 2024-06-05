@@ -7,7 +7,7 @@ slug: /example-token-vaults
 
 # Tokenized Vault Contract (ERC4626)
 
-This [repo](https://github.com/enviodev/erc4626-token-vault-indexer) contains an Envio indexer template built using Javascript for indexing events for OpenZeppelin Tokenized Vault Contracts (ERC4626).
+This [repo](https://github.com/enviodev/erc4626-token-vault-indexer) contains an Envio indexer template built using JavaScript for indexing events for OpenZeppelin Tokenized Vault Contracts (ERC4626).
 
 This repo was forked from the [original indexer](https://github.com/en0c-026/erc4626-indexer) built by en0c, one of Envio's successful bounty applicants.
 
