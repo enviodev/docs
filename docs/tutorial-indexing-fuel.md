@@ -1,57 +1,176 @@
 ---
 id: tutorial-indexing-fuel
 title: Indexing Sway Farm on the Fuel network
-sidebar_label: Indexing Fuel network
+sidebar_label: Indexing Fuel Network
 slug: /tutorial-indexing-fuel
 ---
 
 # Indexing Sway Farm on the Fuel network
 
-This tutorial will guide you through the process of indexing the Optimism Standard Bridge contracts on Optimism and Ethereum Mainnet in less than 5 minutes using the Envio HyperIndex no-code [contract import](https://docs.envio.dev/docs/contract-import) feature.
+Until recently, HyperIndex was only available on EVM networks, and now we have extended support to the [Fuel](https://fuel.network/) Network.
 
-The Optimism Standard Bridge allows users to easily move ETH and most ERC-20 tokens between Ethereum and Optimism Mainnet. The goal is to index bridge deposit events by extracting the `DepositFinalized (index_topic_1 address l1Token, index_topic_2 address l2Token, index_topic_3 address from, address to, uint256 amount, bytes extraData)` logs emitted by the contracts.
+Indexers are vital to the success of any dApp. In this tutorial, we will create an Envio indexer for the Fuel dApp [Sway Farm](https://swayfarm.xyz/) step by step.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/9U2MTFU9or0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+Sway Farm is a simple farming game and for the sake of a real-world example let's create the indexer for leadearboard of all farmers 🧑‍🌾
+
+![alt text](image.png)
+
+## About Fuel
+
+[Fuel](https://fuel.network/) is an operating system purpose-built for Ethereum rollups. Fuel's unique architecture allows rollups to solve for PSI (parallelization, state minimized execution, interoperability). Powered by the FuelVM, Fuel aims to expand Ethereum's capability set without compromising security or decentralization.
+
+[Website](https://fuel.network/) | [X](https://twitter.com/fuel_network?lang=en) | [Discord](https://discord.com/invite/xfpK4Pe)
 
 ## Prerequisites
 
-Before we start indexing, you'll need to make sure you have the [prerequisites](https://docs.envio.dev/docs/getting-started) installed.
+### Environment tooling
 
-## Initializing an Indexer
+1. [<ins>Node.js</ins>](https://nodejs.org/en/download/current) we recommend using something like [fnm](https://github.com/Schniz/fnm) or [nvm](https://github.com/nvm-sh/nvm) to install Node
+1. [<ins>pnpm</ins>](https://pnpm.io/installation)
+1. [<ins>Docker Desktop</ins>](https://www.docker.com/products/docker-desktop/)
 
-Now that you have installed the prerequisite packages required, let’s jump into the practical steps of setting up the indexer.
+## Initialize the project
 
-1. Open your terminal in an empty repository and initialize a new indexer by running the command ‘envio init’
+Saved
 
-<img src="/docs-assets/tutorial-op-bridge-1.png" alt="tutorial-op-bridge-1" width="100%"/>
+Hide assistant
 
-2. Name your indexer. In this example, we named our indexer “optimism-bridge-indexer” but feel free to name your indexer anything you prefer.
+Now that you have installed the prerequisite packages let's begin the practical steps of setting up the indexer.
 
-<img src="/docs-assets/tutorial-op-bridge-2.png" alt="tutorial-op-bridge-2" width="100%"/>
+Open your terminal in an empty directory and initialize a new indexer by running the command:
 
-3. Choose a language, select contract import, and import from the block explorer. For this demonstration, we’ve chosen to use TypeScript as the language.
+```bash
+npx envio init
+```
 
-<img src="/docs-assets/tutorial-op-bridge-3.png" alt="tutorial-op-bridge-3" width="100%"/>
+In the following prompt, let's name our indexer `sway-farm-indexer`:
 
-> Note: Indexers on Envio can be written in JavaScript, TypeScript, or ReScript.
+```bash
+? Name your indexer: sway-farm-indexer
+```
 
-4. Choose `Block Explorer` then select `Optimism`, insert the Optimism bridge contract address from OP Etherscan, and select the events you would like to index. In this case, we’ll be indexing the `deposit finalized` event.
+Then, choose the directory where you want to set up your project. The default is the current directory, but in the tutorial, I'll use the indexer name:
 
-To select an event navigate using the arrow keys (↑ ↓) and click the space bar once you have made your choice.
+```bash
+? Specify a folder name (ENTER to skip): sway-farm-indexer
+```
 
-> Note: Multiple events can be selected and indexed at the same time.
+Then, choose a language of your choice for the event handlers. TypeScript is the most popular one, so we'll stick with it:
 
-Optimism bridge contract address: [0x4200000000000000000000000000000000000010](https://optimistic.etherscan.io/address/0x4200000000000000000000000000000000000010)
+```bash
+? Which language would you like to use?
+  JavaScript
+> TypeScript
+  ReScript
+[↑↓ to move, enter to select, type to filter]
+```
 
-<img src="/docs-assets/tutorial-op-bridge-4.png" alt="tutorial-op-bridge-4" width="100%"/>
+The contract import feature has not yet been released for the Fuel network, so let's choose `Template` and `GreeterOnFuel`.
 
-5. Add another contract address, in this case, we’ve imported from the block explorer just like before, added the Optimism Gateway smart contract address on Ethereum Mainnet from Etherscan, and opted to index the events `eth deposit initiated`. Finally, review the configuration and select `I’m finished` to start generating the indexer.
+```bash
+? Choose an initialization option
+> Template
+  Contract Import
+[↑↓ to move, enter to select, type to filter]
+```
 
-Ethereum Mainnet contract address: [0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1](https://basescan.org/address/0x833589fcd6edb6e08f4c7c32d4f71b54bda02913)
+```bash
+? Which template would you like to use?
+  Greeter
+> GreeterOnFuel
+  Erc20
+[↑↓ to move, enter to select, type to filter]
+```
 
-<img src="/docs-assets/tutorial-op-bridge-5.png" alt="tutorial-op-bridge-5" width="100%"/>
+After the project is finished initializing, you should see the following line:
 
-<img src="/docs-assets/tutorial-op-bridge-6.png" alt="tutorial-op-bridge-6" width="100%"/>
+```
+Please run `cd sway-farm-indexer` to run the rest of the envio commands
+```
+
+We are already halfway through 🙌
+
+Let's open the indexer in an IDE and start adjusting it for our farm 🍅
+
+## Adjusting the Indexer for Sway Farm
+
+Currently, using the `GreeterOnFuel` template is the simplest way to create a Fuel indexer. Still, we must admit that the `Greeter` indexer is not quite what we want.
+
+> 🧠 A separate [Tutorial] (./greeter-tutorial) page provides more details about the `Greeter` template.
+
+So, let's start by adjusting its parts to make it work for Sway Farm. It's done via modifying the 3 files below:
+
+- [`config.yaml`](./configuration-file)
+- [`schema.graphql`](./schema)
+- [`src/EventHandlers.*`](./event-handlers)
+
+> (\* depending on the language chosen for the indexer)
+
+I suggest to go one by one and the first in line is `config.yaml`.
+
+### Update `config.yaml`
+
+In the file, we need to change a few configurations:
+
+- Rename indexer to `Sway Farm Indexer`
+- Change the contract name to `SwayFarm`
+- Set an address for the deployed contract
+- Update ABI and the path to the location. You can get ABI by building the contract using `forc build`. In my case, I found the latest version of the ABI in the [`sway-farm`](https://github.com/FuelLabs/sway-farm/blob/47e3ed5a91593ebcf8d2c67ae6fad41d9954c8a8/frontend/src/sway-api/contracts/factories/ContractAbi__factory.ts#L16) GitHub repo
+- Lastly, we need to list the events we want to index. To get them, I opened the list of logged events of the [contract file](https://github.com/FuelLabs/sway-farm/blob/47e3ed5a91593ebcf8d2c67ae6fad41d9954c8a8/contract/src/abi_structs.sw#L365-L406) and realized that for leaderboard we need only events which update player information. Hence, I added `NewPlayer`, `LevelUp`, and `SellItem` events to the list. We'd want to index more events in real life, but this is enough for the tutorial.
+
+```diff
+- name: Fuel Greeter Indexer
++ name: Sway Farm Indexer
+networks:
+  - id: 0
+    start_block: 0
+    contracts:
+-     - name: Greeter
+-       address: 0xb9bc445e5696c966dcf7e5d1237bd03c04e3ba6929bdaedfeebc7aae784c3a0b
+-       abi_file_path: abis/greeter-abi.json
++     - name: SwayFarm
++       address: 0xf5b08689ada97df7fd2fbd67bee7dea6d219f117c1dc9345245da16fe4e99111
++       abi_file_path: abis/sway-farm-abi.json
+
+        handler: ./src/EventHandlers.ts
+        events:
+-         - name: NewGreeting
+-         - name: ClearGreeting
++         - name: NewPlayer
++         - name: SellItem
++         - name: LevelUp
+```
+
+You can notice that we use [Sway](https://docs.fuel.network/docs/sway/) struct names for the `events` configuration. Envio will automatically find `LogData` [receipts](https://docs.fuel.network/docs/specs/abi/receipts) containing data of the desired struct type. In case you log non-struct data, you can set the log id from ABI explicitly:
+
+```
+- name: MyEvent
+  logId: "1515152261580153489"
+```
+
+> The current version supports indexing only `LogData` and `Log` receipts. Join our [Discord](https://discord.com/invite/gt7yEUZKeB) channel to make sure you catch all new releases. We have `Transfer`, `TransferOut`, `Mint`, `Burn`, and `Call` receipts support on our roadmap.
+
+### Update `schema.graphql`
+
+The `schema.graphql` file serves as a representation of your application's data model. It defines entity types that directly correspond to database tables, and the event handlers you create are responsible for creating and updating records within those tables. Additionally, the GraphQL API is automatically generated based on the entity types specified in the `schema.graphql` file, to allow access for the indexed data.
+
+> 🧠 A separate [Guide](./schema) page provides more details about the `schema.graphql` file.
+
+For the leaderboard, we need only one entity representing the player. Let's create it:
+
+```graphql
+# schema.graphql
+
+type Player {
+  id: ID!
+  farmingSkill: BigInt!
+  totalValueSold: BigInt!
+}
+```
+
+We will use the user address as an ID. The fields `farmingSkill` and `totalValueSold` are `u64` in Sway, so to safely map them to JavaScript value, we'll use `BigInt`.
+
+<!-- WIP  -->
 
 ## Starting the Indexer
 
