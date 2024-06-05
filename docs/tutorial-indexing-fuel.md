@@ -31,10 +31,6 @@ Sway Farm is a simple farming game and for the sake of a real-world example let'
 
 ## Initialize the project
 
-Saved
-
-Hide assistant
-
 Now that you have installed the prerequisite packages let's begin the practical steps of setting up the indexer.
 
 Open your terminal in an empty directory and initialize a new indexer by running the command:
@@ -96,7 +92,7 @@ Let's open the indexer in an IDE and start adjusting it for our farm 🍅
 
 Currently, using the `GreeterOnFuel` template is the simplest way to create a Fuel indexer. Still, we must admit that the `Greeter` indexer is not quite what we want.
 
-> 🧠 A separate [Tutorial] (./greeter-tutorial) page provides more details about the `Greeter` template.
+> 🧠 A separate [Tutorial](./greeter-tutorial) page provides more details about the `Greeter` template.
 
 So, let's start by adjusting its parts to make it work for Sway Farm. It's done via modifying the 3 files below:
 
