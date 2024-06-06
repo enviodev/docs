@@ -112,7 +112,7 @@ In the file, we need to change a few configurations:
 - Change the contract name to `SwayFarm`
 - Set an address for the deployed contract
 - Update ABI and the path to the location. You can get ABI by building the contract using `forc build`. In my case, I found the latest version of the ABI in the [`sway-farm`](https://github.com/FuelLabs/sway-farm/blob/47e3ed5a91593ebcf8d2c67ae6fad41d9954c8a8/frontend/src/sway-api/contracts/factories/ContractAbi__factory.ts#L16) GitHub repo
-- Lastly, we need to list the events we want to index. To get them, I opened the list of logged events of the [contract file](https://github.com/FuelLabs/sway-farm/blob/47e3ed5a91593ebcf8d2c67ae6fad41d9954c8a8/contract/src/abi_structs.sw#L365-L406) and realized that for leaderboard we need only events which update player information. Hence, I added `NewPlayer`, `LevelUp`, and `SellItem` events to the list. We'd want to index more events in real life, but this is enough for the tutorial.
+- Lastly, we need to list the events we want to index. To get them, I opened the list of logged events of the [contract file](https://github.com/FuelLabs/sway-farm/blob/47e3ed5a91593ebcf8d2c67ae6fad41d9954c8a8/contract/src/abi_structs.sw#L365-L406) and realized that for a leaderboard we need only events which update player information. Hence, I added `NewPlayer`, `LevelUp`, and `SellItem` events to the list. We'd want to index more events in real life, but this is enough for the tutorial.
 
 ```diff
 - name: Fuel Greeter Indexer
