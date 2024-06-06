@@ -1,6 +1,6 @@
 ---
 title: "Envio Bounty Graduate: ERC4626 Indexer for Tokenized Vault Contracts"
-sidebar_label: 'Envio Bounty Graduate: ERC4626 Indexer for Tokenized Vault Contracts'
+sidebar_label: "Envio Bounty Graduate: ERC4626 Indexer for Tokenized Vault Contracts"
 slug: /envio-bounty-erc4626-tokenized-vault-indexer
 ---
 
@@ -20,7 +20,7 @@ This bounty aimed to tackle the challenges that blockchain developers face when 
 
 For blockchain developers seeking an easy and efficient way to access information for tokenized vault contracts in their applications can be quite a cumbersome task. Our recent bounty introduced an indexer template tailored for OpenZeppelin’s ERC4626 tokenized vault contract standard. This template aims to bootstrap development time by indexing token vault events without the need to write the indexing logic by providing a pre-built solution for indexing OpenZeppelins’s token vault events.
 
-The ERC4626 tokenized vault standard extends the functionality of the ERC20 standard by allowing fractionalized token supply through deposits and withdrawals to token vaults. The bounty included the development of a GraphQL schema, an Envio configuration file, and indexing logic in [JavaScript](https://www.javascript.com/). In addition, Envio indexer supports indexing logic in [TypeScript](https://www.typescriptlang.org/) or [Rescript](https://rescript-lang.org/).
+The ERC4626 tokenized vault standard extends the functionality of the ERC20 standard by allowing fractionalized token supply through deposits and withdrawals to token vaults. The bounty included the development of a GraphQL schema, an Envio configuration file, and indexing logic in [JavaScript](https://www.javascript.com/). In addition, Envio indexer supports indexing logic in [TypeScript](https://www.typescriptlang.org/) or [ReScript](https://rescript-lang.org/).
 
 The schema includes three main types: `TokenVault`, `Deposit`, and `Withdrawal`. The `TokenVault` entity stores information about the tokenized vault, such as assets, shares, proportions, and exchange rates. `Deposit` and `Withdrawal` entities capture details about corresponding events, including sender, owner, assets, shares, and the associated vault.
 
@@ -34,13 +34,13 @@ You can now explore the full functionalities of the ERC4626 token vault indexer,
 
 In addition, our graduate demonstrated what a few GraphQL API queries would look like below:
 
-*Query Example: Get Vault State*
+_Query Example: Get Vault State_
 <img src="/blog-assets/envio-erc4626-getvaultstate.png" alt="Screenshot of Example Query" width="100%"/>
 
-*Query Example: Get the latest deposits*
+_Query Example: Get the latest deposits_
 <img src="/blog-assets/envio-erc4626-latestdeposits.png" alt="Screenshot of Example Query" width="100%"/>
 
-*Query Example: Get the latest withdrawals*
+_Query Example: Get the latest withdrawals_
 <img src="/blog-assets/envio-erc4626-latestwithdrawals.png" alt="Screenshot of Example Query" width="100%"/>
 
 Envio stands out by providing a hassle-free solution for deploying and hosting your indexer. We take care of the entire infrastructure, eliminating the complexities associated with setup and management. This user-centric approach allows developers to channel their focus into refining their application's core functionality, ensuring an unparalleled user experience. For a comprehensive guide on deploying your indexer to Envio's hosted service, explore our [documentation](https://docs.envio.dev/docs/hosted-service).

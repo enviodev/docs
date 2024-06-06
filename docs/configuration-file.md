@@ -71,7 +71,7 @@ More information on Human Readable ABI parsing is available [here](https://docs.
 - Address field should contain the address of the proxy contract, which emits the events on the specified blockchain.
 - Should the human readable ABI format not be used, then the ABI which is referenced in config file needs to be copied from the implementation contract into the specified abi directory.
 
-## Example `config.yaml` from Greeter template using Rescript language:
+## Example `config.yaml` from Greeter template using ReScript language:
 
 ```yaml
 name: Greeter

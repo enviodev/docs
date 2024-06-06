@@ -7,7 +7,7 @@ slug: /example-ens
 
 # ENS Indexer
 
-This [repo](https://github.com/JasoonS/Envio-ENS-Indexer) contains an Envio indexer template built using Typescript for indexing events from the ENS (Ethereum Name Service) contracts.
+This [repo](https://github.com/JasoonS/Envio-ENS-Indexer) contains an Envio indexer template built using TypeScript for indexing events from the ENS (Ethereum Name Service) contracts.
 
 The indexer has been built using v0.0.37 of Envio.
 

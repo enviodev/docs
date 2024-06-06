@@ -30,7 +30,7 @@ To make things even more exciting Envio's hyper-performant indexing solution has
 
 The hosted service has been updated to allow developers to create multiple indexers per GitHub repository. Previously developers could only create a single indexer per repository, meaning every indexer in an organisation required a new repository for deployment. Now developers with multiple indexers in the same repository can create different indexers on the hosted service for that repository, with each indexer having its own root directory, config file and branch definition. 👩‍💻
 
-To connect a new indexer to an existing repository simply select ‘*+ new indexer*’ on the organisation dashboard page. From there you can connect your repository to a new indexer or configure existing indexers linked to that repository. Selecting connect allows for the creation of a new indexer for that repository. The indexer name must be unique for each indexer created for the repository.
+To connect a new indexer to an existing repository simply select ‘_+ new indexer_’ on the organisation dashboard page. From there you can connect your repository to a new indexer or configure existing indexers linked to that repository. Selecting connect allows for the creation of a new indexer for that repository. The indexer name must be unique for each indexer created for the repository.
 
 ⭐ Note: existing indexers created before this change have the indexer name defaulted to the repository name in line with the previous naming convention, but all new indexers can have any user-defined name.
 
@@ -86,8 +86,7 @@ Over the past month, we released six new versions of Envio (v.0.0.31 → v.0.0.3
 
 We're thrilled to unveil our latest release, featuring a captivating new Terminal UI for visualising indexer progress alongside a few new features and fixes noted in the change log below. 🌟
 
-<img src="/blog-assets/envio-tui.gif" alt="Envio's new CLI look and sync progress bars" width="50%"/> 
-
+<img src="/blog-assets/envio-tui.gif" alt="Envio's new CLI look and sync progress bars" width="50%"/>
 
 ⭐Note: We've swiftly addressed a critical race condition bug affecting versions v0.0.30 to v0.0.32, and we highly recommend you upgrade if you are currently using one of these versions.
 
@@ -107,7 +106,7 @@ We're thrilled to unveil our latest release, featuring a captivating new Termina
 - **Minor Tweaks**: We've made adjustments to ensure the order of definitions in generated code remains predictably deterministic, enhancing system stability. ✨
 - **Testing Helpers**: Testing helper mock processors now use a default chainId derived from your config rather than defaulting to mainnet. No need to define your chain in the mock processor if mainnet is not part of your config. 🧪
 - **Minor patch:** v0.0.34 is out for terminal UIs!
-    - Fixed: status bar not turning green when fully synced.
+  - Fixed: status bar not turning green when fully synced.
 
 **Breaking Changes:**
 
@@ -118,6 +117,7 @@ MyContract.MyEvent.loader({ event, context } => {
     //... loader logic
 })
 ```
+
 ```typescript
 MyContract.MyEvent.handler({ event, context } => {
     //... handler logic
@@ -125,10 +125,11 @@ MyContract.MyEvent.handler({ event, context } => {
 ```
 
 Previously, JavaScript handlers and loaders utilised positional arguments:
+
 ```typescript
 MyContract.MyEvent.handler((event, context) => {
-    //... handler logic
-})
+  //... handler logic
+});
 ```
 
 ⭐Note: TypeScript's snake_case syntax remains backwards compatible, so `MyContract_MyEvent_handler(({event, context}) => {...` still works but we encourage using dot syntax for consistency.
@@ -164,7 +165,7 @@ This small patch brought some key enhancements and fixes:
 - Upgraded PostgreSQL to v16.
 - Improved management of purging generated folders when needed running codegen.
 - Improved behaviour of sync status bar in TUI.
-- Fixed freezing issue on some environments with the Rescript Format command.
+- Fixed freezing issue on some environments with the ReScript Format command.
 
 ### V.0.0.36 & V.0.0.37
 
@@ -195,4 +196,3 @@ By builders, for builders. [Envio](https://envio.dev/) is a dev-friendly, speed-
 If you're a blockchain developer looking to enhance your development process and unlock the true potential of Web3 infrastructure, look no further. Join our growing community of elite developers, check out our docs, and let's work together to revolutionize the blockchain world and propel your project to the next level.
 
 [Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Hey](https://hey.xyz/u/envio) | [Medium](https://medium.com/@Envio_Indexer) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
-
