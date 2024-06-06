@@ -11,7 +11,7 @@ Until recently, HyperIndex was only available on EVM networks, and now we have e
 
 Indexers are vital to the success of any dApp. In this tutorial, we will create an Envio indexer for the Fuel dApp [Sway Farm](https://swayfarm.xyz/) step by step.
 
-Sway Farm is a simple farming game and for the sake of a real-world example let's create the indexer for leadearboard of all farmers 🧑‍🌾
+Sway Farm is a simple farming game and for the sake of a real-world example, let's create the indexer for a leaderboard of all farmers 🧑‍🌾
 
 <img src="/docs-assets/tutorial-indexing-fuel-farm.png" alt="Sway Farm" width="100%"/>
 
