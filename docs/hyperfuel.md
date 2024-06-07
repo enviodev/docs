@@ -1,7 +1,7 @@
 ---
 id: hyperfuel
 title: HyperFuel
-sidebar_label: HyperFuel
+sidebar_label: Overview
 slug: /hyperfuel
 ---
 
