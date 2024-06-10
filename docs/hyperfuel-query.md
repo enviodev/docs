@@ -5,7 +5,7 @@ sidebar_label: Query Structure
 slug: /hyperfuel-query
 ---
 
-This section is dedicated to giving an exhaustive list of all the fields and query parameters of a hyperfuel query.  HyperFuel is extremely powerful but learning how to craft queries can take some practice.  It is recommended to look at the examples and reference this page.  HyperFuel query structure is the same across clients.
+This section is dedicated to giving an exhaustive list of all the fields and query parameters of a HyperFuel query.  HyperFuel is extremely powerful but learning how to craft queries can take some practice.  It is recommended to look at the examples and reference this page.  HyperFuel query structure is the same across clients.
 
 # Top level query structure
 Illustrated as json
