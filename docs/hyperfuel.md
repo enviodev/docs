@@ -179,8 +179,10 @@ curl --request POST \
         ],
         "field_selection": {
             "input": [
-                "block_height",
                 "tx_id",
+                "block_height",
+                "input_type",
+                "utxo_id",
                 "owner",
                 "amount",
                 "asset_id"

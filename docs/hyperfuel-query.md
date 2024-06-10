@@ -9,7 +9,7 @@ This section is dedicated to giving an exhaustive list of all the fields and que
 
 # Top level query structure
 Illustrated as json
-```go
+```json
 {
     // The block to start the query from
     "from_block": Number,
@@ -23,13 +23,13 @@ Illustrated as json
     //  pagination.
     "to_block": Number, // Optional, defaults to latest block
 
-    /// List of receipt selections, the query will return receipts that match any of these selections.
+    // List of receipt selections, the query will return receipts that match any of these selections.
     "receipts": [{ReceiptSelection}], // Optional
 
-    /// List of input selections, the query will return inputs that match any of these selections.
+    // List of input selections, the query will return inputs that match any of these selections.
     "inputs": [{InputSelection}], // Optional
 
-    /// List of output selections, the query will return outputs that match any of these selections.
+    // List of output selections, the query will return outputs that match any of these selections.
     "outputs": [{OutputSelection}], // Optional
 
     // Whether to include all blocks regardless of if they match a receipt, input, or output selection.  Normally
@@ -51,7 +51,7 @@ Illustrated as json
 Query takes an array of ReceiptSelection objects and returns receipts that match any of the selections.  All fields are optional.
 Below is an exhaustive list of all fields in a ReceiptSelection json object.  Reference the [Fuel docs on receipts](https://docs.fuel.network/docs/specs/abi/receipts/#receipts) for field explanations.
 
-```go
+```json
 {
     // address that emitted the receipt
     "root_contract_id": [String],
@@ -111,7 +111,7 @@ Below is an exhaustive list of all fields in a ReceiptSelection json object.  Re
 # Input Selection
 Query takes an array of InputSelection objects and returns inputs that match any of the selections.  All fields are optional.
 Below is an exhaustive list of all fields in a InputSelection json object.  Reference the [Fuel docs on inputs](https://docs.fuel.network/docs/specs/tx-format/input/#input) for field explanations.
-```go
+```json
 {
     // The owning address or predicate root.
     "owner": [String],
@@ -152,7 +152,7 @@ Below is an exhaustive list of all fields in a InputSelection json object.  Refe
 # OutputSelection
 Query takes an array of OutputSelection objects and returns outputs that match any of the selections.  All fields are optional.
 Below is an exhaustive list of all fields in a OutputSelection json object.  Reference the [Fuel docs on outputs](https://docs.fuel.network/docs/specs/tx-format/output/#output) for field explanations.
-```go
+```json
 {
     // The address the coins were sent to.
     "to": [String],
@@ -194,7 +194,7 @@ For best performance, select a minimal amount of fields.
 *Important note:* all fields draw inspiration from Fuel's [graphql schema](https://docs.fuel.network/docs/graphql/reference/).  Mainly Blocks, Transactions, Receipts, Inputs, and Outputs.  Enums of each type (ex: Receipt has 12 different types, two of which are Log and LogData, Input has 3: InputCoin, InputContract, InputMessage, and Output has 5: CoinOutput, ContractOutput, ChangeOutput, VariableOutput, ContractCreated) are flattened into the parent type.  This is why  multiple fields on any returned Receipt, Input, or Output might be null; it's not a field on all possible enums of that type, so null is inserted.
 
 All fields are optional.  Below is an exhaustive list of all fields in a FieldSelection json object.
-```go
+```json
 {
     "block": [
         "id",
