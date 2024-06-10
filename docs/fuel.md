@@ -7,8 +7,6 @@ slug: /fuel
 
 Until recently, Envio was only available on EVM-compatible blockchains, and now we have extended support to the Fuel Network 🙌
 
-Currently it's in Beta
-
 ## About Fuel
 
 [Fuel](https://fuel.network/) is an operating system purpose-built for Ethereum rollups. Fuel's unique architecture allows rollups to solve for PSI (parallelization, state minimized execution, interoperability). Powered by the FuelVM, Fuel aims to expand Ethereum's capability set without compromising security or decentralization.
@@ -19,7 +17,7 @@ Currently it's in Beta
 
 HyperFuel is [HyperSync](./overview-hypersync.md) adapted for the [Fuel network](https://fuel.network/) and is exposed as a low-level API for developers and data analysts to create niche, flexible, high-speed queries for all on-chain data.
 
-Users can interact with the HyperFuel in Rust, Python client, Node Js, or JSON API to extract data into parquet files, arrow format, or as typed data.
+Users can interact with the HyperFuel in Rust, Python client, Node Js, or Json API to extract data into parquet files, arrow format, or as typed data.
 
 Using HyperFuel, application developers can easily sync and search large datasets in a few minutes.
 
@@ -28,7 +26,7 @@ You can integrate with HyperFuel using any of our clients:
 - Rust: https://github.com/enviodev/hyperfuel-client-rust
 - Python: https://github.com/enviodev/hyperfuel-client-python
 - Nodejs: https://github.com/enviodev/hyperfuel-client-node
-- JSON API: https://github.com/enviodev/hyperfuel-json-api
+- Json API: https://github.com/enviodev/hyperfuel-json-api
 
 > HyperFuel supports Fuel's latest testnet.
 
@@ -36,7 +34,7 @@ You can integrate with HyperFuel using any of our clients:
 
 [HyperIndex](./overview.md) is a real-time indexer built to provide developers with a seamless and efficient indexing solution.
 
-Learn [How to Index Data on Fuel in <5mins using Envio](./tutorial-indexing-fuel.md) in a step-by-step tutorial.
+Learn [How to Index Data on Fuel in \<5mins using Envio](./tutorial-indexing-fuel.md) in a step-by-step tutorial.
 
 Or gain inspiration from already running indexers built by other developers on Fuel:
 
