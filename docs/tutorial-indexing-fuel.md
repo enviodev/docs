@@ -13,7 +13,7 @@ Indexers are vital to the success of any dApp. In this tutorial, we will create 
 
 Sway Farm is a simple farming game and for the sake of a real-world example, let's create the indexer for a leaderboard of all farmers 🧑‍🌾
 
-<img src="/docs-assets/tutorial-indexing-fuel-farm.png" alt="Sway Farm" width="100%"/>
+<img src="/docs-assets/tutorial-indexing-fuel-farm.webp" alt="Sway Farm" width="100%"/>
 
 ## About Fuel
 
@@ -174,7 +174,7 @@ import { SwayFarmContract } from "generated";
 Registers a handler that processes NewPlayer event
 on the SwayFarm contract and stores the players in the DB
 */
-SwayFarmContract.NewPlayer.handler(({ event, context }) => {
+SwayFarmContract.NewPlayer.handlerAsync(async ({ event, context }) => {
   // Set the Player entity in the DB with the intial values
   context.Player.set({
     // The address in Sway is a union type of user Address and ContractID. Envio supports most of the Sway types, and the address value was decoded as a discriminated union 100% typesafe
@@ -191,7 +191,7 @@ Actually, this is already enough to start the indexer and get the list of all pl
 ```typescript
 // Code from above ...
 
-SwayFarmContract.LevelUp.handler(({ event, context }) => {
+SwayFarmContract.LevelUp.handlerAsync(async ({ event, context }) => {
   const playerInfo = event.data.player_info;
   context.Player.set({
     id: event.data.address.payload.bits,
@@ -200,7 +200,7 @@ SwayFarmContract.LevelUp.handler(({ event, context }) => {
   });
 });
 
-SwayFarmContract.SellItem.handler(({ event, context }) => {
+SwayFarmContract.SellItem.handlerAsync(async ({ event, context }) => {
   const playerInfo = event.data.player_info;
   context.Player.set({
     id: event.data.address.payload.bits,
@@ -222,7 +222,7 @@ The following commands will start the docker and create databases for indexed da
 pnpm dev
 ```
 
-<img src="/docs-assets/tutorial-indexing-fuel-running-indexer.png" alt="Running indexer" width="100%"/>
+<img src="/docs-assets/tutorial-indexing-fuel-running-indexer.webp" alt="Running indexer" width="100%"/>
 
 Nice, we indexed `1,721,352` blocks containing `58,784` events in 10 seconds, and they continue coming in.
 
@@ -236,7 +236,7 @@ open http://localhost:8080
 
 The Hasura admin-secret / password is `testing`, and the tables can be viewed in the data tab or queried from the playground.
 
-<img src="/docs-assets/tutorial-indexing-fuel-graphiql.png" alt="GraphiQL example" width="100%"/>
+<img src="/docs-assets/tutorial-indexing-fuel-graphiql.webp" alt="GraphiQL example" width="100%"/>
 
 Now, we can easily get the top 5 players, the number of inactive and active players, and the average sold value. What's left is a nice UI for the Sway Farm leaderboard, but that's not the tutorial's topic.
 
