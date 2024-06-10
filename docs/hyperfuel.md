@@ -13,7 +13,7 @@ Users can interact with the HyperFuel in Rust, Python client, Node Js, or Json a
 
 Using HyperFuel, application developers can easily sync and search large datasets in a few minutes.
 
-HyperFuel supports Fuel's testnet.
+HyperFuel supports Fuel's testnet at the endpoint https://fuel-testnet.hypersync.xyz
 
 You can integrate with HyperFuel using any of our clients:
  - Rust: https://github.com/enviodev/hyperfuel-client-rust
