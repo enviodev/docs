@@ -61,22 +61,16 @@ Then, choose a language of your choice for the event handlers. TypeScript is the
 [↑↓ to move, enter to select, type to filter]
 ```
 
-The contract import feature has not yet been released for the Fuel network, so let's choose `Template` and `GreeterOnFuel`.
+Next, we have the new prompt for a blockchain ecosystem. Previously Envio supported only Evm, but now it's possible to choose between `Evm`, `Fuel` and other networks in the future:
 
 ```bash
-? Choose an initialization option
-> Template
-  Contract Import
+? Choose blockchain ecosystem
+  Evm
+> Fuel
 [↑↓ to move, enter to select, type to filter]
 ```
 
-```bash
-? Which template would you like to use?
-  Greeter
-> GreeterOnFuel
-  Erc20
-[↑↓ to move, enter to select, type to filter]
-```
+The contract import feature has not yet been released for the Fuel network, so let's choose `Template` and `Greeter`.
 
 After the project is finished initializing, you should see the following line:
 
@@ -90,11 +84,11 @@ Let's open the indexer in an IDE and start adjusting it for our farm 🍅
 
 ## Adjusting the Indexer for Sway Farm
 
-Currently, using the `GreeterOnFuel` template is the simplest way to create a Fuel indexer. Still, we must admit that the `Greeter` indexer is not quite what we want.
+Currently, using the `Greeter` template is the simplest way to create a Fuel indexer. Still, we must admit that the `Greeter` indexer is not quite what we want. So, let's start by adjusting its parts to make it work for Sway Farm.
 
 > 🧠 A separate [Tutorial](./greeter-tutorial) page provides more details about the `Greeter` template.
 
-So, let's start by adjusting its parts to make it work for Sway Farm. It's done via modifying the 3 files below:
+It's done via modifying the 3 files below:
 
 - [`config.yaml`](./configuration-file)
 - [`schema.graphql`](./schema)
@@ -127,7 +121,6 @@ networks:
 +     - name: SwayFarm
 +       address: 0xf5b08689ada97df7fd2fbd67bee7dea6d219f117c1dc9345245da16fe4e99111
 +       abi_file_path: abis/sway-farm-abi.json
-
         handler: ./src/EventHandlers.ts
         events:
 -         - name: NewGreeting
@@ -226,12 +219,12 @@ Without overengineering, simply set the player data into the database. What's ni
 The following commands will start the docker and create databases for indexed data. Make sure to re-run `pnpm dev` if you've made some changes.
 
 ```bash
-envio dev
+pnpm dev
 ```
 
 <img src="/docs-assets/tutorial-indexing-fuel-running-indexer.png" alt="Running indexer" width="100%"/>
 
-Nice, we indexed `1,721,352` blocks in 10 seconds, and they continue coming in.
+Nice, we indexed `1,721,352` blocks containing `58,784` events in 10 seconds, and they continue coming in.
 
 ## View the indexed results
 
