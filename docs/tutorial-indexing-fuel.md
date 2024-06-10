@@ -7,7 +7,7 @@ slug: /tutorial-indexing-fuel
 
 # Indexing Sway Farm on the Fuel network
 
-Until recently, HyperIndex was only available on EVM networks, and now we have extended support to the [Fuel](https://fuel.network/) Network.
+Until recently, HyperIndex was only available on EVM-compatible blockchains, and now we have extended support to the [Fuel](https://fuel.network/) Network.
 
 Indexers are vital to the success of any dApp. In this tutorial, we will create an Envio indexer for the Fuel dApp [Sway Farm](https://swayfarm.xyz/) step by step.
 
@@ -61,7 +61,7 @@ Then, choose a language of your choice for the event handlers. TypeScript is the
 [↑↓ to move, enter to select, type to filter]
 ```
 
-Next, we have the new prompt for a blockchain ecosystem. Previously Envio supported only Evm, but now it's possible to choose between `Evm`, `Fuel` and other networks in the future:
+Next, we have the new prompt for a blockchain ecosystem. Previously Envio supported only EVM, but now it's possible to choose between `Evm`, `Fuel` and other networks in the future:
 
 ```bash
 ? Choose blockchain ecosystem
