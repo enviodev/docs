@@ -24,12 +24,15 @@ Illustrated as json
     "to_block": Number, // Optional, defaults to latest block
 
     // List of receipt selections, the query will return receipts that match any of these selections.
+    // All selections have an OR relationship with eachother.
     "receipts": [{ReceiptSelection}], // Optional
 
     // List of input selections, the query will return inputs that match any of these selections.
+    // All selections have an OR relationship with eachother.
     "inputs": [{InputSelection}], // Optional
 
     // List of output selections, the query will return outputs that match any of these selections.
+    // All selections have an OR relationship with eachother.
     "outputs": [{OutputSelection}], // Optional
 
     // Whether to include all blocks regardless of if they match a receipt, input, or output selection.  Normally
