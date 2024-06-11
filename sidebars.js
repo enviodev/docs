@@ -110,7 +110,14 @@ module.exports = {
         "hypersync-usage",
         "hypersync-clients",
         "hypersync-url-endpoints",
-        "hyperfuel",
+        {
+          type: "category",
+          label: "HyperFuel",
+          items: [
+            "hyperfuel",
+            "hyperfuel-query"
+          ],
+        },
       ],
     },
     {
