@@ -36,7 +36,7 @@ Now that you have installed the prerequisite packages let's begin the practical 
 Open your terminal in an empty directory and initialize a new indexer by running the command:
 
 ```bash
-npx envio init
+npx envio@1.2 init
 ```
 
 In the following prompt, let's name our indexer `sway-farm-indexer`:
