@@ -112,7 +112,7 @@ Below is an exhaustive list of all fields in a ReceiptSelection json object.  Re
 }
 ```
 
-# Input Selection
+# InputSelection
 Query takes an array of InputSelection objects and returns inputs that match any of the selections.  All fields are optional.
 Below is an exhaustive list of all fields in a InputSelection json object.  Reference the [Fuel docs on inputs](https://docs.fuel.network/docs/specs/tx-format/input/#input) for field explanations.
 ```json
