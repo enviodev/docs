@@ -48,6 +48,6 @@ Currently, `HyperIndex` on Fuel supports the most features EVM indexer does, inc
 
 Also, compared to EVM, Fuel provides many more kinds of possible events. Now, we support indexing only `LogData` receipts (the `log` calls in a [Sway](https://docs.fuel.network/docs/sway/) contract), but there's a plan to also support `Transfer`, `TransferOut`, `Mint`, `Burn`, and `Call` receipts in the near future.
 
-We will also work on [No-code Quickstart](/docs/contract-import), predicates support, and more.
+We will also work on a [No-code Quickstart](/docs/contract-import), predicates support, and more.
 
 > Join our [Discord](https://discord.com/invite/gt7yEUZKeB) channel to make sure you catch all new releases.
