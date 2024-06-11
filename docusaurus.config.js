@@ -122,9 +122,17 @@ const config = {
         showLastUpdateTime: true,
         versions: {
           current: {
-            label: '1.0.0',
-            path: '1.0.0',
+            label: 'latest(4.0.0)',
+            path: '4.0.0',
           },
+          // '2.0.0': {
+          //   label: '2.0.0',
+          //   path: '2.0.0',
+          // },
+          // '1.1.0': {
+          //   label: '1.1.0',
+          //   path: '1.1.0',
+          // },
         },
       },
     ],
@@ -139,13 +147,13 @@ const config = {
         showLastUpdateTime: true,
         versions: {
           current: {
-            label: '1.0.0',
-            path: '1.0.0',
-          },
-          "1.1.0": {
             label: '1.1.0',
             path: '1.1.0',
           },
+          // '1.1.0': {
+          //   label: '1.1.0',
+          //   path: '1.1.0',
+          // },
         },
       },
     ],
