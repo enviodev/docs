@@ -14,6 +14,7 @@ module.exports = {
           items: [
             "tutorial-op-bridge-deposits",
             "tutorial-erc20-token-transfers",
+            "tutorial-indexing-fuel",
             "greeter-tutorial",
           ],
         },
@@ -117,5 +118,6 @@ module.exports = {
       label: "HyperRPC",
       items: ["overview-hyperrpc"],
     },
+    "fuel",
   ],
 };

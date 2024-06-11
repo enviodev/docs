@@ -14,10 +14,11 @@ This document contains the help content for the `envio` command-line program.
 * [`envio`↴](#envio)
 * [`envio init`↴](#envio-init)
 * [`envio init template`↴](#envio-init-template)
-* [`envio init subgraph-migration`↴](#envio-init-subgraph-migration)
 * [`envio init contract-import`↴](#envio-init-contract-import)
 * [`envio init contract-import explorer`↴](#envio-init-contract-import-explorer)
 * [`envio init contract-import local`↴](#envio-init-contract-import-local)
+* [`envio init fuel`↴](#envio-init-fuel)
+* [`envio init fuel template`↴](#envio-init-fuel-template)
 * [`envio dev`↴](#envio-dev)
 * [`envio stop`↴](#envio-stop)
 * [`envio codegen`↴](#envio-codegen)
@@ -49,7 +50,7 @@ This document contains the help content for the `envio` command-line program.
 * `-d`, `--directory <DIRECTORY>` — The directory of the project. Defaults to current dir ("./")
 * `-o`, `--output-directory <OUTPUT_DIRECTORY>` — The directory within the project that generated code should output to
 
-  Default value: `generated/`
+  Default value: `generated`
 * `--config <CONFIG>` — The file in the project containing config
 
   Default value: `config.yaml`
@@ -64,9 +65,9 @@ Initialize an indexer with one of the initialization options
 
 ###### **Subcommands:**
 
-* `template` — Initialize from an example template
-* `subgraph-migration` — Initialize by migrating config from an existing subgraph
-* `contract-import` — Initialize by importing config from a contract for a given chain
+* `template` — Initialize Evm indexer from an example template
+* `contract-import` — Initialize Evm indexer by importing config from a contract for a given chain
+* `fuel` — Initialization option for creating Fuel indexer
 
 ###### **Options:**
 
@@ -80,7 +81,7 @@ Initialize an indexer with one of the initialization options
 
 ## `envio init template`
 
-Initialize from an example template
+Initialize Evm indexer from an example template
 
 **Usage:** `envio init template [OPTIONS]`
 
@@ -93,38 +94,28 @@ Initialize from an example template
 
 
 
-## `envio init subgraph-migration`
-
-Initialize by migrating config from an existing subgraph
-
-**Usage:** `envio init subgraph-migration [OPTIONS]`
-
-###### **Options:**
-
-* `-s`, `--subgraph-id <SUBGRAPH_ID>` — Subgraph ID to start a migration from
-
-
-
 ## `envio init contract-import`
 
-Initialize by importing config from a contract for a given chain
+Initialize Evm indexer by importing config from a contract for a given chain
 
 **Usage:** `envio init contract-import [OPTIONS] [COMMAND]`
 
 ###### **Subcommands:**
 
-* `explorer` — Initialize by migrating config from an existing subgraph
-* `local` — Initialize from an example template
+* `explorer` — Initialize by pulling the contract ABI from a block explorer
+* `local` — Initialize from a local json ABI file
 
 ###### **Options:**
 
 * `-c`, `--contract-address <CONTRACT_ADDRESS>` — Contract address to generate the config from
+* `--single-contract` — If selected, prompt will not ask for additional contracts/addresses/networks
+* `--all-events` — If selected, prompt will not ask to confirm selection of events on a contract
 
 
 
 ## `envio init contract-import explorer`
 
-Initialize by migrating config from an existing subgraph
+Initialize by pulling the contract ABI from a block explorer
 
 **Usage:** `envio init contract-import explorer [OPTIONS]`
 
@@ -132,14 +123,14 @@ Initialize by migrating config from an existing subgraph
 
 * `-b`, `--blockchain <BLOCKCHAIN>` — Network from which contract address should be fetched for migration
 
-  Possible values: `ethereum-mainnet`, `goerli`, `optimism`, `base`, `bsc`, `gnosis`, `polygon`, `optimism-goerli`, `arbitrum-one`, `arbitrum-goerli`, `avalanche`, `mumbai`, `sepolia`, `linea`
+  Possible values: `ethereum-mainnet`, `goerli`, `optimism`, `base`, `base-sepolia`, `bsc`, `gnosis`, `fantom`, `polygon`, `optimism-goerli`, `optimism-sepolia`, `moonbeam`, `arbitrum-one`, `arbitrum-nova`, `arbitrum-goerli`, `arbitrum-sepolia`, `celo`, `mumbai`, `sepolia`, `linea`, `polygon-zkevm`, `scroll`, `kroma`, `holesky`, `blast`, `blast-sepolia`
 
 
 
 
 ## `envio init contract-import local`
 
-Initialize from an example template
+Initialize from a local json ABI file
 
 **Usage:** `envio init contract-import local [OPTIONS]`
 
@@ -149,6 +140,33 @@ Initialize from an example template
 * `--contract-name <CONTRACT_NAME>` — The name of the contract
 * `-b`, `--blockchain <BLOCKCHAIN>` — Network from which contract address should be fetched for migration
 * `-r`, `--rpc-url <RPC_URL>` — The rpc url to use if the network id used is unsupported by our hypersync
+
+
+
+## `envio init fuel`
+
+Initialization option for creating Fuel indexer
+
+**Usage:** `envio init fuel <COMMAND>`
+
+###### **Subcommands:**
+
+* `template` — Initialize Fuel indexer from an example template
+
+
+
+## `envio init fuel template`
+
+Initialize Fuel indexer from an example template
+
+**Usage:** `envio init fuel template [OPTIONS]`
+
+###### **Options:**
+
+* `-t`, `--template <TEMPLATE>` — Name of the template to be used in initialization
+
+  Possible values: `greeter`
+
 
 
 
