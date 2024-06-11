@@ -118,8 +118,8 @@ const config = {
         path: 'docs/hypersync',
         routeBasePath: 'docs/hypersync',
         sidebarPath: require.resolve('./sidebarsHypersync.js'),
-        showLastUpdateAuthor: true,
-        showLastUpdateTime: true,
+        showLastUpdateAuthor: false,
+        showLastUpdateTime: false,
         versions: {
           current: {
             label: 'latest(4.0.0)',
@@ -143,8 +143,8 @@ const config = {
         path: 'docs/hyperindex',
         routeBasePath: 'docs/hyperindex',
         sidebarPath: require.resolve('./sidebarsHyperindex.js'),
-        showLastUpdateAuthor: true,
-        showLastUpdateTime: true,
+        showLastUpdateAuthor: false,
+        showLastUpdateTime: false,
         versions: {
           current: {
             label: '1.1.0',
