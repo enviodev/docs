@@ -8,7 +8,6 @@ module.exports = {
         "overview",
         "getting-started",
         "contract-import",
-        "fuel",
         {
           type: "category",
           label: "Tutorials",
@@ -119,5 +118,6 @@ module.exports = {
       label: "HyperRPC",
       items: ["overview-hyperrpc"],
     },
+    "fuel",
   ],
 };
