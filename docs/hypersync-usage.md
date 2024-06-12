@@ -56,6 +56,14 @@ Another way of communicating with HyperSync is via HTTP requests to the endpoint
 
 This request retrieves all data specified in the field selection structure, filtering relevant events based on logs.topics and transactions.from/to fields.
 
+#### Query Explanation
+
+Topics Filter: The topic filter is used to filter logs based on event signatures. In this example, the topic hash 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef is the signature for the ERC-20 Transfer event. The filter specifies that we are interested in logs where either the second or third topic (representing the sender and recipient addresses) matches 0x0000000000000000000000001e037f97d730Cc881e77F01E409D828b0bb14de0.
+
+From/To Addresses: The transactions.from and transactions.to fields filter transactions by the sender (from) and recipient (to) addresses. Here, we filter transactions where the sender or recipient address is 0x1e037f97d730Cc881e77F01E409D828b0bb14de0.
+
+The following example shows how to filter transfer events for a specific address on an ERC-20 contract:
+
 ```bash
 curl --request POST \
   --url https://eth.hypersync.xyz/query \
@@ -127,3 +135,17 @@ curl --request POST \
     }
   }'
 ```
+
+
+### Choosing the Right Query Method
+Using cURL is an excellent way to quickly test queries and see the results. However, for production environments, we recommend using the HyperSync client library for your language of choice. This approach allows you to construct queries more easily and handle responses in a structured way.
+
+HyperSync client libraries provide several advantages:
+
+- Better Compression: Data is sent in a compressed format, increasing throughput for data-intensive queries.
+- Query Fragmentation Handling: The client libraries automatically run subsequent queries if the initial query doesn't reach the to_block or the end of the chain.
+- Arrow Support: Data can be returned in the Apache Arrow format, facilitating easy data manipulation and analysis.
+- Auto Retry: The client libraries automatically retry failed requests, ensuring more reliable data retrieval.
+
+
+This makes the HyperSync client libraries a robust and efficient choice for integrating HyperSync into your production systems.
