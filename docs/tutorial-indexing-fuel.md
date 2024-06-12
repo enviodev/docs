@@ -1,11 +1,11 @@
 ---
 id: tutorial-indexing-fuel
-title: Indexing Sway Farm on the Fuel network
+title: Indexing Sway Farm on the Fuel Network
 sidebar_label: Indexing Fuel Network
 slug: /tutorial-indexing-fuel
 ---
 
-# Indexing Sway Farm on the Fuel network
+# Indexing Sway Farm on the Fuel Network
 
 Until recently, HyperIndex was only available on EVM-compatible blockchains, and now we have extended support to the [Fuel](https://fuel.network/) Network.
 
@@ -70,7 +70,7 @@ Next, we have the new prompt for a blockchain ecosystem. Previously Envio suppor
 [↑↓ to move, enter to select, type to filter]
 ```
 
-The contract import feature has not yet been released for the Fuel network, so let's choose `Template` and `Greeter`.
+The contract import feature has not yet been released for the Fuel Network, so let's choose `Template` and `Greeter`.
 
 After the project is finished initializing, you should see the following line:
 

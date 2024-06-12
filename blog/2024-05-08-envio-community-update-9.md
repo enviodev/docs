@@ -8,7 +8,6 @@ slug: /envio-developer-update-april-2024
 
 <!--truncate-->
 
-
 Welcome to the latest developer update of April 2024.  Dive into our latest release V.0.0.40 and see what the Envio team has been shipping over the past month including new features and technical updates, upcoming events, developer tutorials and much more. 🚢
 
 ## 🚀 New Release: Version 0.0.40 Now Available! 🚀
@@ -22,7 +21,7 @@ Welcome to the latest developer update of April 2024.  Dive into our latest rel
 
 <img src="/blog-assets/envio-partner-fuel.jpeg" alt="Cover Image Envio and Fuel Partnership" width="100%"/>
 
-In addition, we’re excited to announce that Envio has recently fully integrated its Hypersync service on the Fuel Network, a Rollup Operating System purpose-built for Ethereum. Envio’s data infrastructure serves as an accelerated data query layer on top of the Fuel network allowing application developers and data analysts to easily parse, query, and analyse large datasets on Fuel within seconds! ⚡
+In addition, we’re excited to announce that Envio has recently fully integrated its Hypersync service on the Fuel Network, a Rollup Operating System purpose-built for Ethereum. Envio’s data infrastructure serves as an accelerated data query layer on top of the Fuel Network allowing application developers and data analysts to easily parse, query, and analyse large datasets on Fuel within seconds! ⚡
 
 Check out [Spark Finance](https://sprk.fi/), the world's fastest on-chain order book built on Fuel VM, is a great case study for utilising Hypersync to present near-instant access to order book information to their traders.
 
@@ -34,7 +33,7 @@ We’re excited to announce that Envio [HyperSync](https://docs.envio.dev/docs/o
 
 To see the full list of currently supported chains on HyperSync visit our [docs](https://docs.envio.dev/docs/hypersync).
 
-*⭐Note: This list is for Hypersync-supported networks only. Envio’s HyperIndex, as the indexing framework, supports any EVM network using RPC. If you would like Hypersync added to a network we don’t support, just let us know!*
+_⭐Note: This list is for Hypersync-supported networks only. Envio’s HyperIndex, as the indexing framework, supports any EVM network using RPC. If you would like Hypersync added to a network we don’t support, just let us know!_
 
 ## Create Custom Indices
 
@@ -42,9 +41,9 @@ Our new exciting feature allows developers to refine an entity and use the `@ind
 
 ```graphql
 type MyEntity {
-id: ID!,
-userAddress: String! @index
-tokenAddress: String! @index
+  id: ID!
+  userAddress: String! @index
+  tokenAddress: String! @index
 }
 ```
 
@@ -54,9 +53,9 @@ You can also group fields into one composite index like this:
 
 ```graphql
 type MyEntity @index(fields: ["userAddress", "tokenAddress"]) {
-id: ID!,
-userAddress: String!
-tokenAddress: String!
+  id: ID!
+  userAddress: String!
+  tokenAddress: String!
 }
 ```
 
@@ -64,10 +63,9 @@ This will then create a composite index on both of these fields.
 
 ⭐*Note: All `id` fields and `@derivedFrom` fields automatically have indices, so there is no need to add a custom index.*
 
-
 ## Reference Generated Code As a Package
 
-*⭐Note: This is optional and you should be able to continue referencing your generated files as before with no changes.*
+_⭐Note: This is optional and you should be able to continue referencing your generated files as before with no changes._
 
 Previously, you would have to reference the file that gives you handlers and types in your generated folder like this:
 
