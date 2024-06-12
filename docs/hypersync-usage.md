@@ -62,7 +62,7 @@ Topics Filter: The topic filter is used to filter logs based on event signatures
 
 From/To Addresses: The transactions.from and transactions.to fields filter transactions by the sender (from) and recipient (to) addresses. Here, we filter transactions where the sender or recipient address is 0x1e037f97d730Cc881e77F01E409D828b0bb14de0.
 
-The following example shows how to filter transfer events for a specific address on an ERC-20 contract:
+The following example shows how to filter all ERC-20 transfer events for a specific EOA address:
 
 ```bash
 curl --request POST \
