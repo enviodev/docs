@@ -5,15 +5,16 @@ sidebar_label: Hypersync curl examples
 slug: /hypersync-curl-example
 ---
 
-### When to Use curl Requests and When Not
+### When to Use Json API Requests and When Not
 
-Using curl requests to interact with envio.dev can be highly effective for various scenarios, but it's important to understand when it is appropriate to use them and when other methods might be more suitable.
+Using Json API requests to interact with envio.dev can be highly effective for various scenarios, but it's important to understand when it is appropriate to use them and when other methods might be more suitable.
 
-##### Curl advantages:
+##### Json API Advantages:
 
 - Quick Testing and Debugging: curl is ideal for quickly testing and debugging API endpoints without the need for complex setup.
 - Automated Scripts: Perfect for shell scripts that automate HTTP requests efficiently.
 - Simple Data Retrieval: Efficient and easy to use for straightforward data retrieval tasks.
+- Flexibility: The Json API can be used with any programming language that doesn't support the HyperSync Client libraries.
 
 ##### Client libraries advantages:
 
