@@ -20,7 +20,7 @@ Click [<ins>here</ins>](./getting-started.md) for a quickstart guide on how to g
 HyperIndex currently supports indexing on:
 
 - Any EVM-compatible network with an RPC endpoint
-- [Fuel network](./fuel.md)
+- [Fuel Network](./fuel.md)
 
 The secret of HyperIndex’s sync speed lies in using HyperSync for data retrieval.
 

@@ -15,7 +15,7 @@ Until recently, Envio was only available on EVM-compatible blockchains, and now 
 
 ## HyperFuel
 
-HyperFuel is [HyperSync](./overview-hypersync.md) adapted for the [Fuel network](https://fuel.network/) and is exposed as a low-level API for developers and data analysts to create niche, flexible, high-speed queries for all on-chain data.
+HyperFuel is [HyperSync](./overview-hypersync.md) adapted for the [Fuel Network](https://fuel.network/) and is exposed as a low-level API for developers and data analysts to create niche, flexible, high-speed queries for all on-chain data.
 
 Users can interact with the HyperFuel in Rust, Python client, Node Js, or Json API to extract data into parquet files, arrow format, or as typed data.
 
