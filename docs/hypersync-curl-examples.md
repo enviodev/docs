@@ -26,6 +26,86 @@ Using curl requests to interact with envio.dev can be highly effective for vario
 
 ### Curl query examples
 
+#### Get all ERC-20 transfers for the EOA address
+
+The following query shows how to filter all ERC-20 transfer events for a specific EOA address.
+
+Topics Filter: The topic filter is used to filter logs based on event signatures. In this example, the topic hash 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef is the signature for the ERC-20 Transfer event. The filter specifies that we are interested in logs where either the second or third topic (representing the sender and recipient addresses) matches 0x0000000000000000000000001e037f97d730Cc881e77F01E409D828b0bb14de0.
+
+From/To Addresses: The transactions.from and transactions.to fields filter transactions by the sender (from) and recipient (to) addresses. Here, we filter transactions where the sender or recipient address is 0x1e037f97d730Cc881e77F01E409D828b0bb14de0.
+
+```bash
+curl --request POST \
+  --url https://eth.hypersync.xyz/query \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "from_block": 0,
+    "logs": [
+        {
+            "topics": [
+                [
+                    "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+                ],
+                [],
+                [
+                    "0x0000000000000000000000001e037f97d730Cc881e77F01E409D828b0bb14de0"
+                ]
+            ]
+        },
+        {
+            "topics": [
+                [
+                    "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+                ],
+                [
+                    "0x0000000000000000000000001e037f97d730Cc881e77F01E409D828b0bb14de0"
+                ],
+                []
+            ]
+        }
+    ],
+    "transactions": [
+        {
+            "from": [
+                "0x1e037f97d730Cc881e77F01E409D828b0bb14de0"
+            ]
+        },
+        {
+            "to": [
+                "0x1e037f97d730Cc881e77F01E409D828b0bb14de0"
+            ]
+        }
+    ],
+    "field_selection": {
+        "block": [
+            "number",
+            "timestamp",
+            "hash"
+        ],
+        "log": [
+            "block_number",
+            "log_index",
+            "transaction_index",
+            "data",
+            "address",
+            "topic0",
+            "topic1",
+            "topic2",
+            "topic3"
+        ],
+        "transaction": [
+            "block_number",
+            "transaction_index",
+            "hash",
+            "from",
+            "to",
+            "value",
+            "input"
+        ]
+    }
+  }'
+```
+
 #### Get All Logs for a Smart Contract Address
 
 This query returns all logs for a specified smart contract, starting from the beginning of the blockchain. 
