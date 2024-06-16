@@ -108,6 +108,7 @@ module.exports = {
       items: [
         "overview-hypersync",
         "hypersync-usage",
+        "hypersync-query",
         "hypersync-clients",
         "hypersync-curl-examples",
         "hypersync-url-endpoints",
