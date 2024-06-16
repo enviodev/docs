@@ -11,15 +11,18 @@ This page explains how the hypersync query works and how to get the data you nee
 
 ## Table of Contents
 
-1. [Example Query](#example-query) (A simple query example for introduction)
-2. [Query Structure](#query-fields) (Explanation of all query fields)
-3. [Data Schema](#data-schema) (Entire schema for each data table)
-4. [Response Structure](#response-structure) (Explanation of all response fields)
-4. [Query Execution Explained](#query-execution-explained) (Explanation of how queries work)
+1. [Introduction](#introduction) (A simple query example for introduction)
+2. [Query Execution Explained](#query-execution-explained) (Explanation of how queries work)
+3. [Query Structure](#query-fields) (Explanation of all query fields)
+4. [Data Schema](#data-schema) (Entire schema for each data table)
+5. [Response Structure](#response-structure) (Explanation of all response fields)
+6. [Stream and Collect Functions](#stream-and-collect-functions) (Explains the stream and collect functions that are implemented in the client libraries)
 
-## Example Query
+## Introduction
 
-This is an example query that gets some logs and transactions related to a contract at address `0x3f69bb14860f7f3348ac8a5f0d445322143f7fee`.
+This section gives a brief introduction using a simple query example.
+
+Below is an example query that gets some logs and transactions related to a contract at address `0x3f69bb14860f7f3348ac8a5f0d445322143f7fee`.
 
 We will explain the exact semantics of the query in next sections but can just go over the basics here for an introduction.
 
@@ -30,6 +33,8 @@ Also the transactions for the logs that our query matches will be returned. This
 `field_selection` is for selecting the specific fields we want returned. You can think of it like the part where you list column names in an SQL `SELECT` statement. The available tables are `log`, `transaction`, `block` and `trace`. We will give an exact list of available columns in later sections.
 
 We also have a `max_num_logs` parameter here which means the query execution will stop as soon as the server realizes it reached or exceeded ten logs in the response. So this is not an exact limit, but it can be effective when trying to fine tune the query response size or runtime.
+
+If you want to drive this query until the end of the blockchain height or if you want to build a full data pipeline, it is recommended to use the `collect` and `stream` functions that are implemented in the client libraries.
 
 ```json
 {
@@ -64,6 +69,32 @@ We also have a `max_num_logs` parameter here which means the query execution wil
 	"max_num_logs": 10
 }
 ```
+
+## Query Execution Explained
+
+This section explains how the query executes on the server, step-by-step.
+
+#### Preliminary
+
+The data in hypersync server is split into groups by block number. Each groups consists of data for a
+ contiguous block range. When the query runs, these groups are always queried atomically, meaning if a group
+ is queried it is never queried in half. This is important when considering limit arguments like `max_num_logs`
+ or when considering time/response_size limits. If server realzes it reached a limit then it will terminate the
+ query after it finishes the current data group it is querying and then return the response to the user. On the
+ response it will put `next_block` value which is the block the query stopped at. 
+
+#### Query limits
+
+- <b>Time</b>: There is a server-configured time limit that applies to all queries. This limit can be exceeded slightly by the server, the reason is explained in the preliminary above.
+- <b>Response size</b>: There is a server-configured response size limit that applies to all queries. But the user can also set a lower response size limit in their query via max_num_* parameters. This limit can be exceeded slightly by the server, the reason is explained in the preliminary above.
+- <b>to_block</b>: This can be set by the user in query. The number is exclusive so the query will go up-to `to_block` but won't include data from this block. This limit won't be exceeded by the server so the query always will stop at this block number and will not include data from this block number or the later blocks. Also the next_block will be equal to this block number if none of the other limits triggered before server reached this block number.
+
+#### Steps
+
+- Server receives the query and checks which block the query starts at.
+- It finds the data group it should start from.
+- It iterates through the data groups using the query until it hits some limit
+- When a limit is hit, the response is serialised and sent back to the client.
 
 ## Query Fields
 
@@ -480,6 +511,18 @@ struct RollbackGuard {
 }
 ```
 
-## Query Execution Explained
+## Stream and Collect Functions
 
-TODO
+This section explains how the `stream` and `collect` functions work on the client libraries. These functions run the query multiple times internally so they can be harder to understand compared to how a single query works.
+
+<b>Disclaimer</b>: These functions are not designed to be used in a rollback context, if you are at the tip of the chain we recommend implementing a loop using one of the `get` functions from the client library you are using and handling the rollbacks manually.
+
+#### Stream
+
+Stream function runs many internal queries concurrently and gives back the results as they come. It returns a stream handle that can be used to receive the results. It pipelines decoding/decompressing etc. of response chunks so user can get a very efficient experience out of the box. It will stream data until it reaches query.to_block or if to_block was not speicified in the query, it runs until it reaches chain height at the time of the stream start (it gets height of chain when it is starting the stream and runs until it reaches it).
+
+<b>WARNING</b>: If you are opening/closing many streams in your program, it is recommended to explicitly call `close` function on the stream handle so there is no resource leakage.
+
+#### Collect
+
+The collect function essentially calls `stream` internally and collects all of the data into a single response. The `collect_parquet` function can be used to pipe data into a parquet file, it doesn't accumulate all data in memory so can be used to collect data that doesn't fit in RAM. We still recommend chunking the `collect_parquet` calls so you don't end up with big parquet files.
