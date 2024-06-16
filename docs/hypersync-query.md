@@ -36,6 +36,8 @@ We also have a `max_num_logs` parameter here which means the query execution wil
 
 If you want to drive this query until the end of the blockchain height or if you want to build a full data pipeline, it is recommended to use the `collect` and `stream` functions that are implemented in the client libraries.
 
+<b>TIP</b>: set `RUST_LOG` environment variable to `trace` if you want to see more logs when using the client libraries.
+
 ```json
 {
 	"from_block": 0,
@@ -526,3 +528,5 @@ Stream function runs many internal queries concurrently and gives back the resul
 #### Collect
 
 The collect function essentially calls `stream` internally and collects all of the data into a single response. The `collect_parquet` function can be used to pipe data into a parquet file, it doesn't accumulate all data in memory so can be used to collect data that doesn't fit in RAM. We still recommend chunking the `collect_parquet` calls so you don't end up with big parquet files.
+
+<b>TIP</b>: set `RUST_LOG` environment variable to `trace` if you want to see more logs when using the client libraries.
