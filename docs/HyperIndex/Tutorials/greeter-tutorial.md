@@ -126,12 +126,12 @@ Once you have verified that the indexer is working for the Greeter contracts, th
 
 Deploying an indexer onto the hosted service allows you to extract information via graphQL queries into your front-end or some back-end application.
 
-Navigate to the [hosted service](https://envio.dev/app/login) to start deploying your indexer and refer to this [documentation](./hosted-service.md) for more information on deploying your indexer.
+Navigate to the [hosted service](https://envio.dev/app/login) to start deploying your indexer and refer to this [documentation](../../HyperIndex/Hosted_Service/hosted-service.md) for more information on deploying your indexer.
 
 ### What next?
 
 Once you have successfully finished the Greeter tutorial, you are ready to become a blockchain indexing wizard!
 
-Jump into [Importing Contracts](./contract-import.md) page to generate a basic indexing template for a contract that is deployed on blockchain!
+Jump into [Importing Contracts](../../HyperIndex/contract-import.md) page to generate a basic indexing template for a contract that is deployed on blockchain!
 
 You can also start to modify the handlers to your own custom indexing logic.

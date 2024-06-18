@@ -231,7 +231,7 @@ The contract-specific details that will be automatically populated in the `confi
 
 Users can remove the events from the configuration file which do not need to be indexed. By default the contract import process populates the configuration file for all events.
 
-For more information on how to write the configuration file, go [here](./configuration-file.md).
+For more information on how to write the configuration file, go [here](../HyperIndex/Guides/configuration-file.md).
 
 However, users are not required to do make any changes to the `config.yaml` file for the indexer to run.
 
@@ -245,7 +245,7 @@ Additionally, `EventsSummary` entity will be created that:
 - Stores a count of how many entities of each type have been created
 - Links to a vector of entities of each type that have been created
 
-For more information on how to write the schema file, go [here](./schema.md).
+For more information on how to write the schema file, go [here](../HyperIndex/Guides/schema-file.md).
 
 ## Event Handlers
 
@@ -258,4 +258,4 @@ For all events, the handler function will perform two operations:
 - Create an instance of the event-specific entity with all the parameters that have been emitted
 - Update the event-specific entity counter in the loaded `EventsSummary` entity
 
-For more information on how to write the event handlers file, go [here](./event-handlers.mdx).
+For more information on how to write the event handlers file, go [here](../HyperIndex/Guides/event-handlers.mdx).

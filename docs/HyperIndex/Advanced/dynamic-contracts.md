@@ -59,7 +59,7 @@ context.contractRegistration.addSimpleNft(event.params.contractAddress);
 
 > The syntax is exactly same for JavaScript, TypeScript and ReScript.
 
-For more information on how to write the event handlers file, go [here](./event-handlers.mdx).
+For more information on how to write the event handlers file, go [here](../../HyperIndex/Guides/event-handlers.mdx).
 
 ## Important Note
 
