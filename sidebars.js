@@ -30,16 +30,16 @@ module.exports = {
             "testing",
             "running-locally",
             "navigating-hasura",
-            {
-              type: "category",
-              label: "Hosted Service",
-              items: [
-                "hosted-service",
-                "hosted-service-deployment",
-                "hosted-service-billing",
-              ],
-            },
             "cli-commands",
+          ],
+        },
+        {
+          type: "category",
+          label: "Hosted Service",
+          items: [
+            "hosted-service",
+            "hosted-service-deployment",
+            "hosted-service-billing",
           ],
         },
         {
@@ -115,10 +115,7 @@ module.exports = {
         {
           type: "category",
           label: "HyperFuel",
-          items: [
-            "hyperfuel",
-            "hyperfuel-query"
-          ],
+          items: ["hyperfuel", "hyperfuel-query"],
         },
       ],
     },
