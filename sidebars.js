@@ -56,6 +56,7 @@ module.exports = {
             "HyperIndex/Advanced/terminology",
             "HyperIndex/Advanced/async-mode",
             "HyperIndex/Advanced/labels",
+            "HyperIndex/Advanced/performance/performance",
           ],
         },
         {
