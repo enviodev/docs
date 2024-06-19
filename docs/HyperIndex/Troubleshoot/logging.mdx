@@ -208,4 +208,8 @@ export LOG_LEVEL="trace"
 
 will set the log level of the current environment to `trace`.
 
+### Troubleshooting
+
+In development, sometimes it can be nice to turn the Terminal UI off, do this with the `TUI_OFF="true"` environment variable, or the `--tui-off` flag. It is a known issue that the Terminal UI sometimes obfuscates errors and crashes in the terminal, so turning it off can make that process of debugging clearer. Of course, you can add `LOG_STRATEGY="file-only"` or `LOG_STRATEGY="both-prettyconsole"` and view the logs in a file rather than the terminal and keep the TUI running.
+
 ---
