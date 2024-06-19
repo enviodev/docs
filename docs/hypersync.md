@@ -13,7 +13,7 @@ Envio HyperSync is our blazing-fast indexed layer on top of the blockchain that 
 
 What would usually take hours to sync ~100,000 events can now be done in the order of less than a minute.
 
-HyperSync is the default method used by HyperIndex for all syncing. Visit [here](../../HyperSync/overview-hypersync.md) to learn more about using the HyperSync python/ts/rust clients for further more custom needs of extracting data.
+HyperSync is the default method used by HyperIndex for all syncing. Visit [here](./overview-hypersync.md) to learn more about using the HyperSync python/ts/rust clients for further more custom needs of extracting data.
 
 Since this service is a layer above the blockchain we maintain and host this service for each supported network.
 

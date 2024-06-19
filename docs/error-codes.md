@@ -168,7 +168,7 @@ Avoid using reserved words in the schema file.
 
 ### `EE211`: Unsupported Arrays of Entities
 
-Please use one of the methods for referencing entities outlined in the [<ins>documentation</ins>](../../HyperIndex/Guides/schema-file.md).
+Please use one of the methods for referencing entities outlined in the [<ins>documentation</ins>](./schema.md).
 
 ### `EE212`: Schema contains the following reserved enum names
 

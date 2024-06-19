@@ -7,7 +7,7 @@ slug: /overview-hypersync
 
 <!-- TODO-update: num of chains needs to be updated regularily -->
 
-HyperSync is highly specialized data node built in rust aimed at massively improving data retrieval speeds while also providing flexiblity. It can be used via Python, Rust or NodeJs clients and supports more than [45 EVM](../HyperIndex/Advanced/hypersync.md) chains and Fuel.
+HyperSync is highly specialized data node built in rust aimed at massively improving data retrieval speeds while also providing flexiblity. It can be used via Python, Rust or NodeJs clients and supports more than [45 EVM](./hypersync.md) chains and Fuel.
 
 It is an ideal solution for indexers, block explorers, data analysts, bridges and other applications or usecases relying on on-chain information and focussed on performance. Do things like:
 
