@@ -118,7 +118,8 @@ Below is a list of raw event information that can be accessed:
 - `srcAddress`
 - `transactionHash`
 - `transactionIndex`
-- `txOrigin` (this is an optional parameter that is only present for events fetched via HyperSync, not via RPC Sync)
+- `txOrigin` - the EOA that made the transaction (this is an optional parameter that is only present for events fetched via HyperSync, not via RPC Sync)
+- `txTo` - the 'to' field of the top level transaction, not necessarily the same contract as the contract that emitted the event (this is an optional parameter that is only present for events fetched via HyperSync, not via RPC Sync)
 
 ### Context
 
