@@ -28,7 +28,9 @@ You can integrate with HyperFuel using any of our clients:
 - Nodejs: https://github.com/enviodev/hyperfuel-client-node
 - Json API: https://github.com/enviodev/hyperfuel-json-api
 
-> HyperFuel supports Fuel's latest testnet.
+> HyperFuel supports Fuel's testnet at the endpoint https://fuel-testnet.hypersync.xyz
+
+Read [HyperFuel documentation](../HyperSync/HyperFuel/hyperfuel.md) to learn more.
 
 ## HyperIndex
 

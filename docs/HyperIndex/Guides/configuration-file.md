@@ -7,7 +7,7 @@ slug: /configuration-file
 
 # Setting up Configuration File
 
-The `config.yaml` outlines the specifications for the indexer including details including network and contract specifications and the event information to be used in the indexing process.
+The `config.yaml` outlines the specifications for the indexer, including details such as network and contract specifications and the event information to be used in the indexing process.
 
 ## Field Descriptions
 
