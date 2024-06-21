@@ -9,7 +9,7 @@ const config = {
   favicon: "img/favicon.ico",
   url: "https://docs.envio.dev",
   baseUrl: "/",
-  organizationName: "float-capital",
+  organizationName: "enviodev",
   projectName: "indexer-docs",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
