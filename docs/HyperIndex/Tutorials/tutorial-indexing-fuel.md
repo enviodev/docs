@@ -36,7 +36,7 @@ Now that you have installed the prerequisite packages let's begin the practical 
 Open your terminal in an empty directory and initialize a new indexer by running the command:
 
 ```bash
-npx envio@1.2 init
+npx envio@1.3 init
 ```
 
 In the following prompt, let's name our indexer `sway-farm-indexer`:
@@ -61,7 +61,7 @@ Then, choose a language of your choice for the event handlers. TypeScript is the
 [↑↓ to move, enter to select, type to filter]
 ```
 
-Next, we have the new prompt for a blockchain ecosystem. Previously Envio supported only EVM, but now it's possible to choose between `Evm`, `Fuel` and other networks in the future:
+Next, we have the new prompt for a blockchain ecosystem. Previously Envio supported only EVM, but now it's possible to choose between `Evm`, `Fuel` and other VMs in the future:
 
 ```bash
 ? Choose blockchain ecosystem
@@ -70,80 +70,136 @@ Next, we have the new prompt for a blockchain ecosystem. Previously Envio suppor
 [↑↓ to move, enter to select, type to filter]
 ```
 
-The contract import feature has not yet been released for the Fuel Network, so let's choose `Template` and `Greeter`.
+In the following prompt, you can choose an initialization option. There's a Greeter template for Fuel, which is an excellent way to learn more about HyperIndex. But since we have an existing contract, the `Contract Import` option is the best way to create an indexer:
 
-After the project is finished initializing, you should see the following line:
+```bash
+? Choose an initialization option
+  Template
+> Contract Import
+[↑↓ to move, enter to select, type to filter]
+```
+
+> A separate [Tutorial](./greeter-tutorial) page provides more details about the `Greeter` template.
+
+Next it'll ask us for an ABI file. You can find it in the `./out/debug` directory after building your [Sway](https://docs.fuel.network/docs/sway/) contract with `forc build`:
+
+```bash
+? What is the path to your json abi file? ./sway-farm/contract/out/debug/contract-abi.json
+```
+
+After the ABI file is provided, Envio parses all possible events you can use for indexing:
+
+```bash
+? Which events would you like to index?
+> [x] NewPlayer
+  [x] PlantSeed
+  [x] SellItem
+  [x] InvalidError
+  [x] Harvest
+  [x] BuySeeds
+  [x] LevelUp
+[↑↓ to move, space to select one, → to all, ← to none, type to filter]
+```
+
+The current version supports indexing `LogData` and `Log` receipts. Join our [Discord](https://discord.com/invite/gt7yEUZKeB) channel to make sure you catch all new releases. We have `Transfer`, `TransferOut`, `Mint`, `Burn`, and `Call` receipts support on our roadmap.
+
+Let's select the events we want to index. I opened the code of the [contract file](https://github.com/FuelLabs/sway-farm/blob/47e3ed5a91593ebcf8d2c67ae6fad41d9954c8a8/contract/src/abi_structs.sw#L365-L406) and realized that for a leaderboard we need only events which update player information. Hence, I left only `NewPlayer`, `LevelUp`, and `SellItem` selected in the list. We'd want to index more events in real life, but this is enough for the tutorial.
+
+```bash
+? Which events would you like to index?
+> [x] NewPlayer
+  [ ] PlantSeed
+  [x] SellItem
+  [ ] InvalidError
+  [ ] Harvest
+  [ ] BuySeeds
+  [x] LevelUp
+[↑↓ to move, space to select one, → to all, ← to none, type to filter]
+```
+
+Just a few simple questions left. Let's call our contract `SwayFarm`:
+
+```bash
+? What is the name of this contract? SwayFarm
+```
+
+Set an address for the deployed contract:
+
+```bash
+? What is the address of the contract? 0xf5b08689ada97df7fd2fbd67bee7dea6d219f117c1dc9345245da16fe4e99111
+[Use the proxy address if your abi is a proxy implementation]
+```
+
+And finish the initialization process:
+
+```bash
+? Would you like to add another contract?
+> I'm finished
+  Add a new address for same contract on same network
+  Add a new contract (with a different ABI)
+[Current contract: SwayFarm, on network: Fuel]
+```
+
+If you see the following line, it means we are already halfway through 🙌
 
 ```
 Please run `cd sway-farm-indexer` to run the rest of the envio commands
 ```
 
-We are already halfway through 🙌
-
 Let's open the indexer in an IDE and start adjusting it for our farm 🍅
 
-## Adjusting the Indexer for Sway Farm
+## Walk through initialized indexer
 
-Currently, using the `Greeter` template is the simplest way to create a Fuel indexer. Still, we must admit that the `Greeter` indexer is not quite what we want. So, let's start by adjusting its parts to make it work for Sway Farm.
+At this point, we should already have a working indexer. You can start it by running `pnpm dev`, which we cover in more detail later in the tutorial.
 
-> 🧠 A separate [Tutorial](./greeter-tutorial) page provides more details about the `Greeter` template.
+Everything is configured by modifying the 3 files below. Let's walk through each of them.
 
-It's done via modifying the 3 files below:
+- config.yaml [`Guide`](../Guides/configuration-file.md)
+- schema.graphql [`Guide`](../Guides/schema-file.md)
+- EventHandlers.\* [`Guide`](../Guides/event-handlers.mdx)
 
-- [`config.yaml`](./configuration-file)
-- [`schema.graphql`](./schema)
-- [`src/EventHandlers.*`](./event-handlers)
+> (\* depending on the language chosen for indexer)
 
-> (\* depending on the language chosen for the indexer)
+### `config.yaml`
 
-I suggest to go one by one and the first in line is `config.yaml`.
+The `config.yaml` outlines the specifications for the indexer, including details such as network and contract specifications and the event information to be used in the indexing process.
 
-### Update `config.yaml`
-
-In the file, we need to change a few configurations:
-
-- Rename indexer to `Sway Farm Indexer`
-- Change the contract name to `SwayFarm`
-- Set an address for the deployed contract
-- Update ABI and the path to the location. You can get ABI by building the contract using `forc build`. In my case, I found the latest version of the ABI in the [`sway-farm`](https://github.com/FuelLabs/sway-farm/blob/47e3ed5a91593ebcf8d2c67ae6fad41d9954c8a8/frontend/src/sway-api/contracts/factories/ContractAbi__factory.ts#L16) GitHub repo
-- Lastly, we need to list the events we want to index. To get them, I opened the list of logged events of the [contract file](https://github.com/FuelLabs/sway-farm/blob/47e3ed5a91593ebcf8d2c67ae6fad41d9954c8a8/contract/src/abi_structs.sw#L365-L406) and realized that for a leaderboard we need only events which update player information. Hence, I added `NewPlayer`, `LevelUp`, and `SellItem` events to the list. We'd want to index more events in real life, but this is enough for the tutorial.
-
-```diff
-- name: Fuel Greeter Indexer
-+ name: Sway Farm Indexer
+```
+name: sway-farm-indexer
+ecosystem: fuel
 networks:
   - id: 0
     start_block: 0
     contracts:
--     - name: Greeter
--       address: 0xb9bc445e5696c966dcf7e5d1237bd03c04e3ba6929bdaedfeebc7aae784c3a0b
--       abi_file_path: abis/greeter-abi.json
-+     - name: SwayFarm
-+       address: 0xf5b08689ada97df7fd2fbd67bee7dea6d219f117c1dc9345245da16fe4e99111
-+       abi_file_path: abis/sway-farm-abi.json
-        handler: ./src/EventHandlers.ts
+      - name: SwayFarm
+        address:
+          - 0xf5b08689ada97df7fd2fbd67bee7dea6d219f117c1dc9345245da16fe4e99111
+        abi_file_path: abis/swayfarm-abi.json
+        handler: src/EventHandlers.ts
         events:
--         - name: NewGreeting
--         - name: ClearGreeting
-+         - name: NewPlayer
-+         - name: SellItem
-+         - name: LevelUp
+          - name: SellItem
+            logId: "11192939610819626128"
+          - name: LevelUp
+            logId: "9956391856148830557"
+          - name: NewPlayer
+            logId: "169340015036328252"
 ```
 
-You can notice that we use [Sway](https://docs.fuel.network/docs/sway/) struct names for the `events` configuration. Envio will automatically find `LogData` [receipts](https://docs.fuel.network/docs/specs/abi/receipts) containing data of the desired struct type. In case you log non-struct data, you can set the log id from ABI explicitly:
+In the tutorial, we don't need to adjust it in any way. But later you can modify the file add more events for indexing.
+
+As a nice to have, you can use a [Sway](https://docs.fuel.network/docs/sway/) struct name without specifying a `logId`, like this:
 
 ```
-- name: MyEvent
-  logId: "1515152261580153489"
+- name: SellItem
+- name: LevelUp
+- name: NewPlayer
 ```
 
-> The current version supports indexing only `LogData` and `Log` receipts. Join our [Discord](https://discord.com/invite/gt7yEUZKeB) channel to make sure you catch all new releases. We have `Transfer`, `TransferOut`, `Mint`, `Burn`, and `Call` receipts support on our roadmap.
-
-### Update `schema.graphql`
+### `schema.graphql`
 
 The `schema.graphql` file serves as a representation of your application's data model. It defines entity types that directly correspond to database tables, and the event handlers you create are responsible for creating and updating records within those tables. Additionally, the GraphQL API is automatically generated based on the entity types specified in the `schema.graphql` file, to allow access for the indexed data.
 
-> 🧠 A separate [Guide](./schema) page provides more details about the `schema.graphql` file.
+> 🧠 A separate [Guide](../Guides/schema-file.md) page provides more details about the `schema.graphql` file.
 
 For the leaderboard, we need only one entity representing the player. Let's create it:
 
@@ -157,15 +213,32 @@ type Player {
 
 We will use the user address as an ID. The fields `farmingSkill` and `totalValueSold` are `u64` in Sway, so to safely map them to JavaScript value, we'll use `BigInt`.
 
-### Update `EventHandlers.ts`
+### `EventHandlers.ts`
 
-Before we start writing our first event handlers, let's run a codegen script. It'll use `config.yaml` and `schema.graphql` to generate code for the indexer and types we will use in the event handler.
+The event handlers generated by contract import are quite simple and only add an entity to a DB when a related event is indexed.
+
+```typescript
+/*
+ * Please refer to https://docs.envio.dev for a thorough guide on all Envio indexer features
+ */
+import { SwayFarmContract, SwayFarm_SellItemEntity } from "generated";
+
+SwayFarmContract.SellItem.handler(({ event, context }) => {
+  const entity: SwayFarm_SellItemEntity = {
+    id: `${event.transactionId}_${event.receiptIndex}`,
+  };
+
+  context.SwayFarm_SellItem.set(entity);
+});
+```
+
+Let's modify the handlers to update the `Player` entity instead. But before we start, we need to run `pnpm codegen` to generate utility code and types for the `Player` entity we've added.
 
 ```bash
 pnpm codegen
 ```
 
-Now, if you open `EventHandlers.ts`, you should see some TypeScript errors. That's fine, let's delete all the Greeter indexer code and write our first Sway Farm event handler.
+It's time for a little bit of coding. The indexer is very simple; it requires us only to pass event data to an entity.
 
 ```typescript
 import { SwayFarmContract } from "generated";
@@ -174,7 +247,7 @@ import { SwayFarmContract } from "generated";
 Registers a handler that processes NewPlayer event
 on the SwayFarm contract and stores the players in the DB
 */
-SwayFarmContract.NewPlayer.handlerAsync(async ({ event, context }) => {
+SwayFarmContract.NewPlayer.handler(({ event, context }) => {
   // Set the Player entity in the DB with the intial values
   context.Player.set({
     // The address in Sway is a union type of user Address and ContractID. Envio supports most of the Sway types, and the address value was decoded as a discriminated union 100% typesafe
@@ -184,14 +257,8 @@ SwayFarmContract.NewPlayer.handlerAsync(async ({ event, context }) => {
     totalValueSold: 0n,
   });
 });
-```
 
-Actually, this is already enough to start the indexer and get the list of all players, but let's spend a few more seconds and add the rest of the event handlers, so we have synced `farmingSkill` and `totalValueSold` data in our DB.
-
-```typescript
-// Code from above ...
-
-SwayFarmContract.LevelUp.handlerAsync(async ({ event, context }) => {
+SwayFarmContract.LevelUp.handler(({ event, context }) => {
   const playerInfo = event.data.player_info;
   context.Player.set({
     id: event.data.address.payload.bits,
@@ -200,7 +267,7 @@ SwayFarmContract.LevelUp.handlerAsync(async ({ event, context }) => {
   });
 });
 
-SwayFarmContract.SellItem.handlerAsync(async ({ event, context }) => {
+SwayFarmContract.SellItem.handler(({ event, context }) => {
   const playerInfo = event.data.player_info;
   context.Player.set({
     id: event.data.address.payload.bits,
@@ -211,6 +278,8 @@ SwayFarmContract.SellItem.handlerAsync(async ({ event, context }) => {
 ```
 
 Without overengineering, simply set the player data into the database. What's nice is that whenever your ABI or entities in `graphql.schema` change, Envio regenerates types and shows the compilation error.
+
+> 🧠 You can find the indexer repo created during the tutorial on [GitHub](https://github.com/enviodev/sway-farm-indexer).
 
 ## Starting the Indexer
 

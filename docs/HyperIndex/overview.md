@@ -23,6 +23,6 @@ The rest of the documentation guides users through the simple steps of configuri
 >
 > - It has not been audited for security purposes.
 > - Envio currently supports Linux and MacOS and not Windows (only Windows Subsystem for Linux is supported).
-> - We appreciate your patience until we get there. Until then, we are happy to answer all questions in our [Discord](https://discord.gg/Q9qt8gZ2fX).
+> - Join our [Discord](https://discord.gg/Q9qt8gZ2fX) channel to make sure you catch all new releases. We appreciate your patience until we get there.
 
 ---
