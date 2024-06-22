@@ -17,27 +17,12 @@ const config = {
     defaultLocale: "en",
     locales: ["en"],
   },
-  plugins: [
-    [
-      "@docusaurus/plugin-client-redirects",
-      {
-        redirects: [
-          {
-            from: "/docs/quickstart",
-            to: "/docs/overview",
-          },
-        ],
-      },
-    ],
-  ],
   presets: [
     [
       "classic",
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
-        docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
-        },
+        docs: false,
         blog: {
           showReadingTime: true,
           blogTitle: "Blog",
@@ -57,7 +42,6 @@ const config = {
   ],
 
   themeConfig:
-
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
@@ -73,15 +57,30 @@ const config = {
         },
         items: [
           {
-            to: "docs/overview",
-            activeBasePath: "docs",
-            label: "Docs",
-            position: "left",
+            to: 'docs/HyperSync/overview',
+            label: 'HyperSync Docs',
+            position: 'left',
           },
+          //// I will add versioning later
+          // {
+          //   type: 'docsVersionDropdown',
+          //   docsPluginId: 'HyperSync',
+          //   position: 'left',
+          // },
           {
-            to: "blog",
-            label: "Blog",
-            position: "left",
+            to: 'docs/HyperIndex/overview',
+            label: 'HyperIndex Docs',
+            position: 'left',
+          },
+          // {
+          //   type: 'docsVersionDropdown',
+          //   docsPluginId: 'HyperIndex',
+          //   position: 'left',
+          // },
+          {
+            to: 'blog',
+            label: 'Blog',
+            position: 'left',
           },
           {
             href: "https://github.com/enviodev",
@@ -94,34 +93,17 @@ const config = {
         apiKey: "0f966036bca0e26d512dc59f023d64c5",
         indexName: "envio",
         appId: "584MK2OMPZ",
+        contextualSearch: true, // algolia prioritizes results that are more related to the current section of the docs.
       },
       footer: {
         style: "dark",
         links: [
-          // {
-          //   title: "Docs",
-          //   items: [
-          //     {
-          //       label: "Tutorial",
-          //       to: "docs/intro",
-          //     },
-          //   ],
-          // },
           {
             title: "Community",
             items: [
-              {
-                label: "Discord",
-                href: "https://discord.gg/Q9qt8gZ2fX",
-              },
-              {
-                label: "Twitter",
-                href: "https://twitter.com/envio_indexer",
-              },
-              {
-                label: "Lens",
-                href: "https://lenster.xyz/u/envio.lens",
-              },
+              { label: "Discord", href: "https://discord.gg/Q9qt8gZ2fX" },
+              { label: "Twitter", href: "https://twitter.com/envio_indexer" },
+              { label: "Lens", href: "https://lenster.xyz/u/envio.lens" }
             ],
           },
           {
@@ -146,6 +128,42 @@ const config = {
         additionalLanguages: ['rescript', 'bash', 'diff', 'json', 'javascript', 'typescript'],
       },
     }),
+  plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'HyperSync',
+        path: 'docs/HyperSync',
+        routeBasePath: 'docs/HyperSync',
+        sidebarPath: require.resolve('./sidebarsHyperSync.js'),
+        showLastUpdateAuthor: false,
+        showLastUpdateTime: false,
+        // versions: {
+        //   current: {
+        //     label: 'latest(4.0.0)',
+        //     path: '4.0.0',
+        //   },
+        // },
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'HyperIndex',
+        path: 'docs/HyperIndex',
+        routeBasePath: 'docs/HyperIndex',
+        sidebarPath: require.resolve('./sidebarsHyperIndex.js'),
+        showLastUpdateAuthor: false,
+        showLastUpdateTime: false,
+        // versions: {
+        //   current: {
+        //     label: '1.2.0',
+        //     path: '1.2.0',
+        //   },
+        // },
+      },
+    ],
+  ],
 };
 
 module.exports = config;

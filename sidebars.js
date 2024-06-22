@@ -83,6 +83,7 @@ module.exports = {
           ],
         },
         "HyperIndex/licensing",
+        "HyperIndex/fuel/fuel",
         // {
         //   type: "category",
         //   label: "Education",
@@ -126,16 +127,15 @@ module.exports = {
             "HyperSync/HyperFuel/hyperfuel-query",
           ],
         },
+        {
+          type: "category",
+          label: "HyperRPC",
+          items: [
+            "HyperSync/HyperRPC/overview-hyperrpc",
+          ],
+        },
       ],
     },
-    {
-      type: "category",
-      label: "HyperRPC",
-      items: [
-        "HyperRPC/overview-hyperrpc",
-      ],
-    },
-    "fuel/fuel",
   ],
 };
 

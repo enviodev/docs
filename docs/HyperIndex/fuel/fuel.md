@@ -15,7 +15,7 @@ Until recently, Envio was only available on EVM-compatible blockchains, and now 
 
 ## HyperFuel
 
-HyperFuel is [HyperSync](../HyperSync/overview-hypersync.md) adapted for the [Fuel Network](https://fuel.network/) and is exposed as a low-level API for developers and data analysts to create niche, flexible, high-speed queries for all on-chain data.
+HyperFuel is [HyperSync](/docs/HyperSync/overview) adapted for the [Fuel Network](https://fuel.network/) and is exposed as a low-level API for developers and data analysts to create niche, flexible, high-speed queries for all on-chain data.
 
 Users can interact with the HyperFuel in Rust, Python client, Node Js, or Json API to extract data into parquet files, arrow format, or as typed data.
 
@@ -30,13 +30,13 @@ You can integrate with HyperFuel using any of our clients:
 
 > HyperFuel supports Fuel's testnet at the endpoint https://fuel-testnet.hypersync.xyz
 
-Read [HyperFuel documentation](../HyperSync/HyperFuel/hyperfuel.md) to learn more.
+Read [HyperFuel documentation](/docs/HyperSync/HyperFuel/hyperfuel) to learn more.
 
 ## HyperIndex
 
-[HyperIndex](../HyperIndex/overview.md) is a real-time indexer built to provide developers with a seamless and efficient indexing solution.
+[HyperIndex](../overview.md) is a real-time indexer built to provide developers with a seamless and efficient indexing solution.
 
-Learn [How to Index Data on Fuel in \<5mins using Envio](../HyperIndex/Tutorials/tutorial-indexing-fuel.md) in a step-by-step tutorial.
+Learn [How to Index Data on Fuel in \<5mins using Envio](../Tutorials/tutorial-indexing-fuel.md) in a step-by-step tutorial.
 
 Or gain inspiration from already running indexers built by other developers on Fuel:
 
@@ -46,7 +46,7 @@ Or gain inspiration from already running indexers built by other developers on F
 
 ### State of the art
 
-Currently, `HyperIndex` on Fuel supports the most features EVM indexer does, including advanced features such as [Dynamic Contracts / Factories](../HyperIndex/Advanced/dynamic-contracts.md), [Testing Framework](/docs/testing) and [Hosted Service](../HyperIndex/Hosted_Service/hosted-service.md).
+Currently, `HyperIndex` on Fuel supports the most features EVM indexer does, including advanced features such as [Dynamic Contracts / Factories](../Advanced/dynamic-contracts.md), [Testing Framework](/docs/testing) and [Hosted Service](../Hosted_Service/hosted-service.md).
 
 Also, compared to EVM, Fuel provides many more kinds of possible events. Now, we support indexing only `LogData` receipts (the `log` calls in a [Sway](https://docs.fuel.network/docs/sway/) contract), but there's a plan to also support `Transfer`, `TransferOut`, `Mint`, `Burn`, and `Call` receipts in the near future.
 
