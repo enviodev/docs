@@ -16,7 +16,7 @@ We’re thrilled to announce that Envio has recently fully integrated its Hypers
 
 ## What Envio Supports on Fuel?
 
-[Envio HyperSync’s](https://docs.envio.dev/docs/overview-hypersync) hyper-performant data infrastructure serves as an accelerated data query layer on top of the Fuel Network that allows application developers and data analysts to easily parse, query, and analyse Fuel data.
+[Envio HyperSync’s](https://docs.envio.dev/docs/HyperIndex/overview-hypersync) hyper-performant data infrastructure serves as an accelerated data query layer on top of the Fuel Network that allows application developers and data analysts to easily parse, query, and analyse Fuel data.
 
 With its flexible API, developers and data analysts can interact with the Hypersync API using either [JavaScript](https://www.javascript.com/), [Python](https://www.python.org/) or [Rust](https://www.rust-lang.org/) clients and can choose to query their data in JSON, Arrow, and Parquet data formats.
 
@@ -118,14 +118,14 @@ Envio is a purpose-built, modern blockchain indexing solution and data provider 
 
 As part of the next evolution in the Envio x Fuel partnership, Envio will be looking to add support for its HyperIndex product to the Fuel ecosystem, a graph-like indexer that equips developers with the necessary tools to easily create custom [GraphQL](https://graphql.org/) APIs and Web3 backends for their applications.
 
-[HyperIndex](https://docs.envio.dev/docs/overview) is a developer-first, feature-rich data indexing framework that allows indexed data to be easily accessed through GraphQL queries, empowering developers with the ability to retrieve specific information.
+[HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) is a developer-first, feature-rich data indexing framework that allows indexed data to be easily accessed through GraphQL queries, empowering developers with the ability to retrieve specific information.
 
 HyperIndex is currently only available on EVM networks and offers application developers developers automatic code generation, flexible language support, quickstart templates, and a reliable cost-effective hosted service, overcoming challenges often associated with managing your own infrastructure.
 
 Here are some HyperIndex features Fuel developers can expect:
 
 - [HyperSync](https://docs.envio.dev/docs/hypersync): To ensure blazing-fast retrieval of historical on-chain data and a seamless developer experience, Envio’s HyperSync automatically powers HyperIndex for 100 x sync times than standard RPC (use of RPC is optional).
-- [No-code Quickstart](https://docs.envio.dev/docs/contract-import): Autogenerate the key boilerplate for an entire Indexer project off single or multiple smart contracts. Deploy within minutes.
+- [No-code Quickstart](https://docs.envio.dev/docs/HyperIndex/contract-import): Autogenerate the key boilerplate for an entire Indexer project off single or multiple smart contracts. Deploy within minutes.
 - [Multi-chain Support](https://docs.envio.dev/docs/multichain-indexing): Aggregate data across multiple networks into a single database. Query all your data with a unified GraphQL API.
 - [Asynchronous Mode](https://docs.envio.dev/docs/async-mode): Fetch data from off-chain storage such as IPFS, or contract state (e.g. smart contract view functions).
 - [Factory Contracts](https://docs.envio.dev/docs/dynamic-contracts): Automatically process events emitted by all child contracts that are created by the specified factory.
@@ -133,7 +133,7 @@ Here are some HyperIndex features Fuel developers can expect:
 
 ## Relevant Links
 
-- [Envio HyperSync](https://docs.envio.dev/docs/overview-hypersync)
+- [Envio HyperSync](https://docs.envio.dev/docs/HyperIndex/overview-hypersync)
 - [Fuel’s HyperSync Doumentation](https://github.com/enviodev/hypersync-fuel-docs)
 
 ## About Fuel

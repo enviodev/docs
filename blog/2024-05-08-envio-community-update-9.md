@@ -29,7 +29,7 @@ Learn more [here](https://x.com/Sprkfi/status/1777730945853907128).
 
 ## New HyperSync Network Support ⚡
 
-We’re excited to announce that Envio [HyperSync](https://docs.envio.dev/docs/overview-hypersync) has expanded enhanced indexing support for developers building on [Polygon’s](https://polygon.technology/) [Amoy](https://polygon.technology/blog/introducing-the-amoy-testnet-for-polygon-pos) Testnet. ⚡
+We’re excited to announce that Envio [HyperSync](https://docs.envio.dev/docs/HyperIndex/overview-hypersync) has expanded enhanced indexing support for developers building on [Polygon’s](https://polygon.technology/) [Amoy](https://polygon.technology/blog/introducing-the-amoy-testnet-for-polygon-pos) Testnet. ⚡
 
 To see the full list of currently supported chains on HyperSync visit our [docs](https://docs.envio.dev/docs/hypersync).
 
@@ -170,7 +170,7 @@ Get your ticket [here](https://www.dappcon.io/#tickets).
 - LearnWeb3 - [Indexing ERC-20 USDC Token Transfers on Base using Envio's HyperIndex](https://learnweb3.io/lessons/indexing-erc-20-usdc-token-transfers-on-base-using-envios-hyper-index/)
 - LearnWeb3 - [Indexing Optimism Bridge deposits using Envio's HyperIndex](https://learnweb3.io/lessons/indexing-optimism-bridge-deposits-using-envios-hyper-index/)
 
-For a full list of written tutorials visit our [docs](https://docs.envio.dev/docs/overview).
+For a full list of written tutorials visit our [docs](https://docs.envio.dev/docs/HyperIndex/overview).
 
 **Envio 101 Video Tutorials:**
 

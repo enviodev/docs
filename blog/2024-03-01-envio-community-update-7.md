@@ -12,7 +12,7 @@ slug: /envio-community-update-no-7
 
 Greetings developers! We’re excited to be back with our seventh community update and our second one of 2024! As usual, we’ll run through some of the latest activities the Envio team has been up to over the past month, including a detailed look into some features and tech updates.
 
-Notable activities include a double dose of version updates that aim to supercharge your development experience. The team noticed a small regression affecting the [contract import](https://docs.envio.dev/docs/contract-import) templates, prompting us to roll out two brand-spanking new versions with some exciting additions that can be seen in the technical overview below.
+Notable activities include a double dose of version updates that aim to supercharge your development experience. The team noticed a small regression affecting the [contract import](https://docs.envio.dev/docs/HyperIndex/contract-import) templates, prompting us to roll out two brand-spanking new versions with some exciting additions that can be seen in the technical overview below.
 
 We’re also very excited to announce that [Envio](https://envio.dev/) and [ChainDensity](https://chaindensity.xyz/) are the proud [Gold](https://www.primodata.org/company/envio) and [Bronze](https://www.primodata.org/company/chaindensity) sponsors featured on [Primodata](https://www.primodata.org/), the hub of blockchain data and one of the most comprehensive directories for blockchain data resources on the internet!
 
@@ -26,7 +26,7 @@ Learn more about the grant opportunity [here](https://docs.envio.dev/blog/envio-
 
 ## New HyperSync Network Support ⚡[​](https://docs.envio.dev/blog/envio-developer-community-update-no-6#new-hypersync-networks-)
 
-We’re very thrilled to announce that Envio [HyperSync](https://docs.envio.dev/docs/overview-hypersync) has added even more significant updates to existing networks and added new and enhanced indexing support for developers building on [Arbitrum](https://arbitrum.io/) Sepolia, [Zeta](https://www.zetachain.com/), [RSK](https://rootstock.io/) (Rootstock), [Berachain](https://www.berachain.com/) Artio (testnet), [Shimmer](https://shimmer.network/) and [NeonEVM](https://neonevm.org/) with many more to come!
+We’re very thrilled to announce that Envio [HyperSync](https://docs.envio.dev/docs/HyperIndex/overview-hypersync) has added even more significant updates to existing networks and added new and enhanced indexing support for developers building on [Arbitrum](https://arbitrum.io/) Sepolia, [Zeta](https://www.zetachain.com/), [RSK](https://rootstock.io/) (Rootstock), [Berachain](https://www.berachain.com/) Artio (testnet), [Shimmer](https://shimmer.network/) and [NeonEVM](https://neonevm.org/) with many more to come!
 
 To see a full list of currently supported chains on HyperSync visit our [docs](https://docs.envio.dev/docs/hypersync).
 

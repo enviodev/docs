@@ -12,7 +12,7 @@ Ahoy Envio Shipooors!
 
 Welcome to our first-ever monthly community update that will be happening on a monthly cadence so you can get a first-hand snapshot of what the team has been focusing on in the previous month.
 
-So what's been happening behind the scenes at [Envio](https://envio.dev/)? Lots! In this update, we’ll cover technical features, release updates, upcoming events, and milestones we've reached. This month's update also provides a sneak peek into Envio’s upcoming Hypersync feature 👀. This month has been an epic display of #BigDevEnergy with our first release going live! 🚀 
+So what's been happening behind the scenes at [Envio](https://envio.dev/)? Lots! In this update, we’ll cover technical features, release updates, upcoming events, and milestones we've reached. This month's update also provides a sneak peek into Envio’s upcoming Hypersync feature 👀. This month has been an epic display of #BigDevEnergy with our first release going live! 🚀
 
 To commemorate the release of our alpha version we launched the [Envio “Build Bigger. Ship Faster” Grant Program](https://docs.envio.dev/blog/envio-grant-program-now-live), where we’ve invited blockchain developers like you to receive up to **$10,000** in prizes for simply integrating an awesome use case with Envio, and providing us with feedback on your experience. Cool right?! 🤩
 
@@ -59,7 +59,7 @@ Sometimes you need a fresh start, right? That's why we've implemented the 'raw e
 
 Last but not least, we're reaching new heights with our HyperSync feature. The tests are in, and the documentation is looking sharp. Prepare to experience indexing at blazingly fast speeds!
 
-TL;DR, *Nodes are optimized for consensus not reading and serving data. This service aims to optimize blockchain data for reading and querying with accelerated APIs* 🧠
+TL;DR, _Nodes are optimized for consensus not reading and serving data. This service aims to optimize blockchain data for reading and querying with accelerated APIs_ 🧠
 
 Stay tuned for more monthly updates and hop in our Discord for more up-to-date information.
 
@@ -71,6 +71,6 @@ LFG.
 
 By builders, for builders. Envio is a dev-friendly, speed-optimized, modern blockchain indexing solution that addresses the limitations of traditional blockchain indexing approaches and gives developers peace of mind. By harnessing the power of Envio, developers can overcome the challenges posed by latency, reliability, and costs across various sources. Envio serves as the front door for any application’s need to access, transform, and save real-time or historical data, from any EVM-compatible smart contracts.
 
-If you're a blockchain developer looking to enhance your development process and unlock the true potential of Web3 infrastructure, look no further. Join our growing community of elite developers, check out our [docs](https://docs.envio.dev/docs/overview), and let's work together to revolutionize the blockchain world and propel your project to the next level.
+If you're a blockchain developer looking to enhance your development process and unlock the true potential of Web3 infrastructure, look no further. Join our growing community of elite developers, check out our [docs](https://docs.envio.dev/docs/HyperIndex/overview), and let's work together to revolutionize the blockchain world and propel your project to the next level.
 
 Follow Envio on [Twitter](https://twitter.com/envio_indexer) and/or [Lenster](https://lenster.xyz/u/envio) for updates on new features, or jump into our [Discord](http://discord.gg/gt7yEUZKeB) for any questions.

@@ -18,13 +18,13 @@ Welcome to our latest developer update for May 2024. Dive into our latest releas
 - Add txTo as an optional field alongside txOrigin (non-breaking).
 - Add retry to HyperSync in case where a HyperSync replica is out of sync (bug fix).
 
-*⭐️ Please note: We are marking V1.0.x as deprecated in NPM due to the bug we fixed in this release. Please upgrade if you are on V1.0.2.*
+_⭐️ Please note: We are marking V1.0.x as deprecated in NPM due to the bug we fixed in this release. Please upgrade if you are on V1.0.2._
 
 Stay up-to-date with our latest version releases by following the “🚨releases” [channel](https://discord.gg/uGVheTdmaH) in our Discord to get live updates as soon as new versions are available!
 
 ## Python Package for Envio’s HyperFuel Client is live! 🐍
 
-Now developers and analysts building on the [Fuel Network](https://fuel.network/) can interact with our flexible [HyperSync](https://docs.envio.dev/docs/overview-hypersync) API using either [JavaScript](https://www.javascript.com/), [Python](https://www.python.org/) or [Rust](https://www.rust-lang.org/) clients, and choose to query their data in JSON, Arrow, and Parquet data formats.
+Now developers and analysts building on the [Fuel Network](https://fuel.network/) can interact with our flexible [HyperSync](https://docs.envio.dev/docs/HyperIndex/overview-hypersync) API using either [JavaScript](https://www.javascript.com/), [Python](https://www.python.org/) or [Rust](https://www.rust-lang.org/) clients, and choose to query their data in JSON, Arrow, and Parquet data formats.
 
 To install, run the $ pip install hyperfuel command.
 

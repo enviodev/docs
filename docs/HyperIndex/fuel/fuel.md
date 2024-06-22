@@ -30,7 +30,7 @@ You can integrate with HyperFuel using any of our clients:
 
 > HyperFuel supports Fuel's testnet at the endpoint https://fuel-testnet.hypersync.xyz
 
-Read [HyperFuel documentation](/docs/HyperSync/HyperFuel/hyperfuel) to learn more.
+Read [HyperFuel documentation](/docs/HyperSync/hyperfuel) to learn more.
 
 ## HyperIndex
 
@@ -46,10 +46,10 @@ Or gain inspiration from already running indexers built by other developers on F
 
 ### State of the art
 
-Currently, `HyperIndex` on Fuel supports the most features EVM indexer does, including advanced features such as [Dynamic Contracts / Factories](../Advanced/dynamic-contracts.md), [Testing Framework](/docs/testing) and [Hosted Service](../Hosted_Service/hosted-service.md).
+Currently, `HyperIndex` on Fuel supports the most features EVM indexer does, including advanced features such as [Dynamic Contracts / Factories](../Advanced/dynamic-contracts.md), [Testing Framework](/docs/HyperIndex/testing) and [Hosted Service](../Hosted_Service/hosted-service.md).
 
 Also, compared to EVM, Fuel provides many more kinds of possible events. Now, we support indexing only `LogData` receipts (the `log` calls in a [Sway](https://docs.fuel.network/docs/sway/) contract), but there's a plan to also support `Transfer`, `TransferOut`, `Mint`, `Burn`, and `Call` receipts in the near future.
 
-We will also work on a [No-code Quickstart](/docs/contract-import), predicates support, and more.
+We will also work on a [No-code Quickstart](/docs/HyperIndex/contract-import), predicates support, and more.
 
 > Join our [Discord](https://discord.com/invite/gt7yEUZKeB) channel to make sure you catch all new releases.

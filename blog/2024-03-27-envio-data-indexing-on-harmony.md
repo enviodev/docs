@@ -8,7 +8,6 @@ slug: /envio-data-indexing-supports-developers-building-on-harmony
 
 <!--truncate-->
 
-
 We are excited to announce that Envio now fully supports Harmony with its hyper-performant data infrastructure and developer tooling. This integration empowers blockchain developers and analysts to seamlessly access and query large volumes of real-time and historical on-chain data for their applications and other data-driven use cases.
 
 Developers now have the opportunity to take advantage of top-tier data indexing performance and efficiency on Harmony, one of the fastest open EVM-compatible chains available. With Harmony's impressive 2-second transaction finality and significantly lower fees, developers can optimize their workflow and enhance their overall developer experience.
@@ -19,21 +18,21 @@ By utilizing Envio, developers building on Harmony can accelerate their developm
 
 [Envio](https://envio.dev/) is a purpose-built, modern blockchain indexing solution and data provider that extends its native support to various EVM blockchains, including [Polygon](https://polygon.technology/), [Avalanche](https://www.avax.network/), [Linea](https://linea.build/), [Arbitrum](https://arbitrum.io/), [Base](https://www.base.org/), [ZkSync](https://zksync.io/), and, of course, [Harmony](https://www.harmony.one/) (including testnet and mainnet).
 
-**Envio [HyperIndex](https://docs.envio.dev/docs/overview)** provides Harmony developers with a feature-rich data indexing framework offering developers automatic code generation, flexible language support, quickstart templates, and a reliable cost-effective hosted service, overcoming challenges often associated with traditional solutions.
+**Envio [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview)** provides Harmony developers with a feature-rich data indexing framework offering developers automatic code generation, flexible language support, quickstart templates, and a reliable cost-effective hosted service, overcoming challenges often associated with traditional solutions.
 
 For more information on how to get started and set up a basic indexer on Harmony with Envio, check out Envio’s [Harmony Data Indexing Tutorial](https://docs.harmony.one/home/developers/tools/envio) in the Harmony developer docs.
 
 **Envio [HyperSync](https://docs.envio.dev/docs/hypersync)** is an accelerated data query layer for the Harmony blockchain, that allows RPC bypass for 100x faster syncing of historical data. HyperSync is used by default in Envio's indexing framework, with the use of RPC for data retrieval being optional. Users do not need to worry about RPC URLs, rate-limiting, or managing their own infrastructure, and can easily sync large datasets in a few minutes, something that would usually take hours or days.
 
-HyperSync is also available as a standalone API for data analytic use cases. Data analysts can interact with the HyperSync API using JavaScript, Python, or Rust clients and extract data in JSON, Arrow, or Parquet formats. For more information, visit the HyperSync documentation [here](https://docs.envio.dev/docs/overview-hypersync).
+HyperSync is also available as a standalone API for data analytic use cases. Data analysts can interact with the HyperSync API using JavaScript, Python, or Rust clients and extract data in JSON, Arrow, or Parquet formats. For more information, visit the HyperSync documentation [here](https://docs.envio.dev/docs/HyperIndex/overview-hypersync).
 
-**Envio [HyperRPC](https://docs.envio.dev/docs/overview-hyperrpc)** is a hyper-speed Ethereum RPC (RPC formatted endpoint based on HyperSync’s accelerated API), designed for data-heavy use cases, such as syncing a lot of historical data. HyperRPC is perfectly suited as a drop-in replacement for projects with existing indexers looking to improve their indexing speeds.
+**Envio [HyperRPC](https://docs.envio.dev/docs/HyperIndex/overview-hyperrpc)** is a hyper-speed Ethereum RPC (RPC formatted endpoint based on HyperSync’s accelerated API), designed for data-heavy use cases, such as syncing a lot of historical data. HyperRPC is perfectly suited as a drop-in replacement for projects with existing indexers looking to improve their indexing speeds.
 
 ## Resources
 
 - [Envio Installation](https://docs.envio.dev/docs/getting-started)
-- [No-code Quickstart](https://docs.envio.dev/docs/contract-import)
-- [Envio HyperSync](https://docs.envio.dev/docs/overview-hypersync)
+- [No-code Quickstart](https://docs.envio.dev/docs/HyperIndex/contract-import)
+- [Envio HyperSync](https://docs.envio.dev/docs/HyperIndex/overview-hypersync)
 - [Envio Hosted Service](https://docs.envio.dev/docs/hosted-service)
 - [Harmony Documentation](https://docs.harmony.one/home)
 
