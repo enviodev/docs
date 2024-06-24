@@ -20,7 +20,7 @@ The API tab lets you execute GraphQL queries and mutations on indexed data. It s
 <img src="/img/hasura-api-tab.png" alt="/hasura-api-tab" width="100%"/>
 
 Under the explorer, all entities defined in the `schema.graphql` file should appear.
-By default, Envio will also display [`dynamic_contracts`](../../HyperIndex/Advanced/dynamic-contracts.md) and `raw_events` that have been used in the indexing process.
+By default, Envio will also display [`dynamic_contracts`](../Advanced/dynamic-contracts.md) and `raw_events` that have been used in the indexing process.
 
 In the GraphQL playground, you can structure and test your API calls using the indexed data.
 
@@ -33,7 +33,7 @@ The Data tab allows you to view and manage your database schema, tables, and rel
 <img src="/img/hasura-data-tab.png" alt="/hasura-data-tab" width="100%"/>
 
 In the public schema, all indexed tables should appear.
-Again, by default, [`dynamic_contracts`](../../HyperIndex/Advanced/dynamic-contracts.md) and `raw_events` tables will also be displayed.
+Again, by default, [`dynamic_contracts`](../Advanced/dynamic-contracts.md) and `raw_events` tables will also be displayed.
 
 To verify that the data has been correctly indexed, it is advisable to check the content of the entity tables and the `db_write_timestamp` values for the rows in each table.
 

@@ -95,7 +95,7 @@ Warning messages:
 - `Failed Combined Query Filter from block`
 - `Issue while running fetching batch of events from the RPC. Will wait ()ms and try again.`
 
-It is recommend to use [HyperSync](../../HyperIndex/Advanced/hypersync.md) instead, if the network being indexed from is supported.
+It is recommend to use [HyperSync](../Advanced/hypersync.md) instead, if the network being indexed from is supported.
 
 Otherwise, use a different RPC endpoint that is valid in the `config.yaml` file.
 
