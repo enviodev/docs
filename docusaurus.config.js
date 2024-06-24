@@ -354,11 +354,13 @@ const config = {
         showLastUpdateTime: false,
         versions: {
           current: {
-            label: 'v1',
-          },
-          v2: {
             label: 'v2',
             path: 'v2',
+            banner: 'unreleased',
+          },
+          v1: {
+            label: 'v1',
+            path: '',
           },
         },
       },

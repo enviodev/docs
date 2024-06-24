@@ -317,7 +317,7 @@ Once you have verified that the indexer is working for your contracts, then you 
 
 Deploying an indexer onto the hosted service allows you to extract information via graphQL queries into your front-end or some back-end application.
 
-Navigate to the [hosted service](https://envio.dev/app/login) to start deploying your indexer and refer to this [documentation](../../HyperIndex/Hosted_Service/hosted-service.md) for more information on deploying your indexer.
+Navigate to the [hosted service](https://envio.dev/app/login) to start deploying your indexer and refer to this [documentation](../Hosted_Service/hosted-service.md) for more information on deploying your indexer.
 
 ## What next?
 
