@@ -252,26 +252,26 @@ const config = {
         },
         items: [
           {
+            to: 'docs/HyperIndex/overview',
+            label: 'HyperIndex Docs',
+            position: 'left',
+          },
+          {
+            type: 'docsVersionDropdown',
+            docsPluginId: 'HyperIndex',
+            position: 'left',
+          },
+          {
             to: 'docs/HyperSync/overview',
             label: 'HyperSync Docs',
             position: 'left',
           },
           //// I will add versioning later
-          // {
-          //   type: 'docsVersionDropdown',
-          //   docsPluginId: 'HyperSync',
-          //   position: 'left',
-          // },
           {
-            to: 'docs/HyperIndex/overview',
-            label: 'HyperIndex Docs',
+            type: 'docsVersionDropdown',
+            docsPluginId: 'HyperSync',
             position: 'left',
           },
-          // {
-          //   type: 'docsVersionDropdown',
-          //   docsPluginId: 'HyperIndex',
-          //   position: 'left',
-          // },
           {
             to: 'blog',
             label: 'Blog',
@@ -350,12 +350,15 @@ const config = {
         sidebarPath: require.resolve('./sidebarsHyperIndex.js'),
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,
-        // versions: {
-        //   current: {
-        //     label: '1.2.0',
-        //     path: '1.2.0',
-        //   },
-        // },
+        versions: {
+          current: {
+            label: 'v1',
+          },
+          v2: {
+            label: 'v2',
+            path: 'v2',
+          },
+        },
       },
     ],
     [
