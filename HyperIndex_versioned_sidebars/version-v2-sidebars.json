@@ -1,0 +1,79 @@
+{
+  "someSidebar": [
+    "overview",
+    "getting-started",
+    "contract-import",
+    {
+      "type": "category",
+      "label": "Tutorials",
+      "items": [
+        "Tutorials/tutorial-op-bridge-deposits",
+        "Tutorials/tutorial-erc20-token-transfers",
+        "Tutorials/tutorial-indexing-fuel",
+        "Tutorials/greeter-tutorial"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Guides",
+      "items": [
+        "Guides/hyperindex-basics",
+        "Guides/configuration-file",
+        "Guides/schema-file",
+        "Guides/event-handlers",
+        "Guides/testing",
+        "Guides/running-locally",
+        "Guides/navigating-hasura",
+        "Guides/cli-commands"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Hosted Service",
+      "items": [
+        "Hosted_Service/hosted-service",
+        "Hosted_Service/hosted-service-deployment",
+        "Hosted_Service/hosted-service-billing"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Advanced",
+      "items": [
+        "Advanced/linked-entity-loaders",
+        "Advanced/dynamic-contracts",
+        "Advanced/multichain-indexing",
+        "Advanced/hypersync",
+        "Advanced/rpc-sync",
+        "Advanced/persisted_files",
+        "Advanced/generated-files",
+        "Advanced/terminology",
+        "Advanced/async-mode",
+        "Advanced/labels",
+        "Advanced/performance/performance"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Examples",
+      "items": [
+        "Examples/example-sablier-v2",
+        "Examples/example-liquidation-metrics",
+        "Examples/example-uniswap-v3",
+        "Examples/example-ens"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Troubleshoot",
+      "items": [
+        "Troubleshoot/logging",
+        "Troubleshoot/common-issues",
+        "Troubleshoot/error-codes",
+        "Troubleshoot/reserved-words"
+      ]
+    },
+    "licensing",
+    "fuel/fuel"
+  ]
+}
