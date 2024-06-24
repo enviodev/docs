@@ -1,0 +1,265 @@
+---
+id: multichain-indexing
+title: Multichain Indexing
+sidebar_label: Multichain Indexing
+slug: /multichain-indexing
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+This page explains how to index from multiple chains in a single indexer.
+
+This means that events from contracts deployed on multiple chains can be used to create and update entities defined in the schema file.
+
+Users are required to populate the `network` section in `config.yaml` file for each chain and specify a contract to index from.
+
+Users can then specify event loader/handler for each of the contracts specified in `config.yaml` file.
+
+## Multichain Indexing on Greeter template
+
+### Config file
+
+```yaml
+name: Greeter
+description: Greeter indexer
+#Global contract definitions that must contain all definitions except
+#addresses. Now you can share a single handler/abi/event definitions
+#for contracts across multiple chains
+contracts:
+  - name: Greeter
+    abi_file_path: ./abis/greeter-abi.json
+    handler: ./src/EventHandlers.js
+    events:
+      - event: NewGreeting
+      - event: ClearGreeting
+networks:
+  - id: 137 # Polygon
+    start_block: 45336336
+    contracts:
+      - name: Greeter #A reference to the global contract definition
+        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
+  - id: 59144 # Linea
+    start_block: 367801
+    contracts:
+      - name: Greeter #A reference to the global contract definition
+        address: "0xdEe21B97AB77a16B4b236F952e586cf8408CF32A"
+```
+
+The Greeter indexer listens to `NewGreeting` and `ClearGreeting` events from `Greeter` contract (which is defined above networks as a "global contract") to update the `Greeting` entity.
+
+Notice how the global definition of the "Greeter" contract does not contain any addresses. And in the contracts section of both Polygon and Linea networks, they simply reference the name of the contract ("Greeter") and define the address. Both of these will use the same handler functions and events.
+
+### Schema file
+
+```graphql
+type User {
+  id: ID! # user's account address
+  greetings: [String!]! # list of greetings made by the user
+  latestGreeting: String! # most recent greeting
+  numberOfGreetings: Int! # total number of greetings made
+}
+```
+
+> Dev note: 📢 When it makes sense, we recommend appending the chain id to the entity id when you are developing multichain indexers. For example if you deploy a contract to two different networks with the same contract address then append `-<chainId>` to the end of the id to differentiate the contracts between different networks.
+
+### Event Handler file
+
+<Tabs>
+  <TabItem value="javascript" label="Javascript">
+
+```javascript
+let { GreeterContract } = require("../generated/src/Handlers.bs.js");
+
+GreeterContract.NewGreeting.loader((event, context) => {
+  context.User.load(event.params.user);
+});
+
+GreeterContract.NewGreeting.handler((event, context) => {
+  let user = event.params.user;
+  let latestGreeting = event.params.greeting;
+  let numberOfGreetings = event.params.numberOfGreetings;
+
+  let existingUser = context.User.get(event.params.user);
+
+  if (existingUser !== undefined) {
+    context.User.set({
+      id: user,
+      latestGreeting: latestGreeting,
+      numberOfGreetings: existingUser.numberOfGreetings + 1,
+      greetings: [...existingUser.greetings, latestGreeting],
+    });
+  } else {
+    context.User.set({
+      id: user,
+      latestGreeting: latestGreeting,
+      numberOfGreetings: 1,
+      greetings: [latestGreeting],
+    });
+  }
+});
+
+GreeterContract.ClearGreeting.loader((event, context) => {
+  context.User.load(event.params.user);
+});
+
+GreeterContract.ClearGreeting.handler((event, context) => {
+  let existingUser = context.User.get(event.params.user);
+  if (existingUser !== undefined) {
+    context.User.set({
+      id: user,
+      latestGreeting: "",
+      numberOfGreetings: existingUser.numberOfGreetings + 1,
+      greetings: existingUser.greetings,
+    });
+  }
+});
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="Typescript">
+
+```typescript
+import {
+  GreeterContract_NewGreeting_loader,
+  GreeterContract_NewGreeting_handler,
+  GreeterContract_ClearGreeting_loader,
+  GreeterContract_ClearGreeting_handler,
+} from "../generated/src/Handlers.gen";
+
+import { UserEntity } from "../generated/src/Types.gen";
+
+GreeterContract_NewGreeting_loader(({ event, context }) => {
+  context.User.load(event.params.user.toString());
+});
+
+GreeterContract_NewGreeting_handler(({ event, context }) => {
+  let currentUser = context.User.get(event.params.user);
+
+  if (currentUser !== undefined) {
+    let userObject: UserEntity = {
+      id: event.params.user.toString(),
+      latestGreeting: event.params.greeting,
+      numberOfGreetings: currentUser.numberOfGreetings + 1,
+      greetings: [...currentUser.greetings, event.params.greeting],
+    };
+
+    context.User.set(userObject);
+  } else {
+    let userObject: UserEntity = {
+      id: event.params.user.toString(),
+      latestGreeting: event.params.greeting,
+      numberOfGreetings: 1,
+      greetings: [event.params.greeting],
+    };
+    context.User.set(userObject);
+  }
+});
+
+GreeterContract_ClearGreeting_loader(({ event, context }) => {
+  context.User.load(event.params.user.toString());
+});
+
+GreeterContract_ClearGreeting_handler(({ event, context }) => {
+  let currentUser = context.User.get(event.params.user);
+
+  if (currentUser !== undefined) {
+    let userObject: UserEntity = {
+      id: event.params.user.toString(),
+      latestGreeting: "",
+      numberOfGreetings: currentUser.numberOfGreetings,
+      greetings: currentUser.greetings,
+    };
+
+    context.User.set(userObject);
+  }
+});
+```
+
+  </TabItem>
+  <TabItem value="rescript" label="Rescript">
+
+```rescript
+open Types
+
+Handlers.GreeterContract.NewGreeting.loader(({ event, context }) => {
+  context.greeting.load(event.params.user->Ethers.ethAddressToString)
+})
+
+Handlers.GreeterContract.NewGreeting.handler(({ event, context }) => {
+  let currentUserOpt = context.greeting.get(event.params.user->Ethers.ethAddressToString)
+
+  switch currentUserOpt {
+  | Some(existingUser) => {
+      let userObject: userEntity = {
+        id: event.params.user->Ethers.ethAddressToString,
+        latestGreeting: event.params.greeting,
+        numberOfGreetings: existingUser.numberOfGreetings + 1,
+        greetings: existingUser.greetings->Belt.Array.concat([event.params.greeting]),
+      }
+
+      context.greeting.set(userObject)
+    }
+
+  | None =>
+    let userObject: userEntity = {
+      id: event.params.user->Ethers.ethAddressToString,
+      latestGreeting: event.params.greeting,
+      numberOfGreetings: 1,
+      greetings: [event.params.greeting],
+    }
+
+    context.greeting.set(userObject)
+  }
+})
+
+Handlers.GreeterContract.ClearGreeting.loader(({ event, context }) => {
+  context.greeting.load(event.params.user->Ethers.ethAddressToString)
+  ()
+})
+
+Handlers.GreeterContract.ClearGreeting.handler(({ event, context }) => {
+  let currentUserOpt = context.greeting.get(event.params.user->Ethers.ethAddressToString)
+
+  switch currentUserOpt {
+  | Some(existingUser) => {
+      let userObject: userEntity = {
+        id: event.params.user->Ethers.ethAddressToString,
+        latestGreeting: "",
+        numberOfGreetings: existingUser.numberOfGreetings,
+        greetings: existingUser.greetings,
+      }
+
+      context.greeting.set(userObject)
+    }
+
+  | None => ()
+  }
+})
+```
+
+  </TabItem>
+</Tabs>
+
+## `Unordered Multichain Mode`
+
+To activate "Unordered Multichain Mode", add a field to your config.yaml file like this:
+
+```yaml
+unordered_multichain_mode: true
+networks: ...
+```
+
+Or you can set it via environment variable (this would take precedence over config):
+
+```sh
+UNORDERED_MULTICHAIN_MODE=true
+```
+
+By default the indexer will synchronise the ordering of events across chains, ensuring that indexing is always deterministic and events across networks will be processed in the same order on every indexer run. This deterministic synchronisation is important for some applications, but for others it is not. This is why we have added "unordered multichain mode".
+
+In order for events to be perfectly ordered across multiple networks, the indexer needs to wait for all blocks to increment from each network. This is because the indexer needs to determine which block came first. Hence there is a latency between when an event is emitted and when it is processed by the indexer based on the block interval of the slowest network.
+
+Generally, if operations to update an entity from multiple events across multiple networks are [commutative](./terminology#commutative-property) (where the ordering of operations doesnt effect the result) then the ordering of events doesn't need to be ordered and the unordered multichain mode can be set to true. Likewise if there is no overlap between entities from different networks then the unordered multichain mode can be set to true as the ordering of events across the networks is not important.
+
+If unordered multichain mode is set to true, then the indexer will process events as soon as they are emitted, and so the indexer will not wait for all blocks to increment from each network before moving on to the next block. Even though events will remain ordered for a given network, events from different networks can be processed out of order, but it also means that events will be processed as soon as they are emitted.
