@@ -7,7 +7,7 @@ slug: /tutorial-op-bridge-deposits
 
 # Indexing OP Bridge Deposits
 
-This tutorial will guide you through the process of indexing the Optimism Standard Bridge contracts on Optimism and Ethereum Mainnet in less than 5 minutes using the Envio HyperIndex no-code [contract import](https://docs.envio.dev/docs/contract-import) feature.
+This tutorial will guide you through the process of indexing the Optimism Standard Bridge contracts on Optimism and Ethereum Mainnet in less than 5 minutes using the Envio HyperIndex no-code [contract import](https://docs.envio.dev/docs/HyperIndex/contract-import) feature.
 
 The Optimism Standard Bridge allows users to easily move ETH and most ERC-20 tokens between Ethereum and Optimism Mainnet. The goal is to index bridge deposit events by extracting the `DepositFinalized (index_topic_1 address l1Token, index_topic_2 address l2Token, index_topic_3 address from, address to, uint256 amount, bytes extraData)` logs emitted by the contracts.
 

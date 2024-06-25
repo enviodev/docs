@@ -2,7 +2,7 @@
 id: hypersync-curl-examples
 title: Using curl requests with hypersync
 sidebar_label: Hypersync curl examples
-slug: /hypersync-curl-example
+slug: /hypersync-curl-examples
 ---
 
 ### When to Use Json API Requests and When Not
@@ -23,7 +23,6 @@ Using Json API requests to interact with envio.dev can be highly effective for v
 - Query Fragmentation Handling: Client libraries handle subsequent queries automatically if the initial query doesn't reach the to_block or the end of the chain.
 - Arrow Support: Data can be returned in Apache Arrow format, facilitating easier data manipulation and analysis.
 - Auto Retry: Client libraries automatically retry failed requests, ensuring more reliable data retrieval.
-
 
 ### Curl query examples
 
@@ -109,9 +108,9 @@ curl --request POST \
 
 #### Get All Logs for a Smart Contract Address
 
-This query returns all logs for a specified smart contract, starting from the beginning of the blockchain. 
+This query returns all logs for a specified smart contract, starting from the beginning of the blockchain.
 
-Note that this query might not return all data at once. Instead, it will likely return a `next_block` parameter, 
+Note that this query might not return all data at once. Instead, it will likely return a `next_block` parameter,
 which should be used as the `from_block` for subsequent queries to fetch the next chunk of data.
 
 ```bash
@@ -155,14 +154,13 @@ curl --request POST \
   }'
 ```
 
-
 #### Get Blob Data for the Optimism Chain
 
-This query returns all blob transactions produced by the Optimism chain. After retrieving the transaction data, you can query the Ethereum network to get the relevant blobs of data. 
+This query returns all blob transactions produced by the Optimism chain. After retrieving the transaction data, you can query the Ethereum network to get the relevant blobs of data.
 
 Note that these blobs are only stored for 18 days.
 
-```bash 
+```bash
 curl --request POST \
   --url https://eth.hypersync.xyz/query \
   --header 'Content-Type: application/json' \
@@ -191,11 +189,11 @@ curl --request POST \
         ]
     }
   }'
-  ```
+```
 
 #### Mint USDC events
 
-This query retrieves all mint events for the USDC token. 
+This query retrieves all mint events for the USDC token.
 
 It uses the signature for the transfer event (0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef) and the `from` address 0x0000000000000000000000000000000000000000000000000000000000000000 to identify mint transactions.
 
@@ -247,15 +245,15 @@ curl --request POST \
         ]
     }
   }'
-  ```
+```
 
 #### Get All Transactions From/To an Address
 
-This query returns all transactions involving a specific EOA address, either as the sender or the recipient. 
+This query returns all transactions involving a specific EOA address, either as the sender or the recipient.
 
 Note that from_block is set to a specific block because the beginning of the chain does not contain data related to this address. Multiple queries may be needed to start retrieving data.
 
-```bash 
+```bash
 curl --request POST \
   --url https://eth.hypersync.xyz/query \
   --header 'Content-Type: application/json' \
@@ -288,13 +286,13 @@ curl --request POST \
 
 #### Get All Successful/Failed Transactions for the Last 10 Blocks
 
-First, query the current block height using https://eth.hypersync.xyz/height, subtract 10 from it, and store the result in a variable. 
+First, query the current block height using https://eth.hypersync.xyz/height, subtract 10 from it, and store the result in a variable.
 
-Use this variable as the from_block to get transactions with a matching status. 
+Use this variable as the from_block to get transactions with a matching status.
 
-This example returns successful transactions. To retrieve failed transactions, change the status to 0. 
+This example returns successful transactions. To retrieve failed transactions, change the status to 0.
 
-```bash 
+```bash
 height=$((`curl https://eth.hypersync.xyz/height | jq .height` - 10))
 curl --request POST \
   --url https://eth.hypersync.xyz/query \

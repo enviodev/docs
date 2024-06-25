@@ -20,7 +20,7 @@ With each passing month, our community has flourished, and the collaborative spi
 
 In 2023, our journey was defined by a series of strategic version releases, each contributing to Envio’s evolution.
 
-Versions from v0.0.20 to v0.0.24 showcased our commitment to performance optimization and ecosystem growth. These releases introduced significant improvements in [Hypersync](https://docs.envio.dev/docs/hypersync) performance allowing 100x faster sync speeds than JSON-RPC, and innovative features like our no-code [Contract Import](https://docs.envio.dev/docs/contract-import) tool that allows users to generate and index an existing contract that has been deployed on the blockchain, and with the addition of expanded support for diverse networks.
+Versions from v0.0.20 to v0.0.24 showcased our commitment to performance optimization and ecosystem growth. These releases introduced significant improvements in [Hypersync](https://docs.envio.dev/docs/hypersync) performance allowing 100x faster sync speeds than JSON-RPC, and innovative features like our no-code [Contract Import](https://docs.envio.dev/docs/HyperIndex/contract-import) tool that allows users to generate and index an existing contract that has been deployed on the blockchain, and with the addition of expanded support for diverse networks.
 
 Continuing the momentum, v0.0.25 refined existing features, resolving challenges like tuples in event parameters. In addition, the 'envio dev' command was optimized for efficient codegen management, demonstrating Envio's responsiveness to our user's needs.
 
@@ -80,9 +80,9 @@ Changes:
 New Features:
 
 - "TestHelpers", a code-generated module that helps you write unit tests for your indexer by generating:
-    - A MockDb module that allows you to simulate the indexer interacting with a database.
-    - A processEvent functions for every contract and event in your project. These functions take a mock event and a MockDb and run the event through your loaders and handlers.
-    - A createMockEvent function for each event in your project that allows you to quickly mock events passing in only parameters you care about and defaulting the rest.
+  - A MockDb module that allows you to simulate the indexer interacting with a database.
+  - A processEvent functions for every contract and event in your project. These functions take a mock event and a MockDb and run the event through your loaders and handlers.
+  - A createMockEvent function for each event in your project that allows you to quickly mock events passing in only parameters you care about and defaulting the rest.
 - Extended contract-import. You can now import multiple contracts using the contract-import tool and get started incredibly fast with a template customized for multiple contracts across multiple chains.
 - Event Selection on contract-import. You can now choose a selection of events.
 
@@ -97,7 +97,7 @@ Fixes and other changes:
 
 - Disabled automatic resync from cached events on the ‘envio dev’ command due to the feature being unstable.
 - Templates now contain test examples.
-- DB-related environment variables are now prepended with ENVIO_ to avoid collisions with existing databases in a dev environment.
+- DB-related environment variables are now prepended with ENVIO\_ to avoid collisions with existing databases in a dev environment.
 - Fixed a bug that allowed users to define an array of entities in their graphql.schema files.
 
 Stay tuned for more monthly updates and hop in our Discord for more up-to-date information.

@@ -5,13 +5,13 @@ sidebar_label: On Chain governance
 slug: /example-onchain-governance
 ---
 
-# On chain governance indexer 
+# On chain governance indexer
 
-This [repo](https://github.com/enviodev/onchain-governance-indexer) contains an example Envio indexer built in TypeScript for indexing events for OpenZeppelin Governance Contract. 
+This [repo](https://github.com/enviodev/onchain-governance-indexer) contains an example Envio indexer built in TypeScript for indexing events for OpenZeppelin Governance Contract.
 
-The [Gitcoin](https://etherscan.io/address/0x9d4c63565d5618310271bf3f3c01b2954c1d1639) governance contract deployed on Ethereum Mainnet was used to index events related to proposals, delegates, and votecasts.  
+The [Gitcoin](https://etherscan.io/address/0x9d4c63565d5618310271bf3f3c01b2954c1d1639) governance contract deployed on Ethereum Mainnet was used to index events related to proposals, delegates, and votecasts.
 
-The indexer was built using Envio's [contract import feature](https://docs.envio.dev/docs/contract-import). All of the events from the Governance contract are indexed as entities and the `EventsSummary` entity is defined to track number of each event that the indexer has indexed.
+The indexer was built using Envio's [contract import feature](https://docs.envio.dev/docs/HyperIndex/contract-import). All of the events from the Governance contract are indexed as entities and the `EventsSummary` entity is defined to track number of each event that the indexer has indexed.
 
 The indexer has been built using 0.0.20 of Envio.
 

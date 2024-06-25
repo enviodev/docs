@@ -14,7 +14,7 @@ Notable feature updates include ‘Async Mode’ which eliminates the need for u
 
 ### New HyperSync Networks ⚡
 
-We’re also excited to announce that Envio [HyperSync](https://docs.envio.dev/docs/overview-hypersync) has added even more significant updates to existing networks and added new and enhanced indexing support for developers building on [Base](https://base.org/) Sepolia, [Optimism](https://www.optimism.io/) Sepolia, [Arbitrum Nova](https://arbitrum.io/anytrust), [Aurora](https://aurora.dev/), Aurora Testnet, [Harmony](https://www.harmony.one/), [ZORA](https://zora.co/), [Public Goods Network](https://publicgoods.network/), [C1 Milkomeda](https://docs.milkomeda.com/cardano/for-developers/overview/), [Flare](https://flare.network/) and [Mantle](https://www.mantle.xyz/) with many more in the pipeline.
+We’re also excited to announce that Envio [HyperSync](https://docs.envio.dev/docs/HyperIndex/overview-hypersync) has added even more significant updates to existing networks and added new and enhanced indexing support for developers building on [Base](https://base.org/) Sepolia, [Optimism](https://www.optimism.io/) Sepolia, [Arbitrum Nova](https://arbitrum.io/anytrust), [Aurora](https://aurora.dev/), Aurora Testnet, [Harmony](https://www.harmony.one/), [ZORA](https://zora.co/), [Public Goods Network](https://publicgoods.network/), [C1 Milkomeda](https://docs.milkomeda.com/cardano/for-developers/overview/), [Flare](https://flare.network/) and [Mantle](https://www.mantle.xyz/) with many more in the pipeline.
 
 For a full list of currently supported chains on HyperSync visit our [docs](https://docs.envio.dev/docs/hypersync).
 

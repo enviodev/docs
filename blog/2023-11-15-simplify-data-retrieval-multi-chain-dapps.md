@@ -61,10 +61,10 @@ Through Envio's multi-chain indexing, builders can specify their event handler t
 
 ```graphql
 type User {
-id: ID!
-greetings: [String!]!
-latestGreeting: String!
-numberOfGreetings: Int!
+  id: ID!
+  greetings: [String!]!
+  latestGreeting: String!
+  numberOfGreetings: Int!
 }
 ```
 
@@ -103,6 +103,6 @@ By gaining a deep understanding of how multi-chain indexing works, developers ca
 
 By builders, for builders. Envio is a modern, no-code, feature-rich blockchain indexing solution that addresses the limitations of traditional blockchain indexing approaches and gives developers peace of mind. By harnessing the power of Envio, developers can overcome the challenges posed by latency, reliability, and costs across various sources. Envio serves as the front door for any application’s need to access, transform, and save real-time or historical data, from any EVM-compatible smart contracts.
 
-If you're a blockchain developer looking to enhance your development process and unlock the true potential of Web3 infrastructure, look no further. Join our growing community of elite developers, check out our [docs](https://docs.envio.dev/docs/overview), and let's work together to revolutionize the blockchain world and propel your project to the next level.
+If you're a blockchain developer looking to enhance your development process and unlock the true potential of Web3 infrastructure, look no further. Join our growing community of elite developers, check out our [docs](https://docs.envio.dev/docs/HyperIndex/overview), and let's work together to revolutionize the blockchain world and propel your project to the next level.
 
 Follow Envio on [Twitter](https://twitter.com/envio_indexer) and/or [Hey](https://lenster.xyz/u/envio) (formerly known as Lenster) for updates on new features, or jump into our [Discord](http://discord.gg/gt7yEUZKeB) for any questions.

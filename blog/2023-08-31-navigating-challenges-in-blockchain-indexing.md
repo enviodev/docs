@@ -48,6 +48,6 @@ https://envio.dev/
 
 By builders, for builders. Envio is a dev-friendly, speed-optimized, modern blockchain indexing solution that addresses the limitations of traditional blockchain indexing approaches and gives developers peace of mind. By harnessing the power of Envio, developers can overcome the challenges posed by latency, reliability, and costs across various sources. Envio serves as the front door for any application’s need to access, transform, and save real-time or historical data, from any EVM-compatible smart contracts.
 
-If you're a blockchain developer looking to enhance your development process and unlock the true potential of Web3 infrastructure, look no further. Join our growing community of elite developers, check out our [docs](https://docs.envio.dev/docs/overview), and let's work together to revolutionize the blockchain world and propel your project to the next level.
+If you're a blockchain developer looking to enhance your development process and unlock the true potential of Web3 infrastructure, look no further. Join our growing community of elite developers, check out our [docs](https://docs.envio.dev/docs/HyperIndex/overview), and let's work together to revolutionize the blockchain world and propel your project to the next level.
 
 Follow Envio on [Twitter](https://twitter.com/envio_indexer) and/or [Lenster](https://lenster.xyz/u/envio) for updates on new features, or jump into our [Discord](http://discord.gg/gt7yEUZKeB) for any questions.

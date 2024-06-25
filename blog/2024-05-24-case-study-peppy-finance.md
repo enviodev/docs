@@ -28,11 +28,11 @@ As an interim workaround, Peppy Finance implemented custom event listeners that 
 
 ## How Envio Solved This Problem?
 
-Envio's indexing framework, [HyperIndex](https://docs.envio.dev/docs/overview), is designed with out-of-the-box support for building custom APIs for any EVM-compatible network using an RPC URL, including Shimmer Network’s Layer-2 EVM.
+Envio's indexing framework, [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview), is designed with out-of-the-box support for building custom APIs for any EVM-compatible network using an RPC URL, including Shimmer Network’s Layer-2 EVM.
 
 Additionally, Envio has integrated [Hypersync](https://docs.envio.dev/docs/hypersync), a data lake that allows for querying historical blockchain data up to 1000 times faster than a standard RPC node, serving as an accelerated data layer. HyperIndex automatically leverages Hypersync for its data indexing, enhancing the developer experience and improving application performance. This embedded architecture provides decentralized finance protocols like Peppy Finance with both real-time on-chain events and unmatched indexing speeds for historical data.
 
-***“Envio enabled us to use the same indexer for historical and real-time data. When building Peppy Finance, we reduced the code size of our data collection modules by over 60% because the Envio indexer is so fast that we could eliminate every manual event listener for live data. Goodbye complicated data merges, hello real-time indexing.”*** *– [Valentin Seehausen](https://x.com/V_Seehausen), Developer at Peppy Finance*
+**_“Envio enabled us to use the same indexer for historical and real-time data. When building Peppy Finance, we reduced the code size of our data collection modules by over 60% because the Envio indexer is so fast that we could eliminate every manual event listener for live data. Goodbye complicated data merges, hello real-time indexing.”_** _– [Valentin Seehausen](https://x.com/V_Seehausen), Developer at Peppy Finance_
 
 Peppy Finance uses Envio’s indexer to query their application data with [GraphQL](https://graphql.org/) and employs a subscription query, such as the GraphQL client [URQL](https://github.com/urql-graphql/urql), to receive real-time updates. This enables their reactive front end to update in real-time (e.g. displaying open positions, transaction history, updated portfolio values, etc.) whenever an event occurs on the blockchain.
 
@@ -40,7 +40,7 @@ Peppy Finance uses Envio’s indexer to query their application data with [Graph
 
 Envio offers a reliable hosted service that simplifies the deployment and maintenance process, eliminating the need for you to manage your own infrastructure.
 
-Envio’s hosted service streamlines development and deployment, by simply pushing your latest project code to a pre-configured GitHub repo to auto-deploy your indexer to the hosted service. 
+Envio’s hosted service streamlines development and deployment, by simply pushing your latest project code to a pre-configured GitHub repo to auto-deploy your indexer to the hosted service.
 
 This approach allows developers to focus on their application’s core functionality while ensuring data indexers deliver guaranteed performance with production-grade infrastructure.
 
@@ -53,8 +53,8 @@ Envio is a developer-first, modern blockchain data indexing solution that lets d
 Envio supports the [Fuel Network](https://fuel.network/) and any EVM-compatible blockchain network with:
 
 - **Flexible language support:** Configure your event handling in familiar and widely supported languages, such as [JavaScript](https://www.javascript.com/), [TypeScript](https://www.typescriptlang.org/), or [ReScript](https://rescript-lang.org/).
-- **[HyperSync](https://docs.envio.dev/docs/overview-hypersync):** To ensure blazing-fast retrieval of historical on-chain data and a seamless developer experience, Envio’s HyperSync endpoint allows up to 1000x faster indexing than standard RPC (use of RPC is optional).
-- **[No-code Quickstart](https://docs.envio.dev/docs/contract-import):** Autogenerate the key boilerplate for an entire Indexer project off single or multiple smart contracts. Deploy within minutes.
+- **[HyperSync](https://docs.envio.dev/docs/HyperIndex/overview-hypersync):** To ensure blazing-fast retrieval of historical on-chain data and a seamless developer experience, Envio’s HyperSync endpoint allows up to 1000x faster indexing than standard RPC (use of RPC is optional).
+- **[No-code Quickstart](https://docs.envio.dev/docs/HyperIndex/contract-import):** Autogenerate the key boilerplate for an entire Indexer project off single or multiple smart contracts. Deploy within minutes.
 - **[Multi-chain Support](https://docs.envio.dev/docs/multichain-indexing):** Aggregate data across multiple networks into a single database. Query all your data with a unified GraphQL API.
 - **[Join on-chain and off-chain data](https://docs.envio.dev/docs/async-mode):** Connect indexed blockchain data as well as ingest off-chain data to create flexible API for rich data beyond just what is emitted simply from events on-chain. e.g. modules that efficiently index off-chain NFT metadata.
 - **[Factory Contracts](https://docs.envio.dev/docs/dynamic-contracts)**: Automatically register and process events emitted by all child contracts that are created by the specified factory / dynamic contract..
@@ -64,7 +64,7 @@ Envio supports the [Fuel Network](https://fuel.network/) and any EVM-compatible 
 
 - [Peppy Finance Hosted Indexer](https://envio.dev/app/peppyfinance/peppy%20indexer)
 - [Peppy Finance Indexer Github Repository](https://github.com/PeppyFinance/indexer/tree/main)
-- [Envio HyperIndex Quickstart](https://docs.envio.dev/docs/contract-import)
+- [Envio HyperIndex Quickstart](https://docs.envio.dev/docs/HyperIndex/contract-import)
 - [Envio HyperSync](https://docs.envio.dev/docs/hypersync)
 
 ## About Envio
@@ -75,5 +75,5 @@ If you're a blockchain developer looking to enhance your development process and
 
 Join our growing community of Web3 developers, check out our docs, and let's work together to revolutionize the blockchain world and propel your project to the next level.
 
-[Website](https://envio.dev/) | 
+[Website](https://envio.dev/) |
 [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Hey](https://hey.xyz/u/envio) | [Medium](https://medium.com/@Envio_Indexer) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
