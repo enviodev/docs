@@ -5,6 +5,8 @@ sidebar_label: Overview
 slug: /overview
 ---
 
+NOTE: v2 is currently in rc phase (release candidate) and is not yet stable. Please refer to the [v1 documentation](https://docs.envio.dev/docs/HyperIndex) for the stable version. Here is the [migration guide](./migration-guide-v1-v2).
+
 Envio (now referred to as HyperIndex) is a real-time indexer built specifically for EVM-compatible blockchains, providing developers with a seamless and efficient indexing solution. Designed to optimize the user experience, Envio offers automatic code generation and flexible language support.
 Indexers on Envio can be written in JavaScript, TypeScript or ReScript.
 
