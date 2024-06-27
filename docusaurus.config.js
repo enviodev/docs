@@ -331,6 +331,7 @@ const config = {
         path: 'docs/HyperSync',
         routeBasePath: 'docs/HyperSync',
         sidebarPath: require.resolve('./sidebarsHyperSync.js'),
+        editUrl: 'https://github.com/enviodev/docs/edit/main/',
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,
         // versions: {
@@ -348,6 +349,7 @@ const config = {
         path: 'docs/HyperIndex',
         routeBasePath: 'docs/HyperIndex',
         sidebarPath: require.resolve('./sidebarsHyperIndex.js'),
+        editUrl: 'https://github.com/enviodev/docs/edit/main/',
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,
         // versions: {
