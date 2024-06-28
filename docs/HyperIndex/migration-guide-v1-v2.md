@@ -66,16 +66,15 @@ Replace the old import statements with the new ones.
 
 ```typescript
 import {
-  SomeContract.Event1.loader,
-  SomeContract.Event1.handler,
+  GreeterContract_NewGreeting_handler,
   // or you aren't using these `_` versions of the imports
-  SomeContract,
+  GreeterContract,
   // ...
 } from "../generated/src/Handlers.gen"; // Not all imports still look like this, but on old indexers they do.
 
 import {
-  Event1Entity,
-  Event2Entity,
+  GreetingEntity,
+  UserEntity,
   // ... other entities
 } from "../generated/src/Types.gen";
 ```
@@ -84,11 +83,10 @@ import {
 
 ```typescript
 import {
-  Some,
-  Another,
+  Greeter, // the Greeter Contract
   // ...
-  Event1,
-  Event2,
+  Greeting, // the Greeting Entity
+  User, // The User Entity
   // ... other entities
 } from "generated"; // Note this requires adding the 'generated' folder to your 'optionalDependencies' in your package.json
 ```
@@ -114,7 +112,7 @@ Some.Event1.handlerWithLoader({
   loader: async ({ event, context }) => {
     // Loader code
     return {
-      /* loaded data */
+      /* loaded data, this data is available in the "handler" via the `loaderReturn` parameter */
     };
   },
   handler: async ({ event, context, loaderReturn }) => {
@@ -143,37 +141,47 @@ Some.Event1.handler(async ({ event, context }) => {
 
 ### 3. Dynamic Contract Registration
 
-Use `contractRegister` for dynamic contract registration.
+Use `contractRegister` for dynamic contract registration. Assuming there is an event called NewGreeterCreated that creates a contract called Greeter that has the address of the `newGreeter` as a field.
 
 **Before:**
 
 ```typescript
-SomeContract.Event1.loader(({ event, context }) => {
-  context.contractRegistration.addContract(event.params.contract);
+SomeContract.NewGreeterCreated.loader(({ event, context }) => {
+  context.contractRegistration.addGreeter(event.params.newGreeter);
 });
 ```
 
 **After:**
 
 ```typescript
-Some.Event1.contractRegister(({ event, context }) => {
-  context.addContract(event.params.contract);
+Some.NewGreeterCreated.contractRegister(({ event, context }) => {
+  context.addGreeter(event.params.newGreeter);
 });
 ```
 
 ### 4. Handling Entities
 
-**Before == After**
+**Before**
 
 ```typescript
-const entityInstance: EntityType = {
-  ...currentEntity,
+const greetingInstance: GreetingEntity = {
+  ...currentGreeting,
   // ...
 };
-context.Entity.set(entityInstance);
+context.Greeting.set(greetingInstance);
 ```
 
-No changes 💪
+**After**
+
+```typescript
+const greetingInstance: Greeting = {
+  ...currentGreeting,
+  // ...
+};
+context.Greeting.set(greetingInstance);
+```
+
+Only change is in the TypeScript/ReScript type for the entity 💪
 
 ### 5. Accessing Loaded Data
 
