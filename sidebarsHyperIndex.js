@@ -1,6 +1,7 @@
 module.exports = {
   someSidebar: [
     "overview",
+    "migration-guide-v1-v2",
     "getting-started",
     "contract-import",
     {
@@ -41,19 +42,18 @@ module.exports = {
       type: "category",
       label: "Advanced",
       items: [
-        "Advanced/linked-entity-loaders",
-        "Advanced/dynamic-contracts",
+        // "Advanced/dynamic-contracts", // TODO: need to add this back and have it correct.
         "Advanced/multichain-indexing",
         "Advanced/hypersync",
         "Advanced/rpc-sync",
         "Advanced/persisted_files",
         "Advanced/generated-files",
         "Advanced/terminology",
-        "Advanced/async-mode",
-        "Advanced/labels",
         "Advanced/performance/performance",
       ],
     },
+    /* 
+    /// TODO: add back once we have some v2 examples.
     {
       type: "category",
       label: "Examples",
@@ -66,7 +66,7 @@ module.exports = {
         // "Examples/example-reNFT",
         // "Examples/example-token-vaults",
       ],
-    },
+    }, */
     {
       type: "category",
       label: "Troubleshoot",

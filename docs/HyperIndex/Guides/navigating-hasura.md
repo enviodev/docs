@@ -20,7 +20,7 @@ The API tab lets you execute GraphQL queries and mutations on indexed data. It s
 <img src="/img/hasura-api-tab.png" alt="/hasura-api-tab" width="100%"/>
 
 Under the explorer, all entities defined in the `schema.graphql` file should appear.
-By default, Envio will also display [`dynamic_contracts`](../Advanced/dynamic-contracts.md) and `raw_events` that have been used in the indexing process.
+By default, Envio will also display [`dynamic_contracts`](../Advanced/dynamic-contracts.md) and `raw_events` (`raw_events` doesn't get populated for Fuel indexers) that have been used in the indexing process.
 
 In the GraphQL playground, you can structure and test your API calls using the indexed data.
 

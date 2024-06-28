@@ -38,7 +38,7 @@ Loader functions are called via
   <TabItem value="typescript" label="Typescript">
 
 ```typescript
-<ContractName>Contract_ < EventName > _loader;
+<ContractName>Contract.< EventName >.loader;
 ```
 
   </TabItem>
@@ -153,9 +153,9 @@ and
 context.<EntityName>.deleteUnsafe(<entityObject>.id)
 ```
 
-The set function is used to either create an entity or to update an existing entity with the values defined in the `entityObject`. 
+The set function is used to either create an entity or to update an existing entity with the values defined in the `entityObject`.
 The deleteUnsafe function is an experimental feature that allows you to remove an entity with a particular ID from the database and indexer memory. This is un `unsafe` function,
-since there may be unexpected repercussions when a deleted entity is linked to another entity. See [here](./linked-entity-loaders) for more information regarding linked entities. It is your responsibility to delete/fix these references manually since a 'safe' delete function hasn't been created yet. 
+since there may be unexpected repercussions when a deleted entity is linked to another entity. See [here](./linked-entity-loaders) for more information regarding linked entities. It is your responsibility to delete/fix these references manually since a 'safe' delete function hasn't been created yet.
 
 ### Example of a Loader function for the `NewGreeting` event:
 
@@ -163,9 +163,9 @@ since there may be unexpected repercussions when a deleted entity is linked to a
   <TabItem value="javascript" label="Javascript">
 
 ```javascript
-let { GreeterContract } = require("../generated/src/Handlers.bs.js");
+let { GreeterContract } = require("generated/src/Handlers.bs.js");
 
-GreeterContract.NewGreeting.loader((event, context) => {
+GreeterContract.NewGreeting.loader(({ event, context }) => {
   context.User.load(event.params.user.toString());
 });
 ```
@@ -174,11 +174,9 @@ GreeterContract.NewGreeting.loader((event, context) => {
   <TabItem value="typescript" label="Typescript">
 
 ```typescript
-import { GreeterContract_NewGreeting_loader } from "../generated/src/Handlers.gen";
+import { UserEntity, GreeterContract } from "generated";
 
-import { userEntity } from "../generated/src/Types.gen";
-
-GreeterContract_NewGreeting_loader(({ event, context }) => {
+GreeterContract.NewGreeting.loader(({ event, context }) => {
   context.User.load(event.params.user.toString());
 });
 ```
@@ -209,7 +207,7 @@ Handlers.GreeterContract.NewGreeting.loader(({ event, context }) => {
 ```javascript
 let { GreeterContract } = require("../generated/src/Handlers.bs.js");
 
-GreeterContract.NewGreeting.handler((event, context) => {
+GreeterContract.NewGreeting.handler(({ event, context }) => {
   let existingUser = context.User.get(event.params.user.toString());
 
   if (existingUser !== undefined) {
@@ -234,11 +232,11 @@ GreeterContract.NewGreeting.handler((event, context) => {
   <TabItem value="typescript" label="Typescript">
 
 ```typescript
-import { GreeterContract_NewGreeting_handler } from "../generated/src/Handlers.gen";
+import { GreeterContract } from "../generated/src/Handlers.gen";
 
 import { userEntity } from "../generated/src/Types.gen";
 
-GreeterContract_NewGreeting_handler(({ event, context }) => {
+GreeterContract.NewGreeting.handler(({ event, context }) => {
 (({ event, context }) => {
   let currentUser = context.User.get(event.params.user.toString());
 
@@ -318,7 +316,7 @@ We expose the `config.yaml` data in the handler via `getConfigByChainId`. The be
 ```javascript
 let { getConfigByChainId } = require("../generated/src/ConfigYAML.bs.js");
 
-GreeterContract.NewGreeting.handler((event, context) => {
+GreeterContract.NewGreeting.handler(({ event, context }) => {
   let config = getConfigByChainId(event.chainId);
 });
 ```
