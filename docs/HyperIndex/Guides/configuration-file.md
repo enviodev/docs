@@ -13,7 +13,7 @@ The `config.yaml` outlines the specifications for the indexer, including details
 
 - `name` - Name of the project
 - `description` - Description of the project
-- `ecosystem` - Ecosystem the indexer is intended for. Default value is "ethereum", but can be set to "fuel".
+- `ecosystem` - Ecosystem the indexer is intended for. The default value is "evm", but it can be set to "fuel".
 - `networks` - Configuration of the blockchain networks that the project is deployed on
   - `id` - Chain identifier of the network
   - `rpc_config` - RPC Config that will be used to subscribe to blockchain data on this network (TIP: This is optional and in most cases does not need to be specified if the network is supported with [HyperSync](../Advanced/hypersync.md). We recommend using HyperSync instead of RPC for 100x speed-up)

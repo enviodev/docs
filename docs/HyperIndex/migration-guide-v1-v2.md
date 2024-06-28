@@ -11,7 +11,8 @@ NOTE: v2 is currently in rc phase (release candidate) and is not yet stable. Ple
 
 V2 of HyperIndex is about streamlining the process of starting an indexer and optimizing it as you go. There are two big changes:
 
-- Handlers are now asynchronous, and by default 'loaders' aren't required at all - there is no need for the [async-mode](/docs/HyperIndex/async-mode).
+- Handlers are now asynchronous, and `loaders` became an optional tool for additional optimizations.
+- It made [async-mode](/docs/HyperIndex/async-mode) not needed, hence it's removed in v2.
 - Loaders (when used) are more expressive and connected via the return type to the context of the handler.
   - In v1, you needed to use linked entities to load entity fields of other entities. This was unintuitive.
     - In v2, you can directly access the fields of the loader the exact same way as you do in the handler, with an async 'get' function.
@@ -22,7 +23,7 @@ V2 of HyperIndex is about streamlining the process of starting an indexer and op
 
 ### Handlers
 
-- Handlers are now asynchronous (you can add an `async` keyword before it).
+- Handlers are now asynchronous - add the `async` keyword and rename `handlerAsync` to `handler`.
 - You can use `handlerWithLoader` if you need a loader, otherwise use `handler` directly.
 - The 'get' function is now asyncronous, so add an `await` before those functions.
 - No labelled entities.
@@ -30,10 +31,10 @@ V2 of HyperIndex is about streamlining the process of starting an indexer and op
 ### Loaders
 
 - Loaders are merged into the handlers using `handlerWithLoader`.
-- Loading linked entities is done directly with promices in the loader.
+- Loading linked entities is done directly with promises in the loader.
 - Loaders are completely optional - only use the if you care about high throughput indexing.
 - Loaders return the required entities which are then used in the handler.
-- `contractRegister` is used for dynamic contract registration. You don't add contracts to the indexer dynamically in the loader anymore.
+- The dynamic contract registration moved from loaders to its own `<ContractName>.<EventName>.contractRegister` handler.
 - The return type of the loader is used directly in the handler to access the loaded data. No need to re-'get' it again in the handler.
 
 ### Configuration
@@ -44,14 +45,15 @@ V2 of HyperIndex is about streamlining the process of starting an indexer and op
 - isAsync: true
 ```
 
-- No entity labels or required entities.
+- Removed entity labels and required entities.
 
 ### Miscellaneous breaking changes and deprecations
 
-- For rescript, you need to use the built in bigint type instead of the `Ethers.BigInt` type.
-- Upgrade to rescript 11 uncurried mode (and use of newer rescript compiler).
+- For ReScript, we moved to the built-in `bigint` type instead of the `Ethers.BigInt.t`.
+- Need to upgrade to ReScript 11 uncurried mode.
 - The `context.Entity.load` function is deprecated and should be replaced with direct calls to `context.Entity.get` in the loader.
 - The `context.ParentEntity.loadField` functions are deprecated and should be replaced with direct calls to `context.ChildEntity.get`.
+- Remove the `Contract` and `Entity` suffixes from generated code.
 <!-- TODO: lots more to put here -->
 
 ## Migration Steps
@@ -108,7 +110,7 @@ SomeContract.Event1.handler(({ event, context }) => {
 **After:**
 
 ```typescript
-SomeContract.Event1.handlerWithLoader({
+Some.Event1.handlerWithLoader({
   loader: async ({ event, context }) => {
     // Loader code
     return {
@@ -134,7 +136,7 @@ SomeContract.Event1.handler(({ event, context }) => {
 **After:**
 
 ```typescript
-SomeContract.Event1.handler(async ({ event, context, loaderReturn }) => {
+Some.Event1.handler(async ({ event, context }) => {
   // Handler code
 });
 ```
@@ -154,7 +156,7 @@ SomeContract.Event1.loader(({ event, context }) => {
 **After:**
 
 ```typescript
-SomeContract.Event1.contractRegister(({ event, context }) => {
+Some.Event1.contractRegister(({ event, context }) => {
   context.addContract(event.params.contract);
 });
 ```
@@ -219,7 +221,7 @@ SomeContract.Event1.loader(({ event, context }) => {
 ### After:
 
 ```typescript
-SomeContract.Event1.handlerWithLoader({
+Some.Event1.handlerWithLoader({
   loader: async ({ event, context }) => {
     const currentEntity = await context.Entity.get(event.srcAddress.toString());
     if (currentEntity == undefined) return null;
