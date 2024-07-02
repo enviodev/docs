@@ -5,6 +5,8 @@ sidebar_label: Hypersync Query
 slug: /hypersync-query
 ---
 
+*NOTE*: this not everything on this page has been updated to work for HyperFuel, for example the stream function isn't implemented for Fuel.
+
 # Hypersync Query
 
 This page explains how the hypersync query works and how to get the data you need from hypersync.
@@ -17,6 +19,7 @@ This page explains how the hypersync query works and how to get the data you nee
 4. [Data Schema](#data-schema) (Entire schema for each data table)
 5. [Response Structure](#response-structure) (Explanation of all response fields)
 6. [Stream and Collect Functions](#stream-and-collect-functions) (Explains the stream and collect functions that are implemented in the client libraries)
+7. [Join Modes](#join-modes) (Explains the join modes that are implemented in the client libraries)
 
 ## Introduction
 
@@ -530,3 +533,37 @@ Stream function runs many internal queries concurrently and gives back the resul
 The collect function essentially calls `stream` internally and collects all of the data into a single response. The `collect_parquet` function can be used to pipe data into a parquet file, it doesn't accumulate all data in memory so can be used to collect data that doesn't fit in RAM. We still recommend chunking the `collect_parquet` calls so you don't end up with big parquet files.
 
 <b>TIP</b>: set `RUST_LOG` environment variable to `trace` if you want to see more logs when using the client libraries.
+
+## Join Modes
+
+In the context of Hypersync, joins refer to the implicit linking of different types of blockchain data (logs, transactions, traces, and blocks) based on certain relationships. Here's an explanation of how these joins work:
+
+### Current Join Mechanism
+
+1. **Logs to Transactions**:
+   - When you query logs using `log_selection`, Hypersync automatically retrieves the transactions associated with those logs. This is based on the transaction hash present in each log.
+     - Example: If your `log_selection` returns logs related to certain ERC20 transfers, Hypersync fetches the transactions containing these logs.
+
+2. **Transactions to Traces**:
+   - After fetching the relevant transactions (either directly through `transaction_selection` or via logs), Hypersync retrieves the associated traces.
+     - Example: If your transaction involves certain addresses, Hypersync retrieves traces related to these transactions, including internal transactions.
+
+3. **Traces to Blocks**:
+   - Hypersync then fetches the blocks containing these traces. This ensures you have the complete context of each transaction, including the block details.
+     - Example: The block containing the transaction and its traces is fetched based on the block number.
+
+### [Coming Soon] Other Join Modes
+
+Hypersync is planning to implement more flexible join modes to give users greater control over the data retrieval process. The planned modes are:
+
+1. **Default Mode**:
+   - This will function similarly to the current implementation, where logs are joined with transactions, which are then joined with traces, and finally with blocks.
+
+2. **Everything Mode**:
+   - This mode will retrieve all relevant data tables and perform comprehensive joins across all selections.
+     - Example: If you specify a log selection, it will not only fetch the logs and their transactions but also all traces and other logs related to those transactions, and the blocks containing all these elements.
+
+3. **Nothing Mode**:
+   - In this mode, no automatic joins are performed. You will get the data exactly as specified in your selections without any implicit joins.
+     - Example: If you only query for logs, you will only get logs without the associated transactions or traces.
+
