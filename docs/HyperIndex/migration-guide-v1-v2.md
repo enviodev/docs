@@ -101,11 +101,11 @@ import {
 **Before:**
 
 ```typescript
-/// or if your indexer is very old: SomeContract_Event1_loader
-SomeContract.Event1.loader(({ event, context }) => {
+/// or if your indexer is very old: GreeterContract_Event1_loader
+GreeterContract.Event1.loader(({ event, context }) => {
   // Loader code
 });
-SomeContract.Event1.handler(({ event, context }) => {
+GreeterContract.Event1.handler(({ event, context }) => {
   // Handler code
 });
 ```
@@ -113,7 +113,7 @@ SomeContract.Event1.handler(({ event, context }) => {
 **After:**
 
 ```typescript
-Some.Event1.handlerWithLoader({
+Greeter.Event1.handlerWithLoader({
   loader: async ({ event, context }) => {
     // Loader code
     return {
@@ -131,7 +131,7 @@ Some.Event1.handlerWithLoader({
 **Before:**
 
 ```typescript
-SomeContract.Event1.handler(({ event, context }) => {
+GreeterContract.Event1.handler(({ event, context }) => {
   // Handler code
 });
 ```
@@ -139,7 +139,7 @@ SomeContract.Event1.handler(({ event, context }) => {
 **After:**
 
 ```typescript
-Some.Event1.handler(async ({ event, context }) => {
+Greeter.Event1.handler(async ({ event, context }) => {
   // Handler code
 });
 ```
@@ -151,7 +151,7 @@ Use `contractRegister` for dynamic contract registration. Assuming there is an e
 **Before:**
 
 ```typescript
-SomeContract.NewGreeterCreated.loader(({ event, context }) => {
+GreeterContract.NewGreeterCreated.loader(({ event, context }) => {
   context.contractRegistration.addGreeter(event.params.newGreeter);
 });
 ```
@@ -159,7 +159,7 @@ SomeContract.NewGreeterCreated.loader(({ event, context }) => {
 **After:**
 
 ```typescript
-Some.NewGreeterCreated.contractRegister(({ event, context }) => {
+Greeter.NewGreeterCreated.contractRegister(({ event, context }) => {
   context.addGreeter(event.params.newGreeter);
 });
 ```
@@ -223,7 +223,7 @@ const { currentEntity } = loaderReturn;
 ### Before
 
 ```typescript
-SomeContract.Event1.loader(({ event, context }) => {
+GreeterContract.Event1.loader(({ event, context }) => {
   context.Entity.load(event.srcAddress.toString(), {
     loadField1: true,
     loadField2: true,
@@ -234,7 +234,7 @@ SomeContract.Event1.loader(({ event, context }) => {
 ### After:
 
 ```typescript
-Some.Event1.handlerWithLoader({
+Greeter.Event1.handlerWithLoader({
   loader: async ({ event, context }) => {
     const currentEntity = await context.Entity.get(event.srcAddress.toString());
     if (currentEntity == undefined) return null;
