@@ -47,6 +47,11 @@ V2 of HyperIndex is about streamlining the process of starting an indexer and op
 
 - Removed entity labels and required entities.
 
+```diff
+- required_entities:
+-   - name: User
+```
+
 ### Miscellaneous breaking changes and deprecations
 
 - For ReScript, we moved to the built-in `bigint` type instead of the `Ethers.BigInt.t`.
