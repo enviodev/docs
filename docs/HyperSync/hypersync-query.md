@@ -538,11 +538,11 @@ The collect function essentially calls `stream` internally and collects all of t
 
 In the context of Hypersync, joins refer to the implicit linking of different types of blockchain data (logs, transactions, traces, and blocks) based on certain relationships. Here's an explanation of how these joins work:
 
-### Current Join Mechanism
+### Default Join Mechanism
 
 1. **Logs to Transactions**:
    - When you query logs using `log_selection`, Hypersync automatically retrieves the transactions associated with those logs. This is based on the transaction hash present in each log.
-     - Example: If your `log_selection` returns logs related to certain ERC20 transfers, Hypersync fetches the transactions containing these logs.
+     - Example: If your `log_selection` returns logs related to certain ERC20 transfers, Hypersync fetches the transactions containing these logs if the `field_selection.transaction`.
 
 2. **Transactions to Traces**:
    - After fetching the relevant transactions (either directly through `transaction_selection` or via logs), Hypersync retrieves the associated traces.
@@ -552,18 +552,14 @@ In the context of Hypersync, joins refer to the implicit linking of different ty
    - Hypersync then fetches the blocks containing these traces. This ensures you have the complete context of each transaction, including the block details.
      - Example: The block containing the transaction and its traces is fetched based on the block number.
 
-### [Coming Soon] Other Join Modes
+### Other Join Modes 
 
-Hypersync is planning to implement more flexible join modes to give users greater control over the data retrieval process. The planned modes are:
-
-1. **Default Mode**:
-   - This will function similarly to the current implementation, where logs are joined with transactions, which are then joined with traces, and finally with blocks.
-
-2. **Everything Mode**:
-   - This mode will retrieve all relevant data tables and perform comprehensive joins across all selections.
+1. **JoinAll Mode**:
+   - This mode retrieves all relevant data tables and performs comprehensive joins across all selections.
      - Example: If you specify a log selection, it will not only fetch the logs and their transactions but also all traces and other logs related to those transactions, and the blocks containing all these elements.
 
-3. **Nothing Mode**:
+2. **JoinNothing Mode**:
    - In this mode, no automatic joins are performed. You will get the data exactly as specified in your selections without any implicit joins.
      - Example: If you only query for logs, you will only get logs without the associated transactions or traces.
 
+To use these join modes use `join_mode` in rust and curl, and `JoinMode` in python and nodejs.
