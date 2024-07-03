@@ -18,6 +18,7 @@ V2 of HyperIndex is about streamlining the process of starting an indexer and op
     - In v2, you can directly access the fields of the loader the exact same way as you do in the handler, with an async 'get' function.
   - In v1, you needed to call 'load' in the loader, and 'get' in the handler separately (or use labelled fields).
     - In v2, you can use the return type of the loader to directly access the fields in the handler via the context, or you can call 'get' again.
+- Fixed indexing params with names that are reserved words in ReScript.
 
 ## Changes to Make
 
@@ -49,11 +50,15 @@ V2 of HyperIndex is about streamlining the process of starting an indexer and op
 
 ### Miscellaneous breaking changes and deprecations
 
-- For ReScript, we moved to the built-in `bigint` type instead of the `Ethers.BigInt.t`.
-- Need to upgrade to ReScript 11 uncurried mode.
 - The `context.Entity.load` function is deprecated and should be replaced with direct calls to `context.Entity.get` in the loader.
 - The `context.ParentEntity.loadField` functions are deprecated and should be replaced with direct calls to `context.ChildEntity.get`.
 - Remove the `Contract` and `Entity` suffixes from generated code.
+- For JavaScript/TypeScript users:
+  - The event param names are not uncapitalized anymore. So you might need to change `event.params.capitalizedParamName` to `event.params.CapitalizedParamName`.
+- For ReScript users:
+  - We moved to the built-in `bigint` type instead of the `Ethers.BigInt.t`.
+  - We migrated to ReScript 11 uncurried mode. Curried mode is not supported anymore. So you need to remove `uncurried: false` from your rescript.json file. Also, we vendored `RescriptMocha` bindings to support uncurried mode. Please use it instead of `rescript-mocha`.
+
 <!-- TODO: lots more to put here -->
 
 ## Migration Steps
