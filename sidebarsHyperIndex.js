@@ -49,7 +49,19 @@ module.exports = {
         "Advanced/persisted_files",
         "Advanced/generated-files",
         "Advanced/terminology",
-        "Advanced/performance/performance",
+        {
+          type: 'category',
+          label: 'Performance',
+          link: {
+            type: 'doc',
+            id: "Advanced/performance/index",
+          },
+          items: [
+            "Advanced/performance/database-performance-optimization",
+            "Advanced/performance/historical-sync",
+            "Advanced/performance/latency-at-head",
+          ],
+        },
       ],
     },
     /* 
