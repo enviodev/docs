@@ -18,6 +18,7 @@ V2 of HyperIndex is about streamlining the process of starting an indexer and op
     - In v2, you can directly access the fields of the loader the exact same way as you do in the handler, with an async 'get' function.
   - In v1, you needed to call 'load' in the loader, and 'get' in the handler separately (or use labelled fields).
     - In v2, you can use the return type of the loader to directly access the fields in the handler via the context, or you can call 'get' again.
+- Validation and autocompletion for `config.yaml`. You can enable it by adding `# yaml-language-server: $schema=./node_modules/envio/evm.schema.json` on top of your `config.yaml` file.
 
 ## Changes to Make
 
