@@ -7,27 +7,31 @@ slug: /dynamic-contracts
 
 # Dynamic Contracts / Factories
 
-If you have a system that does not know all the contracts that need indexing at the beginning i.e. you have a factory contract that dynamically creates new contracts over time, - you can use dynamic contracts.
+If you have a system that does not know all the contracts that need indexing at the beginning (e.g., a factory contract that dynamically creates new contracts over time), you can use dynamic contracts.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/O6qPXZ6kjYY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<!--
+///TODO: add back a video once it has been updated to v2
+<iframe width="560" height="315" src="https://www.youtube.com/embed/O6qPXZ6kjYY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
 
 ## Loader Function
 
-Contract factories are currently supported in the `loader` function of the event that you want to register the contract in.
+Contract factories are currently supported in the event's `contractRegister` function that you want to register the contract in.
 
-You can register a dynamic contract by including the following line inside the loader function:
+You can register a dynamic contract by including the following line inside the `contractRegister` function:
 
 ```javascript
-context.contractRegistration.add<your-contract-name>(<address-of-the-contract>)
+<contract-name>.<event-name>.contractRegister(({ event, context }) => {
+  context.add<your-contract-name>(<address-of-the-contract>);
+});
 ```
 
-> The syntax is exactly same for JavaScript, TypeScript and ReScript.
+> The syntax is exactly the same for JavaScript, TypeScript, and ReScript.
 
-## Example using a NFT factory
+## Example using an NFT factory
 
 In the NFT factory example, we want to dynamically register all the `SimpleNft` contracts that get created by the `NftFactory` contract, via `SimpleNftCreated` events.
 
-Both types of contracts will be defined in the configuration file, however address field will be omitted for the `SimpleNft` contract - address values will instead be retrieved from `SimpleNftCreated` event.
+Both types of contracts will be defined in the configuration file; however, the address field will be omitted for the `SimpleNft` contract - address values will instead be retrieved from the `SimpleNftCreated` event.
 
 ### Config file
 
@@ -51,13 +55,15 @@ networks:
           - event: Transfer (address from, address to, uint256 tokenId)
 ```
 
-### Registering `SimpleNft` contracts in loader function for `SimpleNftCreated` event
+### Registering `SimpleNft` contracts in `contractRegister` function for `SimpleNftCreated` event
 
 ```javascript
-context.contractRegistration.addSimpleNft(event.params.contractAddress);
+NftFactory.SimpleNftCreated.contractRegister(({ event, context }) => {
+  context.addSimpleNft(event.params.contractAddress);
+});
 ```
 
-> The syntax is exactly same for JavaScript, TypeScript and ReScript.
+> The syntax is exactly the same for JavaScript, TypeScript, and ReScript.
 
 For more information on how to write the event handlers file, go [here](../Guides/event-handlers.mdx).
 
