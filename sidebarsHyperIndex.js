@@ -42,7 +42,7 @@ module.exports = {
       type: "category",
       label: "Advanced",
       items: [
-        // "Advanced/dynamic-contracts", // TODO: need to add this back and have it correct.
+        "Advanced/dynamic-contracts",
         "Advanced/multichain-indexing",
         "Advanced/hypersync",
         "Advanced/rpc-sync",
