@@ -13,10 +13,15 @@ The `config.yaml` outlines the specifications for the indexer, including details
 
 - `name` - Name of the project
 - `description` - Description of the project
+- `ecosystem` - Ecosystem the indexer is intended for. The default value is "evm", but it can be set to "fuel".
+- `schema` - Custom path to config file
+- `contracts` - Global contract definitions that must contain all definitions except addresses. You can share a single handler/abi/event definitions for contracts across multiple chains.
 - `networks` - Configuration of the blockchain networks that the project is deployed on
   - `id` - Chain identifier of the network
   - `rpc_config` - RPC Config that will be used to subscribe to blockchain data on this network (TIP: This is optional and in most cases does not need to be specified if the network is supported with [HyperSync](../Advanced/hypersync.md). We recommend using HyperSync instead of RPC for 100x speed-up)
     - `url` - URL of the RPC endpoint
+  - `hypersync_config` - Optional HyperSync Config for additional fine-tuning
+    - `url` - URL of the HyperSync endpoint (default: The most performant HyperSync endpoint for the network)
   - `start_block` - Initial block from which the indexer will start listening for events
   - `end_block` - An optional field to specify the last block an indexer must index to
   - `contracts` - Configuration for each contract deployed on the network
@@ -26,9 +31,14 @@ The `config.yaml` outlines the specifications for the indexer, including details
     - `handler` - Location of the file that handles the events emitted by this contract
     - `events` - Configuration for each event emitted by this contract that the indexer will listen for
       - `event` - Event signature or name of the event (must match the name in the ABI)
+      - `isAsync` - If the event handler is asynchronous (default: false)
       - `required_entities` - An array of entities that need to loaded and made accessible within the handler function (an empty array indicates that no entities are required)(Optional, if this is left out all entities will be available)
         - `name` - The name of the required entity (must match an entity defined in `schema.graphql`)
         - `labels` - This is an optional name given for loaded entities in the loaders that can be used in the event handlers (useful in differentiating entities that should be modified differently by the same event)
+- `unordered_multichain_mode` - A flag to indicate if the indexer should use a single queue for all chains or a queue per chain (default: false)
+- `event_decoder` - The event decoder to use for the indexer (default: hypersync-client)
+- `rollback_on_reorg` - A flag to indicate if the indexer should rollback to the last known valid block on a reorg (default: false)
+- `save_full_history` - A flag to indicate if the indexer should save the full history of events. This is useful for debugging but will increase the size of the database (default: false)
 
 After you have set up your config file and the scheme, you are ready to generate the indexing code required to write the event handlers.
 
