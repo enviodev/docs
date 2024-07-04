@@ -18,6 +18,7 @@ V2 of HyperIndex is about streamlining the process of starting an indexer and op
     - In v2, you can directly access the fields of the loader the exact same way as you do in the handler, with an async 'get' function.
   - In v1, you needed to call 'load' in the loader, and 'get' in the handler separately (or use labelled fields).
     - In v2, you can use the return type of the loader to directly access the fields in the handler via the context, or you can call 'get' again.
+- Fixed indexing params with names that are reserved words in ReScript.
 - Validation and autocompletion for `config.yaml`. You can enable it by adding `# yaml-language-server: $schema=./node_modules/envio/evm.schema.json` on top of your `config.yaml` file.
 
 ## Changes to Make
@@ -55,11 +56,15 @@ V2 of HyperIndex is about streamlining the process of starting an indexer and op
 
 ### Miscellaneous breaking changes and deprecations
 
-- For ReScript, we moved to the built-in `bigint` type instead of the `Ethers.BigInt.t`.
-- Need to upgrade to ReScript 11 uncurried mode.
 - The `context.Entity.load` function is deprecated and should be replaced with direct calls to `context.Entity.get` in the loader.
 - The `context.ParentEntity.loadField` functions are deprecated and should be replaced with direct calls to `context.ChildEntity.get`.
 - Remove the `Contract` and `Entity` suffixes from generated code.
+- For JavaScript/TypeScript users:
+  - The event param names are not uncapitalized anymore. So you might need to change `event.params.capitalizedParamName` to `event.params.CapitalizedParamName`.
+- For ReScript users:
+  - We moved to the built-in `bigint` type instead of the `Ethers.BigInt.t`.
+  - We migrated to ReScript 11 uncurried mode. Curried mode is not supported anymore. So you need to remove `uncurried: false` from your rescript.json file. Also, we vendored `RescriptMocha` bindings to support uncurried mode. Please use it instead of `rescript-mocha`.
+
 <!-- TODO: lots more to put here -->
 
 ## Migration Steps
@@ -102,11 +107,11 @@ import {
 **Before:**
 
 ```typescript
-/// or if your indexer is very old: SomeContract_Event1_loader
-SomeContract.Event1.loader(({ event, context }) => {
+/// or if your indexer is very old: GreeterContract_Event1_loader
+GreeterContract.Event1.loader(({ event, context }) => {
   // Loader code
 });
-SomeContract.Event1.handler(({ event, context }) => {
+GreeterContract.Event1.handler(({ event, context }) => {
   // Handler code
 });
 ```
@@ -114,7 +119,7 @@ SomeContract.Event1.handler(({ event, context }) => {
 **After:**
 
 ```typescript
-Some.Event1.handlerWithLoader({
+Greeter.Event1.handlerWithLoader({
   loader: async ({ event, context }) => {
     // Loader code
     return {
@@ -132,7 +137,7 @@ Some.Event1.handlerWithLoader({
 **Before:**
 
 ```typescript
-SomeContract.Event1.handler(({ event, context }) => {
+GreeterContract.Event1.handler(({ event, context }) => {
   // Handler code
 });
 ```
@@ -140,7 +145,7 @@ SomeContract.Event1.handler(({ event, context }) => {
 **After:**
 
 ```typescript
-Some.Event1.handler(async ({ event, context }) => {
+Greeter.Event1.handler(async ({ event, context }) => {
   // Handler code
 });
 ```
@@ -152,7 +157,7 @@ Use `contractRegister` for dynamic contract registration. Assuming there is an e
 **Before:**
 
 ```typescript
-SomeContract.NewGreeterCreated.loader(({ event, context }) => {
+GreeterContract.NewGreeterCreated.loader(({ event, context }) => {
   context.contractRegistration.addGreeter(event.params.newGreeter);
 });
 ```
@@ -160,7 +165,7 @@ SomeContract.NewGreeterCreated.loader(({ event, context }) => {
 **After:**
 
 ```typescript
-Some.NewGreeterCreated.contractRegister(({ event, context }) => {
+Greeter.NewGreeterCreated.contractRegister(({ event, context }) => {
   context.addGreeter(event.params.newGreeter);
 });
 ```
@@ -224,7 +229,7 @@ const { currentEntity } = loaderReturn;
 ### Before
 
 ```typescript
-SomeContract.Event1.loader(({ event, context }) => {
+GreeterContract.Event1.loader(({ event, context }) => {
   context.Entity.load(event.srcAddress.toString(), {
     loadField1: true,
     loadField2: true,
@@ -235,7 +240,7 @@ SomeContract.Event1.loader(({ event, context }) => {
 ### After:
 
 ```typescript
-Some.Event1.handlerWithLoader({
+Greeter.Event1.handlerWithLoader({
   loader: async ({ event, context }) => {
     const currentEntity = await context.Entity.get(event.srcAddress.toString());
     if (currentEntity == undefined) return null;
