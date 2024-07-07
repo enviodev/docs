@@ -91,6 +91,8 @@ module.exports = {
     },
     "licensing",
     "fuel/fuel",
+    "terms-of-service",
+    "privacy-policy",
     // {
     //   type: "category",
     //   label: "Education",

@@ -19,6 +19,7 @@ module.exports = {
       label: "HyperRPC",
       items: [
         "HyperRPC/overview-hyperrpc",
+        "HyperRPC/hyperrpc-url-endpoints",
       ],
     },
   ],
