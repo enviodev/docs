@@ -19,7 +19,7 @@ The `config.yaml` outlines the specifications for the indexer, including details
 - `networks` - Configuration of the blockchain networks that the project is deployed on
   - `id` - Chain identifier of the network
   - `rpc_config` - RPC Config that will be used to subscribe to blockchain data on this network (TIP: This is optional and in most cases does not need to be specified if the network is supported with [HyperSync](../Advanced/hypersync.md). We recommend using HyperSync instead of RPC for 100x speed-up)
-    - `url` - URL of the RPC endpoint
+    - `url` - URL of the RPC endpoint. You can provide multiple RPC endpoints for the network, they'll be used as fallbacks in case the primary RPC endpoint is down.
   - `hypersync_config` - Optional HyperSync Config for additional fine-tuning
     - `url` - URL of the HyperSync endpoint (default: The most performant HyperSync endpoint for the network)
   - `start_block` - Initial block from which the indexer will start listening for events
