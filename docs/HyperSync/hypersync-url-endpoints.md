@@ -22,7 +22,7 @@ Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9
 | Crab             | 44         | https://crab.hypersync.xyz or https://44.hypersync.xyz                 |
 | Darwinia         | 46         | https://darwinia.hypersync.xyz or https://46.hypersync.xyz             |
 | BSC              | 56         | https://bsc.hypersync.xyz or https://56.hypersync.xyz                  |
-| BSC Testnet      | 97         | https://bsc-testnet.hypersync.xyz or https://97.hypersync.xyz                  |
+| BSC Testnet      | 97         | https://bsc-testnet.hypersync.xyz or https://97.hypersync.xyz          |
 | Gnosis           | 100        | https://gnosis.hypersync.xyz or https://100.hypersync.xyz              |
 | Polygon          | 137        | https://polygon.hypersync.xyz or https://137.hypersync.xyz             |
 | ShimmerEVM       | 148        | https://shimmer-evm.hypersync.xyz or https://148.hypersync.xyz         |
