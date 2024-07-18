@@ -49,7 +49,7 @@ Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9
 | Arbitrum One     | 42161      | https://arbitrum.rpc.hypersync.xyz or https://42161.rpc.hypersync.xyz          |
 | Arbitrum Nova    | 42170      | https://arbitrum-nova.rpc.hypersync.xyz or https://42170.rpc.hypersync.xyz     |
 | Celo             | 42220      | https://celo.rpc.hypersync.xyz or https://42220.rpc.hypersync.xyz              |
-| Fuji             | 43113      | https://fuji.rpc.hypersync.xyz or https://43113.fuji.hypersync.xyz         |
+| Fuji             | 43113      | https://fuji.rpc.hypersync.xyz or https://43113.rpc.hypersync.xyz         |
 | Avalanche        | 43114      | https://avalanche.rpc.hypersync.xyz or https://43114.rpc.hypersync.xyz         |
 | Linea            | 59144      | https://linea.rpc.hypersync.xyz or https://59144.rpc.hypersync.xyz             |
 | Amoy             | 80002      | https://amoy.rpc.hypersync.xyz or https://80001.rpc.hypersync.xyz              |
