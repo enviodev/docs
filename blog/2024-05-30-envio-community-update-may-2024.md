@@ -103,7 +103,9 @@ Follow GBlast on [X](https://x.com/GBlast_gg).
 
 <img src="/blog-assets/envio-dev-community-update-may-2024-modular-summit.png" alt="Cover Image DappCon Speaker Modern Blockchain Indexing" width="100%"/>
 
-We’re excited to announce that Envio has been listed as a proud sponsor of the Modular Summit 3.0, a premier event in modular technology and Web3!
+<!--truncate-->
+
+We’re excited to announce that Envio has been listed as a proud sponsor of the Modular Summit 3.0, a premier event in modular technology and Web3! 
 
 Join us in Brussels, with top industry leaders, innovators, and enthusiasts to explore the future of decentralized technologies. Highlights include in-depth sessions, interactive workshops, and networking opportunities with key influencers and venture capitalists.
 

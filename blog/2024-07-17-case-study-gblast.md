@@ -6,6 +6,8 @@ slug: /case-study-gblast
 
 <img src="/blog-assets/case-study-gblast.png" alt="Cover Image for Case Study GBlast" width="100%"/>
 
+<!--truncate-->
+
 Who doesn't love having a blast? Just as every blockchain developer chases the thrill of the code, we're excited to announce that [GBlast](https://gblast.gg/), known for its exhilarating real-time luck-based games, has seamlessly integrated Envio’s high-performance blockchain data indexing capabilities to power its GambleFi platform.
 
 This integration marks a significant leap forward in optimizing GBlast’s application infrastructure, serving real-time data in their front-end and ensuring a responsive gaming experience for end users.
