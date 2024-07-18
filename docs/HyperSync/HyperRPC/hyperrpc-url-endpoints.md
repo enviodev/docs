@@ -19,12 +19,12 @@ Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9
 | Ethereum Mainnet | 1          | https://eth.rpc.hypersync.xyz or https://1.rpc.hypersync.xyz                   |
 | Goerli           | 5          | https://goerli.rpc.hypersync.xyz or https://5.rpc.hypersync.xyz                |
 | Optimism         | 10         | https://optimism-sepolia.rpc.hypersync.xyz or https://10.rpc.hypersync.xyz     |
-| Flare            | 14         | https://flare.rpc.hypersync.xyz or https://14.rpc.hypersync.xyz                |
 | Rootstock        | 30         | https://rsk.rpc.hypersync.xyz or https://30.rpc.hypersync.xyz                  |
 | Lukso            | 42         | https://lukso.rpc.hypersync.xyz or https://42.rpc.hypersync.xyz                |
 | Crab             | 44         | https://crab.rpc.hypersync.xyz or https://44.rpc.hypersync.xyz                 |
 | Darwinia         | 46         | https://darwinia.rpc.hypersync.xyz or https://46.rpc.hypersync.xyz             |
-| Bsc              | 56         | https://bsc.rpc.hypersync.xyz or https://56.rpc.hypersync.xyz                  |
+| BSC              | 56         | https://bsc.rpc.hypersync.xyz or https://56.rpc.hypersync.xyz                  |
+| BSC Testnet      | 97         | https://bsc-testnet.rpc.hypersync.xyz or https://97.rpc.hypersync.xyz                  |
 | Gnosis           | 100        | https://gnosis.rpc.hypersync.xyz or https://100.rpc.hypersync.xyz              |
 | Polygon          | 137        | https://polygon.rpc.hypersync.xyz or https://137.rpc.hypersync.xyz             |
 | ShimmerEVM       | 148        | https://shimmer-evm.rpc.hypersync.xyz or https://148.rpc.hypersync.xyz         |
@@ -49,6 +49,7 @@ Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9
 | Arbitrum One     | 42161      | https://arbitrum.rpc.hypersync.xyz or https://42161.rpc.hypersync.xyz          |
 | Arbitrum Nova    | 42170      | https://arbitrum-nova.rpc.hypersync.xyz or https://42170.rpc.hypersync.xyz     |
 | Celo             | 42220      | https://celo.rpc.hypersync.xyz or https://42220.rpc.hypersync.xyz              |
+| Fuji             | 43113      | https://fuji.rpc.hypersync.xyz or https://43113.fuji.hypersync.xyz         |
 | Avalanche        | 43114      | https://avalanche.rpc.hypersync.xyz or https://43114.rpc.hypersync.xyz         |
 | Linea            | 59144      | https://linea.rpc.hypersync.xyz or https://59144.rpc.hypersync.xyz             |
 | Amoy             | 80002      | https://amoy.rpc.hypersync.xyz or https://80001.rpc.hypersync.xyz              |

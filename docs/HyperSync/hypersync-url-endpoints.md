@@ -17,12 +17,12 @@ Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9
 | Ethereum Mainnet | 1          | https://eth.hypersync.xyz or https://1.hypersync.xyz                   |
 | Goerli           | 5          | https://goerli.hypersync.xyz or https://5.hypersync.xyz                |
 | Optimism         | 10         | https://optimism-sepolia.hypersync.xyz or https://10.hypersync.xyz     |
-| Flare            | 14         | https://flare.hypersync.xyz or https://14.hypersync.xyz                |
 | Rootstock        | 30         | https://rsk.hypersync.xyz or https://30.hypersync.xyz                  |
 | Lukso            | 42         | https://lukso.hypersync.xyz or https://42.hypersync.xyz                |
 | Crab             | 44         | https://crab.hypersync.xyz or https://44.hypersync.xyz                 |
 | Darwinia         | 46         | https://darwinia.hypersync.xyz or https://46.hypersync.xyz             |
-| Bsc              | 56         | https://bsc.hypersync.xyz or https://56.hypersync.xyz                  |
+| BSC              | 56         | https://bsc.hypersync.xyz or https://56.hypersync.xyz                  |
+| BSC Testnet      | 97         | https://bsc-testnet.hypersync.xyz or https://97.hypersync.xyz                  |
 | Gnosis           | 100        | https://gnosis.hypersync.xyz or https://100.hypersync.xyz              |
 | Polygon          | 137        | https://polygon.hypersync.xyz or https://137.hypersync.xyz             |
 | ShimmerEVM       | 148        | https://shimmer-evm.hypersync.xyz or https://148.hypersync.xyz         |
@@ -47,6 +47,7 @@ Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9
 | Arbitrum One     | 42161      | https://arbitrum.hypersync.xyz or https://42161.hypersync.xyz          |
 | Arbitrum Nova    | 42170      | https://arbitrum-nova.hypersync.xyz or https://42170.hypersync.xyz     |
 | Celo             | 42220      | https://celo.hypersync.xyz or https://42220.hypersync.xyz              |
+| Fuji             | 43113      | https://fuji.hypersync.xyz or https://43113.hypersync.xyz              |
 | Avalanche        | 43114      | https://avalanche.hypersync.xyz or https://43114.hypersync.xyz         |
 | Linea            | 59144      | https://linea.hypersync.xyz or https://59144.hypersync.xyz             |
 | Amoy             | 80002      | https://amoy.hypersync.xyz or https://80001.hypersync.xyz              |
