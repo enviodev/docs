@@ -163,6 +163,10 @@ const redirectsList = [
     from: "/docs/reserved-words",
     to: "/docs/HyperIndex/reserved-words",
   },
+  {
+    from: "/docs/hyperfuel",
+    to: "/docs/HyperIndex/fuel",
+  },
   //// HyperSync
   {
     from: "/docs/overview-hypersync",

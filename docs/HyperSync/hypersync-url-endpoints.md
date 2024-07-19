@@ -9,7 +9,7 @@ Here is a table of currently supported networks on HyperSync and their respectiv
 
 :::note
 Please note we are rapidly updating supported networks and this list may be outdated.
-Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9qt8gZ2fX).
+Don't see your network here? Request a network using this discord [form](https://discord.gg/fztEvj79m3).
 :::
 
 | Network Name     | Network ID | URL                                                                    |
