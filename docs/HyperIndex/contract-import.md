@@ -100,7 +100,6 @@ Please note: This is a list of supported networks for the no-code quickstart. En
 - `public-goods`
 - `a1-milkomeda`
 - `c1-milkomeda`
-- `flare`
 - `mantle`
 - `zeta`
 - `neon-evm`

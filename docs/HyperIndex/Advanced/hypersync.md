@@ -26,12 +26,13 @@ Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9
 | Ethereum Mainnet | 1            |
 | Goerli           | 5            |
 | Optimism         | 10           |
-| Flare            | 14           |
+| Flare | 14 |
 | Rootstock        | 30           |
 | Lukso            | 42           |
 | Crab             | 44           |
 | Darwinia         | 46           |
-| Bsc              | 56           |
+| BSC              | 56           |
+| BSC Testnet      | 97           |
 | Gnosis           | 100          |
 | Polygon          | 137          |
 | ShimmerEVM       | 148          |
@@ -57,6 +58,7 @@ Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9
 | Arbitrum One     | 42161        |
 | Arbitrum Nova    | 42170        |
 | Celo             | 42220        |
+| Fuji             | 43113        |
 | Avalanche        | 43114        |
 | Linea            | 59144        |
 | Amoy             | 80002        |
@@ -71,6 +73,7 @@ Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9
 | NeonEVM          | 245022934    |
 | Aurora           | 1313161554   |
 | Harmony          | 1666600000/1 |
+
 
 ## Greeter example
 
