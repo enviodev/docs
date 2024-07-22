@@ -26,6 +26,7 @@ Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9
 | Ethereum Mainnet | 1            |
 | Goerli           | 5            |
 | Optimism         | 10           |
+| Flare | 14 |
 | Rootstock        | 30           |
 | Lukso            | 42           |
 | Crab             | 44           |
