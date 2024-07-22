@@ -34,7 +34,7 @@ HyperFuel acts as a high-performance real-time data archive that accelerates dat
 
 Developers and data analysts can interact with HyperFuel API using JavaScript, Python, or Rust [clients](https://github.com/enviodev/hyperfuel-json-api), and choose the output their data in JSON, Arrow, and Parquet formats.
 
-With HyperFuel, developers can sync large datasets in minutes, eliminating the need to use slow or rate-limited node endpoints, like RPCs, which would typically take hours or days using to fetch large data sets. HyperFuel is ideal for developers building dApps, block explorers, wallets, analytics, and other data-heavy use cases on the Fuel Network.
+With HyperFuel, developers can sync large datasets in minutes, eliminating the need to use slow or rate-limited node endpoints, like RPCs, which would typically take hours or even days to fetch large data sets. HyperFuel is ideal for developers building dApps, block explorers, wallets, analytics, and other data-heavy use cases on the Fuel Network.
 
 ### HyperIndex
 
@@ -46,7 +46,7 @@ For a detailed tutorial demonstrating how to leverage this quickstart, explore o
 
 *⚠️Note: Before diving into this tutorial, ensure you have the necessary [prerequisites](https://docs.envio.dev/docs/HyperIndex/getting-started) installed.*
 
-Fuel application teams also have the option of hosting their indexer and custom application API on Envio’s reliable [Hosted Service](https://docs.envio.dev/docs/HyperIndex/v2/hosted-service), making inframangement deployement and management a painless and seamless experience, so that teams can can focus on the core of their application, and other business functions such as providing seamless user experience, exceptional user support and spekding more time on growth strategies for adoption.
+Fuel application teams also have the option of hosting their indexer and custom application API on Envio’s reliable [Hosted Service](https://docs.envio.dev/docs/HyperIndex/v2/hosted-service), making infrastructure deployment and management a painless and seamless experience, so that teams can focus on the core of their application, and other business functions such as providing seamless user experience, exceptional user support and spending more time on growth strategies for adoption.
 
 ## Relevant Resources
 
