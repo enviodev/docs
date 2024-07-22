@@ -19,6 +19,7 @@ Don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9
 | Ethereum Mainnet | 1          | https://eth.rpc.hypersync.xyz or https://1.rpc.hypersync.xyz                   |
 | Goerli           | 5          | https://goerli.rpc.hypersync.xyz or https://5.rpc.hypersync.xyz                |
 | Optimism         | 10         | https://optimism-sepolia.rpc.hypersync.xyz or https://10.rpc.hypersync.xyz     |
+| Flare | 14 | https://flare.rpc.hypersync.xyz or https://14.rpc.hypersync.xyz |
 | Rootstock        | 30         | https://rsk.rpc.hypersync.xyz or https://30.rpc.hypersync.xyz                  |
 | Lukso            | 42         | https://lukso.rpc.hypersync.xyz or https://42.rpc.hypersync.xyz                |
 | Crab             | 44         | https://crab.rpc.hypersync.xyz or https://44.rpc.hypersync.xyz                 |
