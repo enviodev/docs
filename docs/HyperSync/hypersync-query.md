@@ -146,6 +146,14 @@ struct Query {
     /// Maximum number of traces that should be returned, the server might return more traces than this number but
     ///  it won't overshoot by too much.
     max_num_traces: Optional<usize>,
+    /// Selects join mode for the query,
+    /// Default: join in this order logs -> transactions -> traces -> blocks
+    /// JoinAll: join everything to everything. For example if logSelection matches log0, we get the
+    /// associated transaction of log0 and then we get associated logs of that transaction as well. Applites similarly
+    /// to blocks, traces.
+    /// JoinNothing: join nothing.
+    #[serde(default)]
+    pub join_mode: JoinMode,
 }
 
 struct LogSelection {
