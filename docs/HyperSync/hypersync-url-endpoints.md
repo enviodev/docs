@@ -16,8 +16,8 @@ Don't see your network here? Request a network using this discord [form](https:/
 | ---------------- | ---------- | ---------------------------------------------------------------------- |
 | Ethereum Mainnet | 1          | https://eth.hypersync.xyz or https://1.hypersync.xyz                   |
 | Goerli           | 5          | https://goerli.hypersync.xyz or https://5.hypersync.xyz                |
-| Optimism         | 10         | https://optimism-sepolia.hypersync.xyz or https://10.hypersync.xyz     |
-| Flare | 14 | https://flare.hypersync.xyz or https://14.hypersync.xyz |
+| Optimism         | 10         | https://optimism.hypersync.xyz or https://10.hypersync.xyz             |
+| Flare            | 14         | https://flare.hypersync.xyz or https://14.hypersync.xyz                |
 | Rootstock        | 30         | https://rsk.hypersync.xyz or https://30.hypersync.xyz                  |
 | Lukso            | 42         | https://lukso.hypersync.xyz or https://42.hypersync.xyz                |
 | Crab             | 44         | https://crab.hypersync.xyz or https://44.hypersync.xyz                 |
@@ -65,3 +65,4 @@ Don't see your network here? Request a network using this discord [form](https:/
 | Aurora           | 1313161554 | https://aurora.hypersync.xyz or https://1313161554.hypersync.xyz       |
 | Harmony Shard 0  | 1666600000 | https://harmony-shard-0.hypersync.xyz or https://1666600000.hypersync.xyz |
 | Harmony Shard 1  | 1666600001 | https://harmony-shard-0.hypersync.xyz or https://1666600001.hypersync.xyz |
+| Kakarot Sepolia  | 1802203764 | https://kakarot-sepolia.hypersync.xyz or https://1802203764.hypersync.xyz |
