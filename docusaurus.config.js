@@ -192,6 +192,10 @@ const redirectsList = [
     from: "/docs/hypersync-url-endpoints",
     to: "/docs/HyperSync/hypersync-url-endpoints",
   },
+  { 
+    from: "/docs/HyperSync/hypersync-url-endpoints",
+    to: "/docs/HyperSync/hypersync-supported-networks",
+  },
   {
     from: "/docs/hyperfuel-query",
     to: "/docs/HyperSync/hyperfuel-query",
@@ -199,6 +203,10 @@ const redirectsList = [
   {
     from: "/docs/overview-hyperrpc",
     to: "/docs/HyperSync/overview-hyperrpc",
+  },
+  { 
+    from: "/docs/HyperSync/hyperrpc-url-endpoints",
+    to: "/docs/HyperSync/hyperrpc-supported-networks",
   },
 ]
 /** @type {import('@docusaurus/types').Config} */
