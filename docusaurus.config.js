@@ -190,9 +190,9 @@ const redirectsList = [
   },
   {
     from: "/docs/hypersync-url-endpoints",
-    to: "/docs/HyperSync/hypersync-url-endpoints",
+    to: "/docs/HyperSync/hypersync-supported-networks",
   },
-  { 
+  {
     from: "/docs/HyperSync/hypersync-url-endpoints",
     to: "/docs/HyperSync/hypersync-supported-networks",
   },
@@ -204,7 +204,7 @@ const redirectsList = [
     from: "/docs/overview-hyperrpc",
     to: "/docs/HyperSync/overview-hyperrpc",
   },
-  { 
+  {
     from: "/docs/HyperSync/hyperrpc-url-endpoints",
     to: "/docs/HyperSync/hyperrpc-supported-networks",
   },
