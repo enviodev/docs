@@ -192,6 +192,13 @@ const redirectsList = [
     from: "/docs/hypersync-url-endpoints",
     to: "/docs/HyperSync/hypersync-url-endpoints",
   },
+<<<<<<< Updated upstream
+=======
+  {
+    from: "/docs/HyperSync/hypersync-url-endpoints",
+    to: "/docs/HyperSync/hypersync-supported-networks",
+  },
+>>>>>>> Stashed changes
   {
     from: "/docs/hyperfuel-query",
     to: "/docs/HyperSync/hyperfuel-query",
@@ -200,6 +207,13 @@ const redirectsList = [
     from: "/docs/overview-hyperrpc",
     to: "/docs/HyperSync/overview-hyperrpc",
   },
+<<<<<<< Updated upstream
+=======
+  {
+    from: "/docs/HyperSync/hyperrpc-url-endpoints",
+    to: "/docs/HyperSync/hyperrpc-supported-networks",
+  },
+>>>>>>> Stashed changes
 ]
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -270,12 +284,12 @@ const config = {
             label: 'HyperSync Docs',
             position: 'left',
           },
-          //// I will add versioning later
-          {
-            type: 'docsVersionDropdown',
-            docsPluginId: 'HyperSync',
-            position: 'left',
-          },
+          // //// I will add versioning later - for now - no versioning.
+          // {
+          //   type: 'docsVersionDropdown',
+          //   docsPluginId: 'HyperSync',
+          //   position: 'left',
+          // },
           {
             to: 'blog',
             label: 'Blog',
