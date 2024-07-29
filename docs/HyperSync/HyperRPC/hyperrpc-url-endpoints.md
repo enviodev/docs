@@ -11,8 +11,9 @@ Please note we are rapidly adding new supported networks. If you don't see your 
 
 Here is a table of the currently supported networks on HyperRPC and their respective URL endpoints.
 
-| Network Name     | Network ID | URL                                                                    |
-| ---------------- | ---------- | ---------------------------------------------------------------------- |
+
+| Network Name | Network ID | URL |
+| ---------------- | ---------------- | ---------------- |
 | Arbitrum         | 42161      | https://arbitrum.rpc.hypersync.xyz or https://42161.rpc.hypersync.xyz  |
 | Arbitrum Nova    | 42170      | https://arbitrum-nova.rpc.hypersync.xyz or https://42170.rpc.hypersync.xyz |
 | Arbitrum Sepolia | 421614     | https://arbitrum-sepolia.rpc.hypersync.xyz or https://421614.rpc.hypersync.xyz |
