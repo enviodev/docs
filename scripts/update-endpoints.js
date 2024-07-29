@@ -3,8 +3,12 @@ const fs = require('fs');
 const url = 'https://chains.hyperquery.xyz/active_chains';
 const renameConfig = {
   eth: 'Ethereum Mainnet',
+  "polygon-zkevm": "Polygon zkEVM",
+  "zksync": "ZKsync",
   // Add other renaming rules here
 };
+
+const filterEndpoints = [/^staging-/];
 
 const capitalizeAndSplit = (name) => {
   return name.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
@@ -20,7 +24,7 @@ const generateHyperSyncTable = (data) => {
     return nameA.localeCompare(nameB);
   });
 
-  data.forEach(chain => {
+  data.filter(chain => !filterEndpoints.some(regex => regex.test(chain.name))).forEach(chain => {
     const networkName = renameConfig[chain.name] || capitalizeAndSplit(chain.name);
     const tier = chain.tier === 'paid-rpc' ? 'gold' : 'bronze';
     const supportsTraces = chain.additional_features && chain.additional_features.includes('TRACES') ? '✔️' : ' ';
@@ -42,7 +46,7 @@ const generateHyperRPCTable = (data) => {
     return nameA.localeCompare(nameB);
   });
 
-  data.forEach(chain => {
+  data.filter(chain => !filterEndpoints.some(regex => regex.test(chain.name))).forEach(chain => {
     const networkName = renameConfig[chain.name] || capitalizeAndSplit(chain.name);
     const url = `https://${chain.name}.rpc.hypersync.xyz or https://${chain.chain_id}.rpc.hypersync.xyz`;
 

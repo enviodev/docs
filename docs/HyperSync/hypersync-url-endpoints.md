@@ -54,18 +54,17 @@ Here is a table of the currently supported networks on HyperSync and their respe
 | Optimism Sepolia | 11155420 | https://optimism-sepolia.hypersync.xyz or https://11155420.hypersync.xyz | gold |   |
 | Polygon | 137 | https://polygon.hypersync.xyz or https://137.hypersync.xyz | gold |   |
 | Polygon Amoy | 80002 | https://polygon-amoy.hypersync.xyz or https://80002.hypersync.xyz | bronze |   |
-| Polygon Zkevm | 1101 | https://polygon-zkevm.hypersync.xyz or https://1101.hypersync.xyz | gold |   |
+| Polygon zkEVM | 1101 | https://polygon-zkevm.hypersync.xyz or https://1101.hypersync.xyz | gold |   |
 | Publicgoods | 424 | https://publicgoods.hypersync.xyz or https://424.hypersync.xyz | bronze |   |
 | Rsk | 30 | https://rsk.hypersync.xyz or https://30.hypersync.xyz | bronze |   |
 | Scroll | 534352 | https://scroll.hypersync.xyz or https://534352.hypersync.xyz | gold |   |
 | Sepolia | 11155111 | https://sepolia.hypersync.xyz or https://11155111.hypersync.xyz | gold |   |
 | Shimmer Evm | 148 | https://shimmer-evm.hypersync.xyz or https://148.hypersync.xyz | bronze |   |
-| Staging Eth | 1 | https://staging-eth.hypersync.xyz or https://1.hypersync.xyz | gold |   |
 | Taiko Jolnr | 1088 | https://taiko-jolnr.hypersync.xyz or https://1088.hypersync.xyz | bronze |   |
 | X Layer | 196 | https://x-layer.hypersync.xyz or https://196.hypersync.xyz | bronze |   |
 | X Layer Testnet | 195 | https://x-layer-testnet.hypersync.xyz or https://195.hypersync.xyz | bronze |   |
 | Zeta | 7000 | https://zeta.hypersync.xyz or https://7000.hypersync.xyz | bronze |   |
-| Zksync | 324 | https://zksync.hypersync.xyz or https://324.hypersync.xyz | gold |   |
+| ZKsync | 324 | https://zksync.hypersync.xyz or https://324.hypersync.xyz | gold |   |
 | Zora | 7777777 | https://zora.hypersync.xyz or https://7777777.hypersync.xyz | bronze |   |
 
 :::note
