@@ -11,8 +11,8 @@ Please note we are rapidly adding new supported networks. If you don't see your 
 
 Here is a table of the currently supported networks on HyperSync and their respective URL endpoints.
 
-| Network Name     | Network ID | URL | Tier | Supports Traces |
-| ---------------- | ---------- | --- | ---- | --------------- |
+| Network Name | Network ID | URL | Tier | Supports Traces |
+| ---------------- | ---------------- | ---------------- | ---------------- | ---------------- |
 | Arbitrum | 42161 | https://arbitrum.hypersync.xyz or https://42161.hypersync.xyz | gold |   |
 | Arbitrum Nova | 42170 | https://arbitrum-nova.hypersync.xyz or https://42170.hypersync.xyz | gold |   |
 | Arbitrum Sepolia | 421614 | https://arbitrum-sepolia.hypersync.xyz or https://421614.hypersync.xyz | gold |   |

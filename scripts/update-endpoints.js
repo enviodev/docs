@@ -1,6 +1,8 @@
 const fs = require('fs');
 
 const url = 'https://chains.hyperquery.xyz/active_chains';
+
+// TODO: we could enrich data for each chain from the data from https://chainid.network/chains_mini.json or https://chainid.network/chains.json
 const renameConfig = {
   eth: 'Ethereum Mainnet',
   "polygon-zkevm": "Polygon zkEVM",
@@ -14,43 +16,57 @@ const capitalizeAndSplit = (name) => {
   return name.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
 };
 
+const generateCommonTableHeader = (columns) => {
+  let header = '| ' + columns.join(' | ') + ' |\n';
+  header += '| ' + columns.map(() => '-'.repeat(16)).join(' | ') + ' |\n';
+  return header;
+};
+
+const sortAndFilterChains = (data) => {
+  return data
+    .sort((a, b) => {
+      const nameA = renameConfig[a.name] || capitalizeAndSplit(a.name);
+      const nameB = renameConfig[b.name] || capitalizeAndSplit(b.name);
+      return nameA.localeCompare(nameB);
+    })
+    .filter(chain => !filterEndpoints.some(regex => regex.test(chain.name)));
+};
+
+const getNetworkName = (chain) => renameConfig[chain.name] || capitalizeAndSplit(chain.name);
+
+const generateTableRow = (columns) => {
+  return '| ' + columns.join(' | ') + ' |\n';
+};
+
 const generateHyperSyncTable = (data) => {
-  let table = `| Network Name     | Network ID | URL | Tier | Supports Traces |\n`;
-  table += `| ---------------- | ---------- | --- | ---- | --------------- |\n`;
+  const columns = ['Network Name', 'Network ID', 'URL', 'Tier', 'Supports Traces'];
+  let table = generateCommonTableHeader(columns);
 
-  data.sort((a, b) => {
-    const nameA = renameConfig[a.name] || capitalizeAndSplit(a.name);
-    const nameB = renameConfig[b.name] || capitalizeAndSplit(b.name);
-    return nameA.localeCompare(nameB);
-  });
-
-  data.filter(chain => !filterEndpoints.some(regex => regex.test(chain.name))).forEach(chain => {
-    const networkName = renameConfig[chain.name] || capitalizeAndSplit(chain.name);
+  sortAndFilterChains(data).forEach(chain => {
+    const networkName = getNetworkName(chain);
     const tier = chain.tier === 'paid-rpc' ? 'gold' : 'bronze';
     const supportsTraces = chain.additional_features && chain.additional_features.includes('TRACES') ? '✔️' : ' ';
     const url = `https://${chain.name}.hypersync.xyz or https://${chain.chain_id}.hypersync.xyz`;
 
-    table += `| ${networkName} | ${chain.chain_id} | ${url} | ${tier} | ${supportsTraces} |\n`;
+    table += generateTableRow([networkName, chain.chain_id, url, tier, supportsTraces]);
   });
 
   return table;
 };
 
 const generateHyperRPCTable = (data) => {
-  let table = `| Network Name     | Network ID | URL                                                                    |\n`;
-  table += `| ---------------- | ---------- | ---------------------------------------------------------------------- |\n`;
+  const columns = ['Network Name', 'Network ID', 'URL'];
+  let table = generateCommonTableHeader(columns);
 
-  data.sort((a, b) => {
-    const nameA = renameConfig[a.name] || capitalizeAndSplit(a.name);
-    const nameB = renameConfig[b.name] || capitalizeAndSplit(b.name);
-    return nameA.localeCompare(nameB);
-  });
-
-  data.filter(chain => !filterEndpoints.some(regex => regex.test(chain.name))).forEach(chain => {
-    const networkName = renameConfig[chain.name] || capitalizeAndSplit(chain.name);
+  sortAndFilterChains(data).forEach(chain => {
+    const networkName = getNetworkName(chain);
     const url = `https://${chain.name}.rpc.hypersync.xyz or https://${chain.chain_id}.rpc.hypersync.xyz`;
 
-    table += `| ${networkName.padEnd(16)} | ${chain.chain_id.toString().padEnd(10)} | ${url.padEnd(70)} |\n`;
+    table += generateTableRow([
+      networkName.padEnd(16),
+      chain.chain_id.toString().padEnd(10),
+      url.padEnd(70)
+    ]);
   });
 
   return table;
