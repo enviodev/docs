@@ -60,7 +60,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Scroll           | 534352     | https://scroll.rpc.hypersync.xyz or https://534352.rpc.hypersync.xyz   |
 | Sepolia          | 11155111   | https://sepolia.rpc.hypersync.xyz or https://11155111.rpc.hypersync.xyz |
 | Shimmer Evm      | 148        | https://shimmer-evm.rpc.hypersync.xyz or https://148.rpc.hypersync.xyz |
-| Staging Eth      | 1          | https://staging-eth.rpc.hypersync.xyz or https://1.rpc.hypersync.xyz   |
 | Taiko Jolnr      | 1088       | https://taiko-jolnr.rpc.hypersync.xyz or https://1088.rpc.hypersync.xyz |
 | X Layer          | 196        | https://x-layer.rpc.hypersync.xyz or https://196.rpc.hypersync.xyz     |
 | X Layer Testnet  | 195        | https://x-layer-testnet.rpc.hypersync.xyz or https://195.rpc.hypersync.xyz |
