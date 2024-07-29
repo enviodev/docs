@@ -1,17 +1,15 @@
 ---
-id: hyperrpc-url-endpoints
-title: Endpoints
-sidebar_label: Endpoints
-slug: /hyperrpc-url-endpoints
+id: hyperrpc-supported-networks
+title: Supported Networks
+sidebar_label: Supported Networks
+slug: /hyperrpc-supported-networks
 ---
 
-Here is a table of currently supported networks on HyperRPC and their respective URL endpoints.
-
 :::note
-Please note we are rapidly updating supported networks, if you don't see your network here? Pop us a message in [Discord](https://discord.gg/Q9qt8gZ2fX).
+Please note we are rapidly adding new supported networks. If you don't see your network here or would like us to add a network to HyperRPC, pop us a message in [Discord](https://discord.gg/Q9qt8gZ2fX).
 :::
 
-## Standard RPC URLs
+Here is a table of the currently supported networks on HyperRPC and their respective URL endpoints.
 
 | Network Name     | Network ID | URL                                                                    |
 | ---------------- | ---------- | ---------------------------------------------------------------------- |
@@ -56,7 +54,7 @@ Please note we are rapidly updating supported networks, if you don't see your ne
 | Optimism Sepolia | 11155420   | https://optimism-sepolia.rpc.hypersync.xyz or https://11155420.rpc.hypersync.xyz |
 | Polygon          | 137        | https://polygon.rpc.hypersync.xyz or https://137.rpc.hypersync.xyz     |
 | Polygon Amoy     | 80002      | https://polygon-amoy.rpc.hypersync.xyz or https://80002.rpc.hypersync.xyz |
-| Polygon Zkevm    | 1101       | https://polygon-zkevm.rpc.hypersync.xyz or https://1101.rpc.hypersync.xyz |
+| Polygon zkEVM    | 1101       | https://polygon-zkevm.rpc.hypersync.xyz or https://1101.rpc.hypersync.xyz |
 | Publicgoods      | 424        | https://publicgoods.rpc.hypersync.xyz or https://424.rpc.hypersync.xyz |
 | Rsk              | 30         | https://rsk.rpc.hypersync.xyz or https://30.rpc.hypersync.xyz          |
 | Scroll           | 534352     | https://scroll.rpc.hypersync.xyz or https://534352.rpc.hypersync.xyz   |
@@ -67,6 +65,6 @@ Please note we are rapidly updating supported networks, if you don't see your ne
 | X Layer          | 196        | https://x-layer.rpc.hypersync.xyz or https://196.rpc.hypersync.xyz     |
 | X Layer Testnet  | 195        | https://x-layer-testnet.rpc.hypersync.xyz or https://195.rpc.hypersync.xyz |
 | Zeta             | 7000       | https://zeta.rpc.hypersync.xyz or https://7000.rpc.hypersync.xyz       |
-| Zksync           | 324        | https://zksync.rpc.hypersync.xyz or https://324.rpc.hypersync.xyz      |
+| ZKsync           | 324        | https://zksync.rpc.hypersync.xyz or https://324.rpc.hypersync.xyz      |
 | Zora             | 7777777    | https://zora.rpc.hypersync.xyz or https://7777777.rpc.hypersync.xyz    |
 

@@ -1,11 +1,15 @@
 ---
-id: hypersync-url-endpoints
-title: Endpoints
-sidebar_label: Endpoints
-slug: /hypersync-url-endpoints
+id: hypersync-supported-networks
+title: Supported Networks
+sidebar_label: Supported Networks
+slug: /hypersync-supported-networks
 ---
 
-Here is a table of currently supported networks on HyperSync and their respective URL endpoints.
+:::note
+Please note we are rapidly adding new supported networks. If you don't see your network here or would like us to add a network to HyperSync, pop us a message in [Discord](https://discord.gg/Q9qt8gZ2fX).
+:::
+
+Here is a table of the currently supported networks on HyperSync and their respective URL endpoints.
 
 | Network Name     | Network ID | URL | Tier | Supports Traces |
 | ---------------- | ---------- | --- | ---- | --------------- |
@@ -65,7 +69,5 @@ Here is a table of currently supported networks on HyperSync and their respectiv
 | Zora | 7777777 | https://zora.hypersync.xyz or https://7777777.hypersync.xyz | bronze |   |
 
 :::note
-The tier is an aproximate level of support based on infrustructure running the chain. Please contact us if you want a new chain to be supported, or if you want to upgrade a chains level of support.
-
-Don't see your network here? Request a network using this discord [form](https://discord.gg/fztEvj79m3).
+The tier is an approximate level of support (and therefore reliability) based on infrastructure running the chain. If you would like us to upgrade a chain's level of support, pop us a message in [Discord](https://discord.gg/Q9qt8gZ2fX).
 :::
