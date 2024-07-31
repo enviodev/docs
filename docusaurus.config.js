@@ -208,10 +208,6 @@ const redirectsList = [
     from: "/docs/HyperSync/hyperrpc-url-endpoints",
     to: "/docs/HyperSync/hyperrpc-supported-networks",
   },
-  {
-    from: '/',
-    to: '/docs/HyperIndex/overview',
-  },
 ]
 /** @type {import('@docusaurus/types').Config} */
 const config = {
