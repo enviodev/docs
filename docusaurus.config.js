@@ -258,8 +258,8 @@ const config = {
           src: "img/envio-logo.png",
           srcDark: "img/envio-logo.png",
           style: {
-            width: 96,
-            height: 40,
+            maxWidth: 200,
+            maxHeight: 40,
           },
         },
         items: [
