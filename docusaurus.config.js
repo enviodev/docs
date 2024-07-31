@@ -208,6 +208,10 @@ const redirectsList = [
     from: "/docs/HyperSync/hyperrpc-url-endpoints",
     to: "/docs/HyperSync/hyperrpc-supported-networks",
   },
+  {
+    from: '/',
+    to: '/docs/HyperIndex/overview',
+  },
 ]
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -258,8 +262,8 @@ const config = {
           src: "img/envio-logo.png",
           srcDark: "img/envio-logo.png",
           style: {
-            width: 96,
-            height: 40,
+            maxWidth: 200,
+            maxHeight: 40,
           },
         },
         items: [
@@ -359,7 +363,7 @@ const config = {
       {
         id: 'HyperIndex',
         path: 'docs/HyperIndex',
-        routeBasePath: 'docs/HyperIndex',
+        routeBasePath: '/',
         sidebarPath: require.resolve('./sidebarsHyperIndex.js'),
         editUrl: 'https://github.com/enviodev/docs/edit/main/',
         showLastUpdateAuthor: false,
