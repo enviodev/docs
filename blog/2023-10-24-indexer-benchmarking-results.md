@@ -65,6 +65,17 @@ We employed 6 separate indexer solutions for this benchmarking test:
 - [Ponder](https://ponder.sh/)
 - [Subtreams-powered Subgraph](https://thegraph.com/docs/en/cookbook/substreams-powered-subgraphs/) on theGraph hosted solution
 
+### Benchmark Repositories
+
+To ensure transparency and reproducibility, we've made the code for each indexer implementation publicly available:
+
+- Envio: [uniV3-swaps](https://github.com/enviodev/uniV3-swaps)
+- Ponder: [univ3-ponder](https://github.com/enviodev/univ3-ponder)
+- Subsquid: [univ3-sqd](https://github.com/enviodev/univ3-sqd)
+- Subtreams-powered Subgraph: [univ3-substreams](https://github.com/enviodev/univ3-substreams)
+
+We encourage the community to review, test, and provide feedback on these implementations. These benchmarks are also somewhat old now [edit 10 months later], we will be updating them soon with the latest versions of each indexer and on a more complicated scenario.
+
 ## Findings
 
 Below is a the results from the benchmarking tests, measured in number of events indexed per second:
