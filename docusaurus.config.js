@@ -190,15 +190,16 @@ const redirectsList = [
   },
   {
     from: "/docs/hypersync-url-endpoints",
-    to: "/docs/HyperSync/hypersync-url-endpoints",
+    to: "/docs/HyperSync/hypersync-supported-networks",
   },
-<<<<<<< Updated upstream
-=======
   {
     from: "/docs/HyperSync/hypersync-url-endpoints",
     to: "/docs/HyperSync/hypersync-supported-networks",
   },
->>>>>>> Stashed changes
+  {
+    from: "/docs/HyperSync/hypersync-url-endpoints",
+    to: "/docs/HyperSync/hypersync-supported-networks",
+  },
   {
     from: "/docs/hyperfuel-query",
     to: "/docs/HyperSync/hyperfuel-query",
@@ -206,14 +207,7 @@ const redirectsList = [
   {
     from: "/docs/overview-hyperrpc",
     to: "/docs/HyperSync/overview-hyperrpc",
-  },
-<<<<<<< Updated upstream
-=======
-  {
-    from: "/docs/HyperSync/hyperrpc-url-endpoints",
-    to: "/docs/HyperSync/hyperrpc-supported-networks",
-  },
->>>>>>> Stashed changes
+  }
 ]
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -264,8 +258,8 @@ const config = {
           src: "img/envio-logo.png",
           srcDark: "img/envio-logo.png",
           style: {
-            width: 96,
-            height: 40,
+            maxWidth: 200,
+            maxHeight: 40,
           },
         },
         items: [

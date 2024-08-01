@@ -5,7 +5,7 @@ module.exports = {
     "hypersync-query",
     "hypersync-clients",
     "hypersync-curl-examples",
-    "hypersync-url-endpoints",
+    "hypersync-supported-networks",
     {
       type: "category",
       label: "HyperFuel",
@@ -19,7 +19,7 @@ module.exports = {
       label: "HyperRPC",
       items: [
         "HyperRPC/overview-hyperrpc",
-        "HyperRPC/hyperrpc-url-endpoints",
+        "HyperRPC/hyperrpc-supported-networks",
       ],
     },
   ],
