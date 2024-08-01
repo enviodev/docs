@@ -197,17 +197,17 @@ const redirectsList = [
     to: "/docs/HyperSync/hypersync-supported-networks",
   },
   {
+    from: "/docs/HyperSync/hypersync-url-endpoints",
+    to: "/docs/HyperSync/hypersync-supported-networks",
+  },
+  {
     from: "/docs/hyperfuel-query",
     to: "/docs/HyperSync/hyperfuel-query",
   },
   {
     from: "/docs/overview-hyperrpc",
     to: "/docs/HyperSync/overview-hyperrpc",
-  },
-  {
-    from: "/docs/HyperSync/hyperrpc-url-endpoints",
-    to: "/docs/HyperSync/hyperrpc-supported-networks",
-  },
+  }
 ]
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -278,12 +278,12 @@ const config = {
             label: 'HyperSync Docs',
             position: 'left',
           },
-          //// I will add versioning later
-          {
-            type: 'docsVersionDropdown',
-            docsPluginId: 'HyperSync',
-            position: 'left',
-          },
+          // //// I will add versioning later - for now - no versioning.
+          // {
+          //   type: 'docsVersionDropdown',
+          //   docsPluginId: 'HyperSync',
+          //   position: 'left',
+          // },
           {
             to: 'blog',
             label: 'Blog',
