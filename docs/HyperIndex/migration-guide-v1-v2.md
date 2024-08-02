@@ -39,6 +39,13 @@ V2 of HyperIndex is about streamlining the process of starting an indexer and op
 - The dynamic contract registration moved from loaders to its own `<ContractName>.<EventName>.contractRegister` handler.
 - The return type of the loader is used directly in the handler to access the loaded data. No need to re-'get' it again in the handler.
 
+### 'event' parameter
+
+This is common to loaders, handlers, and dynamic contract registration:
+- Block and transaction fields on an event are scoped to 'block' or 'transaction'. So for example `event.block.timestamp` instead of `event.blockTimestamp`. 
+- `event.address` is now `event.srcAddress`.
+<!-- TODO: lots more to put here -->
+
 ### Configuration
 
 - There is no async-mode anymore, so you can remove `isAsync: true` from each of the events in your `config.yaml`.
@@ -180,7 +187,7 @@ Greeter.NewGreeterCreated.contractRegister(({ event, context }) => {
 ```typescript
 const greetingInstance: GreetingEntity = {
   ...currentGreeting,
-  // ...
+  // ...loaderReturn
 };
 context.Greeting.set(greetingInstance);
 ```
@@ -284,6 +291,32 @@ contracts:
     sameRandomFieldThatIsntPartOfSchema: true
     events:
       - event: Greet(address indexed recipient, string greeting)
+```
+### 8. Update event fields
+
+Before:
+```typescript
+GreeterContract.Event1.loader(({ event, context }) => {
+  console.log("The event timestamp and block number", event.block.timestamp, createdAtBlockNumber: event.block.number);
+});
+GreeterContract.Event1.handler(({ event, context }) => {
+  console.log("The event timestamp and block number", event.block.timestamp, createdAtBlockNumber: event.block.number);
+});
+```
+
+After:
+```typescript
+GreeterContract.Event1.contractRegister(({ event, context }) => {
+  console.log("These values exist in the contract registration too", event.block.timestamp, createdAtBlockNumber: event.block.number);
+});
+GreeterContract.Event1.handlerWithLoader({
+  loader: async ({ event, context }) => {
+    console.log("The event timestamp and block number", event.block.timestamp, createdAtBlockNumber: event.block.number);
+  },
+  handler: async ({ event, context }) => {
+    console.log("The event timestamp and block number", event.block.timestamp, createdAtBlockNumber: event.block.number);
+  },
+});
 ```
 
 ## Examples
