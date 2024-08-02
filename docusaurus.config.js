@@ -197,8 +197,8 @@ const redirectsList = [
     to: "/docs/HyperSync/hypersync-supported-networks",
   },
   {
-    from: "/docs/HyperSync/hypersync-url-endpoints",
-    to: "/docs/HyperSync/hypersync-supported-networks",
+    from: "/docs/HyperSync/hyperrpc-url-endpoints",
+    to: "/docs/HyperSync/hyperrpc-supported-networks",
   },
   {
     from: "/docs/hyperfuel-query",
