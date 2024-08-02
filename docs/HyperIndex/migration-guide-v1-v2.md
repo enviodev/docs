@@ -42,6 +42,7 @@ V2 of HyperIndex is about streamlining the process of starting an indexer and op
 ### Configuration
 
 - There is no async-mode anymore, so you can remove `isAsync: true` from each of the events in your `config.yaml`.
+- This is no more 'required_entities' in the config file. This includes subfields such as `label` and `arrayLabels`.
 
 ```diff
 - isAsync: true
@@ -64,6 +65,8 @@ V2 of HyperIndex is about streamlining the process of starting an indexer and op
 - For ReScript users:
   - We moved to the built-in `bigint` type instead of the `Ethers.BigInt.t`.
   - We migrated to ReScript 11 uncurried mode. Curried mode is not supported anymore. So you need to remove `uncurried: false` from your rescript.json file. Also, we vendored `RescriptMocha` bindings to support uncurried mode. Please use it instead of `rescript-mocha`.
+- The config parsing is more strict, unknown fields will result in an error.
+  - You can add `# yaml-language-server: $schema=./node_modules/envio/evm.schema.json` at the top of your 'config.yaml' file to get autocomplete and validation for the config file.
 
 <!-- TODO: lots more to put here -->
 
@@ -226,8 +229,7 @@ const { currentEntity } = loaderReturn;
 
 ### 6. Loading Linked Entities
 
-### Before
-
+Before:
 ```typescript
 GreeterContract.Event1.loader(({ event, context }) => {
   context.Entity.load(event.srcAddress.toString(), {
@@ -237,8 +239,7 @@ GreeterContract.Event1.loader(({ event, context }) => {
 });
 ```
 
-### After:
-
+After:
 ```typescript
 Greeter.Event1.handlerWithLoader({
   loader: async ({ event, context }) => {
@@ -255,6 +256,34 @@ Greeter.Event1.handlerWithLoader({
     return { currentEntity, field1Instance, field2Instance };
   },
 });
+```
+
+### 7. Config File Changes
+
+Before:
+```yaml
+contracts:
+  - name: Greeter
+    sameRandomFieldThatIsntPartOfSchema: true
+    handler: src/EventHandlers.ts
+    events:
+      - event: Greet(address indexed recipient, string greeting)
+        isAsync: true
+        requiredEntities:
+          - name: User
+            label: recipient
+          - name: Greetings
+            arrayLabels: previousGreetings
+```
+
+After:
+```yaml
+contracts:
+  - name: Greeter
+    handler: src/EventHandlers.ts
+    sameRandomFieldThatIsntPartOfSchema: true
+    events:
+      - event: Greet(address indexed recipient, string greeting)
 ```
 
 ## Examples
