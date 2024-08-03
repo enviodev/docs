@@ -33,7 +33,7 @@ The `config.yaml` outlines the specifications for the indexer, including details
       - `event` - Event signature or name of the event (must match the name in the ABI)
 - `unordered_multichain_mode` - A flag to indicate if the indexer should use a single queue for all chains or a queue per chain (default: false)
 - `event_decoder` - The event decoder to use for the indexer (default: hypersync-client)
-- `rollback_on_reorg` - A flag to indicate if the indexer should rollback to the last known valid block on a reorg (default: false)
+- `rollback_on_reorg` - A flag to indicate if the indexer should rollback to the last known valid block on a reorg (default: true)
 - `save_full_history` - A flag to indicate if the indexer should save the full history of events. This is useful for debugging but will increase the size of the database (default: false)
 
 After you have set up your config file and the scheme, you are ready to generate the indexing code required to write the event handlers.
