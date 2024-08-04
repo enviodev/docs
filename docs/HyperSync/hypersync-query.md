@@ -1,7 +1,7 @@
 ---
 id: hypersync-query
 title: HyperSync Query
-sidebar_label: Hypersync Query
+sidebar_label: HyperSync Query
 slug: /hypersync-query
 ---
 
