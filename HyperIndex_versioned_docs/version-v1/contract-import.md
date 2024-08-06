@@ -231,7 +231,7 @@ The contract-specific details that will be automatically populated in the `confi
 
 Users can remove the events from the configuration file which do not need to be indexed. By default the contract import process populates the configuration file for all events.
 
-For more information on how to write the configuration file, go [here](./Guides/configuration-file.md).
+For more information on how to write the configuration file, go [here](configuration-file).
 
 However, users are not required to do make any changes to the `config.yaml` file for the indexer to run.
 

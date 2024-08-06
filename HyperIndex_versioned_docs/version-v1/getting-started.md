@@ -62,7 +62,7 @@ Indexers generated using examples, templates or the contract import process will
 
 Users can further configure their indexers to perform custom logic, and the process is done via modifying the 3 files below:
 
-- [`config.yaml`](./configuration-file)
+- [`config.yaml`](configuration-file)
 - [`schema.graphql`](./schema)
 - [`EventHandlers.*`](./event-handlers)
 
