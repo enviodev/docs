@@ -55,7 +55,7 @@ Avoid using reserved words in the configuration file.
 
 Unable to parse event signature due to an error.
 
-Refer to the [<ins>configuration</ins>](./configuration-file) page on how to correctly define a human readable ABI.
+Refer to the [<ins>configuration</ins>](configuration-file) page on how to correctly define a human readable ABI.
 
 ### `EE104`: Resolve Config Path
 
@@ -67,7 +67,7 @@ Ensure that the configuration file exists in the correct directory.
 
 Failed to deserialize the config file.
 
-Refer to the [<ins>configuration</ins>](./configuration-file) page for more information.
+Refer to the [<ins>configuration</ins>](configuration-file) page for more information.
 
 ### `EE106`: Undefined Network Config
 

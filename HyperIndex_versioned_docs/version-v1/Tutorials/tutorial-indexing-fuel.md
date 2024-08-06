@@ -154,7 +154,7 @@ At this point, we should already have a working indexer. You can start it by run
 
 Everything is configured by modifying the 3 files below. Let's walk through each of them.
 
-- config.yaml [`Guide`](../Guides/configuration-file.md)
+- config.yaml [`Guide`](configuration-file)
 - schema.graphql [`Guide`](../Guides/schema-file.md)
 - EventHandlers.\* [`Guide`](../Guides/event-handlers.mdx)
 
