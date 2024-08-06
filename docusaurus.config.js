@@ -1,4 +1,4 @@
-const { themes } = require('prism-react-renderer');
+const { themes } = require("prism-react-renderer");
 const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
 
@@ -207,8 +207,8 @@ const redirectsList = [
   {
     from: "/docs/overview-hyperrpc",
     to: "/docs/HyperSync/overview-hyperrpc",
-  }
-]
+  },
+];
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Envio",
@@ -264,19 +264,19 @@ const config = {
         },
         items: [
           {
-            to: 'docs/HyperIndex/overview',
-            label: 'HyperIndex Docs',
-            position: 'left',
+            to: "docs/HyperIndex/overview",
+            label: "HyperIndex Docs",
+            position: "left",
           },
           {
-            type: 'docsVersionDropdown',
-            docsPluginId: 'HyperIndex',
-            position: 'left',
+            type: "docsVersionDropdown",
+            docsPluginId: "HyperIndex",
+            position: "left",
           },
           {
-            to: 'docs/HyperSync/overview',
-            label: 'HyperSync Docs',
-            position: 'left',
+            to: "docs/HyperSync/overview",
+            label: "HyperSync Docs",
+            position: "left",
           },
           // //// I will add versioning later - for now - no versioning.
           // {
@@ -285,9 +285,9 @@ const config = {
           //   position: 'left',
           // },
           {
-            to: 'blog',
-            label: 'Blog',
-            position: 'left',
+            to: "blog",
+            label: "Blog",
+            position: "left",
           },
           {
             href: "https://github.com/enviodev",
@@ -310,7 +310,7 @@ const config = {
             items: [
               { label: "Discord", href: "https://discord.gg/Q9qt8gZ2fX" },
               { label: "Twitter", href: "https://twitter.com/envio_indexer" },
-              { label: "Lens", href: "https://lenster.xyz/u/envio.lens" }
+              { label: "Lens", href: "https://lenster.xyz/u/envio.lens" },
             ],
           },
           {
@@ -332,18 +332,25 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
-        additionalLanguages: ['rescript', 'bash', 'diff', 'json', 'javascript', 'typescript'],
+        additionalLanguages: [
+          "rescript",
+          "bash",
+          "diff",
+          "json",
+          "javascript",
+          "typescript",
+        ],
       },
     }),
   plugins: [
     [
-      '@docusaurus/plugin-content-docs',
+      "@docusaurus/plugin-content-docs",
       {
-        id: 'HyperSync',
-        path: 'docs/HyperSync',
-        routeBasePath: 'docs/HyperSync',
-        sidebarPath: require.resolve('./sidebarsHyperSync.js'),
-        editUrl: 'https://github.com/enviodev/docs/edit/main/',
+        id: "HyperSync",
+        path: "docs/HyperSync",
+        routeBasePath: "docs/HyperSync",
+        sidebarPath: require.resolve("./sidebarsHyperSync.js"),
+        editUrl: "https://github.com/enviodev/docs/edit/main/",
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,
         // versions: {
@@ -355,24 +362,24 @@ const config = {
       },
     ],
     [
-      '@docusaurus/plugin-content-docs',
+      "@docusaurus/plugin-content-docs",
       {
-        id: 'HyperIndex',
-        path: 'docs/HyperIndex',
-        routeBasePath: 'docs/HyperIndex',
-        sidebarPath: require.resolve('./sidebarsHyperIndex.js'),
-        editUrl: 'https://github.com/enviodev/docs/edit/main/',
+        id: "HyperIndex",
+        path: "docs/HyperIndex",
+        routeBasePath: "docs/HyperIndex",
+        sidebarPath: require.resolve("./sidebarsHyperIndex.js"),
+        editUrl: "https://github.com/enviodev/docs/edit/main/",
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,
         versions: {
           current: {
-            label: 'v2',
-            path: 'v2',
-            banner: 'unreleased',
+            label: "v2",
+            path: "v2",
+            banner: "unreleased",
           },
           v1: {
-            label: 'v1',
-            path: '',
+            label: "v1",
+            path: "",
           },
         },
       },
@@ -384,6 +391,7 @@ const config = {
       },
     ],
   ],
+  themes: ["docusaurus-json-schema-plugin"],
 };
 
 module.exports = config;
