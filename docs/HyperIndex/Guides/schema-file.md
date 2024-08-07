@@ -78,8 +78,8 @@ In GraphQL, scalars represent fundamental data types such as strings and numbers
 | Float      | A signed floating-point value                    | number                                 | number                                 | float             |
 | Boolean    | Represents a true or false value                 | boolean                                | boolean                                | bool              |
 | Bytes      | A UTF-8 character sequence with a 0x prefix      | string                                 | string                                 | string            |
-| BigInt     | A signed integer (equivalent to solidity int256) | bigint                                 | bigint                                 | bigint       |
-| BigDecimal | An arbitrary size floating point number          | BigDecimal (imported from "generated") | BigDecimal (imported from "generated") | BigDecimal.t   |
+| BigInt     | A signed integer (equivalent to solidity int256) | bigint                                 | bigint                                 | bigint            |
+| BigDecimal | An arbitrary size floating point number          | BigDecimal (imported from "generated") | BigDecimal (imported from "generated") | BigDecimal.t      |
 
 You can find out more on GraphQL [here](https://graphql.org/learn/).
 
@@ -117,6 +117,23 @@ Assume that each `NftCollection` can have multiple `Token` objects. This is repr
 When you create a `Token` entity, the value of the `collection` field is set to the `id` of its associated `NftCollection` entity.
 
 Note that in the `NftCollection` schema, the `tokens` field can't be directly accessed or modified. Fields marked with the `@derivedFrom` directive function are virtual fields and are only accessible when executing GraphQL API queries. This is commonly known as **reverse lookup**, as the relationship is established on the "many" end of the association.
+
+## Adding Indexes to Fields
+
+Add an index to a field to [improve read performance](database-performance-optimization) and enable field queries in your loaders. <!--TODO add links to field queries doc-->
+
+Indices will automatically be added to all entity `id` fields and all fields referenced using `@derivedFrom` directive.
+
+### Example
+
+```graphql
+type Token {
+  id: ID!
+  tokenId: BigInt!
+  collection: NftCollection!
+  owner: User! @index
+}
+```
 
 ## Other design tip(s)
 
