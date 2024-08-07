@@ -20,7 +20,7 @@ in the project directory to generate the functions you will use in your handlers
 
 Each event that you want to process requires that a handler be registered. These functions are asynchronous.
 
-**Note:** _Two other functions, `handlerWithLoader` and `contractRegister`, are also sometimes used but not required for most indexers. Both functions are explored in the Advanced section. `handlerWithLoader` is used to optimise the loading of entities from the database in performance critical situations, `contractRegister` is to be used for dynamic/factory contracts loading._
+**Note:** _Two other functions, `handlerWithLoader` and `contractRegister`, are also sometimes used but not required for most indexers. Both functions are explored in the Advanced section. `handlerWithLoader` is used to optimise the loading of entities from the database and accessing one to many relationships on entities, `contractRegister` is to be used for registering addresses dynamically from a factory contract._
 <!-- TODO: add links to the advanced section about handlerWithLoader and contractRegister -->
 
 ## Handler function
@@ -31,9 +31,9 @@ Handler functions are called via
   <TabItem value="typescript" label="Typescript">
 
 ```typescript
-import { <ContractName> } from "generated";
+import { <CONTRACT_NAME> } from "generated";
 
-<ContractName>.<EventName>.handler(async ({event, context}) => {
+<CONTRACT_NAME>.<EVENT_NAME>.handler(async ({event, context}) => {
   // Your logic
 });
 ```
@@ -42,9 +42,9 @@ import { <ContractName> } from "generated";
   <TabItem value="javascript" label="Javascript">
 
 ```javascript
-const { <ContractName> } = require("generated");
+const { <CONTRACT_NAME> } = require("generated");
 
-<ContractName>.<EventName>.handler(async ({event, context}) => {
+<CONTRACT_NAME>.<EVENT_NAME>.handler(async ({event, context}) => {
   // Your logic
 });
 ```
@@ -53,7 +53,7 @@ const { <ContractName> } = require("generated");
   <TabItem value="rescript" label="Rescript">
 
 ```rescript
-Handlers.<ContractName>.<EventName>.handler(async ({event, context}) => {
+Handlers.<CONTRACT_NAME>.<EVENT_NAME>.handler(async ({event, context}) => {
   // Your logic
 });
 ```
@@ -66,33 +66,66 @@ Handlers.<ContractName>.<EventName>.handler(async ({event, context}) => {
 #### Event Params
 
 Handler functions are used to modify the entities which have been loaded by the loader function, and thus should contain all the required logic for updating entities with the raw data emitted by the event.
-All of the parameters emitted in each event are accessible via `event.params.<parameterName>`.
+All of the parameters emitted in each event are accessible via `event.params.<PARAMETER_NAME>`.
 
-#### Raw Event Information
+#### Additional Event Information
 
-Additional raw event information can also be accessed via `event.<rawInfo>`.
+Additional event information can also be accessed via `event.<EVENT_PROPERTY>`.
 
-Below is a list of raw event information that can be accessed:
+Below shows an example type of an event.
 
-- `blockHash`
-- `blockNumber`
-- `blockTimestamp`
-- `chainId`
-- `eventId`
-- `eventType`
-- `logIndex`
-- `srcAddress`
-- `transactionHash`
-- `transactionIndex`
-- `txOrigin` - the EOA that made the transaction (this is an optional parameter that is only present for events fetched via HyperSync, not via RPC Sync)
-- `txTo` - the 'to' field of the top level transaction, not necessarily the same contract as the contract that emitted the event (this is an optional parameter that is only present for events fetched via HyperSync, not via RPC Sync)
+```ts
+type Event<Params, TransactionFields, BlockFields> = {
+  params: Params;
+  chainId: number;
+  srcAddress: address;
+  logIndex: number;
+  transaction: TransactionFields;
+  block: BlockFields;
+};
+```
+
+Note that the fields `block` and `transaction` type will depend on configured values in `field_selection` of your `config.yaml`
+
+For instance if you add the following to your `config.yaml`
+```yaml
+field_selection:
+  transaction_fields:
+    - "hash"
+    - "transaction_index"
+    - "gas_used"
+  block_fields:
+    - "parent_hash"
+```
+
+You can expect to get:
+
+```ts
+type TransactionFields = {
+  hash: string;
+  transactionIndex: number;
+};
+
+type AdditionalBlockFields = {
+  parentHash: string;
+};
+
+type BlockFields = {
+  //number, timestamp and hash are always available by default
+  number: number;
+  timestamp: number;
+  hash: string;
+} & AdditionalBlockFields;
+```
+
+It is recommended to add `# yaml-language-server: $schema=../../codegenerator/cli/npm/envio/evm.schema.json` to the top of your `config.yaml` to help with editor autocompletion.
 
 ### Context
 
 In your handler functions you can access entities in the database via the asyncronous 'get' function as shown below:
 
 ```javascript
-await context.<EntityName>.get(<id>)
+await context.<ENTITY_NAME>.get(<ID>)
 ```
 
 The context also contains some logging functions that include the context automatically. You can also use `console.log`.
@@ -107,13 +140,13 @@ In addition to the 'get' which is a read only action, two write actions are prov
 Used as follows
 
 ```javascript
-context.<entityName>.set(<entityObject>)
+context.<ENTITY_NAME>.set(<ENTITY_OBJECT>)
 ```
 
 and
 
 ```javascript
-context.<EntityName>.deleteUnsafe(<entityObject>.id)
+context.<ENTITY_NAME>.deleteUnsafe(<ENTITY_OBJECT>.id)
 ```
 
 The `set` method is used to either create an entity or to update an existing entity with the values defined in the `entityObject`.
@@ -276,8 +309,8 @@ Handlers.Greeter.NewGreeting.handler(async ({ event, context }) => {
 
 ### contracts
 
-- `config.contracts.<ContractName>.abi` - ABI of the contract
-- `config.contracts.<ContractName>.addresses` - An array of addresses of the contract
-- `config.contracts.<ContractName>.events` - An array of event names emitted by the contract
+- `config.contracts.<CONTRACT_NAME>.abi` - ABI of the contract
+- `config.contracts.<CONTRACT_NAME>.addresses` - An array of addresses of the contract
+- `config.contracts.<CONTRACT_NAME>.events` - An array of event names emitted by the contract
 
 ---
