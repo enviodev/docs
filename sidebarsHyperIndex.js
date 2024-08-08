@@ -42,6 +42,7 @@ module.exports = {
       type: "category",
       label: "Advanced",
       items: [
+        "Advanced/loaders",
         "Advanced/dynamic-contracts",
         "Advanced/multichain-indexing",
         "Advanced/hypersync",
@@ -50,10 +51,10 @@ module.exports = {
         "Advanced/generated-files",
         "Advanced/terminology",
         {
-          type: 'category',
-          label: 'Performance',
+          type: "category",
+          label: "Performance",
           link: {
-            type: 'doc',
+            type: "doc",
             id: "Advanced/performance/index",
           },
           items: [
