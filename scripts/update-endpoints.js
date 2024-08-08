@@ -55,17 +55,19 @@ const generateHyperSyncTable = (data) => {
 };
 
 const generateHyperRPCTable = (data) => {
-  const columns = ['Network Name', 'Network ID', 'URL'];
+  const columns = ['Network Name', 'Network ID', 'URL', 'Supports Traces'];
   let table = generateCommonTableHeader(columns);
 
   sortAndFilterChains(data).forEach(chain => {
     const networkName = getNetworkName(chain);
     const url = `https://${chain.name}.rpc.hypersync.xyz or https://${chain.chain_id}.rpc.hypersync.xyz`;
+    const supportsTraces = chain.additional_features && chain.additional_features.includes('TRACES') ? '✔️' : ' ';
 
     table += generateTableRow([
       networkName.padEnd(16),
       chain.chain_id.toString().padEnd(10),
-      url.padEnd(70)
+      url.padEnd(70),
+      supportsTraces
     ]);
   });
 
