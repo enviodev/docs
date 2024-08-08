@@ -21,9 +21,9 @@ Its optimizations mean that while it is suitable for heavy-lifting data extracti
 > - `eth_getTransactionReceipt`
 > - `eth_getBlockReceipts`
 > - `eth_getLogs`
-> - `trace_block` (only on [select chains](/docs/HyperSync/HyperRPC/hyperrpc-url-endpoints))
+> - `trace_block` (only on [select chains](./hyperrpc-supported-networks))
 
-These methods are already supported on a wide selection of chains (the most up-to-date list can be found [here](/docs/HyperSync/HyperRPC/hyperrpc-url-endpoints))
+These methods are already supported on a wide selection of chains (the most up-to-date list can be found [here](./hyperrpc-supported-networks)))
 
 Testing the endpoint and providing feedback is hugely valuable. To access these endpoints for free please join our [Discord](https://discord.gg/Q9qt8gZ2fX) and reach out or alternatively log in via GitHub on the main website to access your endpoints.
 

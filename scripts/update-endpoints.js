@@ -84,7 +84,7 @@ const updateMarkdownFiles = async () => {
     const hyperSyncFilePath = 'docs/HyperSync/hypersync-url-endpoints.md';
     let hyperSyncContent = fs.readFileSync(hyperSyncFilePath, 'utf8');
     hyperSyncContent = hyperSyncContent.replace(
-      /\| Network Name\s+\| Network ID\s+\| URL\s+\| Tier\s+\| Supports Traces \|\n\| ---------------- \| ---------- \| --- \| ---- \| --------------- \|\n[\s\S]*?\n(?=\n|$)/,
+      /\| Network Name\s+\| Network ID\s+\| URL\s+\| Tier\s+\| Supports Traces \|\n\| -+ \| -+ \| -+ \| -+ \| -+ \|\n[\s\S]*?\n(?=\n|$)/,
       hyperSyncTable
     );
     fs.writeFileSync(hyperSyncFilePath, hyperSyncContent, 'utf8');
@@ -95,7 +95,7 @@ const updateMarkdownFiles = async () => {
     const hyperRPCFilePath = 'docs/HyperSync/HyperRPC/hyperrpc-url-endpoints.md';
     let hyperRPCContent = fs.readFileSync(hyperRPCFilePath, 'utf8');
     hyperRPCContent = hyperRPCContent.replace(
-      /\| Network Name\s+\| Network ID\s+\| URL\s+\|\n\| ---------------- \| ---------- \| ---------------------------------------------------------------------- \|\n[\s\S]*?\n(?=\n|$)/,
+      /\| Network Name\s+\| Network ID\s+\| URL\s+\| Supports Traces \|\n\| -+ \| -+ \| -+ \| -+ \|\n[\s\S]*?(?=\n\n|$)/,
       hyperRPCTable
     );
     fs.writeFileSync(hyperRPCFilePath, hyperRPCContent, 'utf8');
