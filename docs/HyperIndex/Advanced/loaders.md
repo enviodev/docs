@@ -5,11 +5,15 @@ sidebar_label: Loaders
 slug: /loaders
 ---
 
-Loaders are a way to define the entities that you want to load from the database in a way that can be optimized. They also provide a way to load arrays of entities based on field values of those entities.
+## Overview
 
-Loaders are designed to minimize I/O which is the biggest performance bottleneck of an indexer. The indexer will process all events in batches and if you load all your entities via a "loader", it will be able to group all of the requests defined in your loader into one round trip to the database before the batch is processed. These values will be cached in an in memory store so the batch can be processed entirely in memory.
+Loaders provide an efficient way to define and load entities from the database, optimizing performance by minimizing I/O operations. They also enable you to load arrays of entities based on specific field values.
 
-Lets look at an example of converting a simple handler to using a loader. Here is a handler which loads in values at runtime, on demand. Note: Caching is built in so reloading the same value multiple times in a batch will not result in multiple hits to the database.
+Loaders are designed to reduce I/O, which is often the primary performance bottleneck in an indexer. By using loaders, you can group multiple requests into a single database round trip before processing a batch of events. The retrieved values are cached in memory, allowing the batch to be processed entirely in memory.
+
+## Example: Refactoring a Simple Handler
+
+Let's explore how to convert a basic handler to use a loader. Below is an example of a handler that loads values at runtime, on demand. Note: Built-in caching still ensures that reloading the same value multiple times in a batch doesn't result in multiple database hits.
 
 ```ts
 ERC20.Transfer.handler(async ({ event, context }) => {
@@ -19,7 +23,9 @@ ERC20.Transfer.handler(async ({ event, context }) => {
 });
 ```
 
-Now lets refactor this to using a loader:
+### Refactoring with a Loader
+
+Now, let's refactor this handler to use a loader:
 
 ```ts
 ERC20.Transfer.handlerWithLoader({
@@ -40,11 +46,13 @@ ERC20.Transfer.handlerWithLoader({
 });
 ```
 
-In this example we are calling `handlerWithLoader` rather than just `handler` and passing it an object with `loader` and `handler` properties. The `loader` is also an async function that takes an argument with props of event and context. The `event` is the same value that will be passed to the handler. And you interact with the `context` in the same way as you do in a handler. Whatever value is returned from your loader will be the value passed to the `loaderReturn` property in your handler.
+In this example, we're using `handlerWithLoader` instead of `handler` and passing it an object with `loader` and `handler` properties. The `loader` is an asynchronous function that receives `event` and `context` as arguments. The `event` is the same value passed to the handler, and you interact with the `context` just as you would in a standard handler. The value returned by the loader is passed to the `loaderReturn` property in the handler.
 
-Before your each `handler` gets run on a batch of events, each `loader` will be run and the indexer will try to load all the required entities into memory with as few database roundtrips as possible.
+Before processing a batch of events, all corresponding loaders are executed. The indexer attempts to load all the required entities into memory with as few database round trips as possible. Once all the loaders have run, the handlers for the batch are then executed, using the data loaded into memory.
 
-We can improve this even further by ensuring that we maximise on concurrency where possible. For example both "receiver" and "sender" accounts can be requested concurrently and then awaited at a top level. This would ensure that both requests are made in the same roundtrip to the database.
+### Optimizing for Concurrency
+
+We can further improve this by maximizing concurrency. For instance, both the "sender" and "receiver" accounts can be requested concurrently and awaited at the top level. This approach ensures that both requests are made in the same round trip to the database.
 
 ```ts
 ERC20.Transfer.handlerWithLoader({
@@ -64,9 +72,11 @@ ERC20.Transfer.handlerWithLoader({
 });
 ```
 
-## Query By Field
+## Querying by Field
 
-Another use case for loaders is `getWhere` queries which allow you to query arrays of entities by field values. These can be applied to any entity that has a field used as a relationship from a [`@derivedFrom`](schema/#defining-one-to-many-relationships) directive or if the field has an [`@index`](database-performance-optimization/#creating-custom-indices) directive. For example if we wanted to iterate over all `Approval` entities where the `owner_id` field is equal to the value passed:
+Another useful application of loaders is with `getWhere` queries, which allow you to query arrays of entities by field values. These queries can be applied to any entity with a field used as a relationship from a [`@derivedFrom`](schema/#defining-one-to-many-relationships) directive or if the field has an [`@index`](database-performance-optimization/#creating-custom-indices) directive.
+
+For example, to iterate over all `Approval` entities where the `owner_id` field equals a specific value:
 
 ```ts
 ERC20.Approval.handlerWithLoader({
@@ -81,10 +91,10 @@ ERC20.Approval.handlerWithLoader({
     const { currentOwnerApprovals } = loaderReturn;
 
     for (const ownerApproval of currentOwnerApprovals) {
-      //iterate over currentOwnerApprovals
+      // iterate over currentOwnerApprovals
     }
   },
 });
 ```
 
-Please note that these kinds of queries are very heavy and not recommended for performance. They are also currently unrestricted meaning that if you make a query too large you can quite easily get an "out of memory" error since all processing happens in memory.
+**Note:** These types of queries can be very resource-intensive and are not recommended for performance-critical applications. They are currently unrestricted, meaning that if a query is too large, it can easily cause an "out of memory" error, as all processing happens in memory.
