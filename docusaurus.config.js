@@ -261,6 +261,7 @@ const config = {
             maxWidth: 200,
             maxHeight: 40,
           },
+          href: "https://envio.dev",
         },
         items: [
           {
