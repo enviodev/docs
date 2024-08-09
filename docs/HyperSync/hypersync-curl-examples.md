@@ -19,7 +19,7 @@ Using Json API requests to interact with envio.dev can be highly effective for v
 ##### Client libraries advantages:
 
 - Complex Workflows: HyperSync client libraries provide greater flexibility and convenient code organization for workflows involving multiple steps and conditional logic.
-- Data Compression: HyperSync libraries automatically send da ta in a compressed format, enhancing throughput for data-intensive queries.
+- Data Compression: HyperSync libraries automatically send data in a compressed format, enhancing throughput for data-intensive queries.
 - Query Fragmentation Handling: Client libraries handle subsequent queries automatically if the initial query doesn't reach the to_block or the end of the chain.
 - Arrow Support: Data can be returned in Apache Arrow format, facilitating easier data manipulation and analysis.
 - Auto Retry: Client libraries automatically retry failed requests, ensuring more reliable data retrieval.
