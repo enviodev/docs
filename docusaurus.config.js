@@ -4,6 +4,10 @@ const darkCodeTheme = themes.dracula;
 
 const redirectsList = [
   {
+    from: "/",
+    to: "/docs/HyperIndex/overview",
+  },
+  {
     from: "/docs/quickstart",
     to: "/docs/HyperIndex/overview",
   },
@@ -261,6 +265,7 @@ const config = {
             maxWidth: 200,
             maxHeight: 40,
           },
+          href: "https://envio.dev",
         },
         items: [
           {
