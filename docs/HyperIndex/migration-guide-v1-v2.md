@@ -42,7 +42,7 @@ V2 of HyperIndex is about streamlining the process of starting an indexer and op
 ### Configuration
 
 - There is no async-mode anymore, so you can remove `isAsync: true` from each of the events in your `config.yaml`.
-- This is no more 'required_entities' in the config file. This includes subfields such as `label` and `arrayLabels`.
+- There is no more 'required_entities' in the config file. This includes sub-fields such as `label` and `arrayLabels`.
 
 ```diff
 - isAsync: true
@@ -281,7 +281,6 @@ After:
 contracts:
   - name: Greeter
     handler: src/EventHandlers.ts
-    sameRandomFieldThatIsntPartOfSchema: true
     events:
       - event: Greet(address indexed recipient, string greeting)
 ```
