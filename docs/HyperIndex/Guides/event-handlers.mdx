@@ -149,7 +149,7 @@ and
 context.<ENTITY_NAME>.deleteUnsafe(<ENTITY_OBJECT>.id);
 ```
 
-The `set` method is used to either create an entity or to update an existing entity with the values defined in the `entityObject`. The `deleteUnsafe` method is an experimental feature that allows you to remove an entity with a particular ID from the database and indexer memory. This is an **unsafe** function since there may be unexpected repercussions when a deleted entity is linked to another entity. It is your responsibility to delete/fix these references manually since a 'safe' delete function hasn't been created yet.
+The `set` method is used to either create an entity or to update an existing entity with the values defined in the `entityObject`. The `deleteUnsafe` method is an experimental feature that allows you to remove an entity with a particular ID from the database and indexer memory. This is an **unsafe** function since there may be unexpected repercussions when a deleted entity is linked to another entity. It is your responsibility to delete/fix these references manually.
 
 ### Example of Registering a Handler Function for the `NewGreeting` Event
 
