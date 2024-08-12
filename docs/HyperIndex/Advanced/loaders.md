@@ -13,7 +13,7 @@ Loaders are designed to reduce I/O, which is often the primary performance bottl
 
 ## Example: Refactoring a Simple Handler
 
-Let's explore how to convert a basic handler to use a loader. Below is an example of a handler that loads values at runtime, on demand. Note: Built-in caching still ensures that reloading the same value multiple times in a batch doesn't result in multiple database hits.
+Let's explore how to convert a basic handler to use a loader. Below is an example of a handler that loads values at runtime, on demand.
 
 ```ts
 ERC20.Transfer.handler(async ({ event, context }) => {
@@ -22,6 +22,8 @@ ERC20.Transfer.handler(async ({ event, context }) => {
   // ...Logic to update sender and receiver accounts
 });
 ```
+
+In the example above, if there are `5,000` events in a batch, each with unique `to` and `from` parameters, this would result in `10,000` roundtrips to the database—one for each unique value loaded for "sender" and "receiver."
 
 ### Refactoring with a Loader
 
@@ -32,8 +34,8 @@ ERC20.Transfer.handlerWithLoader({
   loader: async ({ event, context }) => {
     const sender = await context.Account.get(event.params.from);
     const receiver = await context.Account.get(event.params.to);
-    // Return whatever you like from the loader,
-    // it will be the value you get in your loaderReturn
+    // Return the values you need from the loader,
+    // which will be passed to your handler as loaderReturn
     return {
       sender,
       receiver,
@@ -46,13 +48,15 @@ ERC20.Transfer.handlerWithLoader({
 });
 ```
 
-In this example, we're using `handlerWithLoader` instead of `handler` and passing it an object with `loader` and `handler` properties. The `loader` is an asynchronous function that receives `event` and `context` as arguments. The `event` is the same value passed to the handler, and you interact with the `context` just as you would in a standard handler. The value returned by the loader is passed to the `loaderReturn` property in the handler.
+In this example, we're using `handlerWithLoader` instead of `handler` and passing an object with `loader` and `handler` properties. The `loader` is an asynchronous function that receives `event` and `context` as arguments, similar to the handler. The value returned by the loader is passed to the `loaderReturn` parameter in the handler.
 
-Before processing a batch of events, all corresponding loaders are executed. The indexer attempts to load all the required entities into memory with as few database round trips as possible. Once all the loaders have run, the handlers for the batch are then executed, using the data loaded into memory.
+Before processing a batch of events, all corresponding loaders are executed. The indexer attempts to load all the required entities into memory with as few database roundtrips as possible. Once all the loaders have run, the handlers for the batch are executed using the data loaded into memory.
+
+With this refactor, the same batch of `5,000` events would require only 2 roundtrips to the database. The loader for each event groups the `sender` requests into one query and the `receiver` requests into another.
 
 ### Optimizing for Concurrency
 
-We can further improve this by maximizing concurrency. For instance, both the "sender" and "receiver" accounts can be requested concurrently and awaited at the top level. This approach ensures that both requests are made in the same round trip to the database.
+We can further improve this by maximizing concurrency. For instance, both the "sender" and "receiver" accounts can be requested concurrently and awaited at the top level. This approach ensures that both requests are made in the same roundtrip to the database.
 
 ```ts
 ERC20.Transfer.handlerWithLoader({
@@ -61,8 +65,8 @@ ERC20.Transfer.handlerWithLoader({
       context.Account.get(event.params.from),
       context.Account.get(event.params.to),
     ]);
-    // Return whatever you like from the loader,
-    // it will be the value you get in your loaderReturn
+    // Return the values you need from the loader,
+    // which will be passed to your handler as loaderReturn
     return {
       sender,
       receiver,
@@ -71,6 +75,8 @@ ERC20.Transfer.handlerWithLoader({
   // ...handler code
 });
 ```
+
+With this approach, even for a batch of `5,000` events, there is only 1 roundtrip to the database. We've successfully reduced roundtrips from `10,000` down to `1`.
 
 ## Querying by Field
 
