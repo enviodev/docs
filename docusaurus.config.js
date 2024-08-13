@@ -4,7 +4,7 @@ const darkCodeTheme = themes.dracula;
 
 const redirectsList = [
   {
-    from: "/",
+    from: "/docs",
     to: "/docs/HyperIndex/overview",
   },
   {
