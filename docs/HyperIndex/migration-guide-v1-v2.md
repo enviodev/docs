@@ -5,8 +5,6 @@ sidebar_label: Migration Guide v1 to v2
 slug: /migration-guide-v1-v2
 ---
 
-NOTE: v2 is currently in rc phase (release candidate) and is not yet stable. Please refer to the [v1 documentation](https://docs.envio.dev/docs/HyperIndex) for the stable version.
-
 # Introduction
 
 V2 of HyperIndex is about streamlining the process of starting an indexer and optimizing it as you go. There are two big changes:

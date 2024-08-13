@@ -379,12 +379,11 @@ const config = {
         versions: {
           current: {
             label: "v2",
-            path: "v2",
-            banner: "unreleased",
+            path: "",
           },
           v1: {
             label: "v1",
-            path: "",
+            path: "v1",
           },
         },
       },
