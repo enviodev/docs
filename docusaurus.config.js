@@ -296,12 +296,6 @@ const config = {
             label: "HyperSync Docs",
             position: "left",
           },
-          // //// I will add versioning later - for now - no versioning.
-          // {
-          //   type: 'docsVersionDropdown',
-          //   docsPluginId: 'HyperSync',
-          //   position: 'left',
-          // },
           {
             to: "blog",
             label: "Blog",
@@ -371,12 +365,6 @@ const config = {
         editUrl: "https://github.com/enviodev/docs/edit/main/",
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,
-        // versions: {
-        //   current: {
-        //     label: 'latest(4.0.0)',
-        //     path: '4.0.0',
-        //   },
-        // },
       },
     ],
     [
@@ -390,7 +378,7 @@ const config = {
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,
         versions: {
-          current: {
+          v2: {
             label: "v2",
             path: "",
           },
@@ -399,6 +387,7 @@ const config = {
             path: "v1",
           },
         },
+        lastVersion: "v2",
       },
     ],
     [
