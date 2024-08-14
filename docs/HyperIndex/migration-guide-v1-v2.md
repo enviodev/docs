@@ -5,19 +5,23 @@ sidebar_label: Migration Guide v1 to v2
 slug: /migration-guide-v1-v2
 ---
 
-# Introduction
+# Migration Guide: HyperIndex v1 to v2
 
-V2 of HyperIndex is about streamlining the process of starting an indexer and optimizing it as you go. There are two big changes:
+## Introduction
 
-- Handlers are now asynchronous, and `loaders` became an optional tool for additional optimizations.
-- It made [async-mode](/docs/HyperIndex/v1/async-mode) not needed, hence it's removed in v2.
-- Loaders (when used) are more expressive and connected via the return type to the context of the handler.
-  - In v1, you needed to use linked entities to load entity fields of other entities. This was unintuitive.
-    - In v2, you can directly access the fields of the loader the exact same way as you do in the handler, with an async 'get' function.
-  - In v1, you needed to call 'load' in the loader, and 'get' in the handler separately (or use labelled fields).
-    - In v2, you can use the return type of the loader to directly access the fields in the handler via the context, or you can call 'get' again.
-- Fixed indexing params with names that are reserved words in ReScript.
-- Validation and autocompletion for `config.yaml`. You can enable it by adding `# yaml-language-server: $schema=./node_modules/envio/evm.schema.json` on top of your `config.yaml` file.
+Welcome to HyperIndex v2 - a major upgrade that significantly enhances your indexing experience! This new version introduces asynchronous processing, streamlined workflows, and improved flexibility for your indexers. With v2, you'll benefit from faster development, better performance, and a more intuitive API.
+
+While the full release changes can be found in the [v2.0.0 release notes](https://github.com/enviodev/hyperindex/releases/tag/v2.0.0), here are some key highlights before we dive into the comprehensive migration guide:
+
+- Handlers are now asynchronous, with `loaders` becoming an optional tool for additional optimizations.
+- [Async-mode](/docs/HyperIndex/v1/async-mode) has been removed as it's no longer needed in v2.
+- Loaders (when used) are more expressive and directly connected to the handler context via their return type.
+  - In v2, you can access loader fields in the handler the same way you do in the loader, using an async 'get' function.
+  - The return type of the loader can be used to directly access loaded data in the handler via the context.
+- Indexing parameters with names that are reserved words in ReScript have been fixed.
+- Validation and autocompletion for `config.yaml` is now available. Enable it by adding `# yaml-language-server: $schema=./node_modules/envio/evm.schema.json` at the top of your `config.yaml` file.
+
+These changes simplify the development process and provide a more consistent and powerful indexing experience. The following sections will guide you through the necessary steps to migrate your existing v1 indexers to v2.
 
 ## Changes to Make
 
@@ -36,6 +40,26 @@ V2 of HyperIndex is about streamlining the process of starting an indexer and op
 - Loaders return the required entities which are then used in the handler.
 - The dynamic contract registration moved from loaders to its own `<ContractName>.<EventName>.contractRegister` handler.
 - The return type of the loader is used directly in the handler to access the loaded data. No need to re-'get' it again in the handler.
+
+### Field Selection
+
+Field selection has been introduced in v2 to allow you to add additional data points to each event that gets passed to your handlers. This feature enhances the flexibility and efficiency of your indexer.
+
+To use field selection, add a `field_selection` section to your `config.yaml` file. For example:
+
+```yaml
+field_selection:
+  transaction_fields:
+    - "hash"
+    - "transactionIndex"
+    - "gasUsed"
+  block_fields:
+    - "parentHash"
+```
+
+For an exhaustive list of fields that can be added and more detailed information about field selection, please refer to the [Field Selection section in the Configuration File guide](configuration-file#field-selection).
+
+Note: By default, `number`, `hash`, and `timestamp` are already selected for `block_fields` and do not need to be configured.
 
 ### Configuration
 
@@ -228,6 +252,7 @@ const { currentEntity } = loaderReturn;
 ### 6. Loading Linked Entities
 
 Before:
+
 ```typescript
 GreeterContract.Event1.loader(({ event, context }) => {
   context.Entity.load(event.srcAddress.toString(), {
@@ -238,6 +263,7 @@ GreeterContract.Event1.loader(({ event, context }) => {
 ```
 
 After:
+
 ```typescript
 Greeter.Event1.handlerWithLoader({
   loader: async ({ event, context }) => {
@@ -259,6 +285,7 @@ Greeter.Event1.handlerWithLoader({
 ### 7. Config File Changes
 
 Before:
+
 ```yaml
 contracts:
   - name: Greeter
@@ -275,6 +302,7 @@ contracts:
 ```
 
 After:
+
 ```yaml
 contracts:
   - name: Greeter
@@ -292,4 +320,5 @@ As we upgrade public repos on GitHub, we'll add the commits of the upgrade to th
 ### Additional Tips
 
 - Make sure to thoroughly test your migrated code to catch any issues that might arise from the asynchronous nature of the new handlers.
+
 - If performance isn't a massive concern, you can simply use the `handler` function without a loader.
