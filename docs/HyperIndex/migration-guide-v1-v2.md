@@ -37,6 +37,26 @@ V2 of HyperIndex is about streamlining the process of starting an indexer and op
 - The dynamic contract registration moved from loaders to its own `<ContractName>.<EventName>.contractRegister` handler.
 - The return type of the loader is used directly in the handler to access the loaded data. No need to re-'get' it again in the handler.
 
+### Field Selection
+
+Field selection has been introduced in v2 to allow you to add additional data points to each event that gets passed to your handlers. This feature enhances the flexibility and efficiency of your indexer.
+
+To use field selection, add a `field_selection` section to your `config.yaml` file. For example:
+
+```yaml
+field_selection:
+  transaction_fields:
+    - "hash"
+    - "transactionIndex"
+    - "gasUsed"
+  block_fields:
+    - "parentHash"
+```
+
+For an exhaustive list of fields that can be added and more detailed information about field selection, please refer to the [Field Selection section in the Configuration File guide](configuration-file#field-selection).
+
+Note: By default, `number`, `hash`, and `timestamp` are already selected for `block_fields` and do not need to be configured.
+
 ### Configuration
 
 - There is no async-mode anymore, so you can remove `isAsync: true` from each of the events in your `config.yaml`.
@@ -228,6 +248,7 @@ const { currentEntity } = loaderReturn;
 ### 6. Loading Linked Entities
 
 Before:
+
 ```typescript
 GreeterContract.Event1.loader(({ event, context }) => {
   context.Entity.load(event.srcAddress.toString(), {
@@ -238,6 +259,7 @@ GreeterContract.Event1.loader(({ event, context }) => {
 ```
 
 After:
+
 ```typescript
 Greeter.Event1.handlerWithLoader({
   loader: async ({ event, context }) => {
@@ -259,6 +281,7 @@ Greeter.Event1.handlerWithLoader({
 ### 7. Config File Changes
 
 Before:
+
 ```yaml
 contracts:
   - name: Greeter
@@ -275,6 +298,7 @@ contracts:
 ```
 
 After:
+
 ```yaml
 contracts:
   - name: Greeter
