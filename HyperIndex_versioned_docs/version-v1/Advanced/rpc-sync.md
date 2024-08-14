@@ -99,4 +99,4 @@ For a more granular approach of handling RPC failovers, permenant caching, auto-
   ...
 ```
 
-Once configured, all RPC requests will be routed through eRPC, which will manage caching, failover, auto-batching, rate-limiting, auto-discovery of node providers, and more behind the scenes, providing a more resilient and efficient indexing solution.
+Once configured, all RPC requests will be routed through eRPC, which will manage caching, failover, auto-batching, rate-limiting, auto-discovery of node providers, and more behind the scenes, providing a more resilient and efficient indexing solution as opposed to using a single RPC source. Using HyperSync will still perform indexing faster as opposed to RPC based solutions.
