@@ -393,6 +393,7 @@ const config = {
         editUrl: "https://github.com/enviodev/docs/edit/main/",
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,
+        lastVersion: "current",
         versions: {
           current: {
             label: "v2",
