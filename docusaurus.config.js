@@ -407,8 +407,8 @@ const config = {
       {
         redirects: redirectsList,
         createRedirects: function (existingPath) {
-          if (existingPath.includes('/docs/HyperIndex/v2/')) {
-            const newPath = existingPath.replace('/docs/HyperIndex/v2/', '/docs/HyperIndex/');
+          if (existingPath.includes('/docs/HyperIndex/') && !existingPath.includes('/v2/')) {
+            const newPath = existingPath.replace('/docs/HyperIndex/', '/docs/HyperIndex/v2');
             return [newPath];
           }
           return undefined;
