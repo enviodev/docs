@@ -395,12 +395,11 @@ const config = {
       {
         redirects: redirectsList,
         createRedirects: function (existingPath) {
-          if (existingPath.includes('/docs/HyperSync/v2/')) {
-            return [
-              existingPath.replace('/docs/HyperSync/v2/', '/docs/HyperSync/'),
-            ];
+          if (existingPath.includes('/docs/HyperIndex/v2/')) {
+            const newPath = existingPath.replace('/docs/HyperIndex/v2/', '/docs/HyperIndex/');
+            return [newPath];
           }
-          return undefined; // Return undefined if no redirect is needed
+          return undefined;
         },
       },
     ],
