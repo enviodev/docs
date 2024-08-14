@@ -5,7 +5,9 @@ sidebar_label: Migration Guide v1 to v2
 slug: /migration-guide-v1-v2
 ---
 
-# Introduction
+# Migration Guide: HyperIndex v1 to v2
+
+## Introduction
 
 Welcome to HyperIndex v2 - a major upgrade that significantly enhances your indexing experience! This new version introduces asynchronous processing, streamlined workflows, and improved flexibility for your indexers. With v2, you'll benefit from faster development, better performance, and a more intuitive API.
 
