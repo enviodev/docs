@@ -97,10 +97,6 @@ const redirectsList = [
     to: "/docs/HyperIndex/v1/linked-entity-loaders",
   },
   {
-    from: "/docs/HyperIndex/v2/migration-guide-v1-v2",
-    to: "/docs/HyperIndex/migration-guide-v1-v2",
-  },
-  {
     from: "/docs/HyperIndex/linked-entity-loaders",
     to: "/docs/HyperIndex/v1/linked-entity-loaders",
   },
@@ -409,6 +405,14 @@ const config = {
       "@docusaurus/plugin-client-redirects",
       {
         redirects: redirectsList,
+        createRedirects: function (existingPath) {
+          if (existingPath.includes('/docs/HyperSync/v2/')) {
+            return [
+              existingPath.replace('/docs/HyperSync/v2/', '/docs/HyperSync/'),
+            ];
+          }
+          return undefined; // Return undefined if no redirect is needed
+        },
       },
     ],
   ],
