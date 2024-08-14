@@ -60,6 +60,10 @@ This command builds the static content and deploys it to the specified `deploy` 
 
 The documentation content files are primarily written in Markdown and located in the `/docs` directory. Modify or add new documents as needed to update the site's content.
 
+## Versioning
+
+To add a new version of the hyperIndex docs you'll need to run: `yarn docusaurus docs:version:HyperIndex v<new-version-number>`. Due to the way that docusaurus displays WIP versions, you'll probably want to use this script `./scripts/make-symlinks.sh` to create symlinks to the latest version of the docs until work on a 'next' version starts. See more details why here: https://github.com/facebook/lexical/issues/6144
+
 ## More Information
 
 For more detailed instructions on managing and customizing your Docusaurus site, refer to the [official Docusaurus documentation](https://docusaurus.io/docs).
