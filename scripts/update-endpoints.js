@@ -1,74 +1,83 @@
 const fs = require('fs');
 
-const url = 'https://chains.hyperquery.xyz/active_chains';
+const URL = 'https://chains.hyperquery.xyz/active_chains';
 
-// TODO: we could enrich data for each chain from the data from https://chainid.network/chains_mini.json or https://chainid.network/chains.json
-const renameConfig = {
+const RENAME_CONFIG = {
   eth: 'Ethereum Mainnet',
   "polygon-zkevm": "Polygon zkEVM",
   "zksync": "ZKsync",
   // Add other renaming rules here
 };
 
-const filterEndpoints = [/^staging-/];
+const FILTER_ENDPOINTS = [/^staging-/];
+
+const HYPERSYNC_COLUMNS = [
+  { name: 'Network Name', width: 20 },
+  { name: 'Network ID', width: 10 },
+  { name: 'URL', width: 83 },
+  { name: 'Tier', width: 6 },
+  { name: 'Supports Traces', width: 15 }
+];
+
+const HYPERRPC_COLUMNS = [
+  { name: 'Network Name', width: 20 },
+  { name: 'Network ID', width: 10 },
+  { name: 'URL', width: 83 },
+  { name: 'Supports Traces', width: 15 }
+];
 
 const capitalizeAndSplit = (name) => {
   return name.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
 };
 
 const generateCommonTableHeader = (columns) => {
-  let header = '| ' + columns.join(' | ') + ' |\n';
-  header += '| ' + columns.map(() => '-'.repeat(16)).join(' | ') + ' |\n';
+  let header = '| ' + columns.map(col => col.name.padEnd(col.width)).join(' | ') + ' |\n';
+  header += '| ' + columns.map(col => '-'.repeat(col.width)).join(' | ') + ' |\n';
   return header;
 };
 
 const sortAndFilterChains = (data) => {
   return data
     .sort((a, b) => {
-      const nameA = renameConfig[a.name] || capitalizeAndSplit(a.name);
-      const nameB = renameConfig[b.name] || capitalizeAndSplit(b.name);
+      const nameA = RENAME_CONFIG[a.name] || capitalizeAndSplit(a.name);
+      const nameB = RENAME_CONFIG[b.name] || capitalizeAndSplit(b.name);
       return nameA.localeCompare(nameB);
     })
-    .filter(chain => !filterEndpoints.some(regex => regex.test(chain.name)));
+    .filter(chain => !FILTER_ENDPOINTS.some(regex => regex.test(chain.name)));
 };
 
-const getNetworkName = (chain) => renameConfig[chain.name] || capitalizeAndSplit(chain.name);
+const getNetworkName = (chain) => RENAME_CONFIG[chain.name] || capitalizeAndSplit(chain.name);
 
-const generateTableRow = (columns) => {
-  return '| ' + columns.join(' | ') + ' |\n';
+const TICK = '✔️';
+
+const generateTableRow = (columns, values) => {
+  return '| ' + columns.map((col, index) => values[index].padEnd(col.width)).join(' | ') + ' |\n';
 };
 
 const generateHyperSyncTable = (data) => {
-  const columns = ['Network Name', 'Network ID', 'URL', 'Tier', 'Supports Traces'];
-  let table = generateCommonTableHeader(columns);
+  let table = generateCommonTableHeader(HYPERSYNC_COLUMNS);
 
   sortAndFilterChains(data).forEach(chain => {
     const networkName = getNetworkName(chain);
     const tier = chain.tier === 'paid-rpc' ? 'gold' : 'bronze';
-    const supportsTraces = chain.additional_features && chain.additional_features.includes('TRACES') ? '✔️' : ' ';
+    const supportsTraces = chain.additional_features && chain.additional_features.includes('TRACES') ? TICK : ' ';
     const url = `https://${chain.name}.hypersync.xyz or https://${chain.chain_id}.hypersync.xyz`;
 
-    table += generateTableRow([networkName, chain.chain_id, url, tier, supportsTraces]);
+    table += generateTableRow(HYPERSYNC_COLUMNS, [networkName, chain.chain_id.toString(), url, tier, supportsTraces]);
   });
 
   return table;
 };
 
 const generateHyperRPCTable = (data) => {
-  const columns = ['Network Name', 'Network ID', 'URL', 'Supports Traces'];
-  let table = generateCommonTableHeader(columns);
+  let table = generateCommonTableHeader(HYPERRPC_COLUMNS);
 
   sortAndFilterChains(data).forEach(chain => {
     const networkName = getNetworkName(chain);
     const url = `https://${chain.name}.rpc.hypersync.xyz or https://${chain.chain_id}.rpc.hypersync.xyz`;
-    const supportsTraces = chain.additional_features && chain.additional_features.includes('TRACES') ? '✔️' : ' ';
+    const supportsTraces = chain.additional_features && chain.additional_features.includes('TRACES') ? TICK : ' ';
 
-    table += generateTableRow([
-      networkName.padEnd(16),
-      chain.chain_id.toString().padEnd(10),
-      url.padEnd(70),
-      supportsTraces
-    ]);
+    table += generateTableRow(HYPERRPC_COLUMNS, [networkName, chain.chain_id.toString(), url, supportsTraces]);
   });
 
   return table;
@@ -76,30 +85,42 @@ const generateHyperRPCTable = (data) => {
 
 const updateMarkdownFiles = async () => {
   try {
-    const response = await fetch(url);
+    const response = await fetch(URL);
     const data = await response.json();
 
     // Update HyperSync file
     const hyperSyncTable = generateHyperSyncTable(data);
-    const hyperSyncFilePath = 'docs/HyperSync/hypersync-url-endpoints.md';
-    let hyperSyncContent = fs.readFileSync(hyperSyncFilePath, 'utf8');
-    hyperSyncContent = hyperSyncContent.replace(
-      /\| Network Name\s+\| Network ID\s+\| URL\s+\| Tier\s+\| Supports Traces \|\n\| -+ \| -+ \| -+ \| -+ \| -+ \|\n[\s\S]*?\n(?=\n|$)/,
-      hyperSyncTable
-    );
-    fs.writeFileSync(hyperSyncFilePath, hyperSyncContent, 'utf8');
-    console.log('HyperSync markdown file updated successfully.');
+    const HYPERSYNC_FILE_PATH = 'docs/HyperSync/hypersync-url-endpoints.md';
+    let hyperSyncContent = fs.readFileSync(HYPERSYNC_FILE_PATH, 'utf8');
+
+    const hyperSyncRegex = /([\s\S]*?\n\n)\n*\| Network Name.*\| Supports Traces \|\n\| -+.*\| -+ \|\n[\s\S]*?\n*(\n\n[\s\S]*|$)/;
+    const hyperSyncMatch = hyperSyncContent.match(hyperSyncRegex);
+
+    if (hyperSyncMatch) {
+      const updatedHyperSyncContent = hyperSyncMatch[1] + '\n' + hyperSyncTable + '\n' + hyperSyncMatch[2];
+      hyperSyncContent = hyperSyncContent.replace(hyperSyncRegex, updatedHyperSyncContent);
+      fs.writeFileSync(HYPERSYNC_FILE_PATH, hyperSyncContent, 'utf8');
+      console.log('HyperSync markdown file updated successfully.');
+    } else {
+      console.log('HyperSync table not found in the markdown file.');
+    }
 
     // Update HyperRPC file
     const hyperRPCTable = generateHyperRPCTable(data);
-    const hyperRPCFilePath = 'docs/HyperSync/HyperRPC/hyperrpc-url-endpoints.md';
-    let hyperRPCContent = fs.readFileSync(hyperRPCFilePath, 'utf8');
-    hyperRPCContent = hyperRPCContent.replace(
-      /\| Network Name\s+\| Network ID\s+\| URL\s+\| Supports Traces \|\n\| -+ \| -+ \| -+ \| -+ \|\n[\s\S]*?(?=\n\n|$)/,
-      hyperRPCTable
-    );
-    fs.writeFileSync(hyperRPCFilePath, hyperRPCContent, 'utf8');
-    console.log('HyperRPC markdown file updated successfully.');
+    const HYPERRPC_FILE_PATH = 'docs/HyperSync/HyperRPC/hyperrpc-url-endpoints.md';
+    let hyperRPCContent = fs.readFileSync(HYPERRPC_FILE_PATH, 'utf8');
+
+    const hyperRPCRegex = /([\s\S]*?\n\n)\n*\| Network Name.*\| Supports Traces \|\n\| -+.*\| -+ \|\n[\s\S]*?\n*(\n\n[\s\S]*|$)/;
+    const hyperRPCMatch = hyperRPCContent.match(hyperRPCRegex);
+
+    if (hyperRPCMatch) {
+      const updatedHyperRPCContent = hyperRPCMatch[1] + '\n' + hyperRPCTable + '\n' + hyperRPCMatch[2];
+      hyperRPCContent = hyperRPCContent.replace(hyperRPCRegex, updatedHyperRPCContent);
+      fs.writeFileSync(HYPERRPC_FILE_PATH, hyperRPCContent, 'utf8');
+      console.log('HyperRPC markdown file updated successfully.');
+    } else {
+      console.log('HyperRPC table not found in the markdown file.');
+    }
 
   } catch (error) {
     console.error('Error updating markdown files:', error);
