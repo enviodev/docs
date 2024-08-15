@@ -75,6 +75,26 @@ More information on Human Readable ABI parsing is available [here](https://docs.
 
 > **Dev note:** An error in the ABI or the event signature will result in the events not matching, and they may not reflect in the `raw_events_table` or propagate correctly into the event handler logic.
 
+## Field Selection
+
+Field selection allows you to add additional data points to each event that gets passed to your handlers. For an exhaustive list of fields that can be added, see the [explorer](#explorer) below.
+
+By default, `number`, `hash`, and `timestamp` are already selected for `block_fields` and do not need to be configured.
+
+*Note:* Regarding indexing from RPC, currently only `hash` and `transaction_index` are supported in `transaction_fields`.
+
+### Example:
+
+```yaml
+field_selection:
+  transaction_fields:
+    - "hash"
+    - "transactionIndex"
+    - "gasUsed"
+  block_fields:
+    - "parentHash"
+```
+
 ## Additional Guidelines
 
 - The contract name field (`Greeter` in the example above) should contain a single word, as it is used to create a namespace for functions in the indexer.

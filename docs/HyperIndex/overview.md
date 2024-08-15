@@ -5,19 +5,24 @@ sidebar_label: Overview
 slug: /overview
 ---
 
-NOTE: v2 is currently in rc phase (release candidate) and is not yet stable. Please refer to the [v1 documentation](https://docs.envio.dev/docs/HyperIndex) for the stable version. Here is the [migration guide](./migration-guide-v1-v2).
+HyperIndex is a real-time indexer built specifically for EVM-compatible blockchains (+Fuel), providing developers with a seamless and efficient indexing solution. Designed to optimize the user experience, HyperIndex offers automatic code generation and flexible language support.
 
-Envio (now referred to as HyperIndex) is a real-time indexer built specifically for EVM-compatible blockchains, providing developers with a seamless and efficient indexing solution. Designed to optimize the user experience, Envio offers automatic code generation and flexible language support.
-Indexers on Envio can be written in JavaScript, TypeScript or ReScript.
+## Key Features
 
-Indexing blockchain data becomes effortless with Envio, offering fast syncing speed and simplified setup steps. Detailed logging and error messaging are provided for effective troubleshooting and debugging.
+- Fast syncing speed and simplified setup
+- Automatic code generation
+- Support for JavaScript, TypeScript, and ReScript
+- Detailed logging and error messaging for effective troubleshooting
+- Ability to aggregate and index data from multiple chains
 
-<!-- One of the standout features of Envio is its ability to aggregate and index data from multiple chains into a hosted database, ensuring reliable uptime and providing monitoring capabilities for the indexer's health status.
--->
+<!-- ## Why HyperIndex? -->
+<!-- TODO -->
 
-To get started with Envio, developers can utilize the Envio CLI, allowing for easy configuration and execution of the indexer. The indexed data is easily accessible through GraphQL queries, providing developers with the flexibility and power to retrieve specific information.
+## Quick Start
 
-The rest of the documentation guides users through the simple steps of configuring and running an Envio indexer.
+Check out our [No-Code Quickstart](./contract-import.md) guide to index any contract with just a few clicks!
+
+## Learn More
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/cbiiWtxFnMk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
