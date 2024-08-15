@@ -41,26 +41,6 @@ These changes simplify the development process and provide a more consistent and
 - The dynamic contract registration moved from loaders to its own `<ContractName>.<EventName>.contractRegister` handler.
 - The return type of the loader is used directly in the handler to access the loaded data. No need to re-'get' it again in the handler.
 
-### Field Selection
-
-Field selection has been introduced in v2 to allow you to add additional data points to each event that gets passed to your handlers. This feature enhances the flexibility and efficiency of your indexer.
-
-To use field selection, add a `field_selection` section to your `config.yaml` file. For example:
-
-```yaml
-field_selection:
-  transaction_fields:
-    - "hash"
-    - "transactionIndex"
-    - "gasUsed"
-  block_fields:
-    - "parentHash"
-```
-
-For an exhaustive list of fields that can be added and more detailed information about field selection, please refer to the [Field Selection section in the Configuration File guide](configuration-file#field-selection).
-
-Note: By default, `number`, `hash`, and `timestamp` are already selected for `block_fields` and do not need to be configured.
-
 ### Configuration
 
 - There is no async-mode anymore, so you can remove `isAsync: true` from each of the events in your `config.yaml`.
@@ -77,6 +57,43 @@ Note: By default, `number`, `hash`, and `timestamp` are already selected for `bl
 -   - name: User
 ```
 
+#### Field Selection and Event Parameter Changes
+
+In v2, the structure of the `event` parameter has changed significantly. Some fields have been moved or renamed, and new fields are available through the `field_selection` configuration.
+
+Field selection allows you to add additional data points to each event that gets passed to your handlers. This feature enhances the flexibility and efficiency of your indexer, as by default you don't fetch data that isn't required.
+
+To use field selection, add a `field_selection` section to your `config.yaml` file. For example:
+
+```yaml
+field_selection:
+  transaction_fields:
+    - "from"
+    - "to"
+    - "hash"
+    - "transactionIndex"
+  block_fields:
+    # Not required for migration, but more fields can be added here
+    - "parentHash"
+```
+
+For an exhaustive list of fields that can be added and more detailed information about field selection, please refer to the [Field Selection section in the Configuration File guide](configuration-file#field-selection).
+
+Note: By default, `number`, `hash`, and `timestamp` are already selected for `block_fields` and do not need to be configured.
+
+#### 'event' Parameter Changes
+
+The structure of the `event` parameter has changed in v2. This affects loaders, handlers, and dynamic contract registration. Here are the key changes:
+
+1. Block and transaction fields are now scoped under `event.block` and `event.transaction` respectively.
+2. Some field names have changed:
+   - `event.txOrigin` is now `event.transaction.from` (requires adding to config)
+   - `event.txTo` is now `event.transaction.to` (requires adding to config)
+   - `event.txHash` is now `event.transaction.hash` (requires adding to config)
+   - `event.blockTimestamp` is now `event.block.timestamp` (no config change)
+   - `event.blockNumber` is now `event.block.number` (no config change)
+   - `event.blockHash` is now `event.block.hash` (no config change)
+
 ### Miscellaneous breaking changes and deprecations
 
 - The `context.Entity.load` function is deprecated and should be replaced with direct calls to `context.Entity.get` in the loader.
@@ -89,8 +106,6 @@ Note: By default, `number`, `hash`, and `timestamp` are already selected for `bl
   - We migrated to ReScript 11 uncurried mode. Curried mode is not supported anymore. So you need to remove `uncurried: false` from your rescript.json file. Also, we vendored `RescriptMocha` bindings to support uncurried mode. Please use it instead of `rescript-mocha`.
 - The config parsing is more strict, unknown fields will result in an error.
   - You can add `# yaml-language-server: $schema=./node_modules/envio/evm.schema.json` at the top of your 'config.yaml' file to get autocomplete and validation for the config file.
-
-<!-- TODO: lots more to put here -->
 
 ## Migration Steps
 
@@ -202,7 +217,7 @@ Greeter.NewGreeterCreated.contractRegister(({ event, context }) => {
 ```typescript
 const greetingInstance: GreetingEntity = {
   ...currentGreeting,
-  // ...
+  // ...loaderReturn
 };
 context.Greeting.set(greetingInstance);
 ```
@@ -309,6 +324,47 @@ contracts:
     handler: src/EventHandlers.ts
     events:
       - event: Greet(address indexed recipient, string greeting)
+```
+### 8. Event Fields
+
+Before (v1):
+```typescript
+GreeterContract.Event1.handler(({ event, context }) => {
+  console.log("The event timestamp and block number",
+    event.txOrigin,
+    event.txTo,
+    event.transactionHash,
+    event.transactionIndex,
+    event.blockNumber,
+    event.blockTimestamp,
+    event.blockHash,
+  )
+});
+```
+
+After (v2):
+```typescript
+Greeter.Event1.handlerWithLoader(async ({ event, context }) => {
+  // NOTE: these fields are in the loader and the contractRegister function too
+  console.log("The event timestamp and block number",
+    event.transaction.from,
+    event.transaction.to,
+    event.transaction.hash,
+    event.transaction.transactionIndex,
+    event.block.number,
+    event.block.timestamp,
+    event.block.hash,
+  );
+});
+```
+And in your `config.yaml` file:
+```yaml
+field_selection:
+  transaction_fields:
+    - "from"
+    - "to"
+    - "hash"
+    - "transactionIndex"
 ```
 
 ## Examples
