@@ -11,7 +11,6 @@ Please note we are rapidly adding new supported networks. If you don't see your 
 
 Here is a table of the currently supported networks on HyperRPC and their respective URL endpoints.
 
-
 | Network Name         | Network ID | URL                                                                                 | Supports Traces |
 | -------------------- | ---------- | ----------------------------------------------------------------------------------- | --------------- |
 | Arbitrum             | 42161      | https://arbitrum.rpc.hypersync.xyz or https://42161.rpc.hypersync.xyz               |                 |
@@ -67,4 +66,3 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Zeta                 | 7000       | https://zeta.rpc.hypersync.xyz or https://7000.rpc.hypersync.xyz                    |                 |
 | ZKsync               | 324        | https://zksync.rpc.hypersync.xyz or https://324.rpc.hypersync.xyz                   |                 |
 | Zora                 | 7777777    | https://zora.rpc.hypersync.xyz or https://7777777.rpc.hypersync.xyz                 |                 |
-

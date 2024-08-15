@@ -4,6 +4,10 @@ const darkCodeTheme = themes.dracula;
 
 const redirectsList = [
   {
+    from: "/docs",
+    to: "/docs/HyperIndex/overview",
+  },
+  {
     from: "/docs/quickstart",
     to: "/docs/HyperIndex/overview",
   },
@@ -89,7 +93,16 @@ const redirectsList = [
   },
   {
     from: "/docs/linked-entity-loaders",
-    to: "/docs/HyperIndex/linked-entity-loaders",
+    // this has been updated to point to v1 since it doesn't exist in v2.
+    to: "/docs/HyperIndex/v1/linked-entity-loaders",
+  },
+  {
+    from: "/docs/HyperIndex/v2/migration-guide-v1-v2",
+    to: "/docs/HyperIndex/migration-guide-v1-v2",
+  },
+  {
+    from: "/docs/HyperIndex/linked-entity-loaders",
+    to: "/docs/HyperIndex/v1/linked-entity-loaders",
   },
   {
     from: "/docs/dynamic-contracts",
@@ -121,11 +134,19 @@ const redirectsList = [
   },
   {
     from: "/docs/async-mode",
-    to: "/docs/HyperIndex/async-mode",
+    to: "/docs/HyperIndex/v1/async-mode",
+  },
+  {
+    from: "/docs/HyperIndex/async-mode",
+    to: "/docs/HyperIndex/v1/async-mode",
   },
   {
     from: "/docs/labels",
-    to: "/docs/HyperIndex/labels",
+    to: "/docs/HyperIndex/v1/labels",
+  },
+  {
+    from: "/docs/HyperIndex/labels",
+    to: "/docs/HyperIndex/v1/labels",
   },
   {
     from: "/docs/performance",
@@ -261,6 +282,7 @@ const config = {
             maxWidth: 200,
             maxHeight: 40,
           },
+          href: "https://envio.dev",
         },
         items: [
           {
@@ -371,15 +393,15 @@ const config = {
         editUrl: "https://github.com/enviodev/docs/edit/main/",
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,
+        lastVersion: "current",
         versions: {
           current: {
             label: "v2",
-            path: "v2",
-            banner: "unreleased",
+            path: "",
           },
           v1: {
             label: "v1",
-            path: "",
+            path: "v1",
           },
         },
       },
