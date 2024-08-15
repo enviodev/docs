@@ -29,13 +29,12 @@ Below is an example of how sync configuration per RPC endpoint can be defined:
 - id: 1
   rpc_config:
     url: https://eth.com # RPC URL that will be used to subscribe to blockchain data on this network
-    unstable__sync_config:
-      initial_block_interval: 10000 # Integer
-      backoff_multiplicative: 0.8 # Float
-      acceleration_additive: 2000 # Integer
-      interval_ceiling: 10000 # Integer
-      backoff_millis: 5000 # Integer
-      query_timeout_millis: 20000 # Integer
+    initial_block_interval: 10000 # Integer
+    backoff_multiplicative: 0.8 # Float
+    acceleration_additive: 2000 # Integer
+    interval_ceiling: 10000 # Integer
+    backoff_millis: 5000 # Integer
+    query_timeout_millis: 20000 # Integer
   start_block: 0
 ```
 
@@ -51,43 +50,43 @@ For a more granular approach of handling RPC failovers, permenant caching, auto-
 
 1. **Create your [`erpc.yaml`](https://docs.erpc.cloud/config/example) configuration file**:
 
-    ```yaml
-    logLevel: debug
-    projects:
-      - id: main
-        upstreams:
-          # This will automatically add all supported EVM chains by HyperRPC.
-          - endpoint: evm+envio://rpc.hypersync.xyz
-          # you can add other rpc endpoints for fallback
-          - endpoint: https://eth-1.com
-          - endpoint: https://eth-2.com 
-          - endpoint: https://eth-3.com 
-    ```
+   ```yaml
+   logLevel: debug
+   projects:
+     - id: main
+       upstreams:
+         # This will automatically add all supported EVM chains by HyperRPC.
+         - endpoint: evm+envio://rpc.hypersync.xyz
+         # you can add other rpc endpoints for fallback
+         - endpoint: https://eth-1.com
+         - endpoint: https://eth-2.com
+         - endpoint: https://eth-3.com
+   ```
 
-    Refer to [a complete config example](https://docs.erpc.cloud/config/example) for further details and customization options.
+   Refer to [a complete config example](https://docs.erpc.cloud/config/example) for further details and customization options.
 
 2. **Use the Docker image**:
 
-    ```bash
-    docker run -v $(pwd)/erpc.yaml:/root/erpc.yaml -p 4000:4000 -p 4001:4001 ghcr.io/erpc/erpc:latest
-    ```
+   ```bash
+   docker run -v $(pwd)/erpc.yaml:/root/erpc.yaml -p 4000:4000 -p 4001:4001 ghcr.io/erpc/erpc:latest
+   ```
 
    Or run eRPC as a service and as part of your current `docker-compose.yaml` configs.
 
-    ```yaml
-    services:
-      ...
+   ```yaml
+   services:
+     ...
 
-      erpc: 
-        image: ghcr.io/erpc/erpc:latest 
-        platform: linux/amd64 
-        volumes: 
-          - "${PWD}/erpc.yaml:/root/erpc.yaml"
-        ports: 
-          - 4000:4000 
-          - 4001:4001 
-        restart: always 
-    ```
+     erpc:
+       image: ghcr.io/erpc/erpc:latest
+       platform: linux/amd64
+       volumes:
+         - "${PWD}/erpc.yaml:/root/erpc.yaml"
+       ports:
+         - 4000:4000
+         - 4001:4001
+       restart: always
+   ```
 
 3. **Set the eRPC URL in the `envio config yaml`**
 
