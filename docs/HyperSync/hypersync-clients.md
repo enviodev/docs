@@ -29,9 +29,11 @@ The clients use a common rust base for high performance and uniform experience a
 - [GitHub page](https://github.com/enviodev/hypersync-client-rust)
 - [Examples](https://github.com/enviodev/hypersync-client-rust/tree/main/examples)
 
+## API Tokens
+
+For information on how to use API tokens with HyperSync clients, please refer to our [API Tokens](./api-tokens) guide.
+
 > ### Disclaimer
 >
 > - Docs under construction.
 > - We appreciate your patience until we get there. Until then, we are happy to answer all questions in our [Discord](https://discord.gg/Q9qt8gZ2fX).
-
----
