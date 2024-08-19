@@ -13,7 +13,7 @@ If you have a system that does not know all the contracts that need indexing at 
 ///TODO: add back a video once it has been updated to v2
 <iframe width="560" height="315" src="https://www.youtube.com/embed/O6qPXZ6kjYY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
 
-## Loader Function
+## Contract Registration
 
 Contract factories are currently supported in the event's `contractRegister` function that you want to register the contract in.
 
@@ -26,6 +26,18 @@ You can register a dynamic contract by including the following line inside the `
 ```
 
 > The syntax is exactly the same for JavaScript, TypeScript, and ReScript.
+
+## Contract Registration on Fuel
+
+The HyperIndex on Fuel still uses the v1 API, so the contract registration is done via the `loader` function.
+
+You can register a dynamic contract by including the following line inside the loader function:
+
+```javascript
+context.contractRegistration.add<your-contract-name>(<address-of-the-contract>)
+```
+
+> The syntax is exactly same for JavaScript, TypeScript and ReScript.
 
 ## Example using an NFT factory
 
