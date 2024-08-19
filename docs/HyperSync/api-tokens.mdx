@@ -1,0 +1,56 @@
+---
+id: api-tokens
+title: API Tokens
+sidebar_label: API Tokens
+slug: /api-tokens
+---
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# API Tokens for HyperSync Clients
+
+API tokens can be used with HyperSync clients to access enhanced services and track usage statistics. While not currently mandatory, they will become compulsory in the future. API tokens allow us to provide better service with dedicated capacity, bandwidth, and higher quality guarantees.
+
+## Generating API Tokens
+
+You can generate API tokens at [https://envio.dev/app/api-tokens](https://envio.dev/app/api-tokens).
+
+## Using API Tokens
+
+To use an API token, you need to pass it as a `bearer_token` when creating a HyperSync client. Here's how to do it in different languages:
+
+<Tabs>
+  <TabItem value="typescript" label="Typescript/Javascript">
+
+```typescript
+const client = HypersyncClient.new({
+    url: "https://eth.hypersync.xyz",
+    bearerToken: process.env.HYPERSYNC_BEARER_TOKEN,
+});
+```
+
+  </TabItem>
+  <TabItem value="python" label="Python">
+
+```python
+client = hypersync.HypersyncClient(hypersync.ClientConfig(
+    url="https://eth.hypersync.xyz",
+    bearer_token=your_api_token
+))
+```
+
+  </TabItem>
+  <TabItem value="rust" label="Rust">
+
+```rust
+let client = Client::new(ClientConfig {
+    bearer_token: Some("your_api_token".to_owned()),
+    ..Default::default()
+})
+.unwrap();
+```
+
+  </TabItem>
+</Tabs>
+
+**Note on Security**: Bearer tokens should never be committed to git or shared publicly. We recommending using the environment for them and storing them them in `.env` files that are included in your `.gitignore`.
