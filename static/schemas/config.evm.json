@@ -6,10 +6,7 @@
   "properties": {
     "description": {
       "description": "Description of the project",
-      "type": [
-        "string",
-        "null"
-      ]
+      "type": ["string", "null"]
     },
     "name": {
       "description": "Name of the project",
@@ -28,17 +25,11 @@
     },
     "schema": {
       "description": "Custom path to config file",
-      "type": [
-        "string",
-        "null"
-      ]
+      "type": ["string", "null"]
     },
     "contracts": {
       "description": "Global contract definitions that must contain all definitions except addresses. You can share a single handler/abi/event definitions for contracts across multiple chains.",
-      "type": [
-        "array",
-        "null"
-      ],
+      "type": ["array", "null"],
       "items": {
         "$ref": "#/$defs/GlobalContract_for_ContractConfig"
       }
@@ -52,10 +43,7 @@
     },
     "unordered_multichain_mode": {
       "description": "A flag to indicate if the indexer should use a single queue for all chains or a queue per chain (default: false)",
-      "type": [
-        "boolean",
-        "null"
-      ]
+      "type": ["boolean", "null"]
     },
     "event_decoder": {
       "description": "The event decoder to use for the indexer (default: hypersync-client)",
@@ -69,18 +57,12 @@
       ]
     },
     "rollback_on_reorg": {
-      "description": "A flag to indicate if the indexer should rollback to the last known valid block on a reorg (default: false)",
-      "type": [
-        "boolean",
-        "null"
-      ]
+      "description": "A flag to indicate if the indexer should rollback to the last known valid block on a reorg (default: true)",
+      "type": ["boolean", "null"]
     },
     "save_full_history": {
       "description": "A flag to indicate if the indexer should save the full history of events. This is useful for debugging but will increase the size of the database (default: false)",
-      "type": [
-        "boolean",
-        "null"
-      ]
+      "type": ["boolean", "null"]
     },
     "field_selection": {
       "description": "An object representing additional fields to add to the event passed to handlers.",
@@ -95,23 +77,15 @@
     },
     "raw_events": {
       "description": "If true, the indexer will store the raw event data in the database. This is useful for debugging, but will increase the size of the database and the amount of time it takes to process events (default: false)",
-      "type": [
-        "boolean",
-        "null"
-      ]
+      "type": ["boolean", "null"]
     }
   },
   "additionalProperties": false,
-  "required": [
-    "name",
-    "networks"
-  ],
+  "required": ["name", "networks"],
   "$defs": {
     "EcosystemTag": {
       "type": "string",
-      "enum": [
-        "evm"
-      ]
+      "enum": ["evm"]
     },
     "GlobalContract_for_ContractConfig": {
       "type": "object",
@@ -122,10 +96,7 @@
         },
         "abi_file_path": {
           "description": "Relative path (from config) to a json abi. If this is used then each configured event should simply be referenced by its name",
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": ["string", "null"]
         },
         "handler": {
           "description": "The relative path to a file where handlers are registered for the given contract",
@@ -140,11 +111,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "name",
-        "handler",
-        "events"
-      ]
+      "required": ["name", "handler", "events"]
     },
     "EventConfig": {
       "type": "object",
@@ -155,9 +122,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "event"
-      ]
+      "required": ["event"]
     },
     "Network": {
       "type": "object",
@@ -192,10 +157,7 @@
         },
         "confirmed_block_threshold": {
           "description": "The number of blocks from the head that the indexer should account for in case of reorgs.",
-          "type": [
-            "integer",
-            "null"
-          ],
+          "type": ["integer", "null"],
           "format": "int32"
         },
         "start_block": {
@@ -205,10 +167,7 @@
         },
         "end_block": {
           "description": "The block at which the indexer should terminate.",
-          "type": [
-            "integer",
-            "null"
-          ],
+          "type": ["integer", "null"],
           "format": "int32"
         },
         "contracts": {
@@ -220,11 +179,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "id",
-        "start_block",
-        "contracts"
-      ]
+      "required": ["id", "start_block", "contracts"]
     },
     "RpcConfig": {
       "type": "object",
@@ -245,71 +200,48 @@
         },
         "initial_block_interval": {
           "description": "The starting interval in range of blocks per query",
-          "type": [
-            "integer",
-            "null"
-          ],
+          "type": ["integer", "null"],
           "format": "uint32",
           "minimum": 0
         },
         "backoff_multiplicative": {
           "description": "After an RPC error, how much to scale back the number of blocks requested at once",
-          "type": [
-            "number",
-            "null"
-          ],
+          "type": ["number", "null"],
           "format": "double"
         },
         "acceleration_additive": {
           "description": "Without RPC errors or timeouts, how much to increase the number of blocks requested by for the next batch",
-          "type": [
-            "integer",
-            "null"
-          ],
+          "type": ["integer", "null"],
           "format": "uint32",
           "minimum": 0
         },
         "interval_ceiling": {
           "description": "Do not further increase the block interval past this limit",
-          "type": [
-            "integer",
-            "null"
-          ],
+          "type": ["integer", "null"],
           "format": "uint32",
           "minimum": 0
         },
         "backoff_millis": {
           "description": "After an error, how long to wait before retrying",
-          "type": [
-            "integer",
-            "null"
-          ],
+          "type": ["integer", "null"],
           "format": "uint32",
           "minimum": 0
         },
         "fallback_stall_timeout": {
           "description": "If a fallback RPC is provided, the amount of time in ms to wait before kicking off the next provider",
-          "type": [
-            "integer",
-            "null"
-          ],
+          "type": ["integer", "null"],
           "format": "uint32",
           "minimum": 0
         },
         "query_timeout_millis": {
           "description": "How long to wait before cancelling an RPC request",
-          "type": [
-            "integer",
-            "null"
-          ],
+          "type": ["integer", "null"],
           "format": "uint32",
           "minimum": 0
         }
       },
       "additionalProperties": false,
-      "required": [
-        "url"
-      ]
+      "required": ["url"]
     },
     "HypersyncConfig": {
       "type": "object",
@@ -320,9 +252,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "url"
-      ]
+      "required": ["url"]
     },
     "NetworkContract_for_ContractConfig": {
       "type": "object",
@@ -337,10 +267,7 @@
         },
         "abi_file_path": {
           "description": "Relative path (from config) to a json abi. If this is used then each configured event should simply be referenced by its name",
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": ["string", "null"]
         },
         "handler": {
           "description": "The relative path to a file where handlers are registered for the given contract",
@@ -355,9 +282,7 @@
         }
       },
       "additionalProperties": false,
-      "required": [
-        "name"
-      ]
+      "required": ["name"]
     },
     "Addresses": {
       "anyOf": [
@@ -392,30 +317,21 @@
     },
     "EventDecoder": {
       "type": "string",
-      "enum": [
-        "viem",
-        "hypersync-client"
-      ]
+      "enum": ["viem", "hypersync-client"]
     },
     "FieldSelection": {
       "type": "object",
       "properties": {
         "transaction_fields": {
           "description": "Fields of a transaction to add to the event passed to handlers",
-          "type": [
-            "array",
-            "null"
-          ],
+          "type": ["array", "null"],
           "items": {
             "$ref": "#/$defs/TransactionField"
           }
         },
         "block_fields": {
           "description": "Fields of a block to add to the event passed to handlers",
-          "type": [
-            "array",
-            "null"
-          ],
+          "type": ["array", "null"],
           "items": {
             "$ref": "#/$defs/BlockField"
           }
