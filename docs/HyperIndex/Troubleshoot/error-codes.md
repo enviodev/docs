@@ -95,6 +95,10 @@ The RPC URLs need to start with either `http://` or `https://`.
 
 If an endblock is specified, the endBlock must be greater than the startBlock in your `config.yaml` file.
 
+### `EE111`: Invalid characters for the contract/event names in the config file
+
+The names are used for the auto-generated code and must be valid identifiers, containing only alphanumeric characters and underscores.
+
 ### `EE200`: Read Schema Error
 
 Failed to read schema file.
