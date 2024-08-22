@@ -9,7 +9,7 @@ slug: /overview
 
 HyperSync is highly specialized data node built in rust aimed at massively improving data retrieval speeds while also providing flexiblity. It can be used via Python, Rust or NodeJs clients and supports more than [45 EVM](/docs/HyperIndex/hypersync) chains and Fuel.
 
-It is an ideal solution for indexers, block explorers, data analysts, bridges and other applications or usecases relying on on-chain information and focussed on performance. Do things like:
+It is an ideal solution for indexers, block explorers, data analysts, bridges and other applications or usecases relying on on-chain information and focused on performance. Do things like:
 
 - Get me every ERC20 Transfer event for _any address_ on Base.
 - Get me every tx to or from a specific address.
@@ -28,19 +28,37 @@ E.g. In 10 seconds HyperSync can:
 
 ```python
 import hypersync
-from hypersync import LogSelection, LogField, DataType, FieldSelection, ColumnMapping, TransactionField
+from hypersync import (
+    LogSelection,
+    LogField,
+    DataType,
+    FieldSelection,
+    ColumnMapping,
+    TransactionField,
+)
 import asyncio
+
 
 async def collect_events():
     # choose network
-    client = hypersync.HypersyncClient("https://arbitrum.hypersync.xyz")
+    client = hypersync.HypersyncClient(
+        hypersync.ClientConfig(url="https://arbitrum.hypersync.xyz")
+    )
 
     query = hypersync.Query(
         from_block=0,
-        logs=[LogSelection(
-            address=["0x1F98431c8aD98523631AE4a59f267346ea31F984"], # uniswap factory
-            topics=[["0x783cca1c0412dd0d695e784568c96da2e9c22ff989357a2e8b1d9b2b4e6b7118"]], # PoolCreated log
-        )],
+        logs=[
+            LogSelection(
+                address=[
+                    "0x1F98431c8aD98523631AE4a59f267346ea31F984"
+                ],  # uniswap factory
+                topics=[
+                    [
+                        "0x783cca1c0412dd0d695e784568c96da2e9c22ff989357a2e8b1d9b2b4e6b7118"
+                    ]
+                ],  # PoolCreated log
+            )
+        ],
         field_selection=FieldSelection(
             log=[
                 LogField.TOPIC0,
@@ -52,22 +70,19 @@ async def collect_events():
             ],
             transaction=[
                 TransactionField.BLOCK_NUMBER,
-            ]
+            ],
         ),
     )
 
-    config = hypersync.ParquetConfig(
-        path="data",
-        hex_output=True,
-        batch_size=1000000,
-        concurrency=10,
+    config = hypersync.StreamConfig(
+        hex_output=hypersync.HexOutput.PREFIXED,
         event_signature="PoolCreated(address indexed token0, address indexed token1, uint24 indexed fee, int24 tickSpacing, address pool)",
     )
 
-    await client.create_parquet_folder(query, config)
+    await client.collect_parquet("dataqaswe", query, config)
 
-def main():
-    asyncio.run(collect_events())
+
+asyncio.run(collect_events())
 ```
 
 > ### Disclaimer
