@@ -42,7 +42,11 @@ import asyncio
 async def collect_events():
     # choose network
     client = hypersync.HypersyncClient(
-        hypersync.ClientConfig(url="https://arbitrum.hypersync.xyz")
+        hypersync.ClientConfig(
+            url="https://arbitrum.hypersync.xyz",
+            # use secret bearer token for access
+            bearer_token="ea52c5da-4114-42ec-82df-8e73baad52ef",
+        )
     )
 
     query = hypersync.Query(
@@ -79,7 +83,7 @@ async def collect_events():
         event_signature="PoolCreated(address indexed token0, address indexed token1, uint24 indexed fee, int24 tickSpacing, address pool)",
     )
 
-    await client.collect_parquet("dataqaswe", query, config)
+    await client.collect_parquet("data", query, config)
 
 
 asyncio.run(collect_events())
