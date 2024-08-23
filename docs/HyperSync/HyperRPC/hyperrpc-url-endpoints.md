@@ -11,6 +11,7 @@ Please note we are rapidly adding new supported networks. If you don't see your 
 
 Here is a table of the currently supported networks on HyperRPC and their respective URL endpoints.
 
+
 | Network Name         | Network ID | URL                                                                                 | Supports Traces |
 | -------------------- | ---------- | ----------------------------------------------------------------------------------- | --------------- |
 | Arbitrum             | 42161      | https://arbitrum.rpc.hypersync.xyz or https://42161.rpc.hypersync.xyz               |                 |
@@ -20,6 +21,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Avalanche            | 43114      | https://avalanche.rpc.hypersync.xyz or https://43114.rpc.hypersync.xyz              |                 |
 | Base                 | 8453       | https://base.rpc.hypersync.xyz or https://8453.rpc.hypersync.xyz                    |                 |
 | Base Sepolia         | 84532      | https://base-sepolia.rpc.hypersync.xyz or https://84532.rpc.hypersync.xyz           |                 |
+| Berachain Bartio     | 80085      | https://berachain-bartio.rpc.hypersync.xyz or https://80085.rpc.hypersync.xyz       |                 |
 | Blast                | 81457      | https://blast.rpc.hypersync.xyz or https://81457.rpc.hypersync.xyz                  |                 |
 | Blast Sepolia        | 168587773  | https://blast-sepolia.rpc.hypersync.xyz or https://168587773.rpc.hypersync.xyz      |                 |
 | Boba                 | 288        | https://boba.rpc.hypersync.xyz or https://288.rpc.hypersync.xyz                     |                 |
@@ -55,7 +57,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Polygon              | 137        | https://polygon.rpc.hypersync.xyz or https://137.rpc.hypersync.xyz                  |                 |
 | Polygon Amoy         | 80002      | https://polygon-amoy.rpc.hypersync.xyz or https://80002.rpc.hypersync.xyz           |                 |
 | Polygon zkEVM        | 1101       | https://polygon-zkevm.rpc.hypersync.xyz or https://1101.rpc.hypersync.xyz           |                 |
-| Publicgoods          | 424        | https://publicgoods.rpc.hypersync.xyz or https://424.rpc.hypersync.xyz              |                 |
 | Rsk                  | 30         | https://rsk.rpc.hypersync.xyz or https://30.rpc.hypersync.xyz                       |                 |
 | Scroll               | 534352     | https://scroll.rpc.hypersync.xyz or https://534352.rpc.hypersync.xyz                |                 |
 | Sepolia              | 11155111   | https://sepolia.rpc.hypersync.xyz or https://11155111.rpc.hypersync.xyz             |                 |
@@ -64,5 +65,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | X Layer              | 196        | https://x-layer.rpc.hypersync.xyz or https://196.rpc.hypersync.xyz                  |                 |
 | X Layer Testnet      | 195        | https://x-layer-testnet.rpc.hypersync.xyz or https://195.rpc.hypersync.xyz          |                 |
 | Zeta                 | 7000       | https://zeta.rpc.hypersync.xyz or https://7000.rpc.hypersync.xyz                    |                 |
+| Zircuit              | 48900      | https://zircuit.rpc.hypersync.xyz or https://48900.rpc.hypersync.xyz                |                 |
 | ZKsync               | 324        | https://zksync.rpc.hypersync.xyz or https://324.rpc.hypersync.xyz                   |                 |
 | Zora                 | 7777777    | https://zora.rpc.hypersync.xyz or https://7777777.rpc.hypersync.xyz                 |                 |
+
