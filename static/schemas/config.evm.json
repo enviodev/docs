@@ -27,7 +27,7 @@
       ]
     },
     "schema": {
-      "description": "Custom path to config file",
+      "description": "Custom path to schema.yaml file",
       "type": [
         "string",
         "null"
@@ -452,7 +452,6 @@
         "s",
         "contractAddress",
         "logsBloom",
-        "type",
         "root",
         "status",
         "yParity",
