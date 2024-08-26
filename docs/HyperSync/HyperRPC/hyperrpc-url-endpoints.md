@@ -38,7 +38,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Fuji                 | 43113      | https://fuji.rpc.hypersync.xyz or https://43113.rpc.hypersync.xyz                   |                 |
 | Gnosis               | 100        | https://gnosis.rpc.hypersync.xyz or https://100.rpc.hypersync.xyz                   |                 |
 | Gnosis Chiado        | 10200      | https://gnosis-chiado.rpc.hypersync.xyz or https://10200.rpc.hypersync.xyz          |                 |
-| Goerli               | 5          | https://goerli.rpc.hypersync.xyz or https://5.rpc.hypersync.xyz                     |                 |
 | Harmony Shard 0      | 1666600000 | https://harmony-shard-0.rpc.hypersync.xyz or https://1666600000.rpc.hypersync.xyz   |                 |
 | Holesky              | 17000      | https://holesky.rpc.hypersync.xyz or https://17000.rpc.hypersync.xyz                |                 |
 | Inco Gentry Testnet  | 9090       | https://inco-gentry-testnet.rpc.hypersync.xyz or https://9090.rpc.hypersync.xyz     |                 |
