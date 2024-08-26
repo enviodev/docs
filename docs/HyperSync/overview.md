@@ -45,6 +45,7 @@ async def collect_events():
         hypersync.ClientConfig(
             url="https://arbitrum.hypersync.xyz",
             # use secret bearer token for access
+            # See https://docs.envio.dev/docs/HyperSync/api-tokens
             bearer_token="ea52c5da-4114-42ec-82df-8e73baad52ef",
         )
     )
