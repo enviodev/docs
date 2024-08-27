@@ -9,11 +9,11 @@ slug: /hypersync-usage
 
 ### Examples
 
-We've found most developers have enjoyed learning HyperSync by practical example. You will find [examples here](./hypersync-clients.md) in Python, Rust and NodeJs in each section.
+We've found most developers have enjoyed learning HyperSync by practical example. You will find examples [here](./hypersync-clients.md) in Python, Rust and NodeJs in each section.
 
 ### Queries
 
-Using HyperSync primarly revolves around successfully constructing and then executing queries. Queries allow you to essentially filter for blocks, logs, transactions and traces. Hovering over types in your IDE will allow you to see all exhaustive options in order to construct a appropriate query.
+Using HyperSync primarily revolves around successfully constructing and then executing queries. Queries allow you to essentially filter for blocks, logs, transactions and traces. Hovering over types in your IDE will allow you to see all exhaustive options in order to construct a appropriate query.
 
 ```python
 class Query(

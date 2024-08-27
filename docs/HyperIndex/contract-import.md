@@ -98,7 +98,7 @@ If you are using a proxy contract with an implementation, the contract address y
 [Current contract: BribeVotingReward, on network: optimism]
 ```
 
-The quickstart process will prompt you whether you would like to finish the import process or continue adding more addresses for same contract on same network, addresses for same contract on different network or a different contract.
+The Quickstart will prompt you whether you would like to finish the import process or continue adding more addresses for same contract on same network, addresses for same contract on different network or a different contract.
 
 ### 2. Local ABI
 
@@ -109,7 +109,7 @@ The quickstart process will prompt you whether you would like to finish the impo
 [↑↓ to move, enter to select, type to filter]
 ```
 
-Choosing `Local ABI` option will allow you to point to a JSON file containing the smart contract ABI. The quickstart will then populate the required files from the ABI.
+Choosing `Local ABI` option will allow you to point to a JSON file containing the smart contract ABI. The Quickstart will then populate the required files from the ABI.
 
 > Select this option if the proxy contract has not been verified, which will cause the fetch request from Etherscan client to fail.
 
@@ -172,7 +172,7 @@ If you are using a proxy contract with an implementation, the contract address y
 [Current contract: BribeVotingReward, on network: optimism]
 ```
 
-The quickstart process will prompt you whether you would like to finish the import process or continue adding more addresses for same contract on same network, addresses for same contract on different network or a different contract.
+The Quickstart will prompt you whether you would like to finish the import process or continue adding more addresses for same contract on same network, addresses for same contract on different network or a different contract.
 
 ## Configuration file
 

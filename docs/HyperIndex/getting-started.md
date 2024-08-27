@@ -41,7 +41,7 @@ Once you have completed the installation step, you can initialize your own index
 
 Generate an indexer quickly based on one or more smart contract/s deployed on a blockchain. 
 
-More information on the quickstart can be found [here](./contract-import).
+More information on the Quickstart can be found [here](./contract-import).
 
 ### Templates
 
@@ -57,7 +57,7 @@ Clone one of the example indexers that have been built using Envio. Reference in
 
 ## Indexer Configuration
 
-Indexers generated using  the quickstart, templates or examples will work without any further configuration.
+Indexers generated using  the Quickstart, templates or examples will work without any further configuration.
 
 Users can further configure their indexers to perform custom logic, and the process is done via modifying the 3 files below:
 
