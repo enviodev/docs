@@ -5,16 +5,6 @@
     "contract-import",
     {
       "type": "category",
-      "label": "Tutorials",
-      "items": [
-        "Tutorials/tutorial-op-bridge-deposits",
-        "Tutorials/tutorial-erc20-token-transfers",
-        "Tutorials/tutorial-indexing-fuel",
-        "Tutorials/greeter-tutorial"
-      ]
-    },
-    {
-      "type": "category",
       "label": "Guides",
       "items": [
         "Guides/hyperindex-basics",
@@ -25,6 +15,16 @@
         "Guides/running-locally",
         "Guides/navigating-hasura",
         "Guides/cli-commands"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Tutorials",
+      "items": [
+        "Tutorials/tutorial-op-bridge-deposits",
+        "Tutorials/tutorial-erc20-token-transfers",
+        "Tutorials/tutorial-indexing-fuel",
+        "Tutorials/greeter-tutorial"
       ]
     },
     {
