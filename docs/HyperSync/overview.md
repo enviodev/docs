@@ -10,7 +10,7 @@ slug: /overview
 HyperSync is highly specialized data node built in Rust aimed at massively improving data retrieval speeds while also providing flexiblity. It serves as a real-time, accelerated data query layer with a low-level API that can be used via Python, Rust, NodeJs or Go clients. 
 HyperSync supports more than [50+ EVM](/docs/HyperIndex/hypersync) chains and Fuel, and we are rapidly adding new networks. 
 
-HyperSync is an ideal solution for indexers, block explorers, data analysts, bridges and other applications or use cases focused on performance. Retrieve millions of blocks, logs, transactions, and traces on multiple chains in seconds.
+HyperSync is an ideal solution for indexers, block explorers, data analysts, bridges and other applications or use cases focused on performance.
 
 Easily analyze things like:
 - Every ERC20 `Transfer` event for _any address_ on Base.
@@ -18,7 +18,7 @@ Easily analyze things like:
 - Which address has spent the most on `gas` in the last 10k blocks.
 - Plus many more, its built to be extremely flexible and performant.
 
-HyperSync can be thought of as more performant and efficient data source alternative than JSON-RPC for fetching logs, blocks, transactions and traces. 
+HyperSync can be thought of as more performant and efficient data source alternative than JSON-RPC. Retrieve millions of blocks, logs, transactions, and traces on multiple chains in seconds.
 
 E.g. In 10 seconds HyperSync can:
 
