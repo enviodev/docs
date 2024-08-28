@@ -286,7 +286,7 @@ curl --request POST \
 
 #### Get All Successful/Failed Transactions for the Last 10 Blocks
 
-First, query the current block height using https://eth.HyperSync.xyz/height, subtract 10 from it, and store the result in a variable.
+First, query the current block height using https://eth.hypersync.xyz/height, subtract 10 from it, and store the result in a variable.
 
 Use this variable as the from_block to get transactions with a matching status.
 
