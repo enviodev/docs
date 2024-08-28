@@ -5,11 +5,13 @@ sidebar_label: HyperSync Query
 slug: /hypersync-query
 ---
 
-# Hypersync Query
+# HyperSync Query
 
-This page explains how the hypersync query works and how to get the data you need from hypersync.
+This page explains how the HyperSync query works and how to get the data you need from HyperSync.
 
-<b>NOTE</b>: Not all of these features are implemented in Fuel implementation of HyperSync (HyperFuel). For example stream and collect functions aren't implemented on fuel clients as of writing.
+:::note
+Not all of the features that are implemented in HyperSync are implemented in HyperFuel (Fuel implementation of HyperSync). For example stream and collect functions aren't implemented on the Fuel client as of writing.
+:::
 
 ## Table of Contents
 
@@ -31,7 +33,7 @@ We will explain the exact semantics of the query in next sections but can just g
 
 `logs` is the list of `LogSelection`s we want to pass. The server return all logs that match <b>any</b> of our selections.
 
-Also the transactions for the logs that our query matches will be returned. This is because transactions are joined after querying logs implicitly in hypersync query implementation. Blocks are also joined after transactions but we won't get any blocks because we didn't select any block fields in our `field_selection`.
+Also the transactions for the logs that our query matches will be returned. This is because transactions are joined after querying logs implicitly in HyperSync query implementation. Blocks are also joined after transactions but we won't get any blocks because we didn't select any block fields in our `field_selection`.
 
 `field_selection` is for selecting the specific fields we want returned. You can think of it like the part where you list column names in an SQL `SELECT` statement. The available tables are `log`, `transaction`, `block` and `trace`. We will give an exact list of available columns in later sections.
 
@@ -81,7 +83,7 @@ This section explains how the query executes on the server, step-by-step.
 
 #### Preliminary
 
-The data in hypersync server is split into groups by block number. Each groups consists of data for a
+The data in HyperSync server is split into groups by block number. Each groups consists of data for a
  contiguous block range. When the query runs, these groups are always queried atomically, meaning if a group
  is queried it is never queried in half. This is important when considering limit arguments like `max_num_logs`
  or when considering time/response_size limits. If server realzes it reached a limit then it will terminate the
@@ -487,16 +489,16 @@ This section gives explanation of all response fields. We give the content in `r
  formatting purposes. Field name casing can change based on which language client you are using, e.g. camelCase for nodejs client
 
 ```rust
-/// Query response from hypersync server.
+/// Query response from HyperSync server.
 struct QueryResponse {
-    /// Current height of the source hypersync instance.
+    /// Current height of the source HyperSync instance.
     /// This number is inclusive. Returns null if the server has no blocks yet.
     archive_height: Optional<u64>,
     /// Next block to query for, the responses are paginated so
     /// the caller should continue the query from this block if they
     /// didn't get responses up to the to_block they specified in the Query.
     next_block: u64,
-    /// Total time it took the hypersync instance to execute the query in milliseconds.
+    /// Total time it took the HyperSync instance to execute the query in milliseconds.
     total_execution_time: u64,
     /// Response data
     /// This can be apache arrow formatted data or it can be native struct data based on
@@ -544,21 +546,21 @@ The collect function essentially calls `stream` internally and collects all of t
 
 ## Join Modes
 
-<b>NOTE</b>: The word join does not mean the same as in `SQL` in this context. It means the inclusion of relevant data in the response instead of left/outer joining or similar in `SQL`. You can think of it like you do a select on table `A` and then join in table `B`. In sql this would mean each row contains rows from `A` and `B`. But in hypersync this means you get data for `A` and `B` seperately and the rows you get from `A` mean you will get the joined in rows from `B` as well in the response. 
+<b>NOTE</b>: The word join does not mean the same as in `SQL` in this context. It means the inclusion of relevant data in the response instead of left/outer joining or similar in `SQL`. You can think of it like you do a select on table `A` and then join in table `B`. In sql this would mean each row contains rows from `A` and `B`. But in HyperSync this means you get data for `A` and `B` seperately and the rows you get from `A` mean you will get the joined in rows from `B` as well in the response. 
 
-In the context of Hypersync, joins refer to the implicit linking of different types of blockchain data (logs, transactions, traces, and blocks) based on certain relationships. Here's an explanation of how these joins work:
+In the context of HyperSync, joins refer to the implicit linking of different types of blockchain data (logs, transactions, traces, and blocks) based on certain relationships. Here's an explanation of how these joins work:
 
 ### Default Join Mechanism
 
 `logs` -> `transactions` -> `traces` -> `blocks`
 
 1. **Logs to Transactions**:
-   - When you query logs using `log_selection`, Hypersync automatically retrieves the transactions associated with those logs. This is based on the transaction hash present in each log.
-     - Example: If your `log_selection` returns some logs, Hypersync includes the transactions that generated these logs in the response as well.
+   - When you query logs using `log_selection`, HyperSync automatically retrieves the transactions associated with those logs. This is based on the transaction hash present in each log.
+     - Example: If your `log_selection` returns some logs, HyperSync includes the transactions that generated these logs in the response as well.
 
 2. **Transactions to Traces**:
-   - After fetching the relevant transactions (either directly through `transaction_selection` or via logs), Hypersync retrieves the associated traces.
-     - Example: If your `transaction_selection` returns transactions or if you get some transactions because of your `log_selection`, Hypersync includes traces related to these transactions in the response as well.
+   - After fetching the relevant transactions (either directly through `transaction_selection` or via logs), HyperSync retrieves the associated traces.
+     - Example: If your `transaction_selection` returns transactions or if you get some transactions because of your `log_selection`, HyperSync includes traces related to these transactions in the response as well.
 
 And this same scheme goes on from traces into blocks as well. We realize this doesn't cover all use cases. For example the user can't get logs based on their transaction_selection this way. This is why we implemented alternative `join_mode` implementations.
 

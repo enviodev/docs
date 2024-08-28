@@ -251,7 +251,7 @@ curl --request POST \
 
 This query returns all transactions involving a specific EOA address, either as the sender or the recipient.
 
-Note that from_block is set to a specific block because the beginning of the chain does not contain data related to this address. Multiple queries may be needed to start retrieving data.
+Note that `from_block` is set to a specific block because the beginning of the chain does not contain data related to this address. Multiple queries may be needed to start retrieving data.
 
 ```bash
 curl --request POST \
@@ -286,7 +286,7 @@ curl --request POST \
 
 #### Get All Successful/Failed Transactions for the Last 10 Blocks
 
-First, query the current block height using https://eth.hypersync.xyz/height, subtract 10 from it, and store the result in a variable.
+First, query the current block height using https://eth.HyperSync.xyz/height, subtract 10 from it, and store the result in a variable.
 
 Use this variable as the from_block to get transactions with a matching status.
 

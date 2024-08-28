@@ -3,6 +3,7 @@
     "overview",
     "getting-started",
     "contract-import",
+    "supported-networks",
     {
       "type": "category",
       "label": "Guides",

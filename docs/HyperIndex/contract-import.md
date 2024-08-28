@@ -5,7 +5,7 @@ sidebar_label: Quickstart
 slug: /contract-import
 ---
 
-Envio's Quickstart allows you to quickly autogenerate a basic indexer. This is the quickest way to get going and likely the starting point for most developers.
+The Quickstart allows you to instantly autogenerate a basic indexer and query your data. This is the quickest way to get going and likely the starting point for most developers.
 
 For example, you could autogenerate an indexer for Eigenlayer AND index the entire Eigenlayer contract in under 5 minutes simply through running `envio init` and pasting the contract address from the Block Explorer: https://etherscan.io/address/0x858646372cc42e1a627fce94aa7a7033e7cf075a
 
@@ -214,3 +214,5 @@ For all events, the handler function will perform two operations:
 - Update the event-specific entity counter in the loaded `EventsSummary` entity
 
 For more information on how to write the event handlers file, go [here](./Guides/event-handlers.mdx).
+
+---

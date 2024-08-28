@@ -37,9 +37,9 @@ You are able to choose exactly what data you would like to be returned from the 
 
 ### Useful tips:
 
-- Run export `export RUST_LOG=trace` to see detiled HyperSync request progress information.
+- Run export `export RUST_LOG=trace` to see detailed HyperSync request progress information.
 - HyperSync requests have a 5 second time limit. The request will return with the block that it reached during the query allowing you paginate and make the next query. HyperSync generally scans through more than 10m blocks in 5 seconds.
-- Modify `batch_size` and `batch_size` params based on your chain and usecase to improve performance in some cases. E.g.
+- Modify `batch_size` and `batch_size` params based on your chain and use case to improve performance in some cases. E.g.
 
 ```python
     config = hypersync.ParquetConfig(

@@ -9,8 +9,8 @@ slug: /hypersync-supported-networks
 We are rapidly adding new supported networks. If you don't see your network here or would like us to add a network to HyperSync, pop us a message in [Discord](https://discord.gg/Q9qt8gZ2fX).
 :::
 
-:::note
-The Tier is an approximate level of support (and therefore reliability) based on infrastructure running the chain. If you would like us to upgrade a chain's level of support, reach out in [Discord](https://discord.gg/Q9qt8gZ2fX).
+:::info
+The Tier is the level of support (and therefore reliability) based on infrastructure running the chain. If you would like us to upgrade a chain's level of support, reach out to us in [Discord](https://discord.gg/Q9qt8gZ2fX).
 :::
 
 
@@ -71,3 +71,4 @@ The Tier is an approximate level of support (and therefore reliability) based on
 | ZKsync               | 324        | https://zksync.hypersync.xyz or https://324.hypersync.xyz                           | gold   |                 |
 | Zora                 | 7777777    | https://zora.hypersync.xyz or https://7777777.hypersync.xyz                         | bronze |                 |
 
+---

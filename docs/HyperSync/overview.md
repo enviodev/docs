@@ -5,10 +5,10 @@ sidebar_label: Overview
 slug: /overview
 ---
 
-<!-- TODO-update: num of chains needs to be updated regularily -->
+<!-- TODO-update: num of chains needs to be updated regularly -->
 
-HyperSync is highly specialized data node built in Rust aimed at massively improving data retrieval speeds while also providing flexiblity. It serves as a real-time, accelerated data query layer with a low-level API that can be used via Python, Rust or NodeJs clients. 
-HyperSync supports more than [50+ EVM](/docs/HyperIndex/hypersync) chains and Fuel.
+HyperSync is highly specialized data node built in Rust aimed at massively improving data retrieval speeds while also providing flexiblity. It serves as a real-time, accelerated data query layer with a low-level API that can be used via Python, Rust, NodeJs or Go clients. 
+HyperSync supports more than [50+ EVM](/docs/HyperIndex/hypersync) chains and Fuel, and we are rapidly adding new networks. 
 
 HyperSync is an ideal solution for indexers, block explorers, data analysts, bridges and other applications or use cases focused on performance. Retrieve millions of blocks, logs, transactions, and traces on multiple chains in seconds.
 
@@ -74,9 +74,8 @@ def main():
     asyncio.run(collect_events())
 ```
 
-> ### Disclaimer
->
-> - Docs under construction!
-> - We appreciate your patience until we get there. Until then, we are happy to answer all questions in our [Discord](https://discord.gg/Q9qt8gZ2fX).
+:::note
+Docs under construction! We appreciate your patience until we get there. Until then, we are happy to answer all questions in our [Discord](https://discord.gg/Q9qt8gZ2fX).
+:::
 
 ---

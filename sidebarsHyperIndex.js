@@ -4,6 +4,7 @@ module.exports = {
     "getting-started",
     "contract-import",
     "migration-guide-v1-v2",
+    "supported-networks",
     {
       type: "category",
       label: "Guides",
