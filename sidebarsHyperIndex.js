@@ -17,6 +17,7 @@ module.exports = {
         "Guides/testing",
         "Guides/running-locally",
         "Guides/navigating-hasura",
+        "Guides/ipfs",
         "Guides/cli-commands",
       ],
     },

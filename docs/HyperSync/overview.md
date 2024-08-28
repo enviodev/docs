@@ -32,19 +32,42 @@ Think of it as a "1000x speed-up" alternative to RPC.
 
 ```python
 import hypersync
-from hypersync import LogSelection, LogField, DataType, FieldSelection, ColumnMapping, TransactionField
+from hypersync import (
+    LogSelection,
+    LogField,
+    DataType,
+    FieldSelection,
+    ColumnMapping,
+    TransactionField,
+)
 import asyncio
+
 
 async def collect_events():
     # choose network
-    client = hypersync.HypersyncClient("https://arbitrum.hypersync.xyz")
+    client = hypersync.HypersyncClient(
+        hypersync.ClientConfig(
+            url="https://arbitrum.hypersync.xyz",
+            # use secret bearer token for access
+            # See https://docs.envio.dev/docs/HyperSync/api-tokens
+            bearer_token="ea52c5da-4114-42ec-82df-8e73baad52ef",
+        )
+    )
 
     query = hypersync.Query(
         from_block=0,
-        logs=[LogSelection(
-            address=["0x1F98431c8aD98523631AE4a59f267346ea31F984"], # uniswap factory
-            topics=[["0x783cca1c0412dd0d695e784568c96da2e9c22ff989357a2e8b1d9b2b4e6b7118"]], # PoolCreated log
-        )],
+        logs=[
+            LogSelection(
+                address=[
+                    "0x1F98431c8aD98523631AE4a59f267346ea31F984"
+                ],  # uniswap factory
+                topics=[
+                    [
+                        "0x783cca1c0412dd0d695e784568c96da2e9c22ff989357a2e8b1d9b2b4e6b7118"
+                    ]
+                ],  # PoolCreated log
+            )
+        ],
         field_selection=FieldSelection(
             log=[
                 LogField.TOPIC0,
@@ -56,22 +79,19 @@ async def collect_events():
             ],
             transaction=[
                 TransactionField.BLOCK_NUMBER,
-            ]
+            ],
         ),
     )
 
-    config = hypersync.ParquetConfig(
-        path="data",
-        hex_output=True,
-        batch_size=1000000,
-        concurrency=10,
+    config = hypersync.StreamConfig(
+        hex_output=hypersync.HexOutput.PREFIXED,
         event_signature="PoolCreated(address indexed token0, address indexed token1, uint24 indexed fee, int24 tickSpacing, address pool)",
     )
 
-    await client.create_parquet_folder(query, config)
+    await client.collect_parquet("data", query, config)
 
-def main():
-    asyncio.run(collect_events())
+
+asyncio.run(collect_events())
 ```
 
 :::note
