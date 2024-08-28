@@ -15,9 +15,9 @@ The backbone of HyperIndex’s blazing-fast indexing speed lies in using HyperSy
 HyperSync is significantly faster and more cost-effective than traditional RPC methods, allowing the retrieval of multiple blocks at once, and enabling sync speeds up to 1000x faster than RPC.
 :::
 
-If a network is supported on HyperSync, then HyperSync is used by default as the data source. This means developers don't additionally need to worry about RPCs, rate-limiting, etc. This is especially valuable for multi-chain apps. Click [here](../Advanced/hypersync.md) for networks that are supported on HyperSync.
+If a network is supported on HyperSync, then HyperSync is used by default as the data source. This means developers don't additionally need to worry about RPCs, rate-limiting, etc. This is especially valuable for multi-chain apps. Click [here](/docs/HyperSync/hypersync-supported-networks) for networks that are supported on HyperSync.
 
-If the network that you want to index from is not supported on HyperSync, please navigate to [RPC Sync](../Advanced/rpc-sync.md) for more information to use RPC. 
+If the network that you want to index from is not supported on HyperSync, please navigate to [RPC Sync](/docs/HyperIndex/Advanced/rpc-sync) for more information to use RPC. 
 
 You can also request a network to be added to HyperSync in the [Discord](https://discord.gg/Q9qt8gZ2fX). 
 

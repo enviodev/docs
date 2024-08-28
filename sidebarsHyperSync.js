@@ -2,9 +2,9 @@ module.exports = {
   someSidebar: [
     "overview",
     "hypersync-usage",
-    "hypersync-supported-networks",
     "hypersync-clients",
     "hypersync-query",
+    "hypersync-supported-networks",
     "api-tokens",
     "hypersync-curl-examples",
     {
