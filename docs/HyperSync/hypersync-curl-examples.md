@@ -251,7 +251,7 @@ curl --request POST \
 
 This query returns all transactions involving a specific EOA address, either as the sender or the recipient.
 
-Note that from_block is set to a specific block because the beginning of the chain does not contain data related to this address. Multiple queries may be needed to start retrieving data.
+Note that `from_block` is set to a specific block because the beginning of the chain does not contain data related to this address. Multiple queries may be needed to start retrieving data.
 
 ```bash
 curl --request POST \

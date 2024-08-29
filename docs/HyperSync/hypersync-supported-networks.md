@@ -9,8 +9,8 @@ slug: /hypersync-supported-networks
 We are rapidly adding new supported networks. If you don't see your network here or would like us to add a network to HyperSync, pop us a message in [Discord](https://discord.gg/Q9qt8gZ2fX).
 :::
 
-:::note
-The Tier is an approximate level of support (and therefore reliability) based on infrastructure running the chain. If you would like us to upgrade a chain's level of support, reach out in [Discord](https://discord.gg/Q9qt8gZ2fX).
+:::info
+The Tier is the level of support (and therefore reliability) based on infrastructure running the chain. If you would like us to upgrade a chain's level of support, reach out to us in [Discord](https://discord.gg/Q9qt8gZ2fX).
 :::
 
 
@@ -31,14 +31,17 @@ The Tier is an approximate level of support (and therefore reliability) based on
 | Bsc Testnet          | 97         | https://bsc-testnet.hypersync.xyz or https://97.hypersync.xyz                       | gold   |                 |
 | C1 Milkomeda         | 2001       | https://c1-milkomeda.hypersync.xyz or https://2001.hypersync.xyz                    | bronze |                 |
 | Celo                 | 42220      | https://celo.hypersync.xyz or https://42220.hypersync.xyz                           | bronze |                 |
+| Chiliz               | 8888       | https://chiliz.hypersync.xyz or https://8888.hypersync.xyz                          | bronze |                 |
 | Crab                 | 44         | https://crab.hypersync.xyz or https://44.hypersync.xyz                              | bronze |                 |
 | Cyber                | 7560       | https://cyber.hypersync.xyz or https://7560.hypersync.xyz                           | bronze |                 |
 | Darwinia             | 46         | https://darwinia.hypersync.xyz or https://46.hypersync.xyz                          | bronze |                 |
 | Ethereum Mainnet     | 1          | https://eth.hypersync.xyz or https://1.hypersync.xyz                                | gold   | ✔️              |
 | Fantom               | 250        | https://fantom.hypersync.xyz or https://250.hypersync.xyz                           | bronze |                 |
+| Fhenix Testnet       | 42069      | https://fhenix-testnet.hypersync.xyz or https://42069.hypersync.xyz                 | bronze |                 |
 | Flare                | 14         | https://flare.hypersync.xyz or https://14.hypersync.xyz                             | bronze |                 |
 | Fuji                 | 43113      | https://fuji.hypersync.xyz or https://43113.hypersync.xyz                           | gold   |                 |
-| Gnosis               | 100        | https://gnosis.hypersync.xyz or https://100.hypersync.xyz                           | gold   |                 |
+| Galadrial Devnet     | 696969     | https://galadrial-devnet.hypersync.xyz or https://696969.hypersync.xyz              | bronze |                 |
+| Gnosis               | 100        | https://gnosis.hypersync.xyz or https://100.hypersync.xyz                           | bronze | ✔️              |
 | Gnosis Chiado        | 10200      | https://gnosis-chiado.hypersync.xyz or https://10200.hypersync.xyz                  | bronze |                 |
 | Goerli               | 5          | https://goerli.hypersync.xyz or https://5.hypersync.xyz                             | bronze |                 |
 | Harmony Shard 0      | 1666600000 | https://harmony-shard-0.hypersync.xyz or https://1666600000.hypersync.xyz           | bronze |                 |
@@ -52,6 +55,7 @@ The Tier is an approximate level of support (and therefore reliability) based on
 | Mantle               | 5000       | https://mantle.hypersync.xyz or https://5000.hypersync.xyz                          | gold   |                 |
 | Metis                | 1088       | https://metis.hypersync.xyz or https://1088.hypersync.xyz                           | bronze |                 |
 | Mev Commit           | 17864      | https://mev-commit.hypersync.xyz or https://17864.hypersync.xyz                     | bronze |                 |
+| Mode                 | 1          | https://mode.hypersync.xyz or https://1.hypersync.xyz                               | bronze |                 |
 | Moonbeam             | 1284       | https://moonbeam.hypersync.xyz or https://1284.hypersync.xyz                        | gold   |                 |
 | Neon Evm             | 245022934  | https://neon-evm.hypersync.xyz or https://245022934.hypersync.xyz                   | bronze |                 |
 | Optimism             | 10         | https://optimism.hypersync.xyz or https://10.hypersync.xyz                          | gold   |                 |
@@ -60,9 +64,11 @@ The Tier is an approximate level of support (and therefore reliability) based on
 | Polygon Amoy         | 80002      | https://polygon-amoy.hypersync.xyz or https://80002.hypersync.xyz                   | bronze |                 |
 | Polygon zkEVM        | 1101       | https://polygon-zkevm.hypersync.xyz or https://1101.hypersync.xyz                   | gold   |                 |
 | Rsk                  | 30         | https://rsk.hypersync.xyz or https://30.hypersync.xyz                               | bronze |                 |
+| Saakuru              | 7225878    | https://saakuru.hypersync.xyz or https://7225878.hypersync.xyz                      | bronze |                 |
 | Scroll               | 534352     | https://scroll.hypersync.xyz or https://534352.hypersync.xyz                        | gold   |                 |
 | Sepolia              | 11155111   | https://sepolia.hypersync.xyz or https://11155111.hypersync.xyz                     | gold   |                 |
 | Shimmer Evm          | 148        | https://shimmer-evm.hypersync.xyz or https://148.hypersync.xyz                      | bronze |                 |
+| Sophon Testnet       | 531050104  | https://sophon-testnet.hypersync.xyz or https://531050104.hypersync.xyz             | bronze |                 |
 | Taiko Jolnr          | 1088       | https://taiko-jolnr.hypersync.xyz or https://1088.hypersync.xyz                     | bronze |                 |
 | X Layer              | 196        | https://x-layer.hypersync.xyz or https://196.hypersync.xyz                          | bronze |                 |
 | X Layer Testnet      | 195        | https://x-layer-testnet.hypersync.xyz or https://195.hypersync.xyz                  | bronze |                 |
@@ -71,3 +77,6 @@ The Tier is an approximate level of support (and therefore reliability) based on
 | ZKsync               | 324        | https://zksync.hypersync.xyz or https://324.hypersync.xyz                           | gold   |                 |
 | Zora                 | 7777777    | https://zora.hypersync.xyz or https://7777777.hypersync.xyz                         | bronze |                 |
 
+
+
+---

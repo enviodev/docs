@@ -1,19 +1,10 @@
 module.exports = {
   someSidebar: [
     "overview",
-    "migration-guide-v1-v2",
     "getting-started",
     "contract-import",
-    {
-      type: "category",
-      label: "Tutorials",
-      items: [
-        "Tutorials/tutorial-op-bridge-deposits",
-        "Tutorials/tutorial-erc20-token-transfers",
-        "Tutorials/tutorial-indexing-fuel",
-        "Tutorials/greeter-tutorial",
-      ],
-    },
+    "migration-guide-v1-v2",
+    "supported-networks",
     {
       type: "category",
       label: "Guides",
@@ -28,6 +19,16 @@ module.exports = {
         "Guides/navigating-hasura",
         "Guides/ipfs",
         "Guides/cli-commands",
+      ],
+    },
+    {
+      type: "category",
+      label: "Tutorials",
+      items: [
+        "Tutorials/tutorial-op-bridge-deposits",
+        "Tutorials/tutorial-erc20-token-transfers",
+        "Tutorials/tutorial-indexing-fuel",
+        "Tutorials/greeter-tutorial",
       ],
     },
     {

@@ -37,28 +37,27 @@ envio --help
 
 Once you have completed the installation step, you can initialize your own indexer via the following options:
 
-### Examples
+### Quickstart
 
-Clone one of the Example indexers that have been built using Envio.
+Generate an indexer quickly based on one or more smart contract/s deployed on a blockchain. 
 
-> Please take note of the difference in version of Envio which the indexer was built on and the [latest version on npm](https://www.npmjs.com/package/envio).
-> There may be some adjustments required to the indexer to be compatible with the latest version of Envio.
+More information on the Quickstart can be found [here](./contract-import).
 
 ### Templates
 
-Select either the `ERC20` or `Greeter` template following the `envio init` command.
+Select either the `ERC20`, `Greeter`, or `Blank` template following the `envio init` command.
 
 More information on the `Greeter` template can be found [here](./greeter-tutorial).
 
-### Contract Import
+### Examples
 
-Generate an indexer based on a smart contract deployed on a blockchain.
+Clone one of the example indexers that have been built using Envio. Reference indexers can be found via the [Explorer](https://envio.dev/explorer), [Tutorials](./tutorial-erc20-token-transfers), or in our [Github](https://github.com/enviodev).
 
-More information on the Contract Import process can be found [here](./contract-import).
+> Please take note of the difference in version of Envio which the indexer was built on and the [latest version on npm](https://www.npmjs.com/package/envio). There may be some adjustments required to the indexer to be compatible with the latest version of Envio.
 
 ## Indexer Configuration
 
-Indexers generated using examples, templates or the contract import process will work without any further configuration.
+Indexers generated using  the Quickstart, templates or examples will work without any further configuration.
 
 Users can further configure their indexers to perform custom logic, and the process is done via modifying the 3 files below:
 
@@ -78,7 +77,7 @@ More information on running the indexer locally can be found [here](./running-lo
 
 ### Deploy to Hosted Service
 
-Once the indexer has been configured, you can deploy the indexer onto Envio's hosted service, via GitHub login.
+Once the indexer has been configured, you can easily deploy your indexer to Envio's hosted service and start querying your endpoint. 
 
 More information on the hosted service can be found [here](./hosted-service).
 

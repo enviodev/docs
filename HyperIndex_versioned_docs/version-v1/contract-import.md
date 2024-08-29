@@ -1,7 +1,7 @@
 ---
 id: contract-import
-title: No-Code Quickstart
-sidebar_label: No-Code Quickstart
+title: Quickstart
+sidebar_label: Quickstart
 slug: /contract-import
 ---
 
