@@ -20,20 +20,25 @@ HyperSync requests have surpassed 10 billion requests, demonstrating [HyperSync]
 
 The traditional approach to blockchain data retrieval uses RPC methods to extract data. This method, while functional, is far from efficient when querying lots of data. More info on this [here](https://docs.envio.dev/blog#the-blockchain-data-retrieval-challenge). 
 
-## Version 2.1.4 now available 🚀
+## Version 2.2.0 now available 🚀
 
-We are excited to announce that the current release is **v.2.1.4**!
+We are excited to announce that the current release is **v.2.2.0**!
 
 **What's changed?**
 
-By replacing lists with arrays in v2.1.0 it incurred a significant performance regression due to using Array.slice method. This removes the use of Array.slice and improves performance.
-
-- Refactor array slicing code to reversed arrays with pop.
-- Bumped Fuel package version to 2.2.3
+- By replacing lists with arrays in v2.1.0 it incurred a significant performance regression due to using Array.slice method. We removed the use of Array.slice which significantly improves performance.
+- Updated Viem version to the latest V2 to fix type conflicts with the Viem version on user-side. *Be careful if you're using Viem V1 in your indexer handlers. This change might cause unexpected behavior.*
+- Bumped Fuel package version to 2.2.3 and work on merging fuel codebase into evm codebase.
+- Added script to help update the chain list in Envio CLI for Quickstart.
+- Fix codegen with HyperSync/RPC endpoint in the config having a trailing slash.
 
 To stay updated with our latest releases and developments, give us a star on [GitHub](https://github.com/enviodev/hyperindex)! Your support is greatly appreciated! ⭐
 
 For more information and to view the full list of current and past release notes, click [here](https://github.com/enviodev/hyperindex/releases).
+
+**What's next?**
+
+- Wildcard indexing 👀
 
 ## Transition to HyperIndex v2 Hosted Service – Important Updates
 
