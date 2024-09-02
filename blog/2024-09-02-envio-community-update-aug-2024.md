@@ -26,11 +26,22 @@ We are excited to announce that the current release is **v.2.2.0**!
 
 **What's changed?**
 
-- By replacing lists with arrays in v2.1.0 it incurred a significant performance regression due to using Array.slice method. We removed the use of Array.slice which significantly improves performance.
-- Updated Viem version to the latest V2 to fix type conflicts with the Viem version on user-side. *Be careful if you're using Viem V1 in your indexer handlers. This change might cause unexpected behavior.*
-- Bumped Fuel package version to 2.2.3 and work on merging fuel codebase into evm codebase.
-- Added script to help update the chain list in Envio CLI for Quickstart.
-- Fix codegen with HyperSync/RPC endpoint in the config having a trailing slash.
+**Features**
+- New Timestamp scalar type available in schema.graphql. It's represented as an instance of Date, making your handlers and queries more flexible, fast, and explicit.
+
+**Fixes & Polishing**
+- Updated Viem version to the latest V2 to fix type conflicts with the Viem version on user-side.
+_⚠️ Be careful if you're using Viem V1 in your indexer handlers. This change might cause unexpected behavior._
+
+- Fixed incorrect import of a type, which caused tsc --build to fail. Also, prevented this from happening in the future by adding a TypeScript type check to CI pipeline.
+- Fixed codegen with HyperSync/RPC endpoint in the config having a trailing slash.
+- Updated the supported chains list by adding new chains and removing deprecated ones.
+- Removed dependency on Ethers.Interface.
+
+**Other**
+- Worked on Wildcard Indexing feature implementation.
+- Worked on Fuel merge.
+- Added script to help update the chain list.
 
 To stay updated with our latest releases and developments, give us a star on [GitHub](https://github.com/enviodev/hyperindex)! Your support is greatly appreciated! ⭐
 
