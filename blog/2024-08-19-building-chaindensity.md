@@ -1,12 +1,12 @@
 ---
-title: Building ChainDensity
+title: "Building ChainDensity: Unveiling Blockchain Activity Patterns with HyperSync"
 sidebar_label: Unveiling Blockchain Activity Patterns with HyperSync
 slug: /building-chaindensity
 ---
 
 <img src="/blog-assets/density1.png" alt="Cover Image for Building ChainDensity" width="100%"/>
 
-# Building ChainDensity: Unveiling Blockchain Activity Patterns with HyperSync
+<!--truncate-->
 
 ## Introduction: The Genesis of ChainDensity
 
