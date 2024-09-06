@@ -1,5 +1,5 @@
 ---
-title: Building ChainDensity: Unveiling Blockchain Activity Patterns with HyperSync
+title: "Building ChainDensity: Unveiling Blockchain Activity Patterns with HyperSync"
 sidebar_label: Unveiling Blockchain Activity Patterns with HyperSync
 slug: /building-chaindensity
 ---
