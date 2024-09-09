@@ -5,26 +5,30 @@ sidebar_label: Overview
 slug: /overview
 ---
 
-<!-- TODO-update: num of chains needs to be updated regularily -->
+<!-- TODO-update: num of chains needs to be updated regularly -->
 
-HyperSync is highly specialized data node built in rust aimed at massively improving data retrieval speeds while also providing flexiblity. It can be used via Python, Rust or NodeJs clients and supports more than [45 EVM](/docs/HyperIndex/hypersync) chains and Fuel.
+HyperSync is highly specialized data node built in Rust aimed at massively improving data retrieval speeds while also providing flexiblity. It serves as a real-time, accelerated data query layer with a low-level API that can be used via Python, Rust, NodeJs or Go clients. 
+HyperSync supports more than [50+ EVM](/docs/HyperIndex/hypersync) chains and Fuel, and we are rapidly adding new networks. 
 
-It is an ideal solution for indexers, block explorers, data analysts, bridges and other applications or usecases relying on on-chain information and focused on performance. Do things like:
+HyperSync is an ideal solution for indexers, block explorers, data analysts, bridges and other applications or use cases focused on performance.
 
-- Get me every ERC20 Transfer event for _any address_ on Base.
-- Get me every tx to or from a specific address.
-- Which address has spent the most on gas in the last 10k blocks.
+Easily analyze things like:
+- Every ERC20 `Transfer` event for _any address_ on Base.
+- Every tx `to` or `from` a specific address.
+- Which address has spent the most on `gas` in the last 10k blocks.
 - Plus many more, its built to be extremely flexible and performant.
 
-It can be thought of as ">100x-1000x speed up" alternative to using a JSON-RPC for retrival of logs, blocks, transactions and traces.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/iu_469ELotw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+HyperSync can be thought of as more performant and efficient data source alternative than JSON-RPC. Retrieve millions of blocks, logs, transactions, and traces on multiple chains in seconds.
 
 E.g. In 10 seconds HyperSync can:
 
-- Scan 200m blocks on the Arbitrum network and;
-- Retrieve and decode every PoolCreated log emitted by the Uniswap v3 Factory.
-- Thats 20m blocks per second.
+- Scan 200 m blocks on the Arbitrum;
+- Retrieve and decode every `PoolCreated` log emitted by the Uniswap v3 Factory.
+- That's 20 million  blocks per second.
+
+Think of it as a "1000x speed-up" alternative to RPC. 
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/iu_469ELotw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ```python
 import hypersync
@@ -90,9 +94,8 @@ async def collect_events():
 asyncio.run(collect_events())
 ```
 
-> ### Disclaimer
->
-> - Docs under construction!
-> - We appreciate your patience until we get there. Until then, we are happy to answer all questions in our [Discord](https://discord.gg/Q9qt8gZ2fX).
+:::note
+Docs under construction! We appreciate your patience until we get there. Until then, we are happy to answer all questions in our [Discord](https://discord.gg/Q9qt8gZ2fX).
+:::
 
 ---

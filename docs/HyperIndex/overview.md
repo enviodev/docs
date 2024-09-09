@@ -5,31 +5,30 @@ sidebar_label: Overview
 slug: /overview
 ---
 
-HyperIndex is a real-time indexer built specifically for EVM-compatible blockchains (+Fuel), providing developers with a seamless and efficient indexing solution. Designed to optimize the user experience, HyperIndex offers automatic code generation and flexible language support.
+HyperIndex is a modern, multi-chain data indexing framework for easily querying real-time and historical data from any EVM blockchain, as well as Fuel. 
+
+Designed with a core focus on delivering superior performance and seamless developer experience, HyperIndex optimizes the user experience. Build a real-time API for your blockchain application in minutes.
 
 ## Key Features
 
-- Fast syncing speed and simplified setup
-- Automatic code generation
-- Support for JavaScript, TypeScript, and ReScript
-- Detailed logging and error messaging for effective troubleshooting
-- Ability to aggregate and index data from multiple chains
+<!-- This version emphasizes the benefits and highlights the specific capabilities of each feature.  -->
 
-<!-- ## Why HyperIndex? -->
-<!-- TODO -->
+- **Simplified Installation & Setup:** Get started instantly.
+- **Any EVM L1, L2, or L3 Blockchain**: Index smart contract data from any EVM blockchain.
+- **Blazing-Fast Indexing**: Accelerate your development workflow, reduce time-to-market.  
+- **Multi-chain support**: Aggregate your cross-chain data. Query with a unified API.
+- **Automatic Code Generation**: Ensures type-safety with minimal effort.
+- **Flexible Language Support**: Choose JavaScript, TypeScript, and ResScript.
+- **Promote to Production**: Develop & test locally. Deploy to Envio's Hosted Service. 
+- **Detailed Logging & Error Messaging**: Simplify troubleshooting with comprehensive insights. 
 
-## Quick Start
+## Quickstart
 
-Check out our [No-Code Quickstart](./contract-import.md) guide to index any contract with just a few clicks!
+Check out our [Quickstart](./contract-import.md) to start querying your smart contract data with just a few clicks!
 
-## Learn More
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/cbiiWtxFnMk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-> ### Disclaimer
->
-> - It has not been audited for security purposes.
-> - Envio currently supports Linux and MacOS and not Windows (only Windows Subsystem for Linux is supported).
-> - Join our [Discord](https://discord.gg/Q9qt8gZ2fX) channel to make sure you catch all new releases. We appreciate your patience until we get there.
-
----
+:::note
+- Envio's HyperIndex has not been audited for security purposes.
+- Envio's HyperIndex currently supports Linux and MacOS and not Windows. Windows Subsystem for Linux (WSL) is supported.
+- Join our [Discord](https://discord.gg/Q9qt8gZ2fX) to make sure you catch all new releases. We appreciate your patience until we get there.
+:::

@@ -21,7 +21,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Avalanche            | 43114      | https://avalanche.rpc.hypersync.xyz or https://43114.rpc.hypersync.xyz              |                 |
 | Base                 | 8453       | https://base.rpc.hypersync.xyz or https://8453.rpc.hypersync.xyz                    |                 |
 | Base Sepolia         | 84532      | https://base-sepolia.rpc.hypersync.xyz or https://84532.rpc.hypersync.xyz           |                 |
-| Berachain Bartio     | 80085      | https://berachain-bartio.rpc.hypersync.xyz or https://80085.rpc.hypersync.xyz       |                 |
+| Berachain Bartio     | 80084      | https://berachain-bartio.rpc.hypersync.xyz or https://80084.rpc.hypersync.xyz       |                 |
 | Blast                | 81457      | https://blast.rpc.hypersync.xyz or https://81457.rpc.hypersync.xyz                  |                 |
 | Blast Sepolia        | 168587773  | https://blast-sepolia.rpc.hypersync.xyz or https://168587773.rpc.hypersync.xyz      |                 |
 | Boba                 | 288        | https://boba.rpc.hypersync.xyz or https://288.rpc.hypersync.xyz                     |                 |
@@ -30,6 +30,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | C1 Milkomeda         | 2001       | https://c1-milkomeda.rpc.hypersync.xyz or https://2001.rpc.hypersync.xyz            |                 |
 | Celo                 | 42220      | https://celo.rpc.hypersync.xyz or https://42220.rpc.hypersync.xyz                   |                 |
 | Chiliz               | 8888       | https://chiliz.rpc.hypersync.xyz or https://8888.rpc.hypersync.xyz                  |                 |
+| Citrea Devnet        | 62298      | https://citrea-devnet.rpc.hypersync.xyz or https://62298.rpc.hypersync.xyz          |                 |
 | Crab                 | 44         | https://crab.rpc.hypersync.xyz or https://44.rpc.hypersync.xyz                      |                 |
 | Cyber                | 7560       | https://cyber.rpc.hypersync.xyz or https://7560.rpc.hypersync.xyz                   |                 |
 | Darwinia             | 46         | https://darwinia.rpc.hypersync.xyz or https://46.rpc.hypersync.xyz                  |                 |
@@ -55,6 +56,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Mev Commit           | 17864      | https://mev-commit.rpc.hypersync.xyz or https://17864.rpc.hypersync.xyz             |                 |
 | Mode                 | 1          | https://mode.rpc.hypersync.xyz or https://1.rpc.hypersync.xyz                       |                 |
 | Moonbeam             | 1284       | https://moonbeam.rpc.hypersync.xyz or https://1284.rpc.hypersync.xyz                |                 |
+| Morph Testnet        | 2810       | https://morph-testnet.rpc.hypersync.xyz or https://2810.rpc.hypersync.xyz           |                 |
 | Neon Evm             | 245022934  | https://neon-evm.rpc.hypersync.xyz or https://245022934.rpc.hypersync.xyz           |                 |
 | Optimism             | 10         | https://optimism.rpc.hypersync.xyz or https://10.rpc.hypersync.xyz                  |                 |
 | Optimism Sepolia     | 11155420   | https://optimism-sepolia.rpc.hypersync.xyz or https://11155420.rpc.hypersync.xyz    |                 |

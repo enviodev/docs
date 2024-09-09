@@ -2,11 +2,11 @@ module.exports = {
   someSidebar: [
     "overview",
     "hypersync-usage",
-    "hypersync-query",
     "hypersync-clients",
+    "hypersync-query",
+    "hypersync-supported-networks",
     "api-tokens",
     "hypersync-curl-examples",
-    "hypersync-supported-networks",
     {
       type: "category",
       label: "HyperFuel",

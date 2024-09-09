@@ -3,16 +3,7 @@
     "overview",
     "getting-started",
     "contract-import",
-    {
-      "type": "category",
-      "label": "Tutorials",
-      "items": [
-        "Tutorials/tutorial-op-bridge-deposits",
-        "Tutorials/tutorial-erc20-token-transfers",
-        "Tutorials/tutorial-indexing-fuel",
-        "Tutorials/greeter-tutorial"
-      ]
-    },
+    "supported-networks",
     {
       "type": "category",
       "label": "Guides",
@@ -25,6 +16,16 @@
         "Guides/running-locally",
         "Guides/navigating-hasura",
         "Guides/cli-commands"
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Tutorials",
+      "items": [
+        "Tutorials/tutorial-op-bridge-deposits",
+        "Tutorials/tutorial-erc20-token-transfers",
+        "Tutorials/tutorial-indexing-fuel",
+        "Tutorials/greeter-tutorial"
       ]
     },
     {

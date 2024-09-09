@@ -90,7 +90,7 @@ const updateMarkdownFiles = async () => {
 
     // Update HyperSync file
     const hyperSyncTable = generateHyperSyncTable(data);
-    const HYPERSYNC_FILE_PATH = 'docs/HyperSync/hypersync-url-endpoints.md';
+    const HYPERSYNC_FILE_PATH = 'docs/HyperSync/hypersync-supported-networks.md';
     let hyperSyncContent = fs.readFileSync(HYPERSYNC_FILE_PATH, 'utf8');
 
     const hyperSyncRegex = /([\s\S]*?\n\n)\n*\| Network Name.*\| Supports Traces \|\n\| -+.*\| -+ \|\n[\s\S]*?\n*(\n\n[\s\S]*|$)/;

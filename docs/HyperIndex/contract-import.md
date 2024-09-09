@@ -1,27 +1,25 @@
 ---
 id: contract-import
-title: No-Code Quickstart
-sidebar_label: No-Code Quickstart
+title: Quickstart
+sidebar_label: Quickstart
 slug: /contract-import
 ---
 
-The Envio CLI allows you to quickly autogenerate a basic indexer. This is the quickest way to get going and the likely starting point for most developers.
+The Quickstart allows you to instantly autogenerate a basic indexer and query your data. This is the quickest way to get going and likely the starting point for most developers.
 
-For example, you could autogenerate an indexer for Eigenlayer AND index the entire Eigenlayer contract in under 5 minutes simply through running `envio init` and pasting the contract address: https://etherscan.io/address/0x858646372cc42e1a627fce94aa7a7033e7cf075a
-
-You can also autogenerate an indexer with a local ABI.
-
-To start, simply run:
-
-```
-envio init
-```
+For example, you could autogenerate an indexer for Eigenlayer AND index the entire Eigenlayer contract in under 5 minutes simply through running `envio init` and pasting the contract address from the Block Explorer: https://etherscan.io/address/0x858646372cc42e1a627fce94aa7a7033e7cf075a
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/zkVlGgf5XAo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/JOiLUysZf-s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Instructions
+
+To start, simply run:
+
+```
+envio init
+```
 
 After selecting the name, directory and preferred language for the indexer, choose `Contract Import` as the initialization option.
 
@@ -32,7 +30,11 @@ After selecting the name, directory and preferred language for the indexer, choo
 [↑↓ to move, enter to select, type to filter]
 ```
 
-### 1. `Block Explorer` option
+Contract Import allows you to quickly generate your indexer with:
+1. Block Explorer
+2. Local ABI
+
+### 1. Block Explorer
 
 ```bash
 ? Would you like to import from a block explorer or a local abi?
@@ -41,8 +43,8 @@ After selecting the name, directory and preferred language for the indexer, choo
 [↑↓ to move, enter to select, type to filter]
 ```
 
-Block Explorer option only requires user to input the address and chain of the contract.
-If the contract is verified and deployed on one of the supported chains, this is the quickest setup as it will retrieve all needed contract information from a block explorer.
+The `Block Explorer` option only requires you to input the address and chain of the contract.
+If the deployed contract is verified and has one of the supported explorers (Etherscan, Routescan, etc.) it will retrieve all needed contract information from the block explorer. The list of available chains will be presented in the Envio CLI.
 
 #### Select the blockchain that the contract is deployed on
 
@@ -58,59 +60,10 @@ v polygon
 [↑↓ to move, enter to select, type to filter]
 ```
 
-List of supported networks (this list is being rapidly added to and may be outdated):
+:::note
+HyperIndex supports indexing smart contract data from any EVM blockchain. If the chain you would like to index is not available on the list, you can use the ABI file option. Alternatively, you choose the same contract on an available network on the list, and change the chain configuration in the config file after the indexer is initialized. 
+:::
 
-Please note: This is a list of supported networks for the no-code quickstart. Envio HyperIndex as an indexing framework natively supports any EVM network.
-
-- `ethereum-mainnet`
-- `goerli`
-- `optimism`
-- `base`
-- `base-sepolia`
-- `bsc`
-- `gnosis`
-- `fantom`
-- `polygon`
-- `boba`
-- `optimism-sepolia`
-- `moonbeam`
-- `arbitrum-one`
-- `arbitrum-nova`
-- `arbitrum-sepolia`
-- `celo`
-- `avalanche`
-- `amoy`
-- `aurora`
-- `harmony`
-- `zksync-era`
-- `sepolia`
-- `linea`
-- `polygon-zkevm`
-- `scroll`
-- `metis`
-- `manta`
-- `taiko-jolnr`
-- `kroma`
-- `lukso`
-- `x-layer-testnet`
-- `x-layer`
-- `holesky`
-- `gnosis-chiado`
-- `zora`
-- `public-goods`
-- `a1-milkomeda`
-- `c1-milkomeda`
-- `mantle`
-- `zeta`
-- `neon-evm`
-- `rootstock`
-- `shimmer-evm`
-- `blast`
-- `blast-sepolia`
-- `fhenix-testnet`
-- `crab`
-- `darwinia`
-- `cyber`
 
 #### Enter in the address of the contract to import
 
@@ -119,7 +72,9 @@ Please note: This is a list of supported networks for the no-code quickstart. En
 [Use the proxy address if your abi is a proxy implementation]
 ```
 
-Note if you are using a proxy contract with an implementation, the address should be for the proxy contract.
+:::note
+If you are using a proxy contract with an implementation, the contract address you specify should be for the proxy contract.
+:::
 
 #### Choose which events to include in the `config.yaml` file
 
@@ -143,9 +98,9 @@ Note if you are using a proxy contract with an implementation, the address shoul
 [Current contract: BribeVotingReward, on network: optimism]
 ```
 
-The `Contract Import` process will prompt the user whether they would like to finish the import process or continue adding more addresses for same contract on same network, addresses for same contract on different network or a different contract.
+The Quickstart will prompt you whether you would like to finish the import process or continue adding more addresses for same contract on same network, addresses for same contract on different network or a different contract.
 
-### 2. `Local ABI` option
+### 2. Local ABI
 
 ```bash
 ? Would you like to import from a block explorer or a local abi?
@@ -154,8 +109,7 @@ The `Contract Import` process will prompt the user whether they would like to fi
 [↑↓ to move, enter to select, type to filter]
 ```
 
-Choosing `Local ABI` option will allow you to point to a JSON file containing the smart contract ABI.
-The `Contract Import` process will then populate the required files from the ABI.
+Choosing `Local ABI` option will allow you to point to a JSON file containing the smart contract ABI. The Quickstart will then populate the required files from the ABI.
 
 > Select this option if the proxy contract has not been verified, which will cause the fetch request from Etherscan client to fail.
 
@@ -203,7 +157,9 @@ v gnosis
 [Use the proxy address if your abi is a proxy implementation]
 ```
 
-Note if you are using a proxy contract with an implementation, the address should be for the proxy.
+:::note
+If you are using a proxy contract with an implementation, the contract address you specify should be for the proxy contract.
+:::
 
 #### Select the continuation option
 
@@ -216,7 +172,7 @@ Note if you are using a proxy contract with an implementation, the address shoul
 [Current contract: BribeVotingReward, on network: optimism]
 ```
 
-The `Contract Import` process will prompt the user whether they would like to finish the import process or continue adding more addresses for same contract on same network, addresses for same contract on different network or a different contract.
+The Quickstart will prompt you whether you would like to finish the import process or continue adding more addresses for same contract on same network, addresses for same contract on different network or a different contract.
 
 ## Configuration file
 
@@ -258,3 +214,5 @@ For all events, the handler function will perform two operations:
 - Update the event-specific entity counter in the loaded `EventsSummary` entity
 
 For more information on how to write the event handlers file, go [here](./Guides/event-handlers.mdx).
+
+---

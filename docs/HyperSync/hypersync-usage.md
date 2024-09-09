@@ -9,11 +9,11 @@ slug: /hypersync-usage
 
 ### Examples
 
-We've found most developers have enjoyed learning HyperSync by practical example. You will find [examples here](./hypersync-clients.md) in Python, Rust and NodeJs in each section.
+We've found most developers have enjoyed learning HyperSync by practical example. You will find examples [here](./hypersync-clients.md) in Python, Rust and NodeJs in each section.
 
 ### Queries
 
-Using HyperSync primarly revolves around successfully constructing and then executing queries. Queries allow you to essentially filter for blocks, logs, transactions and traces. Hovering over types in your IDE will allow you to see all exhaustive options in order to construct a appropriate query.
+Using HyperSync primarily revolves around successfully constructing and then executing queries. Queries allow you to essentially filter for blocks, logs, transactions and traces. Hovering over types in your IDE will allow you to see all exhaustive options in order to construct a appropriate query.
 
 ```python
 class Query(
@@ -37,9 +37,9 @@ You are able to choose exactly what data you would like to be returned from the 
 
 ### Useful tips:
 
-- Run export `export RUST_LOG=trace` to see detiled HyperSync request progress information.
+- Run export `export RUST_LOG=trace` to see detailed HyperSync request progress information.
 - HyperSync requests have a 5 second time limit. The request will return with the block that it reached during the query allowing you paginate and make the next query. HyperSync generally scans through more than 10m blocks in 5 seconds.
-- Modify `batch_size` and `batch_size` params based on your chain and usecase to improve performance in some cases. E.g.
+- Modify `batch_size` and `batch_size` params based on your chain and use case to improve performance in some cases. E.g.
 
 ```python
     config = hypersync.ParquetConfig(
