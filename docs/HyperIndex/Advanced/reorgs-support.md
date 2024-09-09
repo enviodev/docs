@@ -6,21 +6,18 @@ slug: /reorgs-support
 ---
 
 :::note
-This feature, while functional and stable, is not optimized. If you choose to have this feature enabled, please be aware that historical indexing may slow down. We want to ensure blazing-fast indexing and are currently working on improving this. 
+This feature, while functional, is not optimized. If you choose to have this feature enabled, please be aware that historical indexing may slow down. We want to ensure blazing-fast indexing and are currently working on improving this. 
 :::
 
-Chain reorganizations are handled automatically by HyperIndex, and is turned on by default. 
+Chain reorganizations are handled automatically by HyperIndex.
 
-
-To turn this feature off, you can set the ```rollback_on_reorg``` flag in your config.yaml to ```false```:
+To turn this feature on, you can set the ```rollback_on_reorg``` flag in your config.yaml to ```true```:
 ```yaml
-rollback_on_reorg: false
+rollback_on_reorg: true
 networks: ...
 ```
 
-If you choose to have the feature enabled, the ```rollback_on_reorg``` flag in your config.yaml should be set to ```true```:
-
-Additionally, you can also manually configure the `confirmed_block_threshold` for a specific network:
+You can also manually configure the `confirmed_block_threshold` for a specific network:
 ```yaml
 rollback_on_reorg: true
 networks:
@@ -31,7 +28,7 @@ networks:
 This threshold defines the number of blocks below the chain head where a block is considered "confirmed" and should not be subject to a reorg. Reorgs beyond this point won't trigger a rollback. Currently, all chains default to a threshold of 200 blocks, but this number will be tailored per chain in future releases.
 
 Important notes regarding rollbacks and reorgs:
-- Reorg detection is guaranteed when indexing from [HyperSync](/docs/HyperIndex/Advanced/hypersync.md) as data source. However, indexing from a [custom RPC](/docs/HyperIndex/Advanced/rpc-sync.md) as data source may have edge cases where reorgs can occur undetected.
+- Reorg detection is guaranteed when indexing from a [HyperSync](/docs/HyperIndex/Advanced/hypersync.md) as data source. However, indexing from a [custom RPC](/docs/HyperIndex/Advanced/rpc-sync.md) as data source may have edge cases where reorgs can occur undetected.
 - All entities defined in your schema and set/read in your handlers will be managed and rolled back in the event of a reorg. However, any additional side effects or caching used in your handlers cannot be accounted for.
 
 
