@@ -1,11 +1,9 @@
 ---
 id: hypersync
-title: HyperSync
-sidebar_label: HyperSync
+title: HyperSync as Data Source
+sidebar_label: HyperSync Data Source
 slug: /hypersync
 ---
-
-# HyperSync powering HyperIndex
 
 > Beam me up, scotty! 🖖
 

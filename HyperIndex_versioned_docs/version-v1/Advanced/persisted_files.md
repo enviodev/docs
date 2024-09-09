@@ -1,5 +1,5 @@
 ---
-id: persisted_files
+id: persisted-files
 title: Persisted File Changes
 sidebar_label: Persisted File Changes
 slug: /persisted_files

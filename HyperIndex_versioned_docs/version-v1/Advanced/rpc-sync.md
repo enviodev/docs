@@ -1,11 +1,9 @@
 ---
 id: rpc-sync
-title: RPC Sync
-sidebar_label: RPC Sync
+title: RPC as Data Source
+sidebar_label: RPC Data Source
 slug: /rpc-sync
 ---
-
-# RPC Sync
 
 For syncing of events to be indexed, users are required to use RPC endpoints to retrieve events from each different chain.
 

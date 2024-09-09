@@ -49,7 +49,8 @@ module.exports = {
         "Advanced/multichain-indexing",
         "Advanced/hypersync",
         "Advanced/rpc-sync",
-        "Advanced/persisted_files",
+        "Advanced/reorgs-support",
+        "Advanced/persisted-files",
         "Advanced/generated-files",
         "Advanced/terminology",
         {

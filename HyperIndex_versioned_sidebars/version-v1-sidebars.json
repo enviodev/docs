@@ -46,7 +46,7 @@
         "Advanced/multichain-indexing",
         "Advanced/hypersync",
         "Advanced/rpc-sync",
-        "Advanced/persisted_files",
+        "Advanced/persisted-files",
         "Advanced/generated-files",
         "Advanced/terminology",
         "Advanced/async-mode",
