@@ -6,18 +6,20 @@ slug: /reorgs-support
 ---
 
 :::note
-This feature, while functional, is not optimized. If you choose to have this feature enabled, please be aware that historical indexing may slow down. We want to ensure blazing-fast indexing and are currently working on improving this. 
+This feature, while functional and stable, is not optimized. If you choose to have this feature enabled, please be aware that historical indexing may slow down. We want to ensure blazing-fast indexing and are currently working on improving this. 
 :::
 
-Chain reorganizations are handled automatically by HyperIndex.
+Chain reorganizations are handled automatically by HyperIndex, and is turned on by default. 
 
-To turn this feature on, you can set the ```rollback_on_reorg``` flag in your config.yaml to ```true```:
+To turn this feature off, you can set the ```rollback_on_reorg``` flag in your config.yaml to ```false```:
 ```yaml
-rollback_on_reorg: true
+rollback_on_reorg: false
 networks: ...
 ```
 
-You can also manually configure the `confirmed_block_threshold` for a specific network:
+If you choose to have the feature enabled, the `rollback_on_reorg` flag in your `config.yaml` should be set to `true`:
+
+Additionally, you can also manually configure the `confirmed_block_threshold` for a specific network:
 ```yaml
 rollback_on_reorg: true
 networks:
