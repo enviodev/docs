@@ -70,16 +70,17 @@ let user: Types.userEntity = {
 
 In GraphQL, scalars represent fundamental data types such as strings and numbers. Each GraphQL scalar is mapped to a corresponding JavaScript, TypeScript or ReScript type, which is used in event handler code, depending on the language chosen. The following table provides an overview of the available scalar types, along with their associated JavaScript, TypeScript and ReScript types:
 
-| **Name**   | **Description**                                  | **JavaScript Type**                    | **TypeScript Type**                    | **ReScript Type** |
-| ---------- | ------------------------------------------------ | -------------------------------------- | -------------------------------------- | ----------------- |
-| ID         | A unique identifier field                        | string                                 | string                                 | string            |
-| String     | A UTF-8 character sequence                       | string                                 | string                                 | string            |
-| Int        | A signed 32-bit integer                          | number                                 | number                                 | int               |
-| Float      | A signed floating-point value                    | number                                 | number                                 | float             |
-| Boolean    | Represents a true or false value                 | boolean                                | boolean                                | bool              |
-| Bytes      | A UTF-8 character sequence with a 0x prefix      | string                                 | string                                 | string            |
-| BigInt     | A signed integer (equivalent to solidity int256) | bigint                                 | bigint                                 | bigint            |
-| BigDecimal | An arbitrary size floating point number          | BigDecimal (imported from "generated") | BigDecimal (imported from "generated") | BigDecimal.t      |
+| **Name**   | **Description**                                  | **JavaScript/TypeScript Type**         | **ReScript Type** |
+| ---------- | ------------------------------------------------ | -------------------------------------- | ----------------- |
+| ID         | A unique identifier field                        | string                                 | string            |
+| String     | A UTF-8 character sequence                       | string                                 | string            |
+| Int        | A signed 32-bit integer                          | number                                 | int               |
+| Float      | A signed floating-point value                    | number                                 | float             |
+| Boolean    | Represents a true or false value                 | boolean                                | bool              |
+| Bytes      | A UTF-8 character sequence with a 0x prefix      | string                                 | string            |
+| BigInt     | A signed integer (equivalent to solidity int256) | bigint                                 | bigint            |
+| BigDecimal | An arbitrary size floating point number          | BigDecimal (imported from "generated") | BigDecimal.t      |
+| Timestamp  | Timestamp with time zone                         | Date                                   | Js.Date.t         |
 
 You can find out more on GraphQL [here](https://graphql.org/learn/).
 
