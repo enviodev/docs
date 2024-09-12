@@ -54,7 +54,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Mantle               | 5000       | https://mantle.rpc.hypersync.xyz or https://5000.rpc.hypersync.xyz                  |                 |
 | Metis                | 1088       | https://metis.rpc.hypersync.xyz or https://1088.rpc.hypersync.xyz                   |                 |
 | Mev Commit           | 17864      | https://mev-commit.rpc.hypersync.xyz or https://17864.rpc.hypersync.xyz             |                 |
-| Mode                 | 1          | https://mode.rpc.hypersync.xyz or https://1.rpc.hypersync.xyz                       |                 |
+| Mode                 | 34443      | https://mode.rpc.hypersync.xyz or https://34443.rpc.hypersync.xyz                   |                 |
 | Moonbeam             | 1284       | https://moonbeam.rpc.hypersync.xyz or https://1284.rpc.hypersync.xyz                |                 |
 | Morph Testnet        | 2810       | https://morph-testnet.rpc.hypersync.xyz or https://2810.rpc.hypersync.xyz           |                 |
 | Neon Evm             | 245022934  | https://neon-evm.rpc.hypersync.xyz or https://245022934.rpc.hypersync.xyz           |                 |

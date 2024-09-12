@@ -56,7 +56,7 @@ The Tier is the level of support (and therefore reliability) based on infrastruc
 | Mantle               | 5000       | https://mantle.hypersync.xyz or https://5000.hypersync.xyz                          | gold   |                 |
 | Metis                | 1088       | https://metis.hypersync.xyz or https://1088.hypersync.xyz                           | bronze |                 |
 | Mev Commit           | 17864      | https://mev-commit.hypersync.xyz or https://17864.hypersync.xyz                     | bronze |                 |
-| Mode                 | 1          | https://mode.hypersync.xyz or https://1.hypersync.xyz                               | bronze |                 |
+| Mode                 | 34443      | https://mode.hypersync.xyz or https://34443.hypersync.xyz                           | bronze |                 |
 | Moonbeam             | 1284       | https://moonbeam.hypersync.xyz or https://1284.hypersync.xyz                        | gold   |                 |
 | Morph Testnet        | 2810       | https://morph-testnet.hypersync.xyz or https://2810.hypersync.xyz                   | bronze |                 |
 | Neon Evm             | 245022934  | https://neon-evm.hypersync.xyz or https://245022934.hypersync.xyz                   | bronze |                 |
