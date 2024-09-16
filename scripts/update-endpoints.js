@@ -12,16 +12,16 @@ const RENAME_CONFIG = {
 const FILTER_ENDPOINTS = [/^staging-/];
 
 const HYPERSYNC_COLUMNS = [
-  { name: 'Network Name', width: 20 },
   { name: 'Network ID', width: 10 },
+  { name: 'Network Name', width: 20 },
   { name: 'URL', width: 83 },
   { name: 'Tier', width: 6 },
   { name: 'Supports Traces', width: 15 }
 ];
 
 const HYPERRPC_COLUMNS = [
-  { name: 'Network Name', width: 20 },
   { name: 'Network ID', width: 10 },
+  { name: 'Network Name', width: 20 },
   { name: 'URL', width: 83 },
   { name: 'Supports Traces', width: 15 }
 ];
@@ -39,9 +39,7 @@ const generateCommonTableHeader = (columns) => {
 const sortAndFilterChains = (data) => {
   return data
     .sort((a, b) => {
-      const nameA = RENAME_CONFIG[a.name] || capitalizeAndSplit(a.name);
-      const nameB = RENAME_CONFIG[b.name] || capitalizeAndSplit(b.name);
-      return nameA.localeCompare(nameB);
+      return parseInt(a.chain_id) - parseInt(b.chain_id);
     })
     .filter(chain => !FILTER_ENDPOINTS.some(regex => regex.test(chain.name)));
 };
@@ -63,7 +61,7 @@ const generateHyperSyncTable = (data) => {
     const supportsTraces = chain.additional_features && chain.additional_features.includes('TRACES') ? TICK : ' ';
     const url = `https://${chain.name}.hypersync.xyz or https://${chain.chain_id}.hypersync.xyz`;
 
-    table += generateTableRow(HYPERSYNC_COLUMNS, [networkName, chain.chain_id.toString(), url, tier, supportsTraces]);
+    table += generateTableRow(HYPERSYNC_COLUMNS, [chain.chain_id.toString(), networkName, url, tier, supportsTraces]);
   });
 
   return table;
@@ -77,7 +75,7 @@ const generateHyperRPCTable = (data) => {
     const url = `https://${chain.name}.rpc.hypersync.xyz or https://${chain.chain_id}.rpc.hypersync.xyz`;
     const supportsTraces = chain.additional_features && chain.additional_features.includes('TRACES') ? TICK : ' ';
 
-    table += generateTableRow(HYPERRPC_COLUMNS, [networkName, chain.chain_id.toString(), url, supportsTraces]);
+    table += generateTableRow(HYPERRPC_COLUMNS, [chain.chain_id.toString(), networkName, url, supportsTraces]);
   });
 
   return table;
