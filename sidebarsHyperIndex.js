@@ -46,6 +46,7 @@ module.exports = {
       items: [
         "Advanced/loaders",
         "Advanced/dynamic-contracts",
+        "Advanced/wildcard-indexing",
         "Advanced/multichain-indexing",
         "Advanced/hypersync",
         "Advanced/rpc-sync",

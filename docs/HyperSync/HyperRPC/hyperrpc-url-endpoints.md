@@ -50,6 +50,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Kroma                | 255        | https://kroma.rpc.hypersync.xyz or https://255.rpc.hypersync.xyz                    |                 |
 | Linea                | 59144      | https://linea.rpc.hypersync.xyz or https://59144.rpc.hypersync.xyz                  |                 |
 | Lukso                | 42         | https://lukso.rpc.hypersync.xyz or https://42.rpc.hypersync.xyz                     |                 |
+| Lukso Testnet        | 4201       | https://lukso-testnet.rpc.hypersync.xyz or https://4201.rpc.hypersync.xyz           |                 |
 | Manta                | 169        | https://manta.rpc.hypersync.xyz or https://169.rpc.hypersync.xyz                    |                 |
 | Mantle               | 5000       | https://mantle.rpc.hypersync.xyz or https://5000.rpc.hypersync.xyz                  |                 |
 | Metis                | 1088       | https://metis.rpc.hypersync.xyz or https://1088.rpc.hypersync.xyz                   |                 |
@@ -69,6 +70,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Sepolia              | 11155111   | https://sepolia.rpc.hypersync.xyz or https://11155111.rpc.hypersync.xyz             |                 |
 | Shimmer Evm          | 148        | https://shimmer-evm.rpc.hypersync.xyz or https://148.rpc.hypersync.xyz              |                 |
 | Sophon Testnet       | 531050104  | https://sophon-testnet.rpc.hypersync.xyz or https://531050104.rpc.hypersync.xyz     |                 |
+| Taiko                | 167000     | https://taiko.rpc.hypersync.xyz or https://167000.rpc.hypersync.xyz                 |                 |
 | Taiko Jolnr          | 1088       | https://taiko-jolnr.rpc.hypersync.xyz or https://1088.rpc.hypersync.xyz             |                 |
 | X Layer              | 196        | https://x-layer.rpc.hypersync.xyz or https://196.rpc.hypersync.xyz                  |                 |
 | X Layer Testnet      | 195        | https://x-layer-testnet.rpc.hypersync.xyz or https://195.rpc.hypersync.xyz          |                 |
