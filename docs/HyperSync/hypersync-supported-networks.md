@@ -52,6 +52,7 @@ The Tier is the level of support (and therefore reliability) based on infrastruc
 | Kroma                | 255        | https://kroma.hypersync.xyz or https://255.hypersync.xyz                            | bronze |                 |
 | Linea                | 59144      | https://linea.hypersync.xyz or https://59144.hypersync.xyz                          | gold   |                 |
 | Lukso                | 42         | https://lukso.hypersync.xyz or https://42.hypersync.xyz                             | bronze |                 |
+| Lukso Testnet        | 4201       | https://lukso-testnet.hypersync.xyz or https://4201.hypersync.xyz                   | bronze |                 |
 | Manta                | 169        | https://manta.hypersync.xyz or https://169.hypersync.xyz                            | bronze |                 |
 | Mantle               | 5000       | https://mantle.hypersync.xyz or https://5000.hypersync.xyz                          | gold   |                 |
 | Metis                | 1088       | https://metis.hypersync.xyz or https://1088.hypersync.xyz                           | bronze |                 |
@@ -71,6 +72,7 @@ The Tier is the level of support (and therefore reliability) based on infrastruc
 | Sepolia              | 11155111   | https://sepolia.hypersync.xyz or https://11155111.hypersync.xyz                     | gold   |                 |
 | Shimmer Evm          | 148        | https://shimmer-evm.hypersync.xyz or https://148.hypersync.xyz                      | bronze |                 |
 | Sophon Testnet       | 531050104  | https://sophon-testnet.hypersync.xyz or https://531050104.hypersync.xyz             | bronze |                 |
+| Taiko                | 167000     | https://taiko.hypersync.xyz or https://167000.hypersync.xyz                         | bronze |                 |
 | Taiko Jolnr          | 1088       | https://taiko-jolnr.hypersync.xyz or https://1088.hypersync.xyz                     | bronze |                 |
 | X Layer              | 196        | https://x-layer.hypersync.xyz or https://196.hypersync.xyz                          | bronze |                 |
 | X Layer Testnet      | 195        | https://x-layer-testnet.hypersync.xyz or https://195.hypersync.xyz                  | bronze |                 |
