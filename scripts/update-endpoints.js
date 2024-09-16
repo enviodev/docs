@@ -39,9 +39,7 @@ const generateCommonTableHeader = (columns) => {
 const sortAndFilterChains = (data) => {
   return data
     .sort((a, b) => {
-      const nameA = RENAME_CONFIG[a.name] || capitalizeAndSplit(a.name);
-      const nameB = RENAME_CONFIG[b.name] || capitalizeAndSplit(b.name);
-      return nameA.localeCompare(nameB);
+      return parseInt(a.chain_id) - parseInt(b.chain_id);
     })
     .filter(chain => !FILTER_ENDPOINTS.some(regex => regex.test(chain.name)));
 };
