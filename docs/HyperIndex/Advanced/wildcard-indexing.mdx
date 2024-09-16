@@ -1,0 +1,290 @@
+---
+id: wildcard-indexing
+title: Wildcard Indexing And Topic Filtering
+sidebar_label: Wildcard Indexing / Topic Filtering
+slug: /wildcard-indexing
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+:::note
+As of v2.3 wildcard indexing is supported for Indexers using HyperSync (RPC sync is not yet supported).
+:::
+
+## Introduction
+
+Wildcard indexing is a feature that allows you to index all events that match the specified event signature without requiring you to specify the contract address from which the event was emitted. This can be useful for cases such indexing contracts that are deployed via factories where the factory contract does not emit any events on contract creation. Or for indexing events from all contracts that implement a standard (such as ERC20)
+
+## Example
+
+Say for example we want to index all `Transfer` events we can use the following config:
+
+```yaml
+name: transefer-indexer
+networks:
+  - id: 1
+    start_block: 0
+    contracts:
+      - name: ERC20
+        handler: ./src/EventHandlers.ts
+        events:
+          - event: "Transfer(address indexed from, address indexed to, uint256 value)"
+```
+
+We can write the following event handler:
+
+<Tabs groupId="lang" defaultValue="ts">
+  <TabItem value="ts" label="TypeScript">
+```ts
+// ./src/EventHandlers.ts
+import { ERC20 } from "generated";
+
+ERC20.Transfer.handler(async ({ event, context }) => {
+  //... your handler logic
+  },
+  { wildcard: true },
+);
+
+```
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+```js
+// ./src/EventHandlers.js
+const { ERC20 } = require("generated");
+
+ERC20.Transfer.handler(async ({ event, context }) => {
+  //... your handler logic
+  },
+  { wildcard: true },
+);
+
+```
+  </TabItem>
+  <TabItem value="res" label="ReScript">
+```rescript
+// ./src/EventHandlers.res
+Handlers.ERC20.Transfer.handler(async ({ event, context }) => {
+  //... your handler logic
+  },
+  ~eventConfig={ wildcard: true },
+)
+```
+  </TabItem>
+</Tabs>
+
+The expected outcome is that all `Transfer` events will be indexed, regardless of the contract address from which the event was emitted.
+
+On top of this you can also add filters to the event handler. A filter field will be provided for each "indexed" parameter on the given event. Say for instance you only want to index "Mint" "Transfer" events where the `from` address is equal to `0x0000000000000000000000000000000000000000` you can add a filter to the event handler:
+
+<Tabs groupId="lang" defaultValue="ts">
+  <TabItem value="ts" label="TypeScript">
+```ts
+// ./src/EventHandlers.ts
+import { ERC20 } from "generated";
+
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+
+ERC20.Transfer.handler(
+  async ({ event, context }) => {
+    //... your handler logic
+  },
+  { wildcard: true, eventFilters: { from: ZERO_ADDRESS } },
+);
+```
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+```js
+// ./src/EventHandlers.js
+const { ERC20 } = require("generated");
+
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+
+ERC20.Transfer.handler(
+  async ({ event, context }) => {
+    //... your handler logic
+  },
+  { wildcard: true, eventFilters: { from: ZERO_ADDRESS } },
+);
+```
+  </TabItem>
+  <TabItem value="res" label="ReScript">
+```rescript
+// ./src/EventHandlers.res
+open Types.SingleOrMultiple
+
+let zeroAddress = Address.unsafeFromString("0x0000000000000000000000000000000000000000")
+
+Handlers.ERC20.Transfer.handler(
+  async ({ event, context }) => {
+    //... your handler logic
+  },
+  ~eventConfig={
+    wildcard: true,
+    eventFilters: single({ from: single(zeroAddress) }),
+  },
+)
+```
+  </TabItem>
+</Tabs>
+
+Multiple filters are also supported. For example if you wanted to index all Mint/Burn events for a group of whitelisted addresses you can do the following:
+
+<Tabs groupId="lang" defaultValue="ts">
+  <TabItem value="ts" label="TypeScript">
+```ts
+// ./src/EventHandlers.ts
+import { ERC20 } from "generated";
+
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+
+const WHITELISTED_ADDRESSES = [
+  "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+  "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+  "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"
+];
+
+ERC20.Transfer.handler(
+  async ({ event, context }) => {
+    //... your handler logic
+  },
+  { wildcard: true, 
+    eventFilters: [
+      { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES },
+      { from: WHITELISTED_ADDRESSES, to: ZERO_ADDRESS }
+    ]
+  },
+);
+```
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+```js
+// ./src/EventHandlers.js
+const { ERC20 } = require("generated");
+
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+
+const WHITELISTED_ADDRESSES = [
+  "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+  "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+  "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"
+];
+
+ERC20.Transfer.handler(
+  async ({ event, context }) => {
+    //... your handler logic
+  },
+  { wildcard: true, 
+    eventFilters: [
+      { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES },
+      { from: WHITELISTED_ADDRESSES, to: ZERO_ADDRESS }
+    ]
+  },
+);
+```
+  </TabItem>
+  <TabItem value="res" label="ReScript">
+```rescript
+// ./src/EventHandlers.res
+open Types.SingleOrMultiple
+
+let zeroAddress = Address.unsafeFromString("0x0000000000000000000000000000000000000000")
+
+let whitelistedAddresses = [
+  Address.unsafeFromString("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"),
+  Address.unsafeFromString("0x70997970C51812dc3A010C7d01b50e0d17dc79C8"),
+  Address.unsafeFromString("0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC")
+]
+
+Handlers.ERC20.Transfer.handler(
+  async ({ event, context }) => {
+    //... your handler logic
+  },
+  ~eventConfig={
+    wildcard: true,
+    eventFilters: multiple([
+      { from: single(zeroAddress), to: multiple(whitelistedAddresses) },
+      { from: multiple(whitelistedAddresses), to: single(zeroAddress) }
+    ]),
+  },
+)
+```
+  </TabItem>
+</Tabs>
+
+The same can be applied to contractRegister and handlerWithLoader APIs. Here is an example where we only register Uniswap pools that contain DAI token: 
+
+<Tabs groupId="lang" defaultValue="ts">
+  <TabItem value="ts" label="TypeScript">
+```ts
+// ./src/EventHandlers.ts
+import { UniV3Factory } from "generated";
+
+const DAI_ADDRESS = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
+
+UniV3Factory.PoolCreated.contractRegister(
+  async ({ event, context }) => {
+    const poolAddress = event.params.pool;
+    context.UniV3Pool.add(poolAddress);
+  },
+  { eventFilters: [{ token0: DAI_ADDRESS }, { token1: DAI_ADDRESS }] },
+);
+```
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+```js
+// ./src/EventHandlers.js
+const { UniV3Factory } = require("generated");
+
+const DAI_ADDRESS = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
+
+UniV3Factory.PoolCreated.contractRegister(
+  async ({ event, context }) => {
+    const poolAddress = event.params.pool;
+    context.UniV3Pool.add(poolAddress);
+  },
+  { eventFilters: [{ token0: DAI_ADDRESS }, { token1: DAI_ADDRESS }] },
+);
+```
+  </TabItem>
+  <TabItem value="res" label="ReScript">
+```rescript
+// ./src/EventHandlers.res
+open Types.SingleOrMultiple
+
+let daiAddress = Address.unsafeFromString("0x6B175474E89094C44Da98b954EedeAC495271d0F")
+
+Handlers.UniV3Factory.PoolCreated.contractRegister(
+  async ({ event, context }) => {
+    let poolAddress = event.params.pool
+    context.UniV3Pool.add(poolAddress)
+  },
+  ~eventConfig={
+    eventFilters: multiple([
+      { token0: single(daiAddress) },
+      { token1: single(daiAddress) }
+    ])
+  },
+)
+```
+  </TabItem>
+</Tabs>
+
+For handlerWithLoader API simply add wildcard or eventFilters to the loader function:
+```ts
+ERC20.Transfer.handlerWithLoader({
+  loader: async ({ event, context }) => {},
+  handler: async ({ event, context }) => {},
+  wildcard: ...,
+  eventFilters: ...,
+});
+}
+```
+
+## Limitations
+
+- For any given network, only one event of a given signature can be indexed using wildcard indexing. This means that if you have multiple contracts definitions in your config that contain the same event signature. Only one of them is allowed to be set to `wildcard: true`
+
+- Either the `contractRegister` or the `handler` function can take an event config object (with wildcard/eventFilters fields) but not both.
+
+- RPC sync is not yet supported for wildcard indexing.
