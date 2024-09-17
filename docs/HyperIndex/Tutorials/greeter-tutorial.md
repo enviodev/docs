@@ -45,12 +45,6 @@ Run
 envio init
 ```
 
-Name your indexer
-
-```bash
-? Name your indexer: (My Envio Indexer)
-```
-
 Choose the directory where you would like to setup your project (default is the current directory)
 
 ```bash

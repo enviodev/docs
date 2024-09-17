@@ -39,13 +39,7 @@ Open your terminal in an empty directory and initialize a new indexer by running
 npx envio init
 ```
 
-In the following prompt, let's name our indexer `sway-farm-indexer`:
-
-```bash
-? Name your indexer: sway-farm-indexer
-```
-
-Then, choose the directory where you want to set up your project. The default is the current directory, but in the tutorial, I'll use the indexer name:
+In the following prompt, choose the directory where you want to set up your project. The default is the current directory, but in the tutorial, I'll use the indexer name:
 
 ```bash
 ? Specify a folder name (ENTER to skip): sway-farm-indexer
@@ -225,7 +219,7 @@ import { SwayFarmContract, SwayFarm_SellItemEntity } from "generated";
 
 SwayFarmContract.SellItem.handler(async ({ event, context }) => {
   const entity: SwayFarm_SellItemEntity = {
-    id: `${event.transactionId}_${event.receiptIndex}`,
+    id: `${event.chainId}_${event.block.height}_${event.logIndex}`,
   };
 
   context.SwayFarm_SellItem.set(entity);
@@ -251,7 +245,7 @@ SwayFarmContract.NewPlayer.handler(async ({ event, context }) => {
   // Set the Player entity in the DB with the intial values
   context.Player.set({
     // The address in Sway is a union type of user Address and ContractID. Envio supports most of the Sway types, and the address value was decoded as a discriminated union 100% typesafe
-    id: event.data.address.payload.bits,
+    id: event.params.address.payload.bits,
     // Initial values taken from the contract logic
     farmingSkill: 1n,
     totalValueSold: 0n,
@@ -259,18 +253,18 @@ SwayFarmContract.NewPlayer.handler(async ({ event, context }) => {
 });
 
 SwayFarmContract.LevelUp.handler(async ({ event, context }) => {
-  const playerInfo = event.data.player_info;
+  const playerInfo = event.params.player_info;
   context.Player.set({
-    id: event.data.address.payload.bits,
+    id: event.params.address.payload.bits,
     farmingSkill: playerInfo.farming_skill,
     totalValueSold: playerInfo.total_value_sold,
   });
 });
 
 SwayFarmContract.SellItem.handler(async ({ event, context }) => {
-  const playerInfo = event.data.player_info;
+  const playerInfo = event.params.player_info;
   context.Player.set({
-    id: event.data.address.payload.bits,
+    id: event.params.address.payload.bits,
     farmingSkill: playerInfo.farming_skill,
     totalValueSold: playerInfo.total_value_sold,
   });
