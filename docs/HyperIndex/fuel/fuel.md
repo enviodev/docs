@@ -90,6 +90,6 @@ Also, some other event fields were moved:
 - `receiptIndex` -> `logIndex`
 - `receiptType` -> removed
 
-These are all Fuel-related changes, but if you use `loaders` follow the [v1 to v2 migration guide](/migration-guide-v1-v2) to update to the V2 API.
+These are all Fuel-related changes, but if you use `loaders` follow the [v1 to v2 migration guide](/docs/HyperIndex/migration-guide-v1-v2) to update to the V2 API.
 
 If you need help, create an issue in our [GitHub repository](https://github.com/enviodev/hyperindex). We'll be happy to help!
