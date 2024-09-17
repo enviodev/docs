@@ -46,10 +46,50 @@ Or gain inspiration from already running indexers built by other developers on F
 
 ### State of the art
 
-Currently, `HyperIndex` on Fuel supports the most features EVM indexer does, including advanced features such as [Dynamic Contracts / Factories](../Advanced/dynamic-contracts.md), [Testing Framework](/docs/HyperIndex/testing) and [Hosted Service](../Hosted_Service/hosted-service.md).
+`HyperIndex` on Fuel supports all relevant features EVM indexer does, including [Dynamic Contracts / Factories](../Advanced/dynamic-contracts.md), [Testing Framework](/docs/HyperIndex/testing), [No-code Quickstart](/docs/HyperIndex/contract-import), [Hosted Service](../Hosted_Service/hosted-service.md) and more.
 
-Also, compared to EVM, Fuel provides many more kinds of possible events. Now, we support indexing only `LogData` receipts (the `log` calls in a [Sway](https://docs.fuel.network/docs/sway/) contract), but there's a plan to also support `Transfer`, `TransferOut`, `Mint`, `Burn`, and `Call` receipts in the near future.
-
-We will also work on a [No-code Quickstart](/docs/HyperIndex/contract-import), predicates support, and more.
+Also, compared to EVM, Fuel provides many more kinds of possible events. Now, we support indexing only `LogData` receipts (the `log` calls in a [Sway](https://docs.fuel.network/docs/sway/) contract), but we are working on supporting `Transfer`, `TransferOut`, `Mint`, `Burn`, and `Call` receipts in the near future.
 
 > Join our [Discord](https://discord.com/invite/gt7yEUZKeB) channel to make sure you catch all new releases.
+
+### Migration Guide from the `envio@2.x.x-fuel` verion
+
+With the V2.3 release, we merged the Fuel indexer into the main `envio` repo. This means that you can now use the `envio` version to run both Fuel and EVM indexers.
+
+However, if you are using the `envio` version suffixed with `-fuel`, you will need to migrate to the new version. It shouldn't take more than a few minutes to do so.
+
+To migrate, start with updating the package version:
+
+```bash
+pnpm i envio@latest
+```
+
+> If you installed `envio` globally, you will also need to run `pnpm i -g envio@latest`
+
+Then in your handlers rename `data` to `params`:
+
+```diff
+SwayFarmContract.NewPlayer.handler(async ({ event, context }) => {
+  context.Player.set({
+-   id: event.data.address.payload.bits,
+-   createdAt: event.time,
++   id: event.params.address.payload.bits,
++   createdAt: event.block.time,
+    ...
+  });
+});
+```
+
+Also, some other event fields were moved:
+
+- `time` -> `block.time`
+- `blockHeight` -> `block.height`
+- X => `block.id`
+- `transactionId` -> `transaction.id`
+- `contractId` -> `srcAddress`
+- `receiptIndex` -> `logIndex`
+- `receiptType` -> removed
+
+These are all Fuel-related changes, but if you use `loaders` follow the [v1 to v2 migration guide](/docs/HyperIndex/v1/migration-guide-v1-v2) to update to the V2 API.
+
+If you need help, create an issue in our [GitHub repository](https://github.com/enviodev/hyperindex). We'll be happy to help!
