@@ -75,6 +75,8 @@ Handlers.ERC20.Transfer.handler(async ({ event, context }) => {
 
 The expected outcome is that all `Transfer` events will be indexed, regardless of the contract address from which the event was emitted.
 
+## Filtering Example
+
 On top of this you can also add filters to the event handler. A filter field will be provided for each "indexed" parameter on the given event. Say for instance you only want to index "Mint" "Transfer" events where the `from` address is equal to `0x0000000000000000000000000000000000000000` you can add a filter to the event handler:
 
 <Tabs groupId="lang" defaultValue="ts">
@@ -127,6 +129,8 @@ Handlers.ERC20.Transfer.handler(
 ```
   </TabItem>
 </Tabs>
+
+## Multiple Filters Example
 
 Multiple filters are also supported. For example if you wanted to index all Mint/Burn events for a group of whitelisted addresses you can do the following:
 
@@ -212,6 +216,8 @@ Handlers.ERC20.Transfer.handler(
   </TabItem>
 </Tabs>
 
+## Contract Register Example
+
 The same can be applied to contractRegister and handlerWithLoader APIs. Here is an example where we only register Uniswap pools that contain DAI token: 
 
 <Tabs groupId="lang" defaultValue="ts">
@@ -269,6 +275,8 @@ Handlers.UniV3Factory.PoolCreated.contractRegister(
 ```
   </TabItem>
 </Tabs>
+
+## Handler With Loader Example
 
 For handlerWithLoader API simply add wildcard or eventFilters to the loader function:
 ```ts
