@@ -5,11 +5,11 @@ sidebar_label: Overview
 slug: /hyperfuel
 ---
 
-HyperSync is a high performance database and accelerated data query layer that powers Envio’s Indexing framework (HyperIndex) for 100x faster data retrieval than standard RPC methods.
+HyperSync is a high-performance database and accelerated data query layer that powers Envio’s Indexing framework (HyperIndex) for 100x faster data retrieval than standard RPC methods.
 
 HyperFuel is Hypersync adapted for the [Fuel Network](https://fuel.network/) and is exposed as a low-level API for developers and data analysts to create niche, flexible, high-speed queries for all on-chain data.
 
-Users can interact with the HyperFuel in Rust, Python client, Node Js, or Json api to extract data into parquet files, arrow format, or as typed data. Client examples below.
+Users can interact with the HyperFuel in Rust, Python client, Node Js, or JSON API to extract data into parquet files, arrow format, or as typed data. Client examples below.
 
 Using HyperFuel, application developers can easily sync and search large datasets in a few minutes.
 
@@ -20,7 +20,7 @@ You can integrate with HyperFuel using any of our clients:
 - Rust: https://github.com/enviodev/hyperfuel-client-rust
 - Python: https://github.com/enviodev/hyperfuel-client-python
 - Nodejs: https://github.com/enviodev/hyperfuel-client-node
-- json api: https://github.com/enviodev/hyperfuel-json-api
+- JSON API: https://github.com/enviodev/hyperfuel-json-api
 
 ## Example usage
 
