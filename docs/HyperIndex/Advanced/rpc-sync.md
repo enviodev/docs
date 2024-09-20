@@ -40,7 +40,7 @@ Below is an example of how sync configuration per RPC endpoint can be defined:
 
 ## Granular RPC caching and failover
 
-For a more granular approach of handling RPC failovers, permenant caching, auto-batching, etc. you can use [eRPC](https://github.com/erpc/erpc) with [envio HyperRPC](http://localhost:3001/docs/HyperSync/overview-hyperrpc) or other rpc endpoints as upstream source.
+For a more granular approach to handling RPC failovers, permanent caching, auto-batching, etc. you can use [eRPC](https://github.com/erpc/erpc) with [envio HyperRPC](http://localhost:3001/docs/HyperSync/overview-hyperrpc) or other RPC endpoints as the upstream source.
 
 [eRPC](https://github.com/erpc/erpc) is a fault-tolerant EVM RPC proxy and re-org aware permanent caching solution, specifically built for read-heavy use-cases like data indexing and high-load frontend usage.
 
@@ -96,4 +96,4 @@ For a more granular approach of handling RPC failovers, permenant caching, auto-
   ...
 ```
 
-Once configured, all RPC requests will be routed through eRPC, which will manage caching, failover, auto-batching, rate-limiting, auto-discovery of node providers, and more behind the scenes, providing a more resilient and efficient indexing solution as opposed to using a single RPC source. Using HyperSync will still perform indexing faster as opposed to RPC based solutions.
+Once configured, all RPC requests will be routed through eRPC, which will manage caching, failover, auto-batching, rate-limiting, auto-discovery of node providers, and more behind the scenes, providing a more resilient and efficient indexing solution as opposed to using a single RPC source. Using HyperSync will still perform indexing faster as opposed to RPC-based solutions.
