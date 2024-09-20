@@ -7,7 +7,7 @@ slug: /reserved-words
 
 This section lists the reserved words that cannot be used in the configuration and schema files. Reserved words are special terms that have predefined meanings and behaviors in the system.
 
-Reserved words in Envio are the union of reserved words from JavaScript, TypeScript and ReScript.
+Reserved words in Envio are the union of reserved words from JavaScript, TypeScript, and ReScript.
 
 ## JavaScript Reserved Words
 
