@@ -14,7 +14,7 @@ As of v2.3 wildcard indexing is supported for Indexers using HyperSync (RPC sync
 
 ## Introduction
 
-Wildcard indexing is a feature that allows you to index all events that match the specified event signature without requiring you to specify the contract address from which the event was emitted. This can be useful for cases such indexing contracts that are deployed via factories where the factory contract does not emit any events on contract creation. Or for indexing events from all contracts that implement a standard (such as ERC20)
+Wildcard indexing is a feature that allows you to index all events that match the specified event signature without requiring you to specify the contract address from which the event was emitted. This can be useful for cases such as indexing contracts that are deployed via factories where the factory contract does not emit any events on contract creation. Or for indexing events from all contracts that implement a standard (such as ERC20)
 
 ## Example
 
@@ -77,7 +77,7 @@ The expected outcome is that all `Transfer` events will be indexed, regardless o
 
 ## Filtering Example
 
-On top of this you can also add filters to the event handler. A filter field will be provided for each "indexed" parameter on the given event. Say for instance you only want to index "Mint" "Transfer" events where the `from` address is equal to `0x0000000000000000000000000000000000000000` you can add a filter to the event handler:
+On top of this, you can also add filters to the event handler. A filter field will be provided for each "indexed" parameter on the given event. Say for instance you only want to index "Mint" "Transfer" events where the `from` address is equal to `0x0000000000000000000000000000000000000000` you can add a filter to the event handler:
 
 <Tabs groupId="lang" defaultValue="ts">
   <TabItem value="ts" label="TypeScript">
@@ -132,7 +132,7 @@ Handlers.ERC20.Transfer.handler(
 
 ## Multiple Filters Example
 
-Multiple filters are also supported. For example if you wanted to index all Mint/Burn events for a group of whitelisted addresses you can do the following:
+Multiple filters are also supported. For example, if you wanted to index all Mint/Burn events for a group of whitelisted addresses you can do the following:
 
 <Tabs groupId="lang" defaultValue="ts">
   <TabItem value="ts" label="TypeScript">
@@ -291,7 +291,7 @@ ERC20.Transfer.handlerWithLoader({
 
 ## Limitations
 
-- For any given network, only one event of a given signature can be indexed using wildcard indexing. This means that if you have multiple contracts definitions in your config that contain the same event signature. Only one of them is allowed to be set to `wildcard: true`
+- For any given network, only one event of a given signature can be indexed using wildcard indexing. This means that if you have multiple contract definitions in your config that contain the same event signature. Only one of them is allowed to be set to `wildcard: true`
 
 - Either the `contractRegister` or the `handler` function can take an event config object (with wildcard/eventFilters fields) but not both.
 
