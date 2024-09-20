@@ -17,7 +17,7 @@ Until recently, Envio was only available on EVM-compatible blockchains, and now 
 
 HyperFuel is [HyperSync](/docs/HyperSync/overview) adapted for the [Fuel Network](https://fuel.network/) and is exposed as a low-level API for developers and data analysts to create niche, flexible, high-speed queries for all on-chain data.
 
-Users can interact with the HyperFuel in Rust, Python client, Node Js, or Json API to extract data into parquet files, arrow format, or as typed data.
+Users can interact with the HyperFuel in Rust, Python client, Node Js, or JSON API to extract data into parquet files, arrow format, or as typed data.
 
 Using HyperFuel, application developers can easily sync and search large datasets in a few minutes.
 
@@ -26,7 +26,7 @@ You can integrate with HyperFuel using any of our clients:
 - Rust: https://github.com/enviodev/hyperfuel-client-rust
 - Python: https://github.com/enviodev/hyperfuel-client-python
 - Nodejs: https://github.com/enviodev/hyperfuel-client-node
-- Json API: https://github.com/enviodev/hyperfuel-json-api
+- JSON API: https://github.com/enviodev/hyperfuel-json-api
 
 > HyperFuel supports Fuel's testnet at the endpoint https://fuel-testnet.hypersync.xyz
 
@@ -52,7 +52,7 @@ Also, compared to EVM, Fuel provides many more kinds of possible events. Now, we
 
 > Join our [Discord](https://discord.com/invite/gt7yEUZKeB) channel to make sure you catch all new releases.
 
-### Migration Guide from the `envio@2.x.x-fuel` verion
+### Migration Guide from the `envio@2.x.x-fuel` version
 
 With the V2.3 release, we merged the Fuel indexer into the main `envio` repo. This means that you can now use the `envio` version to run both Fuel and EVM indexers.
 
