@@ -15,7 +15,7 @@ If you have a system that does not know all the contracts that need indexing at 
 
 ## Contract Registration
 
-Contract factories are currently supported in the event's `contractRegister` function that you want to register the contract in.
+Contract factories are currently supported in the event's `contractRegister` function for when you want to register the contract.
 
 You can register a dynamic contract by including the following line inside the `contractRegister` function:
 
@@ -37,7 +37,7 @@ You can register a dynamic contract by including the following line inside the l
 context.contractRegistration.add<your-contract-name>(<address-of-the-contract>)
 ```
 
-> The syntax is exactly same for JavaScript, TypeScript and ReScript.
+> The syntax is exactly the same for JavaScript, TypeScript, and ReScript.
 
 ## Example using an NFT factory
 
