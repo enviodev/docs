@@ -7,7 +7,7 @@ slug: /error-codes
 
 This section provides an exhaustive list of potential errors you could face while using Envio, along with explanations for each error.
 
-Below table indicates the different error categories and sub-categories:
+The below table indicates the different error categories and sub-categories:
 
 | Hundreds Digit of Error Code | Sub-category                     | Category                      |
 | ---------------------------- | -------------------------------- | ----------------------------- |
@@ -25,13 +25,13 @@ Below table indicates the different error categories and sub-categories:
 
 <sub>"Sub-category" indicates the specific file or function in which the error is being encountered.</sub>
 <br></br>
-<sub>"Category" indicates the broader part of indexing process in which the error is being encountered.</sub>
+<sub>"Category" indicates the broader part of the indexing process in which the error is being encountered.</sub>
 
 # Initialization related errors
 
 ### `EE100`: Invalid Addresses
 
-Invalid smart contract addresses present in the configuration file.
+Invalid smart contract addresses are present in the configuration file.
 
 Use smart contract addresses in the valid format belonging to the correct chain.
 
@@ -45,7 +45,7 @@ Use unique contract names in the configuration file.
 
 Using reserved programming words in the configuration file.
 
-Envio prohibits use of reserved words from JavaScript, TypeScript and ReScript in the configuration file as it may conflict with the auto-generated code.
+Envio prohibits use of reserved words from JavaScript, TypeScript, and ReScript in the configuration file as it may conflict with the auto-generated code.
 
 Please refer to [<ins>reserved words</ins>](./reserved-words) page for the full list of reserved words.
 
@@ -55,7 +55,7 @@ Avoid using reserved words in the configuration file.
 
 Unable to parse event signature due to an error.
 
-Refer to the [<ins>configuration</ins>](configuration-file) page on how to correctly define a human readable ABI.
+Refer to the [<ins>configuration</ins>](configuration-file) page on how to correctly define a human-readable ABI.
 
 ### `EE104`: Resolve Config Path
 
@@ -77,7 +77,7 @@ Refer to the [<ins>HyperSync</ins>](./hypersync) or [<ins>RPC Sync</ins>](./rpc-
 
 ### `EE108`: Valid Postgres Database
 
-Provide a valid postgres database name.
+Provide a valid Postgres database name.
 
 Requirements for a valid name:
 
@@ -91,9 +91,9 @@ The config file contains RPC URLs in an incorrect format.
 
 The RPC URLs need to start with either `http://` or `https://`.
 
-### `EE110`: End block is greater than start block for a given network
+### `EE110`: The end block is greater than the start block for a given network
 
-If an endblock is specified, the endBlock must be greater than the startBlock in your `config.yaml` file.
+If an endBlock is specified, the endBlock must be greater than the startBlock in your `config.yaml` file.
 
 ### `EE111`: Invalid characters for the contract/event names in the config file
 
@@ -121,7 +121,7 @@ Refer to the [<ins>schema</ins>](./schema) page for more information.
 
 ### `EE203`: Missing Field Argument for `@derivedFrom`
 
-No `field` argument supplied to `@derivedFrom`.
+No `field` argument was supplied to `@derivedFrom`.
 
 Provide a `field` value for the `@derivedFrom` directive used.
 
@@ -184,17 +184,17 @@ Please ensure all values within each schema enum type are unique.
 
 ### `EE214`: Schema contains the following enums and entities with the same name
 
-All enum and entity definitions must have unique names within the schema. Please update the schema with unique identifier for all types and enums.
+All enum and entity definitions must have unique names within the schema. Please update the schema with a unique identifier for all types and enums.
 
 ### `EE300`: Event ABI Error
 
-Cannot parse the provided ABI for contract.
+Cannot parse the provided ABI for the contract.
 
 Use an event that belongs in your ABI for the configuration file.
 
 ### `EE301`: Missing ABI File Path
 
-Add `abi_file_path` for contract to parse the event.
+Add `abi_file_path` for the contract to parse the event.
 
 ### `EE302`: Invalid ABI File Path
 
@@ -208,25 +208,25 @@ Use an event that belongs in your ABI for the configuration file.
 
 ### `EE304`: Mismatched Event Signature
 
-Event signature does not exist in provided ABI file.
+Event signature does not exist in the provided ABI file.
 
 Ensure that the same event signature from the ABI is used in the configuration file.
 
 ### `EE305`: ABI Config Mismatch
 
-Event signature in ABI does not match the config.
+The event signature in ABI does not match the config.
 
 Ensure that the same event signature from the ABI is used in the configuration file.
 
 ### `EE400`: Invalid Directory Name
 
-Specified directory is invalid.
+The specified directory is invalid.
 
 Use a different directory without special characters such as `/` `\` `:` `*` `?` `"` `<` `>` `|`.
 
 ### `EE401`: Existing Directory
 
-Specified directory already exists.
+The specified directory already exists.
 
 Use a different directory for initialization.
 
@@ -244,7 +244,7 @@ Issue importing the Event Handler file.
 
 Ensure that the file is in the correct directory as per the configuration file.
 
-The Event Handler file should be compiling as well.
+The Event Handler file should be compiled as well.
 
 Refer to the [<ins>event handlers</ins>](./event-handlers) page for more information.
 
@@ -252,11 +252,11 @@ Refer to the [<ins>event handlers</ins>](./event-handlers) page for more informa
 
 Hit a top-level error catcher while processing events.
 
-Contact us on in our [Discord](https://discord.gg/Q9qt8gZ2fX) for further assistance.
+Contact us in our [Discord](https://discord.gg/Q9qt8gZ2fX) for further assistance.
 
 # Database Related Errors
 
-For all of the database related errors, rerun DB migrations using the following command:
+For all of the database-related errors, rerun DB migrations using the following command:
 
 ```bash
 envio local db-migrate setup
@@ -264,7 +264,7 @@ envio local db-migrate setup
 
 ### `EE700`: Parse DB Row
 
-Unable to parse row from the database.
+Unable to parse rows from the database.
 
 ### `EE800`: Raw Table Creation
 
@@ -314,13 +314,13 @@ Indexing may still work - but you may have issues querying the data in Hasura.
 
 Undefined contract specified.
 
-Verify that contract name is defined in the configuration file.
+Verify that the contract name is defined in the configuration file.
 
 ### `EE901`: Interface Mapping Error
 
 Unexpected case - contract name not found in interface mapping.
 
-Contact us on in our [Discord](https://discord.gg/Q9qt8gZ2fX) for further assistance.
+Contact us in our [Discord](https://discord.gg/Q9qt8gZ2fX) for further assistance.
 
 # Network Related Errors
 
@@ -336,6 +336,6 @@ Use a valid chain ID in the configuration file.
 
 Top-level promise timeout reached.
 
-Contact us on in our [Discord](https://discord.gg/Q9qt8gZ2fX) for further assistance.
+Contact us in our [Discord](https://discord.gg/Q9qt8gZ2fX) for further assistance.
 
 ---
