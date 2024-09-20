@@ -15,15 +15,15 @@ slug: /licensing
 
 ## Our position
 
-We're devs and we value OS ethos too, that's why our licensing mirrors a lot of the benefits from open source licensing however Envio and it's products do not use a recognized open source license by the [OSI](https://opensource.org/), we are however public and open and our licensing reflects this.
+We're devs and we value OS ethos too, that's why our licensing mirrors a lot of the benefits from open source licensing however Envio and its products do not use a recognized open source license by the [OSI](https://opensource.org/), we are however public and open and our licensing reflects this.
 
-Our future business model lies in our hosted service and HyperSync requests and so we are protecting this, but to ensure continuity and no vendor lock-in, developers are able to run and develop on their indexer without either. Either by self-hosting, which our license permits or by specifying an RPC url in their indexer configuration and thus bypassing HyperSync.
+Our future business model lies in our hosted service and HyperSync requests and so we are protecting this, but to ensure continuity and no vendor lock-in, developers are able to run and develop on their indexer without either. Either by self-hosting, which our license permits, or by specifying an RPC URL in their indexer configuration and thus bypassing HyperSync.
 
-Envio is in it's formative stages and though we may look to open source the software in the future we are dedicated to ensuring the best interests of all stakeholders. Going open source is some what of a one way function and it is easier to go open source than to proverbially go "closed source". Once we have gained more market traction we will review our position on going open source.
+Envio is in its formative stages and though we may look to open-source the software in the future we are dedicated to ensuring the best interests of all stakeholders. Going open source is somewhat of a one-way function and it is easier to go open source than to proverbially go "closed source". Once we have gained more market traction we will review our position on going open source.
 
 ## HyperIndex End-User License Agreement (EULA)
 
-This agreement describes the users' rights and the conditions upon which the Software and Generated Code may be used. The user should review the entire agreement, including any supplemental license terms that accompany the Software, since all of the terms are important and together create this agreement that applies to them.
+This agreement describes the users' rights and the conditions upon which the Software and Generated Code may be used. The user should review the entire agreement, including any supplemental license terms that accompany the Software since all of the terms are important and together create this agreement that applies to them.
 
 ### 1. Definitions
 
@@ -39,7 +39,7 @@ This agreement describes the users' rights and the conditions upon which the Sof
 The licensor provides you with a non-exclusive, royalty-free, worldwide license that is non-sublicensable and non-transferable. This license allows you to use the Software subject to the limitations and conditions outlined in this EULA.
 With one license, the user can only use the Software on a single device.
 
-**Device:** In this agreement, "device" refers to a hardware system, whether physical or virtual, equipped with an internal storage device capable of executing the Software. This includes hardware partitions, which are considered as individual devices for the purposes of this agreement. Updates may be provided to the Software, and these updates may alter the minimum hardware requirements necessary for the Software. It is the responsibility of users to comply with any changing hardware requirements.
+**Device:** In this agreement, "device" refers to a hardware system, whether physical or virtual, equipped with an internal storage device capable of executing the Software. This includes hardware partitions, which are considered individual devices for the purposes of this agreement. Updates may be provided to the Software, and these updates may alter the minimum hardware requirements necessary for the Software. It is the responsibility of users to comply with any changing hardware requirements.
 
 **Updates:** The Software may be updated automatically. With each update, the EULA may be amended, and it is the users' responsibility to comply with the amendments.
 
@@ -69,7 +69,7 @@ These limitations apply specifically to the Software and do not extend to the Ge
 
 (iii) Any modification, removal, or concealment of licensing, copyright, or other notices belonging to the licensor in the Software is strictly forbidden. The use of the licensor's trademarks is subject to relevant laws.
 
-**Credit:** If the user utilizes the Generated Code to develop and release a new software, product or service, the license agreement for said software, product or service must include proper credit to HyperIndex.
+**Credit:** If the user utilizes the Generated Code to develop and release new software, product, or service, the license agreement for said software, product, or service must include proper credit to HyperIndex.
 
 **Liability:** Envio does not provide any assurance that the Generated Code functions correctly, nor does it assume any responsibility in this regard.
 
@@ -85,6 +85,6 @@ Additionally, it will be the responsibility of the user to assess whether the Ge
 
 (iii) The disclaimers of warranties and limitations of liability outlined above shall be construed in a manner that most closely approximates an absolute disclaimer and waiver of all liability, to the fullest extent permitted by law.
 
-**Applicable Law and Competent Courts:** This EULA and shall be governed by and construed in accordance with the laws of England. The courts of England shall have exclusive jurisdiction to settle any dispute arising out of or in connection with this EULA.
+**Applicable Law and Competent Courts:** This EULA shall be governed by and construed in accordance with the laws of England. The courts of England shall have exclusive jurisdiction to settle any dispute arising out of or in connection with this EULA.
 
 **Additional Agreements:** If the user chooses to use the Software, it may be required to agree to additional terms or agreements outside of this EULA.
