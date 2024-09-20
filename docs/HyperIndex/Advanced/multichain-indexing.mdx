@@ -14,7 +14,7 @@ This means that events from contracts deployed on multiple chains can be used to
 
 Users are required to populate the `network` section in `config.yaml` file for each chain and specify a contract to index from.
 
-Users can then specify event loader/handler for each of the contracts specified in `config.yaml` file.
+Users can then specify the event loader/handler for each of the contracts specified in `config.yaml` file.
 
 ## Multichain Indexing on Greeter template
 
@@ -46,7 +46,7 @@ networks:
         address: "0xdEe21B97AB77a16B4b236F952e586cf8408CF32A"
 ```
 
-The Greeter indexer listens to `NewGreeting` and `ClearGreeting` events from `Greeter` contract (which is defined above networks as a "global contract") to update the `Greeting` entity.
+The Greeter indexer listens to `NewGreeting` and `ClearGreeting` events from the `Greeter` contract (which is defined above networks as a "global contract") to update the `Greeting` entity.
 
 Notice how the global definition of the "Greeter" contract does not contain any addresses. And in the contracts section of both Polygon and Linea networks, they simply reference the name of the contract ("Greeter") and define the address. Both of these will use the same handler functions and events.
 
@@ -61,7 +61,7 @@ type User {
 }
 ```
 
-> Dev note: 📢 When it makes sense, we recommend appending the chain id to the entity id when you are developing multichain indexers. For example if you deploy a contract to two different networks with the same contract address then append `-<chainId>` to the end of the id to differentiate the contracts between different networks.
+> Dev note: 📢 When it makes sense, we recommend appending the chain ID to the entity ID when you are developing multichain indexers. For example, if you deploy a contract to two different networks with the same contract address then append `-<chainId>` to the end of the id to differentiate the contracts between different networks.
 
 ### Event Handler file
 
@@ -256,10 +256,10 @@ Or you can set it via environment variable (this would take precedence over conf
 UNORDERED_MULTICHAIN_MODE=true
 ```
 
-By default the indexer will synchronise the ordering of events across chains, ensuring that indexing is always deterministic and events across networks will be processed in the same order on every indexer run. This deterministic synchronisation is important for some applications, but for others it is not. This is why we have added "unordered multichain mode".
+By default the indexer will synchronise the ordering of events across chains, ensuring that indexing is always deterministic and events across networks will be processed in the same order on every indexer run. This deterministic synchronisation is important for some applications, but for others, it is not. This is why we have added "unordered multichain mode".
 
 In order for events to be perfectly ordered across multiple networks, the indexer needs to wait for all blocks to increment from each network. This is because the indexer needs to determine which block came first. Hence there is a latency between when an event is emitted and when it is processed by the indexer based on the block interval of the slowest network.
 
-Generally, if operations to update an entity from multiple events across multiple networks are [commutative](./terminology#commutative-property) (where the ordering of operations doesnt effect the result) then the ordering of events doesn't need to be ordered and the unordered multichain mode can be set to true. Likewise if there is no overlap between entities from different networks then the unordered multichain mode can be set to true as the ordering of events across the networks is not important.
+Generally, if operations to update an entity from multiple events across multiple networks are [commutative](./terminology#commutative-property) (where the ordering of operations doesn't effect the result) then the ordering of events doesn't need to be ordered and the unordered multichain mode can be set to true. Likewise, if there is no overlap between entities from different networks then the unordered multichain mode can be set to true as the ordering of events across the networks is not important.
 
 If unordered multichain mode is set to true, then the indexer will process events as soon as they are emitted, and so the indexer will not wait for all blocks to increment from each network before moving on to the next block. Even though events will remain ordered for a given network, events from different networks can be processed out of order, but it also means that events will be processed as soon as they are emitted.
