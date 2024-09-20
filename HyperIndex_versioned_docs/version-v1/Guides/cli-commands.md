@@ -42,7 +42,7 @@ This document contains the help content for the `envio` command-line program.
 * `dev` — Development commands for starting, stopping, and restarting the indexer with automatic codegen for any changed files
 * `stop` — Stop the local environment - delete the database and stop all processes (including Docker) for the current directory
 * `codegen` — Generate indexing code from user-defined configuration & schema files
-* `local` — Prepare local environment for envio testing
+* `local` — Prepare the local environment for Envio testing
 * `start` — Start the indexer without any automatic codegen
 
 ###### **Options:**
@@ -81,7 +81,7 @@ Initialize an indexer with one of the initialization options
 
 ## `envio init template`
 
-Initialize Evm indexer from an example template
+Initialize the Evm indexer from an example template
 
 **Usage:** `envio init template [OPTIONS]`
 
@@ -103,13 +103,13 @@ Initialize Evm indexer by importing config from a contract for a given chain
 ###### **Subcommands:**
 
 * `explorer` — Initialize by pulling the contract ABI from a block explorer
-* `local` — Initialize from a local json ABI file
+* `local` — Initialize from a local JSON ABI file
 
 ###### **Options:**
 
 * `-c`, `--contract-address <CONTRACT_ADDRESS>` — Contract address to generate the config from
-* `--single-contract` — If selected, prompt will not ask for additional contracts/addresses/networks
-* `--all-events` — If selected, prompt will not ask to confirm selection of events on a contract
+* `--single-contract` — If selected, the prompt will not ask for additional contracts/addresses/networks
+* `--all-events` — If selected, the prompt will not ask to confirm the selection of events on a contract
 
 
 
@@ -130,16 +130,16 @@ Initialize by pulling the contract ABI from a block explorer
 
 ## `envio init contract-import local`
 
-Initialize from a local json ABI file
+Initialize from a local JSON ABI file
 
 **Usage:** `envio init contract-import local [OPTIONS]`
 
 ###### **Options:**
 
-* `-a`, `--abi-file <ABI_FILE>` — The path to a json abi file
+* `-a`, `--abi-file <ABI_FILE>` — The path to a JSON ABI file
 * `--contract-name <CONTRACT_NAME>` — The name of the contract
 * `-b`, `--blockchain <BLOCKCHAIN>` — Network from which contract address should be fetched for migration
-* `-r`, `--rpc-url <RPC_URL>` — The rpc url to use if the network id used is unsupported by our hypersync
+* `-r`, `--rpc-url <RPC_URL>` — The RPC url to use if the network id used is unsupported by our HyperSync
 
 
 
@@ -151,13 +151,13 @@ Initialization option for creating Fuel indexer
 
 ###### **Subcommands:**
 
-* `template` — Initialize Fuel indexer from an example template
+* `template` — Initialize a Fuel indexer from an example template
 
 
 
 ## `envio init fuel template`
 
-Initialize Fuel indexer from an example template
+Initialize a Fuel indexer from an example template
 
 **Usage:** `envio init fuel template [OPTIONS]`
 
@@ -196,7 +196,7 @@ Generate indexing code from user-defined configuration & schema files
 
 ## `envio local`
 
-Prepare local environment for envio testing
+Prepare local environment for Envio testing
 
 **Usage:** `envio local <COMMAND>`
 
@@ -244,7 +244,7 @@ Local Envio database commands
 
 ###### **Subcommands:**
 
-* `up` — Migrate latest schema to database
+* `up` — Migrate the latest schema to the database
 * `down` — Drop database schema
 * `setup` — Setup database by dropping schema and then running migrations
 
@@ -252,7 +252,7 @@ Local Envio database commands
 
 ## `envio local db-migrate up`
 
-Migrate latest schema to database
+Migrate the latest schema to the database
 
 **Usage:** `envio local db-migrate up`
 
