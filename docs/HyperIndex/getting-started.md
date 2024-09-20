@@ -51,21 +51,21 @@ More information on the `Greeter` template can be found [here](./greeter-tutoria
 
 ### Examples
 
-Clone one of the example indexers that have been built using Envio. Reference indexers can be found via the [Explorer](https://envio.dev/explorer), [Tutorials](./tutorial-erc20-token-transfers), or in our [Github](https://github.com/enviodev).
+Clone one of the example indexers that have been built using Envio. Reference indexers can be found via our [Explorer](https://envio.dev/explorer), [Tutorials](./tutorial-erc20-token-transfers), or in our [GitHub](https://github.com/enviodev).
 
-> Please take note of the difference in version of Envio which the indexer was built on and the [latest version on npm](https://www.npmjs.com/package/envio). There may be some adjustments required to the indexer to be compatible with the latest version of Envio.
+> Please take note of the difference in the version of Envio which the indexer was built on and the [latest version on npm](https://www.npmjs.com/package/envio). There may be some adjustments required to the indexer to be compatible with the latest version of Envio.
 
 ## Indexer Configuration
 
 Indexers generated using  the Quickstart, templates or examples will work without any further configuration.
 
-Users can further configure their indexers to perform custom logic, and the process is done via modifying the 3 files below:
+Users can further configure their indexers to perform custom logic, and the process is done by modifying the 3 files below:
 
 - [`config.yaml`](configuration-file)
 - [`schema.graphql`](./schema)
 - [`EventHandlers.*`](./event-handlers)
 
-> (\* depending on the language chosen for indexer)
+> (\* depending on the language chosen for the indexer)
 
 ## Run the Indexer
 
