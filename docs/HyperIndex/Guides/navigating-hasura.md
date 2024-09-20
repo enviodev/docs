@@ -5,7 +5,7 @@ sidebar_label: Navigating Hasura
 slug: /navigating-hasura
 ---
 
-> This page is only relevant when testing on local machine or using a self-hosted version of Envio that uses Hasura.
+> This page is only relevant when testing on a local machine or using a self-hosted version of Envio that uses Hasura.
 
 ## Introduction
 
