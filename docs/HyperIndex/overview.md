@@ -15,7 +15,7 @@ Designed with a core focus on delivering superior performance and seamless devel
 
 - **Simplified Installation & Setup:** Get started instantly.
 - **Any EVM L1, L2, or L3 Blockchain**: Index smart contract data from any EVM blockchain.
-- **Blazing-Fast Indexing**: Accelerate your development workflow, reduce time-to-market.  
+- **Blazing-Fast Indexing**: Accelerate your development workflow, and reduce time-to-market.  
 - **Multi-chain support**: Aggregate your cross-chain data. Query with a unified API.
 - **Automatic Code Generation**: Ensures type-safety with minimal effort.
 - **Flexible Language Support**: Choose JavaScript, TypeScript, and ResScript.
