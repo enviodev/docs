@@ -5,7 +5,7 @@ sidebar_label: Greeter Tutorial
 slug: /greeter-tutorial
 ---
 
-This tutorial will take you through a step by step guide to indexing a live Greeter smart contract using Envio.
+This tutorial will take you through a step-by-step guide to indexing a live Greeter smart contract using Envio.
 
 ## Background
 
@@ -45,7 +45,7 @@ Run
 envio init
 ```
 
-Choose the directory where you would like to setup your project (default is the current directory)
+Choose the directory where you would like to set up your project (default is the current directory)
 
 ```bash
 ? Set the directory:  (.) .
@@ -71,7 +71,7 @@ Select to start from a template
 [↑↓ to move, enter to select, type to filter]
 ```
 
-Choose `Greeter` when prompted to choose template.
+Choose `Greeter` when prompted to choose a template.
 
 ```bash
 ? Which template would you like to use?
@@ -112,7 +112,7 @@ You can view the indexed results on a local Hasura server.
 open http://localhost:8080
 ```
 
-The hasura admin-secret / password is `testing` and the tables can be viewed in the `data` tab or queried from the playground
+The Hasura admin-secret / password is `testing` and the tables can be viewed in the `data` tab or queried from the playground
 
 ### Deploy the indexer onto the hosted service
 
@@ -126,6 +126,6 @@ Navigate to the [hosted service](https://envio.dev/app/login) to start deploying
 
 Once you have successfully finished the Greeter tutorial, you are ready to become a blockchain indexing wizard!
 
-Jump into [Importing Contracts](../contract-import.md) page to generate a basic indexing template for a contract that is deployed on blockchain!
+Jump into the [Importing Contracts](../contract-import.md) page to generate a basic indexing template for a contract that is deployed on the blockchain!
 
 You can also start to modify the handlers to your own custom indexing logic.
