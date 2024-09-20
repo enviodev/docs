@@ -5,13 +5,13 @@ sidebar_label: HyperSync Data Source
 slug: /hypersync
 ---
 
-> Beam me up, scotty! 🖖
+> Beam me up, Scotty! 🖖
 
-Envio HyperSync is our blazing-fast indexed layer on top of the blockchain that allows for hyper speed syncing.
+Envio HyperSync is our blazing-fast indexed layer on top of the blockchain that allows for hyper-speed syncing.
 
 What would usually take hours to sync ~100,000 events can now be done in the order of less than a minute.
 
-HyperSync is the default method used by HyperIndex for all syncing. Visit [here](/docs/HyperSync/overview) to learn more about using the HyperSync python/ts/rust clients for further more custom needs of extracting data.
+HyperSync is the default method used by HyperIndex for all syncing. Visit [here](/docs/HyperSync/overview) to learn more about using the HyperSync python/ts/rust clients for further custom needs of extracting data.
 
 Since this service is a layer above the blockchain we maintain and host this service for each supported network.
 
@@ -35,7 +35,7 @@ networks:
           - event: ClearGreeting
 ```
 
-In the example above, absence of `rpc_config` will automatically direct Envio to HyperSync for the defined network (Polygon).
+In the example above, the absence of `rpc_config` will automatically direct Envio to HyperSync for the defined network (Polygon).
 
 For HyperSync users can use `start_block` of 0 regardless of when the deployments for the contracts to be indexed were, as HyperSync can very quickly detect the first block where it needs to start indexing from automatically.
 
