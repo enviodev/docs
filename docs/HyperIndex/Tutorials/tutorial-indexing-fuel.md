@@ -124,7 +124,7 @@ Set an address for the deployed contract:
 [Use the proxy address if your abi is a proxy implementation]
 ```
 
-And finish the initialization process:
+Finish the initialization process:
 
 ```bash
 ? Would you like to add another contract?
@@ -152,7 +152,7 @@ Everything is configured by modifying the 3 files below. Let's walk through each
 - schema.graphql [`Guide`](../Guides/schema-file.md)
 - EventHandlers.\* [`Guide`](../Guides/event-handlers.mdx)
 
-> (\* depending on the language chosen for indexer)
+> (\* depending on the language chosen for the indexer)
 
 ### `config.yaml`
 
@@ -179,7 +179,7 @@ networks:
             logId: "169340015036328252"
 ```
 
-In the tutorial, we don't need to adjust it in any way. But later you can modify the file add more events for indexing.
+In the tutorial, we don't need to adjust it in any way. But later you can modify the file and add more events for indexing.
 
 As a nice to have, you can use a [Sway](https://docs.fuel.network/docs/sway/) struct name without specifying a `logId`, like this:
 
@@ -191,7 +191,7 @@ As a nice to have, you can use a [Sway](https://docs.fuel.network/docs/sway/) st
 
 ### `schema.graphql`
 
-The `schema.graphql` file serves as a representation of your application's data model. It defines entity types that directly correspond to database tables, and the event handlers you create are responsible for creating and updating records within those tables. Additionally, the GraphQL API is automatically generated based on the entity types specified in the `schema.graphql` file, to allow access for the indexed data.
+The `schema.graphql` file serves as a representation of your application's data model. It defines entity types that directly correspond to database tables, and the event handlers you create are responsible for creating and updating records within those tables. Additionally, the GraphQL API is automatically generated based on the entity types specified in the `schema.graphql` file, to allow access to the indexed data.
 
 > 🧠 A separate [Guide](../Guides/schema-file.md) page provides more details about the `schema.graphql` file.
 
