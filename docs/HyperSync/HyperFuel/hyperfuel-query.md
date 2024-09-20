@@ -8,7 +8,7 @@ slug: /hyperfuel-query
 
 This section is dedicated to giving an exhaustive list of all the fields and query parameters of a HyperFuel query.  HyperFuel is extremely powerful but learning how to craft queries can take some practice.  It is recommended to look at the examples and reference this page.  HyperFuel query structure is the same across clients.
 
-# Top level query structure
+# Top-level query structure
 Illustrated as json
 ```json
 {
@@ -25,35 +25,35 @@ Illustrated as json
     "to_block": Number, // Optional, defaults to latest block
 
     // List of receipt selections, the query will return receipts that match any of these selections.
-    // All selections have an OR relationship with eachother.
+    // All selections have an OR relationship with each other.
     "receipts": [{ReceiptSelection}], // Optional
 
     // List of input selections, the query will return inputs that match any of these selections.
-    // All selections have an OR relationship with eachother.
+    // All selections have an OR relationship with each other.
     "inputs": [{InputSelection}], // Optional
 
     // List of output selections, the query will return outputs that match any of these selections.
-    // All selections have an OR relationship with eachother.
+    // All selections have an OR relationship with each other.
     "outputs": [{OutputSelection}], // Optional
 
-    // Whether to include all blocks regardless of if they match a receipt, input, or output selection.  Normally
-    //  the server will return only the blocks that are related to the receipts, inputs, or outputs in the response. But if this
+    // Whether to include all blocks regardless of whether they match a receipt, input, or output selection.  Normally
+    // The server will return only the blocks that are related to the receipts, inputs, or outputs in the response. But if this
     //  is set to true, the server will return data for all blocks in the requested range [from_block, to_block).
     "include_all_blocks": bool, // Optional, defaults to false
 
-    // The user selects which fields they want returned. Requesting less fields will improve
+    // The user selects which fields they want returned. Requesting fewer fields will improve
     //  query execution time and reduce the payload size so the user should always use a minimal number of fields.
     "field_selection": {FieldSelection},
 
     // Maximum number of blocks that should be returned, the server might return more blocks than this number but
-    //  it won't overshoot by too much.
+    //It won't overshoot by too much.
     "max_num_blocks": Number, // Optional, defaults to no maximum
 }
 ```
 
 # ReceiptSelection
-Query takes an array of ReceiptSelection objects and returns receipts that match any of the selections.  All fields are optional.
-Below is an exhaustive list of all fields in a ReceiptSelection json object.  Reference the [Fuel docs on receipts](https://docs.fuel.network/docs/specs/abi/receipts/#receipts) for field explanations.
+The query takes an array of ReceiptSelection objects and returns receipts that match any of the selections.  All fields are optional.
+Below is an exhaustive list of all fields in a ReceiptSelection JSON object.  Reference the [Fuel docs on receipts](https://docs.fuel.network/docs/specs/abi/receipts/#receipts) for field explanations.
 
 ```json
 {
@@ -88,7 +88,7 @@ Below is an exhaustive list of all fields in a ReceiptSelection json object.  Re
     // The address of the message recipient.
     "recipient": [String],
 
-    // The contract id of the current context if in an internal context. null otherwise
+    // The contract id of the current context is in an internal context. null otherwise
     "contract_id": [String],
 
     // receipt register values.
@@ -113,8 +113,8 @@ Below is an exhaustive list of all fields in a ReceiptSelection json object.  Re
 ```
 
 # InputSelection
-Query takes an array of InputSelection objects and returns inputs that match any of the selections.  All fields are optional.
-Below is an exhaustive list of all fields in a InputSelection json object.  Reference the [Fuel docs on inputs](https://docs.fuel.network/docs/specs/tx-format/input/#input) for field explanations.
+The query takes an array of InputSelection objects and returns inputs that match any of the selections.  All fields are optional.
+Below is an exhaustive list of all fields in an InputSelection JSON object.  Reference the [Fuel docs on inputs](https://docs.fuel.network/docs/specs/tx-format/input/#input) for field explanations.
 ```json
 {
     // The owning address or predicate root.
@@ -154,8 +154,8 @@ Below is an exhaustive list of all fields in a InputSelection json object.  Refe
 ```
 
 # OutputSelection
-Query takes an array of OutputSelection objects and returns outputs that match any of the selections.  All fields are optional.
-Below is an exhaustive list of all fields in a OutputSelection json object.  Reference the [Fuel docs on outputs](https://docs.fuel.network/docs/specs/tx-format/output/#output) for field explanations.
+The query takes an array of OutputSelection objects and returns outputs that match any of the selections.  All fields are optional.
+Below is an exhaustive list of all fields in an OutputSelection JSON object.  Reference the [Fuel docs on outputs](https://docs.fuel.network/docs/specs/tx-format/output/#output) for field explanations.
 ```json
 {
     // The address the coins were sent to.
@@ -191,13 +191,13 @@ Below is an exhaustive list of all fields in a OutputSelection json object.  Ref
 ```
 
 # FieldSelection
-Query takes a FieldSelection json object where the user specifies what they want returned from data matched by their `ReceiptSelection`, `OutputSelection`, and `InputSelection`.  There is no `BlockSelection` or `TransactionSelection` because the query returns all blocks and transactions that include the data you specified in your `ReceiptSelection`, `OutputSelection`, or `InputSelection`.
+The query takes a FieldSelection JSON object where the user specifies what they want returned from data matched by their `ReceiptSelection`, `OutputSelection`, and `InputSelection`.  There is no `BlockSelection` or `TransactionSelection` because the query returns all blocks and transactions that include the data you specified in your `ReceiptSelection`, `OutputSelection`, or `InputSelection`.
 
 For best performance, select a minimal amount of fields.
 
 *Important note:* all fields draw inspiration from Fuel's [graphql schema](https://docs.fuel.network/docs/graphql/reference/).  Mainly Blocks, Transactions, Receipts, Inputs, and Outputs.  Enums of each type (ex: Receipt has 12 different types, two of which are Log and LogData, Input has 3: InputCoin, InputContract, InputMessage, and Output has 5: CoinOutput, ContractOutput, ChangeOutput, VariableOutput, ContractCreated) are flattened into the parent type.  This is why  multiple fields on any returned Receipt, Input, or Output might be null; it's not a field on all possible enums of that type, so null is inserted.
 
-All fields are optional.  Below is an exhaustive list of all fields in a FieldSelection json object.
+All fields are optional.  Below is an exhaustive list of all fields in a FieldSelection JSON object.
 ```json
 {
     "block": [
