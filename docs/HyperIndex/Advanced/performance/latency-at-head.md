@@ -13,7 +13,7 @@ Maintaining low latency at the head of the chain is crucial for ensuring timely 
 
 - **Efficient Process**: At the head, we currently pull new blocks from HyperSync, which is a highly efficient process. This ensures that we stay up-to-date with the latest blocks with minimal delay.
 - **Reliability**: Typically, this process runs smoothly without any significant issues.
-- **Backups**: We have an on-going project to sync new blocks from both RPC and Hypersync to improve the robustness in the unlikely event of a failure in HyperSync.
+- **Backups**: We have an ongoing project to sync new blocks from both RPC and Hypersync to improve the robustness in the unlikely event of a failure in HyperSync.
 
 ### Low Latency on Popular Networks
 
@@ -38,6 +38,6 @@ Maintaining low latency at the head of the chain is crucial for ensuring timely 
 
 ### Hosted Service
 
-We have ongoing projects to keep improving the sync and build times of the hosted service. Currently the indexers do run slightly slower on the hosted service than they may on a powerful laptop. If you are looking for a beefy hosting solution please contact us on Discord, and we can discuss our enterprise plans.
+We have ongoing projects to keep improving the sync and build times of the hosted service. Currently, the indexers do run slightly slower on the hosted service than they may on a powerful laptop. If you are looking for a beefy hosting solution please contact us on Discord, and we can discuss our enterprise plans.
 
 By leveraging these features and providing feedback, you can help us maintain and improve the performance of your HyperIndex setup.
