@@ -9,7 +9,7 @@ slug: /tutorial-erc20-token-transfers
 
 In this tutorial, we'll walk you through the process of quickly and efficiently indexing ERC20 token transfers on the Base network using Envio HyperIndex and no-code [contract import](https://docs.envio.dev/docs/HyperIndex/contract-import) feature, providing real-time insights into metrics such as the largest USDC transfers.
 
-The goal is to create an indexer that tracks and analyzes all USDC token transfers on Base by extracting the `Transfer (index_topic_1 address from, index_topic_2 address to, uint256 value)` logs emitted by theUSDC contract.
+The goal is to create an indexer that tracks and analyzes all USDC token transfers on Base by extracting the `Transfer (index_topic_1 address from, index_topic_2 address to, uint256 value)` logs emitted by the USDC contract.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/e1xznmKBLa8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -115,4 +115,4 @@ Run queries to explore specific events, such as the largest USDC transfers.
 
 Congratulations! You've successfully generated an indexer and indexed 3.6 million USDC token transfer events in under 5 minutes on Base.
 
-Be sure to check out our [video walkthrough](https://www.youtube.com/watch?v=e1xznmKBLa8&t=572s) on Youtube, including other tutorials that showcase Envio’s indexing features and capabilities.
+Be sure to check out our [video walkthrough](https://www.youtube.com/watch?v=e1xznmKBLa8&t=572s) on YouTube, including other tutorials that showcase Envio’s indexing features and capabilities.
