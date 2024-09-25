@@ -9,11 +9,11 @@ slug: /hypersync-usage
 
 ### Examples
 
-We've found most developers have enjoyed learning HyperSync by practical example. You will find examples [here](./hypersync-clients.md) in Python, Rust and NodeJs in each section.
+We've found most developers have enjoyed learning HyperSync by practical example. You will find examples [here](./hypersync-clients.md) in Python, Rust, and NodeJs in each section.
 
 ### Queries
 
-Using HyperSync primarily revolves around successfully constructing and then executing queries. Queries allow you to essentially filter for blocks, logs, transactions and traces. Hovering over types in your IDE will allow you to see all exhaustive options in order to construct a appropriate query.
+Using HyperSync primarily revolves around successfully constructing and then executing queries. Queries allow you to essentially filter for blocks, logs, transactions and traces. Hovering over types in your IDE will allow you to see all exhaustive options in order to construct an appropriate query.
 
 ```python
 class Query(
@@ -33,12 +33,12 @@ class Query(
 
 #### Field Selection
 
-You are able to choose exactly what data you would like to be returned from the request. For example, this is useful when filtering for Logs, but you would also like the block data associated with that log in order to maybe get the timestamp of when that log was emitted.
+You can choose exactly what data you would like to be returned from the request. For example, this is useful when filtering for Logs, but you would also like the block data associated with that log to maybe get the timestamp of when that log was emitted.
 
 ### Useful tips:
 
 - Run export `export RUST_LOG=trace` to see detailed HyperSync request progress information.
-- HyperSync requests have a 5 second time limit. The request will return with the block that it reached during the query allowing you paginate and make the next query. HyperSync generally scans through more than 10m blocks in 5 seconds.
+- HyperSync requests have a 5-second time limit. The request will return with the block that it reached during the query allowing you to paginate and make the next query. HyperSync generally scans through more than 10m blocks in 5 seconds.
 - Modify `batch_size` and `batch_size` params based on your chain and use case to improve performance in some cases. E.g.
 
 ```python
