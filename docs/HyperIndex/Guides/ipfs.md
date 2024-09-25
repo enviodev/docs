@@ -9,7 +9,7 @@ slug: /ipfs
 
 TLDR; The repo for the code base can be found [here](https://github.com/enviodev/bored-ape-yacht-club-indexer)
 
-In this guide we aim to demonstrate how to fetch IPFS data into your indexer. Specifically we fetch token metadata for the [Bored Ape Yacht Club](https://www.boredapeyachtclub.com/) NFT collection.
+In this guide we aim to demonstrate how to fetch IPFS data into your indexer. Specifically, we fetch token metadata for the [Bored Ape Yacht Club](https://www.boredapeyachtclub.com/) NFT collection.
 
 This guide assumes you are familiar with IPFS, however [jump](#what-is-ipfs) to the bottom for some additional context on IPFS or general helpers.
 
@@ -17,12 +17,12 @@ This guide assumes you are familiar with IPFS, however [jump](#what-is-ipfs) to 
 
 ### Part 1: A basic Bored Ape Yacht Club owner indexer - [82577d2](https://github.com/enviodev/bored-ape-yacht-club-indexer/commit/82577d28ec977256480d0a5bac25ffd35e0842c0)
 
-First we create an indexer using the Envio contract import feature.
+First, we create an indexer using the Envio contract import feature.
 
 `npx envio init`
 Contract address: `0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D`
 
-We then make some light modifications. The resulting config, schema and event handlers look as follows.
+We then make some light modifications. The resulting config, schema, and event handlers look as follows.
 
 > config.yaml
 
@@ -194,7 +194,7 @@ Now when we run `pnpm envio dev` and open http://localhost:8080 we should also s
 
 This step may not be needed if you’re not frequently fetching data from IPFS however since you may be making several IPFS requests which always return the same responses it may make sense to cache this data locally. This can significantly speed up historical sync times as the data doesn’t need to be fetched from IPFS in future iterations.
 
-For the cached data we use a sqlite db. Quite simply we create a table in our database for the token metadata, then during indexing we first check to see if the token metadata is in our table otherwise we fetch it from IPFS and then save it to our database for future runs.
+For the cached data, we use a SQLite DB. Quite simply we create a table in our database for the token metadata, then during indexing, we first check to see if the token metadata is in our table otherwise we fetch it from IPFS and then save it to our database for future runs.
 
 The following annotated diff shows the appropriate changes to add caching.
 
@@ -239,7 +239,7 @@ We added the sqlite3 dependency to cache the IPFS responses into a local databas
 > src/utils/cache.ts
 
 :::info
-The following code allows us to create an sqlite database and read and write token metadata to it
+The following code allows us to create an SQLite database and read and write token metadata to it
 :::
 
 ```typescript
@@ -316,7 +316,7 @@ export class NftCache {
 > src/utils/ipfs.ts
 
 :::info
-In our IPFS fetch logic we now read it from the cache if it exists, otherwise we fetch it from IPFS and then save it to our database for future runs.
+In our IPFS fetch logic, we now read it from the cache if it exists, otherwise, we fetch it from IPFS and then save it to our database for future runs.
 :::
 
 ```diff
