@@ -7,7 +7,7 @@ slug: /schema
 
 # Defining the Schema
 
-The `schema.graphql` file serves as a representation of your application's data model. It defines entity types that directly correspond to database tables, and the event handlers you create are responsible for creating and updating records within those tables. Additionally, the GraphQL API is automatically generated based on the entity types specified in the `schema.graphql` file, to allow access for the indexed data.
+The `schema.graphql` file serves as a representation of your application's data model. It defines entity types that directly correspond to database tables, and the event handlers you create are responsible for creating and updating records within those tables. Additionally, the GraphQL API is automatically generated based on the entity types specified in the `schema.graphql` file, to allow access to the indexed data.
 
 Entity types are identified with the directive within the `schema.graphql` file.
 
@@ -26,7 +26,7 @@ Every entity type must include an `id` field that is of type `ID!`, `String!`, `
 
 ### Enums
 
-The schema file also support the use of enum types. An example of an enum definition and usage within the schema is shown below:
+The schema file also supports the use of enum types. An example of an enum definition and usage within the schema is shown below:
 
 ```graphql
 enum AccountType {
@@ -68,7 +68,7 @@ let user: Types.userEntity = {
 
 ### Scalar Types
 
-In GraphQL, scalars represent fundamental data types such as strings and numbers. Each GraphQL scalar is mapped to a corresponding JavaScript, TypeScript or ReScript type, which is used in event handler code, depending on the language chosen. The following table provides an overview of the available scalar types, along with their associated JavaScript, TypeScript and ReScript types:
+In GraphQL, scalars represent fundamental data types such as strings and numbers. Each GraphQL scalar is mapped to a corresponding JavaScript, TypeScript, or ReScript type, which is used in event handler code, depending on the language chosen. The following table provides an overview of the available scalar types, along with their associated JavaScript, TypeScript, and ReScript types:
 
 | **Name**   | **Description**                                  | **JavaScript/TypeScript Type**         | **ReScript Type** |
 | ---------- | ------------------------------------------------ | -------------------------------------- | ----------------- |
@@ -138,6 +138,6 @@ type Token {
 
 ## Other design tip(s)
 
-- Use lower case for the first letter of field names (i.e. `latestGreeting` and `numberOfGreetings`) inside entities.
+- Use lowercase for the first letter of field names (i.e. `latestGreeting` and `numberOfGreetings`) inside entities.
 
 ---
