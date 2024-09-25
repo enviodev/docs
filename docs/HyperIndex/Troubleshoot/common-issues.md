@@ -53,9 +53,9 @@ envio dev
 
 ## Postgres running locally
 
-If Postgres is running locally on port 5432, then you can run the whole system with a different postgres port by setting the `PG_PORT` environment variable. For example, if you want to run Postgres on port 5433, then set `PG_PORT` to 5433.
+If Postgres is running locally on port 5432, then you can run the whole system with a different Postgres port by setting the `PG_PORT` environment variable. For example, if you want to run Postgres on port 5433, then set `PG_PORT` to 5433.
 
-In practice this could look like this:
+In practice, this could look like this:
 
 ```
 ENVIO_PG_PORT=5433 envio codegen
@@ -70,7 +70,7 @@ envio codegen
 envio dev
 ```
 
-NOTE: you can further customize how you connect to postgres with these additional environment variables `ENVIO_POSTGRES_PASSWORD`, `ENVIO_PG_USER` and `ENVIO_PG_DATABASE`.
+NOTE: you can further customize how you connect to Postgres with these additional environment variables `ENVIO_POSTGRES_PASSWORD`, `ENVIO_PG_USER`, and `ENVIO_PG_DATABASE`.
 
 ## Smart contract updated after the initial codegen
 
@@ -95,15 +95,15 @@ Warning messages:
 - `Failed Combined Query Filter from block`
 - `Issue while running fetching batch of events from the RPC. Will wait ()ms and try again.`
 
-It is recommend to use [HyperSync](../Advanced/hypersync.md) instead, if the network being indexed from is supported.
+It is recommended to use [HyperSync](../Advanced/hypersync.md) instead if the network being indexed from is supported.
 
 Otherwise, use a different RPC endpoint that is valid in the `config.yaml` file.
 
-## Using correct version of `Node.js`
+## Using the correct version of `Node.js`
 
 If you are using a version of Node.js that is v16 or older, please update to v18 or newer.
 
-## Using correct version of `pnpm`
+## Using the correct version of `pnpm`
 
 If you are using a version of `pnpm` that is v7.8 or older, please update to v8 or newer.
 
