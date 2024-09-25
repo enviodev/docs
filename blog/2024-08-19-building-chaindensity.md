@@ -10,7 +10,7 @@ slug: /building-chaindensity
 
 ## Introduction: The Genesis of ChainDensity
 
-Understanding address activity in blockchain networks is more than just a technical necessity, it reveals the underlying dynamics of decentralized applications. Enter [ChainDensity](https://chaindensity.xyz/), a simple yet powerful tool designed to visualize event and transaction density across [Ethereum](https://ethereum.org/) and any other EVM-compatible blockchain.
+Understanding address activity in blockchain networks is more than just a technical necessity, it reveals the underlying dynamics of decentralized applications. Enter [ChainDensity](https://chaindensity.xyz/), a simple yet powerful tool designed to visualize event and transaction density across Ethereum and any other EVM-compatible blockchain.
 
 ChainDensity transforms raw data into clear visualizations, empowering developers, data analysts, and researchers to uncover trends, optimize performance, and harness the full potential of blockchain technology. By creating density plots that span the entire length of a chain, ChainDensity allows users to quickly grasp when an address is most active and assess its total activity over time.
 
@@ -34,7 +34,10 @@ Event density analysis is very insightful for blockchain data indexing. Traditio
 
 ChainDensity addresses this challenge head-on. It provides a rapid assessment of the volume of events to be indexed and their distribution across the chain. This information is invaluable for planning indexing projects, estimating timelines, and determining the most appropriate indexing methodologies.
 
-Pro-tip: indexing millions of events? Consider using [HyperIndex](https://docs.envio.dev/docs/HyperIndex/hyperindex-basics) (which leverages [HyperSync](https://docs.envio.dev/docs/HyperIndex/hypersync) under the hood) to speed up the process.
+:::tip
+Have an indexer and syncing millions of events?  
+Consider using [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) (which leverages [HyperSync](https://docs.envio.dev/docs/HyperIndex/hypersync) under the hood as an alternative  data source to RPC) to significantly speed up the process.
+ :::
 
 
 ## The Blockchain Data Retrieval Challenge
@@ -49,14 +52,14 @@ This inefficiency isn't unique to ChainDensity's use case; it's a common hurdle 
 
 ## Enter HyperSync: Modern Blockchain Data Retrieval
 
-[HyperSync](https://docs.envio.dev/docs/HyperIndex/hypersync) emerges as a game-changing solution in the blockchain data retrieval landscape. This highly specialized data node, built with Rust, offers a quantum leap in data retrieval speeds while providing unparalleled flexibility.
+[HyperSync](https://docs.envio.dev/docs/HyperSync/overview) emerges as a game-changing solution in the blockchain data retrieval landscape. This highly specialized data node, built with Rust, offers a quantum leap in data retrieval speeds while providing unparalleled flexibility.
 
 ### Key Features of HyperSync:
 
 * A powerful API that is capable of filtering blocks, transactions, logs, and traces.
 * Granular control over data retrieval.
-* Support for [Python](https://www.python.org/), [Rust](https://www.rust-lang.org/), and [NodeJs](https://nodejs.org/en) clients.
-* Compatibility with over 50 EVM chains and [Fuel](https://fuel.network/).
+* Support for [Python](https://github.com/enviodev/hypersync-client-python), [Rust](https://github.com/enviodev/hypersync-client-rust), and [NodeJs](https://github.com/enviodev/hypersync-client-node) clients.
+* Compatibility with ~60 EVM chains and [Fuel](https://github.com/enviodev/hyperfuel-json-api).
 
 ### HyperSync in Action: The ChainDensity Example
 
@@ -131,7 +134,7 @@ Why not head over to the [repo](https://github.com/enviodev/chain-density) and m
 
 ## Use HyperSync yourself
 
-Explore [ChainDensity](https://chaindensity.xyz) to experience the power of [HyperSync](https://docs.envio.dev/docs/HyperIndex/hypersync) firsthand. If you're looking to leverage HyperSync for your project, visit our documentation or hop in our [Discord](https://discord.com/invite/gt7yEUZKeB) for support.
+Explore [ChainDensity](https://chaindensity.xyz) to experience the power of [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) firsthand. If you're looking to leverage HyperSync for your project, visit our documentation or hop in our [Discord](https://discord.com/invite/gt7yEUZKeB) for support.
 
 ## About Envio
 

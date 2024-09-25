@@ -55,9 +55,12 @@ The Tier is the level of support (and therefore reliability) based on the infras
 | Lukso Testnet        | 4201       | https://lukso-testnet.hypersync.xyz or https://4201.hypersync.xyz                   | bronze |                 |
 | Manta                | 169        | https://manta.hypersync.xyz or https://169.hypersync.xyz                            | bronze |                 |
 | Mantle               | 5000       | https://mantle.hypersync.xyz or https://5000.hypersync.xyz                          | gold   |                 |
+| Merlin               | 4200       | https://merlin.hypersync.xyz or https://4200.hypersync.xyz                          | bronze |                 |
 | Metis                | 1088       | https://metis.hypersync.xyz or https://1088.hypersync.xyz                           | bronze |                 |
 | Mev Commit           | 17864      | https://mev-commit.hypersync.xyz or https://17864.hypersync.xyz                     | bronze |                 |
+| Mev Commit Traces    | 17864      | https://mev-commit-traces.hypersync.xyz or https://17864.hypersync.xyz              | bronze | ✔️              |
 | Mode                 | 34443      | https://mode.hypersync.xyz or https://34443.hypersync.xyz                           | bronze |                 |
+| Moonbase Alpha       | 1287       | https://moonbase-alpha.hypersync.xyz or https://1287.hypersync.xyz                  | gold   |                 |
 | Moonbeam             | 1284       | https://moonbeam.hypersync.xyz or https://1284.hypersync.xyz                        | gold   |                 |
 | Morph Testnet        | 2810       | https://morph-testnet.hypersync.xyz or https://2810.hypersync.xyz                   | bronze |                 |
 | Neon Evm             | 245022934  | https://neon-evm.hypersync.xyz or https://245022934.hypersync.xyz                   | bronze |                 |
