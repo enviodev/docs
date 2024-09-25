@@ -28,9 +28,9 @@ These changes simplify the development process and provide a more consistent and
 ### Handlers
 
 - Handlers are now asynchronous - add the `async` keyword and rename `handlerAsync` to `handler`.
-- You can use `handlerWithLoader` if you need a loader, otherwise use `handler` directly.
-- The 'get' function is now asyncronous, so add an `await` before those functions.
-- No labelled entities.
+- You can use `handlerWithLoader` if you need a loader, otherwise, use `handler` directly.
+- The 'get' function is now asynchronous, so add an `await` before those functions.
+- No labeled entities.
 
 ### Loaders
 
@@ -98,7 +98,7 @@ The structure of the `event` parameter has changed in v2. This affects loaders, 
 
 - The `context.Entity.load` function is deprecated and should be replaced with direct calls to `context.Entity.get` in the loader.
 - The `context.ParentEntity.loadField` functions are deprecated and should be replaced with direct calls to `context.ChildEntity.get`.
-- Remove the `Contract` and `Entity` suffixes from generated code.
+- Remove the `Contract` and `Entity` suffixes from the generated code.
 - For JavaScript/TypeScript users:
   - The event param names are not uncapitalized anymore. So you might need to change `event.params.capitalizedParamName` to `event.params.CapitalizedParamName`.
 - For ReScript users:
@@ -232,11 +232,11 @@ const greetingInstance: Greeting = {
 context.Greeting.set(greetingInstance);
 ```
 
-Only change is in the TypeScript/ReScript type for the entity 💪
+The only change is in the TypeScript/ReScript type for the entity 💪
 
 ### 5. Accessing Loaded Data
 
-#### Access data via asyncronous get functions:
+#### Access data via asynchronous get functions:
 
 **Before:**
 
