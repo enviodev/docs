@@ -9,7 +9,7 @@ slug: /terms-of-service
 
 Last updated: February 06, 2024
 
-_The fine print: please note these terms are intended to protect us, where adverse outcomes arise we will do our best to use generally accepted reason and logic as our first port of call._
+_The fine print: Please note these terms are intended to protect us, where adverse outcomes arise we will do our best to use generally accepted reason and logic as our first port of call._
 
 1. **Introduction and Acceptance of Terms**
 
@@ -33,7 +33,7 @@ _The fine print: please note these terms are intended to protect us, where adver
 
 5. **Termination**
 
-   Envio reserves the right to terminate user accounts or suspend access to our services at our discretion. Users will be notified in advance of any such actions, unless deemed necessary for security or legal reasons.
+   Envio reserves the right to terminate user accounts or suspend access to our services at our discretion. Users will be notified in advance of any such actions unless deemed necessary for security or legal reasons.
 
 6. **Governing Law and Dispute Resolution**
 
