@@ -62,8 +62,8 @@ The above example shows how to create single field indices (`@index`) or multi-f
 
 #### Single Column Indices
 
-- **When to use**: Use single column indices when you frequently query a table based on a single field.
-- **Why to use**: Single column indices improve the performance of queries filtering or sorting on a single column.
+- **When to use**: Use single-column indices when you frequently query a table based on a single field.
+- **Why to use**: Single-column indices improve the performance of queries filtering or sorting on a single column.
 
 #### Composite Indices
 
@@ -80,7 +80,7 @@ The above example shows how to create single field indices (`@index`) or multi-f
 #### Structuring Schema
 
 - Ensure fields frequently used in queries are indexed.
-- Use composite indices for queries filtering on multiple fields.
+- Use composite indices for query filtering on multiple fields.
 - Avoid unnecessary indices on fields rarely used in queries.
 
 #### Optimizing Hasura GraphQL Queries
