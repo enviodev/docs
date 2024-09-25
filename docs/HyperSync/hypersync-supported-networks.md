@@ -6,11 +6,11 @@ slug: /hypersync-supported-networks
 ---
 
 :::note
-We are rapidly adding new supported networks. If you don't see your network here or would like us to add a network to HyperSync, pop us a message in [Discord](https://discord.gg/Q9qt8gZ2fX).
+We are rapidly adding new supported networks. If you don't see your network here or would like us to add a network to HyperSync, pop us a message in our [Discord](https://discord.gg/Q9qt8gZ2fX).
 :::
 
 :::info
-The Tier is the level of support (and therefore reliability) based on infrastructure running the chain. If you would like us to upgrade a chain's level of support, reach out to us in [Discord](https://discord.gg/Q9qt8gZ2fX).
+The Tier is the level of support (and therefore reliability) based on the infrastructure running the chain. If you would like us to upgrade a chain's level of support, reach out to us in [Discord](https://discord.gg/Q9qt8gZ2fX).
 :::
 
 
