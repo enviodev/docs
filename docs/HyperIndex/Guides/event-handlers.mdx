@@ -20,7 +20,7 @@ in the project directory to generate the functions you will use in your handlers
 
 Each event that you want to process requires that a handler be registered. These functions are asynchronous.
 
-**Note:** _Two other functions, `handlerWithLoader` and `contractRegister`, are also sometimes used but not required for most indexers. Both functions are explored in the Advanced section. `handlerWithLoader` is used to optimize the loading of entities from the database and accessing one-to-many relationships on entities, `contractRegister` is used for registering addresses dynamically from a factory contract._  
+**Note:** _Two other functions, `handlerWithLoader` and `contractRegister`, are also sometimes used but not required for most indexers. Both functions are explored in the Advanced section. `handlerWithLoader` is used to optimize the loading of entities from the database, and accessing one-to-many relationships on entities, `contractRegister` is used for registering addresses dynamically from a factory contract._  
 <!-- TODO: add links to the advanced section about handlerWithLoader and contractRegister -->
 
 ## Handler Function
@@ -71,7 +71,7 @@ Handler functions are used to modify the entities that have been loaded by the l
 
 Additional event information can also be accessed via `event.<EVENT_PROPERTY>`.
 
-Below shows an example type of an event:
+Below is an example type of an event:
 
 ```typescript
 type Event<Params, TransactionFields, BlockFields> = {
@@ -130,7 +130,7 @@ await context.<ENTITY_NAME>.get(<ID>);
 
 The context also contains some logging functions that include the context automatically. You can also use `console.log`.
 
-> Dev note: 📢 For indexers built using `ReScript`, use a lower case for the first letter of `entityName` when accessing it via context (i.e., `context.user` instead of `context.User`).
+> Dev note: 📢 For indexers built using `ReScript`, use a lowercase for the first letter of `entityName` when accessing it via context (i.e., `context.user` instead of `context.User`).
 
 In addition to the `get` function, which is a read-only action, two write actions are provided in the context:
 
@@ -254,7 +254,7 @@ Handlers.Greeter.NewGreeting.handler(async ({ event, context }) => {
 
 <!--
 Maybe this "Config data in the handler" section shouldn't be included here.
-It is a more advanced topic and can be coverred in its own section.
+It is a more advanced topic and can be covered in its section.
 -->
 ## Config Data in the Handler
 We expose the `config.yaml` data in the handler via `getConfigByChainId`. The below code snippets show how to access the `config.yaml` data in the handler and the available data:
