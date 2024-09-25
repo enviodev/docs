@@ -117,4 +117,4 @@ Once you have selected your desired events run the query by clicking the play bu
 
 And just like that, you've successfully indexed the Optimism Bridge contracts on both Optimism and Ethereum Mainnet using the Envio HyperIndex contract import feature.
 
-Be sure to check out our [video walkthrough](https://www.youtube.com/watch?v=9U2MTFU9or0) on Youtube, including other tutorials that showcase Envio’s indexing features and capabilities.
+Be sure to check out our [video walkthrough](https://www.youtube.com/watch?v=9U2MTFU9or0) on YouTube, including other tutorials that showcase Envio’s indexing features and capabilities.
