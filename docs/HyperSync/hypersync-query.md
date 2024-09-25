@@ -10,7 +10,7 @@ slug: /hypersync-query
 This page explains how the HyperSync query works and how to get the data you need from HyperSync.
 
 :::note
-Not all of the features that are implemented in HyperSync are implemented in HyperFuel (Fuel implementation of HyperSync). For example stream and collect functions aren't implemented on the Fuel client as of writing.
+Not all of the features that are implemented in HyperSync are implemented in HyperFuel (Fuel implementation of HyperSync). For example, stream and collect functions aren't implemented on the Fuel client as of writing.
 :::
 
 ## Table of Contents
@@ -29,13 +29,13 @@ This section gives a brief introduction using a simple query example.
 
 Below is an example query that gets some logs and transactions related to a contract at address `0x3f69bb14860f7f3348ac8a5f0d445322143f7fee`.
 
-We will explain the exact semantics of the query in next sections but can just go over the basics here for an introduction.
+We will explain the exact semantics of the query in the next sections but can just go over the basics here for an introduction.
 
 `logs` is the list of `LogSelection`s we want to pass. The server return all logs that match <b>any</b> of our selections.
 
 Also the transactions for the logs that our query matches will be returned. This is because transactions are joined after querying logs implicitly in HyperSync query implementation. Blocks are also joined after transactions but we won't get any blocks because we didn't select any block fields in our `field_selection`.
 
-`field_selection` is for selecting the specific fields we want returned. You can think of it like the part where you list column names in an SQL `SELECT` statement. The available tables are `log`, `transaction`, `block` and `trace`. We will give an exact list of available columns in later sections.
+`field_selection` is for selecting the specific fields we want returned. You can think of it like the part where you list column names in an SQL `SELECT` statement. The available tables are `log`, `transaction`, `block`, and `trace`. We will give an exact list of available columns in later sections.
 
 We also have a `max_num_logs` parameter here which means the query execution will stop as soon as the server realizes it reached or exceeded ten logs in the response. So this is not an exact limit, but it can be effective when trying to fine tune the query response size or runtime.
 
@@ -79,14 +79,14 @@ If you want to drive this query until the end of the blockchain height or if you
 
 ## Query Execution Explained
 
-This section explains how the query executes on the server, step-by-step.
+This section explains how the query executes on the server, step by step.
 
 #### Preliminary
 
-The data in HyperSync server is split into groups by block number. Each groups consists of data for a
+The data in HyperSync server is split into groups by block number. Each group consists of data for a
  contiguous block range. When the query runs, these groups are always queried atomically, meaning if a group
  is queried it is never queried in half. This is important when considering limit arguments like `max_num_logs`
- or when considering time/response_size limits. If server realzes it reached a limit then it will terminate the
+ or when considering time/response_size limits. If the server realizes it reached a limit then it will terminate the
  query after it finishes the current data group it is querying and then return the response to the user. On the
  response it will put `next_block` value which is the block the query stopped at. 
 
@@ -94,14 +94,14 @@ The data in HyperSync server is split into groups by block number. Each groups c
 
 - <b>Time</b>: There is a server-configured time limit that applies to all queries. This limit can be exceeded slightly by the server, the reason is explained in the preliminary above.
 - <b>Response size</b>: There is a server-configured response size limit that applies to all queries. But the user can also set a lower response size limit in their query via max_num_* parameters. This limit can be exceeded slightly by the server, the reason is explained in the preliminary above.
-- <b>to_block</b>: This can be set by the user in query. The number is exclusive so the query will go up-to `to_block` but won't include data from this block. This limit won't be exceeded by the server so the query always will stop at this block number and will not include data from this block number or the later blocks. Also the next_block will be equal to this block number if none of the other limits triggered before server reached this block number.
+- <b>to_block</b>: This can be set by the user in a query. The number is exclusive so the query will go up to `to_block` but won't include data from this block. This limit won't be exceeded by the server so the query always will stop at this block number and will not include data from this block number or the later blocks. Also, the next_block will be equal to this block number if none of the other limits are triggered before the server reaches this block number.
 
 #### Steps
 
 - Server receives the query and checks which block the query starts at.
 - It finds the data group it should start from.
 - It iterates through the data groups using the query until it hits some limit
-- When a limit is hit, the response is serialised and sent back to the client.
+- When a limit is hit, the response is serialized and sent back to the client.
 
 ## Query Fields
 
@@ -534,7 +534,7 @@ This section explains how the `stream` and `collect` functions work on the clien
 
 #### Stream
 
-Stream function runs many internal queries concurrently and gives back the results as they come. It returns a stream handle that can be used to receive the results. It pipelines decoding/decompressing etc. of response chunks so user can get a very efficient experience out of the box. It will stream data until it reaches query.to_block or if to_block was not speicified in the query, it runs until it reaches chain height at the time of the stream start (it gets height of chain when it is starting the stream and runs until it reaches it).
+Stream function runs many internal queries concurrently and gives back the results as they come. It returns a stream handle that can be used to receive the results. It pipelines decoding/decompressing etc. of response chunks so the user can get a very efficient experience out of the box. It will stream data until it reaches query.to_block or if to_block was not specified in the query, it runs until it reaches chain height at the time of the stream start (it gets the height of the chain when it is starting the stream and runs until it reaches it).
 
 <b>WARNING</b>: If you are opening/closing many streams in your program, it is recommended to explicitly call `close` function on the stream handle so there is no resource leakage.
 
@@ -546,7 +546,7 @@ The collect function essentially calls `stream` internally and collects all of t
 
 ## Join Modes
 
-<b>NOTE</b>: The word join does not mean the same as in `SQL` in this context. It means the inclusion of relevant data in the response instead of left/outer joining or similar in `SQL`. You can think of it like you do a select on table `A` and then join in table `B`. In sql this would mean each row contains rows from `A` and `B`. But in HyperSync this means you get data for `A` and `B` seperately and the rows you get from `A` mean you will get the joined in rows from `B` as well in the response. 
+<b>NOTE</b>: The word join does not mean the same as in `SQL` in this context. It means the inclusion of relevant data in the response instead of left/outer joining or similar in `SQL`. You can think of it like you do a select on table `A` and then join table `B`. In SQL this would mean each row contains rows from `A` and `B`. But in HyperSync this means you get data for `A` and `B` separately and the rows you get from `A` mean you will get the joined-in rows from `B` as well in the response. 
 
 In the context of HyperSync, joins refer to the implicit linking of different types of blockchain data (logs, transactions, traces, and blocks) based on certain relationships. Here's an explanation of how these joins work:
 
@@ -562,17 +562,17 @@ In the context of HyperSync, joins refer to the implicit linking of different ty
    - After fetching the relevant transactions (either directly through `transaction_selection` or via logs), HyperSync retrieves the associated traces.
      - Example: If your `transaction_selection` returns transactions or if you get some transactions because of your `log_selection`, HyperSync includes traces related to these transactions in the response as well.
 
-And this same scheme goes on from traces into blocks as well. We realize this doesn't cover all use cases. For example the user can't get logs based on their transaction_selection this way. This is why we implemented alternative `join_mode` implementations.
+And this same scheme goes on from traces into blocks as well. We realize this doesn't cover all use cases. For example, the user can't get logs based on their transaction_selection this way. This is why we implemented alternative `join_mode` implementations.
 
 ### Alternative Join Modes 
 
 1. **JoinAll**:
 
-   This mode first builds up a list of transactions based on selection of every table. For example the list will include a transaction if your `log_selection` selected a log generated by this transaction.
+   This mode first builds up a list of transactions based on the selection of every table. For example, the list will include a transaction if your `log_selection` selected a log generated by this transaction.
 
-   Then it includes every object relating to any of these transactions on the list. For example it includes all traces that were generated by any of these transactions on the list.
+   Then it includes every object relating to any of these transactions on the list. For example, it includes all traces that were generated by any of these transactions on the list.
 
-   For example let's say you selected a trace. It will include the transaction that generated this trace. And then it will include everything related to this transaction including all the logs, traces, the block and the transaction itself.
+   For example, let's say you selected a trace. It will include the transaction that generated this trace. Then it will include everything related to this transaction including all the logs, traces, the block, and the transaction itself.
 
 3. **JoinNothing**:
    This mode completely removes joining so you only get what your selections match. For example if your `log_selection` matches a log then you will only get that log, you will not get the block of the log or the transaction that generated that log.
