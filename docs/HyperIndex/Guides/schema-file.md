@@ -136,7 +136,98 @@ type Token {
 }
 ```
 
-## Other design tip(s)
+## Advanced: Customize Decimal Precision of `BigInt` and `BigDecimal` Fields
+
+When working with large integers or high-precision decimal numbers in your application, you might need to customize the precision and scale of your `BigInt` and `BigDecimal` fields. This ensures that your database stores these numbers accurately according to your specific requirements. If you know your numbers will not be too big, you can also optimize the database by not over-allocating on the precision.
+
+### Using the `@precision` Directive with `BigInt`
+
+The `@precision` directive allows you to specify the maximum number of digits for a `BigInt` field. This is useful when you need to store very large integers and want to control their precision in the database.
+
+**Syntax:**
+
+```graphql
+fieldName: BigInt @precision(digits: <number_of_digits>)
+```
+
+### Using the `@numeric` Directive with `BigDecimal`
+
+The `@numeric` directive allows you to define both the precision (total number of digits) and the scale (number of digits after the decimal point) for a `BigDecimal` field. This is essential when handling high-precision decimal numbers, such as monetary values.
+
+**Syntax:**
+
+```graphql
+fieldName: BigDecimal @numeric(precision: <total_digits>, scale: <decimal_digits>)
+```
+
+**Example:**
+
+```graphql
+type Product {
+  id: ID!
+  price: BigDecimal @numeric(precision: 10, scale: 2)
+}
+```
+
+In this example, the `price` field can store numbers with up to 10 digits in total, with 2 digits after the decimal point (e.g., `99999999.99`).
+
+### Example Usage
+
+Here is an exhaustiveexample demonstrating how to use these directives in your schema:
+
+```graphql
+type PostgresNumericPrecisionEntityTester {
+  id: ID!
+  exampleBigInt: BigInt @precision(digits: 76)
+  exampleBigIntRequired: BigInt! @precision(digits: 77)
+  exampleBigIntArray: [BigInt!] @precision(digits: 78)
+  exampleBigIntArrayRequired: [BigInt!]! @precision(digits: 79)
+  exampleBigDecimal: BigDecimal @numeric(precision: 80, scale: 5)
+  exampleBigDecimalRequired: BigDecimal! @numeric(precision: 81, scale: 5)
+  exampleBigDecimalArray: [BigDecimal!] @numeric(precision: 82, scale: 5)
+  exampleBigDecimalArrayRequired: [BigDecimal!]! @numeric(precision: 83, scale: 5)
+}
+```
+
+### Postgres Precision and Scale Details
+
+<details>
+  <summary>Click to expand Postgres precision and scale details</summary>
+
+In PostgreSQL, the `NUMERIC` data type is used to store exact numeric values with user-defined precision and scale. Understanding how these work is crucial when customizing your numeric fields.
+
+- **Precision:** Total number of significant digits in the number (both to the left and right of the decimal point).
+- **Scale:** Number of digits after the decimal point.
+
+**Examples:**
+
+- A number `12345.678` has a precision of 8 and a scale of 3.
+- With a `NUMERIC(10, 2)` data type, you can store numbers up to `99999999.99`.
+
+**Key Points:**
+
+- **Precision and Scale Limits:**
+  - The maximum number of digits to the left of the decimal point is `precision - scale`.
+  - The total number of digits cannot exceed the specified precision.
+
+- **Rounding and Truncation:**
+  - If you insert a number with more decimal places than the specified scale, PostgreSQL will round it.
+  - If the integer part exceeds the allowed digits (precision - scale), PostgreSQL will raise an error.
+
+- **Storage Size:**
+  - The storage size of a `NUMERIC` field depends on its declared precision.
+
+By customizing precision and scale in your schema, you directly influence how PostgreSQL stores and validates your numeric data, ensuring data integrity and optimal storage usage.
+
+**Additional Resources:**
+
+- [PostgreSQL Numeric Types Documentation](https://www.postgresql.org/docs/current/datatype-numeric.html)
+  
+</details>
+
+---
+
+## Other Design Tips
 
 - Use lowercase for the first letter of field names (i.e. `latestGreeting` and `numberOfGreetings`) inside entities.
 
