@@ -17,7 +17,7 @@ const HYPERSYNC_COLUMNS = [
   { name: 'Network Name', width: 20 },
   { name: 'Network ID', width: 10 },
   { name: 'URL', width: 83 },
-  { name: 'Tier', width: 12 },
+  { name: 'Tier', width: 4 },
   { name: 'Supports Traces', width: 15 }
 ];
 
@@ -61,12 +61,12 @@ const generateHyperSyncTable = (data) => {
 
   sortAndFilterChains(data).forEach(chain => {
     const networkName = getNetworkName(chain);
-    let tier = 'bronze'; // default tier
+    let tier = '🥉'; // default tier
 
     if (chain.tier === 'paid-rpc') {
-      tier = 'gold';
+      tier = '🏅';
     } else if (EXPERIMENTAL_CHAINS.includes(chain.name)) {
-      tier = 'experimental';
+      tier = '🧪';
     }
 
     const supportsTraces = chain.additional_features && chain.additional_features.includes('TRACES') ? TICK : ' ';
