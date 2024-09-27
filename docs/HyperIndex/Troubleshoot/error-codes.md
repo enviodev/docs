@@ -186,6 +186,18 @@ Please ensure all values within each schema enum type are unique.
 
 All enum and entity definitions must have unique names within the schema. Please update the schema with a unique identifier for all types and enums.
 
+### `EE215`: A directive is used in an incorrect place.
+
+For example, some directives should only be used on certain field types in the GraphQL schema, and putting them on a field type that they are not compatible with will throw this error code.
+
+### `EE216`:  Incorrect parameter labels or number given to a directive.
+
+If you pass three values to a directive that only wants two values as arguments, or if you use the incorrect label on an argument in a directive, you will get this error code.
+
+### `EE217`:  The type of a field in a directive has the wrong type.
+
+Directives in the GraphQL schema are reasonably strictly typed. So for example, if a parameter to a directive has to be a positive integer and you pass a negative integer, the code will fail.
+
 ### `EE300`: Event ABI Error
 
 Cannot parse the provided ABI for the contract.
