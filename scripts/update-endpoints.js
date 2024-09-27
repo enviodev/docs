@@ -9,13 +9,15 @@ const RENAME_CONFIG = {
   // Add other renaming rules here
 };
 
+const EXPERIMENTAL_CHAINS = ['neon-evm', 'x-layer', 'zeta', 'cyber', 'galadrial', 'metis'];
+
 const FILTER_ENDPOINTS = [/^staging-/];
 
 const HYPERSYNC_COLUMNS = [
   { name: 'Network Name', width: 20 },
   { name: 'Network ID', width: 10 },
   { name: 'URL', width: 83 },
-  { name: 'Tier', width: 6 },
+  { name: 'Tier', width: 4 },
   { name: 'Supports Traces', width: 15 }
 ];
 
@@ -59,7 +61,14 @@ const generateHyperSyncTable = (data) => {
 
   sortAndFilterChains(data).forEach(chain => {
     const networkName = getNetworkName(chain);
-    const tier = chain.tier === 'paid-rpc' ? 'gold' : 'bronze';
+    let tier = '🥉'; // default tier
+
+    if (chain.tier === 'paid-rpc') {
+      tier = '🏅';
+    } else if (EXPERIMENTAL_CHAINS.includes(chain.name)) {
+      tier = '🧪';
+    }
+
     const supportsTraces = chain.additional_features && chain.additional_features.includes('TRACES') ? TICK : ' ';
     const url = `https://${chain.name}.hypersync.xyz or https://${chain.chain_id}.hypersync.xyz`;
 
