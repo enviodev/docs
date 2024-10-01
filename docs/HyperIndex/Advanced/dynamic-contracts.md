@@ -27,18 +27,6 @@ You can register a dynamic contract by including the following line inside the `
 
 > The syntax is exactly the same for JavaScript, TypeScript, and ReScript.
 
-## Contract Registration on Fuel
-
-The HyperIndex on Fuel still uses the v1 API, so the contract registration is done via the `loader` function.
-
-You can register a dynamic contract by including the following line inside the loader function:
-
-```javascript
-context.contractRegistration.add<your-contract-name>(<address-of-the-contract>)
-```
-
-> The syntax is exactly the same for JavaScript, TypeScript, and ReScript.
-
 ## Example using an NFT factory
 
 In the NFT factory example, we want to dynamically register all the `SimpleNft` contracts that get created by the `NftFactory` contract, via `SimpleNftCreated` events.

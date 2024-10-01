@@ -95,8 +95,6 @@ After the ABI file is provided, Envio parses all possible events you can use for
 [↑↓ to move, space to select one, → to all, ← to none, type to filter]
 ```
 
-The current version supports indexing `LogData` and `Log` receipts. Join our [Discord](https://discord.com/invite/gt7yEUZKeB) channel to make sure you catch all new releases. We have `Transfer`, `TransferOut`, `Mint`, `Burn`, and `Call` receipts support on our roadmap.
-
 Let's select the events we want to index. I opened the code of the [contract file](https://github.com/FuelLabs/sway-farm/blob/47e3ed5a91593ebcf8d2c67ae6fad41d9954c8a8/contract/src/abi_structs.sw#L365-L406) and realized that for a leaderboard we need only events which update player information. Hence, I left only `NewPlayer`, `LevelUp`, and `SellItem` selected in the list. We'd want to index more events in real life, but this is enough for the tutorial.
 
 ```bash
@@ -111,6 +109,8 @@ Let's select the events we want to index. I opened the code of the [contract fil
 [↑↓ to move, space to select one, → to all, ← to none, type to filter]
 ```
 
+> 📖 For the tutorial we only need to index `LOG_DATA` receipts, but you can also index `Mint`, `Burn`, `Transfer` and `Call` receipts. Read more about [Supported Event Types](/docs/HyperIndex/fuel#supported-event-types).
+
 Just a few simple questions left. Let's call our contract `SwayFarm`:
 
 ```bash
@@ -124,7 +124,7 @@ Set an address for the deployed contract:
 [Use the proxy address if your abi is a proxy implementation]
 ```
 
-And finish the initialization process:
+Finish the initialization process:
 
 ```bash
 ? Would you like to add another contract?
@@ -152,7 +152,7 @@ Everything is configured by modifying the 3 files below. Let's walk through each
 - schema.graphql [`Guide`](../Guides/schema-file.md)
 - EventHandlers.\* [`Guide`](../Guides/event-handlers.mdx)
 
-> (\* depending on the language chosen for indexer)
+> (\* depending on the language chosen for the indexer)
 
 ### `config.yaml`
 
@@ -179,7 +179,7 @@ networks:
             logId: "169340015036328252"
 ```
 
-In the tutorial, we don't need to adjust it in any way. But later you can modify the file add more events for indexing.
+In the tutorial, we don't need to adjust it in any way. But later you can modify the file and add more events for indexing.
 
 As a nice to have, you can use a [Sway](https://docs.fuel.network/docs/sway/) struct name without specifying a `logId`, like this:
 
@@ -191,7 +191,7 @@ As a nice to have, you can use a [Sway](https://docs.fuel.network/docs/sway/) st
 
 ### `schema.graphql`
 
-The `schema.graphql` file serves as a representation of your application's data model. It defines entity types that directly correspond to database tables, and the event handlers you create are responsible for creating and updating records within those tables. Additionally, the GraphQL API is automatically generated based on the entity types specified in the `schema.graphql` file, to allow access for the indexed data.
+The `schema.graphql` file serves as a representation of your application's data model. It defines entity types that directly correspond to database tables, and the event handlers you create are responsible for creating and updating records within those tables. Additionally, the GraphQL API is automatically generated based on the entity types specified in the `schema.graphql` file, to allow access to the indexed data.
 
 > 🧠 A separate [Guide](../Guides/schema-file.md) page provides more details about the `schema.graphql` file.
 
