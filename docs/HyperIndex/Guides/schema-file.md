@@ -136,58 +136,58 @@ type Token {
 }
 ```
 
-## Advanced: Customize Decimal Precision of `BigInt` and `BigDecimal` Fields
+## Advanced: @config Directive for Decimal Precision of `BigInt` and `BigDecimal` Fields
 
 When working with large integers or high-precision decimal numbers in your application, you might need to customize the precision and scale of your `BigInt` and `BigDecimal` fields. This ensures that your database stores these numbers accurately according to your specific requirements. If you know your numbers will not be too big, you can also optimize the database by not over-allocating on the precision.
+### Using the `@config` Directive
 
-### Using the `@precision` Directive with `BigInt`
+The `@config` directive allows you to specify custom configurations for fields. For `BigInt` and `BigDecimal` types, you can define precision and scale parameters.
 
-The `@precision` directive allows you to specify the maximum number of digits for a `BigInt` field. This is useful when you need to store very large integers and want to control their precision in the database.
-
-**Syntax:**
+**Syntax for `BigInt`:**
 
 ```graphql
-fieldName: BigInt @precision(digits: <number_of_digits>)
+fieldName: BigInt @config(precision: <number_of_digits>)
 ```
 
-### Using the `@numeric` Directive with `BigDecimal`
-
-The `@numeric` directive allows you to define both the precision (total number of digits) and the scale (number of digits after the decimal point) for a `BigDecimal` field. This is essential when handling high-precision decimal numbers, such as monetary values.
-
-**Syntax:**
+**Syntax for `BigDecimal`:**
 
 ```graphql
-fieldName: BigDecimal @numeric(precision: <total_digits>, scale: <decimal_digits>)
+fieldName: BigDecimal @config(precision: <total_digits>, scale: <decimal_digits>)
 ```
 
 **Example:**
 
 ```graphql
-type Product {
-  id: ID!
-  price: BigDecimal @numeric(precision: 10, scale: 2)
+type Entity {
+    id: ID!
+    amount: BigInt @config(precision: 76)
+    price: BigDecimal @config(precision: 10, scale: 2)
 }
 ```
 
-In this example, the `price` field can store numbers with up to 10 digits in total, with 2 digits after the decimal point (e.g., `99999999.99`).
+In this example:
 
-### Example Usage
+- The `amount` field is a `BigInt` with up to 76 digits.
+- The `price` field is a `BigDecimal` with a total of 10 digits and 2 decimal places.
 
-Here is an exhaustiveexample demonstrating how to use these directives in your schema:
+<details>
+  <summary>Click to expand a complete example of `@config` directive usage</summary>
+### Complete Example Usage
 
 ```graphql
-type PostgresNumericPrecisionEntityTester {
-  id: ID!
-  exampleBigInt: BigInt @precision(digits: 76)
-  exampleBigIntRequired: BigInt! @precision(digits: 77)
-  exampleBigIntArray: [BigInt!] @precision(digits: 78)
-  exampleBigIntArrayRequired: [BigInt!]! @precision(digits: 79)
-  exampleBigDecimal: BigDecimal @numeric(precision: 80, scale: 5)
-  exampleBigDecimalRequired: BigDecimal! @numeric(precision: 81, scale: 5)
-  exampleBigDecimalArray: [BigDecimal!] @numeric(precision: 82, scale: 5)
-  exampleBigDecimalArrayRequired: [BigDecimal!]! @numeric(precision: 83, scale: 5)
+type Entity {
+    id: ID!
+    exampleBigInt: BigInt @config(precision: 76)
+    exampleBigIntRequired: BigInt! @config(precision: 77)
+    exampleBigIntArray: [BigInt!] @config(precision: 78)
+    exampleBigIntArrayRequired: [BigInt!]! @config(precision: 79)
+    exampleBigDecimal: BigDecimal @config(precision: 80, scale: 5)
+    exampleBigDecimalRequired: BigDecimal! @config(precision: 81, scale: 5)
+    exampleBigDecimalArray: [BigDecimal!] @config(precision: 82, scale: 5)
+    exampleBigDecimalArrayRequired: [BigDecimal!]! @config(precision: 83, scale: 5)
 }
 ```
+</details>
 
 ### Postgres Precision and Scale Details
 
