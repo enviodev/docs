@@ -95,8 +95,6 @@ After the ABI file is provided, Envio parses all possible events you can use for
 [↑↓ to move, space to select one, → to all, ← to none, type to filter]
 ```
 
-The current version supports indexing `LogData` and `Log` receipts. Join our [Discord](https://discord.com/invite/gt7yEUZKeB) channel to make sure you catch all new releases. We have `Transfer`, `TransferOut`, `Mint`, `Burn`, and `Call` receipts support on our roadmap.
-
 Let's select the events we want to index. I opened the code of the [contract file](https://github.com/FuelLabs/sway-farm/blob/47e3ed5a91593ebcf8d2c67ae6fad41d9954c8a8/contract/src/abi_structs.sw#L365-L406) and realized that for a leaderboard we need only events which update player information. Hence, I left only `NewPlayer`, `LevelUp`, and `SellItem` selected in the list. We'd want to index more events in real life, but this is enough for the tutorial.
 
 ```bash
@@ -110,6 +108,8 @@ Let's select the events we want to index. I opened the code of the [contract fil
   [x] LevelUp
 [↑↓ to move, space to select one, → to all, ← to none, type to filter]
 ```
+
+> 📖 For the tutorial we only need to index `LOG_DATA` receipts, but you can also index `Mint`, `Burn`, `Transfer` and `Call` receipts. Read more about [Supported Event Types](/docs/HyperIndex/fuel#supported-event-types).
 
 Just a few simple questions left. Let's call our contract `SwayFarm`:
 

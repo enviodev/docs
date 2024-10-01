@@ -48,9 +48,50 @@ Or gain inspiration from already running indexers built by other developers on F
 
 `HyperIndex` on Fuel supports all relevant features EVM indexer does, including [Dynamic Contracts / Factories](../Advanced/dynamic-contracts.md), [Testing Framework](/docs/HyperIndex/testing), [No-code Quickstart](/docs/HyperIndex/contract-import), [Hosted Service](../Hosted_Service/hosted-service.md) and more.
 
-Also, compared to EVM, Fuel provides many more kinds of possible events. Now, we support indexing only `LogData` receipts (the `log` calls in a [Sway](https://docs.fuel.network/docs/sway/) contract), but we are working on supporting `Transfer`, `TransferOut`, `Mint`, `Burn`, and `Call` receipts in the near future.
-
 > Join our [Discord](https://discord.com/invite/gt7yEUZKeB) channel to make sure you catch all new releases.
+
+### Supported Event Types
+
+Envio supports many different event types for indexing on Fuel Network.
+
+The default and most flexible one is indexing `LOG_DATA` receipts, which are created by the `log` calls in a [Sway](https://docs.fuel.network/docs/sway/) contract.
+
+This is similar to `emit` in Solidity contracts but much more flexible because you can pass any data to the Sway `log` function, not only events declared beforehand.
+
+To add an event for a `LOG_DATA` receipt in your contract config, you need to add the name used for the generated code and `logId`, which you can find in the ABI file:
+
+```
+events:
+  - name: NewGreeting
+    logId: "8500535089865083573"
+```
+
+If the name matches the logged struct name in Sway, you can omit the `logId` field. We will derive it automatically from the config file.
+
+> 📖 Also, to avoid manually extracting logIds from ABI, you can use the [contract import](/docs/HyperIndex/contract-import), which will automatically generate the config file with events you want to index.
+
+Compared to EVM, Fuel allows indexing `Mint`, `Burn`, `Transfer` and `Call`:
+
+```
+events:
+  - name: Mint
+```
+
+In case you want to change the name to something else, you can use the `type` field:
+
+```
+events:
+  - name: MintMyNft
+    type: mint
+```
+
+> 📖 All event types support [wildcard mode](/docs/HyperIndex/wildcard-indexing)
+
+#### Transfer Event Type
+
+The `Transfer` event type combines the `TRANSFER` and `TRANSFER_OUT` receipts into a single event. The first one is emitted when a contract transfers tokens to another contract, and the second one when a contract transfers tokens to a wallet. For better Developer Experience we group them into a single type.
+
+> 📖 Transfers between wallets are not included in the `Transfer` event type.
 
 ### Migration Guide from the `envio@2.x.x-fuel` version
 
@@ -65,6 +106,8 @@ pnpm i envio@latest
 ```
 
 > If you installed `envio` globally, you will also need to run `pnpm i -g envio@latest`
+
+Add `ecosystem: fuel` to your `config.yaml` file.
 
 Then in your handlers rename `data` to `params`:
 
