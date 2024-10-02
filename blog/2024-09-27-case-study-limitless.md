@@ -10,7 +10,7 @@ slug: /case-study-limitless-prediction-market
 
 Prediction markets are emerging as a new craze in decentralized finance, gaining significant attention and establishing themselves as major players in this cycle's narrative. The upcoming US election is driving this interest, raising questions about the sustainability of trading volume after the election. Others strongly believe that prediction markets have found product-market fit, capturing mainstream attention and joining other established categories like stablecoins, NFTs, meme coins, and lending and borrowing protocols.
 
-This new paradigm of prediction markets leverages blockchain technology and cryptocurrency as infrastructure, offering better user experiences than what existed before. Low fees, global accessibility, permissionless operation, and ease of coordination contribute to their adoption and success. Built on a public blockchain, these platforms ensure that all transactions are transparent, censorship-resistant, and executed quickly and accurately by smart contracts. This also makes them accessible to anyone — unlike traditional prediction market services, which are often restricted by financial regulations.
+This new paradigm of prediction markets leverages blockchain technology and cryptocurrency as infrastructure, offering better user experiences than what existed before. Low fees, global accessibility, permissionless operation, and ease of coordination contribute to their adoption and success. Built on a public blockchain, these platforms ensure that all transactions are transparent, censorship-resistant, and executed quickly and accurately by smart contracts.
 
 Prediction markets are evolving into a new form of media — a source of truth, a peer-to-peer social platform, and an engagement mechanism that incentivizes correctness (or as close to correctness as possible, given the information available).
 
@@ -37,7 +37,7 @@ Currently, Polymarket is the world's largest prediction market. Deployed on Poly
 
 Azuro Protocol stands out for its sports betting markets, which provide the tooling, oracle, and liquidity solution for EVM chains to host sports-specific prediction markets. B.E.T built on top of the Drift Protocol, and Hedgehog, are two popular prediction markets on Solana, with B.E.T. recently reaching $20 million daily volume.
 
-Limitless Labs, a new daily prediction market on Base focusing on price action and sporting events, recently hit [$2 million in volume](https://x.com/trylimitless/status/1833621283290157216). A week prior, Limitless was doing $100k in volume, suggesting its traction.
+Limitless Labs, a new daily prediction market on Base focusing on price action and sporting events, recently hit [$2 million in volume](https://x.com/trylimitless/status/1833621283290157216). A week prior, Limitless was doing $100k in volume, suggesting its traction is growing.
 
 Each prediction market platform aims to be capital-efficient and use different mechanisms to incentivize engagement and accuracy, integrating underlying DeFi capabilities. Some of these include, but are not limited to:
 
