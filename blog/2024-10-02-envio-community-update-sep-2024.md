@@ -15,7 +15,7 @@ We’re back with another exciting update on the latest and greatest advancement
 
 ## 🚀 Version 2.3.0 is now available🚀
 
-We are excited to announce that the current release is **v.2.3.2**!
+We are excited to announce that the current release is **v.2.4.1**!
 
 **What's changed?**
 
