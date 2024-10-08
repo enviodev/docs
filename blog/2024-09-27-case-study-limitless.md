@@ -23,7 +23,7 @@ Prediction markets allow participants to buy and sell shares based on the outcom
 
 ## How do Prediction Markets work?
 
-Prediction markets rely on smart contracts and oracles to function securely and transparently. Smart contracts are self-executing programs on the blockchain that automate the trading process, manage payouts, and ensure trustless execution. Oracles serve as bridges between the blockchain and the real world by providing accurate, tamper-resistant data regarding the outcome of events.
+Prediction markets rely on smart contracts and oracles to function securely and transparently. Smart contracts are self-executing programs on the blockchain that automate the trading process, manage payouts, and ensure trustless execution. Oracles serve as bridges between the blockchain and the real world by providing accurate, tamper-resistant data regarding the outcome of events. 
 
 Prediction markets allow you to bet on whether an event will occur, with financial rewards for correct predictions. You can buy shares in an event's outcome, and if the event happens, you can redeem your shares for a profit.
 
@@ -33,46 +33,49 @@ Overview of Prediction Markets
 
 <img src="/blog-assets/case-study-limitless-3.png" alt="Cover Image Limitless Prediction Markets Case Study" width="100%"/>
 
-Currently, Polymarket is the world's largest prediction market. Deployed on Polygon, Polymarket has experienced exponential growth, with elections accounting for 85% of its total volume. In July 2024, the platform generated an impressive $137.3 million in weekly trading volume. Data also suggests that non-election prediction markets have been increasing, such as betting on crypto prices, sports results, or social events.
+Currently, Polymarket is the world's largest prediction market. Deployed on Polygon, Polymarket has experienced exponential growth, with elections accounting for 85% of its total volume. In July 2024, the platform generated an impressive $137.3 million in weekly trading volume. Data also suggests that non-election prediction markets have been increasing, such as betting on crypto prices, sports results, or social events. 
 
-Azuro Protocol stands out for its sports betting markets, which provide the tooling, oracle, and liquidity solution for EVM chains to host sports-specific prediction markets. B.E.T built on top of the Drift Protocol, and Hedgehog, are two popular prediction markets on Solana, with B.E.T. recently reaching $20 million daily volume.
+Azuro Protocol stands out for its sports betting markets, which provide the tooling, oracle, and liquidity solution for EVM chains to host sports-specific prediction markets. B.E.T. built on top of the Drift Protocol, and Hedgehog, are two popular prediction markets on Solana, with B.E.T. recently reaching $20 million daily volume. 
 
-Limitless Labs, a new daily prediction market on Base focusing on price action and sporting events, recently hit over [$6.5 million in volume](https://dune.com/limitless_exchange/limitless). A week prior, Limitless was doing $100k in volume, suggesting its traction is growing.
+Limitless Exchange, a new daily prediction market on Base focusing on price action and sporting events, recently hit over [$6.5 million](https://dune.com/limitless_exchange/limitless) in volume. A week prior, Limitless was doing $100k in volume, suggesting its traction is growing.
 
 Each prediction market platform aims to be capital-efficient and use different mechanisms to incentivize engagement and accuracy, integrating underlying DeFi capabilities. Some of these include, but are not limited to:
 
-- Earning yield on your positions, integrating yield through lending/borrowing platforms
-- Hedging positions, by going long on a prediction market while simultaneously shorting a cryptocurrency, such as Bitcoin.
-- Utilizing different tokens as collateral, not just stablecoins. Limitless allows the use of USDC, ETH, as well as any ERC-20-compliant token.
-- DAO structures and governance models allow participants to stake tokens on the underlying platform token and vote in determining future markets
+- Earning yield on your positions, integrating yield through lending/borrowing platforms 
+- Hedging positions, by going long on a prediction market while simultaneously shorting a cryptocurrency, such as Bitcoin. 
+- Utilizing different tokens as collateral, not just stablecoins. Limitless allows the use of USDC, ETH, BTC as well as any - ERC-20-compliant token. 
+- DAO structures and governance models allow participants to stake tokens on the underlying platform token and vote in determining future markets 
+
 
 ## Project Spotlight: Limitless Labs
 
-Envio has had the pleasure of working closely with the Limitless Labs team, a daily prediction market built on Base and coined as the “people's prediction market.”
+Envio has had the pleasure of working closely with the team behind Limitless Exchange, a daily prediction market built on Base and coined as the “people's prediction market.”
 
-With [Limitless](https://limitless.exchange/), participants can use various tokens, take part in transparent voting for upcoming markets, and engage in opportunities created by the community. The platform promotes community involvement, allowing users to configure their own markets and share them with others.
+With [Limitless}(https://limitless.exchange/) Exchange, participants can use various tokens, take part in transparent voting for upcoming markets, and engage in opportunities created by the community. The platform promotes community involvement, allowing users to configure their own markets and share them with others.
 
-Limitless leverages AI-driven data analytics to provide real-time insights, empowering users to make informed predictions based on the latest information. The platform supports a wide range of prediction scenarios, enhancing the overall user experience with timely and accurate data.
+Limitless Exchange leverages AI-driven data analytics to provide real-time insights, empowering users to make informed predictions based on the latest information. The platform supports a wide range of prediction scenarios, enhancing the overall user experience with timely and accurate data.
+
 
 [![Tweet from Limitless Founder](/blog-assets/case-study-limitless-4.png)](https://x.com/cjhtech/status/1829930727397290116)
 
 ## Envio’s role in powering Limitless’s Daily Prediction Markets
 
-While smart contracts and oracles are core infrastructure components that enable decentralized prediction markets to function securely and autonomously, another essential mission-critical infrastructure component in blockchain applications is the ability to deliver real-time updates to users, ensuring a frictionless experience. With ambitious growth objectives and a commitment to a seamless user experience, Limitless recognized the need to optimize its data infrastructure early on to support its expanding range of prediction markets and growth strategy.
+While smart contracts and oracles are core infrastructure components that enable decentralized prediction markets to function securely and autonomously, another essential mission-critical infrastructure component in blockchain applications is the ability to deliver real-time updates to users, ensuring a frictionless experience. With ambitious growth objectives and a commitment to a seamless user experience, the Limitless Exchange team recognized the need to optimize its data infrastructure early on to support its expanding range of prediction markets and growth strategy.
 
-To achieve this, Limitless Labs selected Envio as its data indexer and accelerated data infrastructure partner. Envio provides real-time data query capabilities and blazing-fast indexing of onchain data, allowing Limitless to query its onchain data efficiently through a custom application GraphQL API.
+To achieve this, Limitless Exchange selected Envio as its data indexer and accelerated data infrastructure partner. Envio provides real-time data query capabilities and blazing-fast indexing of onchain data, allowing Limitless to query its onchain data efficiently through a custom application GraphQL API.
+
 
 [![Tweet from Limitless Founder](/blog-assets/case-study-limitless-5.png)](https://x.com/cjhtech/status/1829132368755486735)
 
-The introduction of new features—such as customizable markets, enhanced reward systems, a transaction feed, and a transparent voting system, all of which operate on-chain—requires a robust solution for handling and querying this data efficiently. Envio's feature-rich data indexing framework enables protocols like Limitless to create application-tailored APIs with ease.
+The introduction of new features—such as customizable markets, enhanced reward systems, and a transaction feed, all of which operate on-chain—requires a robust solution for handling and querying this data efficiently. Envio's feature-rich data indexing framework enables protocols like Limitless Exchange to create application-tailored APIs with ease.
 
-Limitless is able to query information such as:
+Limitless Exchange is able to query information such as:
 
 - New prediction markets and their associated contract addresses, collateral tokens, launch dates, and expiry dates
 - Volume traded per market, volume per participant, total volume traded
-- Reward distributions
-- Voting proposals and results
-- Transaction History, such as “Limitless Feed”
+- Price feed from Oracles as resolution source
+- Winning shares and ROI for market participants
+- Transaction History, such as “Limitless Feed” 
 
 <img src="/blog-assets/case-study-limitless-6.png" alt="Screenshot of app showing trading feed" width="100%"/>
 *Screenshot of https://limitless.exchange/ new transaction feed, powered by Envio.*
@@ -80,7 +83,10 @@ Limitless is able to query information such as:
 <img src="/blog-assets/case-study-limitless-7.png" alt="Screenshot of app showing markets" width="100%"/>
 *Screenshot of https://limitless.exchange/ markets overview, powered by Envio.*
 
-The Limitless Indexer can be seen in action in the Explorer of Envio’s Hosted Service [here](https://envio.dev/app/limitless-labs-group/fork-prod/ee7e661).
+<img src="/blog-assets/case-study-limitless-8.png" alt="Screenshot of app showing markets" width="100%"/>
+*A screenshot of https://limitless.exchange/ quick bets, powered by Envio.
+
+The Limitless Exchange Indexer can be seen in action in the Explorer of Envio’s Hosted Service [here](https://envio.dev/app/limitless-labs-group/fork-prod/ee7e661).
 
 ## Other Envio Indexers related to Prediction Markets
 
