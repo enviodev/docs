@@ -1,0 +1,298 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Query",
+  "type": "object",
+  "required": [
+    "from_block"
+  ],
+  "properties": {
+    "blocks": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/BlockSelection"
+      }
+    },
+    "field_selection": {
+      "default": {
+        "block": [],
+        "log": [],
+        "trace": [],
+        "transaction": []
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/FieldSelection"
+        }
+      ]
+    },
+    "from_block": {
+      "type": "integer",
+      "format": "uint64",
+      "minimum": 0.0
+    },
+    "include_all_blocks": {
+      "default": false,
+      "type": "boolean"
+    },
+    "join_mode": {
+      "default": "Default",
+      "allOf": [
+        {
+          "$ref": "#/definitions/JoinMode"
+        }
+      ]
+    },
+    "logs": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/LogSelection"
+      }
+    },
+    "max_num_blocks": {
+      "default": null,
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "uint",
+      "minimum": 0.0
+    },
+    "max_num_logs": {
+      "default": null,
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "uint",
+      "minimum": 0.0
+    },
+    "max_num_traces": {
+      "default": null,
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "uint",
+      "minimum": 0.0
+    },
+    "max_num_transactions": {
+      "default": null,
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "uint",
+      "minimum": 0.0
+    },
+    "to_block": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "uint64",
+      "minimum": 0.0
+    },
+    "traces": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/TraceSelection"
+      }
+    },
+    "transactions": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/TransactionSelection"
+      }
+    }
+  },
+  "definitions": {
+    "Address": {
+      "description": "An Ethereum address represented as a 40-character hexadecimal string.",
+      "type": "string",
+      "pattern": "^(0x)?[0-9a-fA-F]{40}$"
+    },
+    "BlockSelection": {
+      "type": "object",
+      "properties": {
+        "hash": {
+          "description": "Hash of a block, any blocks that have one of these hashes will be returned. Empty means match all.",
+          "default": [],
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Hash"
+          }
+        },
+        "miner": {
+          "description": "Miner address of a block, any blocks that have one of these miners will be returned. Empty means match all.",
+          "default": [],
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Address"
+          }
+        }
+      }
+    },
+    "FieldSelection": {
+      "type": "object",
+      "properties": {
+        "block": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "log": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "trace": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "transaction": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "FilterWrapper": {
+      "description": "A filter wrapper represented as a string.",
+      "type": "string"
+    },
+    "Hash": {
+      "description": "A 32-byte hash represented as a 64-character hexadecimal string.",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{64}$"
+    },
+    "JoinMode": {
+      "type": "string",
+      "enum": [
+        "Default",
+        "JoinAll",
+        "JoinNothing"
+      ]
+    },
+    "LogArgument": {
+      "description": "A log argument represented as a string.",
+      "type": "string"
+    },
+    "LogSelection": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "description": "Address of the contract, any logs that has any of these addresses will be returned. Empty means match all.",
+          "default": [],
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Address"
+          }
+        },
+        "address_filter": {
+          "default": null,
+          "anyOf": [
+            {
+              "$ref": "#/definitions/FilterWrapper"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "topics": {
+          "description": "Topics to match, each member of the top-level array is another array. If the nth topic matches any topic specified in nth element of topics, the log will be returned. Empty means match all.",
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/LogArgument"
+            }
+          }
+        }
+      }
+    },
+    "Sighash": {
+      "description": "A 4-byte sighash represented as an 8-character hexadecimal string.",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}$"
+    },
+    "TraceSelection": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Address"
+          }
+        },
+        "from_filter": {
+          "default": null,
+          "anyOf": [
+            {
+              "$ref": "#/definitions/FilterWrapper"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sighash": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Sighash"
+          }
+        }
+      }
+    },
+    "TransactionSelection": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Address"
+          }
+        },
+        "from_filter": {
+          "default": null,
+          "anyOf": [
+            {
+              "$ref": "#/definitions/FilterWrapper"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hash": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Hash"
+          }
+        }
+      }
+    }
+  }
+}

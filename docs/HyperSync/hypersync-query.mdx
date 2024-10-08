@@ -108,124 +108,7 @@ The data in HyperSync server is split into groups by block number. Each group co
 In this section, we show the explanation of each field in the query. We give the content in `rust` style for
  formatting purposes. Field name casing can change based on which language client you are using, e.g. camelCase for nodejs client
 
-```rust
-struct Query {
-    /// The block to start the query from
-    from_block: u64,
-    /// The block to end the query at. If not specified, the query will go until the
-    ///  end of data. Exclusive, the returned range will be [from_block..to_block).
-    ///
-    /// The query will return before it reaches this target block if it hits the time limit
-    ///  configured on the server. The user should continue their query by putting the
-    ///  next_block field in the response into from_block field of their next query. This implements
-    ///  pagination.
-    to_block: Optional<u64>,
-    /// List of log selections, these have an OR relationship between them, so the query will return logs
-    /// that match any of these selections.
-    logs: Array<LogSelection>,
-    /// List of transaction selections, the query will return transactions that match any of these selections and
-    ///  it will return transactions that are related to the returned logs.
-    transactions: Array<TransactionSelection>,
-    /// List of trace selections, the query will return traces that match any of these selections and
-    ///  it will re turn traces that are related to the returned logs.
-    traces: Array<TraceSelection>,
-    /// Weather to include all blocks regardless of if they are related to a returned transaction or log. Normally
-    ///  the server will return only the blocks that are related to the transaction or logs in the response. But if this
-    ///  is set to true, the server will return data for all blocks in the requested range [from_block, to_block).
-    include_all_blocks: bool,
-    /// Field selection. The user can select which fields they are interested in, requesting less fields will improve
-    ///  query execution time and reduce the payload size so the user should always use a minimal number of fields.
-    field_selection: FieldSelection,
-    /// Maximum number of blocks that should be returned, the server might return more blocks than this number but
-    ///  it won't overshoot by too much.
-    max_num_blocks: Optional<usize>,
-    /// Maximum number of transactions that should be returned, the server might return more transactions than this number but
-    ///  it won't overshoot by too much.
-    max_num_transactions: Optional<usize>,
-    /// Maximum number of logs that should be returned, the server might return more logs than this number but
-    ///  it won't overshoot by too much.
-    max_num_logs: Optional<usize>,
-    /// Maximum number of traces that should be returned, the server might return more traces than this number but
-    ///  it won't overshoot by too much.
-    max_num_traces: Optional<usize>,
-    /// Selects join mode for the query,
-    /// Default: join in this order logs -> transactions -> traces -> blocks
-    /// JoinAll: join everything to everything. For example if logSelection matches log0, we get the
-    /// associated transaction of log0 and then we get associated logs of that transaction as well. Applites similarly
-    /// to blocks, traces.
-    /// JoinNothing: join nothing.
-    #[serde(default)]
-    pub join_mode: JoinMode,
-}
-
-struct LogSelection {
-    /// Address of the contract, any logs that has any of these addresses will be returned.
-    /// Empty means match all.
-    address: Array<Address>,
-    /// Topics to match, each member of the top level array is another array, if the nth topic matches any
-    ///  topic specified in nth element of topics, the log will be returned. Empty means match all.
-    topics: Array<Array<Topic>>,
-}
-
-struct TransactionSelection {
-    /// Address the transaction should originate from. If transaction.from matches any of these, the transaction
-    /// will be returned. Keep in mind that this has an and relationship with `to` filter, so each transaction should
-    /// match both of them. Empty means match all.
-    from: Array<Address>,
-    /// Address the transaction should go to. If transaction.to matches any of these, the transaction will
-    /// be returned. Keep in mind that this has an and relationship with `from` filter, so each transaction should
-    /// match both of them. Empty means match all.
-    to: Array<Address>,
-    /// If first 4 bytes of transaction input matches any of these, transaction will be returned. Empty means match all.
-    sighash: Array<Sighash>,
-    /// If transaction.status matches this value, the transaction will be returned.
-    status: Optional<u8>,
-    /// If transaction.type matches any of these values, the transaction will be returned.
-    #[rename("type")]
-    kind: Array<u8>,
-    // If transaction.contract_address matches any of these values, the transaction will be returned.
-    contract_address: Array<Address>,
-}
-
-struct TraceSelection {
-    /// Address the trace should originate from. If trace.from matches any of these, the trace
-    /// will be returned. Keep in mind that this has an and relationship with `to` filter, so each trace should
-    /// match both of them. Empty means match all.
-    from: Array<Address>,
-    /// Address the trace should go to. If trace.to matches any of these, the trace will
-    /// be returned. Keep in mind that this has an and relationship with `from` filter, so each trace should
-    /// match both of them. Empty means match all.
-    to: Array<Address>,
-    /// The trace will be returned if the trace is a contract deployment (create) trace
-    /// and the address of the deployed contract matches any of these addresses. Empty means match all.
-    address: Array<Address>,
-    /// If trace.call_type matches any of these values, the trace will be returned.  Empty means match all.
-    /// See ethereum RPC `trace_block` method logs to learn more about this field
-    call_type: Array<String>,
-    /// If trace.reward_type matches any of these values, the trace will be returned.  Empty means match all.
-    /// See ethereum RPC `trace_block` method logs to learn more about this field
-    reward_type: Array<String>,
-    /// If trace.type matches any of these values, the trace will be returned.  Empty means match all.
-    /// For example it can be `reward` or `create`.
-    /// See ethereum RPC `trace_block` method logs to learn more about this field
-    #[rename("type")]
-    kind: Array<String>,
-    /// If first 4 bytes of trace input matches any of these, trace will be returned. Empty means match all.
-    /// Sighash is a ethereum style hex encoded string of four bytes, e.g. 0xa2b4c6d8
-    sighash: Array<Sighash>,
-}
-
-struct FieldSelection {
-    /// List of names of columns to return from block table
-    block: Array<String>,
-    /// List of names of columns to return from transaction table
-    transaction: Array<String>,
-    /// List of names of columns to return from log table
-    log: Array<String>,
-    /// List of names of columns to return from trace table
-    trace: Array<String>,
-}
-```
+<JSONSchemaViewer schema={QuerySchema} />
 
 ## Data Schema
 
@@ -578,3 +461,42 @@ And this same scheme goes on from traces into blocks as well. We realize this do
    This mode completely removes joining so you only get what your selections match. For example if your `log_selection` matches a log then you will only get that log, you will not get the block of the log or the transaction that generated that log.
 
 To use these join modes set `query.join_mode` to the desired value. It defaults to the `Default` mode if it is not specified.
+
+import CodeBlock from '@theme/CodeBlock';
+import Schema from "@site/static/schemas/config.evm.json";
+import QuerySchema from "@site/static/schemas/hypersync/query_schema.json";
+import LogSelectionSchema from "@site/static/schemas/hypersync/log_selection_schema.json";
+import TransactionSelectionSchema from "@site/static/schemas/hypersync/transaction_selection_schema.json";
+import TraceSelectionSchema from "@site/static/schemas/hypersync/trace_selection_schema.json";
+import RollbackGuardSchema from "@site/static/schemas/hypersync/rollback_guard_schema.json";
+import FieldSelectionSchema from "@site/static/schemas/hypersync/field_selection_schema.json";
+import JSONSchemaViewer from "@theme/JSONSchemaViewer";
+
+## JSON Schema
+
+To better understand the structure of the queries and responses, you can refer to the JSON schema files below:
+
+### Full Query Schema
+
+<JSONSchemaViewer schema={QuerySchema} />
+
+### Log Selection Schema
+
+<JSONSchemaViewer schema={LogSelectionSchema} />
+
+### Transaction Selection Schema
+
+<JSONSchemaViewer schema={TransactionSelectionSchema} />
+
+### Trace Selection Schema
+
+<JSONSchemaViewer schema={TraceSelectionSchema} />
+
+### Rollback Guard Schema
+
+<JSONSchemaViewer schema={RollbackGuardSchema} />
+
+### Field Selection Schema
+
+<JSONSchemaViewer schema={FieldSelectionSchema} />
+
