@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RollbackGuard",
+  "description": "Guard for detecting rollbacks",
+  "type": "object",
+  "required": [
+    "block_number",
+    "first_block_number",
+    "first_parent_hash",
+    "hash",
+    "timestamp"
+  ],
+  "properties": {
+    "block_number": {
+      "description": "Block number of last block scanned in memory",
+      "type": "integer",
+      "format": "uint64",
+      "minimum": 0.0
+    },
+    "first_block_number": {
+      "description": "Block number of first block scanned in memory",
+      "type": "integer",
+      "format": "uint64",
+      "minimum": 0.0
+    },
+    "first_parent_hash": {
+      "description": "Parent hash of first block scanned in memory",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Hash"
+        }
+      ]
+    },
+    "hash": {
+      "description": "Block hash of last block scanned in memory",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Hash"
+        }
+      ]
+    },
+    "timestamp": {
+      "description": "Block timestamp of last block scanned in memory",
+      "type": "integer",
+      "format": "int64"
+    }
+  },
+  "definitions": {
+    "Hash": {
+      "description": "A 32-byte hash represented as a 64-character hexadecimal string.",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{64}$"
+    }
+  }
+}
