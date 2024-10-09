@@ -37,7 +37,7 @@ Currently, Polymarket is the world's largest prediction market. Deployed on Poly
 
 Azuro Protocol stands out for its sports betting markets, which provide the tooling, oracle, and liquidity solution for EVM chains to host sports-specific prediction markets. B.E.T. built on top of the Drift Protocol, and Hedgehog, are two popular prediction markets on Solana, with B.E.T. recently reaching $20 million daily volume. 
 
-Limitless Exchange, a new daily prediction market on Base focusing on price action and sporting events, recently hit over [$6.5 million](https://dune.com/limitless_exchange/limitless) in volume. A week prior, Limitless was doing $100k in volume, suggesting its traction is growing.
+Limitless Exchange, a new daily prediction market on Base focusing on price action and sporting events, recently hit over [$9.7 million](https://dune.com/limitless_exchange/limitless) in volume. A week prior, Limitless was doing $100k in volume, suggesting its traction is growing.
 
 Each prediction market platform aims to be capital-efficient and use different mechanisms to incentivize engagement and accuracy, integrating underlying DeFi capabilities. Some of these include, but are not limited to:
 
