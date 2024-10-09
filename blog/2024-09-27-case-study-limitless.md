@@ -29,7 +29,7 @@ Prediction markets allow you to bet on whether an event will occur, with financi
 
 When the event's outcome is determined, the oracle sends the information to the smart contract, which then automatically distributes the rewards to participants based on their positions. This combination of blockchain technology ensures that prediction markets are decentralized, secure, and resistant to manipulation.
 
-Overview of Prediction Markets
+## Overview of Prediction Markets
 
 <img src="/blog-assets/case-study-limitless-3.png" alt="Cover Image Limitless Prediction Markets Case Study" width="100%"/>
 
@@ -49,9 +49,9 @@ Each prediction market platform aims to be capital-efficient and use different m
 
 ## Project Spotlight: Limitless Labs
 
-Envio has had the pleasure of working closely with the team behind Limitless Exchange, a daily prediction market built on Base and coined as the “people's prediction market.”
+Envio has had the pleasure of working closely with the team behind [Limitless Exchange](https://limitless.exchange/), a daily prediction market built on Base and coined as the “people's prediction market.”
 
-With [Limitless}(https://limitless.exchange/) Exchange, participants can use various tokens, take part in transparent voting for upcoming markets, and engage in opportunities created by the community. The platform promotes community involvement, allowing users to configure their own markets and share them with others.
+With Limitless Exchange, participants can use various tokens, take part in transparent voting for upcoming markets, and engage in opportunities created by the community. The platform promotes community involvement, allowing users to configure their own markets and share them with others.
 
 Limitless Exchange leverages AI-driven data analytics to provide real-time insights, empowering users to make informed predictions based on the latest information. The platform supports a wide range of prediction scenarios, enhancing the overall user experience with timely and accurate data.
 
@@ -83,10 +83,10 @@ Limitless Exchange is able to query information such as:
 <img src="/blog-assets/case-study-limitless-7.png" alt="Screenshot of app showing markets" width="100%"/>
 *Screenshot of https://limitless.exchange/ markets overview, powered by Envio.*
 
-<img src="/blog-assets/case-study-limitless-8.png" alt="Screenshot of app showing markets" width="100%"/>
-*A screenshot of https://limitless.exchange/ quick bets, powered by Envio.
+<img src="/blog-assets/case-study-limitless-9.png" alt="Screenshot of app showing markets" width="100%"/>
+*A screenshot of https://limitless.exchange/ quick bets, powered by Envio.*
 
-The Limitless Exchange Indexer can be seen in action in the Explorer of Envio’s Hosted Service [here](https://envio.dev/app/limitless-labs-group/fork-prod/ee7e661).
+The Limitless Exchange Indexer can be seen in action in the Explorer of Envio’s Hosted Service [here](https://envio.dev/app/limitless-labs-group/limitless-exchange-indexer-notifications).
 
 ## Other Envio Indexers related to Prediction Markets
 
