@@ -47,7 +47,7 @@ Each prediction market platform aims to be capital-efficient and use different m
 - DAO structures and governance models allow participants to stake tokens on the underlying platform token and vote in determining future markets 
 
 
-## Project Spotlight: Limitless Labs
+## Project Spotlight: Limitless Exchange
 
 Envio has had the pleasure of working closely with the team behind [Limitless Exchange](https://limitless.exchange/), a daily prediction market built on Base and coined as the “people's prediction market.”
 
