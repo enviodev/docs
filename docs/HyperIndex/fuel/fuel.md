@@ -141,8 +141,8 @@ Read [HyperFuel documentation](/docs/HyperSync/hyperfuel) to learn more.
 
 :::info
 HyperFuel supports Fuel's mainnet and testnet: <br></br>
-Testnet endpoint: https://fuel-testnet.hypersync.xyz <br></br>
-Mainnet endpoint: https://fuel.hypersync.xyz
+Testnet: https://fuel-testnet.hypersync.xyz <br></br>
+Mainnet: https://fuel.hypersync.xyz
 :::
 
 

@@ -5,13 +5,13 @@ sidebar_label: Overview
 slug: /hyperfuel
 ---
 
-HyperSync is a high-performance data node and accelerated data query layer that powers Envio’s Indexing framework, [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview), for up to 1000x faster data retrieval than standard RPC methods.
+[HyperSync](https://docs.envio.dev/docs/HyperSync/overview) is a high-performance data node and accelerated data query layer that powers Envio’s Indexing framework, [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview), for up to 1000x faster data retrieval than standard RPC methods.
 
-HyperFuel is HyperSync adapted for the [Fuel Network](https://fuel.network/) and is exposed as a low-level API for developers and data analysts to create flexible, high-speed queries for all on-chain data.
+HyperFuel is HyperSync adapted for the [Fuel Network](https://fuel.network/) and is exposed as a low-level API for developers and data analysts to create flexible, high-speed queries for all fuel data.
 
-Users can interact with the HyperFuel in Rust, Python client, Node Js, or JSON API to extract data into parquet files, arrow format, or as typed data. Client examples below.
+Users can interact with the HyperFuel in Rust, Python, NodeJS clients, or directly via the JSON API to extract data into parquet files, arrow format, or as typed data. Client examples are listed furhter below.
 
-Using HyperFuel, application developers can easily sync and search large datasets in a few minutes. HypeFuel is an ideal solution for indexers, block explorers, data analysts, bridges, and other applications or use cases focused on performance.
+Using HyperFuel, application developers can easily sync and search large datasets in a few minutes. HyperFuel is an ideal solution for indexers, block explorers, data analysts, bridges, and other applications or use cases focused on performance.
 
 You can integrate with HyperFuel using any of our clients:
 
@@ -23,8 +23,8 @@ You can integrate with HyperFuel using any of our clients:
 
 :::info
 HyperFuel supports Fuel's mainnet and testnet: <br></br>
-Testnet endpoint: https://fuel-testnet.hypersync.xyz <br></br>
-Mainnet endpoint: https://fuel.hypersync.xyz
+Testnet: https://fuel-testnet.hypersync.xyz <br></br>
+Mainnet: https://fuel.hypersync.xyz
 :::
 
 
