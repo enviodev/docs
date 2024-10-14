@@ -5,50 +5,29 @@ sidebar_label: Fuel
 slug: /fuel
 ---
 
-Until recently, Envio was only available on EVM-compatible blockchains, and now we have extended support to the Fuel Network 🙌
-
-## About Fuel
-
-[Fuel](https://fuel.network/) is an operating system purpose-built for Ethereum rollups. Fuel's unique architecture allows rollups to solve for PSI (parallelization, state minimized execution, interoperability). Powered by the FuelVM, Fuel aims to expand Ethereum's capability set without compromising security or decentralization.
-
-[Website](https://fuel.network/) | [X](https://twitter.com/fuel_network?lang=en) | [Discord](https://discord.com/invite/xfpK4Pe)
-
-## HyperFuel
-
-HyperFuel is [HyperSync](/docs/HyperSync/overview) adapted for the [Fuel Network](https://fuel.network/) and is exposed as a low-level API for developers and data analysts to create niche, flexible, high-speed queries for all on-chain data.
-
-Users can interact with the HyperFuel in Rust, Python client, Node Js, or JSON API to extract data into parquet files, arrow format, or as typed data.
-
-Using HyperFuel, application developers can easily sync and search large datasets in a few minutes.
-
-You can integrate with HyperFuel using any of our clients:
-
-- Rust: https://github.com/enviodev/hyperfuel-client-rust
-- Python: https://github.com/enviodev/hyperfuel-client-python
-- Nodejs: https://github.com/enviodev/hyperfuel-client-node
-- JSON API: https://github.com/enviodev/hyperfuel-json-api
-
-> HyperFuel supports Fuel's testnet at the endpoint https://fuel-testnet.hypersync.xyz
-
-Read [HyperFuel documentation](/docs/HyperSync/hyperfuel) to learn more.
+Until recently, Envio was only available on EVM-compatible blockchains. Envio has extended its support for [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) and [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) to the Fuel Network. ⛽⚡
 
 ## HyperIndex
 
-[HyperIndex](../overview.md) is a real-time indexer built to provide developers with a seamless and efficient indexing solution.
+[HyperIndex](../overview.md) is a modern indexing framework for applications to easily query real-time and historical data on Fuel. 
 
-Learn [How to Index Data on Fuel in \<5mins using Envio](../Tutorials/tutorial-indexing-fuel.md) in a step-by-step tutorial.
+Learn how to index your data on Fuel in < 5mins using Envio in a step-by-step [tutorial](../Tutorials/tutorial-indexing-fuel.md).
 
-Or gain inspiration from already running indexers built by other developers on Fuel:
+Alternatively, gain inspiration from reference indexers built by other developers and projects on Fuel:
 
-- [Spark](https://sprk.fi/) Orderbook Indexer [`github`](https://github.com/compolabs/spark-envio-indexer)
-- Thunder Exchange Indexer [`github`](https://github.com/enviodev/fuel-thunder-exchange)
-- Greeter Indexer [`github`](https://github.com/enviodev/fuel-greeter)
+- [Spark](https://sprk.fi/) Orderbook DEX [`github`](https://github.com/compolabs/spark-envio-indexer)
+- [Mira](https://mira.ly/) AMM DEX [`github`](https://github.com/mira-amm/mira-indexer)
+- [Thunder](https://thundernft.market/) NFT Marketplace [`github`](https://github.com/ThunderFuel/thunder-indexer)
+- [Swaylend](https://swaylend.com/) Lending Protocol [`github`](https://github.com/Swaylend/swaylend-monorepo/tree/develop/apps/indexer)
+- Greeter Tutorial [`github`](https://github.com/enviodev/fuel-greeter)
 
 ### State of the art
 
-`HyperIndex` on Fuel supports all relevant features EVM indexer does, including [Dynamic Contracts / Factories](../Advanced/dynamic-contracts.md), [Testing Framework](/docs/HyperIndex/testing), [No-code Quickstart](/docs/HyperIndex/contract-import), [Hosted Service](../Hosted_Service/hosted-service.md) and more.
+`HyperIndex` on Fuel supports all relevant features the EVM indexer does, including [No-code Quickstart](/docs/HyperIndex/contract-import), [Dynamic Contracts / Factories](../Advanced/dynamic-contracts.md), [Testing Framework](/docs/HyperIndex/testing), [Hosted Service](../Hosted_Service/hosted-service.md), [Wildcard indexing](../Advanced/wildcard-indexing.mdx) and more.
 
-> Join our [Discord](https://discord.com/invite/gt7yEUZKeB) channel to make sure you catch all new releases.
+:::info
+Join our [Discord](https://discord.com/invite/gt7yEUZKeB) channel to make sure you catch all new releases.
+:::
 
 ### Supported Event Types
 
@@ -68,7 +47,9 @@ events:
 
 If the name matches the logged struct name in Sway, you can omit the `logId` field. We will derive it automatically from the config file.
 
-> 📖 Also, to avoid manually extracting logIds from ABI, you can use the [contract import](/docs/HyperIndex/contract-import), which will automatically generate the config file with events you want to index.
+:::tip
+📖 Also, to avoid manually extracting logIds from ABI, you can use the [contract import](/docs/HyperIndex/contract-import), which will automatically generate the config file with events you want to index.
+:::
 
 Compared to EVM, Fuel allows indexing `Mint`, `Burn`, `Transfer` and `Call`:
 
@@ -85,13 +66,17 @@ events:
     type: mint
 ```
 
-> 📖 All event types support [wildcard mode](/docs/HyperIndex/wildcard-indexing)
+:::note
+📖 All event types are supported by [Wildcard Indexing](/docs/HyperIndex/wildcard-indexing).
+:::
 
 #### Transfer Event Type
 
 The `Transfer` event type combines the `TRANSFER` and `TRANSFER_OUT` receipts into a single event. The first one is emitted when a contract transfers tokens to another contract, and the second one when a contract transfers tokens to a wallet. For better Developer Experience we group them into a single type.
 
-> 📖 Transfers between wallets are not included in the `Transfer` event type.
+:::note
+📖 Transfers between wallets are not included in the `Transfer` event type.
+:::
 
 ### Migration Guide from the `envio@2.x.x-fuel` version
 
@@ -136,3 +121,33 @@ Also, some other event fields were moved:
 These are all Fuel-related changes, but if you use `loaders` follow the [v1 to v2 migration guide](/docs/HyperIndex/migration-guide-v1-v2) to update to the V2 API.
 
 If you need help, create an issue in our [GitHub repository](https://github.com/enviodev/hyperindex). We'll be happy to help!
+
+## HyperFuel
+
+HyperFuel is [HyperSync](/docs/HyperSync/overview) adapted for the [Fuel Network](https://fuel.network/) and is exposed as a low-level API for developers and data analysts to create niche, flexible, high-speed queries for all on-chain data.
+
+Users can interact with the HyperFuel in Rust, Python client, Node Js, or JSON API to extract data into parquet files, arrow format, or as typed data.
+
+Using HyperFuel, application developers can easily sync and search large datasets in a few minutes.
+
+You can integrate with HyperFuel using any of our clients:
+
+- Rust: https://github.com/enviodev/hyperfuel-client-rust
+- Python: https://github.com/enviodev/hyperfuel-client-python
+- Nodejs: https://github.com/enviodev/hyperfuel-client-node
+- JSON API: https://github.com/enviodev/hyperfuel-json-api
+
+Read [HyperFuel documentation](/docs/HyperSync/hyperfuel) to learn more.
+
+:::info
+HyperFuel supports Fuel's mainnet and testnet: <br></br>
+Testnet endpoint: https://fuel-testnet.hypersync.xyz <br></br>
+Mainnet endpoint: https://fuel.hypersync.xyz
+:::
+
+
+## About Fuel
+
+[Fuel](https://fuel.network/) is an operating system purpose-built for Ethereum rollups. Fuel's unique architecture allows rollups to solve for PSI (parallelization, state minimized execution, interoperability). Powered by the FuelVM, Fuel aims to expand Ethereum's capability set without compromising security or decentralization.
+
+[Website](https://fuel.network/) | [X](https://twitter.com/fuel_network?lang=en) | [Discord](https://discord.com/invite/xfpK4Pe)
