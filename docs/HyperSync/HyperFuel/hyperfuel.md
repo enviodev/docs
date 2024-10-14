@@ -22,9 +22,8 @@ You can integrate with HyperFuel using any of our clients:
 
 
 :::info
-HyperFuel supports Fuel's mainnet and testnet: <br></br>
-Testnet: https://fuel-testnet.hypersync.xyz <br></br>
-Mainnet: https://fuel.hypersync.xyz
+HyperFuel supports Fuel's testnet: <br></br>
+Testnet: https://fuel-testnet.hypersync.xyz
 :::
 
 
