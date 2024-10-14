@@ -5,15 +5,13 @@ sidebar_label: Overview
 slug: /hyperfuel
 ---
 
-HyperSync is a high-performance database and accelerated data query layer that powers Envio’s Indexing framework (HyperIndex) for 100x faster data retrieval than standard RPC methods.
+HyperSync is a high-performance data node and accelerated data query layer that powers Envio’s Indexing framework, [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview), for up to 1000x faster data retrieval than standard RPC methods.
 
-HyperFuel is Hypersync adapted for the [Fuel Network](https://fuel.network/) and is exposed as a low-level API for developers and data analysts to create niche, flexible, high-speed queries for all on-chain data.
+HyperFuel is HyperSync adapted for the [Fuel Network](https://fuel.network/) and is exposed as a low-level API for developers and data analysts to create flexible, high-speed queries for all on-chain data.
 
 Users can interact with the HyperFuel in Rust, Python client, Node Js, or JSON API to extract data into parquet files, arrow format, or as typed data. Client examples below.
 
-Using HyperFuel, application developers can easily sync and search large datasets in a few minutes.
-
-HyperFuel supports Fuel's testnet at the endpoint https://fuel-testnet.hypersync.xyz
+Using HyperFuel, application developers can easily sync and search large datasets in a few minutes. HypeFuel is an ideal solution for indexers, block explorers, data analysts, bridges, and other applications or use cases focused on performance.
 
 You can integrate with HyperFuel using any of our clients:
 
@@ -21,6 +19,14 @@ You can integrate with HyperFuel using any of our clients:
 - Python: https://github.com/enviodev/hyperfuel-client-python
 - Nodejs: https://github.com/enviodev/hyperfuel-client-node
 - JSON API: https://github.com/enviodev/hyperfuel-json-api
+
+
+:::info
+HyperFuel supports Fuel's mainnet and testnet: <br></br>
+Testnet endpoint: https://fuel-testnet.hypersync.xyz <br></br>
+Mainnet endpoint: https://fuel.hypersync.xyz
+:::
+
 
 ## Example usage
 
