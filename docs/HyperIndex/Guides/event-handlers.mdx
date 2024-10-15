@@ -20,7 +20,7 @@ in the project directory to generate the functions you will use in your handlers
 
 Each event that you want to process requires that a handler be registered. These functions are asynchronous.
 
-**Note:** _Two other functions, `handlerWithLoader` and `contractRegister`, are also sometimes used but not required for most indexers. Both functions are explored in the Advanced section. `handlerWithLoader` is used to optimize the loading of entities from the database, and accessing one-to-many relationships on entities, `contractRegister` is used for registering addresses dynamically from a factory contract._  
+**Note:** _Two other functions, `handlerWithLoader` and `contractRegister`, are also sometimes used but not required for most indexers. Both functions are explored in the Advanced section. `handlerWithLoader` is used to optimize the loading of entities from the database, and accessing one-to-many relationships on entities, `contractRegister` is used for registering addresses dynamically from a factory contract._
 <!-- TODO: add links to the advanced section about handlerWithLoader and contractRegister -->
 
 ## Handler Function
@@ -104,6 +104,7 @@ You can expect to get:
 type TransactionFields = {
   hash: string;
   transactionIndex: number;
+  gasUsed: bigint;
 };
 
 type AdditionalBlockFields = {
