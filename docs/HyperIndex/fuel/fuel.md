@@ -5,7 +5,7 @@ sidebar_label: Fuel
 slug: /fuel
 ---
 
-Until recently, Envio was only available on EVM-compatible blockchains. Envio has extended its support for [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) and [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) to the Fuel Network. ⛽⚡
+Until recently, Envio was only available on EVM-compatible blockchains. Envio has extended its support for [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) and [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) to the Fuel Network (mainnet & testnet). ⛽⚡
 
 ## HyperIndex
 
@@ -140,7 +140,8 @@ You can integrate with HyperFuel using any of our clients:
 Read [HyperFuel documentation](/docs/HyperSync/hyperfuel) to learn more.
 
 :::info
-HyperFuel supports Fuel's testnet: <br></br>
+HyperFuel supports Fuel mainnet and testnet: <br></br>
+Mainnet: https://fuel.hypersync.xyz <br></br>
 Testnet: https://fuel-testnet.hypersync.xyz
 :::
 
