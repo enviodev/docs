@@ -65,6 +65,7 @@ module.exports = {
             "Advanced/performance/database-performance-optimization",
             "Advanced/performance/historical-sync",
             "Advanced/performance/latency-at-head",
+            "Advanced/performance/benchmarking",
           ],
         },
       ],
