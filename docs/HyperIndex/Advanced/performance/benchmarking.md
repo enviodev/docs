@@ -13,7 +13,7 @@ You can run `envio start --bench` to capture some benchmarking data while your i
 
 ### Printing the benchmark
 
-Once you have run the indexer for any amount of time you can run `envio benchmark-summar` to print out the result of the benchmark.
+Once you have run the indexer for any amount of time you can run `envio benchmark-summary` to print out the result of the benchmark.
 
 ```
 Time breakdown
