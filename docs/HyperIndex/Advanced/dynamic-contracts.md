@@ -25,6 +25,20 @@ You can register a dynamic contract by including the following line inside the `
 });
 ```
 
+## Contract Pre Registration (Recommended)
+
+You can also configure the "preRegisterDynamicContracts" flag in your event config. For all the events that have this config, there will be an end to end indexer run just for these events to run each relevant contractRegister functions and collect all the dynamic contract addresses. The indexer then restarts with all these addresses from the start block configured for the network (rather than from the block that the contract gets registered). For a standard factory contract setup this drastically reduces indexing time since it doesn't result in many small block range queries but rather larger grouped queries.
+
+```javascript
+<contract-name>.<event-name>.contractRegister(({ event, context }) => {
+    context.add<your-contract-name>(<address-of-the-contract>);
+  },
+  {
+    preRegisterDynamicContracts: true
+  }
+);
+```
+
 > The syntax is exactly the same for JavaScript, TypeScript, and ReScript.
 
 ## Example using an NFT factory
