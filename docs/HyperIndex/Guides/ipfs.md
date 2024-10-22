@@ -242,6 +242,8 @@ We added the sqlite3 dependency to cache the IPFS responses into a local databas
 The following code allows us to create an SQLite database and read and write token metadata to it
 :::
 
+*Make sure to create a `.cache` directory in the root*
+
 ```typescript
 import sqlite3 from "sqlite3";
 import { NftMetadata } from "./types";
