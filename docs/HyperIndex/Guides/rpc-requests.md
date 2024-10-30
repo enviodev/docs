@@ -9,19 +9,24 @@ slug: /rpc-requests
 
 TLDR; The repo for the code base can be found [here](todo_add_link)
 
-What do you do if a specific event handler doesn't have all the information you want to fetch from the blockchain? You can make RPC requests to fetch the information you need. In this guide, we aim to get token information for every token invovled in a Uniswap V3 pool creation event. For each token we should index its name, symbol and decimals.
+**Scenario**  
+In this guide, we aim to get token information for every token involved in a [Uniswap V3 pool creation event](https://docs.uniswap.org/contracts/v3/reference/core/interfaces/IUniswapV3Factory#poolcreated). For each token we should index its name, symbol and decimals.
 
+**Problem**  
 At first glance this may appear to be a simple task as we are only indexing over one event, the [pool created](https://docs.uniswap.org/contracts/v3/reference/core/interfaces/IUniswapV3Factory#poolcreated) event. However, there is one catch, have a look at the event signature: 
 
 ```yaml
 PoolCreated(address indexed token0, address indexed token1, uint24 indexed fee, int24 tickSpacing, address pool)
 ```
 
-The event only provides the token addresses, not the token name, symbol, and decimals. So how are we to fetch this extra information in our event handler? In order to do this, we need to make RPC requests to the token contract.
+The event only provides the token addresses, not the token name, symbol, and decimals. So how are we to fetch this extra information in our event handler? 
+
+**Solution**  
+In order to do this, we need to make RPC requests to the token contract.
 
 ### Prerequisites
 
-This guide assumes basic familiarity with the viem library for making contract calls. Check out the [viem documentation](https://viem.sh/) for more information. This [medium article](https://medium.com/@0xape/typescript-and-viem-quickstart-for-blockchain-scripting-3f1846970b6f) is highly recommened for a gentle introduction to viem with a very similar example to what we are doing here.
+This guide assumes basic familiarity with the viem library for making contract calls. Check out the [viem documentation](https://viem.sh/) for more information. This [medium article](https://medium.com/@0xape/typescript-and-viem-quickstart-for-blockchain-scripting-3f1846970b6f) is highly recommended for a gentle introduction to viem with a very similar example to what we are doing here.
 
 ### Part 1: Create our Uniswap V3 `poolcreated` indexer
 
@@ -54,15 +59,15 @@ rollback_on_reorg: false
 > shema.graphql
 
 :::info
-Simply our schema to only include the pool and token information.
+Simplify our schema to only include the pool and token information.
 :::
 
 ```graphql
 type Token {
   id: ID! #address
   name: String!
-  Symbol: String!
-  Decimals: Int!
+  symbol: String!
+  decimals: Int!
 }
 
 type Pool {
@@ -127,7 +132,9 @@ UniswapV3Factory.PoolCreated.handler(async ({ event, context }) => {
 
 ### Part 2: Fetch token information
 
-Note how we use the `multicall` feature to batch our 3 queries into one request and help avoid rate limiting. Very useful!
+Note how we use the `multicall` feature from Viem to batch our 3 queries into one request to improve performance and help avoid rate limiting. Very useful!
+
+Here, we use an alchemy API key to make RPC requests to the ethereum mainnet. You can get an alchemy API key [here](https://www.alchemy.com/) and add it to your `.env` file. Alternatively, use any other rpc provider of your choice.
 
 > src/tokenDetails.ts
 
@@ -193,7 +200,7 @@ export async function getTokenDetails(
 
 To highlight how important this step is in our use case, imagine how many Uniswap V3 pools have been created with USDC. It would be a complete waste of time to make an rpc request for USDC every time it was involved in a pool creation event!
 
-Seeing as the token details we care about don't change over time, we can cache this information to avoid making the same rpc request multiple times.  We can do this by creating a simple cache object that stores the token information. In this case, we cache the data in a json file. For use cases with more data, you should consider using a proper database as accessing a large json file repeatedly can be slow. See the [ipfs example](https://docs.envio.dev/docs/HyperIndex/ipfs) for an example of how to cache use a SQLite database.
+Since the token details we care about don't change over time, we can cache this information to avoid making the same rpc request multiple times.  We can do this by creating a simple cache object that stores the token information. In this case, we cache the data in a json file. For use cases with more data, you should consider using a proper database as accessing a large json file repeatedly can be slow. See the [ipfs example](https://docs.envio.dev/docs/HyperIndex/ipfs) for an example of how to cache using a SQLite database.
 
 :::info
 our cache implementation is designed to be easily extendable as you can add as many cache categories as you want. Here we only have one category for token information.
@@ -313,5 +320,5 @@ export class Entry<T extends Shape> {
 
 ### Challenges
 
-1. **Historical state**: The rpc requests as shown here function as a regular rpc requests that return the current contract state. They do not fetch historical contract state. In other words, normal rpc requests always return current contract state, not the contract state for the block which your indexer is processing. For our use case, this doesn't matter as the name, symbol, and decimals of a token should not change over time. But let's say you want to fetch the ether balance of an account at a specific historical block, you would a need [special rpc request](https://docs.etherscan.io/api-pro/api-pro#get-historical-ether-balance-for-a-single-address-by-blockno) that is able to fetch historical state.
-2. **Rate limiting**: Rate limiting refers to when a server limits the number of requests a client can make in a given amount of time. This is done to prevent abuse of the server. So if you make too many rpc requests in a short period of time to the same server, your requests may be blocked. The simplest way to avoid this is to check the rate limits of the server you are making requests to and adding a sufficient delay between requests. A slightly more complex way is to use multiple RPC URLs and rotate your requests between them. In our use case, the multicall feature to batch our requests was sufficient to avoid rate limiting.
+1. **Historical state**: The RPC requests as shown here function as a regular RPC requests that return the current contract state. They do not fetch historical contract state. In other words, normal RPC requests always return current contract state, not the contract state for the block which your indexer is processing. For our use case, this doesn't matter as the name, symbol, and decimals of a token should not change over time. But let's say you want to fetch the ether balance of an account at a specific historical block, you would a need [special rpc request](https://docs.etherscan.io/api-pro/api-pro#get-historical-ether-balance-for-a-single-address-by-blockno) that is able to fetch historical state.
+2. **Rate limiting**: Rate limiting refers to when a server limits the number of requests a client can make in a given amount of time. This is done to prevent abuse of the server. So if you make too many RPC requests in a short period of time to the same server, your requests may be blocked. The simplest way to avoid this is to check the rate limits of the server you are making requests to and adding a sufficient delay between requests. A slightly more complex way is to use multiple RPC URLs and rotate your requests between them. In our use case, the multicall feature to batch our requests was sufficient to avoid rate limiting.
