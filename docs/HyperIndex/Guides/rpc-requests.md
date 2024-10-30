@@ -1,13 +1,13 @@
 ---
 id: rpc-requests
-title: RPC Request for contract state
-sidebar_label: rpc requests
+title: RPC Requests
+sidebar_label: RPC Requests
 slug: /rpc-requests
 ---
 
 # RPC Requests guide
 
-TLDR; The repo for the code base can be found [here]()
+TLDR; The repo for the code base can be found [here](todo_add_link)
 
 What do you do if a specific event handler doesn't have all the information you want to fetch from the blockchain? You can make RPC requests to fetch the information you need. In this guide, we aim to get token information for every token invovled in a Uniswap V3 pool creation event. For each token we should index its name, symbol and decimals. 
 
