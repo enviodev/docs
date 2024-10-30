@@ -21,7 +21,7 @@ The event only provides the token addresses, not the token name, symbol, and dec
 
 ### Prerequisites
 
-This guide assumes basic familiarity with the viem library for making contract calls. Check out the [viem documentation](https://viem.sh/) for more information. [This medium article](https://medium.com/@0xape/typescript-and-viem-quickstart-for-blockchain-scripting-3f1846970b6f) is highly recommened for a gentle introduction to viem with a very similar example to what we are doing here.
+This guide assumes basic familiarity with the viem library for making contract calls. Check out the [viem documentation](https://viem.sh/) for more information. This [medium article](https://medium.com/@0xape/typescript-and-viem-quickstart-for-blockchain-scripting-3f1846970b6f) is highly recommened for a gentle introduction to viem with a very similar example to what we are doing here.
 
 ### Part 1: Create our Uniswap V3 `poolcreated` indexer
 
@@ -37,7 +37,7 @@ We remove the `FeeAmountEnabled` and `OwnerChanged` events as they are not relev
 :::
 
 ```yaml
-name: envio-indexer
+name: uniswap-v3-factory-token-indexer
 networks:
 - id: 1
   start_block: 12369620
@@ -193,7 +193,7 @@ export async function getTokenDetails(
 
 To highlight how important this step is in our use case, imagine how many Uniswap V3 pools have been created with USDC. It would be a complete waste of time to make an rpc request for USDC every time it was involved in a pool creation event!
 
-Seeing the token details we care about don't change over time, we can cache this information to avoid making the same rpc request multiple times.  We can do this by creating a simple cache object that stores the token information. In this case, we cache the data in a json file. For use cases with more data, you should consider using a proper database as accessing json data repeatedly can be slow. See the [ipfs example](https://docs.envio.dev/docs/HyperIndex/ipfs) for an example of how to cache using a SQLite database.
+Seeing as the token details we care about don't change over time, we can cache this information to avoid making the same rpc request multiple times.  We can do this by creating a simple cache object that stores the token information. In this case, we cache the data in a json file. For use cases with more data, you should consider using a proper database as accessing a large json file repeatedly can be slow. See the [ipfs example](https://docs.envio.dev/docs/HyperIndex/ipfs) for an example of how to cache use a SQLite database.
 
 :::info
 our cache implementation is designed to be easily extendable as you can add as many cache categories as you want. Here we only have one category for token information.
