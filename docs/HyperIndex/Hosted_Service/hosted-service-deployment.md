@@ -16,6 +16,9 @@ slug: /hosted-service-deployment
    ![Add indexer](/img/hosted-service/add-indexer.webp)
    ![Connect indexer](/img/hosted-service/connect-indexer.webp)
 1. TIP: You may have multiple indexers per repository, differentiated by the config file, root directory and/or the git release branch.
+:::warning
+If you are working in a monorepo make sure all your imports are inside the indexer directory.
+:::
    ![Configure indexer](/img/hosted-service/configure-indexer.webp)
    ![add org](/img/hosted-service/deploy-indexer.webp)
 1. Create a deployment branch
