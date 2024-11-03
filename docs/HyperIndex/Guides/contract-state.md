@@ -1,13 +1,13 @@
 ---
-id: rpc-requests
-title: RPC Requests
-sidebar_label: RPC Requests
-slug: /rpc-requests
+id: contract-state
+title: Contract State
+sidebar_label: Contract State
+slug: /contract-state
 ---
 
-# RPC Requests guide
+# Contract State
 
-TLDR; The repo for the code base can be found [here](todo_add_link)
+TLDR; The repo for the code base can be found [here](https://github.com/enviodev/rpc-token-data-example)
 
 What do you do if a specific event handler doesn't have all the information you want to fetch from the blockchain? You can make RPC requests to fetch the information you need. In this guide, we aim to get token information for every token invovled in a Uniswap V3 pool creation event. For each token we should index its name, symbol and decimals. 
 
@@ -22,7 +22,7 @@ The event only provides the token addresses, not the token name, symbol, and dec
 ### Part 1: Create our Uniswap V3 `poolcreated` indexer
 
 `npx envio init`
-Contract address: `0x1F98431c8aD98523631AE4a59f267346ea31F984`
+Ethereum mainnet contract: [0x1F98431c8aD98523631AE4a59f267346ea31F984](scope.sh/1/address/0x1F98431c8aD98523631AE4a59f267346ea31F984)
 
 We then make some light modifications to remove unnecessary events and simplify the schema. The resulting config, schema, and event handlers look as follows:
 
@@ -82,7 +82,7 @@ import { getTokenDetails } from "./tokenDetails";
 
 UniswapV3Factory.PoolCreated.handler(async ({ event, context }) => {
   const entity: Pool = {
-    id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+    id: `${event.chainId}-${event.block.number}-${event.logIndex}`,
     token0_id: event.params.token0,
     token1_id: event.params.token1,
     fee: event.params.fee,
@@ -91,7 +91,7 @@ UniswapV3Factory.PoolCreated.handler(async ({ event, context }) => {
   };
 
   const {name: name0, symbol: symbol0, decimals: decimals0} = await getTokenDetails(event.params.token0, event.chainId);
-  const {name: name1, symbol: symbol1, decimals: decimals1} = await getTokenDetails(event.params.token0, event.chainId);
+  const {name: name1, symbol: symbol1, decimals: decimals1} = await getTokenDetails(event.params.token1, event.chainId);
 
   context.Pool.set(entity)
   context.Token.set({
@@ -114,17 +114,21 @@ UniswapV3Factory.PoolCreated.handler(async ({ event, context }) => {
 
 This guide assumes basic familiarity with the viem library more making contract calls. Check out the [viem documentation](https://viem.sh/) for more information.
 
-```typescript
-import { createPublicClient, http } from 'viem'
-import { mainnet } from 'viem/chains'
-import { Cache, CacheCategory } from "./cache"; 
-import { getRpcUrl } from './utils';
-const erc20ABI = require("./ERC20.json");
+> src/tokenDetails.ts
 
-const client = createPublicClient({ 
-  chain: mainnet, 
-  transport: http('https://eth-mainnet.g.alchemy.com/v2/<alchemy-api-key>'), 
-}) 
+```typescript
+import { createPublicClient, getContract, http } from 'viem'
+import { mainnet } from 'viem/chains'
+import { Cache, CacheCategory } from "./cache";
+import { ERC20ABI } from './constants';
+
+const apiKey = process.env.ALCHEMY_API_KEY;
+
+const client = createPublicClient({
+  chain: mainnet,
+  transport: http(`https://eth-mainnet.g.alchemy.com/v2/${apiKey}`),
+  batch: { multicall: true }
+})
 
 export async function getTokenDetails(
   contractAddress: string,
@@ -141,26 +145,19 @@ export async function getTokenDetails(
     return token;
   }
 
-  // RPC URL
-  // const rpcURL = getRpcUrl();
+  const contract = getContract({
+    address: contractAddress as `0x${string}`,
+    abi: ERC20ABI,
+    client: { public: client },
+  });
 
-  console.log("attempting to get")
-  console.log(erc20ABI)
   try {
-    const name = await client.readContract({ 
-      ...erc20ABI, 
-      functionName: 'name',
-    })
-    console.log("got name", name)
-    const symbol = await client.readContract({
-      ...erc20ABI,
-      functionName: 'symbol',
-    })
-  
-    const decimals = await client.readContract({
-      ...erc20ABI,
-      functionName: 'decimals',
-    })
+    const [name, symbol, decimals] = await Promise.all([
+      contract.read.name(),
+      contract.read.symbol(),
+      contract.read.decimals(),
+    ]);
+    console.log(`symbol ${symbol} decimals ${decimals} name ${name}`);
 
     const entry = {
       name: name?.toString() || "",
@@ -168,21 +165,18 @@ export async function getTokenDetails(
       decimals: decimals as number,
     } as const;
 
-    console.log("got")
-
-    cache.add({ [contractAddress.toLowerCase()]: entry as any});
+    cache.add({ [contractAddress.toLowerCase()]: entry as any });
 
     return entry;
   } catch (err) {
-    console.error("An error occurred for token ", contractAddress, err);
-    throw err
+    throw err;
   }
 }
 ```
 
 ### Part 3: Cache token information
 
-Seeing as our token details should not change over time, we can cache the token information to avoid making the same rpc request multiple times. We can do this by creating a simple cache object that stores the token information. In this case, we cache the data in a json file. For use cases with more data, you should consider using a proper database as accessing json data repeatedly can be slow. See [ipfs](add link) for an example of how to cache using a SQLite database.
+Seeing as our token details should not change over time, we can cache the token information to avoid making the same rpc request multiple times. We can do this by creating a simple cache object that stores the token information. In this case, we cache the data in a json file. For use cases with more data, you should consider using a proper database as accessing json data repeatedly can be slow. See [ipfs](https://docs.envio.dev/docs/HyperIndex/ipfs) for an example of how to cache using a SQLite database.
 
 :::info
 our cache implementation is designed to be easily extendable as you can add as many cache categories as you want. Here we only have one category for token information.

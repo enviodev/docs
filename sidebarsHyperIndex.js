@@ -19,7 +19,7 @@ module.exports = {
         "Guides/navigating-hasura",
         "Guides/ipfs",
         "Guides/cli-commands",
-        "Guides/rpc-requests"
+        "Guides/contract-state"
       ],
     },
     {
