@@ -5,23 +5,20 @@ sidebar_label: RPC Data Source
 slug: /rpc-sync
 ---
 
-For syncing of events to be indexed, users are required to use RPC endpoints to retrieve events from each different chain.
+HyperIndex natively supports indexing any EVM blockchain using RPC as the data source. See information further below for using RPC as the data source. 
 
-RPC sync configuration is **optional** for the user, and if not defined, the indexer will use default values for the RPC endpoint.
+:::info
+Are you on this page because Hypersync is not supported on the EVM network you want to index? 
 
-Users can configure their own sync behaviour for each RPC endpoint used for additional control.
+The backbone of HyperIndex’s blazing-fast indexing speed lies in using HyperSync as a more performant and cost-effective data source to RPC for data retrieval. While RPCs are functional, and can be used in HyperIndex as a data source, they are far from efficient when it comes to querying large amounts of data (a time-consuming and resource-intensive endeavour).
+:::
 
-The following attributes can be defined for the sync config of each RPC endpoint:
+If a [network is supported](/docs/HyperSync/hypersync-supported-networks) on HyperSync, then HyperSync is used by default as the data source. This means developers don't additionally need to worry about RPCs, rate-limiting, etc. This is especially valuable for multi-chain apps.
 
-- `initial_block_interval`: Initial block interval which the indexer will use to make RPC requests
-- `backoff_multiplicative`: After an RPC error, factor to scale back the number of blocks requested at once
-- `acceleration_additive`: Without RPC errors or timeouts, how much to increase the number of blocks requested for the next batch
-- `interval_ceiling`: Maximum block interval that is allowed for any request on the RPC
-- `backoff_millis`: After an error, how long to wait before retrying in milliseconds
-- `query_timeout_millis`: How long to wait in milliseconds before cancelling an RPC request due to timeout
+If the EVM network that you want to index is not supported on HyperSync, or you want to use RPC as the data source, you can use the following information and configuration options to use RPC for your EVM chain. 
 
-Sync configuration for each RPC endpoint should be defined in `config.yaml` file.
-Below is an example of how sync configuration per RPC endpoint can be defined:
+
+Sync configuration for each RPC endpoint should be defined in `config.yaml` file. Below is an example of how sync configuration per RPC endpoint can be defined:
 
 ```yaml
 - id: 1
@@ -36,11 +33,26 @@ Below is an example of how sync configuration per RPC endpoint can be defined:
   start_block: 0
 ```
 
+Users can configure their own sync behaviour for each RPC endpoint used for additional control.
+
+The following attributes can be defined for the sync config of each RPC endpoint:
+
+- `initial_block_interval`: Initial block interval which the indexer will use to make RPC requests
+- `backoff_multiplicative`: After an RPC error, factor to scale back the number of blocks requested at once
+- `acceleration_additive`: Without RPC errors or timeouts, how much to increase the number of blocks requested for the next batch
+- `interval_ceiling`: Maximum block interval that is allowed for any request on the RPC
+- `backoff_millis`: After an error, how long to wait before retrying in milliseconds
+- `query_timeout_millis`: How long to wait in milliseconds before cancelling an RPC request due to timeout
+
 ---
+
+:::info
+This is an external integration related supplementary to aforementioned RPC usage.
+:::
 
 ## Granular RPC caching and failover
 
-For a more granular approach to handling RPC failovers, permanent caching, auto-batching, etc. you can use [eRPC](https://github.com/erpc/erpc) with [envio HyperRPC](http://localhost:3001/docs/HyperSync/overview-hyperrpc) or other RPC endpoints as the upstream source.
+For a more granular approach to handling RPC failovers, permanent caching, auto-batching, etc. you can use [eRPC](https://github.com/erpc/erpc) with [envio HyperRPC](/docs/HyperSync/overview-hyperrpc) or other RPC endpoints as the upstream source.
 
 [eRPC](https://github.com/erpc/erpc) is a fault-tolerant EVM RPC proxy and re-org aware permanent caching solution, specifically built for read-heavy use-cases like data indexing and high-load frontend usage.
 
