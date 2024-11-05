@@ -46,13 +46,11 @@ The following attributes can be defined for the sync config of each RPC endpoint
 
 ---
 
-:::info
-This is an external integration related supplementary to aforementioned RPC usage.
-:::
-
 ## Granular RPC caching and failover
 
-For a more granular approach to handling RPC failovers, permanent caching, auto-batching, etc. you can use [eRPC](https://github.com/erpc/erpc) with [envio HyperRPC](/docs/HyperSync/overview-hyperrpc) or other RPC endpoints as the upstream source.
+:::info
+This is an external integration supplementary to aforementioned RPC usage with eRPC for a more granular approach to handling RPC failovers, permanent caching, auto-batching, etc. You can use [eRPC](https://github.com/erpc/erpc) with [envio HyperRPC](/docs/HyperSync/overview-hyperrpc) or other RPC endpoints as the upstream source.
+:::
 
 [eRPC](https://github.com/erpc/erpc) is a fault-tolerant EVM RPC proxy and re-org aware permanent caching solution, specifically built for read-heavy use-cases like data indexing and high-load frontend usage.
 
