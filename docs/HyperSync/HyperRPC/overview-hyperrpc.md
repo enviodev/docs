@@ -1,6 +1,6 @@
 ---
 id: overview-hyperrpc
-title: Overview (Alpha available)
+title: Overview
 sidebar_label: Overview
 slug: /overview-hyperrpc
 ---
@@ -30,8 +30,8 @@ Testing the endpoint and providing feedback is hugely valuable. To access these 
 > ### Disclaimer
 >
 > - HyperRPC is still under active development to improve performance and stability.
-> - It has not been audited for security purposes.
 > - It does not support all RPC methods.
+> - It has not been audited for security purposes.
 > - We appreciate your patience until we get there. Until then, we are happy to answer all questions in our [Discord](https://discord.gg/Q9qt8gZ2fX).
 
 ---
