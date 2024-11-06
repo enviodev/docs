@@ -19,7 +19,7 @@ Build a real-time API for your blockchain application in minutes!
 :zap: **Multichain**: Index multiple networks with a single deployment. Query with a unified API.  
 :zap: **Real-time**: Sub-second latency and automatic handling of chain reorganizations.   
 :zap: **Wildcard Indexing**: Index events according to event signatures (e.g. all ERC20 transfers on Base).  
-:zap: **Dynamic Sources / Factory Contracts**: Dynamically index all children contracts contracts (e.g. new token pairs)  
+:zap: **Dynamic Sources / Factory Contracts**: Dynamically index all children contracts (e.g. new token pairs).    
 :zap: **Flexible Language Support**: Write JavaScript, TypeScript, or ReScript with automatically generated types.  
 :zap: **Hosted Service & Self Hosting**: Develop locally, deploy effortlessly. Focus on your app and users, we take care of your infra.  
 :zap: **Detailed Logging & Error Messaging**: Simplify troubleshooting with comprehensive insights.  
