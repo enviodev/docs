@@ -1,6 +1,7 @@
 
 # Exciting News: V2 Hosted Service is Here! 🚀
-[insert blog asset]
+
+<img src="/blog-assets/hosted-service-v2.png" alt="Envio Cover Photo" width="100%"/>
 
 Hold on to your Moonlanders—V2 Hosted Service has arrived! It’s a significant upgrade that brings you faster build times, enhanced features, and an overall smoother experience. Starting **Wednesday, Nov 6th, 2024**, all new deployments will automatically utilize V2. Let’s see what you can expect!👇
 
@@ -34,7 +35,7 @@ You can explore your indexers in our new [Explorer](https://v2.envio.dev/explore
 
 ## No Costs, Just Upgrades!
 
-All developers will automatically be placed on our free development tier, so you won’t incur any costs during this transition. If you’d like to move to a production tier, please fill in[ this form](https://forms.gle/Enpyvpr1ZXze8A819).
+All developers will automatically be placed on our free development tier, so you won’t incur any costs during this transition. If you’d like to move to a production tier, contact us directly via [Discord](https://discord.com/invite/gt7yEUZKeB) or an existing connection.
 
 *⭐Note: The free development tier does have certain limits to maintain optimal performance for everyone. Also, make sure you’re using Envio version v2.6.0 or greater to deploy on the V2 hosted service—upgrade if you haven’t already!*
 
