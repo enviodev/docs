@@ -29,7 +29,7 @@ Behind-the-scenes enhancements:
 
 *🚨Please note: From November 6th, 2024, all new indexer deployments will automatically route to the V2 Hosted Service instead of the current V1 Hosted Service. If you have existing indexers, any new pushes will deploy to V2 as well. *
 
-You can explore your indexers in our new [Explorer](https://v2.hyperindex.xyz/), while your V1 indexers will still be accessible at[ envio.dev](http://envio.dev).
+You can explore your indexers in our new [Explorer](https://v2.envio.dev/explorer), while your V1 indexers will still be accessible at[ envio.dev](http://envio.dev).
 
 
 ## No Costs, Just Upgrades!
