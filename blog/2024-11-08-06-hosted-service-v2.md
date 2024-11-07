@@ -1,5 +1,5 @@
 
-# Exciting News: V2 Hosted Service is Here! 🚀
+# Exciting News: V2 Hosted Service is Here!
 
 <img src="/blog-assets/hosted-service-v2.png" alt="Envio Cover Photo" width="100%"/>
 
