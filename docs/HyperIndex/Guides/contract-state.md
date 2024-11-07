@@ -38,22 +38,26 @@ We then make some light modifications to remove unnecessary events and simplify 
 > config.yaml
 
 :::info
-We remove the `FeeAmountEnabled` and `OwnerChanged` events as they are not relevant to our use case.
+We remove the `FeeAmountEnabled` and `OwnerChanged` events as they are not relevant to our use case. Also we set the start-block to 21000000 as rpc calls are very slow. See the [rpc rate limiting](#challenges) section for possible solutions.
 :::
 
 ```yaml
+# yaml-language-server: $schema=./node_modules/envio/evm.schema.json
 name: uniswap-v3-factory-token-indexer
 networks:
 - id: 1
-  start_block: 12369620
+  start_block: 21000000
   contracts:
   - name: UniswapV3Factory
     address:
     - 0x1F98431c8aD98523631AE4a59f267346ea31F984
     handler: src/EventHandlers.ts
     events:
+    - event: FeeAmountEnabled(uint24 indexed fee, int24 indexed tickSpacing)
+    - event: OwnerChanged(address indexed oldOwner, address indexed newOwner)
     - event: PoolCreated(address indexed token0, address indexed token1, uint24 indexed fee, int24 tickSpacing, address pool)
 rollback_on_reorg: false
+
 ```
 
 > shema.graphql
@@ -102,7 +106,7 @@ UniswapV3Factory.PoolCreated.handler(async ({ event, context }) => {
 
 
   try {
-    const {name: name0, symbol: symbol0, decimals: decimals0} = await getTokenDetails(event.params.token0, event.chainId);
+    const {name: name0, symbol: symbol0, decimals: decimals0} = await getTokenDetails(event.params.token0, event.chainId, event.params.pool);
     context.Token.set({
       id: event.params.token0,
       name: name0,
@@ -110,12 +114,12 @@ UniswapV3Factory.PoolCreated.handler(async ({ event, context }) => {
       decimals: decimals0
     })
   } catch (error) {
-    console.log(error)
+    console.log('failed token0 with address', event.params.token0)
     return
   }
 
   try {
-    const {name: name1, symbol: symbol1, decimals: decimals1} = await getTokenDetails(event.params.token1, event.chainId);
+    const {name: name1, symbol: symbol1, decimals: decimals1} = await getTokenDetails(event.params.token1, event.chainId, event.params.pool);
     context.Token.set({
       id: event.params.token1,
       name: name1,
@@ -123,11 +127,10 @@ UniswapV3Factory.PoolCreated.handler(async ({ event, context }) => {
       decimals: decimals1,
     })
   } catch (error) {
-    console.log(error)
+    console.log('failed token1 with address', event.params.token1)
     return
   }
 });
-
 ```
 
 ### Part 2: Fetch token information
@@ -136,25 +139,37 @@ Note how we use the `multicall` feature from Viem to batch our 3 queries into on
 
 Here, we use an alchemy API key to make RPC requests to the ethereum mainnet. You can get an alchemy API key [here](https://www.alchemy.com/) and add it to your `.env` file. Alternatively, use any other rpc provider of your choice.
 
+There are 2 edge cases that we need to be aware of when fetching token information: 
+
+1. Sometimes `symbol` and `name` are stored as bytes32 in the contract instead of strings. In this case, we need to use a different abi and convert the hex string to a readable string.
+2. Some pools are created with non-standard ERC20 tokens that do not follow the ERC20 standard. In fact, some people create pools with contracts that are not even ERC20 tokens at all, even though such a pool is totally useless.
+
+So take note of our try-catch blocks in the code below that handle these edge cases.
+
 > src/tokenDetails.ts
 
+:::info
+The `hexToString` method from Viem adds byte padding to the string. We remove this padding by using the `replace` method. If you don't do this, there will be errors writing to the envio database.
+:::
+
 ```typescript
-import { createPublicClient, getContract, http } from 'viem'
+import { createPublicClient, http, hexToString } from 'viem'
 import { mainnet } from 'viem/chains'
 import { Cache, CacheCategory } from "./cache";
-import { ERC20ABI } from './constants';
+import { getERC20BytesContract, getERC20Contract } from './utils';
 
-const apiKey = process.env.ALCHEMY_API_KEY;
+const RPC_URL = process.env.RPC_URL;
 
 const client = createPublicClient({
   chain: mainnet,
-  transport: http(`https://eth-mainnet.g.alchemy.com/v2/${apiKey}`),
+  transport: http(RPC_URL),
   batch: { multicall: true }
 })
 
 export async function getTokenDetails(
   contractAddress: string,
-  chainId: number
+  chainId: number,
+  pool: string,
 ): Promise<{
   readonly name: string,
   readonly symbol: string,
@@ -167,32 +182,71 @@ export async function getTokenDetails(
     return token;
   }
 
-  const contract = getContract({
-    address: contractAddress as `0x${string}`,
-    abi: ERC20ABI,
-    client: { public: client },
-  });
+  const erc20 = getERC20Contract(contractAddress as `0x${string}`);
+  const erc20Bytes = getERC20BytesContract(contractAddress as `0x${string}`);
 
+  let results: [number, string, string];
   try {
-    const [name, symbol, decimals] = await Promise.all([
-      contract.read.name(),
-      contract.read.symbol(),
-      contract.read.decimals(),
-    ]);
-    console.log(`symbol ${symbol} decimals ${decimals} name ${name}`);
-
-    const entry = {
-      name: name?.toString() || "",
-      symbol: symbol?.toString() || "",
-      decimals: decimals as number,
-    } as const;
-
-    cache.add({ [contractAddress.toLowerCase()]: entry as any });
-
-    return entry;
-  } catch (err) {
-    throw err;
+    results = await client.multicall({
+      allowFailure: false,
+      contracts: [
+        {
+          ...erc20,
+          functionName: "decimals",
+        },
+        {
+          ...erc20,
+          functionName: "name",
+        },
+        {
+          ...erc20,
+          functionName: "symbol",
+        },
+      ],
+    });
+  } catch (error) {
+    console.log("First multicall failed, trying alternate method");
+    try {
+      const alternateResults = await client.multicall({
+        allowFailure: false,
+        contracts: [
+          {
+            ...erc20Bytes,
+            functionName: "decimals",
+          },
+          {
+            ...erc20Bytes,
+            functionName: "name",
+          },
+          {
+            ...erc20Bytes,
+            functionName: "symbol",
+          },
+        ],
+      });
+      results = [
+        alternateResults[0],
+        hexToString(alternateResults[1]).replace(/\u0000/g, ''),
+        hexToString(alternateResults[2]).replace(/\u0000/g, ''),
+      ];
+    } catch (alternateError) {
+      console.error(`Alternate method failed for pool ${pool}:`);
+      results = [0,"unknown","unknown"];
+    }
   }
+
+  const [decimals, name, symbol] = results;
+  
+  console.log(`Got token details for ${contractAddress}: ${name} (${symbol}) with ${decimals} decimals`);
+
+  const entry = {
+    name,
+    symbol,
+    decimals
+  } as const;
+
+  cache.add({ [contractAddress.toLowerCase()]: entry as any });
+  return entry;
 }
 ```
 
