@@ -9,9 +9,8 @@ const RENAME_CONFIG = {
   // Add other renaming rules here
 };
 
-const EXPERIMENTAL_CHAINS = ['neon-evm', 'x-layer', 'zeta', 'cyber', 'galadrial', 'metis'];
-
-const FILTER_ENDPOINTS = [/^staging-/];
+// Filter out staging and fuel chains
+const FILTER_ENDPOINTS = [/^staging-/, /fuel/];
 
 const HYPERSYNC_COLUMNS = [
   { name: 'Network Name', width: 20 },
@@ -45,8 +44,11 @@ const sortAndFilterChains = (data) => {
       const nameB = RENAME_CONFIG[b.name] || capitalizeAndSplit(b.name);
       return nameA.localeCompare(nameB);
     })
-    .filter(chain => !FILTER_ENDPOINTS.some(regex => regex.test(chain.name)));
+    .filter(chain => !FILTER_ENDPOINTS.some(regex => regex.test(chain.name))
+    );
 };
+
+
 
 const getNetworkName = (chain) => RENAME_CONFIG[chain.name] || capitalizeAndSplit(chain.name);
 
@@ -61,12 +63,20 @@ const generateHyperSyncTable = (data) => {
 
   sortAndFilterChains(data).forEach(chain => {
     const networkName = getNetworkName(chain);
-    let tier = '🥉'; // default tier
 
-    if (chain.tier === 'paid-rpc') {
-      tier = '🏅';
-    } else if (EXPERIMENTAL_CHAINS.includes(chain.name)) {
+    let tier = '🏗️'; // default tier is WIP
+
+    if (chain.tier === 'GOLD') {
+      // Other emojis that could be considdered: 🏆, 🎖️, 🏅
+      tier = '🥇';
+    } else if (chain.tier === 'SILVER') {
+      tier = '🥈';
+    } else if (chain.tier === 'BRONZE') {
+      tier = '🥉';
+    } else if (chain.tier === 'EXPERIMENTAL') {
       tier = '🧪';
+    } else {
+      console.log(`This chain's is not recognised - reverting to WIP tier: ${chain.name} - ${chain.tier}`);
     }
 
     const supportsTraces = chain.additional_features && chain.additional_features.includes('TRACES') ? TICK : ' ';
