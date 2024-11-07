@@ -10,7 +10,7 @@ const RENAME_CONFIG = {
 };
 
 // Filter out staging and fuel chains
-const FILTER_ENDPOINTS = [/^staging-/, /fuel/];
+const FILTER_ENDPOINTS = [/^staging-/, /fuel/, /temporary/, /delete/];
 
 const HYPERSYNC_COLUMNS = [
   { name: 'Network Name', width: 20 },

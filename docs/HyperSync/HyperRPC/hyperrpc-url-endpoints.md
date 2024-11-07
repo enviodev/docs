@@ -62,7 +62,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Morph                | 2818       | https://morph.rpc.hypersync.xyz or https://2818.rpc.hypersync.xyz                   |                 |
 | Morph Testnet        | 2810       | https://morph-testnet.rpc.hypersync.xyz or https://2810.rpc.hypersync.xyz           |                 |
 | Neon Evm             | 245022934  | https://neon-evm.rpc.hypersync.xyz or https://245022934.rpc.hypersync.xyz           |                 |
-| Neon Evm Resync Tempmorary Delete | 245022934  | https://neon-evm-resync-tempmorary-delete.rpc.hypersync.xyz or https://245022934.rpc.hypersync.xyz |                 |
 | Opbnb                | 204        | https://opbnb.rpc.hypersync.xyz or https://204.rpc.hypersync.xyz                    | ✔️              |
 | Optimism             | 10         | https://optimism.rpc.hypersync.xyz or https://10.rpc.hypersync.xyz                  |                 |
 | Optimism Sepolia     | 11155420   | https://optimism-sepolia.rpc.hypersync.xyz or https://11155420.rpc.hypersync.xyz    |                 |

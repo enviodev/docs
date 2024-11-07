@@ -66,7 +66,6 @@ If a chain is marked as experimental(🧪),it means we have noticed some abnorma
 | Morph                | 2818       | https://morph.hypersync.xyz or https://2818.hypersync.xyz                           | 🥉   |                 |
 | Morph Testnet        | 2810       | https://morph-testnet.hypersync.xyz or https://2810.hypersync.xyz                   | 🧪   |                 |
 | Neon Evm             | 245022934  | https://neon-evm.hypersync.xyz or https://245022934.hypersync.xyz                   | 🥉   |                 |
-| Neon Evm Resync Tempmorary Delete | 245022934  | https://neon-evm-resync-tempmorary-delete.hypersync.xyz or https://245022934.hypersync.xyz | 🥈   |                 |
 | Opbnb                | 204        | https://opbnb.hypersync.xyz or https://204.hypersync.xyz                            | 🥉   | ✔️              |
 | Optimism             | 10         | https://optimism.hypersync.xyz or https://10.hypersync.xyz                          | 🥈   |                 |
 | Optimism Sepolia     | 11155420   | https://optimism-sepolia.hypersync.xyz or https://11155420.hypersync.xyz            | 🥈   |                 |
