@@ -1,7 +1,7 @@
 
 
 # Envio Celebrates Azuro Indexer Grantee
-[insert asset 1]
+<img src="/blog-assets/azuro-multichain-grantee-1.png" alt="Envio Cover Photo" width="100%"/>
 
 We’re thrilled to share that Alex Urban, a Python developer at TradingStrategy, has completed the [Envio and Azuro Indexer Grant](https://docs.envio.dev/blog/envio-azuro-developer-grant-multi-chain-indexer). Alex developed an advanced multichain blockchain indexer for the [Azuro Protocol](https://azuro.org/) using Envio’s SDK, helping to boost the performance of Azuro’s decentralized betting platform. Alex was awarded a $1500 USDC grant for this achievement. This milestone showcases the power of Envio’s multichain data indexing solution for decentralized betting applications like Azuro.
 
@@ -34,7 +34,7 @@ The Azuro protocol roughly handles over 5.5 million events on the Gnosis blockch
 
 By leveraging Envio’s multichain indexing infrastructure, Alex was able to aggregate data across different blockchain deployments, reducing fragmentation and streamlining access through a unified GraphQL API. This approach simplified the querying process, allowing Alex to retrieve complex betting data with ease.
 
-[insert asset 2]
+<img src="/blog-assets/azuro-multichain-grantee-2.png" alt="Envio Cover Photo" width="100%"/>
 
 The Azuro indexer extracts and indexes blockchain data relating to the Azuro protocol. This makes it fast and easy to query and analyze this data. This includes processed event data from v1, v2, v3, and the livecore of Azuro, which amounts to about 5.5 million events for the Gnosis blockchain, as shown in the above screenshot. 
 
