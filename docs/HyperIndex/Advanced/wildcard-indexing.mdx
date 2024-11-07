@@ -1,6 +1,6 @@
 ---
 id: wildcard-indexing
-title: Wildcard Indexing And Topic Filtering
+title: Wildcard Indexing & Topic Filtering
 sidebar_label: Wildcard Indexing / Topic Filtering
 slug: /wildcard-indexing
 ---
@@ -8,13 +8,13 @@ slug: /wildcard-indexing
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
+Wildcard indexing is a feature that allows you to index all events matching a specified event signature without requiring the contract address from which the event was emitted. This is useful in cases such as indexing contracts deployed through factories, where the factory contract does not emit any events upon contract creation. It also enables indexing events from all contracts implementing a standard (e.g. all ERC20 transfers).
+
 :::note
-As of v2.3 wildcard indexing is supported for Indexers using HyperSync (RPC sync is not yet supported).
+Wildcard Indexing is only supported from HyperIndex v2.3 onwards.  
+Wildcard Indexing is supported for Indexers using [HyperSync](/docs/HyperIndex/Advanced/hypersync.md) as data source.  
+Wildcard indexing is not yet supported for Indexer using [RPC]((/docs/HyperIndex/Advanced/hypersync.md)) as data source. 
 :::
-
-## Introduction
-
-Wildcard indexing is a feature that allows you to index all events that match the specified event signature without requiring you to specify the contract address from which the event was emitted. This can be useful for cases such as indexing contracts that are deployed via factories where the factory contract does not emit any events on contract creation. Or for indexing events from all contracts that implement a standard (such as ERC20)
 
 ## Example
 
