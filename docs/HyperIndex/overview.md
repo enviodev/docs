@@ -7,22 +7,30 @@ slug: /overview
 
 HyperIndex is a modern, multi-chain data indexing framework for easily querying real-time and historical data from any EVM blockchain, as well as Fuel.
 
-Designed with a core focus on delivering superior performance and seamless developer experience, HyperIndex optimizes the user experience. Build a real-time API for your blockchain application in minutes.
+Designed with a core focus on delivering superior performance and a seamless developer experience, HyperIndex optimizes the end-to-end user experience. 
+
+Build a real-time API for your blockchain application in minutes!
 
 ## Key Features
 
-- **Simplified Installation & Setup:** Get started instantly.
-- **Any EVM L1, L2, or L3 Blockchain**: Index smart contract data from any EVM blockchain.
-- **Blazing-Fast Indexing**: Accelerate your development workflow, reduce time-to-market.
-- **Multi-chain support**: Aggregate your cross-chain data. Query with a unified API.
-- **Automatic Code Generation**: Ensures type-safety with minimal effort.
-- **Flexible Language Support**: Choose JavaScript, TypeScript, and ResScript.
-- **Promote to Production**: Develop & test locally. Deploy to Envio's Hosted Service.
-- **Detailed Logging & Error Messaging**: Simplify troubleshooting with comprehensive insights.
+:zap: **Simplified Setup:** Start instantly with the quickstart, templates, and reference implementations.  
+:zap: **Any EVM and Fuel**: Index smart contract data from any EVM-compatible network.  
+:zap: **Fastest Historical Backfill**: Up to 1000x faster than RPC. Enhance your dev lifecycle. Reduce time-to-market.  
+:zap: **Multichain**: Index multiple networks with a single deployment. Query with a unified API.  
+:zap: **Real-time**: Sub-second latency and automatic handling of chain reorganizations.   
+:zap: **Wildcard Indexing**: Index events according to event signatures (e.g. all ERC20 transfers on Base).  
+:zap: **Dynamic Sources / Factory Contracts**: Dynamically index all children contracts (e.g. new token pairs).    
+:zap: **Flexible Language Support**: Write JavaScript, TypeScript, or ReScript with automatically generated types.  
+:zap: **Hosted Service & Self Hosting**: Develop locally, and deploy effortlessly. Focus on your app and users, we take care of your infra.  
+:zap: **Detailed Logging & Error Messaging**: Simplify troubleshooting with comprehensive insights.  
 
 ## Quickstart
 
-Check out our [Quickstart](./contract-import.md) to start querying your smart contract data with just a few clicks!
+Check out the [Quickstart](./contract-import.md) to start querying your smart contract data with just a few clicks! 
+
+Don't want to start from scratch or via an existing template?  
+   
+Contact us on Discord for reference implementations. We've got an amazing builder community and wholesome portfolio of indexers to help out. 
 
 :::note
 
