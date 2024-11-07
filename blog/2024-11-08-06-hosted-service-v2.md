@@ -1,7 +1,12 @@
-
-# Exciting News: V2 Hosted Service is Here!
+---
+title: "Exciting News: V2 Hosted Service is Here!"
+sidebar_label: V2 Hosted Service is Here!
+slug: /hosted-service-v2
+---
 
 <img src="/blog-assets/hosted-service-v2.png" alt="Envio Cover Photo" width="100%"/>
+
+<!--truncate-->
 
 Hold on to your Moonlanders—V2 Hosted Service has arrived! It’s a significant upgrade that brings you faster build times, enhanced features, and an overall smoother experience. Starting **Wednesday, Nov 6th, 2024**, all new deployments will automatically utilize V2. Let’s see what you can expect!👇
 
