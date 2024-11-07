@@ -160,16 +160,18 @@ const eventMock = ContractName.EventName.createMockEvent({ params });
 Users can also define specific event log details by using `mockEventData` object as a parameter inside `params` object.
 This is useful when you want to test against specific event log details like block number, transaction hash, etc.
 
-Event log details that can be defined inside `mockEventData` object are:
+The `mockEventData` object can include the following properties:
 
-- `blockNumber`
-- `blockTimestamp`
-- `blockHash`
 - `chainId`
 - `srcAddress`
-- `transactionHash`
-- `transactionIndex`
 - `logIndex`
+- `block.number`
+- `block.timestamp`
+- `block.hash`
+- `transaction.from`
+- `transaction.to`
+- `transaction.hash`
+- `transaction.transactionIndex`
 
 #### > `processEvent`
 
