@@ -26,9 +26,6 @@ Build a real-time API for your blockchain application in minutes!
 :zap: **Detailed Logging & Error Messaging**: Simplify troubleshooting with comprehensive insights.  
 
 
-Join on-chain and off-chain data:** Connect indexed blockchain data as well as ingest off-chain data to create flexible API for rich data beyond just what is emitted simply from events on-chain. e.g. modules that efficiently index off-chain NFT metadata.
-
-
 ## Quickstart
 
 Check out the [Quickstart](./contract-import.md) to start querying your smart contract data with just a few clicks! 
