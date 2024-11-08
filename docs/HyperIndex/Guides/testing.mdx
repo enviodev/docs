@@ -162,16 +162,32 @@ This is useful when you want to test against specific event log details like blo
 
 The `mockEventData` object can include the following properties:
 
-- `chainId`
-- `srcAddress`
-- `logIndex`
-- `block.number`
-- `block.timestamp`
-- `block.hash`
-- `transaction.from`
-- `transaction.to`
-- `transaction.hash`
-- `transaction.transactionIndex`
+```typescript
+{
+  chainId,
+  srcAddress,
+  logIndex,
+  block: {
+    number,
+    timestamp,
+    hash,
+    // and the following optionally based on field selection:
+    parentHash, nonce, sha3Uncles, logsBloom, transactionsRoot, stateRoot, receiptsRoot,
+    miner, difficulty, totalDifficulty, extraData, size, gasLimit, gasUsed, uncles,
+    baseFeePerGas, blobGasUsed, excessBlobGas, parentBeaconBlockRoot, withdrawalsRoot,
+    l1BlockNumber, sendCount, sendRoot, mixHash
+  },
+  transaction: {
+    // This is empty by default - but can have the following based on field selection:
+    number, timestamp, hash, parentHash, nonce, sha3Uncles, logsBloom, transactionsRoot,
+    stateRoot, receiptsRoot, miner, difficulty, totalDifficulty, extraData, size, gasLimit,
+    gasUsed, uncles, baseFeePerGas, blobGasUsed, excessBlobGas, parentBeaconBlockRoot,
+    withdrawalsRoot, l1BlockNumber, sendCount, sendRoot, mixHash,
+  }
+}
+```
+
+Please see ['field_selection`](configuration-file#Field Selection) section how to customize available fields.
 
 #### > `processEvent`
 
