@@ -87,7 +87,8 @@ You can find out more on GraphQL [here](https://graphql.org/learn/).
 Once you have set up your config and schema file you can run `pnpm envio codegen` to generate the functions that you will use in your handlers.
 
 ```bash
-pnpm envio codegen```
+pnpm envio codegen
+```
 
 ## Defining One-to-Many Relationships
 
