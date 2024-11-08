@@ -7,17 +7,16 @@ slug: /common-issues
 
 # Common issues
 
-## `Cannot find module` errors on `envio start`
+## `Cannot find module` errors on `pnpm envio start`
 
 This error indicates that the indexer is unable to find the necessary files to start the indexer.
 
 Delete the `generated` folder and run
 
 ```bash
-envio codegen
-```
+pnpm envio codegen```
 
-> Always run `envio codegen` straight after cloning an indexer repo using Envio.
+> Always run `pnpm envio codegen` straight after cloning an indexer repo using Envio.
 
 ## Indexer not starting at the specified start block
 
@@ -26,13 +25,13 @@ If the indexer starts running but does not index the smart contracts from the `s
 Run
 
 ```bash
-envio stop
+pnpm envio stop
 ```
 
 and then
 
 ```bash
-envio dev
+pnpm envio dev
 ```
 
 ## Tables for entities are not registered on Hasura
@@ -42,13 +41,13 @@ Should the tables for the entities outlined in the schema file not show up on Ha
 Run
 
 ```bash
-envio stop
+pnpm envio stop
 ```
 
 and then
 
 ```bash
-envio dev
+pnpm envio dev
 ```
 
 ## Postgres running locally
@@ -58,16 +57,14 @@ If Postgres is running locally on port 5432, then you can run the whole system w
 In practice, this could look like this:
 
 ```
-ENVIO_PG_PORT=5433 envio codegen
-ENVIO_PG_PORT=5433 envio dev
+ENVIO_PG_PORT=5433 pnpm envio codegenENVIO_PG_PORT=5433 pnpm envio dev
 ```
 
 or
 
 ```
 export ENVIO_PG_PORT=5433
-envio codegen
-envio dev
+pnpm envio codegenpnpm envio dev
 ```
 
 NOTE: you can further customize how you connect to Postgres with these additional environment variables `ENVIO_POSTGRES_PASSWORD`, `ENVIO_PG_USER`, and `ENVIO_PG_DATABASE`.

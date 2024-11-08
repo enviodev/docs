@@ -36,7 +36,7 @@ Now that you have installed the prerequisite packages let's begin the practical 
 Open your terminal in an empty directory and initialize a new indexer by running the command:
 
 ```bash
-npx envio init
+npx pnpx envio@latest init
 ```
 
 In the following prompt, choose the directory where you want to set up your project. The default is the current directory, but in the tutorial, I'll use the indexer name:
