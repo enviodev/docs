@@ -12,28 +12,28 @@ This document contains the help content for the `envio` command-line program.
 **Command Overview:**
 
 * [`envio`↴](#envio)
-* [`envio init`↴](#envio-init)
-* [`envio init contract-import`↴](#envio-init-contract-import)
-* [`envio init contract-import explorer`↴](#envio-init-contract-import-explorer)
-* [`envio init contract-import local`↴](#envio-init-contract-import-local)
-* [`envio init template`↴](#envio-init-template)
-* [`envio init fuel`↴](#envio-init-fuel)
-* [`envio init fuel contract-import`↴](#envio-init-fuel-contract-import)
-* [`envio init fuel contract-import local`↴](#envio-init-fuel-contract-import-local)
-* [`envio init fuel template`↴](#envio-init-fuel-template)
-* [`envio dev`↴](#envio-dev)
-* [`envio stop`↴](#envio-stop)
-* [`envio codegen`↴](#envio-codegen)
-* [`envio benchmark-summary`↴](#envio-benchmark-summary)
-* [`envio local`↴](#envio-local)
-* [`envio local docker`↴](#envio-local-docker)
-* [`envio local docker up`↴](#envio-local-docker-up)
-* [`envio local docker down`↴](#envio-local-docker-down)
-* [`envio local db-migrate`↴](#envio-local-db-migrate)
-* [`envio local db-migrate up`↴](#envio-local-db-migrate-up)
-* [`envio local db-migrate down`↴](#envio-local-db-migrate-down)
-* [`envio local db-migrate setup`↴](#envio-local-db-migrate-setup)
-* [`envio start`↴](#envio-start)
+* [`pnpx envio init`↴](#envio-init)
+* [`pnpx envio init contract-import`↴](#envio-init-contract-import)
+* [`pnpx envio init contract-import explorer`↴](#envio-init-contract-import-explorer)
+* [`pnpx envio init contract-import local`↴](#envio-init-contract-import-local)
+* [`pnpx envio init template`↴](#envio-init-template)
+* [`pnpx envio init fuel`↴](#envio-init-fuel)
+* [`pnpx envio init fuel contract-import`↴](#envio-init-fuel-contract-import)
+* [`pnpx envio init fuel contract-import local`↴](#envio-init-fuel-contract-import-local)
+* [`pnpx envio init fuel template`↴](#envio-init-fuel-template)
+* [`pnpx envio dev`↴](#envio-dev)
+* [`pnpx envio stop`↴](#envio-stop)
+* [`pnpx envio codegen`↴](#envio-codegen)
+* [`pnpx envio benchmark-summary`↴](#envio-benchmark-summary)
+* [`pnpx envio local`↴](#envio-local)
+* [`pnpx envio local docker`↴](#envio-local-docker)
+* [`pnpx envio local docker up`↴](#envio-local-docker-up)
+* [`pnpx envio local docker down`↴](#envio-local-docker-down)
+* [`pnpx envio local db-migrate`↴](#envio-local-db-migrate)
+* [`pnpx envio local db-migrate up`↴](#envio-local-db-migrate-up)
+* [`pnpx envio local db-migrate down`↴](#envio-local-db-migrate-down)
+* [`pnpx envio local db-migrate setup`↴](#envio-local-db-migrate-setup)
+* [`pnpx envio start`↴](#envio-start)
 
 ## `envio`
 
@@ -61,11 +61,11 @@ This document contains the help content for the `envio` command-line program.
 
 
 
-## `envio init`
+## `pnpx envio@latest init`
 
 Initialize an indexer with one of the initialization options
 
-**Usage:** `envio init [OPTIONS] [COMMAND]`
+**Usage:** `pnpx envio@latest init [OPTIONS] [COMMAND]`
 
 ###### **Subcommands:**
 
@@ -83,12 +83,11 @@ Initialize an indexer with one of the initialization options
 * `--api-token <API_TOKEN>` — The hypersync API key to be initialized in your templates .env file
 
 
-
-## `envio init contract-import`
+## `pnpx envio@latest init contract-import`
 
 Initialize Evm indexer by importing config from a contract for a given chain
 
-**Usage:** `envio init contract-import [OPTIONS] [COMMAND]`
+**Usage:** `pnpx envio@latest init contract-import [OPTIONS] [COMMAND]`
 
 ###### **Subcommands:**
 
@@ -103,11 +102,11 @@ Initialize Evm indexer by importing config from a contract for a given chain
 
 
 
-## `envio init contract-import explorer`
+## `pnpx envio@latest init contract-import explorer`
 
 Initialize by pulling the contract ABI from a block explorer
 
-**Usage:** `envio init contract-import explorer [OPTIONS]`
+**Usage:** `pnpx envio@latest init contract-import explorer [OPTIONS]`
 
 ###### **Options:**
 
@@ -118,11 +117,11 @@ Initialize by pulling the contract ABI from a block explorer
 
 
 
-## `envio init contract-import local`
+## `pnpx envio@latest init contract-import local`
 
 Initialize from a local json ABI file
 
-**Usage:** `envio init contract-import local [OPTIONS]`
+**Usage:** `pnpx envio@latest init contract-import local [OPTIONS]`
 
 ###### **Options:**
 
@@ -149,11 +148,11 @@ Initialize Evm indexer from an example template
 
 
 
-## `envio init fuel`
+## `pnpx envio@latest init fuel`
 
 Initialization option for creating Fuel indexer
 
-**Usage:** `envio init fuel [COMMAND]`
+**Usage:** `pnpx envio@latest init fuel [COMMAND]`
 
 ###### **Subcommands:**
 
@@ -161,12 +160,11 @@ Initialization option for creating Fuel indexer
 * `template` — Initialize Fuel indexer from an example template
 
 
-
-## `envio init fuel contract-import`
+## `pnpx envio@latest init fuel contract-import`
 
 Initialize Fuel indexer by importing config from a contract for a given chain
 
-**Usage:** `envio init fuel contract-import [OPTIONS] [COMMAND]`
+**Usage:** `pnpx envio@latest init fuel contract-import [OPTIONS] [COMMAND]`
 
 ###### **Subcommands:**
 
@@ -180,11 +178,11 @@ Initialize Fuel indexer by importing config from a contract for a given chain
 
 
 
-## `envio init fuel contract-import local`
+## `pnpx envio@latest init fuel contract-import local`
 
 Initialize from a local json ABI file
 
-**Usage:** `envio init fuel contract-import local [OPTIONS]`
+**Usage:** `pnpx envio@latest init fuel contract-import local [OPTIONS]`
 
 ###### **Options:**
 
@@ -193,7 +191,7 @@ Initialize from a local json ABI file
 
 
 
-## `envio init fuel template`
+## `pnpm envio init fuel template`
 
 Initialize Fuel indexer from an example template
 
@@ -208,43 +206,43 @@ Initialize Fuel indexer from an example template
 
 
 
-## `envio dev`
+## `pnpm envio dev`
 
 Development commands for starting, stopping, and restarting the indexer with automatic codegen for any changed files
 
-**Usage:** `envio dev`
+**Usage:** `pnpm envio dev`
 
 
 
-## `envio stop`
+## `pnpm envio stop`
 
 Stop the local environment - delete the database and stop all processes (including Docker) for the current directory
 
-**Usage:** `envio stop`
+**Usage:** `pnpm envio stop`
 
 
 
-## `envio codegen`
+## `pnpm envio codegen`
 
 Generate indexing code from user-defined configuration & schema files
 
-**Usage:** `envio codegen`
+**Usage:** `pnpm envio codegen`
 
 
 
-## `envio benchmark-summary`
+## `pnpm envio benchmark-summary`
 
 Prints a summary of the benchmark data after running the indexer with envio start --bench flag or setting 'ENVIO_SAVE_BENCHMARK_DATA=true'
 
-**Usage:** `envio benchmark-summary`
+**Usage:** `pnpm envio benchmark-summary`
 
 
 
-## `envio local`
+## `pnpm envio local`
 
 Prepare local environment for envio testing
 
-**Usage:** `envio local <COMMAND>`
+**Usage:** `pnpm envio local <COMMAND>`
 
 ###### **Subcommands:**
 
@@ -253,11 +251,11 @@ Prepare local environment for envio testing
 
 
 
-## `envio local docker`
+## `pnpm envio local docker`
 
 Local Envio and ganache environment commands
 
-**Usage:** `envio local docker <COMMAND>`
+**Usage:** `pnpm envio local docker <COMMAND>`
 
 ###### **Subcommands:**
 
@@ -266,27 +264,27 @@ Local Envio and ganache environment commands
 
 
 
-## `envio local docker up`
+## `pnpm envio local docker up`
 
 Create docker images required for local environment
 
-**Usage:** `envio local docker up`
+**Usage:** `pnpm envio local docker up`
 
 
 
-## `envio local docker down`
+## `pnpm envio local docker down`
 
 Delete existing docker images on local environment
 
-**Usage:** `envio local docker down`
+**Usage:** `pnpm envio local docker down`
 
 
 
-## `envio local db-migrate`
+## `pnpm envio local db-migrate`
 
 Local Envio database commands
 
-**Usage:** `envio local db-migrate <COMMAND>`
+**Usage:** `pnpm envio local db-migrate <COMMAND>`
 
 ###### **Subcommands:**
 
@@ -296,35 +294,35 @@ Local Envio database commands
 
 
 
-## `envio local db-migrate up`
+## `pnpm envio local db-migrate up`
 
 Migrate latest schema to database
 
-**Usage:** `envio local db-migrate up`
+**Usage:** `pnpm envio local db-migrate up`
 
 
 
-## `envio local db-migrate down`
+## `pnpm envio local db-migrate down`
 
 Drop database schema
 
-**Usage:** `envio local db-migrate down`
+**Usage:** `pnpm envio local db-migrate down`
 
 
 
-## `envio local db-migrate setup`
+## `pnpm envio local db-migrate setup`
 
 Setup database by dropping schema and then running migrations
 
-**Usage:** `envio local db-migrate setup`
+**Usage:** `pnpm envio local db-migrate setup`
 
 
 
-## `envio start`
+## `pnpm envio start`
 
 Start the indexer without any automatic codegen
 
-**Usage:** `envio start [OPTIONS]`
+**Usage:** `pnpm envio start [OPTIONS]`
 
 ###### **Options:**
 

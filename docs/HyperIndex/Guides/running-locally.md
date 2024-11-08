@@ -7,14 +7,14 @@ slug: /running-locally
 
 ## Starting the Indexer
 
-Remember to `cd` into your project directory if you have defined one during `envio init`.
+Remember to `cd` into your project directory if you have defined one during `pnpx envio@latest init`.
 
 Before running the Envio CLI command to start the indexer locally, please make sure you have [Docker](https://www.docker.com/products/docker-desktop/) running.
 
 Run the indexer
 
 ```bash
-envio dev
+pnpm envio dev
 ```
 
 This will automatically open up the Hasura dashboard where you can view the data that has been indexed.
@@ -26,7 +26,7 @@ Admin-secret / password for local Hasura is `testing`.
 To delete the docker images used for the local development environment, run
 
 ```bash
-envio stop
+pnpm envio stop
 ```
 
 ## What next?
