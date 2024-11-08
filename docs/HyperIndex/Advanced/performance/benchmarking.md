@@ -9,7 +9,7 @@ slug: /benchmarking
 
 ### Capturing the benchmark
 
-You can run `envio start --bench` to capture some benchmarking data while your indexer is running. This should not be run in production, since it holds each benchmark data point in memory and adds some overhead in writing to a file.
+You can run `pnpm envio start --bench` to capture some benchmarking data while your indexer is running. This should not be run in production, since it holds each benchmark data point in memory and adds some overhead in writing to a file.
 
 ### Printing the benchmark
 

@@ -42,7 +42,7 @@ Initialize the project using the Greeter template.
 Run
 
 ```bash
-envio init
+pnpx envio@latest init
 ```
 
 Choose the directory where you would like to set up your project (default is the current directory)
@@ -89,7 +89,7 @@ The following commands will start the docker and create databases for indexed da
 Run
 
 ```bash
-envio dev
+pnpm envio dev
 ```
 
 The indexer will then start indexing the contract's specified in the `config.yaml` file from the `start_block` specified for each network.
