@@ -14,7 +14,8 @@ This error indicates that the indexer is unable to find the necessary files to s
 Delete the `generated` folder and run
 
 ```bash
-pnpm envio codegen```
+pnpm envio codegen
+```
 
 > Always run `pnpm envio codegen` straight after cloning an indexer repo using Envio.
 
