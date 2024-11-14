@@ -1,6 +1,6 @@
 ---
 title: "Efficiently Running Indexers on AWS: Techniques for Reducing Cloud Costs"
-sidebar_label: Efficiently Running Indexers on AWS: Techniques for Reducing Cloud Costs
+sidebar_label: "Efficiently Running Indexers on AWS: Techniques for Reducing Cloud Costs"
 slug: /cut-aws-cloud-costs
 ---
 
