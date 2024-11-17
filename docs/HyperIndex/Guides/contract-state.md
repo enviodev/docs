@@ -137,7 +137,8 @@ UniswapV3Factory.PoolCreated.handler(async ({ event, context }) => {
 
 Note how we use the `multicall` feature from Viem to batch our 3 queries into one request to improve performance and help avoid rate limiting. Very useful!
 
-Here, we use an alchemy API key to make RPC requests to the ethereum mainnet. You can get an alchemy API key [here](https://www.alchemy.com/) and add it to your `.env` file. Alternatively, use any other rpc provider of your choice.
+
+We recommend using an RPC from [dRPC](https://drpc.org/) and adding it to your `.env` file. Alternatively, use any other rpc provider of your choice.
 
 There are 2 edge cases that we need to be aware of when fetching token information: 
 
@@ -375,4 +376,4 @@ export class Entry<T extends Shape> {
 ### Challenges
 
 1. **Historical state**: The RPC requests as shown here function as a regular RPC requests that return the current contract state. They do not fetch historical contract state. In other words, normal RPC requests always return current contract state, not the contract state for the block which your indexer is processing. For our use case, this doesn't matter as the name, symbol, and decimals of a token should not change over time. But let's say you want to fetch the ether balance of an account at a specific historical block, you would a need [special rpc request](https://docs.etherscan.io/api-pro/api-pro#get-historical-ether-balance-for-a-single-address-by-blockno) that is able to fetch historical state.
-2. **Rate limiting**: Rate limiting refers to when a server limits the number of requests a client can make in a given amount of time. This is done to prevent abuse of the server. So if you make too many RPC requests in a short period of time to the same server, your requests may be blocked. The simplest way to avoid this is to check the rate limits of the server you are making requests to and adding a sufficient delay between requests. A slightly more complex way is to use multiple RPC URLs and rotate your requests between them. In our use case, the multicall feature to batch our requests was sufficient to avoid rate limiting.
+2. **Rate limiting**: Rate limiting refers to when a server limits the number of requests a client can make in a given amount of time. This is done to prevent abuse of the server. So if you make too many RPC requests in a short period of time to the same server, your requests may be blocked. The simplest way to avoid this is to use a paid unthrottled rpc or to check the rate limits of the server you are making requests to and adding a sufficient delay between requests. A slightly more complex way is to use multiple RPC URLs and rotate your requests between them. In our use case, the multicall feature to batch our requests was sufficient to avoid rate limiting.
