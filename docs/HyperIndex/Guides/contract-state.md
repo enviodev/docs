@@ -31,7 +31,7 @@ This guide assumes basic familiarity with the viem library for making contract c
 ### Part 1: Create our Uniswap V3 `poolcreated` indexer
 
 `npx envio init`
-Ethereum mainnet contract address: [0x1F98431c8aD98523631AE4a59f267346ea31F984](scope.sh/1/address/0x1F98431c8aD98523631AE4a59f267346ea31F984)
+Ethereum mainnet contract address: [0x1F98431c8aD98523631AE4a59f267346ea31F984](https://scope.sh/1/address/0x1F98431c8aD98523631AE4a59f267346ea31F984)
 
 We then make some light modifications to remove unnecessary events and simplify the schema. The resulting config, schema, and event handlers look as follows:
 
