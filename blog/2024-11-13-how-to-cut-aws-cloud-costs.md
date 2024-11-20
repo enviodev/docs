@@ -4,7 +4,7 @@ sidebar_label: "Efficiently Running Indexers on AWS: Techniques for Reducing Clo
 slug: /cut-aws-cloud-costs
 ---
 
-<img src="/blog-assets/cut-aws-cloud-costs.png" alt="Envio Cover Photo" width="100%"/>
+<img src="/blog-assets/cut-aws-cloud-costs1.png" alt="Envio Cover Photo" width="100%"/>
 
 <!--truncate-->
 
