@@ -1,0 +1,48 @@
+yarn run v1.22.22
+$ node ./scripts/update-endpoints.js
+This chain's is not recognised - reverting to WIP tier: b2-testnet - undefined
+This chain's is not recognised - reverting to WIP tier: extrabud - INTERNAL
+This chain's is not recognised - reverting to WIP tier: internal-test-chain - HIDDEN
+This chain's is not recognised - reverting to WIP tier: mosaic-matrix - HIDDEN
+This chain's is not recognised - reverting to WIP tier: tangle - undefined
+This chain's is not recognised - reverting to WIP tier: unichain-sepolia - undefined
+HyperSync markdown file updated successfully.
+HyperRPC markdown file updated successfully.
+$ docusaurus start
+[INFO] Starting the development server...
+[ERROR] Loading of version failed for version current
+
+[ERROR] Error: Invalid sidebar file at "sidebarsHyperSync.js".
+These sidebar document ids do not exist:
+- supported-networks/hypersync-supported-networks
+- supported-networks/network-partners
+
+Available document ids are:
+- HyperFuel/hyperfuel
+- HyperFuel/hyperfuel-query
+- HyperRPC/hyperrpc-supported-networks
+- HyperRPC/overview-hyperrpc
+- Supported Networks/hypersync-supported-networks
+- Supported Networks/network-partners
+- api-tokens
+- hypersync-clients
+- hypersync-curl-examples
+- hypersync-query
+- hypersync-supported-networks
+- hypersync-usage
+- overview
+
+    at Object.checkSidebarsDocIds (/Users/jords/Desktop/ENVIO/docs/node_modules/@docusaurus/plugin-content-docs/lib/sidebars/utils.js:245:19)
+    at doLoadVersion (/Users/jords/Desktop/ENVIO/docs/node_modules/@docusaurus/plugin-content-docs/lib/index.js:176:31)
+    at async loadVersion (/Users/jords/Desktop/ENVIO/docs/node_modules/@docusaurus/plugin-content-docs/lib/index.js:193:28)
+    at async Promise.all (index 0)
+    at async Object.loadContent (/Users/jords/Desktop/ENVIO/docs/node_modules/@docusaurus/plugin-content-docs/lib/index.js:201:33)
+    at async /Users/jords/Desktop/ENVIO/docs/node_modules/@docusaurus/core/lib/server/plugins/plugins.js:39:23
+    at async Promise.all (index 5)
+    at async /Users/jords/Desktop/ENVIO/docs/node_modules/@docusaurus/core/lib/server/plugins/plugins.js:140:25
+    at async loadSite (/Users/jords/Desktop/ENVIO/docs/node_modules/@docusaurus/core/lib/server/site.js:144:45)
+    at async createReloadableSite (/Users/jords/Desktop/ENVIO/docs/node_modules/@docusaurus/core/lib/commands/start/utils.js:49:16)
+[INFO] Docusaurus version: 3.6.2
+Node version: v18.20.5
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

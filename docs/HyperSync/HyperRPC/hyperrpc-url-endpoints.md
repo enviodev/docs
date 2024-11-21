@@ -36,6 +36,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Cyber                | 7560       | https://cyber.rpc.hypersync.xyz or https://7560.rpc.hypersync.xyz                   |                 |
 | Darwinia             | 46         | https://darwinia.rpc.hypersync.xyz or https://46.rpc.hypersync.xyz                  |                 |
 | Ethereum Mainnet     | 1          | https://eth.rpc.hypersync.xyz or https://1.rpc.hypersync.xyz                        | ✔️              |
+| Extrabud             | 283027429  | https://extrabud.rpc.hypersync.xyz or https://283027429.rpc.hypersync.xyz           |                 |
 | Fantom               | 250        | https://fantom.rpc.hypersync.xyz or https://250.rpc.hypersync.xyz                   |                 |
 | Flare                | 14         | https://flare.rpc.hypersync.xyz or https://14.rpc.hypersync.xyz                     |                 |
 | Fuji                 | 43113      | https://fuji.rpc.hypersync.xyz or https://43113.rpc.hypersync.xyz                   |                 |
@@ -61,6 +62,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Moonbeam             | 1284       | https://moonbeam.rpc.hypersync.xyz or https://1284.rpc.hypersync.xyz                |                 |
 | Morph                | 2818       | https://morph.rpc.hypersync.xyz or https://2818.rpc.hypersync.xyz                   |                 |
 | Morph Testnet        | 2810       | https://morph-testnet.rpc.hypersync.xyz or https://2810.rpc.hypersync.xyz           |                 |
+| Mosaic Matrix        | 41454      | https://mosaic-matrix.rpc.hypersync.xyz or https://41454.rpc.hypersync.xyz          |                 |
 | Neon Evm             | 245022934  | https://neon-evm.rpc.hypersync.xyz or https://245022934.rpc.hypersync.xyz           |                 |
 | Opbnb                | 204        | https://opbnb.rpc.hypersync.xyz or https://204.rpc.hypersync.xyz                    | ✔️              |
 | Optimism             | 10         | https://optimism.rpc.hypersync.xyz or https://10.rpc.hypersync.xyz                  |                 |
