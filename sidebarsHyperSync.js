@@ -4,7 +4,14 @@ module.exports = {
     "hypersync-usage",
     "hypersync-clients",
     "hypersync-query",
-    "hypersync-supported-networks",
+    {
+      type: "category",
+      label: "Supported Networks",
+      items: [
+        "supported-networks/hypersync-supported-networks",
+        "supported-networks/network-partners",
+      ],
+    },
     "api-tokens",
     "hypersync-curl-examples",
     {
