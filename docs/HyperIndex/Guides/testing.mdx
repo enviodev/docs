@@ -194,7 +194,7 @@ Please see [field_selection](configuration-file#field-selection) section in conf
 The ability to process an event on a mockDb
 
 ```javascript
-const updatedMockDbFromEvent = ContractName.EventName.processEvent({
+const updatedMockDbFromEvent = await ContractName.EventName.processEvent({
   event: eventMock,
   mockDb: updatedMockDb,
 });
@@ -219,7 +219,7 @@ In the examples we use NodeJS's built-in assert module but you can use other pop
   <TabItem value="javascript" label="Javascript">
 
 ```javascript
-it("A NewGreeting event creates a User entity", () => {
+it("A NewGreeting event creates a User entity", async () => {
   // Initializing the mock database
   const mockDbInitial = MockDb.createMockDb();
 
@@ -234,7 +234,7 @@ it("A NewGreeting event creates a User entity", () => {
   });
 
   // Processing the mock event on the mock database
-  const updatedMockDb = Greeter.NewGreeting.processEvent({
+  const updatedMockDb = await Greeter.NewGreeting.processEvent({
     event: mockNewGreetingEvent,
     mockDb: mockDbInitial,
   });
@@ -259,7 +259,7 @@ it("A NewGreeting event creates a User entity", () => {
   <TabItem value="typescript" label="Typescript">
 
 ```typescript
-it("A NewGreeting event creates a User entity", () => {
+it("A NewGreeting event creates a User entity", async () => {
   // Initializing the mock database
   const mockDbInitial = MockDb.createMockDb();
 
@@ -274,7 +274,7 @@ it("A NewGreeting event creates a User entity", () => {
   });
 
   // Processing the mock event on the mock database
-  const updatedMockDb = Greeter.NewGreeting.processEvent({
+  const updatedMockDb = await Greeter.NewGreeting.processEvent({
     event: mockNewGreetingEvent,
     mockDb: mockDbInitial,
   });
@@ -299,7 +299,7 @@ it("A NewGreeting event creates a User entity", () => {
   <TabItem value="rescript" label="Rescript">
 
 ```rescript
-it("A NewGreeting event creates a User entity", () => {
+it("A NewGreeting event creates a User entity", async () => {
     // Initializing the mock database
     let mockDbInitial = TestHelpers.MockDb.createMockDb()
 
@@ -314,7 +314,7 @@ it("A NewGreeting event creates a User entity", () => {
     })
 
     // Processing the mock event on the mock database
-    let updatedMockDb = TestHelpers.Greeter.NewGreeting.processEvent({
+    let updatedMockDb = await TestHelpers.Greeter.NewGreeting.processEvent({
       event: mockNewGreetingEvent,
       mockDb: mockDbInitial,
     })
@@ -345,7 +345,7 @@ it("A NewGreeting event creates a User entity", () => {
   <TabItem value="javascript" label="Javascript">
 
 ```javascript
-it("2 Greetings from the same users results in that user having a greeter count of 2", () => {
+it("2 Greetings from the same users results in that user having a greeter count of 2", async () => {
   // Initializing the mock database
   const mockDbInitial = MockDb.createMockDb();
   // Initializing values for mock event
@@ -366,13 +366,13 @@ it("2 Greetings from the same users results in that user having a greeter count 
   });
 
   // Processing the mock event on the mock database
-  const updatedMockDb = Greeter.NewGreeting.processEvent({
+  const updatedMockDb = await Greeter.NewGreeting.processEvent({
     event: mockNewGreetingEvent,
     mockDb: mockDbInitial,
   });
 
   // Processing the mock event on the updated mock database
-  const updatedMockDb2 = Greeter.NewGreeting.processEvent({
+  const updatedMockDb2 = await Greeter.NewGreeting.processEvent({
     event: mockNewGreetingEvent2,
     mockDb: updatedMockDb,
   });
@@ -389,7 +389,7 @@ it("2 Greetings from the same users results in that user having a greeter count 
   <TabItem value="typescript" label="Typescript">
 
 ```typescript
-it("2 Greetings from the same users results in that user having a greeter count of 2", () => {
+it("2 Greetings from the same users results in that user having a greeter count of 2", async () => {
   // Initializing the mock database
   const mockDbInitial = MockDb.createMockDb();
   // Initializing values for mock event
@@ -410,13 +410,13 @@ it("2 Greetings from the same users results in that user having a greeter count 
   });
 
   // Processing the mock event on the mock database
-  const updatedMockDb = Greeter.NewGreeting.processEvent({
+  const updatedMockDb = await Greeter.NewGreeting.processEvent({
     event: mockNewGreetingEvent,
     mockDb: mockDbInitial,
   });
 
   // Processing the mock event on the updated mock database
-  const updatedMockDb2 = Greeter.NewGreeting.processEvent({
+  const updatedMockDb2 = await Greeter.NewGreeting.processEvent({
     event: mockNewGreetingEvent2,
     mockDb: updatedMockDb,
   });
@@ -433,7 +433,7 @@ it("2 Greetings from the same users results in that user having a greeter count 
   <TabItem value="rescript" label="Rescript">
 
 ```rescript
-it("2 Greetings from the same users results in that user having a greeter count of 2", () => {
+it("2 Greetings from the same users results in that user having a greeter count of 2", async () => {
     // Initializing the mock database
     let mockDbInitial = TestHelpers.MockDb.createMockDb()
 
@@ -455,13 +455,13 @@ it("2 Greetings from the same users results in that user having a greeter count 
     })
 
     // Processing the mock event on the mock database
-    let updatedMockDb = TestHelpers.Greeter.NewGreeting.processEvent({
+    let updatedMockDb = await TestHelpers.Greeter.NewGreeting.processEvent({
       event: mockNewGreetingEvent,
       mockDb: mockDbInitial,
     })
 
     // Processing the mock event on the updated mock database
-    let updatedMockDb2 = TestHelpers.Greeter.NewGreeting.processEvent({
+    let updatedMockDb2 = await TestHelpers.Greeter.NewGreeting.processEvent({
       event: mockNewGreetingEvent2,
       mockDb: updatedMockDb,
     })
