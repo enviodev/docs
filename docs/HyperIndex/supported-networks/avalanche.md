@@ -51,13 +51,13 @@ networks:
 
 With these steps completed, your application will be set to efficiently index Avalanche data using Envio’s blockchain indexer.
 
-For more information on how to set up your config, define a schema, and write event handlers, refer to the guides section in our [documentation](docs/HyperIndex/configuration-file).
+For more information on how to set up your config, define a schema, and write event handlers, refer to the guides section in our [documentation](/docs/HyperIndex/configuration-file).
 
 #### Other Supported Networks: 
 
 * Fuji (Avalanche Testnet)
 
-The full list of HyperSync supported networks can be found [here](docs/HyperSync/hypersync-supported-networks).
+The full list of HyperSync supported networks can be found [here](/docs/HyperSync/hypersync-supported-networks).
 
 
 ### Support
