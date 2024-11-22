@@ -3,8 +3,18 @@ module.exports = {
     "overview",
     "getting-started",
     "contract-import",
-    "migration-guide-v1-v2",
-    "supported-networks",
+    "migration-guide-v1-v2",  
+    {
+      type: "category",
+      label: "Supported Networks",
+      link: {
+        type: "doc",
+        id: "supported-networks/index",
+      },
+      items: [
+        "supported-networks/arbitrum",        
+      ],
+    },
     {
       type: "category",
       label: "Guides",

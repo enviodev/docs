@@ -1,5 +1,5 @@
 ---
-id: supported-networks
+id: index
 title: Supported Networks
 sidebar_label: Supported Networks
 slug: /supported-networks
