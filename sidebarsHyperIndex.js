@@ -13,6 +13,8 @@ module.exports = {
       },
       items: [
         "supported-networks/arbitrum",        
+        "supported-networks/aurora",        
+        "supported-networks/avalanche",        
       ],
     },
     {
