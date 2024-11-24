@@ -1,11 +1,11 @@
 ---
-id: local-hardhat
-title: Local network - Hardhat
-sidebar_label: 👷 Local network - Hardhat 👷
-slug: /local-hardhat
+id: local-anvil
+title: Local network - Anvil
+sidebar_label: 👷 Local network - Anvil 👷
+slug: /local-anvil
 ---
 
-# Local network - Hardhat
+# Local network - Anvil
 
 ---
 
@@ -17,9 +17,9 @@ A local network can be used as a data source for your indexer. You simply need t
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
 networks:
-  - id: 31337 # Local Hardhat network default chainId
+  - id: 31337 # Local Anvil network default chainId
     rpc_config:
-      url: http://localhost:8545 # RPC URL for your local Hardhat network
+      url: http://localhost:8545 # RPC URL for your local Anvil network
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName
@@ -32,4 +32,4 @@ networks:
           - event: Event
 ```
 
---
+---
