@@ -11,15 +11,19 @@ slug: /aurora
 
 | **Field**                     | **Value**                                                                                          |
 |-------------------------------|----------------------------------------------------------------------------------------------------|
-| **Aurora Chain ID**           | 1313161554                                                                                       |
+| **Aurora Chain ID**     | 1313161554                                                                                            |
 | **HyperSync URL Endpoint**    | [https://aurora.hypersync.xyz](https://aurora.hypersync.xyz) or [https://1313161554.hypersync.xyz](https://1313161554.hypersync.xyz) |
 | **HyperRPC URL Endpoint**     | [https://aurora.rpc.hypersync.xyz](https://aurora.rpc.hypersync.xyz) or [https://1313161554.rpc.hypersync.xyz](https://1313161554.rpc.hypersync.xyz) |
 
 ---
 
+### Tier
+
+SILVER 🏗️
+
 ### Overview
 
-Envio is a modular hyper-performant data indexing solution for [Aurora](https://aurora.dev/), enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperSync/overview-hyperrpc) (extremely fast read-only RPC).
+Envio is a modular hyper-performant data indexing solution for Aurora, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperSync/overview-hyperrpc) (extremely fast read-only RPC).
 
 HyperSync accelerates the synchronization of historical data on Aurora, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
 
@@ -46,22 +50,14 @@ networks:
         events:
           - event: Event # Specify event
           - event: Event
-
 ```
-
 
 With these steps completed, your application will be set to efficiently index Aurora data using Envio’s blockchain indexer.
 
 For more information on how to set up your config, define a schema, and write event handlers, refer to the guides section in our [documentation](/docs/HyperIndex/configuration-file).
 
-The full list of HyperSync supported networks can be found [here](/docs/HyperSync/hypersync-supported-networks).
-
-
 ### Support
 
 Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.com/invite/Q9qt8gZ2fX); we’re always happy to help!
 
-
-### About Aurora
-
-Aurora is an Ethereum-compatible blockchain built on [NEAR](https://near.org/) Protocol, enabling high throughput and low-cost transactions for dApps. Its compatibility with Ethereum’s tooling and scalability make it an attractive choice for developers seeking a familiar yet faster environment.
+---

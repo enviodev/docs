@@ -1,9 +1,11 @@
+var { supportedNetworks } = require("./supported-networks.json");
+
 module.exports = {
   someSidebar: [
     "overview",
     "getting-started",
     "contract-import",
-    "migration-guide-v1-v2",  
+    "migration-guide-v1-v2",
     {
       type: "category",
       label: "Supported Networks",
@@ -11,11 +13,7 @@ module.exports = {
         type: "doc",
         id: "supported-networks/index",
       },
-      items: [
-        "supported-networks/arbitrum",        
-        "supported-networks/aurora",        
-        "supported-networks/avalanche",        
-      ],
+      items: supportedNetworks,
     },
     {
       type: "category",
@@ -31,7 +29,7 @@ module.exports = {
         "Guides/navigating-hasura",
         "Guides/ipfs",
         "Guides/cli-commands",
-        "Guides/contract-state"
+        "Guides/contract-state",
       ],
     },
     {

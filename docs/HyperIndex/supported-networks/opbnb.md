@@ -1,19 +1,19 @@
 ---
-id: arbitrum
-title: Arbitrum
-sidebar_label: Arbitrum
-slug: /arbitrum
+id: opbnb
+title: Opbnb
+sidebar_label: Opbnb
+slug: /opbnb
 ---
 
-# Arbitrum
+# Opbnb
 
-## Indexing Arbitrum Data with Envio
+## Indexing Opbnb Data with Envio
 
 | **Field**                     | **Value**                                                                                          |
 |-------------------------------|----------------------------------------------------------------------------------------------------|
-| **Arbitrum Chain ID**     | 42161                                                                                            |
-| **HyperSync URL Endpoint**    | [https://arbitrum.hypersync.xyz](https://arbitrum.hypersync.xyz) or [https://42161.hypersync.xyz](https://42161.hypersync.xyz) |
-| **HyperRPC URL Endpoint**     | [https://arbitrum.rpc.hypersync.xyz](https://arbitrum.rpc.hypersync.xyz) or [https://42161.rpc.hypersync.xyz](https://42161.rpc.hypersync.xyz) |
+| **Opbnb Chain ID**     | 204                                                                                            |
+| **HyperSync URL Endpoint**    | [https://opbnb.hypersync.xyz](https://opbnb.hypersync.xyz) or [https://204.hypersync.xyz](https://204.hypersync.xyz) |
+| **HyperRPC URL Endpoint**     | [https://opbnb.rpc.hypersync.xyz](https://opbnb.rpc.hypersync.xyz) or [https://204.rpc.hypersync.xyz](https://204.rpc.hypersync.xyz) |
 
 ---
 
@@ -23,9 +23,9 @@ SILVER 🏗️
 
 ### Overview
 
-Envio is a modular hyper-performant data indexing solution for Arbitrum, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperSync/overview-hyperrpc) (extremely fast read-only RPC).
+Envio is a modular hyper-performant data indexing solution for Opbnb, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperSync/overview-hyperrpc) (extremely fast read-only RPC).
 
-HyperSync accelerates the synchronization of historical data on Arbitrum, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
+HyperSync accelerates the synchronization of historical data on Opbnb, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted service.
 
@@ -39,7 +39,7 @@ To get started, see our documentation or follow our quickstart [guide](/docs/Hyp
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
 networks:
-  - id: 42161 # Arbitrum  
+  - id: 204 # Opbnb  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
       - name: ContractName
@@ -52,7 +52,7 @@ networks:
           - event: Event
 ```
 
-With these steps completed, your application will be set to efficiently index Arbitrum data using Envio’s blockchain indexer.
+With these steps completed, your application will be set to efficiently index Opbnb data using Envio’s blockchain indexer.
 
 For more information on how to set up your config, define a schema, and write event handlers, refer to the guides section in our [documentation](/docs/HyperIndex/configuration-file).
 
