@@ -81,7 +81,7 @@ If a chain is marked as experimental(🧪),it means we have noticed some abnorma
 | Shimmer Evm          | 148        | https://shimmer-evm.hypersync.xyz or https://148.hypersync.xyz                      | 🥈   |                 |
 | Sophon               | 50104      | https://sophon.hypersync.xyz or https://50104.hypersync.xyz                         | 🥉   |                 |
 | Sophon Testnet       | 531050104  | https://sophon-testnet.hypersync.xyz or https://531050104.hypersync.xyz             | 🧪   |                 |
-| Tangle               | 5845       | https://tangle.hypersync.xyz or https://5845.hypersync.xyz                          | 🏗️  |                 |
+| Tangle               | 5845       | https://tangle.hypersync.xyz or https://5845.hypersync.xyz                          | 🥉   |                 |
 | Unichain Sepolia     | 1301       | https://unichain-sepolia.hypersync.xyz or https://1301.hypersync.xyz                | 🏗️  |                 |
 | X Layer              | 196        | https://x-layer.hypersync.xyz or https://196.hypersync.xyz                          | 🥉   |                 |
 | Zeta                 | 7000       | https://zeta.hypersync.xyz or https://7000.hypersync.xyz                            | 🥇   |                 |

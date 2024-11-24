@@ -303,8 +303,11 @@ Can’t find what you’re looking for or need support? Reach out to us on [Disc
     // Update supported-networks.json
     fs.writeFileSync(
       path.join(rootDir, "supported-networks.json"),
-      `{ "supportedNetworks": 
- [${supportedNetworks.sort().join(",")}]}`,
+      `{ "supportedNetworks": [
+        "supported-networks/any-evm-with-rpc",
+        "supported-networks/local-anvil",
+        "supported-networks/local-hardhat",
+ ${supportedNetworks.sort().join(",")}]}`,
       "utf8",
     );
 
