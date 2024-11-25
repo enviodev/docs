@@ -287,8 +287,8 @@ Can’t find what you’re looking for or need support? Reach out to us on [Disc
     // Generate files
     data.forEach((network) => {
       if (
-        network.tier != "HIDDEN".toLowerCase() ||
-        network.tier != "INTERNAL".toLowerCase()
+        network.tier.toLowerCase() != "HIDDEN".toLowerCase() ||
+        network.tier.toLowerCase() != "INTERNAL".toLowerCase()
       ) {
         const content = generateMarkdownContent(network);
         const filePath = path.join(outputDir, `${network.name}.md`);
