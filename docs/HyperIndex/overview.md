@@ -24,7 +24,7 @@ HyperIndex is an open development framework for building backend's for blockchai
 ✅ - Onchain & offchain data support
 ✅ - Hosted service or easy self hosting
 ✅ - Detailed logging & error messaging
-✅ - Actions - trigger external API services
+✅ - Actions to trigger external API services
 ✅ - Topic based indexing support (wildcard indexing)
 ```
 
