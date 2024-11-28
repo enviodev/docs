@@ -7,7 +7,7 @@ slug: /getting-started
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/LNhaN-Cikis" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-## Installation
+## Indexer Initalization
 
 ### Prerequisites
 
@@ -19,25 +19,7 @@ The following are the prerequisite packages required for Envio:
 
 Docker is required specifically for running the Envio indexer locally.
 
-### Install Envio
-
-You can install Envio by running:
-
-```bash
-npm i -g envio
-```
-
-### Envio CLI
-
-Command to see available CLI commands for Envio is:
-
-```bash
-envio --help
-```
-
-## Indexer Initalization
-
-Once you have completed the installation step, you can initialize your own indexer via the following options:
+Once you have completed the prerequisites step, you can initialize your own indexer via the following options:
 
 ### Quickstart
 
@@ -59,7 +41,7 @@ Clone one of the example indexers that have been built using Envio. Reference in
 
 ## Indexer Configuration
 
-Indexers generated using  the Quickstart, templates, or examples will work without any further configuration.
+Indexers generated using the Quickstart, templates, or examples will work without any further configuration.
 
 Users can further configure their indexers to perform custom logic, by modifying the 3 files:
 
