@@ -21,13 +21,15 @@ Docker is required specifically for running the Envio indexer locally.
 
 ### Install Envio
 
-You can install Envio by running the command below:
+You can install Envio by running:
 
 ```bash
 npm i -g envio
 ```
 
-Command to see available CLI commands for Envio.
+### Envio CLI
+
+Command to see available CLI commands for Envio is:
 
 ```bash
 envio --help
@@ -39,15 +41,15 @@ Once you have completed the installation step, you can initialize your own index
 
 ### Quickstart
 
-Generate an indexer quickly based on one or more smart contract/s deployed on a blockchain. 
+Generate an indexer quickly based on one or more smart contract(s) deployed on a blockchain.
 
-More information on the Quickstart can be found [here](./contract-import).
+More information on [the Quickstart](./contract-import) can be found in this documentation.
 
 ### Templates
 
 Select either the `ERC20`, `Greeter`, or `Blank` template following the `envio init` command.
 
-More information on the `Greeter` template can be found [here](./greeter-tutorial).
+More information on [the `Greeter` template](./greeter-tutorial) is available.
 
 ### Examples
 
@@ -57,9 +59,9 @@ Clone one of the example indexers that have been built using Envio. Reference in
 
 ## Indexer Configuration
 
-Indexers generated using  the Quickstart, templates or examples will work without any further configuration.
+Indexers generated using  the Quickstart, templates, or examples will work without any further configuration.
 
-Users can further configure their indexers to perform custom logic, and the process is done by modifying the 3 files below:
+Users can further configure their indexers to perform custom logic, by modifying the 3 files:
 
 - [`config.yaml`](configuration-file)
 - [`schema.graphql`](./schema)
@@ -73,12 +75,12 @@ Users can further configure their indexers to perform custom logic, and the proc
 
 Users can run the indexer locally without deploying, using [Docker](https://www.docker.com/products/docker-desktop/) and [Hasura](https://hasura.io/).
 
-More information on running the indexer locally can be found [here](./running-locally).
+There is more information on [running the indexer locally](./running-locally).
 
 ### Deploy to Hosted Service
 
-Once the indexer has been configured, you can easily deploy your indexer to Envio's hosted service and start querying your endpoint. 
+Once the indexer has been configured, you can easily deploy your indexer to Envio's hosted service and start querying your endpoint.
 
-More information on the hosted service can be found [here](./hosted-service).
+More information on [the hosted service](./hosted-service) is available.
 
 ---

@@ -1,6 +1,6 @@
 ---
 id: overview-hyperrpc
-title: Overview (Alpha available)
+title: Overview
 sidebar_label: Overview
 slug: /overview-hyperrpc
 ---
@@ -23,15 +23,16 @@ Its optimizations mean that while it is suitable for heavy-lifting data extracti
 > - `eth_getLogs`
 > - `trace_block` (only on [select chains](./hyperrpc-supported-networks))
 
-These methods are already supported on a wide selection of chains  (This is [the most up-to-date list](./hyperrpc-supported-networks))
+
+These methods are already supported on a wide selection of chains (the most up-to-date list can be found [here](./hyperrpc-supported-networks))
 
 Testing the endpoint and providing feedback is hugely valuable. To access these endpoints for free please join our [Discord](https://discord.gg/Q9qt8gZ2fX) and reach out or alternatively login via GitHub on the main website to access your endpoints.
 
 > ### Disclaimer
 >
 > - HyperRPC is still under active development to improve performance and stability.
-> - It has not been audited for security purposes.
 > - It does not support all RPC methods.
+> - It has not been audited for security purposes.
 > - We appreciate your patience until we get there. Until then, we are happy to answer all questions in our [Discord](https://discord.gg/Q9qt8gZ2fX).
 
 ---

@@ -19,6 +19,7 @@ module.exports = {
         "Guides/navigating-hasura",
         "Guides/ipfs",
         "Guides/cli-commands",
+        "Guides/contract-state"
       ],
     },
     {
@@ -65,6 +66,7 @@ module.exports = {
             "Advanced/performance/database-performance-optimization",
             "Advanced/performance/historical-sync",
             "Advanced/performance/latency-at-head",
+            "Advanced/performance/benchmarking",
           ],
         },
       ],

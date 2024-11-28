@@ -86,7 +86,7 @@ Limitless Exchange is able to query information such as:
 <img src="/blog-assets/case-study-limitless-9.png" alt="Screenshot of app showing markets" width="100%"/>
 *A screenshot of https://limitless.exchange/ quick bets, powered by Envio.*
 
-The Limitless Exchange Indexer can be seen in action in the Explorer of Envio’s Hosted Service [here](https://envio.dev/app/limitless-labs-group/limitless-exchange-indexer-notifications).
+The [Limitless Exchange Indexer](https://envio.dev/app/limitless-labs-group/fork-prod) and other indexers can be viewed in the Explorer of Envio’s Hosted Service. 
 
 ## Other Envio Indexers related to Prediction Markets
 

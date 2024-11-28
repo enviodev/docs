@@ -5,29 +5,43 @@ sidebar_label: Overview
 slug: /overview
 ---
 
-HyperIndex is a modern, multi-chain data indexing framework for easily querying real-time and historical data from any EVM blockchain, as well as Fuel.
+HyperIndex is an open development framework for building backend's for blockchain applications. It is designed to be easy to use, extremely fast, and extensible.
 
-Designed with a core focus on delivering superior performance and seamless developer experience, HyperIndex optimizes the user experience. Build a real-time API for your blockchain application in minutes.
+## Features
 
-## Key Features
+```
+✅ - Quickstart templates
+✅ - Real-time indexing
+✅ - Multichain indexing
+✅ - Local development
+✅ - Reorg support
+✅ - GraphQL API
+✅ - Any EVM & Fuel
+✅ - 5000+ events indexed per second historical backfill
+✅ - Auto generate an indexer with contract address
+✅ - Flexible language support (JavaScript, TypeScript, ReScript)
+✅ - 100,000+ factory contracts support
+✅ - Onchain & offchain data support
+✅ - Hosted service or easy self hosting
+✅ - Detailed logging & error messaging
+✅ - Actions to trigger external API services
+✅ - Topic based indexing support (wildcard indexing)
+```
 
-- **Simplified Installation & Setup:** Get started instantly.
-- **Any EVM L1, L2, or L3 Blockchain**: Index smart contract data from any EVM blockchain.
-- **Blazing-Fast Indexing**: Accelerate your development workflow, reduce time-to-market.
-- **Multi-chain support**: Aggregate your cross-chain data. Query with a unified API.
-- **Automatic Code Generation**: Ensures type-safety with minimal effort.
-- **Flexible Language Support**: Choose JavaScript, TypeScript, and ResScript.
-- **Promote to Production**: Develop & test locally. Deploy to Envio's Hosted Service.
-- **Detailed Logging & Error Messaging**: Simplify troubleshooting with comprehensive insights.
+## Features roadmap
 
-## Quickstart
+```
+⬜ - Interval handlers
+⬜ - Block handlers
+⬜ - Call handlers
+⬜ - Alternative data syncs
+```
 
-Check out our [Quickstart](./contract-import.md) to start querying your smart contract data with just a few clicks!
+## Quick links
+
+- [Github](https://github.com/enviodev/hyperindex) ⭐
+- [Support](https://discord.gg/Q9qt8gZ2fX)
 
 :::note
-
-- Envio's HyperIndex has not been audited for security purposes.
-- Envio's HyperIndex currently supports Linux and MacOS and not Windows. Windows Subsystem for Linux (WSL) is supported.
-- Join our [Discord](https://discord.gg/Q9qt8gZ2fX) to make sure you catch all new releases.
-
+Please use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) on Windows
 :::
