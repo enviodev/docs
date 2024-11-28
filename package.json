@@ -22,10 +22,10 @@
     "preinstall": "npx only-allow yarn"
   },
   "dependencies": {
-    "@docusaurus/core": "^3.3.2",
-    "@docusaurus/plugin-client-redirects": "^3.3.2",
-    "@docusaurus/plugin-google-gtag": "^3.3.2",
-    "@docusaurus/preset-classic": "^3.3.2",
+    "@docusaurus/core": "3.0.0",
+    "@docusaurus/plugin-client-redirects": "3.0.0",
+    "@docusaurus/plugin-google-gtag": "3.0.0",
+    "@docusaurus/preset-classic": "3.0.0",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^1.2.1",
     "docusaurus-json-schema-plugin": "^1.12.2",
@@ -34,7 +34,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^3.3.2",
+    "@docusaurus/module-type-aliases": "3.0.0",
     "@docusaurus/types": "3.0.0"
   },
   "browserslist": {
