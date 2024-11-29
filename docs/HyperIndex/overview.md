@@ -43,5 +43,5 @@ HyperIndex is an open development framework for building backend's for blockchai
 - [Support](https://discord.gg/Q9qt8gZ2fX)
 
 :::note
-Please use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) on Windows
+Please use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) for Windows
 :::
