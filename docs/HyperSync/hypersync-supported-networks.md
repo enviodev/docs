@@ -23,7 +23,6 @@ If a chain is marked as experimental(🧪),it means we have noticed some abnorma
 | Arbitrum Sepolia     | 421614     | https://arbitrum-sepolia.hypersync.xyz or https://421614.hypersync.xyz              | 🥇   |                 |
 | Aurora               | 1313161554 | https://aurora.hypersync.xyz or https://1313161554.hypersync.xyz                    | 🥈   |                 |
 | Avalanche            | 43114      | https://avalanche.hypersync.xyz or https://43114.hypersync.xyz                      | 🥇   |                 |
-| B2 Testnet           | 1123       | https://b2-testnet.hypersync.xyz or https://1123.hypersync.xyz                      | 🏗️  |                 |
 | Base                 | 8453       | https://base.hypersync.xyz or https://8453.hypersync.xyz                            | 🥈   |                 |
 | Base Sepolia         | 84532      | https://base-sepolia.hypersync.xyz or https://84532.hypersync.xyz                   | 🥇   |                 |
 | Berachain Bartio     | 80084      | https://berachain-bartio.hypersync.xyz or https://80084.hypersync.xyz               | 🥈   |                 |
@@ -65,7 +64,7 @@ If a chain is marked as experimental(🧪),it means we have noticed some abnorma
 | Moonbase Alpha       | 1287       | https://moonbase-alpha.hypersync.xyz or https://1287.hypersync.xyz                  | 🥉   |                 |
 | Moonbeam             | 1284       | https://moonbeam.hypersync.xyz or https://1284.hypersync.xyz                        | 🥈   |                 |
 | Morph                | 2818       | https://morph.hypersync.xyz or https://2818.hypersync.xyz                           | 🥉   |                 |
-| Morph Testnet        | 2810       | https://morph-testnet.hypersync.xyz or https://2810.hypersync.xyz                   | 🧪   |                 |
+| Morph Holesky        | 2810       | https://morph-holesky.hypersync.xyz or https://2810.hypersync.xyz                   | 🧪   |                 |
 | Mosaic Matrix        | 41454      | https://mosaic-matrix.hypersync.xyz or https://41454.hypersync.xyz                  | 🏗️  |                 |
 | Neon Evm             | 245022934  | https://neon-evm.hypersync.xyz or https://245022934.hypersync.xyz                   | 🥈   |                 |
 | Opbnb                | 204        | https://opbnb.hypersync.xyz or https://204.hypersync.xyz                            | 🥈   | ✔️              |
@@ -82,10 +81,9 @@ If a chain is marked as experimental(🧪),it means we have noticed some abnorma
 | Sophon               | 50104      | https://sophon.hypersync.xyz or https://50104.hypersync.xyz                         | 🥉   |                 |
 | Sophon Testnet       | 531050104  | https://sophon-testnet.hypersync.xyz or https://531050104.hypersync.xyz             | 🧪   |                 |
 | Tangle               | 5845       | https://tangle.hypersync.xyz or https://5845.hypersync.xyz                          | 🥉   |                 |
-| Unichain Sepolia     | 1301       | https://unichain-sepolia.hypersync.xyz or https://1301.hypersync.xyz                | 🏗️  |                 |
-| X Layer              | 196        | https://x-layer.hypersync.xyz or https://196.hypersync.xyz                          | 🥉   |                 |
+| Unichain Sepolia     | 1301       | https://unichain-sepolia.hypersync.xyz or https://1301.hypersync.xyz                | 🧪   |                 |
 | Zeta                 | 7000       | https://zeta.hypersync.xyz or https://7000.hypersync.xyz                            | 🥇   |                 |
-| Zircuit              | 48900      | https://zircuit.hypersync.xyz or https://48900.hypersync.xyz                        | 🥇   |                 |
+| Zircuit              | 48900      | https://zircuit.hypersync.xyz or https://48900.hypersync.xyz                        | 🧪   |                 |
 | ZKsync               | 324        | https://zksync.hypersync.xyz or https://324.hypersync.xyz                           | 🥇   |                 |
 | Zora                 | 7777777    | https://zora.hypersync.xyz or https://7777777.hypersync.xyz                         | 🥉   |                 |
 

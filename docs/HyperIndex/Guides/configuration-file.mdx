@@ -61,7 +61,7 @@ You can also choose to omit the address field for use cases like a factory contr
 
 ## Human-Readable ABI Format
 
-In the configuration, you can optionally pass the file path to the ABI for a contract in the `abi_file_path` field, or you can specify the event signature in the event field. 
+In the configuration, you can optionally pass the file path to the ABI for a contract in the `abi_file_path` field, or you can specify the event signature in the event field.
 
 Here is an example from the above configuration:
 
@@ -75,13 +75,23 @@ More information on Human Readable ABI parsing is available [here](https://docs.
 
 > **Dev note:** An error in the ABI or the event signature will result in the events not matching, and they may not reflect in the `raw_events_table` or propagate correctly into the event handler logic.
 
+## Custom Event Names
+
+This is useful when you want to have a different name on the Envio side; or index events with the same name but different signatures:
+
+```yaml
+- event: Assigned(address indexed recipientId, uint256 amount, address token)
+- event: Assigned(address indexed recipientId, uint256 amount, address token, address sender)
+  name: AssignedWithSender
+```
+
 ## Field Selection
 
 Field selection allows you to add additional data points to each event that gets passed to your handlers. For an exhaustive list of fields that can be added, see the [explorer](#explorer) below.
 
 By default, `number`, `hash`, and `timestamp` are already selected for `block_fields` and do not need to be configured.
 
-*Note:* Regarding indexing from RPC, currently only `hash` and `transaction_index` are supported in `transaction_fields`.
+_Note:_ Regarding indexing from RPC, currently only `hash` and `transaction_index` are supported in `transaction_fields`.
 
 ### Example:
 
@@ -95,16 +105,58 @@ field_selection:
     - "parentHash"
 ```
 
+## Environment Variables Interpolation
+
+Starting from `envio@2.9.0` the config file can use Environment Variables to offer more flexibility. If you want to switch between different configurations quickly, you don't need to edit the config file each time; you can just set Environment Variables at run time.
+
+Below is a simple example:
+
+```yaml
+networks:
+  - id: ${ENVIO_CHAIN_ID:-137}
+    start_block: ${ENVIO_START_BLOCK:-45336336}
+    contracts:
+      - name: Greeter
+        address: ${ENVIO_GREETER_ADDRESSES}
+```
+
+Then you can run `ENVIO_GREETER_ADDRESSES=0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c pnpm dev`, or set the values via the `.env` or the indexer settings page on the Hosted Service.
+
+### Interpolation syntax
+
+For the interpolation to be applied, the Environment Variable name should be placed in braces after a dollar sign (`${VAR}`).
+
+For braced expressions, the following formats are supported:
+
+Direct substitution
+
+- `${VAR}` -> value of `VAR`
+
+Default value
+
+- `${VAR:-default}` -> value of `VAR` if set and non-empty, otherwise `default`
+- `${VAR-default}` -> value of `VAR` if set, otherwise `default`
+
+### Ways to set variables with interpolation
+
+Envio can interpolate variables into your config file from multiple sources.
+
+Note that when the same variable is declared by multiple sources, precedence applies:
+
+1. Variables from your shell environment
+2. Variables set via Hosted Service
+3. Variables set by a `.env` file in the root indexer directory
+
 ## Additional Guidelines
 
 - The contract name field (`Greeter` in the example above) should contain a single word, as it is used to create a namespace for functions in the indexer.
 - The address field should contain the address of the proxy contract, which emits the events on the specified blockchain.
 - If the human-readable ABI format is not used, the ABI referenced in the config file needs to be copied from the implementation contract into the specified ABI directory.
 
-import CodeBlock from '@theme/CodeBlock';
+import CodeBlock from "@theme/CodeBlock";
 import Schema from "@site/static/schemas/config.evm.json";
 import JSONSchemaViewer from "@theme/JSONSchemaViewer";
 
 ## Explorer
 
-<JSONSchemaViewer schema={ Schema } />
+<JSONSchemaViewer schema={Schema} />
