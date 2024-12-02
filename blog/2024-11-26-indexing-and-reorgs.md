@@ -27,7 +27,7 @@ Considering you are ingesting data and the only CRUD (Create, Read, Update & Del
 
 Practically speaking we need to perform some form of aggregation on this data to process it into information, in this context our indexer is dealing with stateful data.
 
-> Side tangent: Stateless indexing can be handled incredibly fast by parallelization, such as indexers like [Flair](flair.dev) who achieve impressive speed with only RPC.  
+> Side tangent: Stateless indexing can be handled incredibly fast by parallelization, such as indexers like [Flair](https://flair.dev) who achieve impressive speed with only RPC.  
 
 
 ## Chain Reorgs and Stateful Data
