@@ -41,9 +41,7 @@ During a chain reorg, rather than simply replacing orphaned data, you need to **
 
 ## Reorgs and Multichain Indexing
 
-The concept of reorgs and multichain indexing should be considered since during multichain indexing we’re adding another layer of complexity in indexing in the sense that we are ingesting from multiple sources in parallel. If we are indexing in [unordered_multichain_mode](https://docs.envio.dev/docs/HyperIndex/multichain-indexing#unordered-multichain-mode) then we process reorgs in the same way as we do with stateful data; however, in the context of multichain ordering, we roll the entity state back for all chains at the occurrence of a reorg on any of the given chains and re-process the events across all the networks from the block timestamp of the forked block 
-
-> Side tangent: The logic used in reorgs whereby we are able to revert individual entities state and reingest at a point in time can be used to implement a concept we’re calling optimistic head multichain indexing allows for real-time ordered indexing without waiting for the block of the slowest network to be mined. 
+When it comes to multichain indexing, we face additional complexities as we process events from multiple sources that interact and update the same entity state. When one chain undergoes a reorg, we need to roll back the state to a known correct point and reprocess any events from all chains that affected the state after the reorg on the affected chain.
 
 
 ## Reorgs in the Wild
