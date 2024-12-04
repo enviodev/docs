@@ -7,7 +7,7 @@ slug: /contract-import
 
 The Quickstart allows you to instantly autogenerate a basic indexer and query your data. This is the quickest way to get going and likely the starting point for most developers.
 
-For example, you could autogenerate an indexer for Eigenlayer AND index the entire Eigenlayer contract in under 5 minutes simply through running `envio init` and pasting the contract address from the Block Explorer: https://etherscan.io/address/0x858646372cc42e1a627fce94aa7a7033e7cf075a
+For example, you could autogenerate an indexer for Eigenlayer AND index the entire Eigenlayer contract in under 5 minutes simply through running `pnpx envio@latest init` and pasting the contract address from the Block Explorer: https://etherscan.io/address/0x858646372cc42e1a627fce94aa7a7033e7cf075a
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/zkVlGgf5XAo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -18,7 +18,7 @@ For example, you could autogenerate an indexer for Eigenlayer AND index the enti
 To start, simply run:
 
 ```
-envio init
+pnpx envio@latest init
 ```
 
 After selecting the name, directory and preferred language for the indexer, choose `Contract Import` as the initialization option.
