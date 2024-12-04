@@ -127,15 +127,14 @@ export default fetchEthPrice;
 
 Due to the slow nature of RPC calls and the fact that you may need a paid subscription, only use this method if accuracy is of the utmost importance. This will help to speed up your indexer and reduce the cost of rpc calls.
 
-## Analysis
+## Event handler
 
-To compare these methods, we will chart the TVL of the USDB/WETH pool on Uniswap v3 after every `Mint` event.
+To compare these methods, we will compare the values of the USDB/WETH pool on Uniswap v3 after every `Mint` event.
 
 `npx envio init`
 
 - For our oracle information, `0x709944a48cAf83535e43471680fDA4905FB3920a` contract and the `UpdatedBeaconSetWithBeacons` event.
 - For our dex pool and tvl information, `0xf52B4b69123CbcF07798AE8265642793b2E8990C` contract and the `Swap` and `Mint` event.
-
 
 > config.yaml
 
@@ -144,7 +143,7 @@ To compare these methods, we will chart the TVL of the USDB/WETH pool on Uniswap
 name: envio-indexer
 networks:
 - id: 81457
-  start_block: 11000000
+  start_block: 0
   contracts:
   - name: Api3ServerV1
     address:
@@ -243,6 +242,7 @@ UniswapV3Pool.Mint.handler(async ({ event, context }) => {
 
   let offChainPrice=0;
   if (event.block.number > 11000000) {
+    // only fetch price data after block 11000000 to save on rpc calls
     offChainPrice = await fetchEthPrice(event.block.number);
     console.log(offChainPrice);
   }
@@ -259,3 +259,9 @@ UniswapV3Pool.Mint.handler(async ({ event, context }) => {
   context.TVLDollars.set(TVLDollars);
 });
 ```
+
+## Analysis
+
+The main point of comparison is between the `oraclePrice` and the `poolPrice` as the `offChainPrice` was simulated and should match the pool prices. It is evident, that the two prices are typically very close to each other. However, sometimes the oracle price is bad, i.e. it has a value of `0`. The DEX price can never be this as it will always be arbitraged to the (somewhat) correct price.
+
+![alt text](image.png)
