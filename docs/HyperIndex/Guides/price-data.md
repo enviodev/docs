@@ -28,9 +28,9 @@ To find the relevant ETH/USD price update events using API3, we can do the follo
 
 Don't worry about the above steps too much as each oracle service will have it's own contracts and events. Just read their documentation or reach out for help on their Discord and you should be able to find the relevant information.
 
-### Considerations
+### Oracle considerations
 
-- **Accuracy**: Due to gas prices, oracles don't push onchain price updates constatly.  Instead, as with API3, the oracle only pushes an onchain update at certain price deviations, e.g. 1% or 5%. This means that the latest price pushed from the oracle will not always be the most recent price, although it should be close.
+- **Accuracy**: Due to gas prices, oracles don't push onchain price updates constantly.  Instead, as with API3, the oracle normally only pushes an onchain update at certain price deviations, e.g. 1% or 5%. This means that the latest price pushed from the oracle will not always be the most recent price, although it should be close.
 - **Centralization**: This will vary from oracle to oracle. API3 runs price feeds from their own API's which means they have a higher degree of centralization. However, this allows them to provide a higher level of security and trustworthiness. Chainlink lets anyone run their own node and provide their own price feeds, which means they are more decentralized. There are some trustworthiness concerns associated with this decentralization but they have reputation and punishment mechanisms to mitigate this.
 - **Data availability**: For security reasons, orcales often choose to limit the price feeds they support to pairs with high liquidity, volume, and trustworthiness. This means that you may not be able to get price data for all tokens, especially newer, low marketcap tokens.
 
@@ -43,7 +43,7 @@ Dex pools are a type of smart contract that allows users to swap tokens with eac
 > src/getUniswapPool.ts
 
 :::info
-You can also manually use [blastscan read contract](https://blastscan.io/address/0x792edAdE80af5fC680d96a2eD80A44247D2Cf6Fd#readContract#F2) to arrive at the same result.
+You can also manually use [blastscan read contract functions](https://blastscan.io/address/0x792edAdE80af5fC680d96a2eD80A44247D2Cf6Fd#readContract#F2) to arrive at the same result.
 :::
 
 ```typescript
@@ -75,9 +75,9 @@ const factoryContract = getContract({
 })();
 ```
 
-The resulting pool address for USDB/WETH is `0xf52B4b69123CbcF07798AE8265642793b2E8990C`. You can use this address to get the price data from the dex pool. The relevant event for Uniswap v3 pools is the `Swap` event which contains the price data in the `sqrtPriceX96` field. To convert this to a price, you can use the following formula: ........
+The resulting pool address for USDB/WETH is `0xf52B4b69123CbcF07798AE8265642793b2E8990C`. You can use this address to get the price data from the dex pool. The relevant event for Uniswap v3 pools is the `Swap` event which contains the price data in the `sqrtPriceX96` field. To convert this to a price, there is a simple calculation that needs to be made which you can see in the [analysis](#analysis) section.
 
-### Considerations
+### DEX pool considerations
 
 - **Accuracy**: Dex pools rely on arbitraguers to keep prices in line with the market. For high liquidity pools, this is usually not a problem and the price can be taken to be reliable, with rare exception. However, for low liquidity pools, the price can change drastically with a single trade and the incentive for arbitraguers to keep the price in line is lower, which can lead to price manipulation. 
 
@@ -89,15 +89,43 @@ As with oracles, using dex pool price data in your indexer will be very fast as 
 
 ## Offchain API
 
-Offchain APIs are the most reliable way to get price data as they are run by centralized entities that have the resources to provide completely accurate and up-to-date price data. One such API is [CoinGecko](https://www.coingecko.com/en/api). CoinGecko provides price data for the majority of tokens on the blockchain with real volume.
+Offchain APIs are the most reliable way to get price data as they are run by centralized entities that have the resources to provide completely accurate and up-to-date price data. One such API is [CoinGecko](https://www.coingecko.com/en/api). CoinGecko provides price data for the majority of tokens on the blockchain with real volume. However there are several downsides as rpc calls are very slow and getting [historical prices](https://docs.etherscan.io/api-endpoints/stats-1#get-ether-historical-price) from an API will typically require a pro subscription. As we don't have a subscription to get historical prices, we will instead make calls to the [uniswap v3 subgraph on blast](https://thegraph.com/explorer/subgraphs/2LHovKznvo8YmKC9ZprPjsYAZDCc4K5q4AYz8s3cnQn1?view=Query&chain=arbitrum-one) as a demonstration.
 
-### Considerations
+> src/request.ts
+
+:::info
+If you are following along with the demo, get your own subgraph API key at the [Subgraph Studio](https://thegraph.com/studio/)
+:::
+
+```typescript
+const SUBGRAPH_API_KEY = process.env.SUBGRAPH_API_KEY;
+
+async function fetchEthPrice(block: number): Promise<any> {
+    const response = await fetch(`https://gateway.thegraph.com/api/${SUBGRAPH_API_KEY}/subgraphs/id/2LHovKznvo8YmKC9ZprPjsYAZDCc4K5q4AYz8s3cnQn1`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            query: `{ pool(id: "0xf52b4b69123cbcf07798ae8265642793b2e8990c", block: {number: ${block}}) { token1Price token0Price } }`,
+            operationName: "Subgraphs",
+            variables: {}
+        })
+    });
+    const data = await response.json() as any;
+    return Number(data.data.pool.token0Price);
+}
+
+export default fetchEthPrice;
+```
+
+### Offchain API considerations
 
 - **Accuracy**: This is the most accurate and reliable to get price data in your indexer as you can make an rpc call to get the very latest USD price. Some APIs, such as CoinGecko, aggregate price data from many different sources so price feed manipulation is highly unlikely. The only real risk you run is if the API goes down or sufferes manipulation, which is very rare for reputable APIs.
 - **Centralization**: Offchain APIs are typically controlled by a single entity meaning they are very centralized. This means that you have to trust the API to provide accurate and reliable price data. However, as mentioned, reputable APIs are very unlikely to manipulate price data. This is not a concern for most use cases.
 - **Data availability**: Offchain APIs such as CoinGecko provide price feeds for the majority of tokens on the blockchain with real volume. However, they may not have price data for newer, low marketcap tokens. In that case, you may have to rely on dex pools or oracles to get price data. Note that offchain APIs require an rpc call every time you need price data which will **significantly** slow down your indexer. RPC calls will change your indexer from a fast, event-based indexer to a slow, rpc-based indexer that takes hours to run.
 
-Due to the slow nature of RPC calls, only use this method if accuracy is of the utmost importance; and if using it, try to optimize your calls by rotating between different APIs and caching the price data. This will help to speed up your indexer and reduce the cost of rpc calls.
+Due to the slow nature of RPC calls and the fact that you may need a paid subscription, only use this method if accuracy is of the utmost importance. This will help to speed up your indexer and reduce the cost of rpc calls.
 
 ## Analysis
 
@@ -116,7 +144,7 @@ To compare these methods, we will chart the TVL of the USDB/WETH pool on Uniswap
 name: envio-indexer
 networks:
 - id: 81457
-  start_block: 0
+  start_block: 11000000
   contracts:
   - name: Api3ServerV1
     address:
@@ -132,7 +160,6 @@ networks:
     - event: Swap(address indexed sender, address indexed recipient, int256 amount0, int256 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick)
     - event: Mint(address sender, address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)
 rollback_on_reorg: false
-
 ```
 
 > schema.graphql
@@ -155,12 +182,80 @@ type UniswapV3PoolPrice {
   timestamp: Int!
   block: Int!
 }
+
+type TVLDollars {
+  id: ID!
+  timestamp: Int!
+  block: Int!
+  oraclePrice: BigInt!
+  poolPrice: BigInt!
+  offChainPrice: Float!
+}
+
+
 ```
 
 > src/EventHandlers.ts
 
 ```typescript
+/*
+ * Please refer to https://docs.envio.dev for a thorough guide on all Envio indexer features
+ */
+import {
+  Api3ServerV1,
+  OraclePoolPrice,
+  UniswapV3Pool,
+  UniswapV3PoolPrice,
+  TVLDollars,
+} from "generated";
+import fetchEthPrice from "./request";
+
+let latestOraclePrice = 0n;
+let latestPoolPrice = 0n;
+
+Api3ServerV1.UpdatedBeaconSetWithBeacons.handler(async ({ event, context }) => {
+  const entity: OraclePoolPrice = {
+    id: `${event.chainId}-${event.block.number}-${event.logIndex}`,
+    value: event.params.value,
+    timestamp: event.params.timestamp,
+    block: event.block.number,
+  };
+
+  latestOraclePrice = event.params.value / BigInt(10**18);
+
+  context.OraclePoolPrice.set(entity);
+});
+
+UniswapV3Pool.Swap.handler(async ({ event, context }) => {
+  const entity: UniswapV3PoolPrice = {
+    id: `${event.chainId}-${event.block.number}-${event.logIndex}`,
+    sqrtPriceX96: event.params.sqrtPriceX96,
+    timestamp: event.block.timestamp,
+    block: event.block.number,
+  };
+
+  latestPoolPrice = BigInt(2 ** 192) / (BigInt(event.params.sqrtPriceX96) * BigInt(event.params.sqrtPriceX96));
+
+  context.UniswapV3PoolPrice.set(entity);
+});
+
+UniswapV3Pool.Mint.handler(async ({ event, context }) => {
+
+  let offChainPrice=0;
+  if (event.block.number > 11000000) {
+    offChainPrice = await fetchEthPrice(event.block.number);
+    console.log(offChainPrice);
+  }
+
+  const TVLDollars: TVLDollars = {
+    id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+    timestamp: event.block.timestamp,
+    block: event.block.number,
+    oraclePrice: latestOraclePrice,
+    poolPrice: latestPoolPrice,
+    offChainPrice: Number(offChainPrice.toFixed(2)),
+  }
+
+  context.TVLDollars.set(TVLDollars);
+});
 ```
-
-
-Indexing this price data was not so bad, but now we want to calculate the usd value during an ETH transfer event. 
