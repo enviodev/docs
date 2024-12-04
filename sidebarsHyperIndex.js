@@ -30,6 +30,7 @@ module.exports = {
         "Guides/ipfs",
         "Guides/cli-commands",
         "Guides/contract-state",
+        "Guides/price-data"
       ],
     },
     {
