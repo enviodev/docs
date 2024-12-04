@@ -13,7 +13,7 @@ slug: /indexing-and-reorgs
 
 In this article, we unpack the implications of chain re-organizations on consuming and aggregating data, considerations in a multichain chain environment, and how we can design for this. 
 
-We assume you have a strong understanding of what a chain reorganization is but if you want to brush up, skip to the bottom here.
+We assume you have a strong understanding of what a chain reorganization is but if you want to brush up, skip to the bottom [here](#what-are-chain-reorgs).
 
 
 > Note: Handling reorgs is only important if you’re indexing at the head, or handling data within the range of the head and the network's finalized block.  
@@ -53,7 +53,7 @@ In practice, different networks exhibit varying levels of exposure to reorgs bas
 
 Ultimately, reorgs are a crucial consideration in blockchain indexing, and by understanding their implications and designing with flexibility, we can properly account for them in our indexer.
 
-
+<a id="what-are-chain-reorgs"></a>
 ## What are Chain Reorgs?
 
 In order to understand reorgs, let’s break down the fundamental concepts of a reorg and build up to our definition of a reorg.
