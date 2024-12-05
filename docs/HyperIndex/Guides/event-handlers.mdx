@@ -21,6 +21,7 @@ in the project directory to generate the functions you will use in your handlers
 Each event that you want to process requires that a handler be registered. These functions are asynchronous.
 
 **Note:** _Two other functions, `handlerWithLoader` and `contractRegister`, are also sometimes used but not required for most indexers. Both functions are explored in the Advanced section. `handlerWithLoader` is used to optimize the loading of entities from the database, and accessing one-to-many relationships on entities, `contractRegister` is used for registering addresses dynamically from a factory contract._
+
 <!-- TODO: add links to the advanced section about handlerWithLoader and contractRegister -->
 
 ## Handler Function
@@ -119,7 +120,7 @@ type BlockFields = {
 } & AdditionalBlockFields;
 ```
 
-It is recommended to add `# yaml-language-server: $schema=../../codegenerator/cli/npm/envio/evm.schema.json` to the top of your `config.yaml` to help with editor autocompletion.
+It is recommended to add `# yaml-language-server: $schema=./node_modules/envio/evm.schema.json` to the top of your `config.yaml` to help with editor autocompletion.
 
 ### Context
 
@@ -257,7 +258,9 @@ Handlers.Greeter.NewGreeting.handler(async ({ event, context }) => {
 Maybe this "Config data in the handler" section shouldn't be included here.
 It is a more advanced topic and can be covered in its section.
 -->
+
 ## Config Data in the Handler
+
 We expose the `config.yaml` data in the handler via `getConfigByChainId`. The below code snippets show how to access the `config.yaml` data in the handler and the available data:
 
 <Tabs>

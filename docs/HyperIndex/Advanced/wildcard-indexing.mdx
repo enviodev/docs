@@ -12,8 +12,8 @@ Wildcard indexing is a feature that allows you to index all events matching a sp
 
 :::note
 Wildcard Indexing is only supported from HyperIndex v2.3 onwards.  
-Wildcard Indexing is supported for Indexers using [HyperSync](/docs/HyperIndex/Advanced/hypersync.md) or [HyperFuel](/docs/HyperIndex/fuel.md) as data source.  
-Wildcard indexing is not yet supported for Indexer using [RPC](/docs/HyperIndex/Advanced/rpc-sync.md) as data source. 
+Wildcard Indexing is supported for Indexers using [HyperSync](/docs/HyperIndex/Advanced/hypersync.md) or [HyperFuel](/docs/HyperIndex/fuel/fuel.md) as data source.  
+Wildcard indexing is not yet supported for Indexer using [RPC](/docs/HyperIndex/Advanced/rpc-sync.md) as data source.
 :::
 
 ## Example
@@ -41,12 +41,12 @@ We can write the following event handler:
 import { ERC20 } from "generated";
 
 ERC20.Transfer.handler(async ({ event, context }) => {
-  //... your handler logic
-  },
-  { wildcard: true },
+//... your handler logic
+},
+{ wildcard: true },
 );
 
-```
+````
   </TabItem>
   <TabItem value="js" label="JavaScript">
 ```js
@@ -59,7 +59,8 @@ ERC20.Transfer.handler(async ({ event, context }) => {
   { wildcard: true },
 );
 
-```
+````
+
   </TabItem>
   <TabItem value="res" label="ReScript">
 ```rescript
@@ -88,12 +89,13 @@ import { ERC20 } from "generated";
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 ERC20.Transfer.handler(
-  async ({ event, context }) => {
-    //... your handler logic
-  },
-  { wildcard: true, eventFilters: { from: ZERO_ADDRESS } },
+async ({ event, context }) => {
+//... your handler logic
+},
+{ wildcard: true, eventFilters: { from: ZERO_ADDRESS } },
 );
-```
+
+````
   </TabItem>
   <TabItem value="js" label="JavaScript">
 ```js
@@ -108,7 +110,8 @@ ERC20.Transfer.handler(
   },
   { wildcard: true, eventFilters: { from: ZERO_ADDRESS } },
 );
-```
+````
+
   </TabItem>
   <TabItem value="res" label="ReScript">
 ```rescript
@@ -118,15 +121,16 @@ open Types.SingleOrMultiple
 let zeroAddress = Address.unsafeFromString("0x0000000000000000000000000000000000000000")
 
 Handlers.ERC20.Transfer.handler(
-  async ({ event, context }) => {
-    //... your handler logic
-  },
-  ~eventConfig={
-    wildcard: true,
-    eventFilters: single({ from: single(zeroAddress) }),
-  },
+async ({ event, context }) => {
+//... your handler logic
+},
+~eventConfig={
+wildcard: true,
+eventFilters: single({ from: single(zeroAddress) }),
+},
 )
-```
+
+````
   </TabItem>
 </Tabs>
 
@@ -152,14 +156,15 @@ ERC20.Transfer.handler(
   async ({ event, context }) => {
     //... your handler logic
   },
-  { wildcard: true, 
+  { wildcard: true,
     eventFilters: [
       { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES },
       { from: WHITELISTED_ADDRESSES, to: ZERO_ADDRESS }
     ]
   },
 );
-```
+````
+
   </TabItem>
   <TabItem value="js" label="JavaScript">
 ```js
@@ -169,23 +174,24 @@ const { ERC20 } = require("generated");
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 const WHITELISTED_ADDRESSES = [
-  "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-  "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-  "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"
+"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+"0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+"0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"
 ];
 
 ERC20.Transfer.handler(
-  async ({ event, context }) => {
-    //... your handler logic
-  },
-  { wildcard: true, 
-    eventFilters: [
-      { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES },
-      { from: WHITELISTED_ADDRESSES, to: ZERO_ADDRESS }
-    ]
-  },
+async ({ event, context }) => {
+//... your handler logic
+},
+{ wildcard: true,
+eventFilters: [
+{ from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES },
+{ from: WHITELISTED_ADDRESSES, to: ZERO_ADDRESS }
+]
+},
 );
-```
+
+````
   </TabItem>
   <TabItem value="res" label="ReScript">
 ```rescript
@@ -212,13 +218,14 @@ Handlers.ERC20.Transfer.handler(
     ]),
   },
 )
-```
+````
+
   </TabItem>
 </Tabs>
 
 ## Contract Register Example
 
-The same can be applied to contractRegister and handlerWithLoader APIs. Here is an example where we only register Uniswap pools that contain DAI token: 
+The same can be applied to contractRegister and handlerWithLoader APIs. Here is an example where we only register Uniswap pools that contain DAI token:
 
 <Tabs groupId="lang" defaultValue="ts">
   <TabItem value="ts" label="TypeScript">
@@ -229,13 +236,14 @@ import { UniV3Factory } from "generated";
 const DAI_ADDRESS = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
 
 UniV3Factory.PoolCreated.contractRegister(
-  async ({ event, context }) => {
-    const poolAddress = event.params.pool;
-    context.UniV3Pool.add(poolAddress);
-  },
-  { eventFilters: [{ token0: DAI_ADDRESS }, { token1: DAI_ADDRESS }] },
+async ({ event, context }) => {
+const poolAddress = event.params.pool;
+context.UniV3Pool.add(poolAddress);
+},
+{ eventFilters: [{ token0: DAI_ADDRESS }, { token1: DAI_ADDRESS }] },
 );
-```
+
+````
   </TabItem>
   <TabItem value="js" label="JavaScript">
 ```js
@@ -251,7 +259,8 @@ UniV3Factory.PoolCreated.contractRegister(
   },
   { eventFilters: [{ token0: DAI_ADDRESS }, { token1: DAI_ADDRESS }] },
 );
-```
+````
+
   </TabItem>
   <TabItem value="res" label="ReScript">
 ```rescript
@@ -261,18 +270,19 @@ open Types.SingleOrMultiple
 let daiAddress = Address.unsafeFromString("0x6B175474E89094C44Da98b954EedeAC495271d0F")
 
 Handlers.UniV3Factory.PoolCreated.contractRegister(
-  async ({ event, context }) => {
-    let poolAddress = event.params.pool
-    context.UniV3Pool.add(poolAddress)
-  },
-  ~eventConfig={
-    eventFilters: multiple([
-      { token0: single(daiAddress) },
-      { token1: single(daiAddress) }
-    ])
-  },
+async ({ event, context }) => {
+let poolAddress = event.params.pool
+context.UniV3Pool.add(poolAddress)
+},
+~eventConfig={
+eventFilters: multiple([
+{ token0: single(daiAddress) },
+{ token1: single(daiAddress) }
+])
+},
 )
-```
+
+````
   </TabItem>
 </Tabs>
 
@@ -287,7 +297,7 @@ ERC20.Transfer.handlerWithLoader({
   eventFilters: ...,
 });
 }
-```
+````
 
 ## Limitations
 
