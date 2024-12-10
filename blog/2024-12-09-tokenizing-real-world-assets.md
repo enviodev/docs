@@ -61,7 +61,7 @@ By leveraging Envio's indexing infrastructure, Blocksquare benefits from real-ti
 
 Envio optimizes performance significantly, enabling the indexing of over 400,000 Ethereum Mainnet events in under 20 minutes—a task that previously took hours. Envio gives web3 developers an edge with significantly faster access to onchain data, speeding up development and testing cycles, and ensuring scalable data access as applications and blockchain grows in size. 
 
-<img src="/blog-assets/tokenizing-rwa-2.png" alt="Oceanpoint" width="100%"/>
+<img src="/blog-assets/tokenizing-rwa-2.png" alt="Oceanpoint Marketplace" width="100%"/>
 
 
 Envio’s integration allows Blocksquare to power its DeFi platform and marketplace with a performant backend that stores important data points, such as available liquidity and asset pools, tokens investment listings, APY calculations, token holders, transaction history, supply information, and any other data points of interest.

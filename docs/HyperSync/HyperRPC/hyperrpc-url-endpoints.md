@@ -63,7 +63,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Morph Holesky        | 2810       | https://morph-holesky.rpc.hypersync.xyz or https://2810.rpc.hypersync.xyz           |                 |
 | Mosaic Matrix        | 41454      | https://mosaic-matrix.rpc.hypersync.xyz or https://41454.rpc.hypersync.xyz          |                 |
 | Neon Evm             | 245022934  | https://neon-evm.rpc.hypersync.xyz or https://245022934.rpc.hypersync.xyz           |                 |
-| Opbnb                | 204        | https://opbnb.rpc.hypersync.xyz or https://204.rpc.hypersync.xyz                    | ✔️              |
+| Opbnb                | 204        | https://opbnb.rpc.hypersync.xyz or https://204.rpc.hypersync.xyz                    |                 |
 | Optimism             | 10         | https://optimism.rpc.hypersync.xyz or https://10.rpc.hypersync.xyz                  |                 |
 | Optimism Sepolia     | 11155420   | https://optimism-sepolia.rpc.hypersync.xyz or https://11155420.rpc.hypersync.xyz    |                 |
 | Polygon              | 137        | https://polygon.rpc.hypersync.xyz or https://137.rpc.hypersync.xyz                  |                 |
