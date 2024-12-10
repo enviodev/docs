@@ -271,7 +271,7 @@ Contact us in our [Discord](https://discord.gg/Q9qt8gZ2fX) for further assistanc
 For all of the database-related errors, rerun DB migrations using the following command:
 
 ```bash
-envio local db-migrate setup
+pnpm envio local db-migrate setup
 ```
 
 ### `EE700`: Parse DB Row
