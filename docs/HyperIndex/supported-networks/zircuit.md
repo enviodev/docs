@@ -19,7 +19,7 @@ slug: /zircuit
 
 ### Tier
 
-GOLD 🏗️
+EXPERIMENTAL 🏗️
 
 ### Overview
 
