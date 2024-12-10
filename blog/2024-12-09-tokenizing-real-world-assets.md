@@ -1,6 +1,6 @@
 ---
-title: Tokenizing RWAs: How Blockchain is Redefining Real Estate Investment
-sidebar_label: Tokenizing RWAs: How Blockchain is Redefining Real Estate Investment
+title: "Tokenizing RWAs: How Blockchain is Redefining Real Estate Investment"
+sidebar_label: "Tokenizing RWAs: How Blockchain is Redefining Real Estate Investment"
 slug: /tokenizing-real-world-assets
 ---
 
