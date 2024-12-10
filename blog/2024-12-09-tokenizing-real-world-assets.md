@@ -40,11 +40,11 @@ At the heart of Blocksquare is [Oceanpoint](https://oceanpoint.fi/), a DeFi plat
 Tokenizing real estate brings numerous benefits beyond traditional property investment methods. Here are a few key reasons why tokenization matters:
 
 
-* **Lower Barriers to Entry:** By fractionalizing property ownership, tokenization allows individuals to invest with smaller amounts of capital, rather than buying entire properties. \
+* **Lower Barriers to Entry:** By fractionalizing property ownership, tokenization allows individuals to invest with smaller amounts of capital, rather than buying entire properties.
 
-* **Liquidity**: Tokenized real estate can be traded, making it much more liquid than traditional real estate investments, which often require years to realize returns. \
+* **Liquidity**: Tokenized real estate can be traded, making it much more liquid than traditional real estate investments, which often require years to realize returns.
 
-* **Transparency**: Ownership records are transparent, tamper-proof, and easily verifiable, reducing the risk of fraud or disputes. \
+* **Transparency**: Ownership records are transparent, tamper-proof, and easily verifiable, reducing the risk of fraud or disputes.
 
 * **Global Access**: Investors from around the world can participate in tokenized real estate markets, democratizing access to property investments that were previously limited to local investors or large institutions.
 
