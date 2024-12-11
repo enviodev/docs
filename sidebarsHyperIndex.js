@@ -81,21 +81,19 @@ module.exports = {
         },
       ],
     },
-    /* 
-    /// TODO: add back once we have some v2 examples.
+    
     {
       type: "category",
       label: "Examples",
       items: [
-        "Examples/example-sablier-v2",
-        "Examples/example-liquidation-metrics",
         "Examples/example-uniswap-v3",
-        "Examples/example-ens",
-        // "Examples/example-aave-token",
-        // "Examples/example-reNFT",
-        // "Examples/example-token-vaults",
+        "Examples/example-velodrome-aerodrome",
+        "Examples/example-sablier",
+        "Examples/example-cross-chain-messaging",
+        // "Examples/example-liquidation-metrics",
+        // "Examples/example-ens",
       ],
-    }, */
+    },
     {
       type: "category",
       label: "Troubleshoot",

@@ -32,7 +32,7 @@ If a chain is marked as experimental(🧪),it means we have noticed some abnorma
 | Bsc                  | 56         | https://bsc.hypersync.xyz or https://56.hypersync.xyz                               | 🥇   |                 |
 | Bsc Testnet          | 97         | https://bsc-testnet.hypersync.xyz or https://97.hypersync.xyz                       | 🧪   |                 |
 | C1 Milkomeda         | 2001       | https://c1-milkomeda.hypersync.xyz or https://2001.hypersync.xyz                    | 🥉   |                 |
-| Celo                 | 42220      | https://celo.hypersync.xyz or https://42220.hypersync.xyz                           | 🥈   |                 |
+| Celo                 | 42220      | https://celo.hypersync.xyz or https://42220.hypersync.xyz                           | 🏗️  |                 |
 | Chiliz               | 8888       | https://chiliz.hypersync.xyz or https://8888.hypersync.xyz                          | 🥈   |                 |
 | Citrea Testnet       | 5115       | https://citrea-testnet.hypersync.xyz or https://5115.hypersync.xyz                  | 🧪   |                 |
 | Crab                 | 44         | https://crab.hypersync.xyz or https://44.hypersync.xyz                              | 🥉   |                 |
@@ -67,7 +67,7 @@ If a chain is marked as experimental(🧪),it means we have noticed some abnorma
 | Morph Holesky        | 2810       | https://morph-holesky.hypersync.xyz or https://2810.hypersync.xyz                   | 🧪   |                 |
 | Mosaic Matrix        | 41454      | https://mosaic-matrix.hypersync.xyz or https://41454.hypersync.xyz                  | 🏗️  |                 |
 | Neon Evm             | 245022934  | https://neon-evm.hypersync.xyz or https://245022934.hypersync.xyz                   | 🥈   |                 |
-| Opbnb                | 204        | https://opbnb.hypersync.xyz or https://204.hypersync.xyz                            | 🥈   |                 |
+| Opbnb                | 204        | https://opbnb.hypersync.xyz or https://204.hypersync.xyz                            | 🏗️  |                 |
 | Optimism             | 10         | https://optimism.hypersync.xyz or https://10.hypersync.xyz                          | 🥇   |                 |
 | Optimism Sepolia     | 11155420   | https://optimism-sepolia.hypersync.xyz or https://11155420.hypersync.xyz            | 🥇   |                 |
 | Polygon              | 137        | https://polygon.hypersync.xyz or https://137.hypersync.xyz                          | 🥇   |                 |

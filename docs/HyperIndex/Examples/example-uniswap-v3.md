@@ -1,26 +1,18 @@
 ---
 id: example-uniswap-v3
-title: Uniswap V3
-sidebar_label: Uniswap V3
-slug: /example-uniswap-v3
+title: Uniswap V3 Multi-chain indexer
+sidebar_label: Uniswap V3 (DEX)
+slug: /example-uniswap-v3-multi-chain-indexer
 ---
 
-# Uniswap V3
+The following indexer example is a reference implementation and can serve as a starting point for applications with similar logic.
 
-> This is a development repo that is undergoing continual changes for benchmarking purposes.
+:::note
+It is important to note that these are not vetted for accuracy, and testing or some level of data validation is always recommended. Additionally the indexer my not be using the latest Envio version and was built by Envio partners and community builders. 
+::: 
 
-This [repo](https://github.com/enviodev/uniV3-swaps) contains an example Envio indexer built using TypeScript for the [Uniswap V3 USDC / ETH
-0.05% pool](https://etherscan.io/address/0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640) deployed on Ethereum Mainnet.
+This [repo](https://github.com/jack-landon/uniswap-v3-indexer) contains a comprehensive example indexer for the Uniswap V3 protocol using Envio HyperIndex.  
 
-`Swap` events from the contract are indexed as entities and the `LiquidityPool` entity is updated on each `Swap` event to track cumulative statistics for the pool.
+This indexer is a multi-chain indexer, built using TypeScript, that indexes Uniswap V3 deployments on Ethereum Mainnet, Arbitrum One and Base. Data is accessible via a unified graphQL API. It is intended as as like-for-like copy of the [Uniswap V3 subgraph](https://github.com/Uniswap/v3-subgraph). 
 
-The indexer has been built using v0.0.21 of Envio.
-
-## Steps to run the indexer
-
-1. Clone the [repo](https://github.com/enviodev/uniV3-swaps)
-1. Install any other pre-requisite packages for Envio listed [here](https://docs.envio.dev/docs/installation#prerequisites)
-1. Install Envio via `npm i -g envio@v0.0.21`
-1. Generate indexing code via `envio codegen`
-1. Run the indexer via `envio dev` (make sure you have Docker running)
-1. Stop the indexer via `envio stop`
+More information on the [ReadMe](https://github.com/jack-landon/uniswap-v3-indexer/blob/main/README.md). 
