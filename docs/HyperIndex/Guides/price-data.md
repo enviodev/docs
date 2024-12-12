@@ -249,6 +249,7 @@ UniswapV3Pool.Mint.handler(async ({ event, context }) => {
   const offChainPrice = await fetchEthPriceFromUnix(event.block.timestamp);
 
   const ethDepositedUsd = latestPoolPrice * event.params.amount1 / BigInt(10 ** 18);
+  const ethDepositedUsd = offChainPrice * event.params.amount1 / BigInt(10 ** 18);
 
   const EthDeposited: EthDeposited = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
@@ -257,7 +258,8 @@ UniswapV3Pool.Mint.handler(async ({ event, context }) => {
     oraclePrice: latestOraclePrice,
     poolPrice: latestPoolPrice,
     offChainPrice: Number(offChainPrice.toFixed(2)),
-    ethDepositedUsd: Number(ethDepositedUsd),
+    ethDepositedUsdPool: Number(ethDepositedUsd),
+    ethDepositedUsdOffchain: Number(ethDepositedUsd),
     usdDeposited: Number(event.params.amount0/BigInt(10**18)),
     txHash: event.transaction.hash,
   }
@@ -271,8 +273,8 @@ UniswapV3Pool.Mint.handler(async ({ event, context }) => {
 
 The main point of comparison is between the `oraclePrice` and the `poolPrice` as the `offChainPrice` is only accurate to the day as explained in the [offchain](#offchain-api) section. It is evident that the two prices are typically very close to each other. However, sometimes the oracle price is bad, i.e. it has a value of `0`. The DEX price can never be that bad as it will always be arbitraged to the somewhat correct price.
 
-We have included the transaction hashes for you to cross check the prices on [Blastscan](https://blastscan.io/). For example, for [this](https://blastscan.io/tx/0xe7e79ddf29ed2f0ea8cb5bb4ffdab1ea23d0a3a0a57cacfa875f0d15768ba37d) transaction (last row in the image), BlastScan shows an Ethereum value of $2,289.37 deposited, which we can assume to be correct. Our value shows $2,117, showing that the dex price does not yield completely accurate results, but only an approximation.
+We have included the transaction hashes for you to cross check the prices on [Blastscan](https://blastscan.io/). For example, for [this](https://blastscan.io/tx/0xe7e79ddf29ed2f0ea8cb5bb4ffdab1ea23d0a3a0a57cacfa875f0d15768ba37d) transaction (last row in the image), BlastScan shows an Ethereum value of $2,289.37 deposited, which we can assume to be correct. Our value using the dex pool shows $2,117, showing that the dex price does not yield completely accurate results, but only an approximation. The value using offchain data is $2,155, slightly closer to the actual value but still not completely accurate.
 
-In conclusion, use an offchain API if you need the most accurate price data, otherwise consider using oracle or dex pool events.
+In conclusion, use an offchain API if you need the most accurate price data, otherwise consider using oracle or dex pool events. If using a dex pool, it is highly recommended to use a dex pool with a high volume and liquidity to get the most accurate price data. In our case, the uniswap pool on Blast has a TVL less than $20k at the time of writing, so price impact and low volume lead to results that could only provide rough estimates. If using an oracle, make sure to check the deviation of the price updates to make sure they are accurate enough for your use case.
 
 ![alt text](image.png)
