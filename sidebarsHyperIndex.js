@@ -44,6 +44,18 @@ module.exports = {
     },
     {
       type: "category",
+      label: "Examples",
+      items: [
+        "Examples/example-uniswap-v3",
+        "Examples/example-velodrome-aerodrome",
+        "Examples/example-sablier",
+        "Examples/example-cross-chain-messaging",
+        // "Examples/example-liquidation-metrics",
+        // "Examples/example-ens",
+      ],
+    },
+    {
+      type: "category",
       label: "Hosted Service",
       items: [
         "Hosted_Service/hosted-service",
@@ -79,19 +91,6 @@ module.exports = {
             "Advanced/performance/benchmarking",
           ],
         },
-      ],
-    },
-    
-    {
-      type: "category",
-      label: "Examples",
-      items: [
-        "Examples/example-uniswap-v3",
-        "Examples/example-velodrome-aerodrome",
-        "Examples/example-sablier",
-        "Examples/example-cross-chain-messaging",
-        // "Examples/example-liquidation-metrics",
-        // "Examples/example-ens",
       ],
     },
     {
