@@ -19,7 +19,13 @@ The following are the prerequisite packages required for Envio:
 
 Docker is required specifically for running the Envio indexer locally.
 
-Once you have completed the prerequisites step, you can initialize your own indexer via the following options:
+### Install Envio
+
+```bash
+pnpm i -g envio
+```
+
+Once you have completed the prerequisites step and installed Envio, you can initialize your own indexer via the following options:
 
 ### Quickstart
 
