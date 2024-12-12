@@ -9,19 +9,19 @@ slug: /price-data
 
 TLDR, the code for this guide can be found [here](todo add link)
 
-There are many applications where you may want to get price data in your indexer. For example, you may want to use price data to calculate the value of historical token transfers or the TVL of a Uniswap pool over time. However, the relevant events to be indexed may not contain the price data you need. In this case, we have 3 different way to get price data inside the indexer:
+There are many applications where you may want to get price data in your indexer. For example, you may want to use price data to calculate the value of historical token transfers or the TVL of a Uniswap pool over time. In this example, we want to get the USD value of ETH deposits into a Uniswap V3 liquidity pool. To do these things, we need to get the price of ETH in USD at the time of the event. However, the relevant events to be indexed may not contain the price data required. In these cases, we have 3 different ways to get price data inside the indexer:
 
 1. Oracles
 2. Dex pools
 3. Offchain API
 
-Each of these methods has its own pros and cons and we will analyze each through the metrics of accuracy, centralization, and data availability. We will also go through each of these methods and explain how to use them in a simple indexer to get the USD value ETH deposits into a Uniswap V3 liquidity pool. We will be using the [Blast](https://blastscan.io/) blockchain however the same principles apply to any other EVM blockchain.
+Each of these methods has its own pros and cons and we will analyze each through the metrics of accuracy, centralization, and data availability. We will also go through each of these methods and explain how to use them in a simple indexer to . We will be using the [Blast](https://blastscan.io/) blockchain however the same principles apply to any other EVM blockchain.
 
 ## Oracles
 
-Oracles are a type of service that provide offchain data to the blockchain. This is usually price-data but has no limitations and can be anything from odds for a sports-betting dApp to random numbers which can be used for a lottery. One such oracle which we will use here is [API3](https://api3.org/) which currently only focuses on price feeds.
+Oracles are a type of service that provide offchain data to the blockchain. This is usually price data but has no limitations and can be anything from odds for a sports betting dApp to random numbers which can be used for a lottery. One such oracle which we will use here is [API3](https://api3.org/) which currently only focuses on price feeds.
 
-To find the relevant ETH/USD price update events using API3: 
+To find the relevant ETH/USD price update events using API3:
 
 - The events we care about are emitted on the Api3ServerV1 contract at [0x709944a48cAf83535e43471680fDA4905FB3920a](https://github.com/api3dao/contracts/blob/main/deployments/blast/Api3ServerV1.json#L2) on Blast, which you can find in the `@api3/contracts`. The events are emitted with data feed IDs and not [dAPI](https://api3.org/data-feeds/) names, so we need to look up what data feed ID the particular dAPI name is set to. 'dAPI' just refers to API3's price data feeds.
 
@@ -134,7 +134,7 @@ Due to the slow nature of rest API calls and the fact that you may need a paid s
 
 ## Event handler
 
-To compare these methods, we will compare the values of the USDB/WETH pool on Uniswap v3 after every `Mint` event.
+To compare these methods, we will compare the USD values of the Eth added to the USDB/WETH pool on Uniswap v3 after every `Mint` event.
 
 `npx envio init`
 
@@ -273,8 +273,8 @@ UniswapV3Pool.Mint.handler(async ({ event, context }) => {
 
 The main point of comparison is between the `oraclePrice` and the `poolPrice` as the `offChainPrice` is only accurate to the day as explained in the [offchain](#offchain-api) section. It is evident that the two prices are typically very close to each other. However, sometimes the oracle price is bad, i.e. it has a value of `0`. The DEX price can never be that bad as it will always be arbitraged to the somewhat correct price.
 
-We have included the transaction hashes for you to cross check the prices on [Blastscan](https://blastscan.io/). For example, for [this](https://blastscan.io/tx/0xe7e79ddf29ed2f0ea8cb5bb4ffdab1ea23d0a3a0a57cacfa875f0d15768ba37d) transaction (last row in the image), BlastScan shows an Ethereum value of $2,289.37 deposited, which we can assume to be correct. Our value using the dex pool, `ethDepositedUsdPool`, shows $2,117, showing that the dex price does not yield completely accurate results, but only an approximation. The value using offchain data, `ethDepositedUsdOffchain`, is $2,155, slightly closer to the actual value but still not completely accurate.
+We have included the transaction hashes for you to cross check the prices on [Blastscan](https://blastscan.io/). For example, for [this](https://blastscan.io/tx/0xe7e79ddf29ed2f0ea8cb5bb4ffdab1ea23d0a3a0a57cacfa875f0d15768ba37d) transaction, seen as last row in the image below, BlastScan shows an ETH value of $2,289.37 deposited, which we can assume to be correct. Our ETH value using the dex pool, `ethDepositedUsdPool`, shows $2,117, highlighting that the dex price does not yield completely accurate results, but only an approximation. The value using offchain data, `ethDepositedUsdOffchain`, is $2,155, slightly closer to the actual value but still not completely accurate.
 
-In conclusion, use an offchain API if you need the most accurate price data, otherwise consider using oracle or dex pool events. If using a dex pool, it is highly recommended to use a dex pool with a high volume and liquidity to get the most accurate price data. In our case, the uniswap pool on Blast has a TVL less than $20k at the time of writing, so price impact and low volume lead to results that could only provide rough estimates. The equivalent pool on Ethereum currently has a TVL of $160M, which we should have used instead. If using an oracle, make sure to check the deviation of the price updates to make sure they are accurate enough for your use case.
+In conclusion, use an offchain API if you need the most accurate price data, otherwise consider using oracle or dex pool events. If using a dex pool, it is highly recommended to use a dex pool with a high volume and liquidity to get the most accurate price data. In our case, the Uniswap pool on Blast has a TVL of less than $20k at the time of writing, so price impact and low volume lead to results that could only provide rough estimates. The equivalent pool on Ethereum currently has a TVL of $160M, which we should have used instead, since Envio easily supports multichain. If using an oracle, make sure to check the deviation of the price updates to make sure they are accurate enough for your use case.
 
 ![alt text](image.png)
