@@ -1,7 +1,7 @@
 ---
 id: example-uniswap-v3
 title: Uniswap V3 Multi-chain indexer
-sidebar_label: Uniswap V3 (DEX)
+sidebar_label: UniswapV3 (DEX)
 slug: /example-uniswap-v3-multi-chain-indexer
 ---
 
