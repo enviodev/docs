@@ -1,7 +1,7 @@
 ---
 id: example-sablier
 title: Sablier Indexer
-sidebar_label: Sablier
+sidebar_label: Sablier (Token streaming)
 slug: /example-sablier
 ---
 

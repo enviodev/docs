@@ -1,8 +1,8 @@
 ---
 id: example-cross-chain-messaging
-title: Cross Chain Messaging Indexer
-sidebar_label: Cross-chain messaging
-slug: /example-
+title: Cross-Chain Messaging
+sidebar_label: Cross-Chain Messaging
+slug: /example-cross-chain-messaging
 ---
 
 The following indexer example is a reference implementation and can serve as a starting point for applications with similar logic.

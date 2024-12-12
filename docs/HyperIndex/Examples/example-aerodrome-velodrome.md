@@ -1,7 +1,7 @@
 ---
 id: example-velodrome-aerodrome
-title: Velo-/Aerodrome Indexer 
-sidebar_label: Velo-/Aerodrome Indexer (DEX)
+title: Velodrome & Aerodrome Indexer 
+sidebar_label: Aerodrome Indexer (DEX)
 slug: /example-aerodrome-dex-indexer
 ---
 
