@@ -30,7 +30,6 @@ module.exports = {
         "Guides/ipfs",
         "Guides/cli-commands",
         "Guides/contract-state",
-        "Guides/price-data"
       ],
     },
     {
@@ -41,6 +40,7 @@ module.exports = {
         "Tutorials/tutorial-erc20-token-transfers",
         "Tutorials/tutorial-indexing-fuel",
         "Tutorials/greeter-tutorial",
+        "Tutorials/price-data"
       ],
     },
     {
