@@ -154,7 +154,7 @@ const redirectsList = [
   },
   {
     from: "/docs/example-sablier-v2",
-    to: "/docs/HyperIndex/example-sablier-v2",
+    to: "/docs/HyperIndex/example-sablier",
   },
   {
     from: "/docs/example-liquidation-metrics",
@@ -162,7 +162,7 @@ const redirectsList = [
   },
   {
     from: "/docs/example-uniswap-v3",
-    to: "/docs/HyperIndex/example-uniswap-v3",
+    to: "/docs/HyperIndex/example-uniswap-v3-multi-chain-indexer",
   },
   {
     from: "/docs/example-ens",
