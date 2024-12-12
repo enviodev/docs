@@ -14,5 +14,5 @@ This indexer is a multi-chain indexer, built using TypeScript, that indexes smar
 More information on the [ReadMe](https://github.com/enviodev/velodrome-indexer/blob/main/README.md). 
 
 :::note
-It is important to note that these are not vetted for accuracy, and testing or some level of data validation is always recommended. Additionally the indexer my not be using the latest Envio version and was built by Envio partners and community builders. 
+It is important to note that these are not vetted for accuracy, and testing or some level of data validation is always recommended. Additionally the indexer my not be using the latest version and was built by Envio partners and community builders. 
 ::: 

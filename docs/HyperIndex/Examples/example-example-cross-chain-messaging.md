@@ -12,5 +12,5 @@ This [repo](https://github.com/ringecosystem/ormpexer/tree/main) contains a comp
 This indexer is a multi-chain indexer, built using TypeScript, that indexes 14 EVM chains. This indexer uses a mix between HyperSync and RPC as data source. Data is accessible via a unified graphQL API. 
 
 :::note
-It is important to note that these are not vetted for accuracy, and testing or some level of data validation is always recommended. Additionally the indexer my not be using the latest Envio version and was built by Envio partners and community builders. 
+It is important to note that these are not vetted for accuracy, and testing or some level of data validation is always recommended. Additionally the indexer my not be using the latest version and was built by Envio partners and community builders. 
 ::: 
