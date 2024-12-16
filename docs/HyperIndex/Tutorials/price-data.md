@@ -258,7 +258,7 @@ UniswapV3Pool.Mint.handler(async ({ event, context }) => {
   const ethDepositedUsdOffchain = BigInt(offChainPrice.toFixed(0)) * event.params.amount1 / BigInt(10 ** 18);
 
   const EthDeposited: EthDeposited = {
-    id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+    id: `${event.chainId}-${event.block.number}-${event.logIndex}`,
     timestamp: event.block.timestamp,
     block: event.block.number,
     oraclePrice: latestOraclePrice,
