@@ -19,11 +19,11 @@ Each of these methods has its own pros and cons and we will analyze each through
 
 ## Oracles
 
-Oracles are a type of service that provide offchain data to the blockchain. This is usually price data but has no limitations and can be anything from odds for a sports betting dApp to random numbers which can be used for a lottery. One such oracle which we will use here is [API3](https://api3.org/) which currently only focuses on price feeds.
+Oracles are a type of service that provide offchain data to the blockchain. This is usually price data but has no limitations and can be anything from odds for a sports betting dApp to random numbers which can be used for a lottery. One such oracle service which we will use here is [API3](https://api3.org/) which currently only focuses on price feeds.
 
 To find the relevant ETH/USD price update events using API3:
 
-- The events we care about are emitted on the Api3ServerV1 contract at [0x709944a48cAf83535e43471680fDA4905FB3920a](https://github.com/api3dao/contracts/blob/main/deployments/blast/Api3ServerV1.json#L2) on Blast, which you can find in the `@api3/contracts`. The events are emitted with data feed IDs and not [dAPI](https://api3.org/data-feeds/) names, so we need to look up what data feed ID the particular dAPI name is set to. 'dAPI' just refers to API3's price data feeds.
+- The events we care about are emitted on the Api3ServerV1 contract at [0x709944a48cAf83535e43471680fDA4905FB3920a](https://github.com/api3dao/contracts/blob/main/deployments/blast/Api3ServerV1.json#L2) on Blast, which you can find in the `@api3/contracts`. The events are emitted with data feed IDs and not dAPI names, so we need to look up what data feed ID the particular dAPI name is set to. [dAPI](https://blog.benligiray.com/post/2022-31-05-dapis-apis-for-dapps/) just refers to API3's price data feeds.
 
 1. `"ETH/USD"` (the dAPI name) as a `bytes32` string is `0x4554482f55534400000000000000000000000000000000000000000000000000`
 2. Using the [dapiNameToDataFeedId](https://blastscan.io/address/0x709944a48cAf83535e43471680fDA4905FB3920a#readContract#F8) conversion function, we see the dAPI is set to a data feed ID with `0x3efb3990846102448c3ee2e47d22f1e5433cd45fa56901abe7ab3ffa054f70b5`
@@ -33,7 +33,7 @@ Don't worry about the above steps too much as each oracle service will have it's
 
 ### Oracle considerations
 
-- **Accuracy**: Due to gas prices, oracles don't push onchain price updates constantly.  Instead, as with API3, the oracle normally only pushes an onchain update at certain price deviations, e.g. 1% or 5%. This means that the latest price pushed from the oracle will not always be the most recent price, although it should be close.
+- **Accuracy**: Due to gas prices, oracles don't push onchain price updates constantly.  Instead, as with the API3 contract we are indexing, the oracle normally only pushes an onchain update at certain price deviations, e.g. 1% or 5%. This means that the latest price pushed from the oracle will not always be the most recent price, although it should be close.
 - **Centralization**: This will vary from oracle to oracle. API3 runs price feeds from their own API's which means they have a higher degree of centralization. However, this allows them to provide a higher level of security and trustworthiness. Chainlink lets anyone run their own node and provide their own price feeds, which means they are more decentralized. There are some trustworthiness concerns associated with this decentralization but they have reputation and punishment mechanisms as a mitigation.
 - **Data availability**: For security reasons, oracles often choose to limit the price feeds they support to pairs with high liquidity, volume, and trustworthiness. This means that you may not be able to get price data for all tokens, especially newer, low marketcap tokens.
 
@@ -147,6 +147,10 @@ To aid comparison, we use each of the three methods in turn to get the USD price
 - For our dex pool and tvl information, [0xf52B4b69123CbcF07798AE8265642793b2E8990C](https://blastscan.io/address/0xf52B4b69123CbcF07798AE8265642793b2E8990C) contract and the `Swap` and `Mint` event.
 
 > config.yaml
+
+:::info
+The `field_selection` section has to be manually added if you want to include the transaction hash in the output. This is not included by default.
+:::
 
 ```yaml
 # yaml-language-server: $schema=./node_modules/envio/evm.schema.json
@@ -295,5 +299,7 @@ Using the image below for reference, we initially compare only the `oraclePrice`
 The table also includes transaction hashes (not seen in the image) to cross check the USD values of ETH on [Blastscan](https://blastscan.io/). For example, [this transaction](https://blastscan.io/tx/0xe7e79ddf29ed2f0ea8cb5bb4ffdab1ea23d0a3a0a57cacfa875f0d15768ba37d), seen as the highlighted row in the image below, shows an ETH value on Blastscan of *$2,358.27* deposited, which we can assume to be correct. Our ETH value using the dex pool, `depositedPool`, shows *2,117.07*, highlighting that the dex price does not yield completely accurate results, but only an approximation. The value using offchain data, `depositedOffchain`, is *2,156.15*, slightly closer to the actual value but still not really accurate.
 
 In conclusion, use an offchain API accurate to the block if you need the most accurate price data, otherwise be willing to use oracle or dex pool events and accept a certain deviation from the true value. If using a dex pool, it is highly recommended to use a dex pool with a high volume and liquidity to get the most accurate price data. In our case, the Uniswap pool on Blast has a TVL of less than $20k at the time of writing, so price impact and low volume lead to results that could only provide rough estimates. The equivalent pool on Ethereum currently has a TVL of $160M, which we should have used instead, since Envio easily supports multichain. If using an oracle, make sure to check the deviation of the price updates to make sure they are accurate enough for your use case.
+
+If you really want to increase price data accuracy while still avoiding the slowness of offchain API calls, use multiple dex pools or oracles and then aggregate the data. This should still be much faster than using an offchain API and will provide more accurate results than using a single dex pool or oracle. Also note that oracles might have multiple contracts/events for the same pair as they often have separate contracts/functions to allow users to manually update the price feed.
 
 ![Table of indexer results](image.png)
