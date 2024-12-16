@@ -103,14 +103,14 @@ If you are following along with the demo, get your own CoinGecko API key [here](
 ```typescript
 const COIN_GECKO_API_KEY = process.env.COIN_GECKO_API_KEY;
 
-async function fetchEthPriceFromUnix(unix: number, token = "ethereum"): Promise<any> {
+async function fetchEthPriceFromUnix(unix: number, token = "ethereum"): Promise<number> {
     // convert unix to date dd-mm-yyyy
     const _date = new Date(unix * 1000);
     const date = _date.toISOString().slice(0, 10).split("-").reverse().join("-");
     return fetchEthPrice(date.slice(0, 10), token);
 }
 
-async function fetchEthPrice(date: string, token = "ethereum"): Promise<any> {
+async function fetchEthPrice(date: string, token = "ethereum"): Promise<number> {
     const options = {
         method: 'GET',
         headers: { accept: 'application/json', 'x-cg-demo-api-key': COIN_GECKO_API_KEY }
@@ -237,7 +237,6 @@ Api3ServerV1.UpdatedBeaconSetWithBeacons.handler(async ({ event, context }) => {
 
   const entity: OraclePoolPrice = {
     id: `${event.chainId}-${event.block.number}-${event.logIndex}`,
-    beaconSetId: event.params.beaconSetId,
     value: event.params.value,
     timestamp: event.params.timestamp,
     block: event.block.number,
