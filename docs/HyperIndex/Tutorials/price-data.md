@@ -177,7 +177,7 @@ field_selection:
 > schema.graphql
 
 :::info
-We have simiflied the default schema to only include the relevant values.
+We have simiflied the default schema to only include the relevant values. The main point of focus is the `EthDeposited` type. It includes the ETH price for all 3 methods and similarly the USD value of the ETH deposited from the Mint event using all 3 methods. `offchainOracleDiff` is the percentage difference between oracle and offchain ETH price. We also include the transaction hash to cross check the values on Blastscan.
 :::
 
 ```graphql
@@ -199,12 +199,13 @@ type EthDeposited {
   id: ID!
   timestamp: Int!
   block: Int!
-  oraclePrice: BigInt!
-  poolPrice: BigInt!
-  ethDepositedUsdPool: Float!
-  ethDepositedUsdOffchain: Float!
-  usdDeposited: Float!
+  oraclePrice: Float!
+  poolPrice: Float!
   offChainPrice: Float!
+  offchainOracleDiff: Float!
+  depositedPool: Float!
+  depositedOffchain: Float!
+  depositedOrcale: Float!
   txHash: String!
 }
 ```
@@ -221,18 +222,24 @@ import {
 } from "generated";
 import fetchEthPriceFromUnix from "./request";
 
-let latestOraclePrice = 0n;
-let latestPoolPrice = 0n;
+let latestOraclePrice = 0;
+let latestPoolPrice = 0;
 
 Api3ServerV1.UpdatedBeaconSetWithBeacons.handler(async ({ event, context }) => {
+  // Filter out the beacon set for the ETH/USD price
+  if (event.params.beaconSetId != '0x3efb3990846102448c3ee2e47d22f1e5433cd45fa56901abe7ab3ffa054f70b5') {
+    return
+  }
+
   const entity: OraclePoolPrice = {
     id: `${event.chainId}-${event.block.number}-${event.logIndex}`,
+    beaconSetId: event.params.beaconSetId,
     value: event.params.value,
     timestamp: event.params.timestamp,
     block: event.block.number,
   };
 
-  latestOraclePrice = event.params.value / BigInt(10 ** 18);
+  latestOraclePrice = Number(event.params.value) / Number(10 ** 18);
 
   context.OraclePoolPrice.set(entity);
 });
@@ -245,7 +252,7 @@ UniswapV3Pool.Swap.handler(async ({ event, context }) => {
     block: event.block.number,
   };
 
-  latestPoolPrice = BigInt(2 ** 192) / (BigInt(event.params.sqrtPriceX96) * BigInt(event.params.sqrtPriceX96));
+  latestPoolPrice = Number(BigInt(2 ** 192) / (BigInt(event.params.sqrtPriceX96) * BigInt(event.params.sqrtPriceX96)));
 
   context.UniswapV3PoolPrice.set(entity);
 });
@@ -254,32 +261,39 @@ UniswapV3Pool.Mint.handler(async ({ event, context }) => {
 
   const offChainPrice = await fetchEthPriceFromUnix(event.block.timestamp);
 
-  const ethDepositedUsdPool = latestPoolPrice * event.params.amount1 / BigInt(10 ** 18);
-  const ethDepositedUsdOffchain = BigInt(offChainPrice.toFixed(0)) * event.params.amount1 / BigInt(10 ** 18);
+  const ethDepositedUsdPool = (latestPoolPrice * Number(event.params.amount1)) / (10 ** 18);
+  const ethDepositedUsdOffchain = (offChainPrice * Number(event.params.amount1)) / (10 ** 18);
+  const ethDepositedUsdOrcale = (latestOraclePrice * Number(event.params.amount1)) / (10 ** 18);
 
   const EthDeposited: EthDeposited = {
     id: `${event.chainId}-${event.block.number}-${event.logIndex}`,
     timestamp: event.block.timestamp,
     block: event.block.number,
-    oraclePrice: latestOraclePrice,
-    poolPrice: latestPoolPrice,
-    offChainPrice: Number(offChainPrice.toFixed(2)),
-    ethDepositedUsdPool: Number(ethDepositedUsdPool),
-    ethDepositedUsdOffchain: Number(ethDepositedUsdOffchain),
-    usdDeposited: Number(event.params.amount0/BigInt(10**18)),
+    oraclePrice: round(latestOraclePrice),
+    poolPrice: round(latestPoolPrice),
+    offChainPrice: round(offChainPrice),
+    depositedPool: round(ethDepositedUsdPool),
+    depositedOffchain: round(ethDepositedUsdOffchain),
+    depositedOrcale: round(ethDepositedUsdOrcale),
+    offchainOracleDiff: round(((ethDepositedUsdOffchain - ethDepositedUsdOrcale)/ethDepositedUsdOffchain)*100),
     txHash: event.transaction.hash,
   }
 
   context.EthDeposited.set(EthDeposited);
 });
+
+
+function round(value: number) {
+  return Math.round(value * 100) / 100;
+}
 ```
 
 ## Analysis
 
-Using the image below for reference, we initially compare only the `oraclePrice` and the `poolPrice` as the `offChainPrice` is only accurate to the day as explained in the [offchain](#offchain-api) section. It is evident that the two prices are typically very close to each other. However, sometimes the oracle price is bad, i.e. it has a value of `0`. The DEX price can never be that bad as it will always be arbitraged to a somewhat correct price.
+Using the image below for reference, we initially compare only the `oraclePrice` and the `poolPrice` as the `offChainPrice` is only accurate to the day as explained in the [offchain](#offchain-api) section. Using the `offchainOracleDiff` column, it is evident that the oracle and pool prices are typically close to each other, although they do deviate up to as much as *17.98%*.
 
-We have included the transaction hashes to cross check the USD values of ETH on [Blastscan](https://blastscan.io/). For example, [this transaction](https://blastscan.io/tx/0xe7e79ddf29ed2f0ea8cb5bb4ffdab1ea23d0a3a0a57cacfa875f0d15768ba37d), seen as last row in the image below, shown an ETH value on Blastscan of *$2,289.37* deposited, which we can assume to be correct. Our ETH value using the dex pool, `ethDepositedUsdPool`, shows *$2,117*, highlighting that the dex price does not yield completely accurate results, but only an approximation. The value using offchain data, `ethDepositedUsdOffchain`, is *$2,155*, slightly closer to the actual value but still not completely accurate.
+The table also includes transaction hashes (not seen in the image) to cross check the USD values of ETH on [Blastscan](https://blastscan.io/). For example, [this transaction](https://blastscan.io/tx/0xe7e79ddf29ed2f0ea8cb5bb4ffdab1ea23d0a3a0a57cacfa875f0d15768ba37d), seen as the highlighted row in the image below, shows an ETH value on Blastscan of *$2,358.27* deposited, which we can assume to be correct. Our ETH value using the dex pool, `depositedPool`, shows *2,117.07*, highlighting that the dex price does not yield completely accurate results, but only an approximation. The value using offchain data, `depositedOffchain`, is *2,156.15*, slightly closer to the actual value but still not really accurate.
 
-In conclusion, use an offchain API accurate to the block if you need the most accurate price data, otherwise consider using oracle or dex pool events. If using a dex pool, it is highly recommended to use a dex pool with a high volume and liquidity to get the most accurate price data. In our case, the Uniswap pool on Blast has a TVL of less than $20k at the time of writing, so price impact and low volume lead to results that could only provide rough estimates. The equivalent pool on Ethereum currently has a TVL of $160M, which we should have used instead, since Envio easily supports multichain. If using an oracle, make sure to check the deviation of the price updates to make sure they are accurate enough for your use case.
+In conclusion, use an offchain API accurate to the block if you need the most accurate price data, otherwise be willing to use oracle or dex pool events and accept a certain deviation from the true value. If using a dex pool, it is highly recommended to use a dex pool with a high volume and liquidity to get the most accurate price data. In our case, the Uniswap pool on Blast has a TVL of less than $20k at the time of writing, so price impact and low volume lead to results that could only provide rough estimates. The equivalent pool on Ethereum currently has a TVL of $160M, which we should have used instead, since Envio easily supports multichain. If using an oracle, make sure to check the deviation of the price updates to make sure they are accurate enough for your use case.
 
-![alt text](image.png)
+![Table of indexer results](image.png)
