@@ -145,10 +145,12 @@ We follow this process for all the `Mint` events in the [USDB/WETH pool](https:/
 2. For each of these three prices, calculate the total dollar value of ETH deposited into the pool by _eth_price * eth_deposited = usd_deposited_
 3. Compare the deposited dollar values to see which method is most accurate.
 
+Mint events refer to events where a user deposits tokens into a DEX pool.
+
 `npx envio init`
 
 - For our oracle information, [0x709944a48cAf83535e43471680fDA4905FB3920a](https://blastscan.io/address/0x709944a48cAf83535e43471680fDA4905FB3920a) contract and the `UpdatedBeaconSetWithBeacons` event.
-- For our dex pool and tvl information, [0xf52B4b69123CbcF07798AE8265642793b2E8990C](https://blastscan.io/address/0xf52B4b69123CbcF07798AE8265642793b2E8990C) contract and the `Swap` and `Mint` event.
+- For our dex pool and mint information, [0xf52B4b69123CbcF07798AE8265642793b2E8990C](https://blastscan.io/address/0xf52B4b69123CbcF07798AE8265642793b2E8990C) contract and the `Swap` and `Mint` event.
 
 > config.yaml
 
