@@ -19,7 +19,7 @@ slug: /opbnb
 
 ### Tier
 
-SILVER 🏗️
+EXPERIMENTAL 🏗️
 
 ### Overview
 
