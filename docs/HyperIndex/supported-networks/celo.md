@@ -19,7 +19,7 @@ slug: /celo
 
 ### Tier
 
-SILVER 🏗️
+EXPERIMENTAL 🏗️
 
 ### Overview
 
