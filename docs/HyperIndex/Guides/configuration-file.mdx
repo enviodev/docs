@@ -87,13 +87,13 @@ This is useful when you want to have a different name on the Envio side; or inde
 
 ## Field Selection
 
-Field selection allows you to add additional data points to each event that gets passed to your handlers. For an exhaustive list of fields that can be added, see the [explorer](#explorer) below.
+Field selection allows you to add specific data points to each event that gets passed to your handlers. For a complete list of available fields, refer to the [explorer](#explorer) below.
 
-By default, `number`, `hash`, and `timestamp` are already selected for `block_fields` and do not need to be configured.
+By default, the `block_fields` include `number`, `hash`, and `timestamp` without requiring additional configuration.
 
-_Note:_ Regarding indexing from RPC, currently only `hash` and `transaction_index` are supported in `transaction_fields`.
+In the Fuel version, these default to the `height`, `id`, and `time` fields for blocks, along with the `id` field for transactions. Note that custom field selection is not supported for Fuel.
 
-### Example:
+_Note_: For indexing from RPC in versions below `envio@2.10.0`, only `hash` and `transactionIndex` are supported in `transaction_fields`. If you encounter this limitation, consider upgrading to a more recent version to access improved functionality.
 
 ```yaml
 field_selection:
@@ -103,6 +103,21 @@ field_selection:
     - "gasUsed"
   block_fields:
     - "parentHash"
+```
+
+### Field Selection per Event
+
+Starting with `envio@2.11.0`, you can specify field selection for individual events. This feature is useful for optimizing RPC and HyperSync calls by fetching only the data relevant to specific events, avoiding over-fetching.
+
+Per-event field selection overrides any global field selection, ensuring precise data handling for each event.
+
+```yaml
+events:
+  - event: "Transfer(address indexed from, address indexed to, uint256 value)"
+    field_selection:
+      transaction_fields:
+        - "to"
+        - "from"
 ```
 
 ## Environment Variables Interpolation
