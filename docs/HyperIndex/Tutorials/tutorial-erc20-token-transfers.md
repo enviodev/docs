@@ -61,7 +61,7 @@ Before starting your indexer, run the command below to ensure that no conflictin
 
 ### Start the indexer
 
-`pnpm envio dev`
+`pnpm dev`
 
 Now, let's run our indexer locally by running the command below.
 

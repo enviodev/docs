@@ -79,7 +79,7 @@ The following command will start the docker and create databases for indexed dat
 Run
 
 ```bash
-pnpm envio dev
+pnpm dev
 ```
 
 The indexer will then start indexing the contract specified in the `config.yaml` file from the `start_block` specified.
