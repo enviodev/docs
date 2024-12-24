@@ -68,20 +68,23 @@ const generateTableRow = (columns, values) => {
   );
 };
 
+const emojiTier = (network) =>{
+return {
+  gold: "🏅",
+  silver: "🥈",
+  bronze: "🥉",
+  experimental: "🧪",
+  hidden: "🔒",          
+  testnet: "🎒",          
+}[network.tier.toLowerCase()] || "🏗️";}
+
 const generateHyperSyncTable = (data) => {
   let table = generateCommonTableHeader(HYPERSYNC_COLUMNS);
 
   sortAndFilterChains(data).forEach((chain) => {
     const networkName = getNetworkName(chain);
 
-    const tier =
-    {
-      gold: "🏅",
-      silver: "🥈",
-      bronze: "🥉",
-      experimental: "🧪",
-      hidden: "🔒",          
-    }[network.tier.toLowerCase()] || "🏗️";
+    const tier = emojiTier(network);
 
     const supportsTraces =
       chain.additional_features && chain.additional_features.includes("TRACES")
@@ -181,14 +184,7 @@ const updateMarkdownFiles = async () => {
     // Function to generate markdown content
     const generateHyperSyncMarkdownContent = (network) => {
       const capitalizedTitle = capitalizeAndSplit(network.name);
-      const tierEmoji =
-        {
-          gold: "🏅",
-          silver: "🥈",
-          bronze: "🥉",
-          experimental: "🧪",
-          hidden: "🔒",          
-        }[network.tier.toLowerCase()] || "🏗️";
+      const tier = emojiTier(network);
 
       const hypersyncUrl = `https://${network.name}.hypersync.xyz`;
       const hyperrpcUrl = `https://${network.name}.rpc.hypersync.xyz`;
@@ -214,7 +210,7 @@ slug: /${network.name}
 
 ### Tier
 
-${network.tier} ${tierEmoji}
+${network.tier} ${tier}
 
 ### Overview
 
