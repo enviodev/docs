@@ -21,7 +21,7 @@ Before we start indexing, you'll need to make sure you have the [prerequisites](
 
 Now that you’re all set up and have installed the prerequisite packages required, let’s jump into the practical steps of initializing the indexer and generating a boilerplate index to index the largest USDC token transfers on Base.
 
-1. Open your terminal in an empty repository and run the command ‘**pnpx envio@latest init.**’
+1. Open your terminal in an empty repository and run the command ‘**pnpx envio init.**’
 
 <img src="/docs-assets/tutorial-base-erc20-transfer-1.png" alt="tutorial-base-erc20-transfer-1" width="100%"/>
 

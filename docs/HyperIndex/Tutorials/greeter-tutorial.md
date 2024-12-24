@@ -42,7 +42,7 @@ Initialize the project using the Greeter template.
 Run
 
 ```bash
-pnpx envio@latest init
+pnpx envio init
 ```
 
 Choose the directory where you would like to set up your project (default is the current directory)

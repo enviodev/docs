@@ -14,7 +14,7 @@ This page will show you how to migrate an existing subgraph from theGraph's host
 ### Initialize `envio`
 
 ```bash
-pnpx envio@latest init
+pnpx envio init
 ```
 
 ### Name your indexer
@@ -65,7 +65,7 @@ The migration will also import schema and ABI files for the associated contracts
 
 ## Write event handlers
 
-Function names for event handlers will be generated from `pnpx envio@latest init` and the existing event handlers file for the hosted subgraph can be written in the language chosen.
+Function names for event handlers will be generated from `pnpx envio init` and the existing event handlers file for the hosted subgraph can be written in the language chosen.
 
 Migration script automatically populates the events section of the config file.
 Linking of specific events to entities needs to be done manually. This is required to indicate the entities each event is required to load and update.

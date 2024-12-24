@@ -11,7 +11,7 @@ The following files are required from the user to run HyperIndex:
 - GraphQL Schema (defaults to `schema.graphql`)
 - Event Handlers (defaults to `src/EventHandlers.*` depending on the language chosen)
 
-These files are auto-generated according to the template and language chosen by running the `pnpx envio@latest init` command.
+These files are auto-generated according to the template and language chosen by running the `pnpx envio init` command.
 
 Click [here](../getting-started.md) for a Quickstart guide on how to get started.
 

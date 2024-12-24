@@ -58,14 +58,16 @@ If Postgres is running locally on port 5432, then you can run the whole system w
 In practice, this could look like this:
 
 ```
-ENVIO_PG_PORT=5433 pnpm envio codegenENVIO_PG_PORT=5433 pnpm envio dev
+ENVIO_PG_PORT=5433 pnpm envio codegen
+ENVIO_PG_PORT=5433 pnpm envio dev
 ```
 
 or
 
 ```
 export ENVIO_PG_PORT=5433
-pnpm envio codegenpnpm envio dev
+pnpm envio codegen
+pnpm envio dev
 ```
 
 NOTE: you can further customize how you connect to Postgres with these additional environment variables `ENVIO_POSTGRES_PASSWORD`, `ENVIO_PG_USER`, and `ENVIO_PG_DATABASE`.
