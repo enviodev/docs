@@ -19,7 +19,7 @@ slug: /manta
 
 ### Tier
 
-SILVER 🏗️
+SILVER 🥈
 
 ### Overview
 

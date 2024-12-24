@@ -19,7 +19,7 @@ slug: /internal-test-chain
 
 ### Tier
 
-HIDDEN 🏗️
+HIDDEN 🔒
 
 ### Overview
 

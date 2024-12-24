@@ -19,7 +19,7 @@ slug: /mosaic-matrix
 
 ### Tier
 
-HIDDEN 🏗️
+HIDDEN 🔒
 
 ### Overview
 

@@ -19,7 +19,7 @@ slug: /unichain-sepolia
 
 ### Tier
 
-EXPERIMENTAL 🏗️
+EXPERIMENTAL 🧪
 
 ### Overview
 

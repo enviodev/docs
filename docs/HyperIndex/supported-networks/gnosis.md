@@ -19,7 +19,7 @@ slug: /gnosis
 
 ### Tier
 
-GOLD 🏗️
+GOLD 🏅
 
 ### Overview
 

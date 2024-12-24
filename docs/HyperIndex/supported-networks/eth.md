@@ -19,7 +19,7 @@ slug: /eth
 
 ### Tier
 
-GOLD 🏗️
+GOLD 🏅
 
 ### Overview
 

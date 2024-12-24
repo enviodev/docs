@@ -19,7 +19,7 @@ slug: /goerli
 
 ### Tier
 
-EXPERIMENTAL 🏗️
+EXPERIMENTAL 🧪
 
 ### Overview
 

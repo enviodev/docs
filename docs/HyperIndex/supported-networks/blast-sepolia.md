@@ -19,7 +19,7 @@ slug: /blast-sepolia
 
 ### Tier
 
-SILVER 🏗️
+SILVER 🥈
 
 ### Overview
 

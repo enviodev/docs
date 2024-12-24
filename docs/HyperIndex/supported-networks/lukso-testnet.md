@@ -19,7 +19,7 @@ slug: /lukso-testnet
 
 ### Tier
 
-BRONZE 🏗️
+BRONZE 🥉
 
 ### Overview
 

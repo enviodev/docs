@@ -19,7 +19,7 @@ slug: /polygon
 
 ### Tier
 
-GOLD 🏗️
+GOLD 🏅
 
 ### Overview
 

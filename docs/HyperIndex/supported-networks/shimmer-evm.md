@@ -19,7 +19,7 @@ slug: /shimmer-evm
 
 ### Tier
 
-SILVER 🏗️
+SILVER 🥈
 
 ### Overview
 

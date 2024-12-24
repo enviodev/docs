@@ -19,7 +19,7 @@ slug: /c1-milkomeda
 
 ### Tier
 
-BRONZE 🏗️
+BRONZE 🥉
 
 ### Overview
 

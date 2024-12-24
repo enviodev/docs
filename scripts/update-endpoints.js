@@ -74,22 +74,14 @@ const generateHyperSyncTable = (data) => {
   sortAndFilterChains(data).forEach((chain) => {
     const networkName = getNetworkName(chain);
 
-    let tier = "🏗️"; // default tier is WIP
-
-    if (chain.tier === "GOLD") {
-      // Other emojis that could be considdered: 🏆, 🎖️, 🏅
-      tier = "🥇";
-    } else if (chain.tier === "SILVER") {
-      tier = "🥈";
-    } else if (chain.tier === "BRONZE") {
-      tier = "🥉";
-    } else if (chain.tier === "EXPERIMENTAL") {
-      tier = "🧪";
-    } else {
-      console.log(
-        `This chain's is not recognised - reverting to WIP tier: ${chain.name} - ${chain.tier}`,
-      );
-    }
+    const tier =
+    {
+      gold: "🏅",
+      silver: "🥈",
+      bronze: "🥉",
+      experimental: "🧪",
+      hidden: "🔒",          
+    }[network.tier.toLowerCase()] || "🏗️";
 
     const supportsTraces =
       chain.additional_features && chain.additional_features.includes("TRACES")
@@ -191,11 +183,12 @@ const updateMarkdownFiles = async () => {
       const capitalizedTitle = capitalizeAndSplit(network.name);
       const tierEmoji =
         {
-          Gold: "🏅",
-          Silver: "🥈",
-          Bronze: "🥉",
-          Hidden: "🔒",
-        }[network.tier] || "🏗️";
+          gold: "🏅",
+          silver: "🥈",
+          bronze: "🥉",
+          experimental: "🧪",
+          hidden: "🔒",          
+        }[network.tier.toLowerCase()] || "🏗️";
 
       const hypersyncUrl = `https://${network.name}.hypersync.xyz`;
       const hyperrpcUrl = `https://${network.name}.rpc.hypersync.xyz`;

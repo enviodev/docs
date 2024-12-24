@@ -19,7 +19,7 @@ slug: /metis
 
 ### Tier
 
-GOLD 🏗️
+GOLD 🏅
 
 ### Overview
 

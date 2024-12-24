@@ -19,7 +19,7 @@ slug: /scroll
 
 ### Tier
 
-SILVER 🏗️
+SILVER 🥈
 
 ### Overview
 

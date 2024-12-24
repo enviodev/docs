@@ -19,7 +19,7 @@ slug: /morph
 
 ### Tier
 
-BRONZE 🏗️
+BRONZE 🥉
 
 ### Overview
 

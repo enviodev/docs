@@ -19,7 +19,7 @@ slug: /merlin
 
 ### Tier
 
-SILVER 🏗️
+SILVER 🥈
 
 ### Overview
 
