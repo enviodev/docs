@@ -19,7 +19,7 @@ This guide assumes you are familiar with IPFS, however [jump](#what-is-ipfs) to 
 
 First, we create an indexer using the Envio contract import feature.
 
-`npx envio init`
+`npx pnpx envio init`
 Contract address: `0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D`
 
 We then make some light modifications. The resulting config, schema, and event handlers look as follows.
@@ -81,7 +81,7 @@ BoredApeYachtClub.Transfer.handler(async ({ event, context }) => {
 });
 ```
 
-We then run `pnpm envio dev` and if we open http://localhost:8080 we should see the owner data for each token inside the Nft table.
+We then run `pnpm dev` and if we open http://localhost:8080 we should see the owner data for each token inside the Nft table.
 
 <img src="/docs-assets/ipfs-screenshot.jpg" alt="hasura ipfs nft indexing screenshot" width="100%"/>
 
@@ -186,7 +186,7 @@ export async function tryFetchIpfsFile(
 }
 ```
 
-Now when we run `pnpm envio dev` and open http://localhost:8080 we should also see the metadata for each token inside the Nft table.
+Now when we run `pnpm dev` and open http://localhost:8080 we should also see the metadata for each token inside the Nft table.
 
 <img src="/docs-assets/ipfs-screenshot-2.jpg" alt="hasura ipfs nft indexing screenshot" width="100%"/>
 
