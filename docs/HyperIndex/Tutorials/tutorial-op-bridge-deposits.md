@@ -21,7 +21,7 @@ Before we start indexing, you'll need to make sure you have the [prerequisites](
 
 Now that you have installed the prerequisite packages required, let’s jump into the practical steps of setting up the indexer.
 
-1. Open your terminal in an empty repository and initialize a new indexer by running the command ‘pnpx envio@latest init’
+1. Open your terminal in an empty repository and initialize a new indexer by running the command ‘pnpx envio init’
 
 <img src="/docs-assets/tutorial-op-bridge-1.png" alt="tutorial-op-bridge-1" width="100%"/>
 

@@ -7,7 +7,7 @@ slug: /running-locally
 
 ## Starting the Indexer
 
-Remember to `cd` into your project directory if you have defined one during `pnpx envio@latest init`.
+Remember to `cd` into your project directory if you have defined one during `pnpx envio init`.
 
 Before running the Envio CLI command to start the indexer locally, please make sure you have [Docker](https://www.docker.com/products/docker-desktop/) running.
 

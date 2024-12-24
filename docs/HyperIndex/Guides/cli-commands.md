@@ -9,33 +9,33 @@ slug: /cli-commands
 
 This document contains the help content for the `envio` command-line program.
 
-**_Note:_** `envio` is an executable, but it is recommended to always run `pnpx envio@latest` for the init command and `pnpm envio` when interacting with a specific repo.  This ensures that you are using an up to date version for new projects, and use the correct version of the envio executable for local project you may look at.
+**_Note:_** `envio` is an executable, but it is recommended to always run `pnpx envio` for the init command and `pnpm envio <subcommand>` when interacting with a specific repo.  This ensures that you are using an up to date version for new projects, and use the correct version of the envio executable for local project you may look at.
 
 **Command Overview:**
 
 * [`envio`↴](#envio)
-* [`pnpx envio init`↴](#envio-init)
-* [`pnpx envio init contract-import`↴](#envio-init-contract-import)
-* [`pnpx envio init contract-import explorer`↴](#envio-init-contract-import-explorer)
-* [`pnpx envio init contract-import local`↴](#envio-init-contract-import-local)
-* [`pnpx envio init template`↴](#envio-init-template)
-* [`pnpx envio init fuel`↴](#envio-init-fuel)
-* [`pnpx envio init fuel contract-import`↴](#envio-init-fuel-contract-import)
-* [`pnpx envio init fuel contract-import local`↴](#envio-init-fuel-contract-import-local)
-* [`pnpx envio init fuel template`↴](#envio-init-fuel-template)
-* [`pnpx envio dev`↴](#envio-dev)
-* [`pnpx envio stop`↴](#envio-stop)
-* [`pnpx envio codegen`↴](#envio-codegen)
-* [`pnpx envio benchmark-summary`↴](#envio-benchmark-summary)
-* [`pnpx envio local`↴](#envio-local)
-* [`pnpx envio local docker`↴](#envio-local-docker)
-* [`pnpx envio local docker up`↴](#envio-local-docker-up)
-* [`pnpx envio local docker down`↴](#envio-local-docker-down)
-* [`pnpx envio local db-migrate`↴](#envio-local-db-migrate)
-* [`pnpx envio local db-migrate up`↴](#envio-local-db-migrate-up)
-* [`pnpx envio local db-migrate down`↴](#envio-local-db-migrate-down)
-* [`pnpx envio local db-migrate setup`↴](#envio-local-db-migrate-setup)
-* [`pnpx envio start`↴](#envio-start)
+* [`envio init`↴](#envio-init)
+* [`envio init contract-import`↴](#envio-init-contract-import)
+* [`envio init contract-import explorer`↴](#envio-init-contract-import-explorer)
+* [`envio init contract-import local`↴](#envio-init-contract-import-local)
+* [`envio init template`↴](#envio-init-template)
+* [`envio init fuel`↴](#envio-init-fuel)
+* [`envio init fuel contract-import`↴](#envio-init-fuel-contract-import)
+* [`envio init fuel contract-import local`↴](#envio-init-fuel-contract-import-local)
+* [`envio init fuel template`↴](#envio-init-fuel-template)
+* [`envio dev`↴](#envio-dev)
+* [`envio stop`↴](#envio-stop)
+* [`envio codegen`↴](#envio-codegen)
+* [`envio benchmark-summary`↴](#envio-benchmark-summary)
+* [`envio local`↴](#envio-local)
+* [`envio local docker`↴](#envio-local-docker)
+* [`envio local docker up`↴](#envio-local-docker-up)
+* [`envio local docker down`↴](#envio-local-docker-down)
+* [`envio local db-migrate`↴](#envio-local-db-migrate)
+* [`envio local db-migrate up`↴](#envio-local-db-migrate-up)
+* [`envio local db-migrate down`↴](#envio-local-db-migrate-down)
+* [`envio local db-migrate setup`↴](#envio-local-db-migrate-setup)
+* [`envio start`↴](#envio-start)
 
 ## `envio`
 
@@ -85,7 +85,8 @@ Initialize an indexer with one of the initialization options
 * `--api-token <API_TOKEN>` — The hypersync API key to be initialized in your templates .env file
 
 
-## `pnpx envio@latest init contract-import`
+
+## `envio init contract-import`
 
 Initialize Evm indexer by importing config from a contract for a given chain
 
@@ -162,6 +163,7 @@ Initialization option for creating Fuel indexer
 * `template` — Initialize Fuel indexer from an example template
 
 
+
 ## `envio init fuel contract-import`
 
 Initialize Fuel indexer by importing config from a contract for a given chain
@@ -193,7 +195,7 @@ Initialize from a local json ABI file
 
 
 
-## `pnpm envio init fuel template`
+## `envio init fuel template`
 
 Initialize Fuel indexer from an example template
 
@@ -208,7 +210,7 @@ Initialize Fuel indexer from an example template
 
 
 
-## `pnpm envio dev`
+## `envio dev`
 
 Development commands for starting, stopping, and restarting the indexer with automatic codegen for any changed files
 
@@ -232,15 +234,15 @@ Generate indexing code from user-defined configuration & schema files
 
 
 
-## `pnpm envio benchmark-summary`
+## `envio benchmark-summary`
 
 Prints a summary of the benchmark data after running the indexer with envio start --bench flag or setting 'ENVIO_SAVE_BENCHMARK_DATA=true'
 
-**Usage:** `pnpm envio benchmark-summary`
+**Usage:** `envio benchmark-summary`
 
 
 
-## `pnpm envio local`
+## `envio local`
 
 Prepare local environment for envio testing
 
