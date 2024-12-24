@@ -44,7 +44,7 @@ If a chain is marked as experimental(🧪),it means we have noticed some abnorma
 | Flare                | 14         | https://flare.hypersync.xyz or https://14.hypersync.xyz                             | 🥉   |                 |
 | Fuji                 | 43113      | https://fuji.hypersync.xyz or https://43113.hypersync.xyz                           | 🥈   |                 |
 | Galadriel Devnet     | 696969     | https://galadriel-devnet.hypersync.xyz or https://696969.hypersync.xyz              | 🧪   |                 |
-| Gnosis               | 100        | https://gnosis.hypersync.xyz or https://100.hypersync.xyz                           | 🥉   | ✔️              |
+| Gnosis               | 100        | https://gnosis.hypersync.xyz or https://100.hypersync.xyz                           | 🥇   |                 |
 | Gnosis Chiado        | 10200      | https://gnosis-chiado.hypersync.xyz or https://10200.hypersync.xyz                  | 🥉   |                 |
 | Goerli               | 5          | https://goerli.hypersync.xyz or https://5.hypersync.xyz                             | 🧪   |                 |
 | Harmony Shard 0      | 1666600000 | https://harmony-shard-0.hypersync.xyz or https://1666600000.hypersync.xyz           | 🥈   |                 |
