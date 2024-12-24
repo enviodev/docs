@@ -19,7 +19,7 @@ slug: /arbitrum
 
 ### Tier
 
-SILVER 🏗️
+SILVER 🥈
 
 ### Overview
 

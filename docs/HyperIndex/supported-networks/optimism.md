@@ -19,7 +19,7 @@ slug: /optimism
 
 ### Tier
 
-GOLD 🏗️
+GOLD 🏅
 
 ### Overview
 

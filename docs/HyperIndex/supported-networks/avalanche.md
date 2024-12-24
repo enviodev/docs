@@ -19,7 +19,7 @@ slug: /avalanche
 
 ### Tier
 
-GOLD 🏗️
+GOLD 🏅
 
 ### Overview
 

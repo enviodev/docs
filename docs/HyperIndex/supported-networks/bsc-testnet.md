@@ -19,7 +19,7 @@ slug: /bsc-testnet
 
 ### Tier
 
-EXPERIMENTAL 🏗️
+EXPERIMENTAL 🧪
 
 ### Overview
 

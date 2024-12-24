@@ -19,7 +19,7 @@ slug: /bsc
 
 ### Tier
 
-GOLD 🏗️
+GOLD 🏅
 
 ### Overview
 

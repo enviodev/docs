@@ -19,7 +19,7 @@ slug: /kroma
 
 ### Tier
 
-BRONZE 🏗️
+BRONZE 🥉
 
 ### Overview
 

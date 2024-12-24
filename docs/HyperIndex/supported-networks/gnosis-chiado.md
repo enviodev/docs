@@ -19,7 +19,7 @@ slug: /gnosis-chiado
 
 ### Tier
 
-BRONZE 🏗️
+BRONZE 🥉
 
 ### Overview
 

@@ -19,7 +19,7 @@ slug: /base-sepolia
 
 ### Tier
 
-GOLD 🏗️
+GOLD 🏅
 
 ### Overview
 

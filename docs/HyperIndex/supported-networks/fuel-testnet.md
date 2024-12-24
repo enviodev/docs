@@ -19,7 +19,7 @@ slug: /fuel-testnet
 
 ### Tier
 
-BRONZE 🏗️
+BRONZE 🥉
 
 ### Overview
 

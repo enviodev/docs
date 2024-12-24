@@ -19,7 +19,7 @@ slug: /mantle
 
 ### Tier
 
-GOLD 🏗️
+GOLD 🏅
 
 ### Overview
 

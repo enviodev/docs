@@ -19,7 +19,7 @@ slug: /moonbeam
 
 ### Tier
 
-SILVER 🏗️
+SILVER 🥈
 
 ### Overview
 

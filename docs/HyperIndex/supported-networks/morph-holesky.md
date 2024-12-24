@@ -19,7 +19,7 @@ slug: /morph-holesky
 
 ### Tier
 
-EXPERIMENTAL 🏗️
+EXPERIMENTAL 🧪
 
 ### Overview
 

@@ -19,7 +19,7 @@ slug: /aurora
 
 ### Tier
 
-SILVER 🏗️
+SILVER 🥈
 
 ### Overview
 

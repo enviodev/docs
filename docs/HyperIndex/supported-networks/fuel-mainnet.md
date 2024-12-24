@@ -19,7 +19,7 @@ slug: /fuel-mainnet
 
 ### Tier
 
-GOLD 🏗️
+GOLD 🏅
 
 ### Overview
 

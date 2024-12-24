@@ -19,7 +19,7 @@ slug: /lukso
 
 ### Tier
 
-BRONZE 🏗️
+BRONZE 🥉
 
 ### Overview
 

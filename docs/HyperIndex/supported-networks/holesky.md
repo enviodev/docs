@@ -19,7 +19,7 @@ slug: /holesky
 
 ### Tier
 
-SILVER 🏗️
+SILVER 🥈
 
 ### Overview
 
