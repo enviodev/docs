@@ -7,7 +7,7 @@ slug: /price-data
 
 # Getting price data in your indexer
 
-TLDR, the code for this guide can be found [here](todo add link)
+TLDR, the code for this guide can be found [here](https://github.com/enviodev/price-data)
 
 There are many applications where you may want to get price data in your indexer. For example, you may want to use price data to calculate the value of historical token transfers or the TVL of a Uniswap pool over time. In this example, we want to get the USD value of ETH deposits into a Uniswap V3 liquidity pool. To do these things, we need to get the price of ETH in USD at the time of the event. However, the relevant events to be indexed may not contain the price data required. In these cases, we have 3 different ways to get price data inside the indexer:
 
@@ -92,7 +92,7 @@ Choosing between dex pools and oracles will depend on the specific use case of y
 
 ## Offchain API
 
-Offchain APIs, which typically use the [REST API](https://www.ibm.com/topics/rest-apis) framework, are the most reliable way to get price data as they are run by centralized entities that have the resources to provide completely accurate and up-to-date price data. One such API is [CoinGecko](https://www.coingecko.com/en/api). CoinGecko provides price data for the majority of tokens on the blockchain with real volume. However there are several downsides as API calls are very slow and getting historical prices that are accurate to the block from an API will typically require a [paid subscription](https://docs.noves.fi/reference/get_evm-chain-price-tokenaddress). [Coingecko's free tier API](https://docs.coingecko.com/v3.0.1/reference/coins-id-history) allows us to get the historical price, although it can only return the token price at the start of that day i.e. 00:00:00 UTC. As we don't have a paid subscription to get historical prices accurate to the block, we will use CoinGecko's free API to give us a rough estimate of the price of ETH in USD at a certain block. We don't expect this to be completely accurate and include it for demonstration purposes only.
+Offchain APIs, are often a reliable way to get price data. One such API is [CoinGecko](https://www.coingecko.com/en/api). CoinGecko provides price data for the majority of tokens on the blockchain with real volume. However there are several downsides as API calls are very slow and getting historical prices that are accurate to the block from an API will typically require a [paid subscription](https://docs.noves.fi/reference/get_evm-chain-price-tokenaddress). [Coingecko's free tier API](https://docs.coingecko.com/v3.0.1/reference/coins-id-history) allows us to get the historical price, although it can only return the token price at the start of that day i.e. 00:00:00 UTC. As we don't have a paid subscription to get historical prices accurate to the block, we will use CoinGecko's free API to give us a rough estimate of the price of ETH in USD at a certain block. We don't expect this to be completely accurate and include it for demonstration purposes only.
 
 > src/request.ts
 
@@ -131,7 +131,7 @@ export default fetchEthPriceFromUnix;
 
 ### Offchain API considerations
 
-- **Accuracy**: If using an endpoint that is accurate to the block, such as the [Noves Pricing API](https://docs.noves.fi/reference/get_evm-chain-price-tokenaddress), then this is definitely the most accurate and reliable way to get price data in your indexer. This is because most offchain API pricing services, aggregate price data from many different sources so that price feed manipulation is highly unlikely. The only real risk you run is if the API goes down or sufferes internal manipulation, which is very rare for reputable APIs.
+- **Accuracy**: If using an endpoint that is accurate to the block, such as the [Noves Pricing API](https://docs.noves.fi/reference/get_evm-chain-price-tokenaddress), then this is definitely the most accurate and reliable way to get price data in your indexer. This is because most offchain API pricing services, aggregate price data from many different sources so that price feed manipulation is highly unlikely. The only real risk you run is if the API goes down or suffers internal manipulation, which is likely rare for reputable APIs.
 - **Centralization**: Offchain APIs are typically controlled by a single entity meaning they are very centralized. This means that you have to trust the API to provide accurate and reliable price data. However, as mentioned, reputable APIs are very unlikely to manipulate price data and as such this is not a real concern for most users.
 - **Data availability**: Offchain APIs such as CoinGecko provide price feeds for the majority of tokens on the blockchain with real volume. However, they may not have price data for newer, low marketcap tokens. In that case, you may have to rely on dex pools or oracles to get price data. Note that offchain APIs require an api call every time you need price data which will **significantly** slow down your indexer. API calls will change your indexer from a fast, event-based indexer to a slow, call-based indexer that may take hours to run.
 
