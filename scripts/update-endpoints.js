@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const {rpcNetworks} = require("./rpc-networks.json")
 
 const URL = "https://chains.hyperquery.xyz/active_chains";
 
@@ -185,20 +186,8 @@ const updateMarkdownFiles = async () => {
   }
 };
 
-// a function to generate a markdown file for each network with a table of endpoints and basic data about the network
-const generateMarkdownFiles = async () => {
-  try {
-    const response = await fetch(URL);
-    const data = await response.json();
-
-    // Directory where the markdown files will be saved
-    const outputDir = path.join(
-      __dirname,
-      "../docs/HyperIndex/supported-networks",
-    );
-
     // Function to generate markdown content
-    const generateMarkdownContent = (network) => {
+    const generateHyperSyncMarkdownContent = (network) => {
       const capitalizedTitle = capitalizeAndSplit(network.name);
       const tierEmoji =
         {
@@ -276,6 +265,80 @@ Can’t find what you’re looking for or need support? Reach out to us on [Disc
 ---
 `;
     };
+    
+    const sluggifyName = (network) => { 
+      console.log(network.name.toLowerCase().replace(/\s+/g, "-"))
+      return network.name.toLowerCase().replace(/\s+/g, "-");}
+// Function to generate markdown content for RPC networks
+const generateRPCMarkdownContent = (network) => {
+
+  let slugFriendlyName = sluggifyName(network)
+
+  return `---
+id: ${slugFriendlyName}
+title: ${network.name}
+sidebar_label: ${network.name}
+slug: /${slugFriendlyName}
+---
+
+# ${network.name}
+
+## Indexing ${network.name} Data with Envio via RPC
+
+:::warning
+RPC as a source is not as fast as HyperSync. It is important in production to source RPC data from reliable sources. We recommend our partners at [drpc.org](https://drpc.org). Below, we have provided a set of free endpoints sourced from chainlist.org. **We don't recommend using these in production** as they may be rate limited. We recommend [tweaking the RPC config](./rpc-sync) to accommodate potential rate limiting.
+:::
+
+We suggest getting the latest from [chainlist.org](https://chainlist.org).
+
+### Overview
+
+Envio supports ${network.name} through an RPC-based indexing approach. This method allows you to ingest blockchain data via an RPC endpoint by setting the RPC configuration.
+
+---
+
+### Defining Network Configurations
+
+To use ${network.name}, define the RPC configuration in your network configuration file as follows:
+
+:::info
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+:::
+
+\`\`\`yaml
+name: IndexerName # Specify indexer name
+description: Indexer Description # Include indexer description
+networks:
+  - id: ${network.chainId} # ${network.name}
+    rpc_config:
+      url: ${network.rpcEndpoints[0]} ${network.rpcEndpoints.length <= 1 ? "" : network.rpcEndpoints.slice(1).map((url) => `\n    # url: ${url} # alternative`)}
+    start_block: START_BLOCK_NUMBER # Specify the starting block
+    contracts:
+      - name: ContractName
+        address:
+          - "0xYourContractAddress1"
+          - "0xYourContractAddress2"
+        handler: ./src/EventHandlers.ts
+        events:
+          - event: Event # Specify event
+          - event: Event
+\`\`\`
+
+Want HyperSync for ${network.name}? Request network support here [Discord](https://discord.gg/fztEvj79m3)!
+`;
+};
+
+// a function to generate a markdown file for each network with a table of endpoints and basic data about the network
+const generateMarkdownFiles = async () => {
+  try {
+    const response = await fetch(URL);
+    const data = await response.json();
+
+    // Directory where the markdown files will be saved
+    const outputDir = path.join(
+      __dirname,
+      "../docs/HyperIndex/supported-networks",
+    );
 
     // Ensure output directory exists
     if (!fs.existsSync(outputDir)) {
@@ -284,19 +347,32 @@ Can’t find what you’re looking for or need support? Reach out to us on [Disc
 
     let supportedNetworks = [];
 
-    // Generate files
+    // Generate HyperSync files
     data.forEach((network) => {
       if (
         network.tier.toLowerCase() != "HIDDEN".toLowerCase() ||
         network.tier.toLowerCase() != "INTERNAL".toLowerCase()
       ) {
-        const content = generateMarkdownContent(network);
+        const content = generateHyperSyncMarkdownContent(network);
         const filePath = path.join(outputDir, `${network.name}.md`);
         fs.writeFileSync(filePath, content, "utf8");
-        supportedNetworks.push(`"supported-networks/${network.name}"`);
+        supportedNetworks.push(`"supported-networks/${network.name}"`); 
         console.log(`Generated file: ${filePath}`);
       }
     });
+
+    // Generate RPC files
+    rpcNetworks.forEach(network => {
+      // if network.chainId exists in data, skip it, implies it's now supported in hypersync       
+      if (data.find(item => item.chainId === network.chainId)) {
+        return
+      }
+      const content = generateRPCMarkdownContent(network)
+      const filePath = path.join(outputDir, `${sluggifyName(network)}.md`);
+      fs.writeFileSync(filePath, content, "utf8");
+      supportedNetworks.push(`"supported-networks/${sluggifyName(network)}"`);
+      console.log(`Generated file: ${filePath}`);
+    })
 
     const rootDir = path.join(__dirname, "..");
 
