@@ -36,6 +36,6 @@ The indexer has been built using v0.0.21 of Envio.
 1. Clone the [repo](https://github.com/enviodev/liquidation-metrics)
 2. Install any other pre-requisite packages for Envio listed [here](https://docs.envio.dev/docs/installation#prerequisites)
 3. Install Envio via `npm i -g envio@v0.0.21`
-4. Generate indexing code via `pnpm envio codegen`
-5. Run the indexer via `pnpm envio dev` (make sure you have Docker running)
+4. Generate indexing code via `pnpm codegen`
+5. Run the indexer via `pnpm dev` (make sure you have Docker running)
 6. Stop the indexer via `pnpm envio stop`

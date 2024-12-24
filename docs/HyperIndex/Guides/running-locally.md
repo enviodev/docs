@@ -14,7 +14,7 @@ Before running the Envio CLI command to start the indexer locally, please make s
 Run the indexer
 
 ```bash
-pnpm envio dev
+pnpm dev
 ```
 
 This will automatically open up the Hasura dashboard where you can view the data that has been indexed.
