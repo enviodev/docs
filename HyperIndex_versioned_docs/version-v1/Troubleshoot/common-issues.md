@@ -26,7 +26,7 @@ If the indexer starts running but does not index the smart contracts from the `s
 Run
 
 ```bash
-envio stop
+pnpm envio stop
 ```
 
 and then
@@ -42,7 +42,7 @@ Should the tables for the entities outlined in the schema file not show up on Ha
 Run
 
 ```bash
-envio stop
+pnpm envio stop
 ```
 
 and then

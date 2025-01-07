@@ -19,7 +19,7 @@ This guide assumes you are familiar with IPFS, however [jump](#what-is-ipfs) to 
 
 First, we create an indexer using the Envio contract import feature.
 
-`npx pnpx envio init`
+`pnpx envio init`
 Contract address: `0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D`
 
 We then make some light modifications. The resulting config, schema, and event handlers look as follows.
