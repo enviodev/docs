@@ -59,7 +59,7 @@ Before starting your indexer, run the command below to ensure that no conflictin
 
 ### Stopping the indexer:
 
-`envio stop`
+`pnpm envio stop`
 
 > Note: Ignore if you’re a first-time user.
 

@@ -18,4 +18,4 @@ The indexer has been built using v0.0.37 of Envio.
 3. Install with `pnpm i`
 4. Generate indexing code via `pnpm codegen`
 5. Run the indexer via `pnpm dev` (make sure you have Docker running)
-6. Stop the indexer via `envio stop`
+6. Stop the indexer via `pnpm envio stop`

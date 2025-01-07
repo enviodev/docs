@@ -23,4 +23,4 @@ The indexer has been built using v0.0.21 of Envio.
 1. Install Envio via `npm i -g envio@v0.0.21`
 1. Generate indexing code via `envio codegen`
 1. Run the indexer via `envio dev` (make sure you have Docker running)
-1. Stop the indexer via `envio stop`
+1. Stop the indexer via `pnpm envio stop`
