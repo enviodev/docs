@@ -19,7 +19,7 @@ slug: /sophon-testnet
 
 ### Tier
 
-EXPERIMENTAL 🧪
+TESTNET 🎒
 
 ### Overview
 

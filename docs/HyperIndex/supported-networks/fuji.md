@@ -19,7 +19,7 @@ slug: /fuji
 
 ### Tier
 
-SILVER 🥈
+TESTNET 🎒
 
 ### Overview
 

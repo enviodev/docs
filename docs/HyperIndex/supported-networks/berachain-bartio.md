@@ -19,7 +19,7 @@ slug: /berachain-bartio
 
 ### Tier
 
-SILVER 🥈
+TESTNET 🎒
 
 ### Overview
 
