@@ -19,7 +19,7 @@ slug: /citrea-testnet
 
 ### Tier
 
-EXPERIMENTAL 🧪
+TESTNET 🎒
 
 ### Overview
 

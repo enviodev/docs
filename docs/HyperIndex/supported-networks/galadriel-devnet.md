@@ -19,7 +19,7 @@ slug: /galadriel-devnet
 
 ### Tier
 
-EXPERIMENTAL 🧪
+TESTNET 🎒
 
 ### Overview
 

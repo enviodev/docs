@@ -19,7 +19,7 @@ slug: /neon-evm
 
 ### Tier
 
-SILVER 🥈
+EXPERIMENTAL 🧪
 
 ### Overview
 

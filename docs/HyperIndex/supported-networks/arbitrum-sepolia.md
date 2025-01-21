@@ -19,7 +19,7 @@ slug: /arbitrum-sepolia
 
 ### Tier
 
-GOLD 🏅
+TESTNET 🎒
 
 ### Overview
 

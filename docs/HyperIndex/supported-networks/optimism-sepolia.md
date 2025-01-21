@@ -19,7 +19,7 @@ slug: /optimism-sepolia
 
 ### Tier
 
-GOLD 🏅
+TESTNET 🎒
 
 ### Overview
 
