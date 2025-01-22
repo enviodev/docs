@@ -11,9 +11,8 @@ import TabItem from "@theme/TabItem";
 Wildcard indexing is a feature that allows you to index all events matching a specified event signature without requiring the contract address from which the event was emitted. This is useful in cases such as indexing contracts deployed through factories, where the factory contract does not emit any events upon contract creation. It also enables indexing events from all contracts implementing a standard (e.g. all ERC20 transfers).
 
 :::note
-Wildcard Indexing is only supported from HyperIndex v2.3 onwards.  
-Wildcard Indexing is supported for Indexers using [HyperSync](/docs/HyperIndex/Advanced/hypersync.md) or [HyperFuel](/docs/HyperIndex/fuel/fuel.md) as data source.  
-Wildcard indexing is not yet supported for Indexer using [RPC](/docs/HyperIndex/Advanced/rpc-sync.md) as data source. 
+Wildcard Indexing is supported for [HyperSync](/docs/HyperIndex/Advanced/hypersync.md) & [HyperFuel](/docs/HyperIndex/fuel/fuel.md) data sources starting from `v2.3.0`.
+For the [RPC](/docs/HyperIndex/Advanced/rpc-sync.md) data source support added in the `v2.12.0` release.
 :::
 
 ## Example
@@ -295,4 +294,4 @@ ERC20.Transfer.handlerWithLoader({
 
 - Either the `contractRegister` or the `handler` function can take an event config object (with wildcard/eventFilters fields) but not both.
 
-- RPC sync is not yet supported for wildcard indexing.
+- The RPC data source currently supports Topic Filtering only applied to a single wildcard event.
