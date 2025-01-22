@@ -31,10 +31,11 @@ HyperIndex is an open development framework for building backend's for blockchai
 ## Features roadmap
 
 ```
+⬜ - Fallback RPC data source
+⬜ - RPC client with cache layer
 ⬜ - Interval handlers
 ⬜ - Block handlers
 ⬜ - Call handlers
-⬜ - Alternative data syncs
 ```
 
 ## Quick links

@@ -161,6 +161,7 @@ The `field_selection` section has to be manually added if you want to include th
 ```yaml
 # yaml-language-server: $schema=./node_modules/envio/evm.schema.json
 name: envio-indexer
+rollback_on_reorg: false
 networks:
 - id: 81457
   start_block: 11000000
@@ -178,10 +179,9 @@ networks:
     events:
     - event: Swap(address indexed sender, address indexed recipient, int256 amount0, int256 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick)
     - event: Mint(address sender, address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)
-rollback_on_reorg: false
-field_selection:
-  transaction_fields:
-    - "hash"
+      field_selection:
+        transaction_fields:
+          - "hash"
 ```
 
 > schema.graphql
