@@ -85,6 +85,11 @@
     "rpcEndpoints": ["https://testnet-hub-rpc.bsquared.network"]
   },
   {
+    "chainId": 88882,
+    "name": "Chiliz Testnet Spicy",
+    "rpcEndpoints": ["https://spicy-rpc.chiliz.com"]
+  },
+  {
     "chainId": 62298,
     "name": "Citrea Devnet",
     "rpcEndpoints": ["https://rpc.devnet.citrea.xyz"]
