@@ -200,6 +200,16 @@
     "rpcEndpoints": ["https://testnet-rpc.layeredge.io"]
   },
   {
+    "chainId": 1890,
+    "name": "Lightlink Phoenix",
+    "rpcEndpoints": ["https://replicator.phoenix.lightlink.io/rpc/v1", "https://endpoints.omniatech.io/v1/lightlink/phoenix/public"]
+  },
+  {
+    "chainId": 1891,
+    "name": "Lightlink Pegasus Testnet",
+    "rpcEndpoints": ["https://replicator.pegasus.lightlink.io/rpc/v1", "https://endpoints.omniatech.io/v1/lightlink/pegasus/public"]
+  },
+  {
     "chainId": 82,
     "name": "Meter Mainnet",
     "rpcEndpoints": ["https://rpc.meter.io", "https://meter.blockpi.network/v1/rpc/public"]
