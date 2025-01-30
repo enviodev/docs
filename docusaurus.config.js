@@ -271,7 +271,16 @@ const config = {
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+    
     ({
+      announcementBar: {
+        id: 'support_us',
+        content:
+          'If you like Envio, give us a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/enviodev/hyperindex">GitHub ⭐️</a>',
+        backgroundColor: '#fafbfc',
+        textColor: '#091E42',
+        isCloseable: true,
+      },
       navbar: {
         title: "",
         logo: {

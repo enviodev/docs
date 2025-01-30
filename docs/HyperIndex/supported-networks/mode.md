@@ -19,7 +19,7 @@ slug: /mode
 
 ### Tier
 
-SILVER 🥈
+EXPERIMENTAL 🧪
 
 ### Overview
 
