@@ -84,7 +84,7 @@ const generateHyperSyncTable = (data) => {
   sortAndFilterChains(data).forEach((chain) => {
     const networkName = getNetworkName(chain);
 
-    const tier = emojiTier(network);
+    const tier = emojiTier(chain);
 
     const supportsTraces =
       chain.additional_features && chain.additional_features.includes("TRACES")
