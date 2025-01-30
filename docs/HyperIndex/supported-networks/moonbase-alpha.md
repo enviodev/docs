@@ -19,7 +19,7 @@ slug: /moonbase-alpha
 
 ### Tier
 
-BRONZE 🥉
+EXPERIMENTAL 🧪
 
 ### Overview
 

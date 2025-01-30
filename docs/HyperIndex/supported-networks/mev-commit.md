@@ -19,7 +19,7 @@ slug: /mev-commit
 
 ### Tier
 
-BRONZE 🥉
+EXPERIMENTAL 🧪
 
 ### Overview
 
