@@ -23,7 +23,7 @@ Happy holidays from all of us at Envio! ⚡
 
 With nearly 80 billion requests served, [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) is rapidly becoming a top choice as a data source for faster data retrieval than standard RPC. Envio’s indexer, HyperIndex, supports both RPC and HyperSync as sources for ingesting blockchain data.
 
-The traditional method of retrieving blockchain data relies on RPC, which, although functional, becomes inefficient when querying large amounts of data. Hypersync enables data access up to 1000x faster than a standard node and also provides this data free of charge.  \
+The traditional method of retrieving blockchain data relies on RPC, which, although functional, becomes inefficient when querying large amounts of data. Hypersync enables data access up to 1000x faster than a standard node and also provides this data free of charge.
 
 
 
@@ -51,7 +51,7 @@ events:
 
 For more information, you can view [all past and current release notes](https://github.com/enviodev/hyperindex/releases) on our GitHub.
 
-If you love what we’re building as much as we do and want to stay updated on our latest releases and developments, give us a star on [GitHub](https://github.com/enviodev/hyperindex)! Your support means the world to us!  ⭐ \
+If you love what we’re building as much as we do and want to stay updated on our latest releases and developments, give us a star on [GitHub](https://github.com/enviodev/hyperindex)! Your support means the world to us!  ⭐
 
 
 
@@ -123,7 +123,7 @@ This month’s Featured Community Member is [Simon Kruse](https://github.com/Sim
 
 Simon’s team operates two of the top-signaled indexers on The Graph but is now consolidating into one unified indexer using Envio for Blocksquare and Oceanpoint. Leveraging Envio’s fast indexing and developer-friendly tools, they’re driving innovation in tokenized real estate and DeFi.
 
-***“Envio is really onto something. Their tech is fascinating, and the developer experience is unparalleled. After years of working with The Graph, it’s refreshing to see new players like Envio pushing the boundaries. The team is responsive, innovative, and a pleasure to work with.” ***– *Simon Kruse, Head of Web3 Development & Governance Board Member at Blocksquare*
+*“Envio is really onto something. Their tech is fascinating, and the developer experience is unparalleled. After years of working with The Graph, it’s refreshing to see new players like Envio pushing the boundaries. The team is responsive, innovative, and a pleasure to work with.” – Simon Kruse, Head of Web3 Development & Governance Board Member at Blocksquare*
 
 Check out Blocksqaure on [X](https://x.com/blocksquare_io) for updates and explore the Blocksquare/Oceanpoint indexer in our [explorer](https://envio.dev/app/blocksquare/blocksquare-oceanpoint).
 
