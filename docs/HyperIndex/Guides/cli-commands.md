@@ -9,8 +9,6 @@ slug: /cli-commands
 
 This document contains the help content for the `envio` command-line program.
 
-**_Note:_** `envio` is an executable, but it is recommended to always run `pnpx envio` for the init command and `pnpm envio <subcommand>` when interacting with a specific repo.  This ensures that you are using an up to date version for new projects, and use the correct version of the envio executable for local project you may look at.
-
 **Command Overview:**
 
 * [`envio`↴](#envio)
