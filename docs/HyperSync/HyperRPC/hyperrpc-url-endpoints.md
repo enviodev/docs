@@ -38,13 +38,16 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Extrabud             | 283027429  | https://extrabud.rpc.hypersync.xyz or https://283027429.rpc.hypersync.xyz           |                 |
 | Fantom               | 250        | https://fantom.rpc.hypersync.xyz or https://250.rpc.hypersync.xyz                   |                 |
 | Flare                | 14         | https://flare.rpc.hypersync.xyz or https://14.rpc.hypersync.xyz                     |                 |
+| Fraxtal              | 252        | https://fraxtal.rpc.hypersync.xyz or https://252.rpc.hypersync.xyz                  |                 |
 | Fuji                 | 43113      | https://fuji.rpc.hypersync.xyz or https://43113.rpc.hypersync.xyz                   |                 |
 | Galadriel Devnet     | 696969     | https://galadriel-devnet.rpc.hypersync.xyz or https://696969.rpc.hypersync.xyz      |                 |
 | Gnosis               | 100        | https://gnosis.rpc.hypersync.xyz or https://100.rpc.hypersync.xyz                   |                 |
 | Gnosis Chiado        | 10200      | https://gnosis-chiado.rpc.hypersync.xyz or https://10200.rpc.hypersync.xyz          |                 |
+| Gnosis Traces        | 100        | https://gnosis-traces.rpc.hypersync.xyz or https://100.rpc.hypersync.xyz            | ✔️              |
 | Goerli               | 5          | https://goerli.rpc.hypersync.xyz or https://5.rpc.hypersync.xyz                     |                 |
 | Harmony Shard 0      | 1666600000 | https://harmony-shard-0.rpc.hypersync.xyz or https://1666600000.rpc.hypersync.xyz   |                 |
 | Holesky              | 17000      | https://holesky.rpc.hypersync.xyz or https://17000.rpc.hypersync.xyz                |                 |
+| Ink                  | 57073      | https://ink.rpc.hypersync.xyz or https://57073.rpc.hypersync.xyz                    |                 |
 | Internal Test Chain  | 16858666   | https://internal-test-chain.rpc.hypersync.xyz or https://16858666.rpc.hypersync.xyz |                 |
 | Kroma                | 255        | https://kroma.rpc.hypersync.xyz or https://255.rpc.hypersync.xyz                    |                 |
 | Linea                | 59144      | https://linea.rpc.hypersync.xyz or https://59144.rpc.hypersync.xyz                  |                 |
@@ -54,6 +57,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Manta                | 169        | https://manta.rpc.hypersync.xyz or https://169.rpc.hypersync.xyz                    |                 |
 | Mantle               | 5000       | https://mantle.rpc.hypersync.xyz or https://5000.rpc.hypersync.xyz                  |                 |
 | Merlin               | 4200       | https://merlin.rpc.hypersync.xyz or https://4200.rpc.hypersync.xyz                  |                 |
+| Metall2              | 1750       | https://metall2.rpc.hypersync.xyz or https://1750.rpc.hypersync.xyz                 |                 |
 | Metis                | 1088       | https://metis.rpc.hypersync.xyz or https://1088.rpc.hypersync.xyz                   |                 |
 | Mev Commit           | 17864      | https://mev-commit.rpc.hypersync.xyz or https://17864.rpc.hypersync.xyz             |                 |
 | Mode                 | 34443      | https://mode.rpc.hypersync.xyz or https://34443.rpc.hypersync.xyz                   |                 |
@@ -74,9 +78,9 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Scroll               | 534352     | https://scroll.rpc.hypersync.xyz or https://534352.rpc.hypersync.xyz                |                 |
 | Sepolia              | 11155111   | https://sepolia.rpc.hypersync.xyz or https://11155111.rpc.hypersync.xyz             |                 |
 | Shimmer Evm          | 148        | https://shimmer-evm.rpc.hypersync.xyz or https://148.rpc.hypersync.xyz              |                 |
+| Soneium              | 1868       | https://soneium.rpc.hypersync.xyz or https://1868.rpc.hypersync.xyz                 |                 |
 | Sophon               | 50104      | https://sophon.rpc.hypersync.xyz or https://50104.rpc.hypersync.xyz                 |                 |
 | Sophon Testnet       | 531050104  | https://sophon-testnet.rpc.hypersync.xyz or https://531050104.rpc.hypersync.xyz     |                 |
-| Tangle               | 5845       | https://tangle.rpc.hypersync.xyz or https://5845.rpc.hypersync.xyz                  |                 |
 | Unichain Sepolia     | 1301       | https://unichain-sepolia.rpc.hypersync.xyz or https://1301.rpc.hypersync.xyz        |                 |
 | Zeta                 | 7000       | https://zeta.rpc.hypersync.xyz or https://7000.rpc.hypersync.xyz                    |                 |
 | Zircuit              | 48900      | https://zircuit.rpc.hypersync.xyz or https://48900.rpc.hypersync.xyz                |                 |
