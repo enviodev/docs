@@ -11,8 +11,6 @@ We are rapidly adding new supported networks. If you don't see your network here
 
 :::info
 The Tier is the level of support (and therefore reliability) based on the infrastructure running the chain. If you would like us to upgrade a chain's level of support, reach out to us in [Discord](https://discord.gg/Q9qt8gZ2fX).
-
-If a chain is marked as experimental(🧪),it means we have noticed some abnormalities on that chain and it is best to chat to the team before using that hypersync instance for production use cases. However, you can use it for testing and development.
 :::
 
 

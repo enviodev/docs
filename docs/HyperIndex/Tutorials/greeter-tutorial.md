@@ -66,8 +66,7 @@ Select to start from a template
 ```bash
 ? Choose an initialization option
 > Template
-  Contract Import
-  Subgraph Migration (Experimental)
+  Contract Import  
 [↑↓ to move, enter to select, type to filter]
 ```
 

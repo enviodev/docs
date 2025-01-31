@@ -73,7 +73,7 @@ return {
   gold: "🏅",
   silver: "🥈",
   bronze: "🥉",
-  experimental: "🧪",
+  stone: "🪨",
   hidden: "🔒",          
   testnet: "🎒",          
 }[network.tier.toLowerCase()] || "🏗️";}
