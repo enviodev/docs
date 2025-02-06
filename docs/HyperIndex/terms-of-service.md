@@ -7,7 +7,7 @@ slug: /terms-of-service
 
 # Terms of Service
 
-Last updated: February 06, 2024
+Last updated: Feb 06, 2025
 
 _The fine print: Please note these terms are intended to protect us, where adverse outcomes arise we will do our best to use generally accepted reason and logic as our first port of call._
 
@@ -29,7 +29,19 @@ _The fine print: Please note these terms are intended to protect us, where adver
 
 4. **Payments and Refunds**
 
-   Our products are currently provided on a free-to-use basis. We reserve the right to introduce charges for these services at our discretion. Any pricing changes will be communicated to users in advance.
+   Our services are provided on a paid basis. By subscribing or making a payment, you agree to the applicable fees and billing terms.
+
+   Billing & Payment: Fees are charged upfront based on the selected plan. Any additional unit fees exceeding the included base usage will be billed separately at the end of the monthly billing cycle. Should the additional unit fees exceed a significant threshold, we reserve the right to charge for accrued units at a point in time before the end of the billing cycle. Payments must be made via the payment methods we support.
+
+   No Refunds: All payments are non-refundable. We do not provide refunds or credits for any unused service, partial subscription periods, downgrades, or cancellations.
+
+   Pricing Changes: We reserve the right to modify our pricing at any time. Any changes will be communicated in advance and will take effect at the start of the next billing cycle.
+
+   Cancellation: Subscriptions can be canceled at any time, but cancellations take effect at the end of the current monthly billing cycle for monthly subscriptions. For annual subscriptions, cancellations will take effect at the end of the current annual billing cycle. Previously paid fees will not be refunded.
+
+   Failed Payments & Account Suspension: If a payment fails, we may retry the charge or suspend access to our services until the outstanding amount is settled. Continued failure to make payment may result in account termination.
+
+   By using our services, you acknowledge and agree to these payment terms.
 
 5. **Termination**
 
@@ -37,7 +49,7 @@ _The fine print: Please note these terms are intended to protect us, where adver
 
 6. **Governing Law and Dispute Resolution**
 
-   These terms and any disputes arising from or related to them shall be governed by and construed in accordance with the laws of the Cayman Islands. Any disputes shall be resolved through arbitration in the jurisdiction of the Cayman Islands.
+   These terms and any disputes arising from or related to them shall be governed by and construed in accordance with the laws of the United Kingdom. Any disputes shall be resolved through arbitration in the jurisdiction of the United Kingdom.
 
 7. **Changes to Terms**
 
