@@ -19,7 +19,7 @@ slug: /flare
 
 ### Tier
 
-BRONZE 🥉
+STONE 🪨
 
 ### Overview
 

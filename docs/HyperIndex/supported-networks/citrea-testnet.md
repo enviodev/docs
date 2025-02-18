@@ -19,7 +19,7 @@ slug: /citrea-testnet
 
 ### Tier
 
-TESTNET 🎒
+STONE 🪨
 
 ### Overview
 

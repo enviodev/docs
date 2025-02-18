@@ -19,7 +19,7 @@ slug: /zircuit
 
 ### Tier
 
-EXPERIMENTAL 🧪
+STONE 🪨
 
 ### Overview
 
