@@ -2,6 +2,7 @@
 title: "Tokenizing RWAs: How Blockchain is Redefining Real Estate Investment"
 sidebar_label: "Tokenizing RWAs: How Blockchain is Redefining Real Estate Investment"
 slug: /tokenizing-real-world-assets
+tags: ["case-studies"]
 ---
 
 <img src="/blog-assets/tokenizing-rwa.png" alt="Cover Image Tokenizing RWAs: How Blockchain is Redefining Real Estate Investment" width="100%"/>

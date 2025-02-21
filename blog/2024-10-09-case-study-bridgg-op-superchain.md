@@ -2,6 +2,7 @@
 title: "Bridgg: The Unified Gateway for the OP Superchain, A New Paradigm of Interop Infra"
 sidebar_label: "Bridgg: The Unified Gateway for the OP Superchain, A New Paradigm of Interop Infra"
 slug: /case-study-bridgg-op-superchain
+tags: ["case-studies"]
 ---
 
 <img src="/blog-assets/case-study-bridgg-op-superchain.png" alt="Cover Image Bridgg OP Superchain Case Study" width="100%"/>
