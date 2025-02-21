@@ -2,6 +2,7 @@
 title: "Can ZKPs Redefine User Privacy? How zkPass is Shaping the Future of Data Security"
 sidebar_label: "Can ZKPs Redefine User Privacy? How zkPass is Shaping the Future of Data Security"
 slug: /zkpass-shaping-future-of-data-privacy
+tags: ["case-studies"]
 ---
 
 <img src="/blog-assets/zkpass-casestudy.png" alt="Cover Image How ZKPs help User Privacy" width="100%"/>
