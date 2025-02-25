@@ -19,7 +19,7 @@ slug: /ink
 
 ### Tier
 
-EXPERIMENTAL 🧪
+STONE 🪨
 
 ### Overview
 
