@@ -19,7 +19,7 @@ slug: /fantom
 
 ### Tier
 
-GOLD 🏅
+BRONZE 🥉
 
 ### Overview
 

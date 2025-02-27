@@ -19,7 +19,7 @@ slug: /fraxtal
 
 ### Tier
 
-EXPERIMENTAL 🧪
+STONE 🏗️
 
 ### Overview
 

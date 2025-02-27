@@ -11,9 +11,9 @@ slug: /fuel-mainnet
 
 | **Field**                     | **Value**                                                                                          |
 |-------------------------------|----------------------------------------------------------------------------------------------------|
-| **Fuel Mainnet Chain ID**     | undefined                                                                                            |
-| **HyperSync URL Endpoint**    | [https://fuel-mainnet.hypersync.xyz](https://fuel-mainnet.hypersync.xyz) or [https://undefined.hypersync.xyz](https://undefined.hypersync.xyz) |
-| **HyperRPC URL Endpoint**     | [https://fuel-mainnet.rpc.hypersync.xyz](https://fuel-mainnet.rpc.hypersync.xyz) or [https://undefined.rpc.hypersync.xyz](https://undefined.rpc.hypersync.xyz) |
+| **Fuel Mainnet Chain ID**     | 9889                                                                                            |
+| **HyperSync URL Endpoint**    | [https://fuel-mainnet.hypersync.xyz](https://fuel-mainnet.hypersync.xyz) or [https://9889.hypersync.xyz](https://9889.hypersync.xyz) |
+| **HyperRPC URL Endpoint**     | [https://fuel-mainnet.rpc.hypersync.xyz](https://fuel-mainnet.rpc.hypersync.xyz) or [https://9889.rpc.hypersync.xyz](https://9889.rpc.hypersync.xyz) |
 
 ---
 
@@ -39,7 +39,7 @@ To get started, see our documentation or follow our quickstart [guide](/docs/Hyp
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
 networks:
-  - id: undefined # Fuel Mainnet  
+  - id: 9889 # Fuel Mainnet  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
       - name: ContractName
