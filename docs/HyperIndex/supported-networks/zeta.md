@@ -19,7 +19,7 @@ slug: /zeta
 
 ### Tier
 
-GOLD 🏅
+STONE 🏗️
 
 ### Overview
 

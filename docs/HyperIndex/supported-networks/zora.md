@@ -19,7 +19,7 @@ slug: /zora
 
 ### Tier
 
-BRONZE 🥉
+STONE 🏗️
 
 ### Overview
 
