@@ -140,7 +140,7 @@ Test it out yourself in our [Explorer](https://envio.dev/explorer).
 ## Upcoming Events 🗓️
 
 * EthGlobal [Pragma Cannes](https://ethglobal.com/events/pragma-cannes): 3rd June 2025
-* [DappCon](DappCon): 16th → 18th June 2025
+* [DappCon](https://dappcon.io/): 16th → 18th June 2025
 * WAGMI Sponsors at [EthCC](https://ethcc.io/)**:** 30th June → 3rd July 2025
 
 ## Featured Developer 🧑‍💻
