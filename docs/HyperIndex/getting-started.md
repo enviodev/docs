@@ -29,7 +29,7 @@ More information on [the Quickstart](./contract-import) can be found in this doc
 
 ### Templates
 
-Select either the `ERC20`, `Greeter`, or `Blank` template following the `pnpx envio init` command.
+Select either the `ERC20` or `Greeter` template following the `pnpx envio init` command.
 
 More information on [the `Greeter` template](./greeter-tutorial) is available.
 
