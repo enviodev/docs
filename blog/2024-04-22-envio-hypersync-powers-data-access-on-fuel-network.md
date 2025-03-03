@@ -134,7 +134,7 @@ Here are some HyperIndex features Fuel developers can expect:
 ## Relevant Links
 
 - [Envio HyperSync](https://docs.envio.dev/docs/HyperIndex/overview-hypersync)
-- [Fuel’s HyperSync Doumentation](https://github.com/enviodev/hypersync-fuel-docs)
+- [Fuel’s HyperSync Documentation](https://github.com/enviodev/hypersync-fuel-docs)
 
 ## About Fuel
 
