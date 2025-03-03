@@ -7,7 +7,7 @@ slug: /getting-started
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/LNhaN-Cikis" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-## Indexer Initalization
+## Indexer Initialization
 
 ### Prerequisites
 
