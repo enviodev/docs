@@ -33,7 +33,7 @@ Command to see available CLI commands for Envio.
 envio --help
 ```
 
-## Indexer Initalization
+## Indexer Initialization
 
 Once you have completed the installation step, you can initialize your own indexer via the following options:
 
