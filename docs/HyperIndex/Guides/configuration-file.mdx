@@ -116,8 +116,11 @@ events:
   - event: "Transfer(address indexed from, address indexed to, uint256 value)"
     field_selection:
       transaction_fields:
-        - "to"
-        - "from"
+        - "hash"
+        - "transactionIndex"
+        - "gasUsed"
+      block_fields:
+        - "parentHash"
 ```
 
 ## Environment Variables Interpolation

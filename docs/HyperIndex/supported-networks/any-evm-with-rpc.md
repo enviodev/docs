@@ -37,9 +37,9 @@ networks:
 Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.com/invite/Q9qt8gZ2fX); we’re always happy to help!
 
 :::info
-the backbone of hyperindex’s blazing-fast indexing speed lies in using hypersync as a more performant and cost-effective data source to rpc for data retrieval. while rpcs are functional, and can be used in hyperindex as a data source, they are far from efficient when it comes to querying large amounts of data (a time-consuming and resource-intensive endeavour).
+The backbone of HyperIndex’s blazing-fast indexing speed lies in using HyperSync as a more performant and cost-effective data source to RPC for data retrieval. While RPCs are functional, and can be used in HyperIndex as a data source, they are far from efficient when it comes to querying large amounts of data (a time-consuming and resource-intensive endeavour).
 
-hypersync is significantly faster and more cost-effective than traditional rpc methods, allowing the retrieval of multiple blocks at once, and enabling sync speeds up to 1000x faster than rpc.
+HyperSync is significantly faster and more cost-effective than traditional RPC methods, allowing the retrieval of multiple blocks at once, and enabling sync speeds up to 1000x faster than RPC.
 :::
 
 ---
