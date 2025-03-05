@@ -29,7 +29,7 @@ Each event that you want to process requires that a handler be registered. These
 Handler functions are called via:
 
 <Tabs>
-  <TabItem value="typescript" label="Typescript">
+  <TabItem value="typescript" label="TypeScript">
 
 ```typescript
 import { <CONTRACT_NAME> } from "generated";
@@ -40,7 +40,7 @@ import { <CONTRACT_NAME> } from "generated";
 ```
 
   </TabItem>
-  <TabItem value="javascript" label="Javascript">
+  <TabItem value="javascript" label="JavaScript">
 
 ```javascript
 const { <CONTRACT_NAME> } = require("generated");
@@ -51,7 +51,7 @@ const { <CONTRACT_NAME> } = require("generated");
 ```
 
   </TabItem>
-  <TabItem value="rescript" label="Rescript">
+  <TabItem value="rescript" label="ReScript">
 
 ```rescript
 Handlers.<CONTRACT_NAME>.<EVENT_NAME>.handler(async ({ event, context }) => {
@@ -124,6 +124,8 @@ It is recommended to add `# yaml-language-server: $schema=./node_modules/envio/e
 
 ### Context
 
+#### Get entity
+
 In your handler functions, you can access entities in the database via the asynchronous `get` function as shown below:
 
 ```javascript
@@ -133,6 +135,8 @@ await context.<ENTITY_NAME>.get(<ID>);
 The context also contains some logging functions that include the context automatically. You can also use `console.log`.
 
 > Dev note: 📢 For indexers built using `ReScript`, use a lowercase for the first letter of `entityName` when accessing it via context (i.e., `context.user` instead of `context.User`).
+
+#### Modify entity
 
 In addition to the `get` function, which is a read-only action, two write actions are provided in the context:
 
@@ -153,10 +157,76 @@ context.<ENTITY_NAME>.deleteUnsafe(<ENTITY_OBJECT>.id);
 
 The `set` method is used to either create an entity or to update an existing entity with the values defined in the `entityObject`. The `deleteUnsafe` method is an experimental feature that allows you to remove an entity with a particular ID from the database and indexer memory. This is an **unsafe** function since there may be unexpected repercussions when a deleted entity is linked to another entity. It is your responsibility to delete/fix these references manually.
 
+#### Update entity field
+
+We don't have an `update` function in the context, but you can update an entity field by using the `set` function as shown below:
+
+
+<Tabs>
+  <TabItem value="javascript" label="JavaScript">
+
+```javascript
+const poolManager = await context.PoolManager.get(
+  `${event.chainId}_${event.srcAddress}`
+);
+if (poolManager) {
+  context.PoolManager.set({
+    ...poolManager,
+    txCount: poolManager.txCount + 1n,
+    totalValueLockedETH: poolManager.totalValueLockedETH
+      .minus(currentPoolTvlETH)
+      .plus(pool.totalValueLockedETH),
+  })
+}
+```
+
+  </TabItem>
+  <TabItem value="typescript" label="TypeScript">
+
+```typescript
+const poolManager = await context.PoolManager.get(
+  `${event.chainId}_${event.srcAddress}`
+);
+if (poolManager) {
+  context.PoolManager.set({
+    ...poolManager,
+    txCount: poolManager.txCount + 1n,
+    totalValueLockedETH: poolManager.totalValueLockedETH
+      .minus(currentPoolTvlETH)
+      .plus(pool.totalValueLockedETH),
+  })
+}
+```
+
+  </TabItem>
+  <TabItem value="rescript" label="ReScript">
+
+```rescript
+let poolManager = await context.PoolManager.get(
+  `${event.chainId}_${event.srcAddress}`
+);
+poolManager->Option.forEach(poolManager => {
+  context.PoolManager.set({
+    ...poolManager,
+    txCount: poolManager.txCount + 1n,
+    totalValueLockedETH: poolManager.totalValueLockedETH
+      .minus(currentPoolTvlETH)
+      .plus(pool.totalValueLockedETH),
+  })
+})
+```
+
+  </TabItem>
+</Tabs>
+
+:::note
+For performance concerns related to `get` function calls in your handlers, refer to the [Benchmarking](/docs/HyperIndex/benchmarking) and [Loaders](/docs/HyperIndex/loaders) guides. These resources provide insights and solutions for optimizing performance.
+:::
+
 ### Example of Registering a Handler Function for the `NewGreeting` Event
 
 <Tabs>
-  <TabItem value="javascript" label="Javascript">
+  <TabItem value="javascript" label="JavaScript">
 
 ```javascript
 let { Greeter } = require("generated");
@@ -183,7 +253,7 @@ Greeter.NewGreeting.handler(async ({ event, context }) => {
 ```
 
   </TabItem>
-  <TabItem value="typescript" label="Typescript">
+  <TabItem value="typescript" label="TypeScript">
 
 ```typescript
 import { Greeter, User } from "generated";
@@ -213,7 +283,7 @@ Greeter.NewGreeting.handler(async ({ event, context }) => {
 ```
 
   </TabItem>
-  <TabItem value="rescript" label="Rescript">
+  <TabItem value="rescript" label="ReScript">
 
 ```rescript
 open Types
@@ -264,7 +334,7 @@ It is a more advanced topic and can be covered in its section.
 We expose the `config.yaml` data in the handler via `getConfigByChainId`. The below code snippets show how to access the `config.yaml` data in the handler and the available data:
 
 <Tabs>
-  <TabItem value="javascript" label="Javascript">
+  <TabItem value="javascript" label="JavaScript">
 
 ```javascript
 let { getConfigByChainId } = require("../generated/src/ConfigYAML.bs.js");
@@ -275,7 +345,7 @@ Greeter.NewGreeting.handler(async ({ event, context }) => {
 ```
 
   </TabItem>
-  <TabItem value="typescript" label="Typescript">
+  <TabItem value="typescript" label="TypeScript">
 
 ```typescript
 import { getConfigByChainId } from "../generated/src/ConfigYAML.gen";
@@ -286,7 +356,7 @@ Greeter.NewGreeting.handler(async ({ event, context }) => {
 ```
 
   </TabItem>
-  <TabItem value="rescript" label="Rescript">
+  <TabItem value="rescript" label="ReScript">
 
 ```rescript
 open Types
