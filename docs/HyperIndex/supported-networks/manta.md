@@ -19,7 +19,7 @@ slug: /manta
 
 ### Tier
 
-STONE 🏗️
+STONE 🪨
 
 ### Overview
 

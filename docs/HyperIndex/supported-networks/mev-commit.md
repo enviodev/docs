@@ -19,7 +19,7 @@ slug: /mev-commit
 
 ### Tier
 
-STONE 🏗️
+STONE 🪨
 
 ### Overview
 

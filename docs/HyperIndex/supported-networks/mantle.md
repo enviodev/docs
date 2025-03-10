@@ -19,7 +19,7 @@ slug: /mantle
 
 ### Tier
 
-STONE 🏗️
+STONE 🪨
 
 ### Overview
 

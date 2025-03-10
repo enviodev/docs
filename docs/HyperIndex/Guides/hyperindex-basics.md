@@ -5,14 +5,28 @@ sidebar_label: HyperIndex Basics
 slug: /hyperindex-basics
 ---
 
-The following files are required from the user to run HyperIndex:
+HyperIndex indexers require three main files to run. These files are automatically generated when you initialize your indexer using:
 
-- Configuration (defaults to `config.yaml`)
-- GraphQL Schema (defaults to `schema.graphql`)
-- Event Handlers (defaults to `src/EventHandlers.*` depending on the language chosen)
+```bash
+pnpx envio init
+```
 
-These files are auto-generated according to the template and language chosen by running the `pnpx envio init` command.
+---
 
-Click [here](../getting-started.md) for a Quickstart guide on how to get started.
+## 📁 Required Files
+
+The essential files needed to run HyperIndex are:
+
+- **Configuration file:** (`config.yaml`) – Defines indexing settings, such as blockchain details and events to index.
+- **GraphQL Schema:** (`schema.graphql`) – Describes the data structure for querying indexed data.
+- **Event Handlers:** (`src/EventHandlers.*`) – Contains logic for processing blockchain events, automatically generated based on your chosen programming language.
+
+> **Note:** The exact file extension for Event Handlers (`*.ts`, `*.js`, `*.res`) depends on the language you selected (TypeScript, JavaScript, or ReScript).
+
+---
+
+## 🚀 Next Steps
+
+For step-by-step instructions on setting up your indexer quickly, refer to the [Quickstart guide](../contract-import.md).
 
 ---

@@ -19,7 +19,7 @@ slug: /boba
 
 ### Tier
 
-STONE 🏗️
+STONE 🪨
 
 ### Overview
 

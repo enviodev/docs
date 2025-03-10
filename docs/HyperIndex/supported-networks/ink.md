@@ -19,7 +19,7 @@ slug: /ink
 
 ### Tier
 
-STONE 🏗️
+STONE 🪨
 
 ### Overview
 

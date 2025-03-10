@@ -19,7 +19,7 @@ slug: /zeta
 
 ### Tier
 
-STONE 🏗️
+STONE 🪨
 
 ### Overview
 

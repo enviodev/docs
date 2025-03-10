@@ -19,7 +19,7 @@ slug: /kroma
 
 ### Tier
 
-STONE 🏗️
+STONE 🪨
 
 ### Overview
 

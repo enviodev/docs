@@ -5,16 +5,7 @@ module.exports = {
     "overview",
     "getting-started",
     "contract-import",
-    "migration-guide-v1-v2",
-    {
-      type: "category",
-      label: "Supported Networks",
-      link: {
-        type: "doc",
-        id: "supported-networks/index",
-      },
-      items: supportedNetworks,
-    },
+    // "migration-guide-v1-v2",
     {
       type: "category",
       label: "Guides",
@@ -30,6 +21,7 @@ module.exports = {
         "Guides/ipfs",
         "Guides/cli-commands",
         "Guides/contract-state",
+        "migration-guide-v1-v2",
       ],
     },
     {
@@ -40,7 +32,7 @@ module.exports = {
         "Tutorials/tutorial-erc20-token-transfers",
         "Tutorials/tutorial-indexing-fuel",
         "Tutorials/greeter-tutorial",
-        "Tutorials/price-data"
+        "Tutorials/price-data",
       ],
     },
     {
@@ -103,6 +95,15 @@ module.exports = {
         "Troubleshoot/error-codes",
         "Troubleshoot/reserved-words",
       ],
+    },
+    {
+      type: "category",
+      label: "Supported Networks",
+      link: {
+        type: "doc",
+        id: "supported-networks/index",
+      },
+      items: supportedNetworks,
     },
     "licensing",
     "fuel/fuel",

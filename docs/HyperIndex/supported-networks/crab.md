@@ -19,7 +19,7 @@ slug: /crab
 
 ### Tier
 
-STONE 🏗️
+STONE 🪨
 
 ### Overview
 

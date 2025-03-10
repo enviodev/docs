@@ -19,7 +19,7 @@ slug: /flare
 
 ### Tier
 
-STONE 🏗️
+STONE 🪨
 
 ### Overview
 

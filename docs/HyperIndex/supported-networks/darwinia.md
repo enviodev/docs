@@ -19,7 +19,7 @@ slug: /darwinia
 
 ### Tier
 
-STONE 🏗️
+STONE 🪨
 
 ### Overview
 

@@ -19,7 +19,7 @@ slug: /unichain
 
 ### Tier
 
-STONE 🏗️
+STONE 🪨
 
 ### Overview
 

@@ -28,6 +28,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Boba                 | 288        | https://boba.rpc.hypersync.xyz or https://288.rpc.hypersync.xyz                     |                 |
 | Bsc                  | 56         | https://bsc.rpc.hypersync.xyz or https://56.rpc.hypersync.xyz                       |                 |
 | Bsc Testnet          | 97         | https://bsc-testnet.rpc.hypersync.xyz or https://97.rpc.hypersync.xyz               |                 |
+| Celo                 | 42220      | https://celo.rpc.hypersync.xyz or https://42220.rpc.hypersync.xyz                   |                 |
 | Chiliz               | 8888       | https://chiliz.rpc.hypersync.xyz or https://8888.rpc.hypersync.xyz                  |                 |
 | Citrea Testnet       | 5115       | https://citrea-testnet.rpc.hypersync.xyz or https://5115.rpc.hypersync.xyz          |                 |
 | Crab                 | 44         | https://crab.rpc.hypersync.xyz or https://44.rpc.hypersync.xyz                      |                 |
@@ -46,6 +47,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Harmony Shard 0      | 1666600000 | https://harmony-shard-0.rpc.hypersync.xyz or https://1666600000.rpc.hypersync.xyz   |                 |
 | Holesky              | 17000      | https://holesky.rpc.hypersync.xyz or https://17000.rpc.hypersync.xyz                |                 |
 | Holesky Token Test   | 17000      | https://holesky-token-test.rpc.hypersync.xyz or https://17000.rpc.hypersync.xyz     |                 |
+| Hyperliquid          | 645749     | https://hyperliquid.rpc.hypersync.xyz or https://645749.rpc.hypersync.xyz           |                 |
 | Ink                  | 57073      | https://ink.rpc.hypersync.xyz or https://57073.rpc.hypersync.xyz                    |                 |
 | Internal Test Chain  | 16858666   | https://internal-test-chain.rpc.hypersync.xyz or https://16858666.rpc.hypersync.xyz |                 |
 | Kroma                | 255        | https://kroma.rpc.hypersync.xyz or https://255.rpc.hypersync.xyz                    |                 |
