@@ -77,7 +77,7 @@ field_selection:
     - "parentHash"
 ```
 
-For an exhaustive list of fields that can be added and more detailed information about field selection, please refer to the [Field Selection section in the Configuration File guide](configuration-file#field-selection).
+For an exhaustive list of fields that can be added and more detailed information about field selection, please refer to the [Field Selection section in the Configuration File guide](configuration-file#-field-selection).
 
 Note: By default, `number`, `hash`, and `timestamp` are already selected for `block_fields` and do not need to be configured.
 
@@ -325,39 +325,46 @@ contracts:
     events:
       - event: Greet(address indexed recipient, string greeting)
 ```
+
 ### 8. Event Fields
 
 Before (v1):
+
 ```typescript
 GreeterContract.Event1.handler(({ event, context }) => {
-  console.log("The event timestamp and block number",
+  console.log(
+    "The event timestamp and block number",
     event.txOrigin,
     event.txTo,
     event.transactionHash,
     event.transactionIndex,
     event.blockNumber,
     event.blockTimestamp,
-    event.blockHash,
-  )
+    event.blockHash
+  );
 });
 ```
 
 After (v2):
+
 ```typescript
 Greeter.Event1.handlerWithLoader(async ({ event, context }) => {
   // NOTE: these fields are in the loader and the contractRegister function too
-  console.log("The event timestamp and block number",
+  console.log(
+    "The event timestamp and block number",
     event.transaction.from,
     event.transaction.to,
     event.transaction.hash,
     event.transaction.transactionIndex,
     event.block.number,
     event.block.timestamp,
-    event.block.hash,
+    event.block.hash
   );
 });
 ```
+
 And in your `config.yaml` file:
+
 ```yaml
 field_selection:
   transaction_fields:
