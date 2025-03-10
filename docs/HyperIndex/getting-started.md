@@ -92,11 +92,3 @@ Follow our [guide to running the indexer locally](./running-locally) for detaile
 Once you're ready, effortlessly deploy your configured indexer to Envio's hosted service and begin querying your endpoint immediately.
 
 Check out our [hosted service documentation](./hosted-service) for details on deployment and usage.
-
----
-
-## 🎯 Next Steps
-
-- [Understanding Envio Indexers](./what-is-envio)
-- [Advanced Configuration](./advanced-configuration)
-- [Best Practices and Performance Tips](./best-practices)
