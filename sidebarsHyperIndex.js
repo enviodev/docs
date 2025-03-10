@@ -16,7 +16,6 @@ module.exports = {
         "Guides/event-handlers",
         // "Guides/subgraph-migration",
         "Guides/testing",
-        // "Guides/running-locally",
         "Guides/navigating-hasura",
         "Guides/ipfs",
         "Guides/cli-commands",
