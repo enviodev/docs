@@ -35,8 +35,8 @@ module.exports = {
       label: "Examples",
       items: [
         "Examples/example-uniswap-v4",
-        "Examples/example-velodrome-aerodrome",
         "Examples/example-sablier",
+        "Examples/example-velodrome-aerodrome",
         "Examples/example-cross-chain-messaging",
         // "Examples/example-liquidation-metrics",
         // "Examples/example-ens",
