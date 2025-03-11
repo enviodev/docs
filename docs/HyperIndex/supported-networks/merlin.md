@@ -19,7 +19,7 @@ slug: /merlin
 
 ### Tier
 
-STONE 🏗️
+STONE 🪨
 
 ### Overview
 

@@ -5,12 +5,35 @@ sidebar_label: Cross-Chain Messaging
 slug: /example-cross-chain-messaging
 ---
 
-The following indexer example is a reference implementation and can serve as a starting point for applications with similar logic.
+# Cross-Chain Messaging Indexer
 
-This [repo](https://github.com/ringecosystem/ormpexer/tree/main) contains a comprehensive example indexer for cross-chain messaging indexer using Envio HyperIndex.  
+This indexer demonstrates how to track and index cross-chain messaging protocols at scale, providing a complete view of message passing across multiple blockchains.
 
-This indexer is a multi-chain indexer, built using TypeScript, that indexes 14 EVM chains. This indexer uses a mix between HyperSync and RPC as data source. Data is accessible via a unified graphQL API. 
+## Overview
+
+The [ORMP Indexer](https://github.com/ringecosystem/ormpexer/tree/main) showcases advanced multi-chain indexing techniques for tracking cross-chain communication. It offers a practical example of how to:
+
+- Monitor message passing across 14 different EVM-compatible blockchains
+- Combine both HyperSync and RPC data sources for optimal performance
+- Create a unified data model for cross-chain events
+- Build a scalable indexing solution for complex cross-chain applications
+
+## Key Features
+
+- Comprehensive tracking of cross-chain message delivery and execution
+- Efficient data collection using a hybrid approach (HyperSync + RPC)
+- Well-structured GraphQL API for querying cross-chain messaging data
+- Example implementation that can be adapted for other cross-chain protocols
+
+## Use Cases
+
+This indexer can serve as a foundation for applications requiring visibility into cross-chain operations, including:
+
+- Cross-chain bridges and token transfer monitoring
+- Multi-chain DeFi dashboards
+- Cross-chain governance systems
+- Message delivery verification tools
 
 :::note
-It is important to note that these are not vetted for accuracy, and testing or some level of data validation is always recommended. Additionally the indexer my not be using the latest version and was built by Envio partners and community builders. 
-::: 
+This indexer was built by Envio partners and community builders. While it provides a valuable reference implementation, it may not be using the latest version of Envio's tooling. Always perform appropriate testing and data validation before using in production environments.
+:::

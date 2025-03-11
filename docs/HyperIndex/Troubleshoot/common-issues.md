@@ -5,106 +5,178 @@ sidebar_label: Common Issues
 slug: /common-issues
 ---
 
-# Common issues
+# Common Issues and Troubleshooting
 
-## `Cannot find module` errors on `pnpm start`
+This guide helps you identify and resolve common issues you might encounter when working with Envio HyperIndex. If you don't find a solution to your problem here, please join our [Discord community](https://discord.gg/DhfFhzuJQh) for additional support.
 
-This error indicates that the indexer is unable to find the necessary files to start the indexer.
+## Table of Contents
 
-Delete the `generated` folder and run
+- [Setup and Configuration Issues](#setup-and-configuration-issues)
+  - [Module Not Found Errors](#cannot-find-module-errors-on-pnpm-start)
+  - [Smart Contract Updates](#smart-contract-updated-after-the-initial-codegen)
+  - [Node.js Version Compatibility](#using-the-correct-version-of-nodejs)
+  - [PNPM Version Compatibility](#using-the-correct-version-of-pnpm)
+- [Runtime Issues](#runtime-issues)
+  - [Indexer Start Block Issues](#indexer-not-starting-at-the-specified-start-block)
+  - [Tables Not Registered in Hasura](#tables-for-entities-are-not-registered-on-hasura)
+  - [RPC-Related Issues](#rpc-related-issues)
+- [Infrastructure Conflicts](#infrastructure-conflicts)
+  - [Local Postgres Conflicts](#postgres-running-locally)
+
+## Setup and Configuration Issues
+
+### Cannot find module errors on `pnpm start`
+
+**Problem:** Errors like `Cannot find module` when starting your indexer indicate missing generated files.
+
+**Cause:** The indexer cannot find necessary files, typically because the code generation step was skipped after cloning the repository.
+
+**Solution:**
+
+1. Delete the `generated` folder if it exists
+2. Run the code generation command:
 
 ```bash
 pnpm codegen
 ```
 
-> Always run `pnpm codegen` straight after cloning an indexer repo using Envio.
+> **Important:** Always run `pnpm codegen` immediately after cloning an indexer repository using Envio.
 
-## Indexer not starting at the specified start block
+### Smart contract updated after the initial codegen
 
-If the indexer starts running but does not index the smart contracts from the `start_block` in the configuration file, then the indexer needs to be stopped before starting it again.
+**Problem:** Changes to smart contracts aren't reflected in your indexer.
 
-Run
+**Cause:** When smart contracts are modified after initial setup, the ABIs need to be regenerated and the indexer needs to be updated.
 
-```bash
-pnpm envio stop
-```
+**Solution:**
 
-and then
+1. Re-export smart contract ABIs (example using Hardhat):
 
 ```bash
-pnpm dev
-```
-
-## Tables for entities are not registered on Hasura
-
-Should the tables for the entities outlined in the schema file not show up on Hasura, the database will need to be migrated (deleting previous ones and creating current ones).
-
-Run
-
-```bash
-pnpm envio stop
-```
-
-and then
-
-```bash
-pnpm dev
-```
-
-## Postgres running locally
-
-If Postgres is running locally on port 5432, then you can run the whole system with a different Postgres port by setting the `PG_PORT` environment variable. For example, if you want to run Postgres on port 5433, then set `PG_PORT` to 5433.
-
-In practice, this could look like this:
-
-```
-ENVIO_PG_PORT=5433 pnpm codegen
-ENVIO_PG_PORT=5433 pnpm dev
-```
-
-or
-
-```
-export ENVIO_PG_PORT=5433
-pnpm codegen
-pnpm dev
-```
-
-NOTE: you can further customize how you connect to Postgres with these additional environment variables `ENVIO_POSTGRES_PASSWORD`, `ENVIO_PG_USER`, and `ENVIO_PG_DATABASE`.
-
-## Smart contract updated after the initial codegen
-
-If your smart contracts have been changed after the initial codegen, then you need to recreate the ABI for the smart contracts.
-
-Re-export smart contract ABI's using [Hardhat ABI exporter](https://www.npmjs.com/package/hardhat-abi-exporter) and `pnpm` by running
-
-```
 cd contracts/
 pnpm hardhat export-abi
 ```
 
-Ensure that the directory for ABI in `config.yaml` is pointing to the correct folder where ABIs have been freshly generated.
+2. Verify that the ABI directory in `config.yaml` points to the correct location where ABIs were freshly generated
+3. Run codegen again:
 
-## RPC-related issues
+```bash
+pnpm codegen
+```
 
-If you keep receiving the warning messages below and are unable to see any of the indexed data, there is likely an issue with the RPC endpoint being used.
+### Using the correct version of Node.js
 
-Warning messages:
+**Problem:** Compatibility issues or unexpected errors when running the indexer.
+
+**Solution:** Envio requires Node.js v18 or newer. If you're using Node.js v16 or older, please update:
+
+```bash
+# Using nvm (recommended)
+nvm install 18
+nvm use 18
+
+# Or download directly from https://nodejs.org/
+```
+
+### Using the correct version of PNPM
+
+**Problem:** Package management issues or build failures.
+
+**Solution:** Envio requires pnpm v8 or newer. If you're using v7.8 or older, please update:
+
+```bash
+# Update pnpm
+npm install -g pnpm@latest
+
+# Verify version
+pnpm --version
+```
+
+## Runtime Issues
+
+### Indexer not starting at the specified start block
+
+**Problem:** The indexer runs but doesn't start from the `start_block` defined in your configuration.
+
+**Cause:** This typically happens when the indexer's state is persisted from a previous run.
+
+**Solution:** Stop the indexer completely before restarting:
+
+```bash
+# First stop the indexer
+pnpm envio stop
+
+# Then restart it
+pnpm dev
+```
+
+### Tables for entities are not registered on Hasura
+
+**Problem:** Entity tables defined in your schema don't appear in Hasura.
+
+**Cause:** Database schema might be out of sync with your entity definitions.
+
+**Solution:** Reset the indexer environment to recreate the necessary tables:
+
+```bash
+# Stop the indexer
+pnpm envio stop
+
+# Restart it (this will recreate tables)
+pnpm dev
+```
+
+### RPC-Related issues
+
+**Problem:** The indexer shows warnings such as:
 
 - `Error getting events, will retry after backoff time`
 - `Failed Combined Query Filter from block`
 - `Issue while running fetching batch of events from the RPC. Will wait ()ms and try again.`
 
-It is recommended to use [HyperSync](../Advanced/hypersync.md) instead if the network being indexed from is supported.
+**Cause:** Issues connecting to or retrieving data from the blockchain RPC endpoint.
 
-Otherwise, use a different RPC endpoint that is valid in the `config.yaml` file.
+**Solutions:**
 
-## Using the correct version of `Node.js`
+1. **Recommended:** Use [HyperSync](../Advanced/hypersync.md) if your network is supported, as it provides better performance and reliability
 
-If you are using a version of Node.js that is v16 or older, please update to v18 or newer.
+2. If HyperSync isn't an option, try:
+   - Using a different RPC endpoint in your `config.yaml`
+   - Verifying your RPC endpoint is stable and has archive data if needed
+   - Checking if your RPC provider has rate limits you're exceeding
 
-## Using the correct version of `pnpm`
+```yaml
+# Example of updating RPC in config.yaml
+network:
+  # Replace with a more reliable RPC
+  rpc_url: "https://mainnet.infura.io/v3/YOUR-API-KEY"
+```
 
-If you are using a version of `pnpm` that is v7.8 or older, please update to v8 or newer.
+## Infrastructure Conflicts
+
+### Postgres running locally
+
+**Problem:** Conflicts when Postgres is already running on port 5432.
+
+**Cause:** The default Postgres port (5432) is already in use by another instance.
+
+**Solution:** Configure Envio to use a different port by setting environment variables:
+
+```bash
+# Option 1: Set variables inline
+ENVIO_PG_PORT=5433 pnpm codegen
+ENVIO_PG_PORT=5433 pnpm dev
+
+# Option 2: Export variables for the session
+export ENVIO_PG_PORT=5433
+pnpm codegen
+pnpm dev
+```
+
+You can further customize your Postgres connection with these additional environment variables:
+
+- `ENVIO_POSTGRES_PASSWORD`: Set a custom password
+- `ENVIO_PG_USER`: Set a custom username
+- `ENVIO_PG_DATABASE`: Set a custom database name
 
 ---

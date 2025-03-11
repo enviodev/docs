@@ -1,32 +1,26 @@
 ---
 id: event-handlers
-title: Writing Event Handlers
-sidebar_label: Writing Event Handlers
+title: Event Handlers (src/EventHandlers.*)
+sidebar_label: Event Handlers (src/EventHandlers.*)
 slug: /event-handlers
 ---
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-# Writing Event Handlers
+# Event Handlers
 
-Once the configuration and schema files are in place, run:
+Event handlers define how your indexer processes blockchain events. After defining your configuration (`config.yaml`) and GraphQL schema (`schema.graphql`), generate the boilerplate code for event handlers by running:
 
 ```bash
 pnpm codegen
 ```
 
-in the project directory to generate the functions you will use in your handlers.
+---
 
-Each event that you want to process requires that a handler be registered. These functions are asynchronous.
+## Registering Event Handlers
 
-**Note:** _Two other functions, `handlerWithLoader` and `contractRegister`, are also sometimes used but not required for most indexers. Both functions are explored in the Advanced section. `handlerWithLoader` is used to optimize the loading of entities from the database, and accessing one-to-many relationships on entities, `contractRegister` is used for registering addresses dynamically from a factory contract._
-
-<!-- TODO: add links to the advanced section about handlerWithLoader and contractRegister -->
-
-## Handler Function
-
-Handler functions are called via:
+Register an asynchronous handler for each blockchain event you want to process. The basic handler registration syntax is shown below:
 
 <Tabs>
   <TabItem value="typescript" label="TypeScript">
@@ -35,7 +29,7 @@ Handler functions are called via:
 import { <CONTRACT_NAME> } from "generated";
 
 <CONTRACT_NAME>.<EVENT_NAME>.handler(async ({ event, context }) => {
-  // Your logic
+  // Your logic here
 });
 ```
 
@@ -46,7 +40,7 @@ import { <CONTRACT_NAME> } from "generated";
 const { <CONTRACT_NAME> } = require("generated");
 
 <CONTRACT_NAME>.<EVENT_NAME>.handler(async ({ event, context }) => {
-  // Your logic
+  // Your logic here
 });
 ```
 
@@ -55,24 +49,45 @@ const { <CONTRACT_NAME> } = require("generated");
 
 ```rescript
 Handlers.<CONTRACT_NAME>.<EVENT_NAME>.handler(async ({ event, context }) => {
-  // Your logic
+  // Your logic here
 });
 ```
 
   </TabItem>
 </Tabs>
 
-### Event
+---
 
-#### Event Params
+## Event Object
 
-Handler functions are used to modify the entities that have been loaded by the loader function and should contain all the required logic for updating entities with the raw data emitted by the event. All of the parameters emitted in each event are accessible via `event.params.<PARAMETER_NAME>`.
+Each handler receives an `event` object containing details about the emitted event, including parameters and blockchain metadata.
 
-#### Additional Event Information
+### Accessing Event Parameters
 
-Additional event information can also be accessed via `event.<EVENT_PROPERTY>`.
+Event parameters are accessed via:
 
-Below is an example type of an event:
+```typescript
+event.params.<PARAMETER_NAME>
+```
+
+Example usage:
+
+```typescript
+const sender = event.params.sender;
+const amount = event.params.amount;
+```
+
+### Additional Event Information
+
+The event object also contains additional metadata:
+
+- `event.chainId` – Chain ID of the network emitting the event.
+- `event.srcAddress` – Contract address emitting the event.
+- `event.logIndex` – Index of the log within the block.
+- `event.block` – Block information (number, timestamp, etc.).
+- `event.transaction` – Transaction details (hash, index, gas used, etc.).
+
+**Example event type definition:**
 
 ```typescript
 type Event<Params, TransactionFields, BlockFields> = {
@@ -85,98 +100,58 @@ type Event<Params, TransactionFields, BlockFields> = {
 };
 ```
 
-Note that the fields `block` and `transaction` type will depend on configured values in `field_selection` of your `config.yaml`.
+You can configure additional block and transaction fields in your `config.yaml` under `field_selection`.
 
-For instance, if you add the following to your `config.yaml`:
+---
 
-```yaml
-field_selection:
-  transaction_fields:
-    - "hash"
-    - "transactionIndex"
-    - "gasUsed"
-  block_fields:
-    - "parentHash"
-```
+## Using the Handler `context`
 
-You can expect to get:
+The handler `context` provides methods to interact with entities stored in the database.
 
-```typescript
-type TransactionFields = {
-  hash: string;
-  transactionIndex: number;
-  gasUsed: bigint;
-};
+### Retrieving Entities
 
-type AdditionalBlockFields = {
-  parentHash: string;
-};
-
-type BlockFields = {
-  // number, timestamp, and hash are always available by default
-  number: number;
-  timestamp: number;
-  hash: string;
-} & AdditionalBlockFields;
-```
-
-It is recommended to add `# yaml-language-server: $schema=./node_modules/envio/evm.schema.json` to the top of your `config.yaml` to help with editor autocompletion.
-
-### Context
-
-#### Get entity
-
-In your handler functions, you can access entities in the database via the asynchronous `get` function as shown below:
+Retrieve entities asynchronously using `get`:
 
 ```javascript
-await context.<ENTITY_NAME>.get(<ID>);
+await context.<ENTITY_NAME>.get(entityId);
 ```
 
-The context also contains some logging functions that include the context automatically. You can also use `console.log`.
+### Modifying Entities
 
-> Dev note: 📢 For indexers built using `ReScript`, use a lowercase for the first letter of `entityName` when accessing it via context (i.e., `context.user` instead of `context.User`).
-
-#### Modify entity
-
-In addition to the `get` function, which is a read-only action, two write actions are provided in the context:
-
-- `set`
-- `deleteUnsafe`
-
-Used as follows:
+Use `set` to create or update an entity:
 
 ```javascript
-context.<ENTITY_NAME>.set(<ENTITY_OBJECT>);
+context.<ENTITY_NAME>.set(entityObject);
 ```
 
-and
+### Deleting Entities (Unsafe)
+
+To delete an entity:
 
 ```javascript
-context.<ENTITY_NAME>.deleteUnsafe(<ENTITY_OBJECT>.id);
+context.<ENTITY_NAME>.deleteUnsafe(entityId);
 ```
 
-The `set` method is used to either create an entity or to update an existing entity with the values defined in the `entityObject`. The `deleteUnsafe` method is an experimental feature that allows you to remove an entity with a particular ID from the database and indexer memory. This is an **unsafe** function since there may be unexpected repercussions when a deleted entity is linked to another entity. It is your responsibility to delete/fix these references manually.
+:::warning
+The `deleteUnsafe` method is experimental and **unsafe**. Manually handle all entity references after deletion to maintain database consistency.
+:::
 
-#### Update entity field
+---
 
-We don't have an `update` function in the context, but you can update an entity field by using the `set` function as shown below:
+## Updating Specific Entity Fields
 
+Use the following approach to update specific fields in an existing entity:
 
 <Tabs>
   <TabItem value="javascript" label="JavaScript">
 
 ```javascript
-const poolManager = await context.PoolManager.get(
-  `${event.chainId}_${event.srcAddress}`
-);
-if (poolManager) {
-  context.PoolManager.set({
-    ...poolManager,
-    txCount: poolManager.txCount + 1n,
-    totalValueLockedETH: poolManager.totalValueLockedETH
-      .minus(currentPoolTvlETH)
-      .plus(pool.totalValueLockedETH),
-  })
+const pool = await context.Pool.get(poolId);
+if (pool) {
+  context.Pool.set({
+    ...pool,
+    totalValueLockedETH: pool.totalValueLockedETH.plus(newDeposit),
+  });
 }
 ```
 
@@ -184,17 +159,12 @@ if (poolManager) {
   <TabItem value="typescript" label="TypeScript">
 
 ```typescript
-const poolManager = await context.PoolManager.get(
-  `${event.chainId}_${event.srcAddress}`
-);
-if (poolManager) {
-  context.PoolManager.set({
-    ...poolManager,
-    txCount: poolManager.txCount + 1n,
-    totalValueLockedETH: poolManager.totalValueLockedETH
-      .minus(currentPoolTvlETH)
-      .plus(pool.totalValueLockedETH),
-  })
+const pool = await context.Pool.get(poolId);
+if (pool) {
+  context.Pool.set({
+    ...pool,
+    totalValueLockedETH: pool.totalValueLockedETH.plus(newDeposit),
+  });
 }
 ```
 
@@ -202,28 +172,23 @@ if (poolManager) {
   <TabItem value="rescript" label="ReScript">
 
 ```rescript
-let poolManager = await context.PoolManager.get(
-  `${event.chainId}_${event.srcAddress}`
-);
-poolManager->Option.forEach(poolManager => {
-  context.PoolManager.set({
-    ...poolManager,
-    txCount: poolManager.txCount + 1n,
-    totalValueLockedETH: poolManager.totalValueLockedETH
-      .minus(currentPoolTvlETH)
-      .plus(pool.totalValueLockedETH),
-  })
-})
+let pool = await context.pool.get(poolId);
+pool->Option.forEach(pool => {
+  context.pool.set({
+    ...pool,
+    totalValueLockedETH: pool.totalValueLockedETH.plus(newDeposit),
+  });
+});
 ```
 
   </TabItem>
 </Tabs>
 
-:::note
-For performance concerns related to `get` function calls in your handlers, refer to the [Benchmarking](/docs/HyperIndex/benchmarking) and [Loaders](/docs/HyperIndex/loaders) guides. These resources provide insights and solutions for optimizing performance.
-:::
+---
 
-### Example of Registering a Handler Function for the `NewGreeting` Event
+## Handler Example: `NewGreeting` Event
+
+Here's a complete example handler for the `NewGreeting` event:
 
 <Tabs>
   <TabItem value="javascript" label="JavaScript">
@@ -232,18 +197,19 @@ For performance concerns related to `get` function calls in your handlers, refer
 let { Greeter } = require("generated");
 
 Greeter.NewGreeting.handler(async ({ event, context }) => {
-  let existingUser = await context.User.get(event.params.user.toString());
+  let userId = event.params.user.toString();
+  let user = await context.User.get(userId);
 
-  if (existingUser !== undefined) {
+  if (user) {
     context.User.set({
-      id: event.params.user.toString(),
+      id: userId,
       latestGreeting: event.params.greeting,
-      numberOfGreetings: existingUser.numberOfGreetings + 1,
-      greetings: [...existingUser.greetings, event.params.greeting],
+      numberOfGreetings: user.numberOfGreetings + 1,
+      greetings: [...user.greetings, event.params.greeting],
     });
   } else {
     context.User.set({
-      id: event.params.user.toString(),
+      id: userId,
       latestGreeting: event.params.greeting,
       numberOfGreetings: 1,
       greetings: [event.params.greeting],
@@ -259,26 +225,24 @@ Greeter.NewGreeting.handler(async ({ event, context }) => {
 import { Greeter, User } from "generated";
 
 Greeter.NewGreeting.handler(async ({ event, context }) => {
-  let currentUser = await context.User.get(event.params.user.toString());
+  const userId = event.params.user.toString();
+  const currentUser = await context.User.get(userId);
 
-  if (currentUser !== undefined) {
-    let userObject: User = {
-      id: event.params.user.toString(),
-      latestGreeting: event.params.greeting,
-      numberOfGreetings: currentUser.numberOfGreetings + 1,
-      greetings: [...currentUser.greetings, event.params.greeting],
-    };
+  const userObject: User = currentUser
+    ? {
+        id: userId,
+        latestGreeting: event.params.greeting,
+        numberOfGreetings: currentUser.numberOfGreetings + 1,
+        greetings: [...currentUser.greetings, event.params.greeting],
+      }
+    : {
+        id: userId,
+        latestGreeting: event.params.greeting,
+        numberOfGreetings: 1,
+        greetings: [event.params.greeting],
+      };
 
-    context.User.set(userObject);
-  } else {
-    let userObject: User = {
-      id: event.params.user.toString(),
-      latestGreeting: event.params.greeting,
-      numberOfGreetings: 1,
-      greetings: [event.params.greeting],
-    };
-    context.User.set(userObject);
-  }
+  context.User.set(userObject);
 });
 ```
 
@@ -286,33 +250,27 @@ Greeter.NewGreeting.handler(async ({ event, context }) => {
   <TabItem value="rescript" label="ReScript">
 
 ```rescript
-open Types
+open Types;
 
 Handlers.Greeter.NewGreeting.handler(async ({ event, context }) => {
-  let currentUserOpt = context.user.get(event.params.user->Ethers.ethAddressToString);
+  let userId = event.params.user->Ethers.ethAddressToString;
+  let currentUserOpt = context.user.get(userId);
 
   switch currentUserOpt {
-  | Some(existingUser) => {
-      let userObject: user = {
-        id: event.params.user->Ethers.ethAddressToString,
+  | Some(existingUser) =>
+      context.user.set({
+        id: userId,
         latestGreeting: event.params.greeting,
         numberOfGreetings: existingUser.numberOfGreetings + 1,
         greetings: existingUser.greetings->Belt.Array.concat([event.params.greeting]),
-      };
-
-      context.user.set(userObject);
-    }
-
-  | None => {
-      let userObject: user = {
-        id: event.params.user->Ethers.ethAddressToString,
+      })
+  | None =>
+      context.user.set({
+        id: userId,
         latestGreeting: event.params.greeting,
         numberOfGreetings: 1,
         greetings: [event.params.greeting],
-      };
-
-      context.user.set(userObject);
-    }
+      })
   }
 });
 ```
@@ -320,27 +278,20 @@ Handlers.Greeter.NewGreeting.handler(async ({ event, context }) => {
   </TabItem>
 </Tabs>
 
-- This `context` is the gateway by which the user can interact with the indexer and the underlying database.
-- The user can then retrieve and modify this entity and subsequently 'set' the `User` entity in the database.
-- The user has access to a `User` type that has all the fields defined in the schema.
+---
 
-<!--
-Maybe this "Config data in the handler" section shouldn't be included here.
-It is a more advanced topic and can be covered in its section.
--->
+## Accessing `config.yaml` Data in Handlers
 
-## Config Data in the Handler
-
-We expose the `config.yaml` data in the handler via `getConfigByChainId`. The below code snippets show how to access the `config.yaml` data in the handler and the available data:
+You can access your indexer configuration within handlers using `getConfigByChainId`:
 
 <Tabs>
   <TabItem value="javascript" label="JavaScript">
 
 ```javascript
-let { getConfigByChainId } = require("../generated/src/ConfigYAML.bs.js");
+const { getConfigByChainId } = require("../generated/src/ConfigYAML.bs.js");
 
 Greeter.NewGreeting.handler(async ({ event, context }) => {
-  let config = getConfigByChainId(event.chainId);
+  const config = getConfigByChainId(event.chainId);
 });
 ```
 
@@ -351,7 +302,7 @@ Greeter.NewGreeting.handler(async ({ event, context }) => {
 import { getConfigByChainId } from "../generated/src/ConfigYAML.gen";
 
 Greeter.NewGreeting.handler(async ({ event, context }) => {
-  let config = getConfigByChainId(event.chainId);
+  const config = getConfigByChainId(event.chainId);
 });
 ```
 
@@ -359,27 +310,30 @@ Greeter.NewGreeting.handler(async ({ event, context }) => {
   <TabItem value="rescript" label="ReScript">
 
 ```rescript
-open Types
+open Types;
 
 Handlers.Greeter.NewGreeting.handler(async ({ event, context }) => {
   let config = ConfigYAML.getConfigByChainId(event.chainId);
-})
+});
 ```
 
   </TabItem>
 </Tabs>
 
-### configYaml
+This exposes configuration data such as:
 
-- `syncSource` - Source where the indexer is syncing from
-- `startBlock` - Block number from which the indexer is syncing
-- `confirmedBlockThreshold` - Number of blocks to wait before a block is considered confirmed (relevant to reorgs)
-- `contracts` - An object of contract data where the key is the contract name
+- `syncSource`, `startBlock`, `confirmedBlockThreshold`
+- Contract-specific data (`abi`, `addresses`, `events`)
 
-### Contracts
+---
 
-- `config.contracts.<CONTRACT_NAME>.abi` - ABI of the contract
-- `config.contracts.<CONTRACT_NAME>.addresses` - An array of addresses of the contract
-- `config.contracts.<CONTRACT_NAME>.events` - An array of event names emitted by the contract
+## Performance Considerations
+
+For performance optimization and best practices, refer to:
+
+- [Benchmarking](/docs/HyperIndex/benchmarking)
+- [Loaders](/docs/HyperIndex/loaders)
+
+These guides offer detailed recommendations on optimizing entity loading and indexing performance.
 
 ---

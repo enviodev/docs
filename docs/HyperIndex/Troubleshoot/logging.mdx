@@ -8,143 +8,154 @@ slug: /logging
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-# Logging
+# Logging in Envio HyperIndex
 
-Logging is an important part of the indexer. It is used to track the progress of the indexer and to debug any issues that may arise. The indexer uses the [pino](https://github.com/pinojs/pino/). Additionally, these logs can be plugged into a tool such as [kibana](https://www.elastic.co/what-is/kibana) to generate metrics and other insights.
+Effective logging is essential for monitoring your indexer's performance, diagnosing issues, and gathering insights. The Envio indexer uses [pino](https://github.com/pinojs/pino/), a high-performance logging library for JavaScript. These logs can be integrated with analytics tools such as [Kibana](https://www.elastic.co/what-is/kibana) to generate metrics and visualizations.
 
-- [Users - logging for your event handlers](#users)
-- [Metrics, Debugging, and Troubleshooting - how to use logs as a power tool](#metrics-debugging-and-troubleshooting)
-- [Developer Logging - how to utilize logs within the envio codebase](#developer-logging)
+## Table of Contents
+
+- [User Logging](#users) - How to implement logging in your event handlers
+- [Configuration & Output Formats](#metrics-debugging-and-troubleshooting) - Configuring log output and formats
+- [Log Levels](#developer-logging) - Understanding available log levels
+- [Troubleshooting](#troubleshooting) - Common issues and solutions
 
 ## Users
 
-Users should use the functions provided in their context for logging. These are as follows:
+When implementing handlers for your indexer, use the logging functions provided in the context object. These functions allow you to record events and errors at different severity levels.
 
-- `<context>.log.debug`
-- `<context>.log.info`
-- `<context>.log.warn`
-- `<context>.log.error`
-- `<context>.log.errorWithExn` : same as `error`, but takes in the exception as the first argument to neatly integrate the stacktrace and error message into the log.
+### Available Logging Methods
+
+- `<context>.log.debug` - For detailed debugging information
+- `<context>.log.info` - For general information about application flow
+- `<context>.log.warn` - For potentially problematic situations
+- `<context>.log.error` - For error events that might still allow the application to continue
+- `<context>.log.errorWithExn` - Same as `error`, but takes an exception as the first argument to include stacktraces and error messages in the log
+
+### Examples by Language
 
 <Tabs>
-  <TabItem value="javascript" label="Javascript">
+  <TabItem value="javascript" label="JavaScript">
 
 ```javascript
-// inside your handler
-context.log.debug(`We are processing the event, ${event.blockHash} (debug)`);
-context.log.info(`We are processing the event, ${event.blockHash} (info)`);
-context.log.warn(`We are processing the event, ${event.blockHash} (warn)`);
-context.log.error(`We are processing the event, ${event.blockHash} (error)`);
+// Inside your handler
+context.log.debug(
+  `Processing event with block hash: ${event.blockHash} (debug)`
+);
+context.log.info(`Processing event with block hash: ${event.blockHash} (info)`);
+context.log.warn(`Potential issue with event: ${event.blockHash} (warn)`);
+context.log.error(`Failed to process event: ${event.blockHash} (error)`);
 context.log.errorWithExn(
-  new Error("some error processing the event"),
-  `We are processing the event, ${event.blockHash} (error)`
+  new Error("Error processing event"),
+  `Failed to process event: ${event.blockHash}`
 );
 
-// You can also pass objects to these logs if you want more information to be available in them. eg.:
+// You can also pass objects to logs for structured logging:
 context.log.info({
-  msg: "We are processing the event",
+  msg: "Processing blockchain event",
   type: "info",
-  extra: "I think this info will help me debug",
+  extra: "Additional debugging context",
   data: { blockHash: event.blockHash },
 });
 ```
 
   </TabItem>
-  <TabItem value="typescript" label="Typescript">
+  <TabItem value="typescript" label="TypeScript">
 
 ```typescript
-// inside your handler
-context.log.debug(`We are processing the event, ${event.blockHash} (debug)`);
-context.log.info(`We are processing the event, ${event.blockHash} (info)`);
-context.log.warn(`We are processing the event, ${event.blockHash} (warn)`);
-context.log.error(`We are processing the event, ${event.blockHash} (error)`);
+// Inside your handler
+context.log.debug(
+  `Processing event with block hash: ${event.blockHash} (debug)`
+);
+context.log.info(`Processing event with block hash: ${event.blockHash} (info)`);
+context.log.warn(`Potential issue with event: ${event.blockHash} (warn)`);
+context.log.error(`Failed to process event: ${event.blockHash} (error)`);
 context.log.errorWithExn(
-  new Error("some error processing the event"),
-  `We are processing the event, ${event.blockHash} (error)`
+  new Error("Error processing event"),
+  `Failed to process event: ${event.blockHash}`
 );
 ```
 
-<!-- TODO: if we move away from gentype we will be able to make the log argument be an `any` type in typescript - this section will be irrelevant then -->
+{/* Note: Our TypeScript bindings currently only accept strings as arguments to logs. We have an open issue to allow the 'any' type for more flexibility */}
 
-Unfortunately, currently our typescript bindings only accept strings as arguments to the logs. We have an open issue in our repo to make this unnecessary for the typescript bindings and make it use the `any` type rather than string, but complex logging is done like this:
+For structured logging with TypeScript, use the following pattern:
 
 ```typescript
 import Logs from "generated/src/Logs.bs.js";
 
-// inside your handler
+// Inside your handler
 Logs.debug(context.log, {
-  msg: "We are processing the event",
+  msg: "Processing blockchain event",
   type: "debug",
   data: { blockHash: event.blockHash },
 });
 Logs.info(context.log, {
-  msg: "We are processing the event",
+  msg: "Processing blockchain event",
   type: "info",
   data: { blockHash: event.blockHash },
 });
 Logs.warn(context.log, {
-  msg: "We are processing the event",
+  msg: "Potential issue with event",
   type: "warn",
   data: { blockHash: event.blockHash },
 });
 Logs.error(context.log, {
-  msg: "We are processing the event",
+  msg: "Failed to process event",
   type: "error",
   data: { blockHash: event.blockHash },
 });
-Logs.errorWithExn(context.log, new Error("some error in code"), {
-  msg: "We are processing the event",
+Logs.errorWithExn(context.log, new Error("Error in processing"), {
+  msg: "Failed to process event",
   type: "error",
   data: { blockHash: event.blockHash },
 });
 ```
 
   </TabItem>
-  <TabItem value="rescript" label="Rescript">
+  <TabItem value="rescript" label="ReScript">
 
 ```rescript
-  // inside your handler
+  // Inside your handler
+  exception ExampleException(string) // Example of an exception
 
-  exception ExmapleException(string) // Example of an exception
-
-  /// Some examples of user logging
-  context.log.debug(`We are processing the event, ${event.blockHash} (debug)`)
-  context.log.info(`We are processing the event, ${event.blockHash} (info)`)
-  context.log.warn(`We are processing the event, ${event.blockHash} (warn)`)
-  context.log.error(`We are processing the event, ${event.blockHash} (error)`)
+  // Basic string logging
+  context.log.debug(`Processing event with block hash: ${event.blockHash} (debug)`)
+  context.log.info(`Processing event with block hash: ${event.blockHash} (info)`)
+  context.log.warn(`Potential issue with event: ${event.blockHash} (warn)`)
+  context.log.error(`Failed to process event: ${event.blockHash} (error)`)
   context.log.errorWithExn(
-    ExmapleException("some error processing the event"),
-    `We are processing the event, ${event.blockHash} (error)`,
+    ExampleException("Error processing event"),
+    `Failed to process event: ${event.blockHash}`,
   )
 ```
 
-Unfortunately records in rescript are strictly typed and not polymorphic. So if you want to pass anything that isn't a string to your log messages, you'll need to use this separate log object. as detailed below.
+For structured logging in ReScript (since records are strictly typed and not polymorphic):
 
 ```rescript
+  // Structured logging with objects
   context.log->Logs.debug({
-    "msg": "We are processing the event",
+    "msg": "Processing blockchain event",
     "type": "debug",
     "data": {"blockHash": event.blockHash},
   })
   context.log->Logs.info({
-    "msg": "We are processing the event",
+    "msg": "Processing blockchain event",
     "type": "info",
     "data": {"blockHash": event.blockHash},
   })
   context.log->Logs.warn({
-    "msg": "We are processing the event",
+    "msg": "Potential issue with event",
     "type": "warn",
     "data": {"blockHash": event.blockHash},
   })
   context.log->Logs.error({
-    "msg": "We are processing the event",
+    "msg": "Failed to process event",
     "type": "error",
     "data": {"blockHash": event.blockHash},
   })
   context.log->Logs.errorWithExn(
-    ExmapleException("some error processing the event"),
+    ExampleException("Error processing event"),
     {
-      "msg": "We are processing the event",
+      "msg": "Failed to process event",
       "type": "error",
       "data": {"blockHash": event.blockHash},
     },
@@ -156,60 +167,79 @@ Unfortunately records in rescript are strictly typed and not polymorphic. So if 
 
 ## Metrics, Debugging, and Troubleshooting
 
-There are many ways to gather insights into our logs. We use the [pino](https://github.com/pinojs/pino/) logging library for javascript which is highly optimized for performance. It also outputs clear and easy to read logs for users via [pino-pretty](https://github.com/pinojs/pino-pretty).
+The Envio indexer provides flexible logging configurations to suit different environments and use cases.
 
-It is able to output logs in a JSON/machine-readable format for tracing, debugging, or generating metrics via tools such as Kibana. For Kibana it might be useful to use the standardized [ECS](https://www.elastic.co/guide/en/ecs/current/index.html), but the pino standard logging format is also fine.
+### Output Formats
 
-The default output format is pino-pretty. But please feel free to use the following environment variables to modify output formats:
+The default output format is human-readable with color-coded log levels (`console-pretty`). You can modify the output format using environment variables:
 
 ```bash
-LOG_STRATEGY="console-pretty" # this is the default format - it logs to the terminal directly with colours for log levels in a human readable format.
-LOG_STRATEGY="ecs-file" # this logs to a file specidied at `LOG_FILE` with the ECS log format which is the standard output format for the EKS stack
-LOG_STRATEGY="ecs-console" # this logs to the console in the raw ECS format
-LOG_STRATEGY="file-only" # this logs to file in default pino format. This is a more efficient logger performance wise.
-LOG_STRATEGY="console-raw" # This logs directly to console in pino format.
-LOG_STRATEGY="both-prettyconsole" # This pretty prints to console, and logs to file at `LOG_FILE` with default pino format
+# Available log strategies
+LOG_STRATEGY="console-pretty"  # Default: Human-readable logs with colors in terminal
+LOG_STRATEGY="ecs-file"        # ECS format logs to file (standard for Elastic Stack)
+LOG_STRATEGY="ecs-console"     # ECS format logs to console
+LOG_STRATEGY="file-only"       # Logs to file in Pino format (most efficient)
+LOG_STRATEGY="console-raw"     # Raw Pino format logs to console
+LOG_STRATEGY="both-prettyconsole"  # Pretty logs to console, Pino format to file
+
+# Specify log file location when using file output
 LOG_FILE="<path-to-log-file>"
 ```
 
-If there are specific dashboards you'd like to have to improve your experience in development or production please [let us know](https://discord.gg/DhfFhzuJQh). We are working on some Kibana dashboards for self-hosting and UI dashboards into our hosting solution too.
+For production environments or detailed analytics, consider integrating logs with Kibana or similar tools. We're developing Kibana dashboards for self-hosting and UI dashboards for our hosting solution. If you have specific dashboard requirements, please [contact us on Discord](https://discord.gg/DhfFhzuJQh).
 
 ## Developer Logging
 
-The indexer supports the following log levels (in ascending order):
+### Log Levels
+
+The indexer supports the following log levels in ascending order of severity:
 
 ```
-- trace
-- debug
-- info
-- udebug
-- uinfo
-- uwarn
-- uerror
-- warn
-- error
-- fatal
+- trace     # Most verbose level, detailed tracing information
+- debug     # Debugging information for developers
+- info      # General information about system operation
+- udebug    # User-level debug logs
+- uinfo     # User-level info logs
+- uwarn     # User-level warning logs
+- uerror    # User-level error logs
+- warn      # System warning logs
+- error     # System error logs
+- fatal     # Critical errors causing system shutdown
 ```
 
-The log levels prefixed with `u` are user-level logs. These are logs emitted from the context for a handler or a loader.
+> **Note**: Log levels prefixed with `u` (like `udebug`) are user-level logs emitted from the context for handlers or loaders.
 
-You can set the log levels with the following environment variables:
+### Configuring Log Levels
 
-```
-LOG_LEVEL - the log level used for logs going to the console (default: "info")
-FILE_LOG_LEVEL - the log level used for logs going to the file (default: "trace")
-```
-
-For example:
+Set log levels using these environment variables:
 
 ```bash
-export LOG_LEVEL="trace"
+LOG_LEVEL="info"      # Controls log level for console output (default: "info")
+FILE_LOG_LEVEL="trace"  # Controls log level for file output (default: "trace")
 ```
 
-will set the log level of the current environment to `trace`.
+Example:
+
+```bash
+export LOG_LEVEL="trace"  # Set console log level to the most verbose option
+```
 
 ### Troubleshooting
 
-In development, sometimes it can be nice to turn the Terminal UI off, do this with the `TUI_OFF="true"` environment variable, or the `--tui-off` flag. It is a known issue that the Terminal UI sometimes obfuscates errors and crashes in the terminal, so turning it off can make that process of debugging clearer. Of course, you can add `LOG_STRATEGY="file-only"` or `LOG_STRATEGY="both-prettyconsole"` and view the logs in a file rather than the terminal and keep the TUI running.
+When debugging issues in development:
+
+1. **Terminal UI Issues**: The Terminal UI may sometimes hide errors. To disable it:
+
+   ```bash
+   export TUI_OFF="true"  # Or use --tui-off flag when starting
+   ```
+
+2. **Log Visibility**: To maintain the Terminal UI while capturing detailed logs:
+   ```bash
+   export LOG_STRATEGY="both-prettyconsole"
+   export LOG_FILE="./debug.log"
+   ```
+
+This approach allows you to view essential information in the UI while capturing comprehensive logs for troubleshooting.
 
 ---

@@ -7,17 +7,34 @@ slug: /dynamic-contracts
 
 # Dynamic Contracts / Factories
 
-If you have a system that does not know all the contracts that need indexing at the beginning (e.g., a factory contract that dynamically creates new contracts over time), you can use dynamic contracts.
+## Introduction
 
-<!--
-///TODO: add back a video once it has been updated to v2
-<iframe width="560" height="315" src="https://www.youtube.com/embed/O6qPXZ6kjYY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+Many blockchain systems use factory patterns where new contracts are created dynamically. Common examples include:
 
-## Contract Registration
+- DEXes like Uniswap where each trading pair creates a new contract
+- NFT platforms that deploy new collection contracts
+- Lending protocols that create new markets as isolated contracts
 
-Contract factories are currently supported in the event's `contractRegister` function for when you want to register the contract.
+When indexing these systems, you need a way to discover and track these dynamically created contracts. Envio provides powerful tools to handle this use case.
 
-You can register a dynamic contract by including the following line inside the `contractRegister` function:
+## When to Use Dynamic Contract Registration
+
+Use dynamic contract registration when:
+
+- Your system includes factory contracts that deploy new contracts over time
+- You want to index events from all instances of a particular contract type
+- The addresses of these contracts aren't known at the time you create your indexer
+
+## Implementation Methods
+
+Envio provides two approaches for dynamic contract registration:
+
+1. **Standard Registration**: Register contracts as they are discovered during normal indexing
+2. **Pre-Registration** (Recommended): Scan for all contract instances first, then index from the beginning
+
+### Standard Contract Registration
+
+With standard registration, you add a `contractRegister` function to detect when new contracts are created:
 
 ```javascript
 <contract-name>.<event-name>.contractRegister(({ event, context }) => {
@@ -25,12 +42,20 @@ You can register a dynamic contract by including the following line inside the `
 });
 ```
 
-## Contract Pre Registration (Recommended)
+This function will be called whenever the specified event is emitted, allowing you to register new contract instances as they're created.
 
-You can also configure the "preRegisterDynamicContracts" flag in your event config. For all the events that have this config, there will be an end to end indexer run just for these events to run each relevant contractRegister functions and collect all the dynamic contract addresses. The indexer then restarts with all these addresses from the start block configured for the network (rather than from the block that the contract gets registered). For a standard factory contract setup this drastically reduces indexing time since it doesn't result in many small block range queries but rather larger grouped queries.
+### Pre-Registration (Recommended)
+
+Pre-registration improves indexing efficiency by:
+
+1. First scanning the blockchain to discover all instances of your contract
+2. Then indexing all events from these contracts from the beginning in a single pass
+
+To use pre-registration, enable the `preRegisterDynamicContracts` flag:
 
 ```javascript
-<contract-name>.<event-name>.contractRegister(({ event, context }) => {
+<contract-name>.<event-name>.contractRegister(
+  ({ event, context }) => {
     context.add<your-contract-name>(<address-of-the-contract>);
   },
   {
@@ -39,15 +64,19 @@ You can also configure the "preRegisterDynamicContracts" flag in your event conf
 );
 ```
 
-> The syntax is exactly the same for JavaScript, TypeScript, and ReScript.
+Pre-registration significantly improves performance for factory patterns by allowing batch processing of events rather than fragmenting queries across many small block ranges.
 
-## Example using an NFT factory
+## Example: NFT Factory Pattern
 
-In the NFT factory example, we want to dynamically register all the `SimpleNft` contracts that get created by the `NftFactory` contract, via `SimpleNftCreated` events.
+Let's look at a complete example using an NFT factory pattern.
 
-Both types of contracts will be defined in the configuration file; however, the address field will be omitted for the `SimpleNft` contract - address values will instead be retrieved from the `SimpleNftCreated` event.
+### Scenario
 
-### Config file
+- `NftFactory` contract creates new `SimpleNft` contracts
+- We want to index events from all NFTs created by this factory
+- Each time a new NFT is created, the factory emits a `SimpleNftCreated` event
+
+### 1. Configure Your Contracts in config.yaml
 
 ```yaml
 name: nftindexer
@@ -58,29 +87,66 @@ networks:
     contracts:
       - name: NftFactory
         abi_file_path: abis/NftFactory.json
-        address: 0x4675a6B115329294e0518A2B7cC12B70987895C4
+        address: 0x4675a6B115329294e0518A2B7cC12B70987895C4 # Factory address is known
         handler: src/EventHandlers.ts
         events:
           - event: SimpleNftCreated (string name, string symbol, uint256 maxSupply, address contractAddress)
+
       - name: SimpleNft
         abi_file_path: abis/SimpleNft.json
+        # No address field - we'll discover these addresses from events
         handler: src/EventHandlers.ts
         events:
           - event: Transfer (address from, address to, uint256 tokenId)
 ```
 
-### Registering `SimpleNft` contracts in `contractRegister` function for `SimpleNftCreated` event
+Note that:
+
+- The `NftFactory` contract has a known address specified in the config
+- The `SimpleNft` contract has no address, as we'll register instances dynamically
+
+### 2. Create the Contract Registration Handler
+
+In your `src/EventHandlers.ts` file:
 
 ```javascript
-NftFactory.SimpleNftCreated.contractRegister(({ event, context }) => {
-  context.addSimpleNft(event.params.contractAddress);
+// Register SimpleNft contracts whenever they're created by the factory
+NftFactory.SimpleNftCreated.contractRegister(
+  ({ event, context }) => {
+    // Register the new NFT contract using its address from the event
+    context.addSimpleNft(event.params.contractAddress);
+
+    console.log(`Registered new SimpleNft at ${event.params.contractAddress}`);
+  },
+  {
+    preRegisterDynamicContracts: true, // Enable pre-registration for better performance
+  }
+);
+
+// Handle Transfer events from all SimpleNft contracts
+SimpleNft.Transfer.handler(async ({ event, context }) => {
+  // Your event handling logic here
+  console.log(
+    `NFT Transfer at ${event.srcAddress} - Token ID: ${event.params.tokenId}`
+  );
+
+  // Example: Store transfer information in the database
+  // ...
 });
 ```
 
-> The syntax is exactly the same for JavaScript, TypeScript, and ReScript.
+## Important Notes
 
-For more information on how to write the event handlers file, go [here](../Guides/event-handlers.mdx).
+- **Block Coverage**: When a dynamic contract is registered, Envio will index all events from that contract in the same block where it was created, even if those events happened in transactions before the registration event. This is particularly useful for contracts that emit events during their construction.
 
-## Important Note
+- **Performance Considerations**: Pre-registration is strongly recommended for factory patterns as it can dramatically improve indexing performance by allowing batch processing.
 
-When a dynamic contract is loaded, we load all the events in the block in which the contract was registered (even if they were from a previous transaction). Please let us know if this is an issue for you, as the team also has a solution where it only loads events after the event that loaded the contract. We decided this was better since many contracts emit an event upon creation, and this occurs before the contract is loaded (for example, in Uniswap v2).
+- **Handler Organization**: You can register contracts from any event handler. For example, you might register a token contract when you see it being added to a registry, not just when it's created.
+
+## Debugging Tips
+
+- Use logging in your `contractRegister` function to confirm contracts are being registered
+- Check your logs for "Registered new contract" messages
+- If you're not seeing events from your dynamic contracts, verify they're being properly registered
+
+For more information on writing event handlers, see the [Event Handlers Guide](../Guides/event-handlers.mdx).

@@ -1,69 +1,93 @@
 ---
 id: configuration-file
-title: Setting up Configuration File
-sidebar_label: Setting up Configuration File
+title: Configuration File (config.yaml)
+sidebar_label: Configuration File (config.yaml)
 slug: /configuration-file
 ---
 
-# Setting up Configuration File
+The `config.yaml` file defines your indexer's behavior, including which blockchain events to index, contract addresses, which networks to index, and various advanced indexing options. It is a crucial step in configuring your HyperIndex setup.
 
-The `config.yaml` outlines the specifications for the indexer, including network and contract details, as well as event information to be used in the indexing process. For a full specification, view the [explorer](#explorer) below.
-
-## Example Configuration
-
-Here is an example `config.yaml` from the TypeScript Greeter template:
-
-```yaml
-# yaml-language-server: $schema=./node_modules/envio/evm.schema.json
-name: Greeter
-description: Greeter indexer
-#Global contract definitions that must contain all definitions except
-#addresses. Now you can share a single handler/abi/event definitions
-#for contracts across multiple chains
-contracts:
-  - name: Greeter
-    abi_file_path: ./abis/greeter-abi.json
-    handler: ./src/EventHandlers.ts
-    events:
-      - event: NewGreeting
-      - event: ClearGreeting
-networks:
-  - id: 137 # Polygon
-    start_block: 45336336
-    contracts:
-      - name: Greeter #A reference to the global contract definition
-        address: 0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c
-  - id: 59144 # Linea
-    start_block: 367801
-    contracts:
-      - name: Greeter #A reference to the global contract definition
-        address: 0xdEe21B97AB77a16B4b236F952e586cf8408CF32A
-```
-
-Once you have set up your config file and the [schema](./schema-file.md), you are ready to generate the indexing code required to write the event handlers.
-
-Run the following command:
+After any changes to your `config.yaml` and the [schema](./schema-file.md), run:
 
 ```bash
 pnpm codegen
 ```
 
-## Contract Addresses
+This command generates necessary types and code for your event handlers.
 
-For the `address` field in the configuration file, use the address that emits the events.
+---
 
-- **Transparent Proxy Pattern:** Use the address of the proxy contract, as this is the contract that emits the events. Retrieve the ABI from the implementation contract.
-- **No Proxy Contract:** Use the same address from which the ABI was obtained.
+## Configuration Structure
 
-If multiple contract addresses need to be indexed, they can be entered as an array like `["0xAddress1", "0xAddress2"]` or in a dash-denominated list as seen in this [example](https://github.com/enviodev/univ3ethusdc-pool-multichain/blob/main/config.yaml) repo.
+Here's an example `config.yaml` file:
 
-You can also choose to omit the address field for use cases like a factory contract where addresses will be dynamically registered during the indexing process.
+```yaml
+# yaml-language: $schema=./node_modules/envio/evm.schema.json
+name: Greeter
+description: Greeter Indexer Example
 
-## Human-Readable ABI Format
+contracts:
+  - name: Greeter
+    abi:
+      - event: "NewGreeting(address user, string greeting)"
+      - event: "ClearGreeting(address user)"
 
-In the configuration, you can optionally pass the file path to the ABI for a contract in the `abi_file_path` field, or you can specify the event signature in the event field.
+networks:
+  - id: 1 # ethereum-mainnet
+    start_block: 12345678
+    contracts:
+      - name: Greeter
+        address: 0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c
+```
 
-Here is an example from the above configuration:
+---
+
+## Key Configuration Options
+
+### Contract Addresses
+
+Set the address of the smart contract you're indexing.
+
+**Single address:**
+
+```yaml
+address: 0xContractAddress
+```
+
+**Multiple addresses for the same contract:**
+
+```yaml
+contracts:
+  - name: MyContract
+    address:
+      - 0xAddress1
+      - 0xAddress2
+```
+
+:::tip
+If using a **proxy contract**, always use the **proxy address**, not the implementation address.
+:::
+
+**Global definitions:**  
+You can also avoid repeating addresses by using global contract definitions:
+
+```yaml
+contracts:
+  - name: Greeter
+    abi: greeter.json
+
+networks:
+  - id: ethereum-mainnet
+    contracts:
+      - name: Greeter
+        address: 0xProxyAddressHere
+```
+
+---
+
+### Events Selection
+
+Define specific events to index in a human-readable format:
 
 ```yaml
 events:
@@ -71,110 +95,169 @@ events:
   - event: "ClearGreeting(address user)"
 ```
 
-More information on Human Readable ABI parsing is available [here](https://docs.rs/ethers-core/latest/ethers_core/abi/struct.AbiParser.html).
+By default, all events defined in the contract are indexed, but you can selectively disable them by removing them from this list.
 
-> **Dev note:** An error in the ABI or the event signature will result in the events not matching, and they may not reflect in the `raw_events_table` or propagate correctly into the event handler logic.
+---
 
-## Custom Event Names
+### Raw Events Storage
 
-This is useful when you want to have a different name on the Envio side; or index events with the same name but different signatures:
+By default, HyperIndex doesn't store raw event data in the database to optimize performance and reduce storage requirements. However, you can enable this feature for debugging purposes or if you need to access the original event data.
+
+To enable storage of raw events, add the following to your `config.yaml`:
 
 ```yaml
-- event: Assigned(address indexed recipientId, uint256 amount, address token)
-- event: Assigned(address indexed recipientId, uint256 amount, address token, address sender)
-  name: AssignedWithSender
+raw_events: true
 ```
 
-## Field Selection
+When enabled, all indexed events will be stored in the `raw_events` table in the database, which you can view through the Hasura interface. This is particularly useful for:
 
-Field selection allows you to add specific data points to each event that gets passed to your handlers. For a complete list of available fields, refer to the [explorer](#explorer) below.
+- Debugging event processing issues
+- Verifying that events are being captured correctly
+- Creating custom queries against raw blockchain data
 
-By default, the `block_fields` include `number`, `hash`, and `timestamp` without requiring additional configuration.
+Note that enabling this option will increase database storage requirements and may slightly impact indexing performance.
 
-In the Fuel version, these default to the `height`, `id`, and `time` fields for blocks, along with the `id` field for transactions. Note that custom field selection is not supported for Fuel.
+---
 
-_Note_: For indexing from RPC in versions below `envio@2.10.0`, only `hash` and `transactionIndex` are supported in `transaction_fields`. If you encounter this limitation, consider upgrading to a more recent version to access improved functionality.
+### Field Selection
+
+You can optimize data retrieval by specifying exactly which fields to fetch (this is used to enhance performance, see [Interactive Schema Explorer](#interactive-schema-explorer) section):
 
 ```yaml
 field_selection:
   transaction_fields:
-    - "hash"
-    - "transactionIndex"
-    - "gasUsed"
+    - hash
+    - gasUsed
   block_fields:
-    - "parentHash"
+    - parentHash
 ```
 
-### Field Selection per Event
+#### Per-event Field Selection
 
-Starting with `envio@2.11.0`, you can specify field selection for individual events. This feature is useful for optimizing RPC and HyperSync calls by fetching only the data relevant to specific events, avoiding over-fetching.
-
-Per-event field selection overrides any global field selection, ensuring precise data handling for each event.
+Starting from `envio@2.11.0`, you can specify fields per event (see [Interactive Schema Explorer](#interactive-schema-explorer) for possibilities):
 
 ```yaml
 events:
-  - event: "Transfer(address indexed from, address indexed to, uint256 value)"
+  - event: "Assigned(address indexed user, uint256 amount)"
     field_selection:
       transaction_fields:
-        - "hash"
-        - "transactionIndex"
-        - "gasUsed"
+        - transactionIndex
       block_fields:
-        - "parentHash"
+        - timestamp
 ```
 
-## Environment Variables Interpolation
+---
 
-Starting from `envio@2.9.0` the config file can use Environment Variables to offer more flexibility. If you want to switch between different configurations quickly, you don't need to edit the config file each time; you can just set Environment Variables at run time.
+### Unordered Multichain Mode
 
-Below is a simple example:
+To improve indexing performance when indexing multiple blockchains, you can enable **Unordered Multichain Mode**. This setting allows parallel processing of events from different networks without strictly maintaining cross-chain event ordering. Useful for minimizing indexing latency when indexing at the head.
+
+Activate this by adding to your `config.yaml`:
+
+```yaml
+unordered_multichain_mode: true
+```
+
+Learn more about when and how to use this feature [here](./multichain-indexing#unordered-multichain-mode).
+
+---
+
+### Rollback on Reorg
+
+HyperIndex automatically handles blockchain reorganizations by default. To disable or customize this behavior, set the `rollback_on_reorg` flag in your `config.yaml`:
+
+```yaml
+rollback_on_reorg: true # default is true
+```
+
+See detailed configuration options [here](./reorgs-support).
+
+---
+
+### Environment Variables
+
+Since `envio@2.9.0`, environment variable interpolation is supported for flexibility and security:
 
 ```yaml
 networks:
-  - id: ${ENVIO_CHAIN_ID:-137}
-    start_block: ${ENVIO_START_BLOCK:-45336336}
+  - id: ${CHAIN_ID:-ethereum-mainnet}
     contracts:
       - name: Greeter
-        address: ${ENVIO_GREETER_ADDRESSES}
+        address: ${GREETER_ADDRESS}
 ```
 
-Then you can run `ENVIO_GREETER_ADDRESSES=0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c pnpm dev`, or set the values via the `.env` or the indexer settings page on the Hosted Service.
+Run your indexer with custom environment variables:
 
-### Interpolation syntax
+```bash
+CHAIN_ID=optimism ENVIO_ADDRESS=0xYourContractAddress pnpm dev
+```
 
-For the interpolation to be applied, the Environment Variable name should be placed in braces after a dollar sign (`${VAR}`).
+**Interpolation syntax:**
 
-For braced expressions, the following formats are supported:
+- `${VAR}` – Use the value of `VAR`
+- `${VAR:-default}` – Use `VAR` if set, otherwise use `default`
 
-Direct substitution
+---
 
-- `${VAR}` -> value of `VAR`
+## Full config file example
 
-Default value
+This example indexes events from multiple contracts across multiple networks.
 
-- `${VAR:-default}` -> value of `VAR` if set and non-empty, otherwise `default`
-- `${VAR-default}` -> value of `VAR` if set, otherwise `default`
+```yaml
+name: envio-indexer
+unordered_multichain_mode: true
+rollback_on_reorg: false
+contracts:
+  - name: PoolManager
+    handler: src/EventHandlers.ts
+    events:
+      - event: Swap(bytes32 indexed id, address indexed sender, int128 amount0, int128 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick, uint24 fee)
+  - name: PositionManager
+    handler: src/EventHandlers.ts
+    events:
+      - event: Transfer(address indexed from, address indexed to, uint256 indexed id)
+networks:
+  - id: 1
+    start_block: 0
+    contracts:
+      - name: PositionManager
+        address:
+          - 0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e
+      - name: PoolManager
+        address:
+          - "0x000000000004444c5dc75cB358380D2e3dE08A90"
+  - id: 10
+    start_block: 0
+    contracts:
+      - name: PositionManager
+        address:
+          - 0x3C3Ea4B57a46241e54610e5f022e5c45859A1017
+      - name: PoolManager
+        address:
+          - 0x9a13F98Cb987694C9F086b1F5eB990EeA8264Ec3
+  - id: 42161
+    start_block: 0
+    contracts:
+      - name: PositionManager
+        address:
+          - 0xd88f38f930b7952f2db2432cb002e7abbf3dd869
+      - name: PoolManager
+        address:
+          - 0x360e68faccca8ca495c1b759fd9eee466db9fb32
+```
 
-### Ways to set variables with interpolation
+---
 
-Envio can interpolate variables into your config file from multiple sources.
+## Interactive Schema Explorer
 
-Note that when the same variable is declared by multiple sources, precedence applies:
-
-1. Variables from your shell environment
-2. Variables set via Hosted Service
-3. Variables set by a `.env` file in the root indexer directory
-
-## Additional Guidelines
-
-- The contract name field (`Greeter` in the example above) should contain a single word, as it is used to create a namespace for functions in the indexer.
-- The address field should contain the address of the proxy contract, which emits the events on the specified blockchain.
-- If the human-readable ABI format is not used, the ABI referenced in the config file needs to be copied from the implementation contract into the specified ABI directory.
+Explore detailed configuration schema parameters here:
 
 import CodeBlock from "@theme/CodeBlock";
 import Schema from "@site/static/schemas/config.evm.json";
 import JSONSchemaViewer from "@theme/JSONSchemaViewer";
 
-## Explorer
-
 <JSONSchemaViewer schema={Schema} />
+
+---
+
+Now your configuration file is set, you're ready to start indexing with HyperIndex!

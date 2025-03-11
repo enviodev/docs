@@ -24,10 +24,6 @@ const redirectsList = [
     to: "/docs/HyperIndex/contract-import",
   },
   {
-    from: "/docs/hyperindex-basics",
-    to: "/docs/HyperIndex/hyperindex-basics",
-  },
-  {
     from: "/docs/configuration-file",
     to: "/docs/HyperIndex/configuration-file",
   },
@@ -93,8 +89,7 @@ const redirectsList = [
   },
   {
     from: "/docs/linked-entity-loaders",
-    // this has been updated to point to v1 since it doesn't exist in v2.
-    to: "/docs/HyperIndex/v1/linked-entity-loaders",
+    to: "/docs/HyperIndex/overview",
   },
   {
     from: "/docs/HyperIndex/v2/migration-guide-v1-v2",
@@ -102,7 +97,7 @@ const redirectsList = [
   },
   {
     from: "/docs/HyperIndex/linked-entity-loaders",
-    to: "/docs/HyperIndex/v1/linked-entity-loaders",
+    to: "/docs/HyperIndex/overview",
   },
   {
     from: "/docs/dynamic-contracts",
@@ -134,19 +129,19 @@ const redirectsList = [
   },
   {
     from: "/docs/async-mode",
-    to: "/docs/HyperIndex/v1/async-mode",
+    to: "/docs/HyperIndex/overview",
   },
   {
     from: "/docs/HyperIndex/async-mode",
-    to: "/docs/HyperIndex/v1/async-mode",
+    to: "/docs/HyperIndex/overview",
   },
   {
     from: "/docs/labels",
-    to: "/docs/HyperIndex/v1/labels",
+    to: "/docs/HyperIndex/overview",
   },
   {
     from: "/docs/HyperIndex/labels",
-    to: "/docs/HyperIndex/v1/labels",
+    to: "/docs/HyperIndex/overview",
   },
   {
     from: "/docs/performance",
@@ -162,7 +157,11 @@ const redirectsList = [
   },
   {
     from: "/docs/example-uniswap-v3",
-    to: "/docs/HyperIndex/example-uniswap-v3-multi-chain-indexer",
+    to: "/docs/HyperIndex/example-uniswap-v4-multi-chain-indexer",
+  },
+  {
+    from: "/docs/example-uniswap-v4",
+    to: "/docs/HyperIndex/example-uniswap-v4-multi-chain-indexer",
   },
   {
     from: "/docs/example-ens",
@@ -269,18 +268,32 @@ const config = {
     ],
   ],
 
+  stylesheets: [
+    {
+      href: "/custom.css",
+      type: "text/css",
+    },
+  ],
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    
+
     ({
       announcementBar: {
-        id: 'support_us',
+        id: "support_us",
         content:
           'If you like Envio, give us a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/enviodev/hyperindex">GitHub ⭐️</a>',
-        backgroundColor: '#fafbfc',
-        textColor: '#091E42',
+        backgroundColor: "#fafbfc",
+        textColor: "#091E42",
         isCloseable: true,
       },
+      // Add custom CSS for smaller sidebar text
+      stylesheets: [
+        {
+          href: "/custom.css",
+          type: "text/css",
+        },
+      ],
       navbar: {
         title: "",
         logo: {
@@ -300,21 +313,10 @@ const config = {
             position: "left",
           },
           {
-            type: "docsVersionDropdown",
-            docsPluginId: "HyperIndex",
-            position: "left",
-          },
-          {
             to: "docs/HyperSync/overview",
             label: "HyperSync Docs",
             position: "left",
           },
-          // //// I will add versioning later - for now - no versioning.
-          // {
-          //   type: 'docsVersionDropdown',
-          //   docsPluginId: 'HyperSync',
-          //   position: 'left',
-          // },
           {
             to: "blog",
             label: "Blog",
@@ -402,15 +404,11 @@ const config = {
         editUrl: "https://github.com/enviodev/docs/edit/main/",
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,
-        lastVersion: "current",
+        disableVersioning: true,
         versions: {
           current: {
             label: "v2",
             path: "",
-          },
-          v1: {
-            label: "v1",
-            path: "v1",
           },
         },
       },

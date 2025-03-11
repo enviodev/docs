@@ -7,112 +7,180 @@ slug: /tutorial-erc20-token-transfers
 
 # Indexing ERC20 Token Transfers on Base
 
-In this tutorial, we'll walk you through the process of quickly and efficiently indexing ERC20 token transfers on the Base network using Envio HyperIndex and no-code [contract import](https://docs.envio.dev/docs/HyperIndex/contract-import) feature, providing real-time insights into metrics such as the largest USDC transfers.
+## Introduction
 
-The goal is to create an indexer that tracks and analyzes all USDC token transfers on Base by extracting the `Transfer (index_topic_1 address from, index_topic_2 address to, uint256 value)` logs emitted by the USDC contract.
+In this tutorial, you'll learn how to index ERC20 token transfers on the Base network using Envio HyperIndex. By leveraging the no-code [contract import](https://docs.envio.dev/docs/HyperIndex/contract-import) feature, you'll be able to quickly analyze USDC transfer activity, including identifying the largest transfers.
+
+We'll create an indexer that tracks all USDC token transfers on Base by extracting the `Transfer` events emitted by the USDC contract. The entire process takes less than 5 minutes to set up and start querying data.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/e1xznmKBLa8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Prerequisites
 
-Before we start indexing, you'll need to make sure you have the [prerequisites](https://docs.envio.dev/docs/getting-started) installed.
+Before starting, ensure you have the following installed:
 
-## Initializing an Indexer
+- Node.js (v18 or newer)
+- pnpm (v8 or newer)
+- Docker Desktop
 
-Now that you’re all set up and have installed the prerequisite packages required, let’s jump into the practical steps of initializing the indexer and generating a boilerplate index to index the largest USDC token transfers on Base.
+For detailed installation instructions, see the [Prerequisites section](https://docs.envio.dev/docs/getting-started#prerequisites).
 
-1. Open your terminal in an empty repository and run the command ‘**pnpx envio init.**’
+## Step 1: Initialize Your Indexer
 
-<img src="/docs-assets/tutorial-base-erc20-transfer-1.png" alt="tutorial-base-erc20-transfer-1" width="100%"/>
+1. Open your terminal in an empty directory and run:
 
-2. Name your indexer anything you’d like (e.g., “**usdc-base-transfer-indexer”**).
+```bash
+pnpx envio init
+```
 
-<img src="/docs-assets/tutorial-base-erc20-transfer-2.png" alt="tutorial-base-erc20-transfer-2" width="100%"/>
+2. Name your indexer (we'll use "usdc-base-transfer-indexer" in this example):
 
-3. Choose your preferred language (e.g., TypeScript) and select “contract import.”
+<img src="/docs-assets/tutorial-base-erc20-transfer-2.png" alt="Naming your indexer" width="100%"/>
 
-<img src="/docs-assets/tutorial-base-erc20-transfer-3.png" alt="tutorial-base-erc20-transfer-3" width="100%"/>
+3. Choose your preferred language (TypeScript, JavaScript, or ReScript):
 
-> Note: Indexers on Envio can be written in JavaScript, TypeScript, or ReScript.
+<img src="/docs-assets/tutorial-base-erc20-transfer-3.png" alt="Selecting TypeScript" width="100%"/>
 
-4. Select `Block Explorer` then navigate to `Base`, and head over to [Basescan](https://basescan.org/), copy and paste the existing contract address, and choose the events you’d like to index. In this example, we’ll be indexing the `Transfer` event.
+## Step 2: Import the USDC Token Contract
 
-To select an event navigate using the arrow keys (↑ ↓) and click the space bar once you have made your choice.
+1. Select **Contract Import** → **Block Explorer** → **Base**
 
-> Note: Multiple events can be selected and indexed at the same time.
+2. Enter the USDC token contract address on Base:
 
-USDC Token Contract address: [0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913](https://basescan.org/address/0x833589fcd6edb6e08f4c7c32d4f71b54bda02913)
+   ```
+   0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
+   ```
 
-<img src="/docs-assets/tutorial-base-erc20-transfer-4.png" alt="tutorial-base-erc20-transfer-4" width="100%"/>
+   [View on BaseScan](https://basescan.org/address/0x833589fcd6edb6e08f4c7c32d4f71b54bda02913)
 
-5. Finally, review the configuration and select `I’m finished` to start generating the indexer.
+3. Select the `Transfer` event:
+   - Navigate using arrow keys (↑↓)
+   - Press spacebar to select the event
 
-<img src="/docs-assets/tutorial-base-erc20-transfer-5.png" alt="tutorial-base-erc20-transfer-5" width="100%"/>
+<img src="/docs-assets/tutorial-base-erc20-transfer-4.png" alt="Selecting Transfer event" width="100%"/>
 
-## Starting the Indexer
+> **Tip:** You can select multiple events to index simultaneously if needed.
 
-Before starting your indexer, run the command below to ensure that no conflicting indexers are running.
+4. When finished adding contracts, select **I'm finished**
 
-### Stopping the indexer
+<img src="/docs-assets/tutorial-base-erc20-transfer-5.png" alt="Completing contract import" width="100%"/>
 
-`pnpm envio stop`
+## Step 3: Start Your Indexer
 
-> Note: Ignore if you’re a first-time user.
+1. If you have any running indexers, stop them first:
 
-### Start the indexer
+```bash
+pnpm envio stop
+```
 
-`pnpm dev`
+> **Note:** You can skip this step if this is your first time running an indexer.
 
-Now, let's run our indexer locally by running the command below.
+2. Start your new indexer:
 
-## Overview of Generated Code
+```bash
+pnpm envio dev
+```
 
-Once that’s all done we can take a peek at the files generated by Envio in our source-code editor, in this example, we’re using [VS Code](https://code.visualstudio.com/) (Visual Code Studio).
+This command:
 
-1. **config.yaml**
+- Starts the required Docker containers
+- Sets up your database
+- Launches the indexing process
+- Opens the Hasura GraphQL interface
 
-This file defines the network, start block, contract address, and events we want to index on Base.
+## Step 4: Understanding the Generated Code
 
-<img src="/docs-assets/tutorial-base-erc20-transfer-6.png" alt="tutorial-base-erc20-transfer-6" width="100%"/>
+Let's examine the key files that Envio generated:
 
-2. **Schema.graphql**
+### 1. `config.yaml`
 
-This file saves and defines the data structures for selected events, such as the `Transfer` event.
+This configuration file defines:
 
-<img src="/docs-assets/tutorial-base-erc20-transfer-7.png" alt="tutorial-base-erc20-transfer-7" width="100%"/>
+- Network to index (Base)
+- Starting block for indexing
+- Contract address and ABI details
+- Events to track (Transfer)
 
-3. **event-handler**
+<img src="/docs-assets/tutorial-base-erc20-transfer-6.png" alt="Config YAML file" width="100%"/>
 
-This file defines what happens when an event is emitted and saves what code is going to run, allowing customization in data handling.
+### 2. `schema.graphql`
 
-<img src="/docs-assets/tutorial-base-erc20-transfer-8.png" alt="tutorial-base-erc20-transfer-8" width="100%"/>
+This schema defines the data structures for the Transfer event:
 
-## Exploring the Indexed Data
+- Entity types based on event data
+- Field types for sender, receiver, and amount
+- Any relationships between entities
 
-Well done champions, now let’s explore the indexed data.
+<img src="/docs-assets/tutorial-base-erc20-transfer-7.png" alt="GraphQL schema file" width="100%"/>
 
-1. Head over to Hasura, type in the admin-secret password (“**testing**”), and click “API” in the above column to access the GraphQL endpoint to query real-time data.
+### 3. `src/EventHandlers.*`
 
-<img src="/docs-assets/tutorial-base-erc20-transfer-9.png" alt="tutorial-base-erc20-transfer-9" width="100%"/>
+This file contains the business logic for processing events:
 
-2. Navigate to “Data” in the above column to monitor the indexing progress on Base through the events sync state table to see which block number you are on.
+- Functions that execute when Transfer events are detected
+- Data transformation and storage logic
+- Entity creation and relationship management
 
-<img src="/docs-assets/tutorial-base-erc20-transfer-10.png" alt="tutorial-base-erc20-transfer-10" width="100%"/>
+<img src="/docs-assets/tutorial-base-erc20-transfer-8.png" alt="Event handlers file" width="100%"/>
 
-3. Now let’s analyze some events. Simply head back to “API” in the above column. From there you can run a query-specific event, in this example "**FiatTokenV2_2 Transfer**" to explore details such as amounts, senders, recipients and values.
+## Step 5: Exploring Your Indexed Data
 
-_Once you have selected your desired events run the query by clicking the play button ( ▶️) to gain access to the real-time indexed data_
+Now you can interact with your indexed USDC transfer data:
 
-**For example:**
+### Accessing Hasura
 
-Let’s look at getting 10 `FiatTokenV2_2 Transfer` events, and order them by the amount we would like to appear first (in this case: desc = largest amount), who it’s from, who it’s to, and the value being transferred.
+1. Open Hasura at [http://localhost:8080](http://localhost:8080)
+2. When prompted, enter the admin password: `testing`
 
-<img src="/docs-assets/tutorial-base-erc20-transfer-11.png" alt="tutorial-base-erc20-transfer-11" width="100%"/>
+<img src="/docs-assets/tutorial-base-erc20-transfer-9.png" alt="Hasura login" width="100%"/>
 
-Run queries to explore specific events, such as the largest USDC transfers.
+### Monitoring Indexing Progress
+
+1. Click the **Data** tab in the top navigation
+2. Find the `_events_sync_state` table to check indexing progress
+3. Observe which blocks are currently being processed
+
+<img src="/docs-assets/tutorial-base-erc20-transfer-10.png" alt="Indexing progress" width="100%"/>
+
+> **Note:** Thanks to Envio's [HyperSync](https://docs.envio.dev/docs/hypersync), you can index millions of USDC transfers in just minutes rather than hours or days with traditional methods.
+
+### Querying Indexed Events
+
+1. Click the **API** tab
+2. Construct a GraphQL query to explore your data
+
+Here's an example query to fetch the 10 largest USDC transfers:
+
+```graphql
+query LargestTransfers {
+  FiatTokenV2_2_Transfer(limit: 10, order_by: { value: desc }) {
+    from
+    to
+    value
+    blockTimestamp
+  }
+}
+```
+
+3. Click the **Play** button to execute your query
+
+<img src="/docs-assets/tutorial-base-erc20-transfer-11.png" alt="Query results" width="100%"/>
 
 ## Conclusion
 
-Congratulations! You've successfully generated an indexer and indexed 3.6 million USDC token transfer events in under 5 minutes on Base.
+Congratulations! You've successfully created an indexer for USDC token transfers on Base. In just a few minutes, you've indexed over 3.6 million transfer events and can now query this data in real-time.
 
-Be sure to check out our [video walkthrough](https://www.youtube.com/watch?v=e1xznmKBLa8&t=572s) on YouTube, including other tutorials that showcase Envio’s indexing features and capabilities.
+### What You've Learned
+
+- How to initialize an indexer using Envio's contract import feature
+- How to index ERC20 token transfers on the Base network
+- How to query and analyze token transfer data using GraphQL
+
+### Next Steps
+
+- Try customizing the event handlers to add additional logic
+- Create aggregated statistics about token transfers
+- Add more tokens or events to your indexer
+- Deploy your indexer to Envio's hosted service
+
+For more tutorials and advanced features, check out our [documentation](https://docs.envio.dev) or watch our [video walkthrough](https://www.youtube.com/watch?v=e1xznmKBLa8) on YouTube.

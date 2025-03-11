@@ -1,336 +1,320 @@
 ---
 id: cli-commands
-title: Envio CLI
+title: Envio CLI Reference
 sidebar_label: Envio CLI
 slug: /cli-commands
 ---
 
-# Command-Line Help for `envio`
+# Envio Command Line Interface
 
-This document contains the help content for the `envio` command-line program.
+This comprehensive reference guide covers all available commands and options in the Envio CLI tool. Use this documentation to explore the full capabilities of the `envio` command and its subcommands for managing your indexing projects.
 
-**Command Overview:**
+## Getting Started
 
-* [`envio`↴](#envio)
-* [`envio init`↴](#envio-init)
-* [`envio init contract-import`↴](#envio-init-contract-import)
-* [`envio init contract-import explorer`↴](#envio-init-contract-import-explorer)
-* [`envio init contract-import local`↴](#envio-init-contract-import-local)
-* [`envio init template`↴](#envio-init-template)
-* [`envio init fuel`↴](#envio-init-fuel)
-* [`envio init fuel contract-import`↴](#envio-init-fuel-contract-import)
-* [`envio init fuel contract-import local`↴](#envio-init-fuel-contract-import-local)
-* [`envio init fuel template`↴](#envio-init-fuel-template)
-* [`envio dev`↴](#envio-dev)
-* [`envio stop`↴](#envio-stop)
-* [`envio codegen`↴](#envio-codegen)
-* [`envio benchmark-summary`↴](#envio-benchmark-summary)
-* [`envio local`↴](#envio-local)
-* [`envio local docker`↴](#envio-local-docker)
-* [`envio local docker up`↴](#envio-local-docker-up)
-* [`envio local docker down`↴](#envio-local-docker-down)
-* [`envio local db-migrate`↴](#envio-local-db-migrate)
-* [`envio local db-migrate up`↴](#envio-local-db-migrate-up)
-* [`envio local db-migrate down`↴](#envio-local-db-migrate-down)
-* [`envio local db-migrate setup`↴](#envio-local-db-migrate-setup)
-* [`envio start`↴](#envio-start)
+The Envio CLI provides a powerful set of tools for creating, developing, and managing your indexers. Whether you're starting a new project, running a development server, or deploying to production, the CLI offers commands to simplify and automate your workflow.
 
-## `envio`
+## Command Overview
+
+The commands are organized into the following categories:
+
+### Initialization Commands
+
+- [`envio init`](#envio-init) - Create new indexer projects
+- [`envio init contract-import`](#envio-init-contract-import) - Import from existing contracts
+- [`envio init template`](#envio-init-template) - Use pre-built templates
+
+### Development Commands
+
+- [`envio dev`](#envio-dev) - Run in development mode with hot reloading
+- [`envio codegen`](#envio-codegen) - Generate code from configuration files
+- [`envio start`](#envio-start) - Start the indexer without code generation
+
+### Environment Management
+
+- [`envio stop`](#envio-stop) - Stop running processes
+- [`envio local`](#envio-local) - Manage local environment
+- [`envio local docker`](#envio-local-docker) - Control Docker containers
+- [`envio local db-migrate`](#envio-local-db-migrate) - Manage database schema
+
+### Analysis Tools
+
+- [`envio benchmark-summary`](#envio-benchmark-summary) - View performance data
+
+## Global Command
+
+### `envio`
+
+The base command that provides access to all Envio functionality.
 
 **Usage:** `envio [OPTIONS] <COMMAND>`
 
-###### **Subcommands:**
-
-* `init` — Initialize an indexer with one of the initialization options
-* `dev` — Development commands for starting, stopping, and restarting the indexer with automatic codegen for any changed files
-* `stop` — Stop the local environment - delete the database and stop all processes (including Docker) for the current directory
-* `codegen` — Generate indexing code from user-defined configuration & schema files
-* `benchmark-summary` — Prints a summary of the benchmark data after running the indexer with envio start --bench flag or setting 'ENVIO_SAVE_BENCHMARK_DATA=true'
-* `local` — Prepare local environment for envio testing
-* `start` — Start the indexer without any automatic codegen
-
 ###### **Options:**
 
-* `-d`, `--directory <DIRECTORY>` — The directory of the project. Defaults to current dir ("./")
-* `-o`, `--output-directory <OUTPUT_DIRECTORY>` — The directory within the project that generated code should output to
+- `-d`, `--directory <DIRECTORY>` — The directory of the project. Defaults to current dir ("./")
+- `-o`, `--output-directory <OUTPUT_DIRECTORY>` — The directory within the project that generated code should output to (Default: `generated`)
+- `--config <CONFIG>` — The file in the project containing config (Default: `config.yaml`)
 
-  Default value: `generated`
-* `--config <CONFIG>` — The file in the project containing config
+## Initialization Commands
 
-  Default value: `config.yaml`
+These commands help you create and set up new indexing projects quickly.
 
+### `envio init`
 
-
-## `envio init`
-
-Initialize an indexer with one of the initialization options
+Initialize an indexer with one of the initialization options.
 
 **Usage:** `envio init [OPTIONS] [COMMAND]`
 
 ###### **Subcommands:**
 
-* `contract-import` — Initialize Evm indexer by importing config from a contract for a given chain
-* `template` — Initialize Evm indexer from an example template
-* `fuel` — Initialization option for creating Fuel indexer
+- `contract-import` — Initialize Evm indexer by importing config from a contract for a given chain
+- `template` — Initialize Evm indexer from an example template
+- `fuel` — Initialization option for creating Fuel indexer
 
 ###### **Options:**
 
-* `-n`, `--name <NAME>` — The name of your project
-* `-l`, `--language <LANGUAGE>` — The language used to write handlers
+- `-n`, `--name <NAME>` — The name of your project
+- `-l`, `--language <LANGUAGE>` — The language used to write handlers (Options: `javascript`, `typescript`, `rescript`)
+- `--api-token <API_TOKEN>` — The hypersync API key to be initialized in your templates .env file
 
-  Possible values: `javascript`, `typescript`, `rescript`
+### `envio init contract-import`
 
-* `--api-token <API_TOKEN>` — The hypersync API key to be initialized in your templates .env file
-
-
-
-## `envio init contract-import`
-
-Initialize Evm indexer by importing config from a contract for a given chain
+Initialize Evm indexer by importing config from a contract for a given chain.
 
 **Usage:** `envio init contract-import [OPTIONS] [COMMAND]`
 
 ###### **Subcommands:**
 
-* `explorer` — Initialize by pulling the contract ABI from a block explorer
-* `local` — Initialize from a local json ABI file
+- `explorer` — Initialize by pulling the contract ABI from a block explorer
+- `local` — Initialize from a local json ABI file
 
 ###### **Options:**
 
-* `-c`, `--contract-address <CONTRACT_ADDRESS>` — Contract address to generate the config from
-* `--single-contract` — If selected, prompt will not ask for additional contracts/addresses/networks
-* `--all-events` — If selected, prompt will not ask to confirm selection of events on a contract
+- `-c`, `--contract-address <CONTRACT_ADDRESS>` — Contract address to generate the config from
+- `--single-contract` — If selected, prompt will not ask for additional contracts/addresses/networks
+- `--all-events` — If selected, prompt will not ask to confirm selection of events on a contract
 
+### `envio init contract-import explorer`
 
-
-## `envio init contract-import explorer`
-
-Initialize by pulling the contract ABI from a block explorer
+Initialize by pulling the contract ABI from a block explorer.
 
 **Usage:** `envio init contract-import explorer [OPTIONS]`
 
 ###### **Options:**
 
-* `-b`, `--blockchain <BLOCKCHAIN>` — Network to import the contract from
+- `-b`, `--blockchain <BLOCKCHAIN>` — Network to import the contract from (Options include `ethereum-mainnet`, `polygon`, `arbitrum-one`, etc.)
 
-  Possible values: `amoy`, `arbitrum-nova`, `arbitrum-one`, `arbitrum-sepolia`, `arbitrum-testnet`, `aurora`, `aurora-testnet`, `avalanche`, `b2-testnet`, `base`, `base-sepolia`, `blast`, `blast-sepolia`, `boba`, `bsc`, `bsc-testnet`, `celo`, `celo-alfajores`, `celo-baklava`, `citrea-testnet`, `crab`, `ethereum-mainnet`, `evmos`, `fantom`, `fantom-testnet`, `fhenix-helium`, `flare`, `fuji`, `galadriel-devnet`, `gnosis`, `gnosis-chiado`, `goerli`, `harmony`, `holesky`, `kroma`, `linea`, `linea-sepolia`, `lisk`, `lukso`, `lukso-testnet`, `manta`, `mantle`, `mantle-testnet`, `metis`, `mode`, `mode-sepolia`, `moonbase-alpha`, `moonbeam`, `moonriver`, `morph`, `morph-testnet`, `neon-evm`, `opbnb`, `optimism`, `optimism-sepolia`, `poa-core`, `poa-sokol`, `polygon`, `polygon-zkevm`, `polygon-zkevm-testnet`, `rsk`, `saakuru`, `scroll`, `scroll-sepolia`, `sepolia`, `shimmer-evm`, `taiko`, `tangle`, `unichain-sepolia`, `zeta`, `zora`, `zora-sepolia`
+### `envio init contract-import local`
 
-
-
-
-## `envio init contract-import local`
-
-Initialize from a local json ABI file
+Initialize from a local json ABI file.
 
 **Usage:** `envio init contract-import local [OPTIONS]`
 
 ###### **Options:**
 
-* `-a`, `--abi-file <ABI_FILE>` — The path to a json abi file
-* `--contract-name <CONTRACT_NAME>` — The name of the contract
-* `-b`, `--blockchain <BLOCKCHAIN>` — Name or ID of the contract network
-* `-r`, `--rpc-url <RPC_URL>` — The rpc url to use if the network id used is unsupported by our hypersync
-* `-s`, `--start-block <START_BLOCK>` — The start block to use on this network
+- `-a`, `--abi-file <ABI_FILE>` — The path to a json abi file
+- `--contract-name <CONTRACT_NAME>` — The name of the contract
+- `-b`, `--blockchain <BLOCKCHAIN>` — Name or ID of the contract network
+- `-r`, `--rpc-url <RPC_URL>` — The rpc url to use if the network id used is unsupported by our hypersync
+- `-s`, `--start-block <START_BLOCK>` — The start block to use on this network
 
+### `envio init template`
 
-
-## `envio init template`
-
-Initialize Evm indexer from an example template
+Initialize Evm indexer from an example template.
 
 **Usage:** `envio init template [OPTIONS]`
 
 ###### **Options:**
 
-* `-t`, `--template <TEMPLATE>` — Name of the template to be used in initialization
+- `-t`, `--template <TEMPLATE>` — Template to use (Options: `greeter`, `erc20`)
 
-  Possible values: `greeter`, `erc20`
+### `envio init fuel`
 
-
-
-
-## `envio init fuel`
-
-Initialization option for creating Fuel indexer
+Initialization option for creating Fuel indexer.
 
 **Usage:** `envio init fuel [COMMAND]`
 
 ###### **Subcommands:**
 
-* `contract-import` — Initialize Fuel indexer by importing config from a contract for a given chain
-* `template` — Initialize Fuel indexer from an example template
+- `contract-import` — Initialize Fuel indexer by importing config from a contract
+- `template` — Initialize Fuel indexer from an example template
 
+### `envio init fuel contract-import`
 
-
-## `envio init fuel contract-import`
-
-Initialize Fuel indexer by importing config from a contract for a given chain
+Initialize Fuel indexer by importing config from a contract for a given chain.
 
 **Usage:** `envio init fuel contract-import [OPTIONS] [COMMAND]`
 
 ###### **Subcommands:**
 
-* `local` — Initialize from a local json ABI file
+- `local` — Initialize from a local json ABI file
 
 ###### **Options:**
 
-* `-c`, `--contract-address <CONTRACT_ADDRESS>` — Contract address to generate the config from
-* `--single-contract` — If selected, prompt will not ask for additional contracts/addresses/networks
-* `--all-events` — If selected, prompt will not ask to confirm selection of events on a contract
+- `-c`, `--contract-address <CONTRACT_ADDRESS>` — Contract address to generate the config from
+- `--single-contract` — If selected, prompt will not ask for additional contracts/addresses/networks
+- `--all-events` — If selected, prompt will not ask to confirm selection of events on a contract
 
+### `envio init fuel contract-import local`
 
-
-## `envio init fuel contract-import local`
-
-Initialize from a local json ABI file
+Initialize from a local json ABI file.
 
 **Usage:** `envio init fuel contract-import local [OPTIONS]`
 
 ###### **Options:**
 
-* `-a`, `--abi-file <ABI_FILE>` — The path to a json abi file
-* `--contract-name <CONTRACT_NAME>` — The name of the contract
+- `-a`, `--abi-file <ABI_FILE>` — The path to a json abi file
+- `--contract-name <CONTRACT_NAME>` — The name of the contract
 
+### `envio init fuel template`
 
-
-## `envio init fuel template`
-
-Initialize Fuel indexer from an example template
+Initialize Fuel indexer from an example template.
 
 **Usage:** `envio init fuel template [OPTIONS]`
 
 ###### **Options:**
 
-* `-t`, `--template <TEMPLATE>` — Name of the template to be used in initialization
+- `-t`, `--template <TEMPLATE>` — Name of the template (Options: `greeter`)
 
-  Possible values: `greeter`
+## Development Commands
 
+These commands help you develop, test, and run your indexers locally.
 
+### `envio dev`
 
-
-## `envio dev`
-
-Development commands for starting, stopping, and restarting the indexer with automatic codegen for any changed files
+Development commands for starting, stopping, and restarting the indexer with automatic codegen for any changed files.
 
 **Usage:** `envio dev`
 
+### `envio stop`
 
-
-## `envio stop`
-
-Stop the local environment - delete the database and stop all processes (including Docker) for the current directory
+Stop the local environment - delete the database and stop all processes (including Docker) for the current directory.
 
 **Usage:** `envio stop`
 
+### `envio codegen`
 
-
-## `envio codegen`
-
-Generate indexing code from user-defined configuration & schema files
+Generate indexing code from user-defined configuration & schema files.
 
 **Usage:** `envio codegen`
 
+### `envio start`
 
-
-## `envio benchmark-summary`
-
-Prints a summary of the benchmark data after running the indexer with envio start --bench flag or setting 'ENVIO_SAVE_BENCHMARK_DATA=true'
-
-**Usage:** `envio benchmark-summary`
-
-
-
-## `envio local`
-
-Prepare local environment for envio testing
-
-**Usage:** `envio local <COMMAND>`
-
-###### **Subcommands:**
-
-* `docker` — Local Envio and ganache environment commands
-* `db-migrate` — Local Envio database commands
-
-
-
-## `envio local docker`
-
-Local Envio and ganache environment commands
-
-**Usage:** `envio local docker <COMMAND>`
-
-###### **Subcommands:**
-
-* `up` — Create docker images required for local environment
-* `down` — Delete existing docker images on local environment
-
-
-
-## `envio local docker up`
-
-Create docker images required for local environment
-
-**Usage:** `envio local docker up`
-
-
-
-## `envio local docker down`
-
-Delete existing docker images on local environment
-
-**Usage:** `envio local docker down`
-
-
-
-## `envio local db-migrate`
-
-Local Envio database commands
-
-**Usage:** `envio local db-migrate <COMMAND>`
-
-###### **Subcommands:**
-
-* `up` — Migrate latest schema to database
-* `down` — Drop database schema
-* `setup` — Setup database by dropping schema and then running migrations
-
-
-
-## `envio local db-migrate up`
-
-Migrate latest schema to database
-
-**Usage:** `envio local db-migrate up`
-
-
-
-## `envio local db-migrate down`
-
-Drop database schema
-
-**Usage:** `envio local db-migrate down`
-
-
-
-## `envio local db-migrate setup`
-
-Setup database by dropping schema and then running migrations
-
-**Usage:** `envio local db-migrate setup`
-
-
-
-## `envio start`
-
-Start the indexer without any automatic codegen
+Start the indexer without any automatic codegen.
 
 **Usage:** `envio start [OPTIONS]`
 
 ###### **Options:**
 
-* `-r`, `--restart` — Clear your database and restart indexing from scratch
-* `-b`, `--bench` — Saves benchmark data to a file during indexing
+- `-r`, `--restart` — Clear your database and restart indexing from scratch
+- `-b`, `--bench` — Saves benchmark data to a file during indexing
 
+## Environment Management Commands
 
+These commands help you manage your local development environment.
 
+### `envio local`
 
+Prepare local environment for envio testing.
+
+**Usage:** `envio local <COMMAND>`
+
+###### **Subcommands:**
+
+- `docker` — Local Envio and ganache environment commands
+- `db-migrate` — Local Envio database commands
+
+### `envio local docker`
+
+Local Envio and ganache environment commands.
+
+**Usage:** `envio local docker <COMMAND>`
+
+###### **Subcommands:**
+
+- `up` — Create docker images required for local environment
+- `down` — Delete existing docker images on local environment
+
+### `envio local docker up`
+
+Create docker images required for local environment.
+
+**Usage:** `envio local docker up`
+
+### `envio local docker down`
+
+Delete existing docker images on local environment.
+
+**Usage:** `envio local docker down`
+
+### `envio local db-migrate`
+
+Local Envio database commands.
+
+**Usage:** `envio local db-migrate <COMMAND>`
+
+###### **Subcommands:**
+
+- `up` — Migrate latest schema to database
+- `down` — Drop database schema
+- `setup` — Setup database by dropping schema and then running migrations
+
+### `envio local db-migrate up`
+
+Migrate latest schema to database.
+
+**Usage:** `envio local db-migrate up`
+
+### `envio local db-migrate down`
+
+Drop database schema.
+
+**Usage:** `envio local db-migrate down`
+
+### `envio local db-migrate setup`
+
+Setup database by dropping schema and then running migrations.
+
+**Usage:** `envio local db-migrate setup`
+
+## Analysis Tools
+
+These commands help you analyze and optimize your indexer's performance.
+
+### `envio benchmark-summary`
+
+Prints a summary of the benchmark data after running the indexer with envio start --bench flag or setting 'ENVIO_SAVE_BENCHMARK_DATA=true'.
+
+**Usage:** `envio benchmark-summary`
+
+## Command Reference Table
+
+| Command                        | Description             | Common Use Case                   |
+| ------------------------------ | ----------------------- | --------------------------------- |
+| `envio init`                   | Create new indexer      | Starting a new project            |
+| `envio dev`                    | Run in development mode | Local development with hot reload |
+| `envio start`                  | Start indexer           | Production or testing runs        |
+| `envio stop`                   | Stop all processes      | Cleaning up environment           |
+| `envio codegen`                | Generate code           | After changing config or schema   |
+| `envio local docker up`        | Start Docker containers | Setting up environment            |
+| `envio local db-migrate setup` | Initialize database     | Before first run                  |
+
+## Advanced Usage Examples
+
+### Creating a New Indexer from an Existing Contract
+
+```bash
+envio init contract-import explorer -b ethereum-mainnet -c 0x1234...
+```
+
+### Starting the Indexer in Development Mode
+
+```bash
+envio dev
+```
+
+### Running Benchmarks
+
+```bash
+envio start --bench
+envio benchmark-summary
+```

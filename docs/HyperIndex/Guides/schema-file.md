@@ -1,17 +1,19 @@
 ---
 id: schema-file
-title: Defining the Schema
-sidebar_label: Defining the Schema
+title: Entities Schema (schema.graphql)
+sidebar_label: Entities Schema (schema.graphql)
 slug: /schema
 ---
 
-# Defining the Schema
+The **`schema.graphql`** file defines the data model for your HyperIndex indexer. Each entity type defined in this schema corresponds directly to a database table, with your event handlers responsible for creating and updating the records. HyperIndex automatically generates a GraphQL API based on these entity types, allowing easy access to the indexed data.
 
-The `schema.graphql` file serves as a representation of your application's data model. It defines entity types that directly correspond to database tables, and the event handlers you create are responsible for creating and updating records within those tables. Additionally, the GraphQL API is automatically generated based on the entity types specified in the `schema.graphql` file, to allow access to the indexed data.
+---
 
-Entity types are identified with the directive within the `schema.graphql` file.
+## Defining Entity Types
 
-Example schema from the Greeter template:
+Entities in your schema are defined as GraphQL object types:
+
+**Example:**
 
 ```graphql
 type User {
@@ -22,17 +24,235 @@ type User {
 }
 ```
 
-Every entity type must include an `id` field that is of type `ID!`, `String!`, `Int!`, `Bytes!`, or `BigInt!`. The `id` field serves as a unique identifier for each instance of the entity.
+### Requirements:
 
-### Enums
+- Every entity **must** have a unique `id` field, using one of these scalar types:
+  - `ID!`, `String!`, `Int!`, `Bytes!`, or `BigInt!`
 
-The schema file also supports the use of enum types. An example of an enum definition and usage within the schema is shown below:
+---
+
+## Scalar Types
+
+Scalar types represent basic data types and map directly to JavaScript, TypeScript, or ReScript types.
+
+| **GraphQL Scalar** | **Description**                              | **JavaScript/TypeScript** | **ReScript**   |
+| ------------------ | -------------------------------------------- | ------------------------- | -------------- |
+| `ID`               | Unique identifier                            | `string`                  | `string`       |
+| `String`           | UTF-8 character sequence                     | `string`                  | `string`       |
+| `Int`              | Signed 32-bit integer                        | `number`                  | `int`          |
+| `Float`            | Signed floating-point number                 | `number`                  | `float`        |
+| `Boolean`          | `true` or `false`                            | `boolean`                 | `bool`         |
+| `Bytes`            | UTF-8 character sequence (hex prefixed `0x`) | `string`                  | `string`       |
+| `BigInt`           | Signed integer (`int256` in Solidity)        | `bigint`                  | `bigint`       |
+| `BigDecimal`       | Arbitrary-size floating-point                | `BigDecimal` (imported)   | `BigDecimal.t` |
+| `Timestamp`        | Timestamp with timezone                      | `Date`                    | `Js.Date.t`    |
+
+Learn more about GraphQL scalars [here](https://graphql.org/learn/).
+
+---
+
+## Working with BigDecimal
+
+The `BigDecimal` scalar type in HyperIndex is based on the [bignumber.js](https://mikemcl.github.io/bignumber.js/) library, which provides arbitrary-precision decimal arithmetic. This is essential for financial calculations and handling numeric values that exceed JavaScript's native number precision.
+
+### Importing BigDecimal
+
+```typescript
+// JavaScript/TypeScript
+import { BigDecimal } from "../generated/src/BigDecimal.js";
+
+// ReScript
+open BigDecimal;
+```
+
+### Creating BigDecimal Instances
+
+```typescript
+// From string (recommended for precision)
+const price = new BigDecimal("123.456789");
+
+// From number (may lose precision for very large values)
+const amount = new BigDecimal(123.45);
+
+// From other BigDecimal
+const copy = new BigDecimal(price);
+
+// Special values
+const zero = BigDecimal.ZERO;
+const one = BigDecimal.ONE;
+```
+
+### Arithmetic Operations
+
+BigDecimal instances are immutable. Operations return new BigDecimal instances:
+
+```typescript
+// Basic arithmetic
+const a = new BigDecimal("123.45");
+const b = new BigDecimal("67.89");
+
+const sum = a.plus(b); // 191.34
+const difference = a.minus(b); // 55.56
+const product = a.times(b); // 8,381.03
+const quotient = a.div(b); // 1.81839...
+
+// Power
+const squared = a.pow(2); // 15,239.9025
+
+// Square root
+const root = a.sqrt(); // 11.11...
+
+// Absolute value
+const abs = new BigDecimal("-123.45").abs(); // 123.45
+```
+
+### Comparison Methods
+
+```typescript
+const x = new BigDecimal("10.5");
+const y = new BigDecimal("10.5");
+const z = new BigDecimal("9.9");
+
+x.eq(y); // true (equal)
+x.gt(z); // true (greater than)
+x.gte(y); // true (greater than or equal)
+x.lt(z); // false (less than)
+x.lte(y); // true (less than or equal)
+
+// Check for special values
+x.isZero(); // false
+x.isPositive(); // true
+x.isNegative(); // false
+x.isFinite(); // true
+```
+
+### Rounding and Formatting
+
+```typescript
+const value = new BigDecimal("123.456789");
+
+// Get with specific decimal places
+value.dp(2); // 123.46 (rounded)
+value.dp(2, 1); // 123.45 (rounded down)
+
+// Format as string
+value.toString(); // "123.456789"
+value.toFixed(2); // "123.46"
+value.toExponential(2); // "1.23e+2"
+value.toPrecision(5); // "123.46"
+```
+
+### Working with Schema-Defined BigDecimal Fields
+
+When you've defined a `BigDecimal` field in your schema:
+
+```graphql
+type TokenPair {
+  id: ID!
+  name: String!
+  price: BigDecimal!
+  volume: BigDecimal!
+}
+```
+
+You can use it in your handlers:
+
+```typescript
+// In your event handler
+context.TokenPair.set({
+  id: event.params.pairId,
+  name: event.params.name,
+  price: new BigDecimal(event.params.price),
+  volume: new BigDecimal("0"), // Start with zero volume
+});
+
+// Updating a field
+const tokenPair = await context.TokenPair.get(pairId);
+if (tokenPair) {
+  const newVolume = tokenPair.volume.plus(new BigDecimal(tradeAmount));
+  context.TokenPair.set({
+    ...tokenPair,
+    volume: newVolume,
+  });
+}
+```
+
+### Example: Financial Calculation
+
+```typescript
+function calculateFee(amount: BigDecimal, feeRate: BigDecimal): BigDecimal {
+  // Calculate fee with proper rounding
+  return amount.times(feeRate).dp(2);
+}
+
+const tradeAmount = new BigDecimal("1250.75");
+const feeRate = new BigDecimal("0.0025"); // 0.25%
+const fee = calculateFee(tradeAmount, feeRate); // 3.13
+```
+
+### Best Practices for BigDecimal
+
+1. **Always use strings for initialization** when precision matters:
+
+   ```typescript
+   // Preferred
+   const value = new BigDecimal("123.456789");
+
+   // May lose precision
+   const value = new BigDecimal(123.456789);
+   ```
+
+2. **Set precision explicitly** when doing division:
+
+   ```typescript
+   // Set to 8 decimal places for crypto prices
+   const price = totalValue.div(tokenAmount).dp(8);
+   ```
+
+3. **Handle rounding appropriately** for financial calculations:
+
+   ```typescript
+   // Round down (floor) for user-favorable calculations
+   const userReceives = amount.dp(2, 1); // ROUND_DOWN
+
+   // Round up (ceil) for protocol-favorable calculations
+   const protocolFee = amount.dp(2, 0); // ROUND_UP
+   ```
+
+4. **Compare with equals method** instead of `==` or `===`:
+
+   ```typescript
+   // Correct
+   if (value.eq(BigDecimal.ZERO)) {
+     /* ... */
+   }
+
+   // Incorrect - compares object references
+   if (value === BigDecimal.ZERO) {
+     /* ... */
+   }
+   ```
+
+5. **Chain operations carefully**, remembering that each operation returns a new instance:
+   ```typescript
+   // Calculate (a + b) * c with proper precision
+   const result = a.plus(b).times(c).dp(8);
+   ```
+
+---
+
+## Enum Types
+
+Enums allow fields to accept only a predefined set of values.
+
+**Example:**
 
 ```graphql
 enum AccountType {
   ADMIN
   USER
 }
+
 type User {
   id: ID!
   balance: Int!
@@ -40,57 +260,37 @@ type User {
 }
 ```
 
-Enum types are generated as string union types for TypeScript and JavaScript and as polymorphic variants for ReScript. Therefore to set an enum field in an entity in TypeScript and JavaScript, the string of the enum value is used:
+Enums translate to string unions (TypeScript/JavaScript) or polymorphic variants (ReScript):
+
+**TypeScript Example:**
 
 ```typescript
 import { AccountType } from "../generated/src/Enums.gen";
 
-let accountType: AccountType = "USER";
-
 let user = {
   id: event.params.id,
   balance: event.params.balance,
-  accountType,
+  accountType: "USER", // enum as string
 };
 ```
 
-For ReScript, we use the polymorphic variant
+**ReScript Example:**
 
 ```rescript
-let accountType: Enums.accountType = #USER;
-
 let user: Types.userEntity = {
   id: event.params.id,
   balance: event.params.balance,
-  accountType
+  accountType: #USER, // polymorphic variant
 };
 ```
 
-### Scalar Types
+---
 
-In GraphQL, scalars represent fundamental data types such as strings and numbers. Each GraphQL scalar is mapped to a corresponding JavaScript, TypeScript, or ReScript type, which is used in event handler code, depending on the language chosen. The following table provides an overview of the available scalar types, along with their associated JavaScript, TypeScript, and ReScript types:
+## Relationships: One-to-Many (`@derivedFrom`)
 
-| **Name**   | **Description**                                  | **JavaScript/TypeScript Type**         | **ReScript Type** |
-| ---------- | ------------------------------------------------ | -------------------------------------- | ----------------- |
-| ID         | A unique identifier field                        | string                                 | string            |
-| String     | A UTF-8 character sequence                       | string                                 | string            |
-| Int        | A signed 32-bit integer                          | number                                 | int               |
-| Float      | A signed floating-point value                    | number                                 | float             |
-| Boolean    | Represents a true or false value                 | boolean                                | bool              |
-| Bytes      | A UTF-8 character sequence with a 0x prefix      | string                                 | string            |
-| BigInt     | A signed integer (equivalent to solidity int256) | bigint                                 | bigint            |
-| BigDecimal | An arbitrary size floating point number          | BigDecimal (imported from "generated") | BigDecimal.t      |
-| Timestamp  | Timestamp with time zone                         | Date                                   | Js.Date.t         |
+Define relationships between entities using the `@derivedFrom` directive, known as **reverse lookups**.
 
-You can find out more on GraphQL [here](https://graphql.org/learn/).
-
-Once you have set up your config and schema file you can run `pnpm codegen` to generate the functions that you will use in your handlers.
-
-```bash
-pnpm codegen
-```
-
-## Defining One-to-Many Relationships
+**Example:**
 
 ```graphql
 type NftCollection {
@@ -102,9 +302,7 @@ type NftCollection {
   currentSupply: Int!
   tokens: [Token!]! @derivedFrom(field: "collection")
 }
-```
 
-```graphql
 type Token {
   id: ID!
   tokenId: BigInt!
@@ -113,19 +311,14 @@ type Token {
 }
 ```
 
-Assume that each `NftCollection` can have multiple `Token` objects. This is represented by the `[Token!]` in `NftCollection` definition, where the field's type is set to another entity type.
+- The `tokens` field in `NftCollection` is a virtual field, populated automatically when querying the API.
+- Set relationships by referencing the related entity's `id`.
 
-When you create a `Token` entity, the value of the `collection` field is set to the `id` of its associated `NftCollection` entity.
+---
 
-Note that in the `NftCollection` schema, the `tokens` field can't be directly accessed or modified. Fields marked with the `@derivedFrom` directive function are virtual fields and are only accessible when executing GraphQL API queries. This is commonly known as **reverse lookup**, as the relationship is established on the "many" end of the association.
+## Field Indexing (`@index`)
 
-## Adding Indexes to Fields
-
-Add an index to a field to [improve read performance](database-performance-optimization) and enable field queries in your loaders. <!--TODO add links to field queries doc-->
-
-Indices will automatically be added to all entity `id` fields and all fields referenced using `@derivedFrom` directive.
-
-### Example
+Add an index to a field for optimized queries and loader performance:
 
 ```graphql
 type Token {
@@ -136,99 +329,73 @@ type Token {
 }
 ```
 
-## Advanced: @config Directive for Decimal Precision of `BigInt` and `BigDecimal` Fields
+- All `id` fields and fields referenced via `@derivedFrom` are indexed automatically.
 
-When working with large integers or high-precision decimal numbers in your application, you might need to customize the precision and scale of your `BigInt` and `BigDecimal` fields. This ensures that your database stores these numbers accurately according to your specific requirements. If you know your numbers will not be too big, you can also optimize the database by not over-allocating on the precision.
-### Using the `@config` Directive
+---
 
-The `@config` directive allows you to specify custom configurations for fields. For `BigInt` and `BigDecimal` types, you can define precision and scale parameters.
+## Advanced: Precision and Scale (`@config` Directive)
 
-**Syntax for `BigInt`:**
+Customize the precision and scale for `BigInt` and `BigDecimal` fields using `@config`.
+
+**Syntax:**
+
+- `BigInt` (precision only):
 
 ```graphql
-fieldName: BigInt @config(precision: <number_of_digits>)
+amount: BigInt @config(precision: 76)
 ```
 
-**Syntax for `BigDecimal`:**
+- `BigDecimal` (precision and scale):
 
 ```graphql
-fieldName: BigDecimal @config(precision: <total_digits>, scale: <decimal_digits>)
+price: BigDecimal @config(precision: 10, scale: 2)
 ```
 
 **Example:**
 
 ```graphql
-type Entity {
-    id: ID!
-    amount: BigInt @config(precision: 76)
-    price: BigDecimal @config(precision: 10, scale: 2)
+type Payment {
+  id: ID!
+  amount: BigInt @config(precision: 76)
+  price: BigDecimal @config(precision: 10, scale: 2)
 }
 ```
 
-In this example:
-
-- The `amount` field is a `BigInt` with up to 76 digits.
-- The `price` field is a `BigDecimal` with a total of 10 digits and 2 decimal places.
+This controls PostgreSQL storage allocation and numerical accuracy.
 
 <details>
-  <summary>Click to expand a complete example of `@config` directive usage</summary>
-### Complete Example Usage
+  <summary>Detailed Example with Arrays</summary>
 
 ```graphql
-type Entity {
-    id: ID!
-    exampleBigInt: BigInt @config(precision: 76)
-    exampleBigIntRequired: BigInt! @config(precision: 77)
-    exampleBigIntArray: [BigInt!] @config(precision: 78)
-    exampleBigIntArrayRequired: [BigInt!]! @config(precision: 79)
-    exampleBigDecimal: BigDecimal @config(precision: 80, scale: 5)
-    exampleBigDecimalRequired: BigDecimal! @config(precision: 81, scale: 5)
-    exampleBigDecimalArray: [BigDecimal!] @config(precision: 82, scale: 5)
-    exampleBigDecimalArrayRequired: [BigDecimal!]! @config(precision: 83, scale: 5)
+type AdvancedEntity {
+  exampleBigInt: BigInt @config(precision: 76)
+  exampleBigIntRequired: BigInt! @config(precision: 77)
+  exampleBigIntArray: [BigInt!] @config(precision: 78)
+  exampleBigIntArrayRequired: [BigInt!]! @config(precision: 79)
+  exampleBigDecimal: BigDecimal @config(precision: 10, scale: 5)
+  exampleBigDecimalRequired: BigDecimal! @config(precision: 12, scale: 4)
 }
 ```
-</details>
 
-### Postgres Precision and Scale Details
-
-<details>
-  <summary>Click to expand Postgres precision and scale details</summary>
-
-In PostgreSQL, the `NUMERIC` data type is used to store exact numeric values with user-defined precision and scale. Understanding how these work is crucial when customizing your numeric fields.
-
-- **Precision:** Total number of significant digits in the number (both to the left and right of the decimal point).
-- **Scale:** Number of digits after the decimal point.
-
-**Examples:**
-
-- A number `12345.678` has a precision of 8 and a scale of 3.
-- With a `NUMERIC(10, 2)` data type, you can store numbers up to `99999999.99`.
-
-**Key Points:**
-
-- **Precision and Scale Limits:**
-  - The maximum number of digits to the left of the decimal point is `precision - scale`.
-  - The total number of digits cannot exceed the specified precision.
-
-- **Rounding and Truncation:**
-  - If you insert a number with more decimal places than the specified scale, PostgreSQL will round it.
-  - If the integer part exceeds the allowed digits (precision - scale), PostgreSQL will raise an error.
-
-- **Storage Size:**
-  - The storage size of a `NUMERIC` field depends on its declared precision.
-
-By customizing precision and scale in your schema, you directly influence how PostgreSQL stores and validates your numeric data, ensuring data integrity and optimal storage usage.
-
-**Additional Resources:**
-
-- [PostgreSQL Numeric Types Documentation](https://www.postgresql.org/docs/current/datatype-numeric.html)
-  
 </details>
 
 ---
 
-## Other Design Tips
+## Generating Types
 
-- Use lowercase for the first letter of field names (i.e. `latestGreeting` and `numberOfGreetings`) inside entities.
+Once you've defined your schema, run this command to generate these entity types that can be accessed in your event handlers:
+
+```bash
+pnpm envio codegen
+```
 
 ---
+
+## Best Practices
+
+- Use camelCase for field names (`latestGreeting`, `numberOfGreetings`).
+- Keep entity and field names clear, descriptive, and intuitive.
+
+---
+
+You're now ready to define powerful schemas and efficiently query your indexed data with HyperIndex!

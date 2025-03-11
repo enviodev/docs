@@ -1,0 +1,13 @@
+/* Custom styles to adjust sidebar item text size */
+.menu__link {
+  font-size: 0.85rem !important;
+}
+
+.menu__list-item-collapsible {
+  font-size: 0.85rem !important;
+}
+
+/* Make category labels (section headers) still stand out */
+.menu__list-item-collapsible .menu__link {
+  font-weight: 600 !important;
+}

@@ -5,149 +5,268 @@ sidebar_label: Fuel
 slug: /fuel
 ---
 
-Until recently, Envio was only available on EVM-compatible blockchains. Envio has extended its support for [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) and [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) to the Fuel Network (mainnet & testnet). ⛽⚡
+# Indexing on Fuel Network
 
-## HyperIndex
+## Introduction
 
-[HyperIndex](../overview.md) is a modern indexing framework for applications to easily query real-time and historical data on Fuel. 
+Envio has expanded its indexing capabilities beyond EVM-compatible blockchains to now fully support the [Fuel Network](https://fuel.network/) (both mainnet and testnet). This documentation covers how to use Envio's products with Fuel's unique architecture and features. ⛽⚡
 
-Learn how to index your data on Fuel in < 5mins using Envio in a step-by-step [tutorial](../Tutorials/tutorial-indexing-fuel.md).
+Fuel offers several advantages as a modular execution layer including:
 
-Alternatively, gain inspiration from reference indexers built by other developers and projects on Fuel:
+- Parallel transaction execution
+- State-minimized design
+- UTXO-based architecture
+- Advanced FuelVM capabilities
 
-- [Spark](https://sprk.fi/) Orderbook DEX [`github`](https://github.com/compolabs/spark-envio-indexer)
-- [Mira](https://mira.ly/) AMM DEX [`github`](https://github.com/mira-amm/mira-indexer)
-- [Thunder](https://thundernft.market/) NFT Marketplace [`github`](https://github.com/ThunderFuel/thunder-indexer)
-- [Swaylend](https://swaylend.com/) Lending Protocol [`github`](https://github.com/Swaylend/swaylend-monorepo/tree/develop/apps/indexer)
-- Greeter Tutorial [`github`](https://github.com/enviodev/fuel-greeter)
+## HyperIndex for Fuel
 
-### State of the art
+[HyperIndex](../overview.md) enables developers to easily index and query real-time and historical data on Fuel Network with the same powerful features available for EVM chains.
 
-`HyperIndex` on Fuel supports all relevant features the EVM indexer does, including [No-code Quickstart](/docs/HyperIndex/contract-import), [Dynamic Contracts / Factories](../Advanced/dynamic-contracts.md), [Testing Framework](/docs/HyperIndex/testing), [Hosted Service](../Hosted_Service/hosted-service.md), [Wildcard indexing](../Advanced/wildcard-indexing.mdx) and more.
+### Getting Started with Fuel Indexing
 
-:::info
-Join our [Discord](https://discord.com/invite/gt7yEUZKeB) channel to make sure you catch all new releases.
-:::
+You can start indexing Fuel contracts in two ways:
 
-### Supported Event Types
+1. **Quick Start (5-minute tutorial)**: Follow our step-by-step [tutorial](../Tutorials/tutorial-indexing-fuel.md) to create your first Fuel indexer quickly.
 
-Envio supports many different event types for indexing on Fuel Network.
+2. **No-Code Contract Import**: Use our [Contract Import](../contract-import.md) tool to automatically generate configuration and schema files for your Fuel contracts.
 
-The default and most flexible one is indexing `LOG_DATA` receipts, which are created by the `log` calls in a [Sway](https://docs.fuel.network/docs/sway/) contract.
+### Example Fuel Indexers
 
-This is similar to `emit` in Solidity contracts but much more flexible because you can pass any data to the Sway `log` function, not only events declared beforehand.
+Looking for inspiration? Check out these indexers built by projects in the Fuel ecosystem:
 
-To add an event for a `LOG_DATA` receipt in your contract config, you need to add the name used for the generated code and `logId`, which you can find in the ABI file:
+| Project                               | Type             | GitHub Repository                                                                 |
+| ------------------------------------- | ---------------- | --------------------------------------------------------------------------------- |
+| [Spark](https://sprk.fi/)             | Orderbook DEX    | [github](https://github.com/compolabs/spark-envio-indexer)                        |
+| [Mira](https://mira.ly/)              | AMM DEX          | [github](https://github.com/mira-amm/mira-indexer)                                |
+| [Thunder](https://thundernft.market/) | NFT Marketplace  | [github](https://github.com/ThunderFuel/thunder-indexer)                          |
+| [Swaylend](https://swaylend.com/)     | Lending Protocol | [github](https://github.com/Swaylend/swaylend-monorepo/tree/develop/apps/indexer) |
+| Greeter                               | Tutorial         | [github](https://github.com/enviodev/fuel-greeter)                                |
 
+### Features Supported on Fuel
+
+HyperIndex for Fuel supports all the core features available in the EVM version:
+
+- ✅ [No-code Contract Import](../contract-import.md)
+- ✅ [Dynamic Contracts / Factory Tracking](../Advanced/dynamic-contracts.md)
+- ✅ [Testing Framework](/docs/HyperIndex/testing)
+- ✅ [Hosted Service](../Hosted_Service/hosted-service.md)
+- ✅ [Wildcard Indexing](../Advanced/wildcard-indexing.mdx)
+
+## Fuel-Specific Event Types
+
+### Understanding Fuel's Event Model
+
+Fuel's event model differs significantly from EVM. Instead of predefined events, Fuel uses a more flexible approach with various receipt types that can be indexed.
+
+### LOG_DATA Receipts (Primary Event Type)
+
+The most common event type in Fuel is the `LOG_DATA` receipt, created by the `log` instruction in [Sway](https://docs.fuel.network/docs/sway/) contracts.
+
+Unlike Solidity's `emit` which requires predefined event structures, Sway's `log` function allows passing any data, providing greater flexibility.
+
+#### Configuration Example:
+
+```yaml
+ecosystem: fuel
+network:
+  name: "fuel_testnet"
+
+contracts:
+  - name: SwayContract
+    abi_file_path: "./abis/SwayContract.json"
+    start_block: 1
+    address: "0x123..."
+    events:
+      - name: NewGreeting
+        logId: "8500535089865083573"
 ```
+
+The `logId` is a unique identifier for the logged struct, which you can find in your contract's ABI file.
+
+#### Auto-detection of logId:
+
+If your event name matches the logged struct name in Sway, you can omit the `logId`:
+
+```yaml
 events:
-  - name: NewGreeting
-    logId: "8500535089865083573"
+  - name: NewGreeting # Will automatically detect logId if it matches the struct name
 ```
 
-If the name matches the logged struct name in Sway, you can omit the `logId` field. We will derive it automatically from the config file.
+> **Tip**: Instead of manually configuring events, use the [Contract Import](../contract-import.md) tool which automatically detects events and generates the proper configuration.
 
-:::tip
-📖 Also, to avoid manually extracting logIds from ABI, you can use the [contract import](/docs/HyperIndex/contract-import), which will automatically generate the config file with events you want to index.
-:::
+### Additional Fuel Event Types
 
-Compared to EVM, Fuel allows indexing `Mint`, `Burn`, `Transfer` and `Call`:
+Fuel allows indexing several additional receipt types not available in EVM:
 
-```
+| Event Type | Description                                      | Example Configuration |
+| ---------- | ------------------------------------------------ | --------------------- |
+| `Mint`     | Triggered when a contract mints tokens           | `- name: Mint`        |
+| `Burn`     | Triggered when a contract burns tokens           | `- name: Burn`        |
+| `Transfer` | Combines `TRANSFER` and `TRANSFER_OUT` receipts  | `- name: Transfer`    |
+| `Call`     | Triggered when a contract calls another contract | `- name: Call`        |
+
+#### Using Custom Names:
+
+You can rename these events while maintaining their type:
+
+```yaml
 events:
-  - name: Mint
+  - name: MintMyNft # Custom name
+    type: mint # Actual event type
 ```
 
-In case you want to change the name to something else, you can use the `type` field:
+> **Note**: All event types can be used with [Wildcard Indexing](../Advanced/wildcard-indexing.mdx).
 
-```
-events:
-  - name: MintMyNft
-    type: mint
-```
+### Transfer Event Specifics
 
-:::note
-📖 All event types are supported by [Wildcard Indexing](/docs/HyperIndex/wildcard-indexing).
-:::
+The `Transfer` event type combines two Fuel receipt types:
 
-#### Transfer Event Type
+- `TRANSFER`: Emitted when a contract transfers tokens to another contract
+- `TRANSFER_OUT`: Emitted when a contract transfers tokens to a wallet
 
-The `Transfer` event type combines the `TRANSFER` and `TRANSFER_OUT` receipts into a single event. The first one is emitted when a contract transfers tokens to another contract, and the second one when a contract transfers tokens to a wallet. For better Developer Experience we group them into a single type.
+> **Important**: Transfers between wallets are not included in the `Transfer` event type.
 
-:::note
-📖 Transfers between wallets are not included in the `Transfer` event type.
-:::
+## Event Object Structure in Handlers
 
-### Migration Guide from the `envio@2.x.x-fuel` version
+When handling Fuel events, the event object structure differs from EVM:
 
-With the V2.3 release, we merged the Fuel indexer into the main `envio` repo. This means that you can now use the `envio` version to run both Fuel and EVM indexers.
+```typescript
+// Example Fuel event handler
+SwayContract.NewGreeting.handler(async ({ event, context }) => {
+  // Access event parameters
+  const message = event.params.message;
 
-However, if you are using the `envio` version suffixed with `-fuel`, you will need to migrate to the new version. It shouldn't take more than a few minutes to do so.
+  // Access block information
+  const blockHeight = event.block.height;
+  const blockTime = event.block.time;
+  const blockId = event.block.id;
 
-To migrate, start with updating the package version:
+  // Access transaction information
+  const txId = event.transaction.id;
 
-```bash
-pnpm i envio@latest
-```
+  // Access source contract address
+  const sourceContract = event.srcAddress;
 
-> If you installed `envio` globally, you will also need to run `pnpm i -g envio@latest`
+  // Access log position
+  const logIndex = event.logIndex;
 
-Add `ecosystem: fuel` to your `config.yaml` file.
-
-Then in your handlers rename `data` to `params`:
-
-```diff
-SwayFarmContract.NewPlayer.handler(async ({ event, context }) => {
-  context.Player.set({
--   id: event.data.address.payload.bits,
--   createdAt: event.time,
-+   id: event.params.address.payload.bits,
-+   createdAt: event.block.time,
-    ...
+  // Store data
+  context.Greeting.set({
+    id: event.transaction.id,
+    message: message,
+    timestamp: blockTime,
   });
 });
 ```
 
-Also, some other event fields were moved:
+## Migration Guide from v2.x.x-fuel
 
-- `time` -> `block.time`
-- `blockHeight` -> `block.height`
-- X => `block.id`
-- `transactionId` -> `transaction.id`
-- `contractId` -> `srcAddress`
-- `receiptIndex` -> `logIndex`
-- `receiptType` -> removed
+Starting with V2.3, the Fuel indexer has been integrated into the main `envio` package. If you were using the Fuel-specific version (`envio@2.x.x-fuel`), follow these steps to migrate:
 
-These are all Fuel-related changes, but if you use `loaders` follow the [v1 to v2 migration guide](/docs/HyperIndex/migration-guide-v1-v2) to update to the V2 API.
+### 1. Update Package Version
 
-If you need help, create an issue in our [GitHub repository](https://github.com/enviodev/hyperindex). We'll be happy to help!
+```bash
+# Update local dependency
+pnpm i envio@latest
+
+# If installed globally
+pnpm i -g envio@latest
+```
+
+### 2. Update Configuration
+
+Add the `ecosystem: fuel` field to your `config.yaml`:
+
+```yaml
+ecosystem: fuel # Required for Fuel indexers
+network:
+  name: "fuel_testnet"
+  # other network config...
+```
+
+### 3. Update Event Handler Code
+
+Several field names have changed in the event object:
+
+| Old Field             | New Field              |
+| --------------------- | ---------------------- |
+| `event.data.x`        | `event.params.x`       |
+| `event.time`          | `event.block.time`     |
+| `event.blockHeight`   | `event.block.height`   |
+| (none)                | `event.block.id`       |
+| `event.transactionId` | `event.transaction.id` |
+| `event.contractId`    | `event.srcAddress`     |
+| `event.receiptIndex`  | `event.logIndex`       |
+| `event.receiptType`   | (removed)              |
+
+Example migration:
+
+```diff
+SwayContract.NewGreeting.handler(async ({ event, context }) => {
+  context.Greeting.set({
+-   id: event.data.id,
+-   message: event.data.message,
+-   createdAt: event.time,
+-   blockHeight: event.blockHeight,
++   id: event.params.id,
++   message: event.params.message,
++   createdAt: event.block.time,
++   blockHeight: event.block.height,
+    transaction: event.transaction.id,
+  });
+});
+```
+
+> **Note**: If you use loaders, also follow the [v1 to v2 migration guide](../migration-guide-v1-v2.md) for loader-specific changes.
 
 ## HyperFuel
 
-HyperFuel is [HyperSync](/docs/HyperSync/overview) adapted for the [Fuel Network](https://fuel.network/) and is exposed as a low-level API for developers and data analysts to create niche, flexible, high-speed queries for all on-chain data.
+[HyperFuel](/docs/HyperSync/hyperfuel) is Envio's low-level data API for the Fuel Network (equivalent to [HyperSync](/docs/HyperSync/overview) for EVM chains).
 
-Users can interact with the HyperFuel in Rust, Python client, Node Js, or JSON API to extract data into parquet files, arrow format, or as typed data.
+HyperFuel provides:
 
-Using HyperFuel, application developers can easily sync and search large datasets in a few minutes.
+- High-performance data access
+- Flexible query capabilities
+- Multiple data formats (Parquet, Arrow, typed data)
+- Complete historical data
 
-You can integrate with HyperFuel using any of our clients:
+### Available Clients
 
-- Rust: https://github.com/enviodev/hyperfuel-client-rust
-- Python: https://github.com/enviodev/hyperfuel-client-python
-- Nodejs: https://github.com/enviodev/hyperfuel-client-node
-- JSON API: https://github.com/enviodev/hyperfuel-json-api
+Access HyperFuel data using any of these clients:
 
-Read [HyperFuel documentation](/docs/HyperSync/hyperfuel) to learn more.
+- **Rust**: [hyperfuel-client-rust](https://github.com/enviodev/hyperfuel-client-rust)
+- **Python**: [hyperfuel-client-python](https://github.com/enviodev/hyperfuel-client-python)
+- **Node.js**: [hyperfuel-client-node](https://github.com/enviodev/hyperfuel-client-node)
+- **JSON API**: [hyperfuel-json-api](https://github.com/enviodev/hyperfuel-json-api)
 
-:::info
-HyperFuel supports Fuel mainnet and testnet: <br></br>
-Mainnet: https://fuel.hypersync.xyz <br></br>
-Testnet: https://fuel-testnet.hypersync.xyz
-:::
+### HyperFuel Endpoints
 
+- **Mainnet**: https://fuel.hypersync.xyz
+- **Testnet**: https://fuel-testnet.hypersync.xyz
 
-## About Fuel
+For detailed information, see the [HyperFuel documentation](/docs/HyperSync/hyperfuel).
 
-[Fuel](https://fuel.network/) is an operating system purpose-built for Ethereum rollups. Fuel's unique architecture allows rollups to solve for PSI (parallelization, state minimized execution, interoperability). Powered by the FuelVM, Fuel aims to expand Ethereum's capability set without compromising security or decentralization.
+## About Fuel Network
 
-[Website](https://fuel.network/) | [X](https://twitter.com/fuel_network?lang=en) | [Discord](https://discord.com/invite/xfpK4Pe)
+[Fuel](https://fuel.network/) is an operating system purpose-built for Ethereum rollups with unique architecture focused on:
+
+- **P**arallelization: Execute transactions concurrently for higher throughput
+- **S**tate-minimized execution: Efficient storage and computation model
+- **I**nteroperability: Seamless integration with other blockchain systems
+
+Powered by the FuelVM, Fuel expands Ethereum's capabilities without compromising security or decentralization.
+
+### Resources
+
+- [Website](https://fuel.network/)
+- [Twitter](https://twitter.com/fuel_network)
+- [Discord](https://discord.com/invite/xfpK4Pe)
+- [Documentation](https://docs.fuel.network/)
+
+## Need Help?
+
+If you encounter any issues with Fuel indexing, please:
+
+1. Check our [Troubleshooting](../Troubleshoot/common-issues.md) guides
+2. Join our [Discord](https://discord.com/invite/gt7yEUZKeB) for community support
+3. Create an issue in our [GitHub repository](https://github.com/enviodev/hyperindex)

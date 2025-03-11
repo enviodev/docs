@@ -19,7 +19,7 @@ slug: /moonbase-alpha
 
 ### Tier
 
-STONE 🏗️
+STONE 🪨
 
 ### Overview
 

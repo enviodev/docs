@@ -5,140 +5,203 @@ sidebar_label: Error Codes
 slug: /error-codes
 ---
 
-This section provides an exhaustive list of potential errors you could face while using Envio, along with explanations for each error.
+# Envio Error Codes
 
-The below table indicates the different error categories and sub-categories:
+This guide provides a comprehensive list of error codes you may encounter when using Envio HyperIndex. Each error includes an explanation and recommended actions to resolve the issue.
 
-| Hundreds Digit of Error Code | Sub-category                     | Category                      |
-| ---------------------------- | -------------------------------- | ----------------------------- |
-| 1\*\*                        | Configuration File               | Initialization related errors |
-| 2\*\*                        | Schema File                      | Initialization related errors |
-| 3\*\*                        | ABI File                         | Initialization related errors |
-| 4\*\*                        | Initialization Arguments         | Initialization related errors |
-| 5\*\*                        | Event Handling                   | Event Related Errors          |
-| 6\*\*                        | Event Syncing                    | Event Related Errors          |
-| 7\*\*                        | Database Functions               | Database Related Errors       |
-| 8\*\*                        | Database Migrations and Tracking | Database Related Errors       |
-| 9\*\*                        | Contract Interface Manager       | Contract Related Errors       |
-| 10\*\*                       | Chain Manager                    | Network Related Errors        |
-| 11\*\*                       | Lazy Loader                      | General Errors                |
+## How to Use This Guide
 
-<sub>"Sub-category" indicates the specific file or function in which the error is being encountered.</sub>
-<br></br>
-<sub>"Category" indicates the broader part of the indexing process in which the error is being encountered.</sub>
+When encountering an error in Envio, you'll receive an error code (like `EE101`). Use this guide to:
 
-# Initialization related errors
+1. Locate the error code by category or by searching for the specific code
+2. Read the explanation to understand what caused the error
+3. Follow the recommended steps to resolve the issue
 
-### `EE100`: Invalid Addresses
+If you can't resolve an error after following the suggestions, please reach out for support on our [Discord community](https://discord.gg/DhfFhzuJQh).
 
-Invalid smart contract addresses are present in the configuration file.
+## Error Categories
 
-Use smart contract addresses in the valid format belonging to the correct chain.
+Envio error codes are categorized by their first digits:
 
-### `EE101`: Unique Contract Names
+| Error Code Range    | Category                 | Description                                                      |
+| ------------------- | ------------------------ | ---------------------------------------------------------------- |
+| `EE100` - `EE199`   | Configuration File       | Issues with the configuration file format, parameters, or values |
+| `EE200` - `EE299`   | Schema File              | Problems with GraphQL schema definition                          |
+| `EE300` - `EE399`   | ABI File                 | Issues with smart contract ABI files or event definitions        |
+| `EE400` - `EE499`   | Initialization Arguments | Problems with initialization parameters or directories           |
+| `EE500` - `EE599`   | Event Handling           | Issues with event handler files or functions                     |
+| `EE600` - `EE699`   | Event Syncing            | Problems with event synchronization process                      |
+| `EE700` - `EE799`   | Database Functions       | Issues with database operations                                  |
+| `EE800` - `EE899`   | Database Migrations      | Problems with database schema migrations or tracking             |
+| `EE900` - `EE999`   | Contract Interface       | Issues related to smart contract interfaces                      |
+| `EE1000` - `EE1099` | Chain Manager            | Problems with blockchain network connections                     |
+| `EE1100` - `EE1199` | Lazy Loader              | General errors related to the loading process                    |
 
-The configuration file contains non-unique contract names.
+## Initialization-Related Errors
 
-Use unique contract names in the configuration file.
+### Configuration File Errors (EE100-EE111)
 
-### `EE102`: Reserved Words in the Configuration file
+#### `EE100`: Invalid Addresses
 
-Using reserved programming words in the configuration file.
+**Issue**: The configuration file contains invalid smart contract addresses.
 
-Envio prohibits use of reserved words from JavaScript, TypeScript, and ReScript in the configuration file as it may conflict with the auto-generated code.
+**Solution**: Verify all contract addresses in your configuration file. Ensure they:
 
-Please refer to [<ins>reserved words</ins>](./reserved-words) page for the full list of reserved words.
+- Match the correct format for the blockchain (0x-prefixed for EVM chains)
+- Are valid addresses for the specified network
+- Have the correct length (42 characters including '0x' for EVM)
 
-Avoid using reserved words in the configuration file.
+#### `EE101`: Non-Unique Contract Names
 
-### `EE103`: Parse Event Error
+**Issue**: The configuration file contains duplicate contract names.
 
-Unable to parse event signature due to an error.
+**Solution**: Each contract in your configuration must have a unique name. Review your config.yaml and ensure all contract names are unique.
 
-Refer to the [<ins>configuration</ins>](configuration-file) page on how to correctly define a human-readable ABI.
+#### `EE102`: Reserved Words in Configuration File
 
-### `EE104`: Resolve Config Path
+**Issue**: Your configuration uses reserved programming words that conflict with Envio's code generation.
 
-Failed to resolve the config path.
+**Solution**:
 
-Ensure that the configuration file exists in the correct directory.
+- Review the [reserved words list](./reserved-words) for JavaScript, TypeScript, and ReScript
+- Rename any contract or event names that use reserved words
+- Choose descriptive names that don't conflict with programming languages
 
-### `EE105`: Deserialize Config
+#### `EE103`: Parse Event Error
 
-Failed to deserialize the config file.
+**Issue**: Envio couldn't parse event signatures in your configuration.
 
-Refer to the [<ins>configuration</ins>](configuration-file) page for more information.
+**Solution**:
 
-### `EE106`: Undefined Network Config
+- Check your event signatures in the configuration file
+- Ensure they match the format in your ABI
+- Refer to the [configuration guide](configuration-file) for correct event definition syntax
 
-There is no `hypersync_config` or `rpc_config` defined for the network ID defined in the configuration file.
+#### `EE104`: Resolve Config Path
 
-Refer to the [<ins>HyperSync</ins>](./hypersync) or [<ins>RPC Sync</ins>](./rpc-sync) page for more information.
+**Issue**: Envio couldn't find your configuration file at the specified path.
 
-### `EE108`: Valid Postgres Database
+**Solution**:
 
-Provide a valid Postgres database name.
+- Verify that your configuration file exists in the correct directory
+- Ensure the file is named correctly (usually `config.yaml`)
+- Check for file permission issues
 
-Requirements for a valid name:
+#### `EE105`: Deserialize Config
 
-- It must start with a letter or underscore.
-- It can contain letters, numbers, and underscores (no spaces).
-- It must have a maximum length of 63 characters.
+**Issue**: Your configuration file contains invalid YAML syntax.
 
-### `EE109`: Incorrect RPC URL
+**Solution**:
 
-The config file contains RPC URLs in an incorrect format.
+- Check your YAML file for syntax errors
+- Ensure proper indentation and structure
+- Validate your YAML using a linter or validator
 
-The RPC URLs need to start with either `http://` or `https://`.
+#### `EE106`: Undefined Network Config
 
-### `EE110`: The end block is greater than the start block for a given network
+**Issue**: No `hypersync_config` or `rpc_config` defined for the network specified in your configuration.
 
-If an endBlock is specified, the endBlock must be greater than the startBlock in your `config.yaml` file.
+**Solution**:
 
-### `EE111`: Invalid characters for the contract/event names in the config file
+- Add either a HyperSync or RPC configuration for your network
+- See the [HyperSync](./hypersync) or [RPC Sync](./rpc-sync) documentation
+- Example:
+  ```yaml
+  network:
+    network_id: 1
+    rpc_config:
+      rpc_url: "https://eth-mainnet.g.alchemy.com/v2/YOUR_API_KEY"
+  ```
 
-The names are used for the auto-generated code and must be valid identifiers, containing only alphanumeric characters and underscores.
+#### `EE108`: Invalid Postgres Database Name
 
-### `EE200`: Read Schema Error
+**Issue**: The Postgres database name provided doesn't meet requirements.
 
-Failed to read schema file.
+**Solution**: Provide a database name that:
 
-Ensure that the schema file is placed in the correct directory.
+- Begins with a letter or underscore
+- Contains only letters, numbers, and underscores (no spaces)
+- Has a maximum length of 63 characters
 
-### `EE201`: Parse Schema Error
+#### `EE109`: Incorrect RPC URL Format
 
-Failed to parse the schema.
+**Issue**: The RPC URL in your configuration has an invalid format.
 
-Ensure that there are no syntax errors in `schema.graphql` file in the directory.
+**Solution**:
 
-Refer to the [<ins>schema</ins>](./schema) page for more information.
+- Ensure all RPC URLs start with either `http://` or `https://`
+- Verify the URL is correctly formatted and accessible
+- Example: `https://eth-mainnet.g.alchemy.com/v2/YOUR_API_KEY`
 
-### `EE202`: Multiple `@derivedFrom`
+#### `EE110`: End Block Not Greater Than Start Block
 
-Cannot use more than one `@derivedFrom` directive on an entity.
+**Issue**: Your configuration specifies an end block that is less than or equal to the start block.
 
-Refer to the [<ins>schema</ins>](./schema) page for more information.
+**Solution**: If providing an end block, ensure it's greater than the start block:
 
-### `EE203`: Missing Field Argument for `@derivedFrom`
+```yaml
+start_block: 10000000
+end_block: 20000000 # Must be greater than start_block
+```
 
-No `field` argument was supplied to `@derivedFrom`.
+#### `EE111`: Invalid Characters in Contract or Event Names
 
-Provide a `field` value for the `@derivedFrom` directive used.
+**Issue**: Contract or event names contain invalid characters.
 
-Refer to the [<ins>schema</ins>](./schema) page for more information.
+**Solution**: Use only alphanumeric characters and underscores in contract and event names.
 
-### `EE204`: Invalid `@derivedFrom` Argument
+### Schema File Errors (EE200-EE217)
 
-`field` argument in `@derivedFrom` needs to contain a string.
+#### `EE200`: Schema File Read Error
 
-Refer to the [<ins>schema</ins>](./schema) page for more information.
+**Issue**: Envio couldn't read the schema file.
 
-### `EE207`: Undefined Type
+**Solution**:
 
-11
-Failed to parse undefined type in the schema.
+- Ensure the schema file exists at the expected location
+- Check file permissions
+- Verify the file isn't corrupted
 
-Use one of the following types in the schema:
+#### `EE201`: Schema Parse Error
+
+**Issue**: The schema file contains syntax errors.
+
+**Solution**:
+
+- Check for GraphQL syntax errors in your schema.graphql file
+- Ensure all entities and fields are properly defined
+- Validate your GraphQL schema with a schema validator
+
+#### `EE202`: Multiple `@derivedFrom` Directives
+
+**Issue**: An entity field has more than one `@derivedFrom` directive.
+
+**Solution**: Use only one `@derivedFrom` directive per entity. Review your schema and remove duplicate directives.
+
+#### `EE203`: Missing Field Argument for `@derivedFrom`
+
+**Issue**: A `@derivedFrom` directive is missing the required `field` argument.
+
+**Solution**: Add the `field` argument to your `@derivedFrom` directive:
+
+```graphql
+type User {
+  id: ID!
+  orders: [Order!]! @derivedFrom(field: "user")
+}
+```
+
+#### `EE204`: Invalid `@derivedFrom` Argument
+
+**Issue**: The `field` argument in `@derivedFrom` has an invalid value.
+
+**Solution**: Ensure the `field` argument contains a valid string value that matches a field name in the referenced entity.
+
+#### `EE207`: Undefined Type
+
+**Issue**: The schema contains an undefined type.
+
+**Solution**: Use only supported scalar types or defined entity types:
 
 - `ID`
 - `String`
@@ -148,206 +211,320 @@ Use one of the following types in the schema:
 - `Bytes`
 - `BigInt`
 
-### `EE208`: Unsupported Nullable Scalars
+#### `EE208`: Unsupported Nullable Scalars
 
-Nullable scalars inside lists are unsupported.
+**Issue**: The schema contains nullable scalar types inside lists.
 
-Include a `!` after your scalar.
+**Solution**: Use non-nullable scalars in lists by adding `!` after the type:
 
-### `EE209`: Unsupported Multidimensional Lists
+```graphql
+# Incorrect
+items: [String]
 
-Nullable multi-dimensional list types are unsupported.
+# Correct
+items: [String!]!
+```
 
-Include a `!` for your inner list type eg. `[[Int!]!]`
+#### `EE209`: Unsupported Multidimensional Lists
 
-### `EE210`: Reserved Words in the Schema file
+**Issue**: The schema contains nullable multidimensional list types.
 
-Using reserved programming words in the schema file.
+**Solution**: Ensure inner list types are non-nullable:
 
-Envio prohibits use of reserved words from JavaScript and ReScript in the schema file as it may conflict with the auto-generated code.
+```graphql
+# Incorrect
+matrix: [[Int]]
 
-Please refer to [<ins>reserved words</ins>](./reserved-words) page for the full list of reserved words.
+# Correct
+matrix: [[Int!]!]!
+```
 
-Avoid using reserved words in the schema file.
+#### `EE210`: Reserved Words in Schema File
 
-### `EE211`: Unsupported Arrays of Entities
+**Issue**: The schema uses reserved programming words.
 
-Please use one of the methods for referencing entities outlined in the [<ins>documentation</ins>](../Guides/schema-file.md).
+**Solution**:
 
-### `EE212`: Schema contains the following reserved enum names
+- Check the [reserved words list](./reserved-words)
+- Rename any entities or fields using reserved words
+- Choose alternative descriptive names
 
-Envio makes use of internal enums that cannot be duplicated in the schema file, please see the [<ins>envio internal reserved words</ins>](./reserved-words#envio-internal-reserved-types) list for the internal reserved types.
+#### `EE211`: Unsupported Arrays of Entities
 
-### `EE213`: Schema enum has duplicate values
+**Issue**: The schema uses unsupported array syntax for entity relationships.
 
-Please ensure all values within each schema enum type are unique.
+**Solution**: Use one of the supported methods for entity references as outlined in the [schema documentation](../Guides/schema-file.md).
 
-### `EE214`: Schema contains the following enums and entities with the same name
+#### `EE212`: Reserved Enum Names
 
-All enum and entity definitions must have unique names within the schema. Please update the schema with a unique identifier for all types and enums.
+**Issue**: The schema uses enum names that conflict with Envio's internal enums.
 
-### `EE215`: A directive is used in an incorrect place.
+**Solution**: Check the [internal reserved types list](./reserved-words#envio-internal-reserved-types) and rename conflicting enums.
 
-For example, some directives should only be used on certain field types in the GraphQL schema, and putting them on a field type that they are not compatible with will throw this error code.
+#### `EE213`: Duplicate Enum Values
 
-### `EE216`:  Incorrect parameter labels or number given to a directive.
+**Issue**: An enum in the schema contains duplicate values.
 
-If you pass three values to a directive that only wants two values as arguments, or if you use the incorrect label on an argument in a directive, you will get this error code.
+**Solution**: Ensure all values within each enum type are unique.
 
-### `EE217`:  The type of a field in a directive has the wrong type.
+#### `EE214`: Naming Conflicts Between Enums and Entities
 
-Directives in the GraphQL schema are reasonably strictly typed. So for example, if a parameter to a directive has to be a positive integer and you pass a negative integer, the code will fail.
+**Issue**: The schema has enums and entities with the same names.
 
-### `EE300`: Event ABI Error
+**Solution**: Ensure all enum and entity names are unique within the schema.
 
-Cannot parse the provided ABI for the contract.
+#### `EE215`: Incorrectly Placed Directive
 
-Use an event that belongs in your ABI for the configuration file.
+**Issue**: A directive is used in an incorrect location in the schema.
 
-### `EE301`: Missing ABI File Path
+**Solution**: Ensure directives are placed on appropriate schema elements according to GraphQL specifications.
 
-Add `abi_file_path` for the contract to parse the event.
+#### `EE216`: Incorrect Directive Parameters
 
-### `EE302`: Invalid ABI File Path
+**Issue**: A directive has incorrect parameter labels or count.
 
-Provide a valid `abi_file_path` for named events.
+**Solution**: Verify that all directive parameters match the expected format and count.
 
-### `EE303`: Missing Event In ABI
+#### `EE217`: Incorrect Directive Parameter Type
 
-Unable to find an event named in your ABI.
+**Issue**: A directive parameter has an invalid type.
 
-Use an event that belongs in your ABI for the configuration file.
+**Solution**: Ensure parameter values match the expected types for each directive.
 
-### `EE304`: Mismatched Event Signature
+### ABI File Errors (EE300-EE305)
 
-Event signature does not exist in the provided ABI file.
+#### `EE300`: Event ABI Parse Error
 
-Ensure that the same event signature from the ABI is used in the configuration file.
+**Issue**: Cannot parse the ABI for specified contract events.
 
-### `EE305`: ABI Config Mismatch
+**Solution**:
 
-The event signature in ABI does not match the config.
+- Verify the ABI file contains valid JSON
+- Ensure the ABI includes all events referenced in your configuration
+- Check for syntax errors in your ABI file
 
-Ensure that the same event signature from the ABI is used in the configuration file.
+#### `EE301`: Missing ABI File Path
 
-### `EE400`: Invalid Directory Name
+**Issue**: No ABI file path specified for a contract.
 
-The specified directory is invalid.
+**Solution**: Add the `abi_file_path` property in your configuration for each contract:
 
-Use a different directory without special characters such as `/` `\` `:` `*` `?` `"` `<` `>` `|`.
+```yaml
+contracts:
+  - name: MyContract
+    abi_file_path: ./abis/MyContract.json
+```
 
-### `EE401`: Existing Directory
+#### `EE302`: Invalid ABI File Path
 
-The specified directory already exists.
+**Issue**: The specified ABI file path is invalid or inaccessible.
 
-Use a different directory for initialization.
+**Solution**:
 
-### `EE402`: Invalid Subgraph ID
+- Verify the ABI file exists at the specified path
+- Ensure the path is relative to your project directory
+- Check file permissions
 
-Invalid ID provided for subgraph migration.
+#### `EE303`: Missing Event in ABI
 
-Provide a subgraph ID that starts with `Qm`.
+**Issue**: An event referenced in your configuration doesn't exist in the ABI.
 
-# Event Related Errors
+**Solution**:
 
-### `EE500`: Event Handler File Not Found
+- Ensure the event name matches exactly what's in the ABI
+- Verify the ABI includes all events you want to track
+- If using a human-readable ABI, check event signature formatting
 
-Issue importing the Event Handler file.
+#### `EE304`: Mismatched Event Signature
 
-Ensure that the file is in the correct directory as per the configuration file.
+**Issue**: Event signature in configuration doesn't match the ABI.
 
-The Event Handler file should be compiled as well.
+**Solution**: Ensure event signatures in your configuration match exactly what's in the ABI file.
 
-Refer to the [<ins>event handlers</ins>](./event-handlers) page for more information.
+#### `EE305`: ABI Config Mismatch
 
-### `EE600`: Top Level Error
+**Issue**: Event parameters in configuration don't match ABI definition.
 
-Hit a top-level error catcher while processing events.
+**Solution**: Verify that event parameters in your configuration match the types and order defined in the ABI.
 
-Contact us in our [Discord](https://discord.gg/Q9qt8gZ2fX) for further assistance.
+### Initialization Arguments Errors (EE400-EE402)
 
-# Database Related Errors
+#### `EE400`: Invalid Directory Name
 
-For all of the database-related errors, rerun DB migrations using the following command:
+**Issue**: A specified directory name contains invalid characters.
+
+**Solution**: Use directory names without special characters like `/`, `\`, `:`, `*`, `?`, `"`, `<`, `>`, `|`.
+
+#### `EE401`: Directory Already Exists
+
+**Issue**: Trying to create a directory that already exists.
+
+**Solution**: Use a different directory name or remove the existing directory if appropriate.
+
+#### `EE402`: Invalid Subgraph ID
+
+**Issue**: The subgraph ID for migration is invalid.
+
+**Solution**: Provide a valid subgraph ID that starts with "Qm".
+
+## Event-Related Errors
+
+### Event Handling Errors (EE500)
+
+#### `EE500`: Event Handler File Not Found
+
+**Issue**: Envio couldn't find or import the event handler file.
+
+**Solution**:
+
+- Ensure the handler file exists in the correct directory
+- Verify the file path in your configuration
+- Make sure the handler file is compiled correctly
+- Refer to the [event handlers documentation](./event-handlers) for proper setup
+
+### Event Syncing Errors (EE600)
+
+#### `EE600`: Top Level Error During Event Processing
+
+**Issue**: An unexpected error occurred while processing events.
+
+**Solution**:
+
+- Check your event handler logic for errors
+- Review recent changes to your indexer
+- If unable to resolve, contact support through [Discord](https://discord.gg/Q9qt8gZ2fX) with error details
+
+## Database-Related Errors
+
+For database-related errors (EE700-EE808), you can often resolve issues by resetting the database migration:
 
 ```bash
 pnpm envio local db-migrate setup
 ```
 
-### `EE700`: Parse DB Row
+### Database Function Errors (EE700)
 
-Unable to parse rows from the database.
+#### `EE700`: Database Row Parse Error
 
-### `EE800`: Raw Table Creation
+**Issue**: Unable to parse rows from the database.
 
-Error in creating raw events table.
+**Solution**:
 
-### `EE801`: Dynamic Contracts Table Creation
+- Check entity definitions in your schema
+- Verify data types match between schema and database
+- Reset database migrations using the command above
 
-Error in creating dynamic contracts table.
+### Database Migration Errors (EE800-EE808)
 
-### `EE802`: Entity Tables Creation
+#### `EE800`: Raw Table Creation Error
 
-Error in creating entity tables.
+**Issue**: Error creating raw events table in database.
 
-### `EE803`: Tracking Tables Error
+**Solution**: Reset database migrations using the command above.
 
-Error in tracking tables.
+#### `EE801`: Dynamic Contracts Table Creation Error
 
-### `EE804`: Drop Entity Tables
+**Issue**: Error creating dynamic contracts table.
 
-Error dropping entity tables.
+**Solution**: Reset database migrations using the command above.
 
-### `EE805`: Drop Tables Except Raw
+#### `EE802`: Entity Tables Creation Error
 
-Error dropping tables except for raw events.
+**Issue**: Error creating entity tables.
 
-### `EE806`: Clear Metadata
+**Solution**:
 
-Error clearing metadata.
+- Check your schema for invalid entity definitions
+- Reset database migrations
 
-Indexing may still work - but you may have issues querying the data in Hasura.
+#### `EE803`: Tracking Tables Error
 
-### `EE807`: Tracking a Table
+**Issue**: Error tracking tables in database.
 
-Error in tracking a table.
+**Solution**: Reset database migrations using the command above.
 
-Indexing may still work - but you may have issues querying the data in Hasura.
+#### `EE804`: Drop Entity Tables Error
 
-### `EE808`: View Permissions
+**Issue**: Error dropping entity tables.
 
-Error setting up view permissions.
+**Solution**:
 
-Indexing may still work - but you may have issues querying the data in Hasura.
+- Check if any other processes are using the database
+- Reset database migrations
 
-# Contract Related Errors
+#### `EE805`: Drop Tables Except Raw Error
 
-### `EE900`: Undefined Contract
+**Issue**: Error dropping all tables except raw events table.
 
-Undefined contract specified.
+**Solution**: Reset database migrations using the command above.
 
-Verify that the contract name is defined in the configuration file.
+#### `EE806`: Clear Metadata Error
 
-### `EE901`: Interface Mapping Error
+**Issue**: Error clearing metadata.
 
-Unexpected case - contract name not found in interface mapping.
+**Solution**:
 
-Contact us in our [Discord](https://discord.gg/Q9qt8gZ2fX) for further assistance.
+- Reset database migrations
+- Note: Indexing may still work, but you might have issues querying data in Hasura
 
-# Network Related Errors
+#### `EE807`: Table Tracking Error
 
-### `EE1000`: Undefined Chain
+**Issue**: Error tracking a table in Hasura.
 
-Undefined chain ID used for chain manager.
+**Solution**:
 
-Use a valid chain ID in the configuration file.
+- Reset database migrations
+- Note: Indexing may still work, but you might have issues querying data in Hasura
 
-# General Errors
+#### `EE808`: View Permissions Error
 
-### `EE1100`: Promise Timeout
+**Issue**: Error setting up view permissions.
 
-Top-level promise timeout reached.
+**Solution**:
 
-Contact us in our [Discord](https://discord.gg/Q9qt8gZ2fX) for further assistance.
+- Reset database migrations
+- Note: Indexing may still work, but you might have issues querying data in Hasura
+
+## Contract-Related Errors
+
+#### `EE900`: Undefined Contract
+
+**Issue**: Referencing a contract that isn't defined in configuration.
+
+**Solution**:
+
+- Verify all contract names in your handlers match those in the configuration file
+- Check for typos in contract names
+
+#### `EE901`: Interface Mapping Error
+
+**Issue**: Contract name not found in interface mapping (unexpected internal error).
+
+**Solution**: Contact support through [Discord](https://discord.gg/Q9qt8gZ2fX) for assistance.
+
+## Network-Related Errors
+
+#### `EE1000`: Undefined Chain
+
+**Issue**: Using a chain ID that isn't defined or supported.
+
+**Solution**:
+
+- Use a valid chain ID in your configuration file
+- Check if the network is supported by Envio
+- Verify chain ID matches the intended network
+
+## General Errors
+
+#### `EE1100`: Promise Timeout
+
+**Issue**: A long-running operation timed out.
+
+**Solution**:
+
+- Check network connectivity
+- Verify RPC endpoint performance
+- Consider increasing timeouts if possible
+- If persists, contact support through [Discord](https://discord.gg/Q9qt8gZ2fX)
 
 ---

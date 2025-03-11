@@ -1,99 +1,123 @@
 ---
 id: contract-state
-title: Contract State
-sidebar_label: Contract State
+title: Accessing Contract State in Event Handlers
+sidebar_label: Accessing Contract State
 slug: /contract-state
 ---
 
-# Contract State
+# Accessing Contract State in Event Handlers
 
-TLDR; The repo for the code base can be found [here](https://github.com/enviodev/rpc-token-data-example)
+> **Example Repository:** The complete code for this guide can be found [here](https://github.com/enviodev/rpc-token-data-example)
 
-**Scenario**  
-In this guide, we aim to get token information for every token involved in a [Uniswap V3 pool creation event](https://docs.uniswap.org/contracts/v3/reference/core/interfaces/IUniswapV3Factory#poolcreated). For each token we should index its name, symbol and decimals.
+## Introduction
 
-**Problem**  
-At first glance this may appear to be a simple task as we are only indexing over one event, the [pool created](https://docs.uniswap.org/contracts/v3/reference/core/interfaces/IUniswapV3Factory#poolcreated) event. However, there is one catch, have a look at the event signature: 
+This guide demonstrates how to access on-chain contract state from your event handlers. You'll learn how to:
+
+1. Make RPC calls to external contracts within your event handlers
+2. Batch multiple calls using multicall for efficiency
+3. Implement caching to reduce redundant RPC requests
+4. Handle common edge cases that arise when accessing token contract data
+
+## The Challenge: Token Data from Pool Creation Events
+
+### Scenario
+
+We want to track token information (name, symbol, decimals) for every token involved in a [Uniswap V3 pool creation event](https://docs.uniswap.org/contracts/v3/reference/core/interfaces/IUniswapV3Factory#poolcreated).
+
+### Problem
+
+The Uniswap V3 factory `PoolCreated` event only provides token addresses, not their metadata:
 
 ```yaml
 PoolCreated(address indexed token0, address indexed token1, uint24 indexed fee, int24 tickSpacing, address pool)
 ```
 
-The event only provides the token addresses, not the token name, symbol, and decimals. So how are we to fetch this extra information in our event handler? 
+To get the token name, symbol, and decimals, we need to:
 
-**Solution**  
-In order to do this, we need to make RPC requests to the token contract.
+1. Extract the token addresses from the event
+2. Make RPC calls to each token's contract
+3. Store this data alongside our pool information
 
-### Prerequisites
+## Prerequisites
 
-This guide assumes basic familiarity with the viem library for making contract calls. Check out the [viem documentation](https://viem.sh/) for more information. This [medium article](https://medium.com/@0xape/typescript-and-viem-quickstart-for-blockchain-scripting-3f1846970b6f) is highly recommended for a gentle introduction to viem with a very similar example to what we are doing here.
+This guide assumes:
 
-### Part 1: Create our Uniswap V3 `poolcreated` indexer
+- Basic familiarity with Envio indexing
+- Understanding of the [viem library](https://viem.sh/) for making contract calls
+- Access to an Ethereum RPC endpoint ([dRPC](https://drpc.org/) recommended)
 
-`npx envio init`
-Ethereum mainnet contract address: [0x1F98431c8aD98523631AE4a59f267346ea31F984](https://scope.sh/1/address/0x1F98431c8aD98523631AE4a59f267346ea31F984)
+For a gentle introduction to viem with a similar example, check out this [medium article](https://medium.com/@0xape/typescript-and-viem-quickstart-for-blockchain-scripting-3f1846970b6f).
 
-We then make some light modifications to remove unnecessary events and simplify the schema. The resulting config, schema, and event handlers look as follows:
+## Implementation Steps
 
-> config.yaml
+### Step 1: Setup the Indexer Configuration
 
-:::info
-We remove the `FeeAmountEnabled` and `OwnerChanged` events as they are not relevant to our use case. Also we set the start-block to 21000000 as rpc calls are very slow. See the [rpc rate limiting](#challenges) section for possible solutions.
-:::
+First, create a new indexer:
 
-```yaml
-# yaml-language-server: $schema=./node_modules/envio/evm.schema.json
-name: uniswap-v3-factory-token-indexer
-networks:
-- id: 1
-  start_block: 21000000
-  contracts:
-  - name: UniswapV3Factory
-    address:
-    - 0x1F98431c8aD98523631AE4a59f267346ea31F984
-    handler: src/EventHandlers.ts
-    events:
-    - event: FeeAmountEnabled(uint24 indexed fee, int24 indexed tickSpacing)
-    - event: OwnerChanged(address indexed oldOwner, address indexed newOwner)
-    - event: PoolCreated(address indexed token0, address indexed token1, uint24 indexed fee, int24 tickSpacing, address pool)
-rollback_on_reorg: false
-
+```bash
+npx envio init
 ```
 
-> shema.graphql
+When prompted, enter the Ethereum mainnet Uniswap V3 Factory address: `0x1F98431c8aD98523631AE4a59f267346ea31F984`
 
-:::info
-Simplify our schema to only include the pool and token information.
-:::
+Then modify your configuration to focus only on the PoolCreated event:
+
+```yaml
+# config.yaml
+name: uniswap-v3-factory-token-indexer
+networks:
+  - id: 1
+    start_block: 21000000 # Starting at a higher block to speed up initial sync
+    contracts:
+      - name: UniswapV3Factory
+        address:
+          - 0x1F98431c8aD98523631AE4a59f267346ea31F984
+        handler: src/EventHandlers.ts
+        events:
+          - event: PoolCreated(address indexed token0, address indexed token1, uint24 indexed fee, int24 tickSpacing, address pool)
+rollback_on_reorg: false
+```
+
+> **Note**: We're starting at block 21,000,000 to reduce initial sync time, as RPC calls can be slow. See the [Rate Limiting](#handling-rate-limiting) section for optimization strategies.
+
+### Step 2: Define the Schema
+
+Create a schema that captures both pool and token information:
 
 ```graphql
+# schema.graphql
 type Token {
-  id: ID! #address
+  id: ID! # token address
   name: String!
   symbol: String!
   decimals: Int!
 }
 
 type Pool {
-  id: ID! # address
-  token0: Token! 
+  id: ID! # unique identifier
+  token0: Token!
   token1: Token!
   fee: BigInt!
   tickSpacing: BigInt!
-  pool: String!
+  pool: String! # pool address
 }
 ```
 
-> src/EventHandlers.ts
+### Step 3: Implement the Event Handler
+
+The event handler needs to:
+
+1. Create a Pool entity from the event data
+2. Make RPC calls to fetch token information for both token0 and token1
+3. Create Token entities with the retrieved data
 
 ```typescript
-import {
-  UniswapV3Factory,
-  Pool,
-} from "generated";
+// src/EventHandlers.ts
+import { UniswapV3Factory, Pool } from "generated";
 import { getTokenDetails } from "./tokenDetails";
 
 UniswapV3Factory.PoolCreated.handler(async ({ event, context }) => {
+  // Create Pool entity
   const entity: Pool = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     token0_id: event.params.token0,
@@ -102,80 +126,88 @@ UniswapV3Factory.PoolCreated.handler(async ({ event, context }) => {
     tickSpacing: event.params.tickSpacing,
     pool: event.params.pool,
   };
-  context.Pool.set(entity)
+  context.Pool.set(entity);
 
-
+  // Fetch and store token0 information
   try {
-    const {name: name0, symbol: symbol0, decimals: decimals0} = await getTokenDetails(event.params.token0, event.chainId, event.params.pool);
+    const {
+      name: name0,
+      symbol: symbol0,
+      decimals: decimals0,
+    } = await getTokenDetails(
+      event.params.token0,
+      event.chainId,
+      event.params.pool
+    );
     context.Token.set({
       id: event.params.token0,
       name: name0,
       symbol: symbol0,
-      decimals: decimals0
-    })
+      decimals: decimals0,
+    });
   } catch (error) {
-    console.log('failed token0 with address', event.params.token0)
-    return
+    console.log("failed token0 with address", event.params.token0);
+    return;
   }
 
+  // Fetch and store token1 information
   try {
-    const {name: name1, symbol: symbol1, decimals: decimals1} = await getTokenDetails(event.params.token1, event.chainId, event.params.pool);
+    const {
+      name: name1,
+      symbol: symbol1,
+      decimals: decimals1,
+    } = await getTokenDetails(
+      event.params.token1,
+      event.chainId,
+      event.params.pool
+    );
     context.Token.set({
       id: event.params.token1,
       name: name1,
       symbol: symbol1,
       decimals: decimals1,
-    })
+    });
   } catch (error) {
-    console.log('failed token1 with address', event.params.token1)
-    return
+    console.log("failed token1 with address", event.params.token1);
+    return;
   }
 });
 ```
 
-### Part 2: Fetch token information
+### Step 4: Create the Token Details Helper
 
-Note how we use the `multicall` feature from Viem to batch our 3 queries into one request to improve performance and help avoid rate limiting. Very useful!
+This is where the magic happens. We need to:
 
-
-We recommend using an RPC from [dRPC](https://drpc.org/) and adding it to your `.env` file. Alternatively, use any other rpc provider of your choice.
-
-There are 2 edge cases that we need to be aware of when fetching token information: 
-
-1. Sometimes `symbol` and `name` are stored as bytes32 in the contract instead of strings. In this case, we need to use a different abi and convert the hex string to a readable string.
-2. Some pools are created with non-standard ERC20 tokens that do not follow the ERC20 standard. In fact, some people create pools with contracts that are not even ERC20 tokens at all, even though such a pool is totally useless.
-
-So take note of our try-catch blocks in the code below that handle these edge cases.
-
-> src/tokenDetails.ts
-
-:::info
-The `hexToString` method from Viem adds byte padding to the string. We remove this padding by using the `replace` method. If you don't do this, there will be errors writing to the envio database.
-:::
+1. Make RPC calls to token contracts
+2. Use multicall to batch multiple calls for efficiency
+3. Handle edge cases like non-standard ERC20 implementations
+4. Cache results to avoid redundant calls
 
 ```typescript
-import { createPublicClient, http, hexToString } from 'viem'
-import { mainnet } from 'viem/chains'
+// src/tokenDetails.ts
+import { createPublicClient, http, hexToString } from "viem";
+import { mainnet } from "viem/chains";
 import { Cache, CacheCategory } from "./cache";
-import { getERC20BytesContract, getERC20Contract } from './utils';
+import { getERC20BytesContract, getERC20Contract } from "./utils";
 
 const RPC_URL = process.env.RPC_URL;
 
 const client = createPublicClient({
   chain: mainnet,
   transport: http(RPC_URL),
-  batch: { multicall: true }
-})
+  batch: { multicall: true }, // Enable multicall batching for efficiency
+});
 
 export async function getTokenDetails(
   contractAddress: string,
   chainId: number,
-  pool: string,
+  pool: string
 ): Promise<{
-  readonly name: string,
-  readonly symbol: string,
-  readonly decimals: number,
+  readonly name: string;
+  readonly symbol: string;
+  readonly decimals: number;
 }> {
+  // Check cache first to avoid redundant RPC calls
   const cache = await Cache.init(CacheCategory.Token, chainId);
   const token = await cache.read(contractAddress.toLowerCase());
 
@@ -183,11 +215,13 @@ export async function getTokenDetails(
     return token;
   }
 
+  // Prepare contract instances for different token standard variations
   const erc20 = getERC20Contract(contractAddress as `0x${string}`);
   const erc20Bytes = getERC20BytesContract(contractAddress as `0x${string}`);
 
   let results: [number, string, string];
   try {
+    // Try standard ERC20 interface first (most common)
     results = await client.multicall({
       allowFailure: false,
       contracts: [
@@ -208,6 +242,7 @@ export async function getTokenDetails(
   } catch (error) {
     console.log("First multicall failed, trying alternate method");
     try {
+      // Some tokens use bytes32 for name/symbol instead of string
       const alternateResults = await client.multicall({
         allowFailure: false,
         contracts: [
@@ -227,23 +262,26 @@ export async function getTokenDetails(
       });
       results = [
         alternateResults[0],
-        hexToString(alternateResults[1]).replace(/\u0000/g, ''),
-        hexToString(alternateResults[2]).replace(/\u0000/g, ''),
+        hexToString(alternateResults[1]).replace(/\u0000/g, ""), // Remove null byte padding
+        hexToString(alternateResults[2]).replace(/\u0000/g, ""), // Remove null byte padding
       ];
     } catch (alternateError) {
       console.error(`Alternate method failed for pool ${pool}:`);
-      results = [0,"unknown","unknown"];
+      results = [0, "unknown", "unknown"]; // Fallback for completely non-standard tokens
     }
   }
 
   const [decimals, name, symbol] = results;
-  
-  console.log(`Got token details for ${contractAddress}: ${name} (${symbol}) with ${decimals} decimals`);
 
+  console.log(
+    `Got token details for ${contractAddress}: ${name} (${symbol}) with ${decimals} decimals`
+  );
+
+  // Prepare and cache the result
   const entry = {
     name,
     symbol,
-    decimals
+    decimals,
   } as const;
 
   cache.add({ [contractAddress.toLowerCase()]: entry as any });
@@ -251,19 +289,14 @@ export async function getTokenDetails(
 }
 ```
 
-### Part 3: Cache token information
+> **Important:** The `hexToString` method from Viem adds byte padding to the string. We remove this padding with `replace(/\u0000/g, '')` to avoid errors when writing to the database.
 
-To highlight how important this step is in our use case, imagine how many Uniswap V3 pools have been created with USDC. It would be a complete waste of time to make an rpc request for USDC every time it was involved in a pool creation event!
+### Step 5: Implement Caching
 
-Since the token details we care about don't change over time, we can cache this information to avoid making the same rpc request multiple times.  We can do this by creating a simple cache object that stores the token information. In this case, we cache the data in a json file. For use cases with more data, you should consider using a proper database as accessing a large json file repeatedly can be slow. See the [ipfs example](https://docs.envio.dev/docs/HyperIndex/ipfs) for an example of how to cache using a SQLite database.
-
-:::info
-our cache implementation is designed to be easily extendable as you can add as many cache categories as you want. Here we only have one category for token information.
-:::
-
-> src/cache.ts
+Caching is crucial for efficiency. Many pools share common tokens (like USDC, WETH, etc.), and we don't want to make redundant RPC calls for the same token addresses.
 
 ```typescript
+// src/cache.ts
 import * as fs from "fs";
 import * as path from "path";
 
@@ -281,7 +314,6 @@ type ShapeRoot = Shape & Record<Address, { hash: string }>;
 type ShapeToken = Shape &
   Record<Address, { decimals: number; name: string; symbol: string }>;
 
-
 export class Cache {
   static init<C = CacheCategory>(
     category: C,
@@ -291,9 +323,7 @@ export class Cache {
       throw new Error("Unsupported cache category");
     }
 
-    type S = C extends "token"
-      ? ShapeToken
-      : ShapeRoot;
+    type S = C extends "token" ? ShapeToken : ShapeRoot;
     const entry = new Entry<S>(`${category}-${chainId.toString()}`);
     return entry;
   }
@@ -373,7 +403,31 @@ export class Entry<T extends Shape> {
 }
 ```
 
-### Challenges
+> **Note:** The hosted service supports basic JSON file caching in beta. Speak to the team if you want to discuss caching options.
 
-1. **Historical state**: The RPC requests as shown here function as a regular RPC requests that return the current contract state. They do not fetch historical contract state. In other words, normal RPC requests always return current contract state, not the contract state for the block which your indexer is processing. For our use case, this doesn't matter as the name, symbol, and decimals of a token should not change over time. But let's say you want to fetch the ether balance of an account at a specific historical block, you would a need [special rpc request](https://docs.etherscan.io/api-pro/api-pro#get-historical-ether-balance-for-a-single-address-by-blockno) that is able to fetch historical state.
-2. **Rate limiting**: Rate limiting refers to when a server limits the number of requests a client can make in a given amount of time. This is done to prevent abuse of the server. So if you make too many RPC requests in a short period of time to the same server, your requests may be blocked. The simplest way to avoid this is to use a paid unthrottled rpc or to check the rate limits of the server you are making requests to and adding a sufficient delay between requests. A slightly more complex way is to use multiple RPC URLs and rotate your requests between them. In our use case, the multicall feature to batch our requests was sufficient to avoid rate limiting.
+## Key Considerations
+
+### Understanding Current vs. Historical State
+
+Standard RPC requests return the **current state** of a contract, not the state at a specific historical block. For token metadata (name, symbol, decimals), this isn't typically an issue since these values rarely change.
+
+However, if you need historical state (like an account balance at a specific block), you would need a specialized RPC method like [eth_getBalanceAt](https://docs.etherscan.io/api-pro/api-pro#get-historical-ether-balance-for-a-single-address-by-blockno).
+
+### Handling Rate Limiting
+
+RPC providers often limit the number of requests per time period. To avoid hitting rate limits:
+
+1. **Use multicall** (as shown in our example) to batch multiple contract calls into a single RPC request
+2. **Implement caching** to avoid redundant requests
+3. **Use a paid, unthrottled RPC provider** for production indexers
+4. **Implement request throttling** to space out requests when needed
+5. **Use multiple RPC providers** and rotate between them for high-volume indexing
+
+## Conclusion
+
+Accessing contract state from your event handlers opens up powerful possibilities for enriching your indexed data. By following the patterns in this guide, you can efficiently retrieve and store contract state while maintaining good performance.
+
+For more advanced techniques, explore:
+
+- Implementing retry logic for failed RPC calls
+- Handling complex contract interactions beyond basic ERC20 tokens

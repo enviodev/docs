@@ -19,7 +19,7 @@ slug: /zora
 
 ### Tier
 
-STONE 🏗️
+STONE 🪨
 
 ### Overview
 

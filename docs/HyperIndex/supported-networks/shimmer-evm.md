@@ -19,7 +19,7 @@ slug: /shimmer-evm
 
 ### Tier
 
-STONE 🏗️
+STONE 🪨
 
 ### Overview
 

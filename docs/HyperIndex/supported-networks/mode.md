@@ -19,7 +19,7 @@ slug: /mode
 
 ### Tier
 
-STONE 🏗️
+STONE 🪨
 
 ### Overview
 

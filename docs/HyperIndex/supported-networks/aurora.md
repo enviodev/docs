@@ -19,7 +19,7 @@ slug: /aurora
 
 ### Tier
 
-STONE 🏗️
+STONE 🪨
 
 ### Overview
 

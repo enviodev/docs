@@ -5,48 +5,64 @@ sidebar_label: Quickstart
 slug: /contract-import
 ---
 
-The Quickstart allows you to instantly autogenerate a basic indexer and query your data. This is the quickest way to get going and likely the starting point for most developers.
+The **Quickstart** enables you to instantly autogenerate a powerful indexer and start querying blockchain data in minutes. This is the fastest and easiest way to begin using HyperIndex.
 
-For example, you could autogenerate an indexer for Eigenlayer AND index the entire Eigenlayer contract in under 5 minutes simply through running `pnpx envio init` and pasting the contract address from the Block Explorer: https://etherscan.io/address/0x858646372cc42e1a627fce94aa7a7033e7cf075a
+**Example:** Autogenerate an indexer for the Eigenlayer contract and index its entire history in less than 5 minutes by simply running `pnpx envio init` and providing the contract address from [Etherscan](https://etherscan.io/address/0x858646372cc42e1a627fce94aa7a7033e7cf075a).
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/zkVlGgf5XAo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+---
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/JOiLUysZf-s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+## Getting Started
 
-## Instructions
+Run the following command to initialize your indexer:
 
-To start, simply run:
-
-```
+```bash
 pnpx envio init
 ```
 
-After selecting the name, directory and preferred language for the indexer, choose `Contract Import` as the initialization option.
+You'll then follow interactive prompts to customize your indexer.
+
+---
+
+### Video Tutorials
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/zkVlGgf5XAo" title="Quickstart Guide" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/JOiLUysZf-s" title="Indexer Initialization Guide" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+---
+
+## Indexer Initialization Options
+
+During initialization, you'll be presented with two options:
+
+- **Contract Import** _(recommended for existing smart contracts)_
+- **Template**
+
+Choose the **Contract Import** option to auto-generate indexers directly from smart contracts.
 
 ```bash
 ? Choose an initialization option
   Template
 > Contract Import
-[↑↓ to move, enter to select, type to filter]
+[↑↓ to move, enter to select]
 ```
 
-Contract Import allows you to quickly generate your indexer with:
-1. Block Explorer
-2. Local ABI
+---
 
-### 1. Block Explorer
+## Contract Import Methods
 
-```bash
-? Would you like to import from a block explorer or a local abi?
-> Block Explorer
-  Local ABI
-[↑↓ to move, enter to select, type to filter]
-```
+There are two convenient methods to import your contract:
 
-The `Block Explorer` option only requires you to input the address and chain of the contract.
-If the deployed contract is verified and has one of the supported explorers (Etherscan, Routescan, etc.) it will retrieve all needed contract information from the block explorer. The list of available chains will be presented in the Envio CLI.
+- **Block Explorer** _(verified contracts on supported explorers like Etherscan and Blockscout)_
+- **Local ABI** _(custom or unverified contracts)_
 
-#### Select the blockchain that the contract is deployed on
+### 1. Block Explorer Import
+
+This method uses a verified contract's address from a supported blockchain explorer (Etherscan, Routescan, etc.) to automatically fetch the ABI.
+
+#### Steps:
+
+**a. Select the blockchain**
 
 ```bash
 ? Which blockchain would you like to import a contract from?
@@ -56,27 +72,26 @@ If the deployed contract is verified and has one of the supported explorers (Eth
   base
   bsc
   gnosis
-v polygon
-[↑↓ to move, enter to select, type to filter]
+  polygon
+[↑↓ to move, enter to select]
 ```
 
 :::note
-HyperIndex supports indexing smart contract data from any EVM blockchain. If the chain you would like to index is not available on the list, you can use the ABI file option. Alternatively, you choose the same contract on an available network on the list, and change the chain configuration in the config file after the indexer is initialized. 
+HyperIndex supports all EVM-compatible chains. If your desired chain is not listed, you can import via the local ABI method or manually adjust the `config.yaml` file after initialization.
 :::
 
-
-#### Enter in the address of the contract to import
+**b. Enter the contract address**
 
 ```bash
 ? What is the address of the contract?
-[Use the proxy address if your abi is a proxy implementation]
+[Use proxy address if ABI is for a proxy implementation]
 ```
 
-:::note
-If you are using a proxy contract with an implementation, the contract address you specify should be for the proxy contract.
+:::tip
+If using a proxy contract, always specify the **proxy address**, not the implementation address.
 :::
 
-#### Choose which events to include in the `config.yaml` file
+**c. Select events to index**
 
 ```bash
 ? Which events would you like to index?
@@ -84,10 +99,12 @@ If you are using a proxy contract with an implementation, the contract address y
   [x] Deposit(address indexed from, uint256 indexed tokenId, uint256 amount)
   [x] NotifyReward(address indexed from, address indexed reward, uint256 indexed epoch, uint256 amount)
   [x] Withdraw(address indexed from, uint256 indexed tokenId, uint256 amount)
-[↑↓ to move, space to select one, → to all, ← to none, type to filter]
+[space to select, → to select all, ← to deselect all]
 ```
 
-#### Select the continuation option
+**d. Finish or add more contracts**
+
+You'll be prompted to continue adding more contracts or to complete the setup:
 
 ```bash
 ? Would you like to add another contract?
@@ -95,73 +112,76 @@ If you are using a proxy contract with an implementation, the contract address y
   Add a new address for same contract on same network
   Add a new network for same contract
   Add a new contract (with a different ABI)
-[Current contract: BribeVotingReward, on network: optimism]
 ```
 
-The Quickstart will prompt you whether you would like to finish the import process or continue adding more addresses for same contract on same network, addresses for same contract on different network or a different contract.
+---
 
-### 2. Local ABI
+### 2. Local ABI Import
+
+Choose this method if the contract ABI is unavailable from a block explorer or you're using an unverified contract.
+
+#### Steps:
+
+**a. Select Local ABI**
 
 ```bash
 ? Would you like to import from a block explorer or a local abi?
   Block Explorer
 > Local ABI
-[↑↓ to move, enter to select, type to filter]
+[↑↓ to move, enter to select]
 ```
 
-Choosing `Local ABI` option will allow you to point to a JSON file containing the smart contract ABI. The Quickstart will then populate the required files from the ABI.
+**b. Specify ABI JSON file**
 
-> Select this option if the proxy contract has not been verified, which will cause the fetch request from Etherscan client to fail.
-
-#### Specify the directory of JSON file containing ABI
+Provide the path to your local ABI file (JSON format):
 
 ```bash
 ? What is the path to your json abi file?
 ```
 
-#### Choose which events to include in the `config.yaml` file
+**c. Select events to index**
 
 ```bash
 ? Which events would you like to index?
 > [x] ClaimRewards(address indexed from, address indexed reward, uint256 amount)
   [x] Deposit(address indexed from, uint256 indexed tokenId, uint256 amount)
-  [x] NotifyReward(address indexed from, address indexed reward, uint256 indexed epoch, uint256 amount)
-  [x] Withdraw(address indexed from, uint256 indexed tokenId, uint256 amount)
-[↑↓ to move, space to select one, → to all, ← to none, type to filter]
+[space to select, → to select all, ← to deselect all]
 ```
 
-#### Specify which chain the contract is deployed on
+**d. Choose blockchain**
+
+Specify the blockchain your contract is deployed on:
 
 ```bash
 ? Choose network:
-> <Enter Network Id>
-  ethereum-mainnet
+> ethereum-mainnet
   goerli
   optimism
   base
   bsc
-v gnosis
-[↑↓ to move, enter to select, type to filter]
+  gnosis
+  [Custom Network ID]
+[↑↓ to move, enter to select]
 ```
 
-#### Enter in the name for the contract
+**e. Enter contract details**
+
+- **Contract name**
 
 ```bash
 ? What is the name of this contract?
 ```
 
-#### Enter in the address of the contract
+- **Contract address**
 
 ```bash
 ? What is the address of the contract?
-[Use the proxy address if your abi is a proxy implementation]
+[Use proxy address if ABI is for a proxy implementation]
 ```
 
-:::note
-If you are using a proxy contract with an implementation, the contract address you specify should be for the proxy contract.
-:::
+**f. Finish or add more contracts**
 
-#### Select the continuation option
+Complete the import process or continue adding contracts:
 
 ```bash
 ? Would you like to add another contract?
@@ -169,50 +189,42 @@ If you are using a proxy contract with an implementation, the contract address y
   Add a new address for same contract on same network
   Add a new network for same contract
   Add a new contract (with a different ABI)
-[Current contract: BribeVotingReward, on network: optimism]
 ```
 
-The Quickstart will prompt you whether you would like to finish the import process or continue adding more addresses for same contract on same network, addresses for same contract on different network or a different contract.
+---
 
-## Configuration file
+## Generated Files & Configuration
 
-The contract-specific details that will be automatically populated in the `config.yaml` file are:
+The Quickstart automatically generates key files:
 
-- Network ID
-- Start Block
-- Contract Name
-- Contract Address
-- Event Signature (for all events) with `requiredEntities`
+### 1. `config.yaml`
 
-Users can remove the events from the configuration file which do not need to be indexed. By default the contract import process populates the configuration file for all events.
+Automatically configured parameters include:
 
-For more information on how to write the configuration file, go [here](configuration-file).
+- **Network ID**
+- **Start Block**
+- **Contract Name**
+- **Contract Address**
+- **Event Signatures**
 
-However, users are not required to do make any changes to the `config.yaml` file for the indexer to run.
+By default, all selected events are included, but you can manually adjust the file if needed. See the detailed guide on [`config.yaml`](configuration-file).
 
-## Schema
+### 2. GraphQL Schema
 
-By default, the contract import process will create an entity for each event in the contract.
-The fields in these entities will correspond to the parameters that are emitted inside the event.
+- Entities are automatically generated for each selected event.
+- Fields match the event parameters emitted.
 
-Additionally, `EventsSummary` entity will be created that:
+See more details in the [schema file guide](./Guides/schema-file.md).
 
-- Stores a count of how many entities of each type have been created
-- Links to a vector of entities of each type that have been created
+### 3. Event Handlers
 
-For more information on how to write the schema file, go [here](./Guides/schema-file.md).
+- Handlers are autogenerated for each event.
+- Handlers create event-specific entities.
 
-## Event Handlers
-
-Loaders and handlers for each event will be automatically generated.
-
-For all events, the loader function will load `EventsSummary` entity using a fixed key to be updated in the handler.
-
-For all events, the handler function will perform two operations:
-
-- Create an instance of the event-specific entity with all the parameters that have been emitted
-- Update the event-specific entity counter in the loaded `EventsSummary` entity
-
-For more information on how to write the event handlers file, go [here](./Guides/event-handlers.mdx).
+Learn more in the [event handlers guide](./Guides/event-handlers.mdx).
 
 ---
+
+**Congratulations!** Your HyperIndex indexer is now ready to run and query data!
+
+Next step: [Running your Indexer locally](./running-locally) or [Deploying to Hosted Service](./hosted-service).

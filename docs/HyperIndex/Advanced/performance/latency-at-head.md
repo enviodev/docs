@@ -1,43 +1,50 @@
 ---
 id: latency-at-head
-title: Latency at the Head
-sidebar_label: Latency at the Head
+title: Understanding Chain Head Latency
+sidebar_label: Latency at the Head (Performance)
 slug: /latency-at-head
 ---
 
-# Latency at the head
+# Understanding Chain Head Latency
 
-Maintaining low latency at the head of the chain is crucial for ensuring timely data updates. Here's an overview of how we handle latency at the head with HyperSync:
+Maintaining low latency at the chain head is crucial for ensuring timely data updates in your indexed data. This page explains how HyperSync handles this important aspect of blockchain indexing.
 
-### Efficient Block Pulling from HyperSync
+## HyperSync Block Retrieval
 
-- **Efficient Process**: At the head, we currently pull new blocks from HyperSync, which is a highly efficient process. This ensures that we stay up-to-date with the latest blocks with minimal delay.
-- **Reliability**: Typically, this process runs smoothly without any significant issues.
-- **Backups**: We have an ongoing project to sync new blocks from both RPC and Hypersync to improve the robustness in the unlikely event of a failure in HyperSync.
+- **Efficient Processing**: We pull new blocks from HyperSync using a highly efficient process, ensuring your indexer stays up-to-date with minimal delay.
+- **Reliable Operation**: This process typically runs smoothly without significant issues.
+- **Redundancy Plans**: We're developing a system to sync new blocks from both RPC and HyperSync simultaneously, improving robustness if one source experiences issues.
 
-### Low Latency on Popular Networks
+## Network-Specific Performance
 
-- **Prioritized Networks**: We have put a lot of effort into maintaining extremely low latency on popular networks such as Ethereum, Optimism, and Arbitrum. Users should not experience any noticeable latency on these networks.
-- **User Experience**: Our focus on these networks ensures a seamless experience for users relying on timely data updates.
+### Optimized Major Networks
 
-### Smaller Chains
+- **Priority Networks**: We've dedicated significant resources to maintaining extremely low latency on popular networks including Ethereum, Optimism, and Arbitrum.
+- **User Experience**: Users should experience seamless, near real-time data updates on these networks.
 
-- **Lower Priority**: On some smaller chains, we haven't prioritized low latency to the same extent. As a result, there might be slightly higher latency on these networks.
-- **Feedback**: If low latency on smaller chains is a concern for you, please let our team know in Discord. Your feedback helps us prioritize improvements.
+### Smaller Chain Networks
 
-### Unordered Multi-Chain Mode
+- **Standard Performance**: On smaller chains, latency might be slightly higher as these networks have received less optimization.
+- **Improvement Process**: Your feedback helps us prioritize which chains to optimize next. Please let us know in Discord if low latency on specific smaller chains is important for your use case.
 
-- [**Docs**](./multichain-indexing#unordered-multichain-mode)
-- **Multi-Chain Indexes**: For users with extremely multi-chain indexes, we offer an unordered multi-chain mode.
-- **Continued Syncing**: In this mode, even if one chain experiences latency, the other chains will continue syncing as normal, ensuring that your data remains up-to-date across multiple networks.
+## Special Configuration Options
 
-### Reorg Support
+### Multi-Chain Indexing
 
-- **Reorg Handling**: We have reorg support in place and are currently in the final phases of testing this feature.
-- **Concerns**: If reorg support is a concern for you, please reach out to our team on Discord. We will have official documentation for reorgs available shortly.
+- **Unordered Multi-Chain Mode**: For applications indexing multiple chains, our [unordered multi-chain mode](./multichain-indexing#unordered-multichain-mode) allows each chain to continue syncing independently.
+- **Resilient Design**: With this configuration, even if one chain experiences latency, your other chains will continue syncing normally.
 
-### Hosted Service
+### Chain Reorganization Support
 
-We have ongoing projects to keep improving the sync and build times of the hosted service. Currently, the indexers do run slightly slower on the hosted service than they may on a powerful laptop. If you are looking for a beefy hosting solution please contact us on Discord, and we can discuss our enterprise plans.
+- **Reorg Handling**: Our reorg support system ensures data consistency even when chains reorganize.
+- **Documentation**: Contact our team on Discord if you have concerns about reorg support while we finalize documentation.
 
-By leveraging these features and providing feedback, you can help us maintain and improve the performance of your HyperIndex setup.
+## Hosted Service Performance
+
+Our hosted service offers reliable performance with ongoing improvements:
+
+- **Continuous Enhancement**: We're actively improving sync and build times on our hosted service.
+- **Relative Performance**: Currently, indexers may run slightly slower on the hosted service compared to high-performance local machines.
+- **Enterprise Solutions**: For applications requiring exceptional performance, contact us on Discord to discuss our enterprise hosting plans.
+
+By leveraging these features and providing feedback on your specific needs, you can help us continually improve the HyperIndex head latency performance.

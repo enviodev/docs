@@ -19,7 +19,7 @@ slug: /metall2
 
 ### Tier
 
-STONE 🏗️
+STONE 🪨
 
 ### Overview
 
