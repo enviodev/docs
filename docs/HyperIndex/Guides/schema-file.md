@@ -1,7 +1,7 @@
 ---
 id: schema-file
-title: GraphQL Schema (schema.graphql)
-sidebar_label: GraphQL Schema (schema.graphql)
+title: Entities Schema (schema.graphql)
+sidebar_label: Entities Schema (schema.graphql)
 slug: /schema
 ---
 
@@ -48,6 +48,196 @@ Scalar types represent basic data types and map directly to JavaScript, TypeScri
 | `Timestamp`        | Timestamp with timezone                      | `Date`                    | `Js.Date.t`    |
 
 Learn more about GraphQL scalars [here](https://graphql.org/learn/).
+
+---
+
+## Working with BigDecimal
+
+The `BigDecimal` scalar type in HyperIndex is based on the [bignumber.js](https://mikemcl.github.io/bignumber.js/) library, which provides arbitrary-precision decimal arithmetic. This is essential for financial calculations and handling numeric values that exceed JavaScript's native number precision.
+
+### Importing BigDecimal
+
+```typescript
+// JavaScript/TypeScript
+import { BigDecimal } from "../generated/src/BigDecimal.js";
+
+// ReScript
+open BigDecimal;
+```
+
+### Creating BigDecimal Instances
+
+```typescript
+// From string (recommended for precision)
+const price = new BigDecimal("123.456789");
+
+// From number (may lose precision for very large values)
+const amount = new BigDecimal(123.45);
+
+// From other BigDecimal
+const copy = new BigDecimal(price);
+
+// Special values
+const zero = BigDecimal.ZERO;
+const one = BigDecimal.ONE;
+```
+
+### Arithmetic Operations
+
+BigDecimal instances are immutable. Operations return new BigDecimal instances:
+
+```typescript
+// Basic arithmetic
+const a = new BigDecimal("123.45");
+const b = new BigDecimal("67.89");
+
+const sum = a.plus(b); // 191.34
+const difference = a.minus(b); // 55.56
+const product = a.times(b); // 8,381.03
+const quotient = a.div(b); // 1.81839...
+
+// Power
+const squared = a.pow(2); // 15,239.9025
+
+// Square root
+const root = a.sqrt(); // 11.11...
+
+// Absolute value
+const abs = new BigDecimal("-123.45").abs(); // 123.45
+```
+
+### Comparison Methods
+
+```typescript
+const x = new BigDecimal("10.5");
+const y = new BigDecimal("10.5");
+const z = new BigDecimal("9.9");
+
+x.eq(y); // true (equal)
+x.gt(z); // true (greater than)
+x.gte(y); // true (greater than or equal)
+x.lt(z); // false (less than)
+x.lte(y); // true (less than or equal)
+
+// Check for special values
+x.isZero(); // false
+x.isPositive(); // true
+x.isNegative(); // false
+x.isFinite(); // true
+```
+
+### Rounding and Formatting
+
+```typescript
+const value = new BigDecimal("123.456789");
+
+// Get with specific decimal places
+value.dp(2); // 123.46 (rounded)
+value.dp(2, 1); // 123.45 (rounded down)
+
+// Format as string
+value.toString(); // "123.456789"
+value.toFixed(2); // "123.46"
+value.toExponential(2); // "1.23e+2"
+value.toPrecision(5); // "123.46"
+```
+
+### Working with Schema-Defined BigDecimal Fields
+
+When you've defined a `BigDecimal` field in your schema:
+
+```graphql
+type TokenPair {
+  id: ID!
+  name: String!
+  price: BigDecimal!
+  volume: BigDecimal!
+}
+```
+
+You can use it in your handlers:
+
+```typescript
+// In your event handler
+context.TokenPair.set({
+  id: event.params.pairId,
+  name: event.params.name,
+  price: new BigDecimal(event.params.price),
+  volume: new BigDecimal("0"), // Start with zero volume
+});
+
+// Updating a field
+const tokenPair = await context.TokenPair.get(pairId);
+if (tokenPair) {
+  const newVolume = tokenPair.volume.plus(new BigDecimal(tradeAmount));
+  context.TokenPair.set({
+    ...tokenPair,
+    volume: newVolume,
+  });
+}
+```
+
+### Example: Financial Calculation
+
+```typescript
+function calculateFee(amount: BigDecimal, feeRate: BigDecimal): BigDecimal {
+  // Calculate fee with proper rounding
+  return amount.times(feeRate).dp(2);
+}
+
+const tradeAmount = new BigDecimal("1250.75");
+const feeRate = new BigDecimal("0.0025"); // 0.25%
+const fee = calculateFee(tradeAmount, feeRate); // 3.13
+```
+
+### Best Practices for BigDecimal
+
+1. **Always use strings for initialization** when precision matters:
+
+   ```typescript
+   // Preferred
+   const value = new BigDecimal("123.456789");
+
+   // May lose precision
+   const value = new BigDecimal(123.456789);
+   ```
+
+2. **Set precision explicitly** when doing division:
+
+   ```typescript
+   // Set to 8 decimal places for crypto prices
+   const price = totalValue.div(tokenAmount).dp(8);
+   ```
+
+3. **Handle rounding appropriately** for financial calculations:
+
+   ```typescript
+   // Round down (floor) for user-favorable calculations
+   const userReceives = amount.dp(2, 1); // ROUND_DOWN
+
+   // Round up (ceil) for protocol-favorable calculations
+   const protocolFee = amount.dp(2, 0); // ROUND_UP
+   ```
+
+4. **Compare with equals method** instead of `==` or `===`:
+
+   ```typescript
+   // Correct
+   if (value.eq(BigDecimal.ZERO)) {
+     /* ... */
+   }
+
+   // Incorrect - compares object references
+   if (value === BigDecimal.ZERO) {
+     /* ... */
+   }
+   ```
+
+5. **Chain operations carefully**, remembering that each operation returns a new instance:
+   ```typescript
+   // Calculate (a + b) * c with proper precision
+   const result = a.plus(b).times(c).dp(8);
+   ```
 
 ---
 
