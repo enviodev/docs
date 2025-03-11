@@ -5,116 +5,195 @@ sidebar_label: Indexing OP Bridge Deposits
 slug: /tutorial-op-bridge-deposits
 ---
 
-# Indexing OP Bridge Deposits
+# Indexing Optimism Bridge Deposits
 
-This tutorial will guide you through the process of indexing the Optimism Standard Bridge contracts on Optimism and Ethereum Mainnet in less than 5 minutes using the Envio HyperIndex no-code [contract import](https://docs.envio.dev/docs/HyperIndex/contract-import) feature.
+## Introduction
 
-The Optimism Standard Bridge allows users to easily move ETH and most ERC-20 tokens between Ethereum and Optimism Mainnet. The goal is to index bridge deposit events by extracting the `DepositFinalized (index_topic_1 address l1Token, index_topic_2 address l2Token, index_topic_3 address from, address to, uint256 amount, bytes extraData)` logs emitted by the contracts.
+This tutorial will guide you through indexing Optimism Standard Bridge deposits in under 5 minutes using Envio HyperIndex's no-code [contract import](https://docs.envio.dev/docs/HyperIndex/contract-import) feature.
+
+The Optimism Standard Bridge enables the movement of ETH and ERC-20 tokens between Ethereum and Optimism. We'll index bridge deposit events by extracting the `DepositFinalized` logs emitted by the bridge contracts on both networks.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/9U2MTFU9or0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Prerequisites
 
-Before we start indexing, you'll need to make sure you have the [prerequisites](https://docs.envio.dev/docs/getting-started) installed.
+Before starting, ensure you have the following installed:
 
-## Initializing an Indexer
+- Node.js (v18 or newer)
+- pnpm (v8 or newer)
+- Docker Desktop
 
-Now that you have installed the prerequisite packages required, let’s jump into the practical steps of setting up the indexer.
+For detailed installation instructions, see the [Prerequisites section](https://docs.envio.dev/docs/getting-started#prerequisites).
 
-1. Open your terminal in an empty repository and initialize a new indexer by running the command ‘pnpx envio init’
+## Step 1: Initialize Your Indexer
 
-<img src="/docs-assets/tutorial-op-bridge-1.png" alt="tutorial-op-bridge-1" width="100%"/>
+1. Open your terminal in an empty directory and run:
 
-2. Name your indexer. In this example, we named our indexer “optimism-bridge-indexer” but feel free to name your indexer anything you prefer.
+```bash
+pnpx envio init
+```
 
-<img src="/docs-assets/tutorial-op-bridge-2.png" alt="tutorial-op-bridge-2" width="100%"/>
+2. Name your indexer (we'll use "optimism-bridge-indexer" in this example):
 
-3. Choose a language, select contract import, and import from the block explorer. For this demonstration, we’ve chosen to use TypeScript as the language.
+<img src="/docs-assets/tutorial-op-bridge-2.png" alt="Naming your indexer" width="100%"/>
 
-<img src="/docs-assets/tutorial-op-bridge-3.png" alt="tutorial-op-bridge-3" width="100%"/>
+3. Choose your preferred language (TypeScript, JavaScript, or ReScript):
 
-> Note: Indexers on Envio can be written in JavaScript, TypeScript, or ReScript.
+<img src="/docs-assets/tutorial-op-bridge-3.png" alt="Selecting TypeScript" width="100%"/>
 
-4. Choose `Block Explorer` then select `Optimism`, insert the Optimism bridge contract address from OP Etherscan, and select the events you would like to index. In this case, we’ll be indexing the `deposit finalized` event.
+## Step 2: Import the Optimism Bridge Contract
 
-To select an event navigate using the arrow keys (↑ ↓) and click the space bar once you have made your choice.
+1. Select **Contract Import** → **Block Explorer** → **Optimism**
 
-> Note: Multiple events can be selected and indexed at the same time.
+2. Enter the Optimism bridge contract address:
 
-Optimism bridge contract address: [0x4200000000000000000000000000000000000010](https://optimistic.etherscan.io/address/0x4200000000000000000000000000000000000010)
+   ```
+   0x4200000000000000000000000000000000000010
+   ```
 
-<img src="/docs-assets/tutorial-op-bridge-4.png" alt="tutorial-op-bridge-4" width="100%"/>
+   [View on Optimistic Etherscan](https://optimistic.etherscan.io/address/0x4200000000000000000000000000000000000010)
 
-5. Add another contract address, in this case, we’ve imported from the block explorer just like before, added the Optimism Gateway smart contract address on Ethereum Mainnet from Etherscan, and opted to index the events `eth deposit initiated`. Finally, review the configuration and select `I’m finished` to start generating the indexer.
+3. Select the `DepositFinalized` event:
+   - Navigate using arrow keys (↑↓)
+   - Press spacebar to select the event
 
-Ethereum Mainnet contract address: [0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1](https://basescan.org/address/0x833589fcd6edb6e08f4c7c32d4f71b54bda02913)
+<img src="/docs-assets/tutorial-op-bridge-4.png" alt="Selecting DepositFinalized event" width="100%"/>
 
-<img src="/docs-assets/tutorial-op-bridge-5.png" alt="tutorial-op-bridge-5" width="100%"/>
+> **Tip:** You can select multiple events to index simultaneously.
 
-<img src="/docs-assets/tutorial-op-bridge-6.png" alt="tutorial-op-bridge-6" width="100%"/>
+## Step 3: Add the Ethereum Mainnet Bridge Contract
 
-## Starting the Indexer
+1. When prompted, select **Add a new contract**
 
-Before starting your indexer, run the command below to ensure that no conflicting indexers are running.
+2. Choose **Block Explorer** → **Ethereum Mainnet**
 
-### Stopping the indexer:
+3. Enter the Ethereum Mainnet gateway contract address:
 
-`pnpm envio stop`
+   ```
+   0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1
+   ```
 
-> Note: Ignore if you’re a first-time user.
+   [View on Etherscan](https://etherscan.io/address/0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1)
 
-### Start the indexer:
+4. Select the `ETHDepositInitiated` event
 
-`pnpm dev`
+5. When finished adding contracts, select **I'm finished**
 
-Now, let's run our indexer locally by running the command below.
+<img src="/docs-assets/tutorial-op-bridge-6.png" alt="Completing contract import" width="100%"/>
 
-## Overview of Generated Code
+## Step 4: Start Your Indexer
 
-Now let's take a glance at the key files generated by Envio:
+1. If you have any running indexers, stop them first:
 
-1. config.yaml
-   This file outlines networks, start blocks, addresses, and events we want to index, specifying Optimism and Ethereum Mainnet.
+```bash
+pnpm envio stop
+```
 
-<img src="/docs-assets/tutorial-op-bridge-7.png" alt="tutorial-op-bridge-7" width="100%"/>
+2. Start your new indexer:
 
-2. schema.graphql
-   This file saves and defines the data structures for selected events, such as `eth deposit initiated` and `deposit finalized`.
+```bash
+pnpm envio dev
+```
 
-<img src="/docs-assets/tutorial-op-bridge-8.png" alt="tutorial-op-bridge-8" width="100%"/>
+This command:
 
-3. event-handler.ts
-   This file defines what happens when one of these events is emitted and saves what code is going to run, allowing customization in data handling.
+- Starts the required Docker containers
+- Sets up your database
+- Launches the indexing process
+- Opens the Hasura GraphQL interface
 
-<img src="/docs-assets/tutorial-op-bridge-9.png" alt="tutorial-op-bridge-9" width="100%"/>
+## Step 5: Understanding the Generated Code
 
-## Exploring the Indexed Data
+Let's examine the key files that Envio generated:
 
-Time to reap the rewards of your indexing efforts:
+### 1. `config.yaml`
 
-1. Head over to Hasura, type in the admin-secret password `testing`, and click “API” in the above column to access the GraphQL endpoint to query real-time data.
+This configuration file defines:
 
-<img src="/docs-assets/tutorial-op-bridge-10.png" alt="tutorial-op-bridge-10" width="100%"/>
+- Networks to index (Optimism and Ethereum Mainnet)
+- Starting blocks for each network
+- Contract addresses and ABIs
+- Events to track
 
-2. Now click on “Data” in the above column to monitor the indexing progress on Ethereum Mainnet and Optimism through the events sync state table to see which block number you are on.
+<img src="/docs-assets/tutorial-op-bridge-7.png" alt="Config YAML file" width="100%"/>
 
-<img src="/docs-assets/tutorial-op-bridge-11.png" alt="tutorial-op-bridge-11" width="100%"/>
+### 2. `schema.graphql`
 
-In general, if you wanted to index hundreds of millions of blocks and save hundreds and thousands of events this would usually take hours if not days using standard RPC but with Envio’s [HyperSync](https://docs.envio.dev/docs/hypersync) developers can reduce this process to a couple of minutes or even seconds.
+This schema defines the data structures for our selected events:
 
-3. Now let’s have a look at some of the events by heading back to “API” in the above column. From there you can run a query-specific event, in this case, "deposit finalized" to explore details such as amounts, senders, and recipients.
+- Entity types based on event data
+- Field types matching the event parameters
+- Relationships between entities (if applicable)
 
-<img src="/docs-assets/tutorial-op-bridge-12.png" alt="tutorial-op-bridge-12" width="100%"/>
+<img src="/docs-assets/tutorial-op-bridge-8.png" alt="GraphQL schema file" width="100%"/>
 
-**For example:**
-Let’s look at getting 10 "deposit finalized" events, and order them by the amount we would like to appear first (in this case: desc = greatest amount), the amounts being bridged, who it’s from, who it’s to, and the different L1 and L2 tokens.
+### 3. `src/EventHandlers.ts`
 
-Once you have selected your desired events run the query by clicking the play button ( ▶️) to gain access to the real-time indexed data
+This file contains the business logic for processing events:
 
-<img src="/docs-assets/tutorial-op-bridge-13.png" alt="tutorial-op-bridge-13" width="100%"/>
+- Functions that execute when events are detected
+- Data transformation and storage logic
+- Entity creation and relationship management
+
+<img src="/docs-assets/tutorial-op-bridge-9.png" alt="Event handlers file" width="100%"/>
+
+## Step 6: Exploring Your Indexed Data
+
+Now you can interact with your indexed data:
+
+### Accessing Hasura
+
+1. Open Hasura at [http://localhost:8080](http://localhost:8080)
+2. When prompted, enter the admin password: `testing`
+
+### Monitoring Indexing Progress
+
+1. Click the **Data** tab in the top navigation
+2. Find the `_events_sync_state` table to check indexing progress
+3. Observe which blocks are currently being processed
+
+<img src="/docs-assets/tutorial-op-bridge-11.png" alt="Indexing progress" width="100%"/>
+
+> **Note:** Thanks to Envio's [HyperSync](https://docs.envio.dev/docs/hypersync), indexing happens significantly faster than with standard RPC methods.
+
+### Querying Indexed Events
+
+1. Click the **API** tab
+2. Construct a GraphQL query to explore your data
+
+Here's an example query to fetch the 10 largest bridge deposits:
+
+```graphql
+query LargestDeposits {
+  DepositFinalized(limit: 10, order_by: { amount: desc }) {
+    l1Token
+    l2Token
+    from
+    to
+    amount
+    blockTimestamp
+  }
+}
+```
+
+3. Click the **Play** button to execute your query
+
+<img src="/docs-assets/tutorial-op-bridge-13.png" alt="Query results" width="100%"/>
 
 ## Conclusion
 
-And just like that, you've successfully indexed the Optimism Bridge contracts on both Optimism and Ethereum Mainnet using the Envio HyperIndex contract import feature.
+Congratulations! You've successfully created an indexer for Optimism Bridge deposits across both Ethereum and Optimism networks.
 
-Be sure to check out our [video walkthrough](https://www.youtube.com/watch?v=9U2MTFU9or0) on YouTube, including other tutorials that showcase Envio’s indexing features and capabilities.
+### What You've Learned
+
+- How to initialize a multi-network indexer using Envio
+- How to import contracts from different blockchains
+- How to query and explore indexed blockchain data
+
+### Next Steps
+
+- Try customizing the event handlers to add additional logic
+- Create relationships between events on different networks
+- Deploy your indexer to Envio's hosted service
+
+For more tutorials and advanced features, check out our [documentation](https://docs.envio.dev) or watch our [video walkthroughs](https://www.youtube.com/watch?v=9U2MTFU9or0) on YouTube.
