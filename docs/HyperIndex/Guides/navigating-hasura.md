@@ -136,4 +136,4 @@ When testing, you may need to reset your database:
 
 ---
 
-For more information on using GraphQL with your indexed data, refer to the [GraphQL API](/docs/HyperIndex/graphql-api) documentation.
+For more information on using GraphQL with your indexed data, refer to the [Hasura GraphQL documentation](https://hasura.io/docs/latest/queries/overview/).
