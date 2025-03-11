@@ -69,7 +69,7 @@ module.exports = {
         "Guides/cli-commands",
         "migration-guide-v1-v2",
         "Advanced/reorgs-support",
-        "Advanced/persisted-files",
+        // "Advanced/persisted-files",
         "Advanced/generated-files",
         "Advanced/terminology",
         {
