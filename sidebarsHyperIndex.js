@@ -11,7 +11,6 @@ module.exports = {
       label: "Guides",
       collapsed: false,
       items: [
-        "Guides/hyperindex-basics",
         "Guides/configuration-file",
         "Guides/schema-file",
         "Guides/event-handlers",

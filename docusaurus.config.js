@@ -24,10 +24,6 @@ const redirectsList = [
     to: "/docs/HyperIndex/contract-import",
   },
   {
-    from: "/docs/hyperindex-basics",
-    to: "/docs/HyperIndex/hyperindex-basics",
-  },
-  {
     from: "/docs/configuration-file",
     to: "/docs/HyperIndex/configuration-file",
   },

@@ -5,18 +5,6 @@ sidebar_label: Getting Started
 slug: /getting-started
 ---
 
----
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/LNhaN-Cikis" title="Envio - Getting Started Guide" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
----
-
-## Quick Setup
-
-Follow these simple steps to quickly get started building indexers with **Envio**.
-
----
-
 ## Prerequisites
 
 Ensure your system meets the following requirements before initializing your indexer:
@@ -62,33 +50,70 @@ Use existing example indexers as a starting point. You can find these examples i
 
 > **Important:** Always verify the Envio version used by the example indexer matches the [latest npm version](https://www.npmjs.com/package/envio). You may need minor adjustments to ensure compatibility.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/LNhaN-Cikis" title="Envio - Getting Started Guide" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ---
 
-## Configure Your Indexer
+## Essential Files
 
-After initialization, you can customize your indexer further by modifying these essential files:
+After initialization, your indexer will contain three main files that are essential for its operation:
 
-- **[`config.yaml`](./configuration-file)** – Adjust indexing parameters, blockchain endpoints, and more.
-- **[`schema.graphql`](./schema)** – Define the GraphQL schema for indexed data.
-- **[`EventHandlers.*`](./event-handlers)** – Write custom logic for processing blockchain events.
+1. **[`config.yaml`](./configuration-file)** – Defines indexing settings such as blockchain endpoints, events to index, and advanced behaviors.
+2. **[`schema.graphql`](./schema)** – Defines the GraphQL schema for indexed data and its structure for efficient querying.
+3. **[`src/EventHandlers.*`](./event-handlers)** – Contains the logic for processing blockchain events.
 
-> The exact naming of `EventHandlers` depends on your selected programming language.
+> **Note:** The file extension for Event Handlers (`*.ts`, `*.js`, or `*.res`) depends on the programming language chosen (TypeScript, JavaScript, or ReScript).
+
+You can customize your indexer by modifying these files to meet your specific requirements.
 
 ---
 
 ## Running Your Indexer
 
-### Run Locally ([docs →](./running-locally))
+### Run Locally
 
-You can easily test and run your indexer locally using:
+You can easily test and run your indexer locally using Docker and Hasura by following these steps:
 
-- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)**
-- **[Hasura](https://hasura.io/)** (provides GraphQL API access)
+1. Navigate to your project directory (if applicable):
 
-Follow our [guide to running the indexer locally](./running-locally) for detailed instructions.
+```bash
+cd your-indexer-directory
+```
 
-### Deploy to Hosted Service ([docs →](./hosted-service))
+2. Ensure [Docker](https://www.docker.com/products/docker-desktop/) is running on your machine.
+
+3. Start the indexer by running:
+
+```bash
+pnpm envio dev
+```
+
+This command automatically launches your local environment and opens the Hasura dashboard, where you can view indexed blockchain data.
+
+**Local Hasura Admin Password:**
+
+```
+testing
+```
+
+#### Stopping the Indexer
+
+When you're done, stop and clean up your local environment with:
+
+```bash
+pnpm envio stop
+```
+
+This will shut down and remove all Docker containers used for your local development environment.
+
+For more detailed instructions, refer to our [guide to running the indexer locally](./running-locally).
+
+### Deploy to Hosted Service
 
 Once you're ready, effortlessly deploy your configured indexer to Envio's hosted service and begin querying your endpoint immediately.
 
 Check out our [hosted service documentation](./hosted-service) for details on deployment and usage.
+
+---
+
+For a complete walkthrough of the process, refer to the [Quickstart guide](./contract-import).

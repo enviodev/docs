@@ -11,14 +11,6 @@ The **Quickstart** enables you to instantly autogenerate a powerful indexer and 
 
 ---
 
-### Video Tutorials
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/zkVlGgf5XAo" title="Quickstart Guide" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/JOiLUysZf-s" title="Indexer Initialization Guide" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
----
-
 ## Getting Started
 
 Run the following command to initialize your indexer:
@@ -28,6 +20,14 @@ pnpx envio init
 ```
 
 You'll then follow interactive prompts to customize your indexer.
+
+---
+
+### Video Tutorials
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/zkVlGgf5XAo" title="Quickstart Guide" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/JOiLUysZf-s" title="Indexer Initialization Guide" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ---
 
