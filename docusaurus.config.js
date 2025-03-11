@@ -158,7 +158,11 @@ const redirectsList = [
   },
   {
     from: "/docs/example-uniswap-v3",
-    to: "/docs/HyperIndex/example-uniswap-v3-multi-chain-indexer",
+    to: "/docs/HyperIndex/example-uniswap-v4-multi-chain-indexer",
+  },
+  {
+    from: "/docs/example-uniswap-v4",
+    to: "/docs/HyperIndex/example-uniswap-v4-multi-chain-indexer",
   },
   {
     from: "/docs/example-ens",
