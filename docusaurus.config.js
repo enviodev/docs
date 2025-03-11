@@ -269,18 +269,32 @@ const config = {
     ],
   ],
 
+  stylesheets: [
+    {
+      href: "/custom.css",
+      type: "text/css",
+    },
+  ],
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    
+
     ({
       announcementBar: {
-        id: 'support_us',
+        id: "support_us",
         content:
           'If you like Envio, give us a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/enviodev/hyperindex">GitHub ⭐️</a>',
-        backgroundColor: '#fafbfc',
-        textColor: '#091E42',
+        backgroundColor: "#fafbfc",
+        textColor: "#091E42",
         isCloseable: true,
       },
+      // Add custom CSS for smaller sidebar text
+      stylesheets: [
+        {
+          href: "/custom.css",
+          type: "text/css",
+        },
+      ],
       navbar: {
         title: "",
         logo: {

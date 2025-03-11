@@ -9,6 +9,7 @@ module.exports = {
     {
       type: "category",
       label: "Guides",
+      collapsed: false,
       items: [
         "Guides/hyperindex-basics",
         "Guides/configuration-file",
