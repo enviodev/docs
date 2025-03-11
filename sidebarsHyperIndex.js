@@ -110,8 +110,8 @@ module.exports = {
       },
       items: supportedNetworks,
     },
-    "licensing",
     "fuel/fuel",
+    "licensing",
     "terms-of-service",
     "privacy-policy",
     // {
