@@ -1,106 +1,205 @@
 ---
 id: loaders
 title: Loaders
-sidebar_label: Loaders
+sidebar_label: Loaders (Performance Optimization)
 slug: /loaders
 ---
 
-## Overview
+# Optimizing Database Access with Loaders
 
-Loaders provide an efficient way to define and load entities from the database, optimizing performance by minimizing I/O operations. They also enable you to load arrays of entities based on specific field values.
+## What Are Loaders?
 
-Loaders are designed to reduce I/O, which is often the primary performance bottleneck in an indexer. By using loaders, you can group multiple requests into a single database round trip before processing a batch of events. The retrieved values are cached in memory, allowing the batch to be processed entirely in memory.
+Loaders are specialized functions that optimize how your event handlers fetch data from the database. They provide a mechanism to:
 
-## Example: Refactoring a Simple Handler
+- **Batch multiple database requests** into a single operation
+- **Cache database results** in memory
+- **Reduce I/O operations**, which are often the primary performance bottleneck
 
-Let's explore how to convert a basic handler to use a loader. Below is an example of a handler that loads values at runtime, on demand.
+By using loaders, you can significantly reduce the number of database roundtrips required to process events, especially when dealing with large batches of events.
 
-```ts
+## Why Use Loaders?
+
+### The Database I/O Problem
+
+Consider this common pattern in event handlers:
+
+```typescript
+// Without loaders: Inefficient database access
 ERC20.Transfer.handler(async ({ event, context }) => {
   const sender = await context.Account.get(event.params.from);
   const receiver = await context.Account.get(event.params.to);
-  // ...Logic to update sender and receiver accounts
+
+  // Process the transfer...
 });
 ```
 
-In the example above, if there are `5,000` events in a batch, each with unique `to` and `from` parameters, this would result in `10,000` roundtrips to the database—one for each unique value loaded for "sender" and "receiver."
+**The Challenge:** If you're processing 5,000 transfer events, each with unique `from` and `to` addresses, this would result in **10,000 roundtrips** to the database—one for each sender and receiver lookup.
 
-### Refactoring with a Loader
+### How Loaders Solve This
 
-Now, let's refactor this handler to use a loader:
+Loaders address this problem by:
 
-```ts
+1. **Collecting all database requests** before processing events
+2. **Batching similar requests** into single database operations
+3. **Caching results** for use during event processing
+
+This approach can reduce thousands of database calls to just a handful, dramatically improving indexing performance.
+
+## How to Implement Loaders
+
+### Basic Structure
+
+Loaders use the `handlerWithLoader` pattern, which separates data loading from event processing:
+
+```typescript
+ContractName.EventName.handlerWithLoader({
+  // The loader function runs before event processing starts
+  loader: async ({ event, context }) => {
+    // Load all required data from the database
+    // Return the data needed for event processing
+  },
+
+  // The handler function processes each event with pre-loaded data
+  handler: async ({ event, context, loaderReturn }) => {
+    // Process the event using the data returned by the loader
+  },
+});
+```
+
+### Basic Example: Converting a Simple Handler
+
+Let's convert our previous example to use loaders:
+
+```typescript
 ERC20.Transfer.handlerWithLoader({
   loader: async ({ event, context }) => {
+    // Load sender and receiver accounts
     const sender = await context.Account.get(event.params.from);
     const receiver = await context.Account.get(event.params.to);
-    // Return the values you need from the loader,
-    // which will be passed to your handler as loaderReturn
+
+    // Return the loaded data to the handler
     return {
       sender,
       receiver,
     };
   },
+
   handler: async ({ event, context, loaderReturn }) => {
     const { sender, receiver } = loaderReturn;
-    // ...Logic to update sender and receiver accounts
+
+    // Process the transfer with the pre-loaded data
+    // No database lookups needed here!
   },
 });
 ```
 
-In this example, we're using `handlerWithLoader` instead of `handler` and passing an object with `loader` and `handler` properties. The `loader` is an asynchronous function that receives `event` and `context` as arguments, similar to the handler. The value returned by the loader is passed to the `loaderReturn` parameter in the handler.
+### How Batching Works
 
-Before processing a batch of events, all corresponding loaders are executed. The indexer attempts to load all the required entities into memory with as few database roundtrips as possible. Once all the loaders have run, the handlers for the batch are executed using the data loaded into memory.
+When Envio processes events:
 
-With this refactor, the same batch of `5,000` events would require only 2 roundtrips to the database. The loader for each event groups the `sender` requests into one query and the `receiver` requests into another.
+1. First, all loader functions run for a batch of events
+2. Similar database requests are automatically batched
+3. Then, all handler functions run with the pre-loaded data
+
+For our 5,000 transfer events example, this reduces database roundtrips from 10,000 to just 2!
+
+## Advanced Loader Techniques
 
 ### Optimizing for Concurrency
 
-We can further improve this by maximizing concurrency. For instance, both the "sender" and "receiver" accounts can be requested concurrently and awaited at the top level. This approach ensures that both requests are made in the same roundtrip to the database.
+You can further optimize by requesting multiple entities concurrently:
 
-```ts
+```typescript
 ERC20.Transfer.handlerWithLoader({
   loader: async ({ event, context }) => {
+    // Request sender and receiver concurrently
     const [sender, receiver] = await Promise.all([
       context.Account.get(event.params.from),
       context.Account.get(event.params.to),
     ]);
-    // Return the values you need from the loader,
-    // which will be passed to your handler as loaderReturn
-    return {
-      sender,
-      receiver,
-    };
+
+    return { sender, receiver };
   },
-  // ...handler code
+
+  handler: async ({ event, context, loaderReturn }) => {
+    const { sender, receiver } = loaderReturn;
+    // Process with pre-loaded data
+  },
 });
 ```
 
-With this approach, even for a batch of `5,000` events, there is only 1 roundtrip to the database. We've successfully reduced roundtrips from `10,000` down to `1`.
+This approach can reduce the database roundtrips to just 1 for the entire batch of events!
 
-## Querying by Field
+### Querying by Field Values
 
-Another useful application of loaders is with `getWhere` queries, which allow you to query arrays of entities by field values. These queries can be applied to any entity with a field used as a relationship from a [`@derivedFrom`](schema/#relationships-one-to-many-derivedfrom) directive or if the field has an [`@index`](database-performance-optimization/#creating-custom-indices) directive.
+Loaders also support more complex queries using the `getWhere` method, which allows you to retrieve arrays of entities based on field values:
 
-For example, to iterate over all `Approval` entities where the `owner_id` field equals a specific value:
-
-```ts
+```typescript
 ERC20.Approval.handlerWithLoader({
   loader: async ({ event, context }) => {
+    // Find all approvals for this owner
     const currentOwnerApprovals = await context.Approval.getWhere.owner_id.eq(
       event.params.owner
     );
 
     return { currentOwnerApprovals };
   },
+
   handler: async ({ event, context, loaderReturn }) => {
     const { currentOwnerApprovals } = loaderReturn;
 
-    for (const ownerApproval of currentOwnerApprovals) {
-      // iterate over currentOwnerApprovals
+    // Process all the owner's approvals
+    for (const approval of currentOwnerApprovals) {
+      // Process each approval
     }
   },
 });
 ```
 
-**Note:** These types of queries can be very resource-intensive and are not recommended for performance-critical applications. They are currently unrestricted, meaning that if a query is too large, it can easily cause an "out of memory" error, as all processing happens in memory.
+This technique works with any entity field that:
+
+- Is used in a relationship with the [`@derivedFrom`](schema/#relationships-one-to-many-derivedfrom) directive
+- Has an [`@index`](database-performance-optimization/#creating-custom-indices) directive
+
+## Best Practices
+
+### When to Use Loaders
+
+Loaders provide the most benefit when:
+
+- Processing batches of events that require similar database lookups
+- Reading the same entities multiple times across different events
+- Performing relationship queries that affect multiple entities
+
+### Performance Considerations
+
+- **Memory Usage**: All loaded entities are stored in memory during batch processing
+- **Query Size**: Very large `getWhere` queries might cause memory issues
+- **Complexity**: Balance the benefits of batching against code complexity
+
+### Rules of Thumb
+
+1. Use loaders if you are going to index more than say 5 million events
+2. Put all database operations in the loader function
+3. Keep handler functions focused on business logic
+4. Use concurrent requests when loading multiple unrelated entities
+
+## Limitations
+
+**Note:** The `getWhere` queries can be resource-intensive and should be used carefully:
+
+- They are currently unrestricted
+- Large result sets can cause "out of memory" errors
+- All processing happens in memory
+
+For performance-critical applications, consider limiting the scope of your queries or processing data in smaller batches.
+
+## Summary
+
+Loaders provide a powerful way to optimize database access in your Envio indexers by:
+
+- Reducing database roundtrips from thousands to just a few
+- Automatically batching similar requests
+- Caching results in memory for efficient processing
+
+By separating data loading from event processing, loaders allow you to write more efficient and performant indexers while maintaining clean, readable code.
