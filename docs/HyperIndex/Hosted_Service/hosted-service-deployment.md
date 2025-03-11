@@ -1,35 +1,89 @@
 ---
 id: hosted-service-deployment
-title: Deploying
+title: Deploying Your Indexer
 sidebar_label: Deploying
 slug: /hosted-service-deployment
 ---
 
-## Deploying an indexer to the hosted service
+# Deploying Your Indexer
 
-1. [Login with GitHub](https://envio.dev/app/login)
-1. Select an organisation or your personal GitHub user profile
+The Envio Hosted Service provides a seamless git-based deployment workflow, similar to modern platforms like Vercel. This enables you to easily deploy, update, and manage your indexers through your normal development workflow.
+
+## Initial Setup
+
+1. **Log in with GitHub**: Visit the [Envio App](https://envio.dev/app/login) and authenticate with your GitHub account
+2. **Select an Organization**: Choose your personal account or any organization you have access to
    ![Select organisation](/img/hosted-service/select-org.webp)
-1. Install the Envio Deployments GitHub app
+3. **Install the Envio Deployments GitHub App**: Grant access to the repositories you want to deploy
    ![Install GitHub App](/img/hosted-service/install-github-app.webp)
-1. Add & configure your indexer
+
+## Configuring Your Indexer
+
+1. **Add a New Indexer**: Click "Add Indexer" in the dashboard
    ![Add indexer](/img/hosted-service/add-indexer.webp)
+2. **Connect to Repository**: Select the repository containing your indexer code
    ![Connect indexer](/img/hosted-service/connect-indexer.webp)
-1. TIP: You may have multiple indexers per repository, differentiated by the config file, root directory and/or the git release branch.
+3. **Configure Deployment Settings**:
+   - Specify the config file location
+   - Set the root directory (important for monorepos)
+   - Choose the deployment branch
+     ![Configure indexer](/img/hosted-service/configure-indexer.webp)
+     ![Add org](/img/hosted-service/deploy-indexer.webp)
+
+:::tip
+**Multiple Indexers Per Repository**
+
+You can deploy multiple indexers from a single repository by configuring them with different:
+
+- Config file paths
+- Root directories
+- Deployment branches
+  :::
+
 :::warning
-If you are working in a monorepo make sure all your imports are inside the indexer directory.
+**Monorepo Configuration**
+
+If you're working in a monorepo, ensure all your imports are contained within your indexer directory to avoid deployment issues.
 :::
-   ![Configure indexer](/img/hosted-service/configure-indexer.webp)
-   ![add org](/img/hosted-service/deploy-indexer.webp)
-1. Create a deployment branch
-   ![add org](/img/hosted-service/checkout.webp)
-1. Deploy your indexer via git
-   ![add org](/img/hosted-service/push.webp)
 
-> For subsequent releases, we strongly recommend setting branch protection rules that prevent direct pushes to your release branch. Instead, making pull requests from a feature branch into the release branch is recommended📓
+## Deployment Workflow
 
-## Deployment limits
+1. **Create a Deployment Branch**: Set up the branch you specified during configuration
+   ![Create branch](/img/hosted-service/checkout.webp)
 
-Developers can deploy 3 indexers per organisation and 3 deployments per indexer. Deployments can be deleted in the hosted service to make space for more deployments.
+2. **Deploy via Git**: Push your code to the deployment branch
+   ![Push code](/img/hosted-service/push.webp)
+
+3. **Monitor Deployment**: Track the progress of your deployment in the Envio dashboard
+
+4. **Version Management**: Once deployed, you can:
+   - View detailed logs
+   - Switch between different deployed versions
+   - Rollback to previous versions if needed
+
+## Continuous Deployment Best Practices
+
+For a robust deployment workflow, we recommend:
+
+1. **Protected Branches**: Set up branch protection rules for your deployment branch
+2. **Pull Request Workflow**: Instead of pushing directly to the deployment branch, use pull requests from feature branches
+3. **CI Integration**: Add tests to your CI pipeline to validate indexer functionality before merging to the deployment branch
+
+## Version Management
+
+Each deployment creates a new version of your indexer that you can access through the dashboard. You can:
+
+- Compare different versions
+- Switch the active version with one click
+- Maintain multiple versions for testing or staging purposes
+
+## Deployment Limits
+
+These can vary depending on the plan you select. In general, development plans are allowed:
+
+- 3 indexers per organization
+- 3 deployments per indexer
+
+Need to free up space? You can delete old deployments through the Envio dashboard.
 
 ---
