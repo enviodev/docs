@@ -13,7 +13,7 @@ pnpx envio init
 
 ---
 
-## 📁 Required Files
+## Required Files
 
 The essential files to run HyperIndex are:
 
@@ -25,11 +25,11 @@ The essential files to run HyperIndex are:
 
 ---
 
-## 🚀 Running Your Indexer Locally
+## Running Your Indexer Locally
 
 After initializing your indexer, you can run it locally using Docker and Hasura. Follow these steps:
 
-### ✅ Starting the Indexer
+### Starting the Indexer
 
 1. Navigate to your project directory (if applicable):
 
@@ -55,7 +55,7 @@ testing
 
 ---
 
-### 🛑 Stopping the Indexer
+### Stopping the Indexer
 
 When you're done, stop and clean up your local environment with:
 
@@ -67,7 +67,7 @@ This will shut down and remove all Docker containers used for your local develop
 
 ---
 
-## ☁️ Next Steps: Deploying Your Indexer
+## Next Steps: Deploying Your Indexer
 
 Once you've successfully tested your indexer locally, deploy it easily to Envio's cloud infrastructure:
 

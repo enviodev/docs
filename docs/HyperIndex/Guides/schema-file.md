@@ -9,7 +9,7 @@ The **`schema.graphql`** file defines the data model for your HyperIndex indexer
 
 ---
 
-## 📌 Defining Entity Types
+## Defining Entity Types
 
 Entities in your schema are defined as GraphQL object types:
 
@@ -31,7 +31,7 @@ type User {
 
 ---
 
-## 🎯 Scalar Types
+## Scalar Types
 
 Scalar types represent basic data types and map directly to JavaScript, TypeScript, or ReScript types.
 

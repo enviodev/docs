@@ -77,7 +77,7 @@ field_selection:
     - "parentHash"
 ```
 
-For an exhaustive list of fields that can be added and more detailed information about field selection, please refer to the [Field Selection section in the Configuration File guide](configuration-file#-field-selection).
+For an exhaustive list of fields that can be added and more detailed information about field selection, please refer to the [Field Selection section in the Configuration File guide](configuration-file#field-selection).
 
 Note: By default, `number`, `hash`, and `timestamp` are already selected for `block_fields` and do not need to be configured.
 

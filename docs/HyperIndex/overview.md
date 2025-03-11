@@ -11,7 +11,7 @@ slug: /overview
 
 ---
 
-## ✅ Key Features
+## Key Features
 
 - **Quickstart templates** – Rapidly bootstrap your indexer.
 - **Real-time indexing** – Instantly track blockchain events.
@@ -32,15 +32,12 @@ slug: /overview
 
 ---
 
-## 🗺️ Feature Roadmap
+## Feature Roadmap
 
 Upcoming features on our development roadmap:
 
 - **⬜ Fallback RPC data sources** – Enhanced reliability for RPC connections.
 - **⬜ RPC client with caching** – Improved indexing performance through cached RPC calls.
-- **⬜ Interval handlers** – Execute custom logic at regular intervals.
-- **⬜ Block handlers** – Perform actions based on new block data.
-- **⬜ Call handlers** – Index and respond to contract calls directly.
 
 ---
 

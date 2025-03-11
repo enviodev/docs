@@ -17,7 +17,7 @@ This command generates necessary types and code for your event handlers.
 
 ---
 
-## 📌 Configuration Structure
+## Configuration Structure
 
 Here's an example `config.yaml` file:
 
@@ -42,9 +42,9 @@ networks:
 
 ---
 
-## 🔧 Key Configuration Options
+## Key Configuration Options
 
-### ✅ Contract Addresses
+### Contract Addresses
 
 Set the address of the smart contract you're indexing.
 
@@ -85,7 +85,7 @@ networks:
 
 ---
 
-### ✅ Events Selection
+### Events Selection
 
 Define specific events to index in a human-readable format:
 
@@ -99,9 +99,9 @@ By default, all events defined in the contract are indexed, but you can selectiv
 
 ---
 
-### ✅ Field Selection
+### Field Selection
 
-You can optimize data retrieval by specifying exactly which fields to fetch (this is used to enhance performance, see [Interactive Schema Explorer](#-interactive-schema-explorer) section):
+You can optimize data retrieval by specifying exactly which fields to fetch (this is used to enhance performance, see [Interactive Schema Explorer](#interactive-schema-explorer) section):
 
 ```yaml
 field_selection:
@@ -114,7 +114,7 @@ field_selection:
 
 #### Per-event Field Selection
 
-Starting from `envio@2.11.0`, you can specify fields per event (see [Interactive Schema Explorer](#-interactive-schema-explorer) for possibilities):
+Starting from `envio@2.11.0`, you can specify fields per event (see [Interactive Schema Explorer](#interactive-schema-explorer) for possibilities):
 
 ```yaml
 events:
@@ -128,7 +128,7 @@ events:
 
 ---
 
-### ✅ Unordered Multichain Mode
+### Unordered Multichain Mode
 
 To improve indexing performance when indexing multiple blockchains, you can enable **Unordered Multichain Mode**. This setting allows parallel processing of events from different networks without strictly maintaining cross-chain event ordering. Useful for minimizing indexing latency when indexing at the head.
 
@@ -142,7 +142,7 @@ Learn more about when and how to use this feature [here](./multichain-indexing#u
 
 ---
 
-### ✅ Rollback on Reorg
+### Rollback on Reorg
 
 HyperIndex automatically handles blockchain reorganizations by default. To disable or customize this behavior, set the `rollback_on_reorg` flag in your `config.yaml`:
 
@@ -154,7 +154,7 @@ See detailed configuration options [here](./reorgs-support).
 
 ---
 
-### ✅ Environment Variables
+### Environment Variables
 
 Since `envio@2.9.0`, environment variable interpolation is supported for flexibility and security:
 
@@ -179,7 +179,7 @@ CHAIN_ID=optimism ENVIO_ADDRESS=0xYourContractAddress pnpm dev
 
 ---
 
-## 📑 Full config file example
+## Full config file example
 
 This example indexes events from multiple contracts across multiple networks.
 
@@ -228,7 +228,7 @@ networks:
 
 ---
 
-## 🔍 Interactive Schema Explorer
+## Interactive Schema Explorer
 
 Explore detailed configuration schema parameters here:
 
