@@ -28,6 +28,10 @@ http://localhost:8080
 
 You can access this URL in any web browser to open the Hasura console.
 
+:::note
+When prompted for authentication, use the password: `testing`
+:::
+
 ## Key Dashboard Areas
 
 The Hasura dashboard has several tabs, but we'll focus on the two most important ones for HyperIndex developers:
