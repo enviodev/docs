@@ -9,34 +9,131 @@ slug: /navigating-hasura
 
 ## Introduction
 
-This page explains how to navigate the Hasura dashboard, focusing on two key tabs: the API and Data tabs. These tabs allow you to interact with and view indexed results.
+[Hasura](https://hasura.io/) is a GraphQL engine that provides a web interface for interacting with your indexed blockchain data. When running HyperIndex locally, Hasura serves as your primary tool for:
 
-The screenshots provided below come from the [Greeter tutorial](./greeter-tutorial).
+- Querying indexed data via GraphQL
+- Visualizing database tables and relationships
+- Testing API endpoints before integration with your frontend
+- Monitoring the indexing process
 
-## API tab
+This guide explains how to navigate the Hasura dashboard to effectively work with your indexed data.
+
+## Accessing Hasura
+
+When running HyperIndex locally, Hasura is automatically available at:
+
+```
+http://localhost:8080
+```
+
+You can access this URL in any web browser to open the Hasura console.
+
+## Key Dashboard Areas
+
+The Hasura dashboard has several tabs, but we'll focus on the two most important ones for HyperIndex developers:
+
+### API Tab
 
 The API tab lets you execute GraphQL queries and mutations on indexed data. It serves as a GraphQL playground for testing your API calls.
 
 <img src="/img/hasura-api-tab.png" alt="/hasura-api-tab" width="100%"/>
 
-Under the explorer, all entities defined in the `schema.graphql` file should appear.
-By default, Envio will also display [`dynamic_contracts`](../Advanced/dynamic-contracts.md) and `raw_events` (`raw_events` doesn't get populated for Fuel indexers) that have been used in the indexing process.
+#### Features
 
-In the GraphQL playground, you can structure and test your API calls using the indexed data.
+- **Explorer Panel**: The left panel shows all available entities defined in your `schema.graphql` file
+- **Query Builder**: The center area is where you write and execute GraphQL queries
+- **Results Panel**: The right panel displays query results in JSON format
 
-For additional information on GraphQL queries, visit Hasura's [quickstart guide](https://hasura.io/docs/latest/queries/quickstart/).
+#### Available Entities
 
-## Data tab
+By default, you'll see:
 
-The Data tab allows you to view and manage your database schema, tables, and relationships, providing crucial insight into the structure of the indexed data.
+- All entities defined in your `schema.graphql` file
+- [`dynamic_contracts`](../Advanced/dynamic-contracts.md) (for dynamically added contracts)
+- `raw_events` table (Note: This table is no longer populated by default to improve performance. To enable storage of raw events, add `raw_events: true` to your `config.yaml` file as described in the [Raw Events Storage](/docs/HyperIndex/configuration-file#raw-events-storage) section)
+
+#### Example Query
+
+Try a simple query to test your indexer:
+
+```graphql
+query MyQuery {
+  User(limit: 5) {
+    id
+    latestGreeting
+    numberOfGreetings
+  }
+}
+```
+
+Click the "Play" button to execute the query and see the results.
+
+For more advanced GraphQL query options, see Hasura's [quickstart guide](https://hasura.io/docs/latest/queries/quickstart/).
+
+### Data Tab
+
+The Data tab provides direct access to your database tables and relationships, allowing you to view the actual indexed data.
 
 <img src="/img/hasura-data-tab.png" alt="/hasura-data-tab" width="100%"/>
 
-In the public schema, all indexed tables should appear.
-Again, by default, [`dynamic_contracts`](../Advanced/dynamic-contracts.md) and `raw_events` tables will also be displayed.
+#### Features
 
-To verify that the data has been correctly indexed, it is advisable to check the content of the entity tables and the `db_write_timestamp` values for the rows in each table.
+- **Schema Browser**: View all tables in the database (left panel)
+- **Table Data**: Examine and browse data within each table
+- **Relationship Viewer**: See how different entities are connected
 
-Older `db_write_timestamp` values might signify stale data from a previous indexing run.
+#### Working with Tables
+
+1. Select any table from the "public" schema to view its contents
+2. Use the "Browse Rows" tab to see all data in that table
+3. Check the "Insert Row" tab to manually add data (useful for testing)
+4. View the "Modify" tab to see the table structure
+
+#### Verifying Indexed Data
+
+To confirm your indexer is working correctly:
+
+1. Check entity tables to ensure they contain the expected data
+2. Look at the `db_write_timestamp` column values to confirm when data was last updated
+3. Newer timestamps indicate fresh data; older timestamps might indicate stale data from previous runs
+
+## Common Tasks
+
+### Checking Indexing Status
+
+To verify your indexer is actively processing new blocks:
+
+1. Go to the Data tab
+2. Select any entity table
+3. Check the latest `db_write_timestamp` values
+4. Monitor these values over time to ensure they're updating
+
+(Note the TUI is also an easy way to monitor this)
+
+### Troubleshooting Missing Data
+
+If expected data isn't appearing:
+
+1. Check if you've enabled raw events storage (`raw_events: true` in `config.yaml`) and then examine the `raw_events` table to confirm events were captured
+2. Verify your event handlers are correctly processing these events
+3. Examine your GraphQL queries to ensure they match your schema structure
+4. Check console logs for any processing errors
+
+### Resetting Indexed Data
+
+When testing, you may need to reset your database:
+
+1. Stop your indexer
+2. Reset your database (refer to the development guide for commands)
+3. Restart your indexer to begin processing from the configured start block
+
+## Best Practices
+
+- **Regular Verification**: Periodically check both the API and Data tabs to ensure your indexer is functioning correctly
+- **Query Testing**: Test complex queries in the API tab before implementing them in your application
+- **Schema Validation**: Use the Data tab to verify that relationships between entities are correctly established
+- **Performance Monitoring**: Watch for tables that grow unusually large, which might indicate inefficient indexing
 
 ---
+
+For more information on using GraphQL with your indexed data, refer to the [GraphQL API](/docs/HyperIndex/graphql-api) documentation.

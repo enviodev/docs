@@ -10,33 +10,45 @@ import TabItem from "@theme/TabItem";
 
 ## Introduction
 
-Envio comes with a built-in testing library to assist developers write tests for their indexer. This library is specifically crafted to mock database states as well as events and assert event handler logic.
+Envio comes with a built-in testing library that enables developers to thoroughly validate their indexer behavior without requiring deployment or interaction with actual blockchains. This library is specifically crafted to:
 
-The testing library is simply a series of helper functions that can be used to write tests, which means that any JavaScript-based testing framework can be used. In the examples below, we use [Mocha](https://mochajs.org/).
+- **Mock database states**: Create and manipulate in-memory representations of your database
+- **Simulate blockchain events**: Generate test events that mimic real blockchain activity
+- **Assert event handler logic**: Verify that your handlers correctly process events and update entities
+- **Test complete workflows**: Validate the entire process from event creation to database updates
+
+The testing library provides helper functions that integrate with any JavaScript-based testing framework (like Mocha, Jest, or others), giving you flexibility in how you structure and run your tests.
 
 ## Learn by doing
 
-Tests are written in JavaScript, TypeScript, and ReScript for the Greeter template and can be explored by following the steps below
+If you prefer to explore by example, the Greeter template includes complete tests that demonstrate best practices:
 
-Generate `greeter` template in TypeScript using Envio CLI
+1. Generate `greeter` template in TypeScript using Envio CLI
 
 ```bash
 pnpx envio init template -l typescript -d greeter -t greeter -n greeter
 ```
 
-Run tests
+2. Run tests
 
 ```bash
 pnpm test
 ```
 
-See the `test/test.ts` file to understand how the tests are written.
+3. See the `test/test.ts` file to understand how the tests are written.
 
 ## Getting Started
 
-This page assumes you have a functioning indexer setup for which you intend to write tests.
+This section covers how to set up testing for your existing HyperIndex indexer.
 
-Install preferred testing framework, for example [Mocha](https://mochajs.org/)
+### Prerequisites
+
+- A functioning indexer setup with schema and event handlers
+- Envio CLI version 0.0.26 or above (verify with `envio -V`)
+
+### Setup Steps
+
+1. Install your preferred testing framework, for example [Mocha](https://mochajs.org/)
 
 <Tabs>
   <TabItem value="javascript" label="Javascript">
@@ -67,49 +79,52 @@ pnpm i mocha rescript-mocha
   </TabItem>
 </Tabs>
 
-Validate you're using Envio `v0.0.26` or above
+2. Create a `test` folder and a test file (e.g., `test.js`) inside it
 
-```bash
-envio -V
-```
-
-Create a `test` folder and a test file `test.js` inside it
-
-Add a test command to your `package.json`
+3. Add a test command to your `package.json`
 
 ```json
 "test": "mocha",
 ```
 
-Make sure to run `pnpm codegen` when changes are made to the config or schema files to regenerate the testing library (`TestHelpers` file).
+4. Generate the testing library by running:
 
 ```bash
 pnpm codegen
 ```
 
+This command will generate the `TestHelpers` file that contains the testing API based on your schema and configuration. Always run this command when you make changes to your schema or configuration files.
+
 ## Writing tests
 
-### Test library design
+### Test Library Design
 
-The library is designed to allow developers to mock the database, mock events and assert different outcomes to the database from these events.
+The testing library follows key design principles that make it effective for testing HyperIndex indexers:
 
-The mock database is immutable and each action returns a new instance of the mocked database.
-This makes it robust and easy to test against previous states of the database.
+- **Immutable database**: The mock database is immutable, with each operation returning a new instance. This makes it robust and easy to test against previous states.
+- **Chainable operations**: Operations can be chained together to build complex test scenarios.
+- **Realistic simulations**: Mock events closely mirror real blockchain events, allowing you to test your handlers in conditions similar to production.
 
-### Example steps of what most tests will look like
+### Typical Test Flow
 
-1. Initialize the mock database
-1. Create a mock event
-1. Process the mock event on the mock database
-1. Assert against the expected database state
+Most tests will follow this general pattern:
+
+1. Initialize the mock database (empty or with predefined entities)
+2. Create a mock event with test parameters
+3. Process the mock event through your handler(s)
+4. Assert that the resulting database state matches your expectations
+
+This flow allows you to verify that your event handlers correctly create, update, or modify entities in response to blockchain events.
 
 ## API
 
-The generated `TestHelpers` file exposes a few different functions:
+The generated `TestHelpers` file exposes several functions for testing your indexer:
+
+### MockDb Methods
 
 #### > `createMockDb`
 
-The ability to create an instance of the MockDb
+Creates an empty instance of a mock database:
 
 ```javascript
 const mockDbInitial = MockDb.createMockDb();
@@ -117,31 +132,33 @@ const mockDbInitial = MockDb.createMockDb();
 
 #### > `set`
 
-The ability to set an entity of a MockDb
+Adds or updates an entity in the mock database:
 
 ```javascript
 const updatedMockDb = mockDbInitial.entities.EntityName.set(entity);
 ```
 
 <span style={{ fontSize: "12px" }}>
-  Where EntityName is the entity defined in the Schema
+  Where EntityName is the entity defined in your Schema
 </span>
 
 #### > `get`
 
-1. Ability to get an entity from the MockDb
+Retrieves an entity from the mock database by its ID:
 
 ```javascript
 const entity = updatedMockDb.entities.EntityName.get(id);
 ```
 
 <span style={{ fontSize: "12px" }}>
-  Where EntityName is the entity defined in the Schema
+  Where EntityName is the entity defined in your Schema
 </span>
+
+### Event Methods
 
 #### > `createMockEvent`
 
-The ability to create an instance of an event
+Creates a mock blockchain event with the parameters you specify:
 
 ```javascript
 const eventMock = ContractName.EventName.createMockEvent({ params });
@@ -157,10 +174,7 @@ const eventMock = ContractName.EventName.createMockEvent({ params });
   Where `params` is an object of the parameters emitted in the event
 </div>
 
-Users can also define specific event log details by using `mockEventData` object as a parameter inside `params` object.
-This is useful when you want to test against specific event log details like block number, transaction hash, etc.
-
-The `mockEventData` object can include the following properties:
+You can optionally specify detailed event metadata using the `mockEventData` parameter:
 
 ```typescript
 {
@@ -191,7 +205,7 @@ Please see [field_selection](configuration-file#field-selection) section in conf
 
 #### > `processEvent`
 
-The ability to process an event on a mockDb
+Processes a mock event through your event handler and returns the updated mock database:
 
 ```javascript
 const updatedMockDbFromEvent = await ContractName.EventName.processEvent({
@@ -209,37 +223,45 @@ const updatedMockDbFromEvent = await ContractName.EventName.processEvent({
 
 ## Assertions
 
-In the examples we use NodeJS's built-in assert module but you can use other popular JavaScript-based assertion libraries like [chai](https://www.chaijs.com/) or [expect](https://github.com/Automattic/expect.js).
+The testing library works with any JavaScript assertion library. In the examples, we use Node.js's built-in assert module, but you can also use popular alternatives like [chai](https://www.chaijs.com/) or [expect](https://github.com/Automattic/expect.js).
+
+Common assertion patterns include:
+
+- `assert.deepEqual(expectedEntity, actualEntity)` - Check that entire entities match
+- `assert.equal(expectedValue, actualEntity.property)` - Verify specific property values
+- `assert.ok(updatedMockDb.entities.Entity.get(id))` - Ensure an entity exists
 
 ## Examples
 
-### A `NewGreeting` event creates a `User` entity
+### A `NewGreeting` Event Creates a User Entity
+
+This example tests that when a `NewGreeting` event is processed, it correctly creates a new `User` entity:
 
 <Tabs>
   <TabItem value="javascript" label="Javascript">
 
 ```javascript
 it("A NewGreeting event creates a User entity", async () => {
-  // Initializing the mock database
+  // Step 1: Initialize an empty mock database
   const mockDbInitial = MockDb.createMockDb();
 
-  // Initializing values for mock event
+  // Step 2: Define test data
   const userAddress = Addresses.defaultAddress;
   const greeting = "Hi there";
 
-  // Creating a mock event
+  // Step 3: Create a mock event with our test data
   const mockNewGreetingEvent = Greeter.NewGreeting.createMockEvent({
     greeting: greeting,
     user: userAddress,
   });
 
-  // Processing the mock event on the mock database
+  // Step 4: Process the event through the handler
   const updatedMockDb = await Greeter.NewGreeting.processEvent({
     event: mockNewGreetingEvent,
     mockDb: mockDbInitial,
   });
 
-  // Expected entity that should be created
+  // Step 5: Define what we expect to see in the database
   const expectedUserEntity = {
     id: userAddress,
     latestGreeting: greeting,
@@ -247,10 +269,8 @@ it("A NewGreeting event creates a User entity", async () => {
     greetings: [greeting],
   };
 
-  // Getting the entity from the mock database
+  // Step 6: Verify the database contains what we expect
   const actualUserEntity = updatedMockDb.entities.User.get(userAddress);
-
-  // Asserting that the entity in the mock database is the same as the expected entity
   assert.deepEqual(expectedUserEntity, actualUserEntity);
 });
 ```
@@ -260,26 +280,26 @@ it("A NewGreeting event creates a User entity", async () => {
 
 ```typescript
 it("A NewGreeting event creates a User entity", async () => {
-  // Initializing the mock database
+  // Step 1: Initialize an empty mock database
   const mockDbInitial = MockDb.createMockDb();
 
-  // Initializing values for mock event
+  // Step 2: Define test data
   const userAddress = Addresses.defaultAddress;
   const greeting = "Hi there";
 
-  // Creating a mock event
+  // Step 3: Create a mock event with our test data
   const mockNewGreetingEvent = Greeter.NewGreeting.createMockEvent({
     greeting: greeting,
     user: userAddress,
   });
 
-  // Processing the mock event on the mock database
+  // Step 4: Process the event through the handler
   const updatedMockDb = await Greeter.NewGreeting.processEvent({
     event: mockNewGreetingEvent,
     mockDb: mockDbInitial,
   });
 
-  // Expected entity that should be created
+  // Step 5: Define what we expect to see in the database
   const expectedUserEntity: UserEntity = {
     id: userAddress,
     latestGreeting: greeting,
@@ -287,10 +307,8 @@ it("A NewGreeting event creates a User entity", async () => {
     greetings: [greeting],
   };
 
-  // Getting the entity from the mock database
+  // Step 6: Verify the database contains what we expect
   const actualUserEntity = updatedMockDb.entities.User.get(userAddress);
-
-  // Asserting that the entity in the mock database is the same as the expected entity
   assert.deepEqual(expectedUserEntity, actualUserEntity);
 });
 ```
@@ -300,26 +318,26 @@ it("A NewGreeting event creates a User entity", async () => {
 
 ```rescript
 it("A NewGreeting event creates a User entity", async () => {
-    // Initializing the mock database
+    // Step 1: Initialize an empty mock database
     let mockDbInitial = TestHelpers.MockDb.createMockDb()
 
-    // Initializing values for mock event
+    // Step 2: Define test data
     let userAddress = Ethers.Addresses.defaultAddress
     let greeting = "Hi there"
 
-    // Creating a mock event
+    // Step 3: Create a mock event with our test data
     let mockNewGreetingEvent = TestHelpers.Greeter.NewGreeting.createMockEvent({
       greeting,
       user: userAddress,
     })
 
-    // Processing the mock event on the mock database
+    // Step 4: Process the event through the handler
     let updatedMockDb = await TestHelpers.Greeter.NewGreeting.processEvent({
       event: mockNewGreetingEvent,
       mockDb: mockDbInitial,
     })
 
-    // Expected entity that should be created
+    // Step 5: Define what we expect to see in the database
     let expectedUserEntity: Types.userEntity = {
       id: userAddress->Ethers.ethAddressToString,
       latestGreeting: greeting,
@@ -327,11 +345,10 @@ it("A NewGreeting event creates a User entity", async () => {
       greetings: [greeting],
     }
 
-    // Getting the entity from the mock database
+    // Step 6: Verify the database contains what we expect
     let actualUserEntity =
       updatedMockDb.entities.user.get(userAddress->Ethers.ethAddressToString)->Option.getExn
 
-    // Asserting that the entity in the mock database is the same as the expected entity
     Assert.deep_equal(expectedUserEntity, actualUserEntity)
   })
 ```
@@ -339,48 +356,51 @@ it("A NewGreeting event creates a User entity", async () => {
   </TabItem>
 </Tabs>
 
-### 2 Greetings from the same users results in that user having a greeter count of 2
+### Testing Entity Updates: 2 Greetings from the Same User
+
+This example tests that when the same user sends multiple greetings, the counter increments correctly:
 
 <Tabs>
   <TabItem value="javascript" label="Javascript">
 
 ```javascript
 it("2 Greetings from the same users results in that user having a greeter count of 2", async () => {
-  // Initializing the mock database
+  // Step 1: Initialize the mock database
   const mockDbInitial = MockDb.createMockDb();
-  // Initializing values for mock event
+
+  // Step 2: Define test data for two events
   const userAddress = Addresses.defaultAddress;
   const greeting = "Hi there";
   const greetingAgain = "Oh hello again";
 
-  // Creating a mock event
+  // Step 3: Create the first mock event
   const mockNewGreetingEvent = Greeter.NewGreeting.createMockEvent({
     greeting: greeting,
     user: userAddress,
   });
 
-  // Creating a mock event
+  // Step 4: Create the second mock event
   const mockNewGreetingEvent2 = Greeter.NewGreeting.createMockEvent({
     greeting: greetingAgain,
     user: userAddress,
   });
 
-  // Processing the mock event on the mock database
+  // Step 5: Process the first event
   const updatedMockDb = await Greeter.NewGreeting.processEvent({
     event: mockNewGreetingEvent,
     mockDb: mockDbInitial,
   });
 
-  // Processing the mock event on the updated mock database
+  // Step 6: Process the second event with the updated database
   const updatedMockDb2 = await Greeter.NewGreeting.processEvent({
     event: mockNewGreetingEvent2,
     mockDb: updatedMockDb,
   });
 
-  // Getting the entity from the mock database
+  // Step 7: Get the entity from the mock database
   const actualUserEntity = updatedMockDb2.entities.User.get(userAddress);
 
-  // Asserting that the field value of the entity in the mock database is the same as the expected field value
+  // Step 8: Verify the greeting count is 2
   assert.equal(2, actualUserEntity?.numberOfGreetings);
 });
 ```
@@ -390,41 +410,42 @@ it("2 Greetings from the same users results in that user having a greeter count 
 
 ```typescript
 it("2 Greetings from the same users results in that user having a greeter count of 2", async () => {
-  // Initializing the mock database
+  // Step 1: Initialize the mock database
   const mockDbInitial = MockDb.createMockDb();
-  // Initializing values for mock event
+
+  // Step 2: Define test data for two events
   const userAddress = Addresses.defaultAddress;
   const greeting = "Hi there";
   const greetingAgain = "Oh hello again";
 
-  // Creating a mock event
+  // Step 3: Create the first mock event
   const mockNewGreetingEvent = Greeter.NewGreeting.createMockEvent({
     greeting: greeting,
     user: userAddress,
   });
 
-  // Creating a mock event
+  // Step 4: Create the second mock event
   const mockNewGreetingEvent2 = Greeter.NewGreeting.createMockEvent({
     greeting: greetingAgain,
     user: userAddress,
   });
 
-  // Processing the mock event on the mock database
+  // Step 5: Process the first event
   const updatedMockDb = await Greeter.NewGreeting.processEvent({
     event: mockNewGreetingEvent,
     mockDb: mockDbInitial,
   });
 
-  // Processing the mock event on the updated mock database
+  // Step 6: Process the second event with the updated database
   const updatedMockDb2 = await Greeter.NewGreeting.processEvent({
     event: mockNewGreetingEvent2,
     mockDb: updatedMockDb,
   });
 
-  // Getting the entity from the mock database
+  // Step 7: Get the entity from the mock database
   const actualUserEntity = updatedMockDb2.entities.User.get(userAddress);
 
-  // Asserting that the field value of the entity in the mock database is the same as the expected field value
+  // Step 8: Verify the greeting count is 2
   assert.equal(2, actualUserEntity?.numberOfGreetings);
 });
 ```
@@ -434,45 +455,46 @@ it("2 Greetings from the same users results in that user having a greeter count 
 
 ```rescript
 it("2 Greetings from the same users results in that user having a greeter count of 2", async () => {
-    // Initializing the mock database
+    // Step 1: Initialize the mock database
     let mockDbInitial = TestHelpers.MockDb.createMockDb()
 
-    // Initializing values for mock event
+    // Step 2: Define test data for two events
     let userAddress = Ethers.Addresses.defaultAddress
     let greeting = "Hi there"
     let greetingAgain = "Oh hello again"
 
-    // Creating a mock event
+    // Step 3: Create the first mock event
     let mockNewGreetingEvent = TestHelpers.Greeter.NewGreeting.createMockEvent({
       greeting,
       user: userAddress,
     })
 
-    // Creating a mock event
+    // Step 4: Create the second mock event
     let mockNewGreetingEvent2 = TestHelpers.Greeter.NewGreeting.createMockEvent({
       greeting: greetingAgain,
       user: userAddress,
     })
 
-    // Processing the mock event on the mock database
+    // Step 5: Process the first event
     let updatedMockDb = await TestHelpers.Greeter.NewGreeting.processEvent({
       event: mockNewGreetingEvent,
       mockDb: mockDbInitial,
     })
 
-    // Processing the mock event on the updated mock database
+    // Step 6: Process the second event with the updated database
     let updatedMockDb2 = await TestHelpers.Greeter.NewGreeting.processEvent({
       event: mockNewGreetingEvent2,
       mockDb: updatedMockDb,
     })
 
+    // Step 7: Set our expected value
     let expectedGreetingCount = 2
 
-    // Getting the entity from the mock database
+    // Step 8: Get the entity from the mock database
     let actualUserEntity =
       updatedMockDb2.entities.user.get(userAddress->Ethers.ethAddressToString)->Option.getExn
 
-    // Asserting that the field value of the entity in the mock database is the same as the expected field value
+    // Step 9: Verify the greeting count is 2
     Assert.equal(actualUserEntity.numberOfGreetings, expectedGreetingCount)
   })
 ```
@@ -482,9 +504,23 @@ it("2 Greetings from the same users results in that user having a greeter count 
 
 ## Troubleshooting
 
-The testing code is available in versions of Envio `v0.0.26` and above.
+If you encounter issues with your tests, check the following:
 
-Make sure to import relevant files and packages into your test file, it might look something like this;
+### Environment and Setup
+
+1. **Verify your Envio version**: The testing library is available in versions `v0.0.26` and above
+
+   ```bash
+   envio -V
+   ```
+
+2. **Ensure you've generated testing code**: Always run codegen after updating your schema or config
+
+   ```bash
+   pnpm codegen
+   ```
+
+3. **Check your imports**: Make sure you're importing the correct files
 
 <Tabs>
    <TabItem value="javascript" label="Javascript">
@@ -517,6 +553,29 @@ open Belt
   </TabItem>
 </Tabs>
 
-> Dev note: 📢 When working in ReScript make sure to update your `bsconfig` file to add the test folder as a source and add `rescript-mocha` as a `bs-dependency`
+### Common Issues and Solutions
+
+- **"Cannot read properties of undefined"**: This usually means an entity wasn't found in the database. Verify your IDs match exactly and that the entity exists before accessing it.
+
+- **"Type mismatch"**: Ensure that your entity structure matches what's defined in your schema. Type issues are common when working with numeric types (like `BigInt` vs `number`).
+
+- **ReScript specific setup**: If using ReScript, remember to update your `bsconfig.json` file:
+
+  ```json
+  {
+    "sources": [
+      { "dir": "src", "subdirs": true },
+      { "dir": "test", "subdirs": true }
+    ],
+    "bs-dependencies": ["rescript-mocha"]
+  }
+  ```
+
+- **Debug database state**: If you're having trouble with assertions, add a debug log to see the exact state of your entities:
+  ```javascript
+  console.log(
+    JSON.stringify(updatedMockDb.entities.User.get(userAddress), null, 2)
+  );
+  ```
 
 If you encounter any issues or have questions, please reach out to us on [Discord](https://discord.gg/Q9qt8gZ2fX)

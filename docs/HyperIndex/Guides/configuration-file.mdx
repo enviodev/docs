@@ -99,6 +99,26 @@ By default, all events defined in the contract are indexed, but you can selectiv
 
 ---
 
+### Raw Events Storage
+
+By default, HyperIndex doesn't store raw event data in the database to optimize performance and reduce storage requirements. However, you can enable this feature for debugging purposes or if you need to access the original event data.
+
+To enable storage of raw events, add the following to your `config.yaml`:
+
+```yaml
+raw_events: true
+```
+
+When enabled, all indexed events will be stored in the `raw_events` table in the database, which you can view through the Hasura interface. This is particularly useful for:
+
+- Debugging event processing issues
+- Verifying that events are being captured correctly
+- Creating custom queries against raw blockchain data
+
+Note that enabling this option will increase database storage requirements and may slightly impact indexing performance.
+
+---
+
 ### Field Selection
 
 You can optimize data retrieval by specifying exactly which fields to fetch (this is used to enhance performance, see [Interactive Schema Explorer](#interactive-schema-explorer) section):
