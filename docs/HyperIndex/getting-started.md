@@ -5,9 +5,9 @@ sidebar_label: Getting Started
 slug: /getting-started
 ---
 
-## Prerequisites
+## Indexer Initialization
 
-Ensure your system meets the following requirements before initializing your indexer:
+### Prerequisites
 
 - **[Node.js](https://nodejs.org/en/download/current)** _(v18 or newer recommended)_
 - **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
