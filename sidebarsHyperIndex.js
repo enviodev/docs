@@ -21,18 +21,8 @@ module.exports = {
     },
     {
       type: "category",
-      label: "Tutorials",
-      items: [
-        "Tutorials/tutorial-op-bridge-deposits",
-        "Tutorials/tutorial-erc20-token-transfers",
-        "Tutorials/tutorial-indexing-fuel",
-        "Tutorials/greeter-tutorial",
-        "Tutorials/price-data",
-      ],
-    },
-    {
-      type: "category",
       label: "Examples",
+      collapsed: false,
       items: [
         "Examples/example-uniswap-v4",
         "Examples/example-sablier",
@@ -40,6 +30,17 @@ module.exports = {
         "Examples/example-cross-chain-messaging",
         // "Examples/example-liquidation-metrics",
         // "Examples/example-ens",
+      ],
+    },
+    {
+      type: "category",
+      label: "Tutorials",
+      items: [
+        "Tutorials/tutorial-op-bridge-deposits",
+        "Tutorials/tutorial-erc20-token-transfers",
+        "Tutorials/tutorial-indexing-fuel",
+        "Tutorials/greeter-tutorial",
+        "Tutorials/price-data",
       ],
     },
     {

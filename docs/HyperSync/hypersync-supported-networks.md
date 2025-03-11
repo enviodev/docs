@@ -49,7 +49,7 @@ The Tier is the level of support (and therefore reliability) based on the infras
 | Harmony Shard 0      | 1666600000 | https://harmony-shard-0.hypersync.xyz or https://1666600000.hypersync.xyz           | 🥈   |                 |
 | Holesky              | 17000      | https://holesky.hypersync.xyz or https://17000.hypersync.xyz                        | 🎒   |                 |
 | Holesky Token Test   | 17000      | https://holesky-token-test.hypersync.xyz or https://17000.hypersync.xyz             | 🔒   |                 |
-| Hyperliquid          | 645749     | https://hyperliquid.hypersync.xyz or https://645749.hypersync.xyz                   | 🪨   |                 |
+| Hyperliquid          | 645749     | https://hyperliquid.hypersync.xyz or https://645749.hypersync.xyz                   | 🏗️  |                 |
 | Ink                  | 57073      | https://ink.hypersync.xyz or https://57073.hypersync.xyz                            | 🪨   |                 |
 | Internal Test Chain  | 16858666   | https://internal-test-chain.hypersync.xyz or https://16858666.hypersync.xyz         | 🔒   |                 |
 | Kroma                | 255        | https://kroma.hypersync.xyz or https://255.hypersync.xyz                            | 🪨   |                 |

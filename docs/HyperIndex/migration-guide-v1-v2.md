@@ -14,7 +14,7 @@ Welcome to HyperIndex v2 - a major upgrade that significantly enhances your inde
 While the full release changes can be found in the [v2.0.0 release notes](https://github.com/enviodev/hyperindex/releases/tag/v2.0.0), here are some key highlights before we dive into the comprehensive migration guide:
 
 - Handlers are now asynchronous, with `loaders` becoming an optional tool for additional optimizations.
-- [Async-mode](/docs/HyperIndex/v1/async-mode) has been removed as it's no longer needed in v2.
+- Async-mode has been removed as it's no longer needed in v2.
 - Loaders (when used) are more expressive and directly connected to the handler context via their return type.
   - In v2, you can access loader fields in the handler the same way you do in the loader, using an async 'get' function.
   - The return type of the loader can be used to directly access loaded data in the handler via the context.

@@ -89,8 +89,7 @@ const redirectsList = [
   },
   {
     from: "/docs/linked-entity-loaders",
-    // this has been updated to point to v1 since it doesn't exist in v2.
-    to: "/docs/HyperIndex/v1/linked-entity-loaders",
+    to: "/docs/HyperIndex/overview",
   },
   {
     from: "/docs/HyperIndex/v2/migration-guide-v1-v2",
@@ -98,7 +97,7 @@ const redirectsList = [
   },
   {
     from: "/docs/HyperIndex/linked-entity-loaders",
-    to: "/docs/HyperIndex/v1/linked-entity-loaders",
+    to: "/docs/HyperIndex/overview",
   },
   {
     from: "/docs/dynamic-contracts",
@@ -130,19 +129,19 @@ const redirectsList = [
   },
   {
     from: "/docs/async-mode",
-    to: "/docs/HyperIndex/v1/async-mode",
+    to: "/docs/HyperIndex/overview",
   },
   {
     from: "/docs/HyperIndex/async-mode",
-    to: "/docs/HyperIndex/v1/async-mode",
+    to: "/docs/HyperIndex/overview",
   },
   {
     from: "/docs/labels",
-    to: "/docs/HyperIndex/v1/labels",
+    to: "/docs/HyperIndex/overview",
   },
   {
     from: "/docs/HyperIndex/labels",
-    to: "/docs/HyperIndex/v1/labels",
+    to: "/docs/HyperIndex/overview",
   },
   {
     from: "/docs/performance",
@@ -314,21 +313,10 @@ const config = {
             position: "left",
           },
           {
-            type: "docsVersionDropdown",
-            docsPluginId: "HyperIndex",
-            position: "left",
-          },
-          {
             to: "docs/HyperSync/overview",
             label: "HyperSync Docs",
             position: "left",
           },
-          // //// I will add versioning later - for now - no versioning.
-          // {
-          //   type: 'docsVersionDropdown',
-          //   docsPluginId: 'HyperSync',
-          //   position: 'left',
-          // },
           {
             to: "blog",
             label: "Blog",
@@ -416,15 +404,11 @@ const config = {
         editUrl: "https://github.com/enviodev/docs/edit/main/",
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,
-        lastVersion: "current",
+        disableVersioning: true,
         versions: {
           current: {
             label: "v2",
             path: "",
-          },
-          v1: {
-            label: "v1",
-            path: "v1",
           },
         },
       },
