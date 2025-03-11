@@ -9,6 +9,15 @@ slug: /overview
 
 ![Sync Process](../../static/img/sync.gif)
 
+:::info HyperIndex & HyperSync
+
+**HyperIndex** is Envio's full-featured blockchain indexing framework that transforms on-chain events into structured, queryable databases with GraphQL APIs.
+
+**HyperSync** is the high-performance data engine that powers HyperIndex. It provides the raw blockchain data access layer, delivering up to 2000x faster performance than traditional RPC endpoints.
+
+While HyperIndex gives you a complete indexing solution with schema management and event handling, HyperSync can be used directly for custom data pipelines and specialized applications.
+:::
+
 ---
 
 ## Key Features
