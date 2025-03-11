@@ -257,8 +257,7 @@ For cases where standard optimizations aren't sufficient:
    - Create specialized handlers for high-volume events
    - Simplify logic for the most common paths
 
-3. **Infrastructure Scaling**
-   - Consider hardware upgrades for database-bound workloads
-   - Evaluate network proximity to your data sources
+3. **Speak to the Envio Team**
+   - We can help!
 
 By regularly benchmarking your indexer and methodically addressing performance bottlenecks, you can achieve significant improvements in indexing speed and efficiency.
