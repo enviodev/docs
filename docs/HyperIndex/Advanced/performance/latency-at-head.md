@@ -1,7 +1,7 @@
 ---
 id: latency-at-head
 title: Latency at the Head
-sidebar_label: Latency at the Head
+sidebar_label: Latency at the Head (Performance)
 slug: /latency-at-head
 ---
 

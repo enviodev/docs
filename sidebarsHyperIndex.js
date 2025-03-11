@@ -62,7 +62,6 @@ module.exports = {
         "Advanced/dynamic-contracts",
         "Advanced/wildcard-indexing",
         "Guides/contract-state",
-        "Advanced/loaders",
         "Advanced/hypersync",
         "Advanced/rpc-sync",
         "Guides/ipfs",
@@ -72,20 +71,24 @@ module.exports = {
         // "Advanced/persisted-files",
         "Advanced/generated-files",
         "Advanced/terminology",
-        {
-          type: "category",
-          label: "Performance",
-          link: {
-            type: "doc",
-            id: "Advanced/performance/index",
-          },
-          items: [
-            "Advanced/performance/database-performance-optimization",
-            "Advanced/performance/historical-sync",
-            "Advanced/performance/latency-at-head",
-            "Advanced/performance/benchmarking",
-          ],
-        },
+        "Advanced/loaders",
+        "Advanced/performance/database-performance-optimization",
+        "Advanced/performance/latency-at-head",
+        "Advanced/performance/benchmarking",
+        // {
+        //   type: "category",
+        //   label: "Performance",
+        //   link: {
+        //     type: "doc",
+        //     id: "Advanced/performance/index",
+        //   },
+        //   items: [
+        //     "Advanced/performance/database-performance-optimization",
+        //     // "Advanced/performance/historical-sync",
+        //     "Advanced/performance/latency-at-head",
+        //     "Advanced/performance/benchmarking",
+        //   ],
+        // },
       ],
     },
     {

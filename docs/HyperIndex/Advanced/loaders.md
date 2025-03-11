@@ -1,7 +1,7 @@
 ---
 id: loaders
 title: Loaders
-sidebar_label: Loaders (Performance Optimization)
+sidebar_label: Loaders (Performance)
 slug: /loaders
 ---
 
