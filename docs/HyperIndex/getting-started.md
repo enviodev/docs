@@ -11,13 +11,13 @@ slug: /getting-started
 
 ---
 
-## 🚀 Quick Setup
+## Quick Setup
 
 Follow these simple steps to quickly get started building indexers with **Envio**.
 
 ---
 
-## ✅ Prerequisites
+## Prerequisites
 
 Ensure your system meets the following requirements before initializing your indexer:
 
@@ -29,7 +29,7 @@ Ensure your system meets the following requirements before initializing your ind
 
 ---
 
-## ⚙️ Initialize Your Indexer
+## Initialize Your Indexer
 
 Envio provides several ways to initialize an indexer depending on your needs:
 
@@ -64,7 +64,7 @@ Use existing example indexers as a starting point. You can find these examples i
 
 ---
 
-## 🛠️ Configure Your Indexer
+## Configure Your Indexer
 
 After initialization, you can customize your indexer further by modifying these essential files:
 
@@ -76,9 +76,9 @@ After initialization, you can customize your indexer further by modifying these 
 
 ---
 
-## ▶️ Running Your Indexer
+## Running Your Indexer
 
-### 🖥️ Run Locally ([docs →](./running-locally))
+### Run Locally ([docs →](./running-locally))
 
 You can easily test and run your indexer locally using:
 
@@ -87,7 +87,7 @@ You can easily test and run your indexer locally using:
 
 Follow our [guide to running the indexer locally](./running-locally) for detailed instructions.
 
-### ☁️ Deploy to Hosted Service ([docs →](./hosted-service))
+### Deploy to Hosted Service ([docs →](./hosted-service))
 
 Once you're ready, effortlessly deploy your configured indexer to Envio's hosted service and begin querying your endpoint immediately.
 

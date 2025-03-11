@@ -51,7 +51,7 @@ Learn more about GraphQL scalars [here](https://graphql.org/learn/).
 
 ---
 
-## 🔗 Enum Types
+## Enum Types
 
 Enums allow fields to accept only a predefined set of values.
 
@@ -96,7 +96,7 @@ let user: Types.userEntity = {
 
 ---
 
-## 🧩 Relationships: One-to-Many (`@derivedFrom`)
+## Relationships: One-to-Many (`@derivedFrom`)
 
 Define relationships between entities using the `@derivedFrom` directive, known as **reverse lookups**.
 
@@ -126,7 +126,7 @@ type Token {
 
 ---
 
-## 🚦 Field Indexing (`@index`)
+## Field Indexing (`@index`)
 
 Add an index to a field for optimized queries and loader performance:
 
@@ -143,7 +143,7 @@ type Token {
 
 ---
 
-## ⚙️ Advanced: Precision and Scale (`@config` Directive)
+## Advanced: Precision and Scale (`@config` Directive)
 
 Customize the precision and scale for `BigInt` and `BigDecimal` fields using `@config`.
 
@@ -191,7 +191,7 @@ type AdvancedEntity {
 
 ---
 
-## 🛠️ Generating Types
+## Generating Types
 
 Once you've defined your schema, run this command to generate these entity types that can be accessed in your event handlers:
 
@@ -201,11 +201,11 @@ pnpm envio codegen
 
 ---
 
-## 📚 Best Practices
+## Best Practices
 
 - Use camelCase for field names (`latestGreeting`, `numberOfGreetings`).
 - Keep entity and field names clear, descriptive, and intuitive.
 
 ---
 
-🎉 You're now ready to define powerful schemas and efficiently query your indexed data with HyperIndex!
+You're now ready to define powerful schemas and efficiently query your indexed data with HyperIndex!

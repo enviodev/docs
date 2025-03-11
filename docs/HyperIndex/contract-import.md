@@ -11,7 +11,7 @@ The **Quickstart** enables you to instantly autogenerate a powerful indexer and 
 
 ---
 
-### 📹 Video Tutorials
+### Video Tutorials
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/zkVlGgf5XAo" title="Quickstart Guide" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -19,7 +19,7 @@ The **Quickstart** enables you to instantly autogenerate a powerful indexer and 
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 Run the following command to initialize your indexer:
 
@@ -31,7 +31,7 @@ You'll then follow interactive prompts to customize your indexer.
 
 ---
 
-## 🔧 Indexer Initialization Options
+## Indexer Initialization Options
 
 During initialization, you'll be presented with two options:
 
@@ -49,7 +49,7 @@ Choose the **Contract Import** option to auto-generate indexers directly from sm
 
 ---
 
-## 📥 Contract Import Methods
+## Contract Import Methods
 
 There are two convenient methods to import your contract:
 
@@ -58,7 +58,7 @@ There are two convenient methods to import your contract:
 
 ### 1. Block Explorer Import
 
-This method uses a verified contract’s address from a supported blockchain explorer (Etherscan, Routescan, etc.) to automatically fetch the ABI.
+This method uses a verified contract's address from a supported blockchain explorer (Etherscan, Routescan, etc.) to automatically fetch the ABI.
 
 #### Steps:
 
@@ -193,7 +193,7 @@ Complete the import process or continue adding contracts:
 
 ---
 
-## 🛠️ Generated Files & Configuration
+## Generated Files & Configuration
 
 The Quickstart automatically generates key files:
 
@@ -225,6 +225,6 @@ Learn more in the [event handlers guide](./Guides/event-handlers.mdx).
 
 ---
 
-🎉 **Congratulations!** Your HyperIndex indexer is now ready to run and query data!
+**Congratulations!** Your HyperIndex indexer is now ready to run and query data!
 
 Next step: [Running your Indexer locally](./running-locally) or [Deploying to Hosted Service](./hosted-service).

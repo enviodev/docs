@@ -80,7 +80,7 @@ With this approach, even for a batch of `5,000` events, there is only 1 roundtri
 
 ## Querying by Field
 
-Another useful application of loaders is with `getWhere` queries, which allow you to query arrays of entities by field values. These queries can be applied to any entity with a field used as a relationship from a [`@derivedFrom`](schema/#-relationships-one-to-many-derivedfrom) directive or if the field has an [`@index`](database-performance-optimization/#creating-custom-indices) directive.
+Another useful application of loaders is with `getWhere` queries, which allow you to query arrays of entities by field values. These queries can be applied to any entity with a field used as a relationship from a [`@derivedFrom`](schema/#relationships-one-to-many-derivedfrom) directive or if the field has an [`@index`](database-performance-optimization/#creating-custom-indices) directive.
 
 For example, to iterate over all `Approval` entities where the `owner_id` field equals a specific value:
 
