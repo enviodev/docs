@@ -34,6 +34,17 @@ module.exports = {
     },
     {
       type: "category",
+      label: "Hosting",
+      collapsed: false,
+      items: [
+        "Hosted_Service/hosted-service",
+        "Hosted_Service/hosted-service-deployment",
+        "Hosted_Service/hosted-service-billing",
+        "Hosted_Service/self-hosting",
+      ],
+    },
+    {
+      type: "category",
       label: "Tutorials",
       items: [
         "Tutorials/tutorial-op-bridge-deposits",
@@ -41,16 +52,6 @@ module.exports = {
         "Tutorials/tutorial-indexing-fuel",
         "Tutorials/greeter-tutorial",
         "Tutorials/price-data",
-      ],
-    },
-    {
-      type: "category",
-      label: "Hosting",
-      items: [
-        "Hosted_Service/hosted-service",
-        "Hosted_Service/hosted-service-deployment",
-        "Hosted_Service/hosted-service-billing",
-        "Hosted_Service/self-hosting",
       ],
     },
     {

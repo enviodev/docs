@@ -14,7 +14,8 @@ Envio offers a fully managed hosting solution for your indexers, providing all t
 - **Git-based Deployments**: Similar to Vercel, deploy your indexer by simply pushing to a designated deployment branch
 - **Zero Infrastructure Management**: We handle all the servers, databases, and scaling for you
 - **Version Management**: Switch between different deployed versions of your indexer with one click
-- **Built-in Monitoring**: Track performance, errors, and usage through our dashboard
+- **Built-in Monitoring**: Track logs and sync status
+- **Alerting**: Get email alerts when indexing errors occur
 - **GraphQL API**: Access your indexed data through a performant GraphQL endpoint
 - **Multi-chain Support**: Deploy indexers that track multiple networks from a single codebase
 
