@@ -8,258 +8,184 @@ slug: /multichain-indexing
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-This page explains how to index from multiple chains in a single indexer.
+# Understanding Multichain Indexing
 
-This means that events from contracts deployed on multiple chains can be used to create and update entities defined in the schema file.
+Multichain indexing allows you to monitor and process events from contracts deployed across multiple blockchain networks within a single indexer instance. This capability is essential for applications that:
 
-Users are required to populate the `network` section in `config.yaml` file for each chain and specify a contract to index from.
+- Track the same contract deployed across multiple networks
+- Need to aggregate data from different chains into a unified view
+- Monitor cross-chain interactions or state
 
-Users can then specify the event loader/handler for each of the contracts specified in `config.yaml` file.
+## How It Works
 
-## Multichain Indexing on Greeter template
+With multichain indexing, events from contracts deployed on multiple chains can be used to create and update entities defined in your schema file. Your indexer will process events from all configured networks, maintaining proper synchronization across chains.
 
-### Config file
+## Configuration Requirements
+
+To implement multichain indexing, you need to:
+
+1. Populate the `networks` section in your `config.yaml` file for each chain
+2. Specify contracts to index from each network
+3. Create event handlers for the specified contracts
+
+## Real-World Example: Uniswap V4 Multichain Indexer
+
+For a comprehensive, production-ready example of multichain indexing, we recommend exploring our [Uniswap V4 Multichain Indexer](/docs/HyperIndex/example-uniswap-v4-multi-chain-indexer). This official reference implementation:
+
+- Indexes Uniswap V4 deployments across 10 different blockchain networks
+- Powers the official [v4.xyz](https://v4.xyz) interface with real-time data
+- Demonstrates best practices for high-performance multichain indexing
+- Provides a complete, production-grade implementation you can study and adapt
+
+![V4 indexer](/img/v4.gif)
+
+The Uniswap V4 indexer showcases how to effectively structure a multichain indexer for a complex DeFi protocol, handling high volumes of data across multiple networks while maintaining performance and reliability.
+
+## Config File Structure for Multichain Indexing
+
+The `config.yaml` file for multichain indexing contains three key sections:
+
+1. **Global contract definitions** - Define contracts, ABIs, and events once
+2. **Network-specific configurations** - Specify chain IDs and starting blocks
+3. **Contract instances** - Reference global contracts with network-specific addresses
 
 ```yaml
-name: Greeter
-description: Greeter indexer
-#Global contract definitions that must contain all definitions except
-#addresses. Now you can share a single handler/abi/event definitions
-#for contracts across multiple chains
+# Example structure (simplified)
 contracts:
-  - name: Greeter
-    abi_file_path: ./abis/greeter-abi.json
+  - name: ExampleContract
+    abi_file_path: ./abis/example-abi.json
     handler: ./src/EventHandlers.js
     events:
-      - event: NewGreeting
-      - event: ClearGreeting
+      - event: ExampleEvent
+
 networks:
+  - id: 1 # Ethereum Mainnet
+    start_block: 0
+    contracts:
+      - name: ExampleContract
+        address: "0x1234..."
   - id: 137 # Polygon
-    start_block: 45336336
+    start_block: 0
     contracts:
-      - name: Greeter #A reference to the global contract definition
-        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
-  - id: 59144 # Linea
-    start_block: 367801
-    contracts:
-      - name: Greeter #A reference to the global contract definition
-        address: "0xdEe21B97AB77a16B4b236F952e586cf8408CF32A"
+      - name: ExampleContract
+        address: "0x5678..."
 ```
 
-The Greeter indexer listens to `NewGreeting` and `ClearGreeting` events from the `Greeter` contract (which is defined above networks as a "global contract") to update the `Greeting` entity.
+### Key Configuration Concepts
 
-Notice how the global definition of the "Greeter" contract does not contain any addresses. And in the contracts section of both Polygon and Linea networks, they simply reference the name of the contract ("Greeter") and define the address. Both of these will use the same handler functions and events.
+- The global `contracts` section defines the contract interface, ABI, handlers, and events once
+- The `networks` section lists each blockchain network you want to index
+- Each network entry references the global contract and provides the network-specific address
+- This structure allows you to reuse the same handler functions and event definitions across networks
 
-### Schema file
+> 📢 **Best Practice**: When developing multichain indexers, append the chain ID to entity IDs to avoid collisions. For example: `user-1` for Ethereum and `user-137` for Polygon.
 
-```graphql
-type User {
-  id: ID! # user's account address
-  greetings: [String!]! # list of greetings made by the user
-  latestGreeting: String! # most recent greeting
-  numberOfGreetings: Int! # total number of greetings made
-}
-```
+## Multichain Event Ordering
 
-> Dev note: 📢 When it makes sense, we recommend appending the chain ID to the entity ID when you are developing multichain indexers. For example, if you deploy a contract to two different networks with the same contract address then append `-<chainId>` to the end of the id to differentiate the contracts between different networks.
+When indexing multiple chains, you have two approaches for handling event ordering:
 
-### Event Handler file
+### Unordered Multichain Mode (Default)
 
-<Tabs>
-  <TabItem value="javascript" label="Javascript">
+By default, the indexer processes events as soon as they're available from each chain, without waiting for other chains. This "Unordered Multichain Mode" provides better performance and lower latency.
 
-```javascript
-let { GreeterContract } = require("../generated/src/Handlers.bs.js");
+With unordered mode (the default):
 
-GreeterContract.NewGreeting.loader((event, context) => {
-  context.User.load(event.params.user);
-});
+- Events will still be processed in order within each individual chain
+- Events across different chains may be processed out of order
+- Processing happens as soon as events are emitted, reducing latency
+- You avoid waiting for the slowest chain's block time
 
-GreeterContract.NewGreeting.handler((event, context) => {
-  let user = event.params.user;
-  let latestGreeting = event.params.greeting;
-  let numberOfGreetings = event.params.numberOfGreetings;
+This mode is ideal for most applications, especially when:
 
-  let existingUser = context.User.get(event.params.user);
+- Operations on your entities are [commutative](./terminology#commutative-property) (order doesn't matter)
+- Entities from different networks never interact with each other
+- Processing speed is more important than guaranteed cross-chain ordering
 
-  if (existingUser !== undefined) {
-    context.User.set({
-      id: user,
-      latestGreeting: latestGreeting,
-      numberOfGreetings: existingUser.numberOfGreetings + 1,
-      greetings: [...existingUser.greetings, latestGreeting],
-    });
-  } else {
-    context.User.set({
-      id: user,
-      latestGreeting: latestGreeting,
-      numberOfGreetings: 1,
-      greetings: [latestGreeting],
-    });
-  }
-});
+### Ordered Mode (Optional)
 
-GreeterContract.ClearGreeting.loader((event, context) => {
-  context.User.load(event.params.user);
-});
+If your application requires strict deterministic ordering of events across all chains, you can enable "Ordered Mode". In this mode, the indexer synchronizes event processing across all chains, ensuring that events are processed in the exact same order in every indexer run, regardless of which chain they came from.
 
-GreeterContract.ClearGreeting.handler((event, context) => {
-  let existingUser = context.User.get(event.params.user);
-  if (existingUser !== undefined) {
-    context.User.set({
-      id: user,
-      latestGreeting: "",
-      numberOfGreetings: existingUser.numberOfGreetings + 1,
-      greetings: existingUser.greetings,
-    });
-  }
-});
-```
+#### When to Use Ordered Mode
 
-  </TabItem>
-  <TabItem value="typescript" label="Typescript">
+Use ordered mode only when:
 
-```typescript
-import {
-  GreeterContract_NewGreeting_loader,
-  GreeterContract_NewGreeting_handler,
-  GreeterContract_ClearGreeting_loader,
-  GreeterContract_ClearGreeting_handler,
-} from "../generated/src/Handlers.gen";
+- The exact ordering of operations across different chains is critical to your application logic
+- You need guaranteed deterministic results across all indexer runs
+- You're willing to accept higher latency for cross-chain consistency
 
-import { UserEntity } from "../generated/src/Types.gen";
+Cross-chain ordering is particularly important for applications like:
 
-GreeterContract_NewGreeting_loader(({ event, context }) => {
-  context.User.load(event.params.user.toString());
-});
+- **Bridge applications**: Where messages or assets must be processed on one chain before being processed on another chain
+- **Cross-chain governance**: Where decisions made on one chain affect operations on another chain
+- **Multi-chain financial applications**: Where the sequence of transactions across chains affects accounting or risk calculations
+- **Data consistency systems**: Where the state must be consistent across multiple chains in a specific order
 
-GreeterContract_NewGreeting_handler(({ event, context }) => {
-  let currentUser = context.User.get(event.params.user);
+#### How to Enable Ordered Mode
 
-  if (currentUser !== undefined) {
-    let userObject: UserEntity = {
-      id: event.params.user.toString(),
-      latestGreeting: event.params.greeting,
-      numberOfGreetings: currentUser.numberOfGreetings + 1,
-      greetings: [...currentUser.greetings, event.params.greeting],
-    };
-
-    context.User.set(userObject);
-  } else {
-    let userObject: UserEntity = {
-      id: event.params.user.toString(),
-      latestGreeting: event.params.greeting,
-      numberOfGreetings: 1,
-      greetings: [event.params.greeting],
-    };
-    context.User.set(userObject);
-  }
-});
-
-GreeterContract_ClearGreeting_loader(({ event, context }) => {
-  context.User.load(event.params.user.toString());
-});
-
-GreeterContract_ClearGreeting_handler(({ event, context }) => {
-  let currentUser = context.User.get(event.params.user);
-
-  if (currentUser !== undefined) {
-    let userObject: UserEntity = {
-      id: event.params.user.toString(),
-      latestGreeting: "",
-      numberOfGreetings: currentUser.numberOfGreetings,
-      greetings: currentUser.greetings,
-    };
-
-    context.User.set(userObject);
-  }
-});
-```
-
-  </TabItem>
-  <TabItem value="rescript" label="Rescript">
-
-```rescript
-open Types
-
-Handlers.GreeterContract.NewGreeting.loader(({ event, context }) => {
-  context.greeting.load(event.params.user->Ethers.ethAddressToString)
-})
-
-Handlers.GreeterContract.NewGreeting.handler(({ event, context }) => {
-  let currentUserOpt = context.greeting.get(event.params.user->Ethers.ethAddressToString)
-
-  switch currentUserOpt {
-  | Some(existingUser) => {
-      let userObject: userEntity = {
-        id: event.params.user->Ethers.ethAddressToString,
-        latestGreeting: event.params.greeting,
-        numberOfGreetings: existingUser.numberOfGreetings + 1,
-        greetings: existingUser.greetings->Belt.Array.concat([event.params.greeting]),
-      }
-
-      context.greeting.set(userObject)
-    }
-
-  | None =>
-    let userObject: userEntity = {
-      id: event.params.user->Ethers.ethAddressToString,
-      latestGreeting: event.params.greeting,
-      numberOfGreetings: 1,
-      greetings: [event.params.greeting],
-    }
-
-    context.greeting.set(userObject)
-  }
-})
-
-Handlers.GreeterContract.ClearGreeting.loader(({ event, context }) => {
-  context.greeting.load(event.params.user->Ethers.ethAddressToString)
-  ()
-})
-
-Handlers.GreeterContract.ClearGreeting.handler(({ event, context }) => {
-  let currentUserOpt = context.greeting.get(event.params.user->Ethers.ethAddressToString)
-
-  switch currentUserOpt {
-  | Some(existingUser) => {
-      let userObject: userEntity = {
-        id: event.params.user->Ethers.ethAddressToString,
-        latestGreeting: "",
-        numberOfGreetings: existingUser.numberOfGreetings,
-        greetings: existingUser.greetings,
-      }
-
-      context.greeting.set(userObject)
-    }
-
-  | None => ()
-  }
-})
-```
-
-  </TabItem>
-</Tabs>
-
-## `Unordered Multichain Mode`
-
-To activate "Unordered Multichain Mode", add a field to your config.yaml file like this:
+In your config.yaml:
 
 ```yaml
-unordered_multichain_mode: true
+unordered_multichain_mode: false
 networks: ...
 ```
 
-Or you can set it via environment variable (this would take precedence over config):
+Or via environment variable:
 
 ```sh
-UNORDERED_MULTICHAIN_MODE=true
+UNORDERED_MULTICHAIN_MODE=false
 ```
 
-By default the indexer will synchronise the ordering of events across chains, ensuring that indexing is always deterministic and events across networks will be processed in the same order on every indexer run. This deterministic synchronisation is important for some applications, but for others, it is not. This is why we have added "unordered multichain mode".
+#### Technical Details
 
-In order for events to be perfectly ordered across multiple networks, the indexer needs to wait for all blocks to increment from each network. This is because the indexer needs to determine which block came first. Hence there is a latency between when an event is emitted and when it is processed by the indexer based on the block interval of the slowest network.
+With ordered mode enabled:
 
-Generally, if operations to update an entity from multiple events across multiple networks are [commutative](./terminology#commutative-property) (where the ordering of operations doesn't effect the result) then the ordering of events doesn't need to be ordered and the unordered multichain mode can be set to true. Likewise, if there is no overlap between entities from different networks then the unordered multichain mode can be set to true as the ordering of events across the networks is not important.
+- The indexer needs to wait for all blocks to increment from each network
+- There is increased latency between when an event is emitted and when it's processed
+- Processing speed is limited by the block interval of the slowest network
+- Events are guaranteed to be processed in the same order in every indexer run
 
-If unordered multichain mode is set to true, then the indexer will process events as soon as they are emitted, and so the indexer will not wait for all blocks to increment from each network before moving on to the next block. Even though events will remain ordered for a given network, events from different networks can be processed out of order, but it also means that events will be processed as soon as they are emitted.
+#### Cross-Chain Ordering Preservation
+
+Ordered mode ensures that the temporal relationship between events on different chains is preserved. This is achieved by:
+
+1. **Global timestamp ordering**: Events are ordered based on their block timestamps across all chains
+2. **Deterministic processing**: The same sequence of events will be processed in the same order every time
+
+The primary trade-off is increased latency at the head of the chain. Since the indexer must wait for blocks from all chains to determine the correct ordering, the processing of recent events is delayed by the slowest chain's block time. For example, if Chain A has 2-second blocks and Chain B has 15-second blocks, the indexer will process events at the slower 15-second rate to maintain proper ordering.
+
+This latency is acceptable for applications where correct cross-chain ordering is more important than real-time updates. For bridge applications in particular, this ordering preservation can be critical for security and correctness, as it ensures that deposit events on one chain are always processed before the corresponding withdrawal events on another chain.
+
+## Best Practices for Multichain Indexing
+
+### 1. Entity ID Namespacing
+
+Always namespace your entity IDs with the chain ID to prevent collisions between networks. This ensures that entities from different networks remain distinct.
+
+### 2. Error Handling
+
+Implement robust error handling for network-specific issues. A failure on one chain shouldn't prevent indexing from continuing on other chains.
+
+### 3. Testing
+
+- Test your indexer with realistic scenarios across all networks
+- Use testnet deployments for initial validation
+- Verify entity updates work correctly across chains
+
+### 4. Performance Considerations
+
+- Use unordered mode when appropriate for better performance
+- Consider your indexing frequency based on the block times of each chain
+- Monitor resource usage, as indexing multiple chains increases load
+
+## Troubleshooting Common Issues
+
+1. **Different Network Speeds**: If one network is significantly slower than others, consider using unordered mode to prevent bottlenecks.
+
+2. **Entity Conflicts**: If you see unexpected entity updates, verify that your entity IDs are properly namespaced with chain IDs.
+
+3. **Memory Usage**: If your indexer uses excessive memory, consider optimizing your entity structure and implementing pagination in your queries.
+
+## Next Steps
+
+- Explore our [Uniswap V4 Multichain Indexer](/docs/HyperIndex/example-uniswap-v4-multi-chain-indexer) for a complete implementation
+- Review [performance optimization techniques](/docs/HyperIndex/performance) for your indexer

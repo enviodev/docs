@@ -14,6 +14,7 @@ module.exports = {
         "Guides/configuration-file",
         "Guides/schema-file",
         "Guides/event-handlers",
+        "Advanced/multichain-indexing",
         // "Guides/subgraph-mPigration",
         "Guides/testing",
         "Guides/navigating-hasura",
@@ -60,7 +61,6 @@ module.exports = {
       items: [
         "Advanced/dynamic-contracts",
         "Advanced/wildcard-indexing",
-        "Advanced/multichain-indexing",
         "Guides/contract-state",
         "Advanced/loaders",
         "Advanced/hypersync",
