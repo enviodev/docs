@@ -164,7 +164,7 @@ For more detailed configuration options, refer to the [eRPC documentation](https
 | Speed           | 10-100x faster                                                     | Baseline                     |
 | Configuration   | Minimal                                                            | Requires tuning              |
 | Rate Limits     | None                                                               | Depends on provider          |
-| Cost            | Included with HyperIndex                                           | Pay per request/subscription |
+| Cost            | Included with Hosted Service                                       | Pay per request/subscription |
 | Network Support | [Supported networks](/docs/HyperSync/hypersync-supported-networks) | Any EVM network              |
 | Maintenance     | Managed by Envio                                                   | Self-managed                 |
 
