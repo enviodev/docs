@@ -17,7 +17,7 @@ HyperSync is significantly faster and more cost-effective than traditional RPC m
 
 If a [network is supported](/docs/HyperSync/hypersync-supported-networks) on HyperSync, then HyperSync is used by default as the data source. This means developers don't additionally need to worry about RPCs, rate-limiting, etc. This is especially valuable for multi-chain apps.
 
-If the network that you want to index is not supported on HyperSync, please navigate to [RPC Sync](/docs/HyperIndex/Advanced/rpc-sync.md) for more information to use RPC as a data source.
+If the network that you want to index is not supported on HyperSync, please navigate to [RPC Data Source](/docs/HyperIndex/Advanced/rpc-sync.md) for more information to use RPC as a data source.
 
 You can also request a network to be added to HyperSync in the [Discord](https://discord.gg/Q9qt8gZ2fX).
 

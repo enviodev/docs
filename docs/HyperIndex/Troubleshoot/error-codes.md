@@ -104,7 +104,7 @@ Envio error codes are categorized by their first digits:
 **Solution**:
 
 - Add either a HyperSync or RPC configuration for your network
-- See the [HyperSync](./hypersync) or [RPC Sync](./rpc-sync) documentation
+- See the [HyperSync Data Source](./hypersync) or [RPC Data Source](./rpc-sync) documentation
 - Example:
   ```yaml
   network:
