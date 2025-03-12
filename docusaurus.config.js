@@ -236,8 +236,6 @@ const config = {
   favicon: "img/favicon.ico",
   url: "https://docs.envio.dev",
   baseUrl: "/",
-  description: "Web3's Backend - Envio",
-  image: "img/envio-social-card.png",
   organizationName: "enviodev",
   projectName: "indexer-docs",
   onBrokenLinks: "throw",
@@ -281,6 +279,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 
     ({
+      image: "img/preview-banner.png",
       announcementBar: {
         id: "support_us",
         content:
