@@ -6,8 +6,8 @@ slug: /overview
 ---
 
 <Head>
-  <link rel="og:image" href="/img/preview-banner.png" />
-  <link rel="twitter:image" href="/img/preview-banner.png" />
+  <meta name="og:image" content="/img/preview-banner.png" />
+  <meta name="twitter:image" content="/img/preview-banner.png" />
 </Head>
 
 **HyperIndex** is a blazing-fast, developer-friendly multichain indexer, optimized for both local development and reliable hosted deployment. It empowers developers to effortlessly build robust backends for blockchain applications.
