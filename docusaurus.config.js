@@ -236,6 +236,8 @@ const config = {
   favicon: "img/favicon.ico",
   url: "https://docs.envio.dev",
   baseUrl: "/",
+  description: "Web3's Backend - Envio",
+  image: "img/envio-social-card.png",
   organizationName: "enviodev",
   projectName: "indexer-docs",
   onBrokenLinks: "throw",
@@ -374,6 +376,12 @@ const config = {
           "typescript",
         ],
       },
+      metadata: [
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:site', content: '@envio_indexer' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:locale', content: 'en' },
+      ],
     }),
   plugins: [
     [
