@@ -86,9 +86,9 @@ name: Greeter
 description: Greeter indexer
 networks:
   - id: 137 # Polygon
-    # Short and simple
++   # Short and simple
 +   rpc: https://eth-mainnet.your-rpc-provider.com?API_KEY={ENVIO_MAINNET_API_KEY}
-    # Or provide multiple RPC endpoints with more flexibility
++   # Or provide multiple RPC endpoints with more flexibility
 +   rpc:
 +     - url: https://eth-mainnet.your-rpc-provider.com?API_KEY={ENVIO_MAINNET_API_KEY}
 +       for: fallback
