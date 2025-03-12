@@ -234,7 +234,7 @@ const config = {
   title: "Envio",
   tagline: "The fastest most flexible way to get on-chain data.",
   favicon: "img/favicon.ico",
-  url: "https://docs.envio.dev",
+  url: "https://envio-docs-spt3dl8o2-envio-9ec2d675.vercel.app",
   baseUrl: "/",
   organizationName: "enviodev",
   projectName: "indexer-docs",
