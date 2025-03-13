@@ -240,6 +240,11 @@ const config = {
   projectName: "indexer-docs",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
+  // Add canonical URL configuration for LLM docs site
+  ...(process.env.DOCS_FOR_LLM === "true" && {
+    // Ensure URLs match between sites for proper canonical link generation
+    trailingSlash: true,
+  }),
   i18n: {
     defaultLocale: "en",
     locales: ["en"],
@@ -376,10 +381,10 @@ const config = {
         ],
       },
       metadata: [
-        { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:site', content: '@envio_indexer' },
-        { property: 'og:type', content: 'website' },
-        { property: 'og:locale', content: 'en' },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:site", content: "@envio_indexer" },
+        { property: "og:type", content: "website" },
+        { property: "og:locale", content: "en" },
       ],
     }),
   plugins: [
@@ -426,6 +431,36 @@ const config = {
         redirects: redirectsList,
       },
     ],
+    // Add canonical URLs plugin when building for LLM site
+    ...(process.env.DOCS_FOR_LLM === "true"
+      ? [
+          [
+            function canonicalUrlPlugin(context, options) {
+              return {
+                name: "canonical-url-plugin",
+                injectHtmlTags({ content }) {
+                  // Get the current URL path
+                  const { siteConfig, permalink } = content;
+                  // Create the canonical URL by combining the main site URL with the current page path
+                  const canonicalUrl = `${siteConfig.url}${permalink}`;
+
+                  return {
+                    headTags: [
+                      {
+                        tagName: "link",
+                        attributes: {
+                          rel: "canonical",
+                          href: canonicalUrl,
+                        },
+                      },
+                    ],
+                  };
+                },
+              };
+            },
+          ],
+        ]
+      : []),
   ],
   themes: ["docusaurus-json-schema-plugin"],
 };
