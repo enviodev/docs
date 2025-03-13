@@ -30,6 +30,7 @@ If you are a network operator or user and would like improved service support or
 
 | Network Name         | Network ID | URL                                                                                 | Tier | Supports Traces |
 | -------------------- | ---------- | ----------------------------------------------------------------------------------- | ---- | --------------- |
+| Abstract             | 2741       | https://abstract.hypersync.xyz or https://2741.hypersync.xyz                        | 🪨   |                 |
 | Arbitrum             | 42161      | https://arbitrum.hypersync.xyz or https://42161.hypersync.xyz                       | 🥈   |                 |
 | Arbitrum Nova        | 42170      | https://arbitrum-nova.hypersync.xyz or https://42170.hypersync.xyz                  | 🏅   |                 |
 | Arbitrum Sepolia     | 421614     | https://arbitrum-sepolia.hypersync.xyz or https://421614.hypersync.xyz              | 🎒   |                 |
@@ -73,6 +74,7 @@ If you are a network operator or user and would like improved service support or
 | Lukso Testnet        | 4201       | https://lukso-testnet.hypersync.xyz or https://4201.hypersync.xyz                   | 🎒   |                 |
 | Manta                | 169        | https://manta.hypersync.xyz or https://169.hypersync.xyz                            | 🪨   |                 |
 | Mantle               | 5000       | https://mantle.hypersync.xyz or https://5000.hypersync.xyz                          | 🪨   |                 |
+| Megaeth Testnet1     | 645749     | https://megaeth-testnet1.hypersync.xyz or https://645749.hypersync.xyz              | 🏗️  |                 |
 | Merlin               | 4200       | https://merlin.hypersync.xyz or https://4200.hypersync.xyz                          | 🪨   |                 |
 | Metall2              | 1750       | https://metall2.hypersync.xyz or https://1750.hypersync.xyz                         | 🪨   |                 |
 | Metis                | 1088       | https://metis.hypersync.xyz or https://1088.hypersync.xyz                           | 🪨   |                 |
