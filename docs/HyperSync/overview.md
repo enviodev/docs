@@ -81,6 +81,7 @@ HyperSync powers a wide range of blockchain applications, enabling developers to
 
 ## Next Steps
 
+- **[Try the Quick Start Guide](/docs/HyperSync/hypersync-quickstart)** to get up and running in minutes
 - [Get an API Token](/docs/HyperSync/api-tokens) to access HyperSync services
 - [View Supported Networks](/docs/HyperSync/hypersync-supported-networks) to see available chains
 - [Check Client Documentation](/docs/HyperSync/hypersync-clients) for language-specific guides

@@ -1,6 +1,7 @@
 module.exports = {
   someSidebar: [
     "overview",
+    "quickstart",
     "hypersync-usage",
     "hypersync-clients",
     "hypersync-query",

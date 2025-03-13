@@ -1,7 +1,7 @@
 ---
 id: hypersync-clients
 title: HyperSync Clients
-sidebar_label: Clients ⭐ Recommended
+sidebar_label: Clients
 slug: /hypersync-clients
 ---
 

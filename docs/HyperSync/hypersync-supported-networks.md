@@ -65,6 +65,7 @@ If you are a network operator or user and would like improved service support or
 | Holesky              | 17000      | https://holesky.hypersync.xyz or https://17000.hypersync.xyz                        | 🎒   |                 |
 | Holesky Token Test   | 17000      | https://holesky-token-test.hypersync.xyz or https://17000.hypersync.xyz             | 🔒   |                 |
 | Hyperliquid          | 645749     | https://hyperliquid.hypersync.xyz or https://645749.hypersync.xyz                   | 🥉   |                 |
+| Hyperliquid Temp     | 645748     | https://hyperliquid-temp.hypersync.xyz or https://645748.hypersync.xyz              | 🥉   |                 |
 | Ink                  | 57073      | https://ink.hypersync.xyz or https://57073.hypersync.xyz                            | 🪨   |                 |
 | Internal Test Chain  | 16858666   | https://internal-test-chain.hypersync.xyz or https://16858666.hypersync.xyz         | 🔒   |                 |
 | Kroma                | 255        | https://kroma.hypersync.xyz or https://255.hypersync.xyz                            | 🪨   |                 |
@@ -74,7 +75,6 @@ If you are a network operator or user and would like improved service support or
 | Lukso Testnet        | 4201       | https://lukso-testnet.hypersync.xyz or https://4201.hypersync.xyz                   | 🎒   |                 |
 | Manta                | 169        | https://manta.hypersync.xyz or https://169.hypersync.xyz                            | 🪨   |                 |
 | Mantle               | 5000       | https://mantle.hypersync.xyz or https://5000.hypersync.xyz                          | 🪨   |                 |
-| Megaeth Testnet1     | 645749     | https://megaeth-testnet1.hypersync.xyz or https://645749.hypersync.xyz              | 🏗️  |                 |
 | Merlin               | 4200       | https://merlin.hypersync.xyz or https://4200.hypersync.xyz                          | 🪨   |                 |
 | Metall2              | 1750       | https://metall2.hypersync.xyz or https://1750.hypersync.xyz                         | 🪨   |                 |
 | Metis                | 1088       | https://metis.hypersync.xyz or https://1088.hypersync.xyz                           | 🪨   |                 |
