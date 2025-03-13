@@ -1,580 +1,515 @@
 ---
 id: hypersync-query
 title: HyperSync Query
-sidebar_label: HyperSync Query
+sidebar_label: Query & Response Structure
 slug: /hypersync-query
 ---
 
 # HyperSync Query
 
-This page explains how the HyperSync query works and how to get the data you need from HyperSync.
+This guide explains how to structure queries for HyperSync to efficiently retrieve blockchain data. You'll learn both the basics and advanced techniques to make the most of HyperSync's powerful querying capabilities.
 
-:::note
-Not all of the features that are implemented in HyperSync are implemented in HyperFuel (Fuel implementation of HyperSync). For example, stream and collect functions aren't implemented on the Fuel client as of writing.
+:::note HyperFuel Limitations
+Not all features implemented in HyperSync are available in HyperFuel (the Fuel implementation of HyperSync). For example, as of this writing, stream and collect functions aren't implemented in the Fuel client.
+:::
+
+## Client Examples
+
+HyperSync offers client libraries in multiple languages, each with its own comprehensive examples. Instead of providing generic examples here, we recommend exploring the language-specific examples:
+
+| Client      | Example Links                                                                                |
+| ----------- | -------------------------------------------------------------------------------------------- |
+| **Node.js** | [Example Repository](https://github.com/enviodev/hypersync-client-node/tree/main/examples)   |
+| **Python**  | [Example Repository](https://github.com/enviodev/hypersync-client-python/tree/main/examples) |
+| **Rust**    | [Example Repository](https://github.com/enviodev/hypersync-client-rust/tree/main/examples)   |
+| **Go**      | [Example Repository](https://github.com/enviodev/hypersync-client-go/tree/main/examples)     |
+
+Additionally, we maintain a comprehensive collection of real-world examples covering various use cases across different languages:
+
+- [**30 HyperSync Examples**](https://github.com/enviodev/30-hypersync-examples) - A diverse collection of practical examples demonstrating HyperSync's capabilities in Python, JavaScript, TypeScript, Rust, and more.
+
+For more details on client libraries, see the [HyperSync Clients](./hypersync-clients) documentation.
+
+:::tip Developer Tip
+Set the `RUST_LOG` environment variable to `trace` for more detailed logs when using client libraries.
 :::
 
 ## Table of Contents
 
-1. [Introduction](#introduction) (A simple query example for introduction)
-2. [Query Execution Explained](#query-execution-explained) (Explanation of how queries work)
-3. [Query Structure](#query-fields) (Explanation of all query fields)
-4. [Data Schema](#data-schema) (Entire schema for each data table)
-5. [Response Structure](#response-structure) (Explanation of all response fields)
-6. [Stream and Collect Functions](#stream-and-collect-functions) (Explains the stream and collect functions that are implemented in the client libraries)
-7. [Join Modes](#join-modes) (Explains the join modes that are implemented in the client libraries)
+1. [Understanding HyperSync Queries](#understanding-hypersync-queries)
+2. [Query Execution Process](#query-execution-process)
+3. [Query Structure Reference](#query-structure-reference)
+4. [Data Schema](#data-schema)
+5. [Response Structure](#response-structure)
+6. [Stream and Collect Functions](#stream-and-collect-functions)
+7. [Working with Join Modes](#working-with-join-modes)
+8. [Best Practices](#best-practices)
 
-## Introduction
+## Understanding HyperSync Queries
 
-This section gives a brief introduction using a simple query example.
+A HyperSync query defines what blockchain data you want to retrieve and how you want it returned. Unlike regular RPC calls, HyperSync queries offer:
 
-Below is an example query that gets some logs and transactions related to a contract at address `0x3f69bb14860f7f3348ac8a5f0d445322143f7fee`.
+- **Flexible filtering** across logs, transactions, traces, and blocks
+- **Field selection** to retrieve only the data you need
+- **Automatic pagination** to handle large result sets
+- **Join capabilities** that link related blockchain data together
 
-We will explain the exact semantics of the query in the next sections but can just go over the basics here for an introduction.
+### Core Concepts
 
-`logs` is the list of `LogSelection`s we want to pass. The server return all logs that match <b>any</b> of our selections.
+- **Selections**: Define criteria for filtering blockchain data (logs, transactions, traces)
+- **Field Selection**: Specify which fields to include in the response
+- **Limits**: Control query execution time and response size
+- **Joins**: Determine how related data is connected in the response
 
-Also the transactions for the logs that our query matches will be returned. This is because transactions are joined after querying logs implicitly in HyperSync query implementation. Blocks are also joined after transactions but we won't get any blocks because we didn't select any block fields in our `field_selection`.
+## Query Execution Process
 
-`field_selection` is for selecting the specific fields we want returned. You can think of it like the part where you list column names in an SQL `SELECT` statement. The available tables are `log`, `transaction`, `block`, and `trace`. We will give an exact list of available columns in later sections.
+### How Data is Organized
 
-We also have a `max_num_logs` parameter here which means the query execution will stop as soon as the server realizes it reached or exceeded ten logs in the response. So this is not an exact limit, but it can be effective when trying to fine tune the query response size or runtime.
+HyperSync organizes blockchain data into groups of contiguous blocks. When executing a query:
 
-If you want to drive this query until the end of the blockchain height or if you want to build a full data pipeline, it is recommended to use the `collect` and `stream` functions that are implemented in the client libraries.
+1. The server identifies which block group contains the starting block
+2. It processes data groups sequentially until it hits a limit
+3. Results are returned along with a `next_block` value for pagination
 
-<b>TIP</b>: set `RUST_LOG` environment variable to `trace` if you want to see more logs when using the client libraries.
+### Query Limits
 
-```json
-{
-	"from_block": 0,
-	"logs": [
-		{
-			"address": [
-				"0x3f69bb14860f7f3348ac8a5f0d445322143f7fee"
-			]
-		}
-	],
-	"field_selection": {
-		"log": [
-			"address",
-			"data",
-			"topic0",
-			"topic1",
-			"topic2",
-			"topic3"
-		],
-		"transaction": [
-			"from",
-			"to",
-			"value",
-			"input",
-			"output",
-			"gas_used",
-			"type",
-			"block_number"
-		]
-	},
-	"max_num_logs": 10
-}
-```
+HyperSync enforces several types of limits to ensure efficient query execution:
 
-## Query Execution Explained
+| Limit Type        | Description                                      | Behavior                                                  |
+| ----------------- | ------------------------------------------------ | --------------------------------------------------------- |
+| **Time**          | Server-configured maximum execution time         | May slightly exceed limit to complete current block group |
+| **Response Size** | Maximum data returned                            | May slightly exceed limit to complete current block group |
+| **to_block**      | User-specified ending block (exclusive)          | Never exceeds this limit                                  |
+| **max*num*\***    | User-specified maximum number of results by type | May slightly exceed limit to complete current block group |
 
-This section explains how the query executes on the server, step by step.
+### Execution Steps
 
-#### Preliminary
+1. Server receives query and identifies the starting block group
+2. It scans each block group, applying selection criteria
+3. It joins related data according to the specified join mode
+4. When a limit is reached, it finishes processing the current block group
+5. It returns results with pagination information
 
-The data in HyperSync server is split into groups by block number. Each group consists of data for a
- contiguous block range. When the query runs, these groups are always queried atomically, meaning if a group
- is queried it is never queried in half. This is important when considering limit arguments like `max_num_logs`
- or when considering time/response_size limits. If the server realizes it reached a limit then it will terminate the
- query after it finishes the current data group it is querying and then return the response to the user. On the
- response it will put `next_block` value which is the block the query stopped at. 
+## Query Structure Reference
 
-#### Query limits
+A complete HyperSync query can include the following components:
 
-- <b>Time</b>: There is a server-configured time limit that applies to all queries. This limit can be exceeded slightly by the server, the reason is explained in the preliminary above.
-- <b>Response size</b>: There is a server-configured response size limit that applies to all queries. But the user can also set a lower response size limit in their query via max_num_* parameters. This limit can be exceeded slightly by the server, the reason is explained in the preliminary above.
-- <b>to_block</b>: This can be set by the user in a query. The number is exclusive so the query will go up to `to_block` but won't include data from this block. This limit won't be exceeded by the server so the query always will stop at this block number and will not include data from this block number or the later blocks. Also, the next_block will be equal to this block number if none of the other limits are triggered before the server reaches this block number.
-
-#### Steps
-
-- Server receives the query and checks which block the query starts at.
-- It finds the data group it should start from.
-- It iterates through the data groups using the query until it hits some limit
-- When a limit is hit, the response is serialized and sent back to the client.
-
-## Query Fields
-
-In this section, we show the explanation of each field in the query. We give the content in `rust` style for
- formatting purposes. Field name casing can change based on which language client you are using, e.g. camelCase for nodejs client
+### Core Query Parameters
 
 ```rust
 struct Query {
     /// The block to start the query from
     from_block: u64,
-    /// The block to end the query at. If not specified, the query will go until the
-    ///  end of data. Exclusive, the returned range will be [from_block..to_block).
-    ///
-    /// The query will return before it reaches this target block if it hits the time limit
-    ///  configured on the server. The user should continue their query by putting the
-    ///  next_block field in the response into from_block field of their next query. This implements
-    ///  pagination.
-    to_block: Optional<u64>,
-    /// List of log selections, these have an OR relationship between them, so the query will return logs
-    /// that match any of these selections.
-    logs: Array<LogSelection>,
-    /// List of transaction selections, the query will return transactions that match any of these selections and
-    ///  it will return transactions that are related to the returned logs.
-    transactions: Array<TransactionSelection>,
-    /// List of trace selections, the query will return traces that match any of these selections and
-    ///  it will re turn traces that are related to the returned logs.
-    traces: Array<TraceSelection>,
-    /// Weather to include all blocks regardless of if they are related to a returned transaction or log. Normally
-    ///  the server will return only the blocks that are related to the transaction or logs in the response. But if this
-    ///  is set to true, the server will return data for all blocks in the requested range [from_block, to_block).
-    include_all_blocks: bool,
-    /// Field selection. The user can select which fields they are interested in, requesting less fields will improve
-    ///  query execution time and reduce the payload size so the user should always use a minimal number of fields.
-    field_selection: FieldSelection,
-    /// Maximum number of blocks that should be returned, the server might return more blocks than this number but
-    ///  it won't overshoot by too much.
-    max_num_blocks: Optional<usize>,
-    /// Maximum number of transactions that should be returned, the server might return more transactions than this number but
-    ///  it won't overshoot by too much.
-    max_num_transactions: Optional<usize>,
-    /// Maximum number of logs that should be returned, the server might return more logs than this number but
-    ///  it won't overshoot by too much.
-    max_num_logs: Optional<usize>,
-    /// Maximum number of traces that should be returned, the server might return more traces than this number but
-    ///  it won't overshoot by too much.
-    max_num_traces: Optional<usize>,
-    /// Selects join mode for the query,
-    /// Default: join in this order logs -> transactions -> traces -> blocks
-    /// JoinAll: join everything to everything. For example if logSelection matches log0, we get the
-    /// associated transaction of log0 and then we get associated logs of that transaction as well. Applites similarly
-    /// to blocks, traces.
-    /// JoinNothing: join nothing.
-    #[serde(default)]
-    pub join_mode: JoinMode,
-}
 
+    /// The block to end the query at (exclusive)
+    /// If not specified, the query runs until the end of available data
+    to_block: Optional<u64>,
+
+    /// Log selection criteria (OR relationship between selections)
+    logs: Array<LogSelection>,
+
+    /// Transaction selection criteria (OR relationship between selections)
+    transactions: Array<TransactionSelection>,
+
+    /// Trace selection criteria (OR relationship between selections)
+    traces: Array<TraceSelection>,
+
+    /// Whether to include all blocks in the requested range
+    /// Default: only return blocks related to matched transactions/logs
+    include_all_blocks: bool,
+
+    /// Fields to include in the response
+    field_selection: FieldSelection,
+
+    /// Maximum results limits (approximate)
+    max_num_blocks: Optional<usize>,
+    max_num_transactions: Optional<usize>,
+    max_num_logs: Optional<usize>,
+    max_num_traces: Optional<usize>,
+
+    /// Data relationship model (Default, JoinAll, or JoinNothing)
+    join_mode: JoinMode,
+}
+```
+
+### Selection Types
+
+#### Log Selection
+
+```rust
 struct LogSelection {
-    /// Address of the contract, any logs that has any of these addresses will be returned.
-    /// Empty means match all.
+    /// Contract addresses to match (empty = match all)
     address: Array<Address>,
-    /// Topics to match, each member of the top level array is another array, if the nth topic matches any
-    ///  topic specified in nth element of topics, the log will be returned. Empty means match all.
+
+    /// Topics to match by position (empty = match all)
+    /// Each array element corresponds to a topic position (0-3)
+    /// Within each position, any matching value will satisfy the condition
     topics: Array<Array<Topic>>,
 }
+```
 
+#### Transaction Selection
+
+```rust
 struct TransactionSelection {
-    /// Address the transaction should originate from. If transaction.from matches any of these, the transaction
-    /// will be returned. Keep in mind that this has an and relationship with `to` filter, so each transaction should
-    /// match both of them. Empty means match all.
+    /// Sender addresses (empty = match all)
+    /// Has AND relationship with 'to' field
     from: Array<Address>,
-    /// Address the transaction should go to. If transaction.to matches any of these, the transaction will
-    /// be returned. Keep in mind that this has an and relationship with `from` filter, so each transaction should
-    /// match both of them. Empty means match all.
+
+    /// Recipient addresses (empty = match all)
+    /// Has AND relationship with 'from' field
     to: Array<Address>,
-    /// If first 4 bytes of transaction input matches any of these, transaction will be returned. Empty means match all.
+
+    /// Method signatures to match (first 4 bytes of input)
     sighash: Array<Sighash>,
-    /// If transaction.status matches this value, the transaction will be returned.
+
+    /// Transaction status to match (1 = success, 0 = failure)
     status: Optional<u8>,
-    /// If transaction.type matches any of these values, the transaction will be returned.
-    #[rename("type")]
+
+    /// Transaction types to match (e.g., 0 = legacy, 2 = EIP-1559)
     kind: Array<u8>,
-    // If transaction.contract_address matches any of these values, the transaction will be returned.
+
+    /// Created contract addresses to match
     contract_address: Array<Address>,
 }
+```
 
+#### Trace Selection
+
+```rust
 struct TraceSelection {
-    /// Address the trace should originate from. If trace.from matches any of these, the trace
-    /// will be returned. Keep in mind that this has an and relationship with `to` filter, so each trace should
-    /// match both of them. Empty means match all.
+    /// Sender addresses (empty = match all)
+    /// Has AND relationship with 'to' field
     from: Array<Address>,
-    /// Address the trace should go to. If trace.to matches any of these, the trace will
-    /// be returned. Keep in mind that this has an and relationship with `from` filter, so each trace should
-    /// match both of them. Empty means match all.
+
+    /// Recipient addresses (empty = match all)
+    /// Has AND relationship with 'from' field
     to: Array<Address>,
-    /// The trace will be returned if the trace is a contract deployment (create) trace
-    /// and the address of the deployed contract matches any of these addresses. Empty means match all.
+
+    /// Created contract addresses to match
     address: Array<Address>,
-    /// If trace.call_type matches any of these values, the trace will be returned.  Empty means match all.
-    /// See ethereum RPC `trace_block` method logs to learn more about this field
+
+    /// Call types to match (e.g., "call", "delegatecall")
     call_type: Array<String>,
-    /// If trace.reward_type matches any of these values, the trace will be returned.  Empty means match all.
-    /// See ethereum RPC `trace_block` method logs to learn more about this field
+
+    /// Reward types to match (e.g., "block", "uncle")
     reward_type: Array<String>,
-    /// If trace.type matches any of these values, the trace will be returned.  Empty means match all.
-    /// For example it can be `reward` or `create`.
-    /// See ethereum RPC `trace_block` method logs to learn more about this field
-    #[rename("type")]
+
+    /// Trace types to match (e.g., "call", "create", "suicide", "reward")
     kind: Array<String>,
-    /// If first 4 bytes of trace input matches any of these, trace will be returned. Empty means match all.
-    /// Sighash is a ethereum style hex encoded string of four bytes, e.g. 0xa2b4c6d8
+
+    /// Method signatures to match (first 4 bytes of input)
     sighash: Array<Sighash>,
 }
+```
 
+#### Field Selection
+
+```rust
 struct FieldSelection {
-    /// List of names of columns to return from block table
+    /// Block fields to include in response
     block: Array<String>,
-    /// List of names of columns to return from transaction table
+
+    /// Transaction fields to include in response
     transaction: Array<String>,
-    /// List of names of columns to return from log table
+
+    /// Log fields to include in response
     log: Array<String>,
-    /// List of names of columns to return from trace table
+
+    /// Trace fields to include in response
     trace: Array<String>,
 }
 ```
 
 ## Data Schema
 
-This section is an exhaustive list of all columns of all tables. We give the content in `python` style for
- formatting purposes. Casing is always snake_case when passing raw strings inside field_selection into a client library.
+HyperSync organizes blockchain data into four main tables. Below are the available fields for each table.
+
+:::info Field Naming
+When specifying fields in your query, always use snake_case names (e.g., `block_number`, not `blockNumber`).
+:::
+
+### Block Fields
 
 ```python
 class BlockField(StrEnum):
-    """Block field enum"""
-    # A scalar value equal to the number of ancestor blocks. The genesis block has a number of zero; formally Hi.
-    NUMBER = 'number'
-    # The Keccak 256-bit hash of the block
-    HASH = 'hash'
-    # The Keccak 256-bit hash of the parent block’s header, in its entirety; formally Hp.
-    PARENT_HASH = 'parent_hash'
-    # A 64-bit value which, combined with the mixhash, proves that a sufficient amount of computation has been carried
-    # out on this block; formally Hn.
-    NONCE = 'nonce'
-    # The Keccak 256-bit hash of the ommers/uncles list portion of this block; formally Ho.
-    SHA3_UNCLES = 'sha3_uncles'
-    # The Bloom filter composed from indexable information (logger address and log topics)
-    # contained in each log entry from the receipt of each transaction in the transactions list;
-    # formally Hb.
-    LOGS_BLOOM = 'logs_bloom'
-    # The Keccak 256-bit hash of the root node of the trie structure populated with each
-    # transaction in the transactions list portion of the block; formally Ht.
-    TRANSACTIONS_ROOT = 'transactions_root'
-    # The Keccak 256-bit hash of the root node of the state trie, after all transactions are
-    # executed and finalisations applied; formally Hr.
-    STATE_ROOT = 'state_root'
-    # The Keccak 256-bit hash of the root node of the trie structure populated with each transaction in the
-    # transactions list portion of the block; formally Ht.
-    RECEIPTS_ROOT = 'receipts_root'
-    # The 160-bit address to which all fees collected from the successful mining of this block
-    # be transferred; formally Hc.
-    MINER = 'miner'
-    # A scalar value corresponding to the difficulty level of this block. This can be calculated
-    # from the previous block’s difficulty level and the timestamp; formally Hd.
-    DIFFICULTY = 'difficulty'
-    # The cumulative sum of the difficulty of all blocks that have been mined in the Ethereum network since the
-    # inception of the network It measures the overall security and integrity of the Ethereum network.
-    TOTAL_DIFFICULTY = 'total_difficulty'
-    # An arbitrary byte array containing data relevant to this block. This must be 32 bytes or
-    # fewer; formally Hx.
-    EXTRA_DATA = 'extra_data'
-    # The size of this block in bytes as an integer value, encoded as hexadecimal.
-    SIZE = 'size'
-    # A scalar value equal to the current limit of gas expenditure per block; formally Hl.
-    GAS_LIMIT = 'gas_limit'
-    # A scalar value equal to the total gas used in transactions in this block; formally Hg.
-    GAS_USED = 'gas_used'
-    # A scalar value equal to the reasonable output of Unix’s time() at this block’s inception; formally Hs.
-    TIMESTAMP = 'timestamp'
-    # Ommers/uncles header.
-    UNCLES = 'uncles'
-    # A scalar representing EIP1559 base fee which can move up or down each block according
-    # to a formula which is a function of gas used in parent block and gas target
-    # (block gas limit divided by elasticity multiplier) of parent block.
-    # The algorithm results in the base fee per gas increasing when blocks are
-    # above the gas target, and decreasing when blocks are below the gas target. The base fee per gas is burned.
-    BASE_FEE_PER_GAS = 'base_fee_per_gas'
-    # The total amount of blob gas consumed by the transactions within the block, added in EIP-4844.
-    BLOB_GAS_USED = 'blob_gas_used'
-    # A running total of blob gas consumed in excess of the target, prior to the block. Blocks
-    # with above-target blob gas consumption increase this value, blocks with below-target blob
-    # gas consumption decrease it (bounded at 0). This was added in EIP-4844.
-    EXCESS_BLOB_GAS = 'excess_blob_gas'
-    # The hash of the parent beacon block's root is included in execution blocks, as proposed by
-    # EIP-4788.
-    # This enables trust-minimized access to consensus state, supporting staking pools, bridges, and more.
-    PARENT_BEACON_BLOCK_ROOT = 'parent_beacon_block_root'
-    # The Keccak 256-bit hash of the withdrawals list portion of this block.
-    # See [EIP-4895](https://eips.ethereum.org/EIPS/eip-4895).
-    WITHDRAWALS_ROOT = 'withdrawals_root'
-    # Withdrawal represents a validator withdrawal from the consensus layer.
-    WITHDRAWALS = 'withdrawals'
-    # The L1 block number that would be used for block.number calls.
-    L1_BLOCK_NUMBER = 'l1_block_number'
-    # The number of L2 to L1 messages since Nitro genesis.
-    SEND_COUNT = 'send_count'
-    # The Merkle root of the outbox tree state.
-    SEND_ROOT = 'send_root'
-    # A 256-bit hash which, combined with the nonce, proves that a sufficient amount of computation has
-    # been carried out on this block; formally Hm.
-    MIX_HASH = 'mix_hash'
-
-class TransactionField(StrEnum):
-    """Transaction field enum"""
-    # The Keccak 256-bit hash of the block
-    BLOCK_HASH = 'block_hash'
-    # A scalar value equal to the number of ancestor blocks. The genesis block has a number of
-    # zero; formally Hi.
-    BLOCK_NUMBER = 'block_number'
-    # The 160-bit address of the message call’s sender
-    FROM = 'from'
-    # A scalar value equal to the maximum amount of gas that should be used in executing
-    # this transaction. This is paid up-front, before any computation is done and may not be increased later;
-    # formally Tg.
-    GAS = 'gas'
-    # A scalar value equal to the number of Wei to be paid per unit of gas for all computation
-    # costs incurred as a result of the execution of this transaction; formally Tp.
-    GAS_PRICE = 'gas_price'
-    # A transaction hash is a keccak hash of an RLP encoded signed transaction.
-    HASH = 'hash'
-    # Input has two uses depending if transaction is Create or Call (if `to` field is None or
-    # Some). pub init: An unlimited size byte array specifying the
-    # EVM-code for the account initialisation procedure CREATE,
-    # data: An unlimited size byte array specifying the
-    # input data of the message call, formally Td.
-    INPUT = 'input'
-    # A scalar value equal to the number of transactions sent by the sender; formally Tn.
-    NONCE = 'nonce'
-    # The 160-bit address of the message call’s recipient or, for a contract creation
-    # transaction, ∅, used here to denote the only member of B0 ; formally Tt.
-    TO = 'to'
-    # Index of the transaction in the block
-    TRANSACTION_INDEX = 'transaction_index'
-    # A scalar value equal to the number of Wei to be transferred to the message call’s recipient or,
-    # in the case of contract creation, as an endowment to the newly created account; formally Tv.
-    VALUE = 'value'
-    # Replay protection value based on chain_id. See EIP-155 for more info.
-    V = 'v'
-    # The R field of the signature; the point on the curve.
-    R = 'r'
-    # The S field of the signature; the point on the curve.
-    S = 's'
-    # yParity: Signature Y parity; formally Ty
-    Y_PARITY = 'y_parity'
-    # Max Priority fee that transaction is paying. This is also known as `GasTipCap`
-    MAX_PRIORITY_FEE_PER_GAS = 'max_priority_fee_per_gas'
-    # A scalar value equal to the maximum. This is also known as `GasFeeCap`
-    MAX_FEE_PER_GAS = 'max_fee_per_gas'
-    # Added as EIP-pub 155: Simple replay attack protection
-    CHAIN_ID = 'chain_id'
-    # The accessList specifies a list of addresses and storage keys;
-    # these addresses and storage keys are added into the `accessed_addresses`
-    # and `accessed_storage_keys` global sets (introduced in EIP-2929).
-    # A gas cost is charged, though at a discount relative to the cost of accessing outside the list.
-    ACCESS_LIST = 'access_list'
-    # Max fee per data gas aka BlobFeeCap or blobGasFeeCap
-    MAX_FEE_PER_BLOB_GAS = 'max_fee_per_blob_gas'
-    # It contains a list of fixed size hash(32 bytes)
-    BLOB_VERSIONED_HASHES = 'blob_versioned_hashes'
-    # The total amount of gas used in the block until this transaction was executed.
-    CUMULATIVE_GAS_USED = 'cumulative_gas_used'
-    # The sum of the base fee and tip paid per unit of gas.
-    EFFECTIVE_GAS_PRICE = 'effective_gas_price'
-    # Gas used by transaction
-    GAS_USED = 'gas_used'
-    # Address of created contract if transaction was a contract creation
-    CONTRACT_ADDRESS = 'contract_address'
-    # Bloom filter for logs produced by this transaction
-    LOGS_BLOOM = 'logs_bloom'
-    # Transaction type. For ethereum: Legacy, Eip2930, Eip1559, Eip4844
-    KIND = 'type'
-    # The Keccak 256-bit hash of the root node of the trie structure populated with each
-    # transaction in the transactions list portion of the block; formally Ht.
-    ROOT = 'root'
-    # If transaction is executed successfully. This is the `statusCode`
-    STATUS = 'status'
-    # The fee associated with a transaction on the Layer 1, it is calculated as l1GasPrice multiplied by l1GasUsed
-    L1_FEE = 'l1_fee'
-    # The gas price for transactions on the Layer 1
-    L1_GAS_PRICE = 'l1_gas_price'
-    # The amount of gas consumed by a transaction on the Layer 1
-    L1_GAS_USED = 'l1_gas_used'
-    # A multiplier applied to the actual gas usage on Layer 1 to calculate the dynamic costs.
-    # If set to 1, it has no impact on the L1 gas usage
-    L1_FEE_SCALAR = 'l1_fee_scalar'
-    # Amount of gas spent on L1 calldata in units of L2 gas.
-    GAS_USED_FOR_L1 = 'gas_used_for_l1'
-
-class LogField(StrEnum):
-    """Log filed enum"""
-    # The boolean value indicating if the event was removed from the blockchain due
-    # to a chain reorganization. True if the log was removed. False if it is a valid log.
-    REMOVED = 'removed'
-    # The integer identifying the index of the event within the block's list of events.
-    LOG_INDEX = 'log_index'
-    # The integer index of the transaction within the block's list of transactions.
-    TRANSACTION_INDEX = 'transaction_index'
-    # The hash of the transaction that triggered the event.
-    TRANSACTION_HASH = 'transaction_hash'
-    # The hash of the block in which the event was included.
-    BLOCK_HASH = 'block_hash'
-    # The block number in which the event was included.
-    BLOCK_NUMBER = 'block_number'
-    # The contract address from which the event originated.
-    ADDRESS = 'address'
-    # The non-indexed data that was emitted along with the event.
-    DATA = 'data'
-    # Topic pushed by contract
-    TOPIC0 = 'topic0'
-    # Topic pushed by contract
-    TOPIC1 = 'topic1'
-    # Topic pushed by contract
-    TOPIC2 = 'topic2'
-    # Topic pushed by contract
-    TOPIC3 = 'topic3'
-
-class TraceField(StrEnum):
-    """Trace field enum"""
-    # The address of the sender who initiated the transaction.
-    FROM = 'from'
-    # The address of the recipient of the transaction if it was a transaction to an address.
-    # For contract creation transactions, this field is None.
-    TO = 'to'
-    # The type of trace, `call` or `delegatecall`, two ways to invoke a function in a smart contract.
-    # `call` creates a new environment for the function to work in, so changes made in that
-    # function won't affect the environment where the function was called.
-    # `delegatecall` doesn't create a new environment. Instead, it runs the function within the
-    # environment of the caller, so changes made in that function will affect the caller's environment.
-    CALL_TYPE = 'call_type'
-    # The units of gas included in the transaction by the sender.
-    GAS = 'gas'
-    # The optional input data sent with the transaction, usually used to interact with smart contracts.
-    INPUT = 'input'
-    # The init code.
-    INIT = 'init'
-    # The value of the native token transferred along with the transaction, in Wei.
-    VALUE = 'value'
-    # The address of the receiver for reward transaction.
-    AUTHOR = 'author'
-    # Kind of reward. `Block` reward or `Uncle` reward.
-    REWARD_TYPE = 'reward_type'
-    # The hash of the block in which the transaction was included.
-    BLOCK_HASH = 'block_hash'
-    # The number of the block in which the transaction was included.
-    BLOCK_NUMBER = 'block_number'
-    # Destroyed address.
-    ADDRESS = 'address'
-    # Contract code.
-    CODE = 'code'
-    # The total used gas by the call, encoded as hexadecimal.
-    GAS_USED = 'gas_used'
-    # The return value of the call, encoded as a hexadecimal string.
-    OUTPUT = 'output'
-    # The number of sub-traces created during execution. When a transaction is executed on the EVM,
-    # it may trigger additional sub-executions, such as when a smart contract calls another smart
-    # contract or when an external account is accessed.
-    SUBTRACES = 'subtraces'
-    # An array that indicates the position of the transaction in the trace.
-    TRACE_ADDRESS = 'trace_address'
-    # The hash of the transaction.
-    TRANSACTION_HASH = 'transaction_hash'
-    # The index of the transaction in the block.
-    TRANSACTION_POSITION = 'transaction_position'
-    # The type of action taken by the transaction, `call`, `create`, `reward` and `suicide`.
-    # `call` is the most common type of trace and occurs when a smart contract invokes another contract's function.
-    # `create` represents the creation of a new smart contract. This type of trace occurs when a smart contract
-    # is deployed to the blockchain.
-    TYPE = 'type'
-    # A string that indicates whether the transaction was successful or not.
-    # None if successful, Reverted if not.
-    ERROR = 'error'
+    NUMBER = 'number'               # Block number
+    HASH = 'hash'                   # Block hash
+    PARENT_HASH = 'parent_hash'     # Parent block hash
+    TIMESTAMP = 'timestamp'         # Block timestamp (Unix time)
+    MINER = 'miner'                 # Miner/validator address
+    GAS_LIMIT = 'gas_limit'         # Block gas limit
+    GAS_USED = 'gas_used'           # Total gas used in block
+    BASE_FEE_PER_GAS = 'base_fee_per_gas'  # EIP-1559 base fee
+    # Many more fields available...
 ```
+
+### Transaction Fields
+
+```python
+class TransactionField(StrEnum):
+    # Block-related fields
+    BLOCK_HASH = 'block_hash'           # The Keccak 256-bit hash of the block
+    BLOCK_NUMBER = 'block_number'       # Block number containing the transaction
+
+    # Transaction identifiers
+    HASH = 'hash'                       # Transaction hash (keccak hash of RLP encoded signed transaction)
+    TRANSACTION_INDEX = 'transaction_index' # Index of the transaction in the block
+
+    # Transaction participants
+    FROM = 'from'                       # 160-bit address of the sender
+    TO = 'to'                           # 160-bit address of the recipient (null for contract creation)
+
+    # Gas information
+    GAS = 'gas'                         # Gas limit set by sender
+    GAS_PRICE = 'gas_price'             # Wei paid per unit of gas
+    GAS_USED = 'gas_used'               # Actual gas used by the transaction
+    CUMULATIVE_GAS_USED = 'cumulative_gas_used' # Total gas used in the block up to this transaction
+    EFFECTIVE_GAS_PRICE = 'effective_gas_price' # Sum of base fee and tip paid per unit of gas
+
+    # EIP-1559 fields
+    MAX_PRIORITY_FEE_PER_GAS = 'max_priority_fee_per_gas' # Max priority fee (a.k.a. GasTipCap)
+    MAX_FEE_PER_GAS = 'max_fee_per_gas' # Max fee per gas (a.k.a. GasFeeCap)
+
+    # Transaction data
+    INPUT = 'input'                     # Transaction input data or contract initialization code
+    VALUE = 'value'                     # Amount of ETH transferred in wei
+    NONCE = 'nonce'                     # Number of transactions sent by the sender
+
+    # Signature fields
+    V = 'v'                             # Replay protection value (based on chain_id)
+    R = 'r'                             # The R field of the signature
+    S = 's'                             # The S field of the signature
+    Y_PARITY = 'y_parity'               # Signature Y parity
+    CHAIN_ID = 'chain_id'               # Chain ID for replay protection (EIP-155)
+
+    # Contract-related fields
+    CONTRACT_ADDRESS = 'contract_address' # Address of created contract (for contract creation txs)
+
+    # Transaction result fields
+    STATUS = 'status'                   # Success (1) or failure (0)
+    LOGS_BLOOM = 'logs_bloom'           # Bloom filter for logs produced by this transaction
+    ROOT = 'root'                       # State root (pre-Byzantium)
+
+    # EIP-2930 fields
+    ACCESS_LIST = 'access_list'         # List of addresses and storage keys to pre-warm
+
+    # EIP-4844 (blob transactions) fields
+    MAX_FEE_PER_BLOB_GAS = 'max_fee_per_blob_gas' # Max fee per data gas (blob fee cap)
+    BLOB_VERSIONED_HASHES = 'blob_versioned_hashes' # List of blob versioned hashes
+
+    # Transaction type
+    KIND = 'type'                       # Transaction type (0=legacy, 1=EIP-2930, 2=EIP-1559, 3=EIP-4844)
+
+    # L2-specific fields (for rollups)
+    L1_FEE = 'l1_fee'                   # Fee for L1 data (L1GasPrice × L1GasUsed)
+    L1_GAS_PRICE = 'l1_gas_price'       # Gas price on L1
+    L1_GAS_USED = 'l1_gas_used'         # Amount of gas consumed on L1
+    L1_FEE_SCALAR = 'l1_fee_scalar'     # Multiplier for L1 fee calculation
+    GAS_USED_FOR_L1 = 'gas_used_for_l1' # Gas spent on L1 calldata in L2 gas units
+```
+
+### Log Fields
+
+```python
+class LogField(StrEnum):
+    # Log identification
+    LOG_INDEX = 'log_index'             # Index of the log in the block
+    TRANSACTION_INDEX = 'transaction_index' # Index of the transaction in the block
+
+    # Transaction information
+    TRANSACTION_HASH = 'transaction_hash' # Hash of the transaction that created this log
+
+    # Block information
+    BLOCK_HASH = 'block_hash'           # Hash of the block containing this log
+    BLOCK_NUMBER = 'block_number'       # Block number containing this log
+
+    # Log content
+    ADDRESS = 'address'                 # Contract address that emitted the event
+    DATA = 'data'                       # Non-indexed data from the event
+
+    # Topics (indexed parameters)
+    TOPIC0 = 'topic0'                   # Event signature hash
+    TOPIC1 = 'topic1'                   # First indexed parameter
+    TOPIC2 = 'topic2'                   # Second indexed parameter
+    TOPIC3 = 'topic3'                   # Third indexed parameter
+
+    # Reorg information
+    REMOVED = 'removed'                 # True if log was removed due to chain reorganization
+```
+
+### Trace Fields
+
+```python
+class TraceField(StrEnum):
+    # Trace identification
+    TRANSACTION_HASH = 'transaction_hash'   # Hash of the transaction
+    TRANSACTION_POSITION = 'transaction_position' # Index of the transaction in the block
+    SUBTRACES = 'subtraces'                 # Number of sub-traces created during execution
+    TRACE_ADDRESS = 'trace_address'         # Array indicating position in the trace tree
+
+    # Block information
+    BLOCK_HASH = 'block_hash'               # Hash of the block containing this trace
+    BLOCK_NUMBER = 'block_number'           # Block number containing this trace
+
+    # Transaction participants
+    FROM = 'from'                           # Address of the sender
+    TO = 'to'                               # Address of the recipient (null for contract creation)
+
+    # Value and gas
+    VALUE = 'value'                         # ETH value transferred (in wei)
+    GAS = 'gas'                             # Gas limit
+    GAS_USED = 'gas_used'                   # Gas actually used
+
+    # Call data
+    INPUT = 'input'                         # Call data for function calls
+    INIT = 'init'                           # Initialization code for contract creation
+    OUTPUT = 'output'                       # Return data from the call
+
+    # Contract information
+    ADDRESS = 'address'                     # Contract address (for creation/destruction)
+    CODE = 'code'                           # Contract code
+
+    # Trace types and categorization
+    TYPE = 'type'                           # Trace type (call, create, suicide, reward)
+    CALL_TYPE = 'call_type'                 # Call type (call, delegatecall, staticcall, etc.)
+    REWARD_TYPE = 'reward_type'             # Reward type (block, uncle)
+
+    # Other actors
+    AUTHOR = 'author'                       # Address of receiver for reward transactions
+
+    # Result information
+    ERROR = 'error'                         # Error message if failed
+```
+
+For a complete list of all available fields, refer to the [HyperSync API Reference](https://docs.envio.dev/docs/api).
 
 ## Response Structure
 
-This section gives explanation of all response fields. We give the content in `rust` style for
- formatting purposes. Field name casing can change based on which language client you are using, e.g. camelCase for nodejs client
+When you execute a HyperSync query, the response includes both metadata and the requested data:
 
 ```rust
-/// Query response from HyperSync server.
 struct QueryResponse {
-    /// Current height of the source HyperSync instance.
-    /// This number is inclusive. Returns null if the server has no blocks yet.
+    /// Current height of the blockchain in HyperSync
     archive_height: Optional<u64>,
-    /// Next block to query for, the responses are paginated so
-    /// the caller should continue the query from this block if they
-    /// didn't get responses up to the to_block they specified in the Query.
+
+    /// Block number to use as from_block in your next query for pagination
     next_block: u64,
-    /// Total time it took the HyperSync instance to execute the query in milliseconds.
+
+    /// Query execution time in milliseconds
     total_execution_time: u64,
-    /// Response data
-    /// This can be apache arrow formatted data or it can be native struct data based on
-    ///  which client and method you are using. 
+
+    /// The actual blockchain data matching your query
     data: ResponseData,
-    /// Rollback guard, this structure is intended to make rollback handling easy and efficient on client side.
+
+    /// Information to help handle chain reorganizations
     rollback_guard: Optional<RollbackGuard>,
 }
+```
 
-/// This structure is intended to make rollback handling easy and efficient on client side.
-/// Here "in memory" refers to data that is only kept in memory and not yet flushed to disk. The data that
-///  can be rolled back at any time is kept in memory until it reaches enough block depth so we can be sure
-///  it won't be rolled back.
+### Rollback Guard
+
+The optional `rollback_guard` helps manage chain reorganizations:
+
+```rust
 struct RollbackGuard {
-    /// Block number of last block scanned in memory
+    /// Last block scanned
     block_number: u64,
-    /// Block timestamp of last block scanned in memory
     timestamp: i64,
-    /// Block hash of last block scanned in memory
     hash: Hash,
-    /// Block number of first block scanned in memory
+
+    /// First block scanned
     first_block_number: u64,
-    /// Parent hash of first block scanned in memory
     first_parent_hash: Hash,
 }
 ```
 
 ## Stream and Collect Functions
 
-This section explains how the `stream` and `collect` functions work on the client libraries. These functions run the query multiple times internally so they can be harder to understand compared to how a single query works.
+For continuous data processing or building data pipelines, client libraries provide `stream` and `collect` functions that wrap the base query functionality.
 
-<b>Disclaimer</b>: These functions are not designed to be used in a rollback context, if you are at the tip of the chain we recommend implementing a loop using one of the `get` functions from the client library you are using and handling the rollbacks manually.
+:::caution Tip of Chain Warning
+These functions are not designed for use at the blockchain tip where rollbacks may occur. For real-time data near the chain tip, implement a custom loop using the `get` functions and handle rollbacks manually.
+:::
 
-#### Stream
+### Stream Function
 
-Stream function runs many internal queries concurrently and gives back the results as they come. It returns a stream handle that can be used to receive the results. It pipelines decoding/decompressing etc. of response chunks so the user can get a very efficient experience out of the box. It will stream data until it reaches query.to_block or if to_block was not specified in the query, it runs until it reaches chain height at the time of the stream start (it gets the height of the chain when it is starting the stream and runs until it reaches it).
+The `stream` function:
 
-<b>WARNING</b>: If you are opening/closing many streams in your program, it is recommended to explicitly call `close` function on the stream handle so there is no resource leakage.
+- Runs multiple queries concurrently
+- Returns a stream handle that yields results as they're available
+- Optimizes performance through pipelined decoding/decompression
+- Continues until reaching either `to_block` or the chain height at stream start
 
-#### Collect
+### Collect Functions
 
-The collect function essentially calls `stream` internally and collects all of the data into a single response. The `collect_parquet` function can be used to pipe data into a parquet file, it doesn't accumulate all data in memory so can be used to collect data that doesn't fit in RAM. We still recommend chunking the `collect_parquet` calls so you don't end up with big parquet files.
+The `collect` functions:
 
-<b>TIP</b>: set `RUST_LOG` environment variable to `trace` if you want to see more logs when using the client libraries.
+- Call `stream` internally and aggregate results
+- Offer different output formats (JSON, Parquet)
+- Handle data that may not fit in memory
 
-## Join Modes
+:::warning Resource Management
+Always call `close()` on stream handles when finished to prevent resource leaks, especially if creating multiple streams.
+:::
 
-<b>NOTE</b>: The word join does not mean the same as in `SQL` in this context. It means the inclusion of relevant data in the response instead of left/outer joining or similar in `SQL`. You can think of it like you do a select on table `A` and then join table `B`. In SQL this would mean each row contains rows from `A` and `B`. But in HyperSync this means you get data for `A` and `B` separately and the rows you get from `A` mean you will get the joined-in rows from `B` as well in the response. 
+## Working with Join Modes
 
-In the context of HyperSync, joins refer to the implicit linking of different types of blockchain data (logs, transactions, traces, and blocks) based on certain relationships. Here's an explanation of how these joins work:
+HyperSync "joins" connect related blockchain data automatically. Unlike SQL joins that combine rows from different tables, HyperSync joins determine which related records to include in the response.
 
-### Default Join Mechanism
+### Default Join Mode (logs → transactions → traces → blocks)
 
-`logs` -> `transactions` -> `traces` -> `blocks`
+With the default join mode:
 
-1. **Logs to Transactions**:
-   - When you query logs using `log_selection`, HyperSync automatically retrieves the transactions associated with those logs. This is based on the transaction hash present in each log.
-     - Example: If your `log_selection` returns some logs, HyperSync includes the transactions that generated these logs in the response as well.
+1. When you query logs, you automatically get their associated transactions
+2. Those transactions' traces are also included
+3. The blocks containing these transactions are included
 
-2. **Transactions to Traces**:
-   - After fetching the relevant transactions (either directly through `transaction_selection` or via logs), HyperSync retrieves the associated traces.
-     - Example: If your `transaction_selection` returns transactions or if you get some transactions because of your `log_selection`, HyperSync includes traces related to these transactions in the response as well.
+```
+┌───────┐     ┌───────────────┐     ┌───────┐     ┌───────┐
+│  Logs │ ──> │ Transactions  │ ──> │ Traces│ ──> │ Blocks│
+└───────┘     └───────────────┘     └───────┘     └───────┘
+```
 
-And this same scheme goes on from traces into blocks as well. We realize this doesn't cover all use cases. For example, the user can't get logs based on their transaction_selection this way. This is why we implemented alternative `join_mode` implementations.
+### JoinAll Mode
 
-### Alternative Join Modes 
+JoinAll creates a more comprehensive network of related data:
 
-1. **JoinAll**:
+```
+                 ┌─────────────────────────────┐
+                 │                             │
+                 ▼                             │
+┌───────┐ <──> ┌───────────────┐ <──> ┌───────┐ <──> ┌───────┐
+│  Logs │      │ Transactions  │      │ Traces│      │ Blocks│
+└───────┘      └───────────────┘      └───────┘      └───────┘
+```
 
-   This mode first builds up a list of transactions based on the selection of every table. For example, the list will include a transaction if your `log_selection` selected a log generated by this transaction.
+For example, if you query a trace:
 
-   Then it includes every object relating to any of these transactions on the list. For example, it includes all traces that were generated by any of these transactions on the list.
+1. You get the transaction that created it
+2. You get ALL logs from that transaction (not just the ones matching your criteria)
+3. You get ALL traces from that transaction
+4. You get the block containing the transaction
 
-   For example, let's say you selected a trace. It will include the transaction that generated this trace. Then it will include everything related to this transaction including all the logs, traces, the block, and the transaction itself.
+### JoinNothing Mode
 
-3. **JoinNothing**:
-   This mode completely removes joining so you only get what your selections match. For example if your `log_selection` matches a log then you will only get that log, you will not get the block of the log or the transaction that generated that log.
+JoinNothing is the most restrictive:
 
-To use these join modes set `query.join_mode` to the desired value. It defaults to the `Default` mode if it is not specified.
+```
+┌───────┐     ┌───────────────┐     ┌───────┐     ┌───────┐
+│  Logs │     │ Transactions  │     │ Traces│     │ Blocks│
+└───────┘     └───────────────┘     └───────┘     └───────┘
+```
+
+Only data directly matching your selection criteria is returned, with no related records included.
+
+## Best Practices
+
+To get the most out of HyperSync queries:
+
+1. **Minimize field selection** - Only request fields you actually need to improve performance
+2. **Use appropriate limits** - Set `max_num_*` parameters to control response size
+3. **Choose the right join mode** - Use `JoinNothing` for minimal data, `JoinAll` for complete context
+4. **Process in chunks** - For large datasets, use pagination or the `stream` function
+5. **Consider Parquet** - For analytical workloads, use `collect_parquet` for efficient storage
+6. **Handle chain tip carefully** - Near the chain tip, implement custom rollback handling

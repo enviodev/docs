@@ -4,24 +4,22 @@ module.exports = {
     "hypersync-usage",
     "hypersync-clients",
     "hypersync-query",
-    "hypersync-supported-networks",
-    "api-tokens",
     "hypersync-curl-examples",
-    {
-      type: "category",
-      label: "HyperFuel",
-      items: [
-        "HyperFuel/hyperfuel",
-        "HyperFuel/hyperfuel-query",
-      ],
-    },
+    "api-tokens",
+    "hypersync-supported-networks",
     {
       type: "category",
       label: "HyperRPC",
+      collapsed: false,
       items: [
         "HyperRPC/overview-hyperrpc",
         "HyperRPC/hyperrpc-supported-networks",
       ],
+    },
+    {
+      type: "category",
+      label: "HyperFuel",
+      items: ["HyperFuel/hyperfuel", "HyperFuel/hyperfuel-query"],
     },
   ],
 };

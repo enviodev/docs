@@ -1,51 +1,268 @@
 ---
 id: hypersync-usage
-title: Usage
-sidebar_label: Usage
+title: Using HyperSync
+sidebar_label: Getting Started
 slug: /hypersync-usage
 ---
 
+# Getting Started with HyperSync
+
+HyperSync is Envio's high-performance blockchain data engine that provides up to 2000x faster access to blockchain data compared to traditional RPC endpoints. This guide will help you understand how to effectively use HyperSync in your applications.
+
+## Quick Start Video
+
+Watch this quick tutorial to see HyperSync in action:
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/S9Z6XkY3aP8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-### Examples
+## Core Concepts
 
-We've found most developers have enjoyed learning HyperSync by practical example. You will find examples [here](./hypersync-clients.md) in Python, Rust, and NodeJs in each section.
+HyperSync revolves around two main concepts:
 
-### Queries
+1. **Queries** - Define what blockchain data you want to retrieve
+2. **Output Configuration** - Specify how you want that data formatted and delivered
 
-Using HyperSync primarily revolves around successfully constructing and then executing queries. Queries allow you to essentially filter for blocks, logs, transactions and traces. Hovering over types in your IDE will allow you to see all exhaustive options in order to construct an appropriate query.
+Think of queries as your data filter and the output configuration as your data processor.
+
+## Building Effective Queries
+
+Queries are the heart of working with HyperSync. They allow you to filter for specific blocks, logs, transactions, and traces.
+
+### Query Structure
+
+A basic HyperSync query contains:
 
 ```python
-class Query(
-    from_block: int,
-    field_selection: FieldSelection,
-    to_block: int | None = None,
-    logs: list[LogSelection] | None = None,
-    transactions: list[TransactionSelection] | None = None,
-    traces: list[TraceSelection] | None = None,
-    include_all_blocks: bool | None = None,
-    max_num_blocks: int | None = None,
-    max_num_transactions: int | None = None,
-    max_num_logs: int | None = None,
-    max_num_traces: int | None = None
+query = hypersync.Query(
+    from_block=12345678,               # Required: Starting block number
+    to_block=12345778,                 # Optional: Ending block number
+    field_selection=field_selection,   # Required: What fields to return
+    logs=[log_selection],              # Optional: Filter for specific logs
+    transactions=[tx_selection],       # Optional: Filter for specific transactions
+    traces=[trace_selection],          # Optional: Filter for specific traces
+    include_all_blocks=False,          # Optional: Include blocks with no matches
+    max_num_blocks=1000,               # Optional: Limit number of blocks processed
+    max_num_transactions=5000,         # Optional: Limit number of transactions processed
+    max_num_logs=5000,                 # Optional: Limit number of logs processed
+    max_num_traces=5000                # Optional: Limit number of traces processed
 )
 ```
 
-#### Field Selection
+### Field Selection
 
-You can choose exactly what data you would like to be returned from the request. For example, this is useful when filtering for Logs, but you would also like the block data associated with that log to maybe get the timestamp of when that log was emitted.
-
-### Useful tips:
-
-- Run export `export RUST_LOG=trace` to see detailed HyperSync request progress information.
-- HyperSync requests have a 5-second time limit. The request will return with the block that it reached during the query allowing you to paginate and make the next query. HyperSync generally scans through more than 10m blocks in 5 seconds.
-- Modify `batch_size` and `batch_size` params based on your chain and use case to improve performance in some cases. E.g.
+Field selection allows you to specify exactly which data fields you want to retrieve. This improves performance by only fetching what you need:
 
 ```python
-    config = hypersync.ParquetConfig(
-        path="data",
-        hex_output=True,
-        batch_size=1000000,
-        concurrency=10,
-    )
+field_selection = hypersync.FieldSelection(
+    # Block fields you want to retrieve
+    block=[
+        BlockField.NUMBER,
+        BlockField.TIMESTAMP,
+        BlockField.HASH
+    ],
+
+    # Transaction fields you want to retrieve
+    transaction=[
+        TransactionField.HASH,
+        TransactionField.FROM,
+        TransactionField.TO,
+        TransactionField.VALUE
+    ],
+
+    # Log fields you want to retrieve
+    log=[
+        LogField.ADDRESS,
+        LogField.TOPIC0,
+        LogField.TOPIC1,
+        LogField.TOPIC2,
+        LogField.TOPIC3,
+        LogField.DATA,
+        LogField.TRANSACTION_HASH
+    ],
+
+    # Trace fields you want to retrieve (if applicable)
+    trace=[
+        TraceField.ACTION_FROM,
+        TraceField.ACTION_TO,
+        TraceField.ACTION_VALUE
+    ]
+)
 ```
+
+### Filtering for Specific Data
+
+For most use cases, you'll want to filter for specific logs, transactions, or traces:
+
+#### Log Selection Example
+
+```python
+# Filter for Transfer events from USDC contract
+log_selection = hypersync.LogSelection(
+    address=["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"],  # USDC contract
+    topics=[
+        ["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"]  # Transfer event signature
+    ]
+)
+```
+
+#### Transaction Selection Example
+
+```python
+# Filter for transactions to the Uniswap V3 router
+tx_selection = hypersync.TransactionSelection(
+    to=["0xE592427A0AEce92De3Edee1F18E0157C05861564"]  # Uniswap V3 Router
+)
+```
+
+## Processing the Results
+
+HyperSync provides multiple ways to process query results:
+
+### Stream to Parquet Files
+
+Parquet is the recommended format for large data sets:
+
+```python
+# Configure output format
+config = hypersync.StreamConfig(
+    hex_output=hypersync.HexOutput.PREFIXED,
+    event_signature="Transfer(address indexed from, address indexed to, uint256 value)"
+)
+
+# Stream results to a Parquet file
+await client.collect_parquet("data_directory", query, config)
+```
+
+### Stream to JSON Files
+
+For smaller datasets or debugging:
+
+```python
+# Stream results to JSON
+await client.collect_json("output.json", query, config)
+```
+
+### Process Data in Memory
+
+For immediate processing:
+
+```python
+# Process data directly
+async for result in client.stream(query, config):
+    for log in result.logs:
+        # Process each log
+        print(f"Transfer from {log.event_params['from']} to {log.event_params['to']}")
+```
+
+## Tips and Best Practices
+
+### Performance Optimization
+
+- **Use Appropriate Batch Sizes**: Adjust batch size based on your chain and use case:
+
+  ```python
+  config = hypersync.ParquetConfig(
+      path="data",
+      hex_output=hypersync.HexOutput.PREFIXED,
+      batch_size=1000000,  # Process 1M blocks at a time
+      concurrency=10,      # Use 10 concurrent workers
+  )
+  ```
+
+- **Enable Trace Logs**: Set `RUST_LOG=trace` to see detailed progress:
+
+  ```bash
+  export RUST_LOG=trace
+  ```
+
+- **Paginate Large Queries**: HyperSync requests have a 5-second time limit. For large data sets, paginate results:
+  ```python
+  current_block = start_block
+  while current_block < end_block:
+      query.from_block = current_block
+      query.to_block = min(current_block + 1000000, end_block)
+      result = await client.collect_parquet("data", query, config)
+      current_block = result.end_block + 1
+  ```
+
+### Network-Specific Considerations
+
+- **High-Volume Networks**: For networks like Ethereum Mainnet, use smaller block ranges or more specific filters
+- **Low-Volume Networks**: For smaller chains, you can process the entire chain in one query
+
+## Complete Example
+
+Here's a complete example that fetches all USDC Transfer events:
+
+```python
+import hypersync
+from hypersync import (
+    LogSelection,
+    LogField,
+    BlockField,
+    FieldSelection,
+    TransactionField,
+    HexOutput
+)
+import asyncio
+
+async def collect_usdc_transfers():
+    # Initialize client
+    client = hypersync.HypersyncClient(
+        hypersync.ClientConfig(
+            url="https://ethereum.hypersync.xyz",
+            bearer_token="your-token-here",  # Get from https://docs.envio.dev/docs/HyperSync/api-tokens
+        )
+    )
+
+    # Define field selection
+    field_selection = hypersync.FieldSelection(
+        block=[BlockField.NUMBER, BlockField.TIMESTAMP],
+        transaction=[TransactionField.HASH],
+        log=[
+            LogField.ADDRESS,
+            LogField.TOPIC0,
+            LogField.TOPIC1,
+            LogField.TOPIC2,
+            LogField.DATA,
+        ]
+    )
+
+    # Define query for USDC transfers
+    query = hypersync.Query(
+        from_block=12000000,
+        to_block=12100000,
+        field_selection=field_selection,
+        logs=[
+            LogSelection(
+                address=["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"],  # USDC contract
+                topics=[
+                    ["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"]  # Transfer signature
+                ]
+            )
+        ]
+    )
+
+    # Configure output
+    config = hypersync.StreamConfig(
+        hex_output=HexOutput.PREFIXED,
+        event_signature="Transfer(address indexed from, address indexed to, uint256 value)"
+    )
+
+    # Collect data to a Parquet file
+    result = await client.collect_parquet("usdc_transfers", query, config)
+    print(f"Processed blocks {query.from_block} to {result.end_block}")
+
+asyncio.run(collect_usdc_transfers())
+```
+
+## Next Steps
+
+Now that you understand the basics of using HyperSync:
+
+- Browse the [Python Client](./hypersync-clients.md) or other language-specific clients
+- Learn about [advanced query options](./hypersync-query.md)
+- See [example queries for common use cases](./hypersync-curl-examples.md)
+- [Get your API token](./api-tokens.mdx) to start building
+
+For detailed API references and examples in other languages, check our [client documentation](./hypersync-clients.md).

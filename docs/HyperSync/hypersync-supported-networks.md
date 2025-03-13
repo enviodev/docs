@@ -10,7 +10,21 @@ We are rapidly adding new supported networks. If you don't see your network here
 :::
 
 :::info
-The Tier is the level of support (and therefore reliability) based on the infrastructure running the chain. If you would like us to upgrade a chain's level of support, reach out to us in [Discord](https://discord.gg/Q9qt8gZ2fX).
+The Tier is the level of support (and therefore reliability) based on the infrastructure running the chain. We are actively working to make the tier distinctions more clear and transparent to our users.
+
+Currently, tiers relate to various service quality aspects including:
+
+- Allocated resources and compute power
+- Query processing speed
+- Infrastructure redundancy
+- Backup frequency and retention
+- Multi-region availability
+- Priority for upgrades and new features
+- SLA guarantees
+
+While detailed tier specifications are still being finalized, we're committed to providing transparent service level information in the near future.
+
+If you are a network operator or user and would like improved service support or to discuss upgrading a chain's level of support, please reach out to us in [Discord](https://discord.gg/Q9qt8gZ2fX).
 :::
 
 
@@ -49,8 +63,7 @@ The Tier is the level of support (and therefore reliability) based on the infras
 | Harmony Shard 0      | 1666600000 | https://harmony-shard-0.hypersync.xyz or https://1666600000.hypersync.xyz           | 🥈   |                 |
 | Holesky              | 17000      | https://holesky.hypersync.xyz or https://17000.hypersync.xyz                        | 🎒   |                 |
 | Holesky Token Test   | 17000      | https://holesky-token-test.hypersync.xyz or https://17000.hypersync.xyz             | 🔒   |                 |
-| Hyperliquid          | 645749     | https://hyperliquid.hypersync.xyz or https://645749.hypersync.xyz                   | 🏗️  |                 |
-| Hyperliquid Temp     | 645749     | https://hyperliquid-temp.hypersync.xyz or https://645749.hypersync.xyz              | 🏗️  |                 |
+| Hyperliquid          | 645749     | https://hyperliquid.hypersync.xyz or https://645749.hypersync.xyz                   | 🥉   |                 |
 | Ink                  | 57073      | https://ink.hypersync.xyz or https://57073.hypersync.xyz                            | 🪨   |                 |
 | Internal Test Chain  | 16858666   | https://internal-test-chain.hypersync.xyz or https://16858666.hypersync.xyz         | 🔒   |                 |
 | Kroma                | 255        | https://kroma.hypersync.xyz or https://255.hypersync.xyz                            | 🪨   |                 |
