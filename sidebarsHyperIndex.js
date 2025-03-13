@@ -1,5 +1,28 @@
 var { supportedNetworks } = require("./supported-networks.json");
 
+// Create a conditional networks section based on environment variable
+const networksSection =
+  process.env.DOCS_FOR_LLM === "true"
+    ? {
+        type: "category",
+        label: "Supported Networks",
+        link: {
+          type: "doc",
+          id: "supported-networks/index",
+        },
+        // In LLM mode, we use the minimal list from supported-networks.json
+        items: supportedNetworks,
+      }
+    : {
+        type: "category",
+        label: "Supported Networks",
+        link: {
+          type: "doc",
+          id: "supported-networks/index",
+        },
+        items: supportedNetworks,
+      };
+
 module.exports = {
   someSidebar: [
     "overview",
@@ -101,15 +124,7 @@ module.exports = {
         "Troubleshoot/reserved-words",
       ],
     },
-    {
-      type: "category",
-      label: "Supported Networks",
-      link: {
-        type: "doc",
-        id: "supported-networks/index",
-      },
-      items: supportedNetworks,
-    },
+    networksSection,
     "fuel/fuel",
     "licensing",
     "terms-of-service",
