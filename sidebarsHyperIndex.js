@@ -12,7 +12,7 @@ if (process.env.DOCS_FOR_LLM === "true") {
     "supported-networks/arbitrum",
     "supported-networks/polygon",
     "supported-networks/optimism",
-    "supported-networks/ethereum",
+    "supported-networks/eth",
   ];
 
   // Filter to only include key networks that exist in the original list
