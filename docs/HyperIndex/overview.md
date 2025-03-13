@@ -43,6 +43,7 @@ While HyperIndex gives you a complete indexing solution with schema management a
 - **Detailed logging & error reporting** – Debug and optimize with clarity.
 - **External API actions** – Trigger external services based on blockchain events.
 - **Wildcard topic indexing** – Flexible indexing based on event topics.
+- **Fallback RPC data sources** – Enhanced reliability with RPC connections.
 
 ---
 
@@ -50,7 +51,6 @@ While HyperIndex gives you a complete indexing solution with schema management a
 
 Upcoming features on our development roadmap:
 
-- **⬜ Fallback RPC data sources** – Enhanced reliability for RPC connections.
 - **⬜ RPC client with caching** – Improved indexing performance through cached RPC calls.
 
 ---
