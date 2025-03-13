@@ -9,6 +9,12 @@ module.exports = {
     "hypersync-supported-networks",
     {
       type: "category",
+      label: "Tutorials",
+      collapsed: false,
+      items: ["tutorial-address-transactions"],
+    },
+    {
+      type: "category",
       label: "HyperRPC",
       collapsed: false,
       items: [

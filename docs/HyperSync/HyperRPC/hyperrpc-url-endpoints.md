@@ -14,6 +14,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 
 | Network Name         | Network ID | URL                                                                                 | Supports Traces |
 | -------------------- | ---------- | ----------------------------------------------------------------------------------- | --------------- |
+| Abstract             | 2741       | https://abstract.rpc.hypersync.xyz or https://2741.rpc.hypersync.xyz                |                 |
 | Arbitrum             | 42161      | https://arbitrum.rpc.hypersync.xyz or https://42161.rpc.hypersync.xyz               |                 |
 | Arbitrum Nova        | 42170      | https://arbitrum-nova.rpc.hypersync.xyz or https://42170.rpc.hypersync.xyz          |                 |
 | Arbitrum Sepolia     | 421614     | https://arbitrum-sepolia.rpc.hypersync.xyz or https://421614.rpc.hypersync.xyz      |                 |
@@ -57,6 +58,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Lukso Testnet        | 4201       | https://lukso-testnet.rpc.hypersync.xyz or https://4201.rpc.hypersync.xyz           |                 |
 | Manta                | 169        | https://manta.rpc.hypersync.xyz or https://169.rpc.hypersync.xyz                    |                 |
 | Mantle               | 5000       | https://mantle.rpc.hypersync.xyz or https://5000.rpc.hypersync.xyz                  |                 |
+| Megaeth Testnet1     | 645749     | https://megaeth-testnet1.rpc.hypersync.xyz or https://645749.rpc.hypersync.xyz      |                 |
 | Merlin               | 4200       | https://merlin.rpc.hypersync.xyz or https://4200.rpc.hypersync.xyz                  |                 |
 | Metall2              | 1750       | https://metall2.rpc.hypersync.xyz or https://1750.rpc.hypersync.xyz                 |                 |
 | Metis                | 1088       | https://metis.rpc.hypersync.xyz or https://1088.rpc.hypersync.xyz                   |                 |
