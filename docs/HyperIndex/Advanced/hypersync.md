@@ -75,11 +75,17 @@ This feature eliminates the need to manually determine the deployment block of y
 
 HyperSync is maintained and hosted by Envio for all supported networks. We handle the infrastructure, allowing you to focus on building your indexer logic.
 
-### Enhance reliability with the RPC data source
+### Improving resilience with RPC fallback
 
-HyperIndex allows you to provide RPC providers specifically for redundancy and failover. This is **recommended** to ensure your indexer has 100% uptime. If something happens with HyperSync, your indexer will automatically switch to RPC.
+HyperIndex supports a multi-layered data source architecture through RPC fallback capability. While HyperSync provides excellent performance and reliability, implementing redundant data sources follows best practices for mission-critical applications.
 
-Add it by providing an `rpc` field in your network configuration. It can be a URL or a list of RPC configuration objects:
+Adding an RPC fallback provides:
+
+- **High availability architecture**: Ensures continuous indexing even during unplanned HyperSync outages
+- **Multi-provider resilience**: Creates a fault-tolerant system that can gracefully handle any network disruptions
+- **Complete control**: Gives you additional options for how your indexer accesses blockchain data
+
+Configure it by providing an `rpc` field in your network configuration:
 
 ```diff
 name: Greeter
@@ -107,7 +113,7 @@ networks:
 ```
 
 :::info
-This feature is available starting from version `2.14.0`. The fallback RPC is used when a primary data source doesn't get a new block for more than 20 seconds.
+This feature is available starting from version `2.14.0`. The fallback RPC is activated only when a primary data source doesn't receive a new block for more than 20 seconds.
 :::
 
 ### Supported Networks

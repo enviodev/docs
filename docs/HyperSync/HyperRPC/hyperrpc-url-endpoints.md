@@ -48,7 +48,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Holesky              | 17000      | https://holesky.rpc.hypersync.xyz or https://17000.rpc.hypersync.xyz                |                 |
 | Holesky Token Test   | 17000      | https://holesky-token-test.rpc.hypersync.xyz or https://17000.rpc.hypersync.xyz     |                 |
 | Hyperliquid          | 645749     | https://hyperliquid.rpc.hypersync.xyz or https://645749.rpc.hypersync.xyz           |                 |
-| Hyperliquid Temp     | 645749     | https://hyperliquid-temp.rpc.hypersync.xyz or https://645749.rpc.hypersync.xyz      |                 |
 | Ink                  | 57073      | https://ink.rpc.hypersync.xyz or https://57073.rpc.hypersync.xyz                    |                 |
 | Internal Test Chain  | 16858666   | https://internal-test-chain.rpc.hypersync.xyz or https://16858666.rpc.hypersync.xyz |                 |
 | Kroma                | 255        | https://kroma.rpc.hypersync.xyz or https://255.rpc.hypersync.xyz                    |                 |
