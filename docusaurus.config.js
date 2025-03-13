@@ -279,6 +279,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 
     ({
+      image: "img/preview-banner.png",
       announcementBar: {
         id: "support_us",
         content:
@@ -374,6 +375,12 @@ const config = {
           "typescript",
         ],
       },
+      metadata: [
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:site', content: '@envio_indexer' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:locale', content: 'en' },
+      ],
     }),
   plugins: [
     [
