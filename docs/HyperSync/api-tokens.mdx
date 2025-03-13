@@ -4,28 +4,53 @@ title: API Tokens
 sidebar_label: API Tokens
 slug: /api-tokens
 ---
+
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-# API Tokens for HyperSync Clients
+# API Tokens for HyperSync
 
-API tokens can be used with HyperSync clients to access enhanced services and track usage statistics. While not currently mandatory, they will become compulsory in the future. API tokens allow us to provide better service with dedicated capacity, bandwidth, and higher-quality guarantees.
+## Overview
+
+API tokens provide authenticated access to HyperSync services, enabling enhanced capabilities and usage tracking. While currently optional, they will become mandatory in the future and offer significant advantages for serious usage.
+
+## Table of Contents
+
+- [Benefits of Using API Tokens](#benefits-of-using-api-tokens)
+- [Generating API Tokens](#generating-api-tokens)
+- [Implementation Guide](#implementation-guide)
+- [Security Best Practices](#security-best-practices)
+
+## Benefits of Using API Tokens
+
+Using API tokens with HyperSync provides several advantages:
+
+- **Dedicated Resources**: Access to reserved capacity and bandwidth
+- **Performance Guarantees**: Higher quality of service with better reliability
+- **Usage Analytics**: Track and monitor your consumption patterns
+- **Future-Proofing**: Early adoption before tokens become mandatory
+- **Enhanced Support**: Better visibility for troubleshooting assistance
 
 ## Generating API Tokens
 
-You can generate API tokens at [https://envio.dev/app/api-tokens](https://envio.dev/app/api-tokens).
+You can generate API tokens through the Envio Dashboard:
 
-## Using API Tokens
+1. Visit [https://envio.dev/app/api-tokens](https://envio.dev/app/api-tokens)
+2. Sign in to your account (or create one if you don't have one)
+3. Follow the prompts to create a new token
+4. Copy and securely store your token
 
-To use an API token, you need to pass it as a `bearer_token` when creating a HyperSync client. Here's how to do it in different languages:
+## Implementation Guide
+
+To use an API token, pass it as a `bearer_token` when creating a HyperSync client:
 
 <Tabs>
-  <TabItem value="typescript" label="Typescript/Javascript">
+  <TabItem value="typescript" label="TypeScript/JavaScript">
 
 ```typescript
 const client = HypersyncClient.new({
-    url: "https://eth.hypersync.xyz",
-    bearerToken: process.env.HYPERSYNC_BEARER_TOKEN,
+  url: "https://eth.hypersync.xyz",
+  bearerToken: process.env.HYPERSYNC_BEARER_TOKEN,
 });
 ```
 
@@ -35,7 +60,7 @@ const client = HypersyncClient.new({
 ```python
 client = hypersync.HypersyncClient(hypersync.ClientConfig(
     url="https://eth.hypersync.xyz",
-    bearer_token=your_api_token
+    bearer_token=os.environ.get("HYPERSYNC_BEARER_TOKEN")
 ))
 ```
 
@@ -44,7 +69,7 @@ client = hypersync.HypersyncClient(hypersync.ClientConfig(
 
 ```rust
 let client = Client::new(ClientConfig {
-    bearer_token: Some("your_api_token".to_owned()),
+    bearer_token: Some(std::env::var("HYPERSYNC_BEARER_TOKEN").unwrap_or_default()),
     ..Default::default()
 })
 .unwrap();
@@ -53,4 +78,19 @@ let client = Client::new(ClientConfig {
   </TabItem>
 </Tabs>
 
-**Note on Security**: Bearer tokens should never be committed to git or shared publicly. We recommending using the environment for them and storing them them in `.env` files that are included in your `.gitignore`.
+## Security Best Practices
+
+When working with API tokens:
+
+- **Never commit tokens to git repositories**
+- **Use environment variables** to store tokens instead of hardcoding
+- **Add token files like `.env` to your `.gitignore**
+- **Rotate tokens periodically** for enhanced security
+- **Limit token sharing** to only those who require access
+
+```bash
+# Example .env file
+HYPERSYNC_BEARER_TOKEN=your_secret_token_here
+```
+
+This approach keeps your tokens secure while making them available to your application at runtime.

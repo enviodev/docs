@@ -10,7 +10,21 @@ We are rapidly adding new supported networks. If you don't see your network here
 :::
 
 :::info
-The Tier is the level of support (and therefore reliability) based on the infrastructure running the chain. If you would like us to upgrade a chain's level of support, reach out to us in [Discord](https://discord.gg/Q9qt8gZ2fX).
+The Tier is the level of support (and therefore reliability) based on the infrastructure running the chain. We are actively working to make the tier distinctions more clear and transparent to our users.
+
+Currently, tiers relate to various service quality aspects including:
+
+- Allocated resources and compute power
+- Query processing speed
+- Infrastructure redundancy
+- Backup frequency and retention
+- Multi-region availability
+- Priority for upgrades and new features
+- SLA guarantees
+
+While detailed tier specifications are still being finalized, we're committed to providing transparent service level information in the near future.
+
+If you are a network operator or user and would like improved service support or to discuss upgrading a chain's level of support, please reach out to us in [Discord](https://discord.gg/Q9qt8gZ2fX).
 :::
 
 

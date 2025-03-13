@@ -1,38 +1,61 @@
 ---
 id: hypersync-curl-examples
-title: Using curl requests with HyperSync
-sidebar_label: HyperSync curl examples
+title: Using curl with HyperSync
+sidebar_label: curl Examples ⭐ Recommended
 slug: /hypersync-curl-examples
 ---
 
-### When to Use Json API Requests and When Not
+# Using curl with HyperSync
 
-Using Json API requests to interact with envio.dev can be highly effective for various scenarios, but it's important to understand when it is appropriate to use them and when other methods might be more suitable.
+This guide demonstrates how to interact with HyperSync using direct HTTP requests via curl. These examples provide a quick way to explore HyperSync functionality without installing client libraries.
 
-##### Json API Advantages:
+:::info Recommended Approach
+We highly recommend trying these curl examples as they're super quick and easy to run directly in your terminal. It's one of the fastest ways to experience HyperSync's performance firsthand and see just how quickly you can retrieve blockchain data without any setup overhead. Simply copy, paste, and be amazed by the response speed!
 
-- Quick Testing and Debugging: curl is ideal for quickly testing and debugging API endpoints without the need for complex setup.
-- Automated Scripts: Perfect for shell scripts that automate HTTP requests efficiently.
-- Simple Data Retrieval: Efficient and easy to use for straightforward data retrieval tasks.
-- Flexibility: The Json API can be used with any programming language that doesn't support the HyperSync Client libraries.
+While curl requests are technically slower than our client libraries (since they use HTTP rather than binary data transfer protocols), they're still impressively fast and provide an excellent demonstration of HyperSync's capabilities without any installation requirements.
+:::
 
-##### Client libraries advantages:
+## Table of Contents
 
-- Complex Workflows: HyperSync client libraries provide greater flexibility and convenient code organization for workflows involving multiple steps and conditional logic.
-- Data Compression: HyperSync libraries automatically send data in a compressed format, enhancing throughput for data-intensive queries.
-- Query Fragmentation Handling: Client libraries handle subsequent queries automatically if the initial query doesn't reach the to_block or the end of the chain.
-- Arrow Support: Data can be returned in Apache Arrow format, facilitating easier data manipulation and analysis.
-- Auto Retry: Client libraries automatically retry failed requests, ensuring more reliable data retrieval.
+1. [Curl vs. Client Libraries](#curl-vs-client-libraries)
+2. [Common Use Cases](#common-use-cases)
+   - [ERC-20 Transfers for an Address](#get-all-erc-20-transfers-for-an-address)
+   - [Contract Event Logs](#get-all-logs-for-a-smart-contract)
+   - [Blob Transactions](#get-blob-data-for-the-optimism-chain)
+   - [Token Mint Events](#get-mint-usdc-events)
+   - [Address Transactions](#get-all-transactions-for-an-address)
+   - [Transaction Status Filtering](#get-successful-or-failed-transactions)
 
-### Curl query examples
+## Curl vs. Client Libraries
 
-#### Get all ERC-20 transfers for the EOA address
+When deciding whether to use curl commands or client libraries, consider the following comparison:
 
-The following query shows how to filter all ERC-20 transfer events for a specific EOA address.
+### When to Use curl (JSON API)
 
-Topics Filter: The topic filter is used to filter logs based on event signatures. In this example, the topic hash 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef is the signature for the ERC-20 Transfer event. The filter specifies that we are interested in logs where either the second or third topic (representing the sender and recipient addresses) matches 0x0000000000000000000000001e037f97d730Cc881e77F01E409D828b0bb14de0.
+- **Quick Prototyping**: Test endpoints and explore data structure without setup
+- **Simple Scripts**: Perfect for shell scripts and automation
+- **Language Independence**: When working with languages without HyperSync client libraries
+- **API Exploration**: When learning the HyperSync API capabilities
 
-From/To Addresses: The transactions.from and transactions.to fields filter transactions by the sender (from) and recipient (to) addresses. Here, we filter transactions where the sender or recipient address is 0x1e037f97d730Cc881e77F01E409D828b0bb14de0.
+### When to Use Client Libraries
+
+- **Production Applications**: For stable, maintained codebases
+- **Complex Data Processing**: When working with large datasets or complex workflows
+- **Performance**: Client libraries offer automatic compression and pagination
+- **Error Handling**: Built-in retry mechanisms and better error reporting
+- **Data Formats**: Support for efficient formats like Apache Arrow
+
+## Common Use Cases
+
+### Get All ERC-20 Transfers for an Address
+
+This example filters for all ERC-20 transfer events involving a specific address, either as sender or recipient. Feel free to swap your address into the example.
+
+**What this query does:**
+
+- Filters logs for the Transfer event signature (topic0)
+- Matches when the address appears in either topic1 (sender) or topic2 (recipient)
+- Also includes direct transactions to/from the address
 
 ```bash
 curl --request POST \
@@ -103,15 +126,18 @@ curl --request POST \
             "input"
         ]
     }
-  }'
+}'
 ```
 
-#### Get All Logs for a Smart Contract Address
+### Get All Logs for a Smart Contract
 
-This query returns all logs for a specified smart contract, starting from the beginning of the blockchain.
+This example retrieves all event logs emitted by a specific contract (USDC in this case).
 
-Note that this query might not return all data at once. Instead, it will likely return a `next_block` parameter,
-which should be used as the `from_block` for subsequent queries to fetch the next chunk of data.
+**Key points:**
+
+- Sets `from_block: 0` to scan from the beginning of the chain
+- Uses `next_block` in the response for pagination to fetch subsequent data
+- Includes relevant block, log, and transaction fields
 
 ```bash
 curl --request POST \
@@ -151,14 +177,19 @@ curl --request POST \
             "input"
         ]
     }
-  }'
+}'
 ```
 
-#### Get Blob Data for the Optimism Chain
+### Get Blob Data for the Optimism Chain
 
-This query returns all blob transactions produced by the Optimism chain. After retrieving the transaction data, you can query the Ethereum network to get the relevant blobs of data.
+This example finds blob transactions used by the Optimism chain for data availability.
 
-Note that these blobs are only stored for 18 days.
+**Key points:**
+
+- Starts at a relatively recent block (20,000,000)
+- Filters for transactions from the Optimism sequencer address
+- Specifically looks for type 3 (blob) transactions
+- Results can be used to retrieve the actual blob data from Ethereum
 
 ```bash
 curl --request POST \
@@ -188,14 +219,19 @@ curl --request POST \
             "type"
         ]
     }
-  }'
+}'
 ```
 
-#### Mint USDC events
+### Get Mint USDC Events
 
-This query retrieves all mint events for the USDC token.
+This example identifies USDC token minting events.
 
-It uses the signature for the transfer event (0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef) and the `from` address 0x0000000000000000000000000000000000000000000000000000000000000000 to identify mint transactions.
+**How it works:**
+
+- Filters for the USDC contract address
+- Looks for Transfer events (topic0)
+- Specifically matches when topic1 (from address) is the zero address, indicating a mint
+- Returns detailed information about each mint event
 
 ```bash
 curl --request POST \
@@ -244,14 +280,19 @@ curl --request POST \
             "input"
         ]
     }
-  }'
+}'
 ```
 
-#### Get All Transactions From/To an Address
+### Get All Transactions for an Address
 
-This query returns all transactions involving a specific EOA address, either as the sender or the recipient.
+This example retrieves all transactions where a specific address is either the sender or receiver.
 
-Note that `from_block` is set to a specific block because the beginning of the chain does not contain data related to this address. Multiple queries may be needed to start retrieving data.
+**Implementation notes:**
+
+- Starts from a specific block (15,362,000) for efficiency
+- Uses two transaction filters in an OR relationship
+- Only includes essential fields in the response
+- Multiple queries may be needed for complete history
 
 ```bash
 curl --request POST \
@@ -281,19 +322,24 @@ curl --request POST \
             "to"
         ]
     }
-  }'
+}'
 ```
 
-#### Get All Successful/Failed Transactions for the Last 10 Blocks
+### Get Successful or Failed Transactions
 
-First, query the current block height using https://eth.hypersync.xyz/height, subtract 10 from it, and store the result in a variable.
+This example shows how to filter transactions based on their status (successful or failed) for recent blocks.
 
-Use this variable as the from_block to get transactions with a matching status.
+**How it works:**
 
-This example returns successful transactions. To retrieve failed transactions, change the status to 0.
+1. First, query the current chain height
+2. Calculate a starting point (current height minus 10)
+3. Query transactions with status=1 (successful) or status=0 (failed)
 
 ```bash
+# Get current height and calculate starting block
 height=$((`curl https://eth.hypersync.xyz/height | jq .height` - 10))
+
+# Query successful transactions (change status to 0 for failed transactions)
 curl --request POST \
   --url https://eth.hypersync.xyz/query \
   --header 'Content-Type: application/json' \
