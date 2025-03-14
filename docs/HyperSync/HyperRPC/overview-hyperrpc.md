@@ -43,13 +43,13 @@ This performance boost is particularly noticeable for:
 
 HyperRPC currently supports the following Ethereum JSON-RPC methods:
 
-| Category             | Methods                                                                                                                                     |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Chain Data**       | `eth_chainId`, `eth_blockNumber`                                                                                                            |
-| **Block Data**       | `eth_getBlockByNumber`, `eth_getBlockByHash`, `eth_getBlockReceipts`                                                                        |
-| **Transaction Data** | `eth_getTransactionByHash`, `eth_getTransactionByBlockHashAndIndex`, `eth_getTransactionByBlockNumberAndIndex`, `eth_getTransactionReceipt` |
-| **Event Logs**       | `eth_getLogs`                                                                                                                               |
-| **Traces**           | `trace_block` (only on [select chains](./hyperrpc-supported-networks))                                                                      |
+| Category             | Methods                                                                                                                                   |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| **Chain Data**       | `eth_chainId`<br />`eth_blockNumber`                                                                                                      |
+| **Block Data**       | `eth_getBlockByNumber`<br />`eth_getBlockByHash`<br />`eth_getBlockReceipts`                                                              |
+| **Transaction Data** | `eth_getTransactionByHash`<br />`eth_getTransactionByBlockHashAndIndex`<br />`eth_getTransactionByBlockNumberAndIndex`<br />`eth_getTransactionReceipt` |
+| **Event Logs**       | `eth_getLogs`                                                                                                                             |
+| **Traces**           | `trace_block` (only on [select chains](./hyperrpc-supported-networks))                                                                    |
 
 ## Supported Networks
 
