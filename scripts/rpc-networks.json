@@ -1,572 +1,827 @@
-{"rpcNetworks": [
-  {
-    "chainId": 9997,
-    "name": "Altlayer OP Demo Testnet",
-    "rpcEndpoints": ["https://rpc-altlayer.optestnet.io", "https://rpc-testnet-altlayer.com", "https://altlayer-rpc.io"]
-  },
-  {
-    "chainId": 888888888,
-    "name": "Ancient8",
-    "rpcEndpoints": ["https://rpc.ancient8.gg"]
-  },
-  {
-    "chainId": 11822,
-    "name": "Artela Testnet",
-    "rpcEndpoints": ["https://betanet-rpc1.artela.network"]
-  },
-  {
-    "chainId": 42420,
-    "name": "Asset Chain Mainnet",
-    "rpcEndpoints": ["https://mainnet-rpc.assetchain.org"]
-  },
-  {
-    "chainId": 3776,
-    "name": "Astar zkEVM",
-    "rpcEndpoints": ["https://rpc.startale.com/astar-zkevm"]
-  },
-  {
-    "chainId": 6038361,
-    "name": "Astar zKyoto",
-    "rpcEndpoints": ["https://rpc.startale.com/zkyoto"]
-  },
-  {
-    "chainId": 4337,
-    "name": "Beam",
-    "rpcEndpoints": ["https://build.onbeam.com/rpc"]
-  },
-  {
-    "chainId": 80085,
-    "name": "Berachain Artio Testnet",
-    "rpcEndpoints": ["https://artio.rpc.berachain.com", "https://rpc.ankr.com/berachain_testnet"]
-  },
-  {
-    "chainId": 11503,
-    "name": "BEVM Testnet",
-    "rpcEndpoints": ["https://testnet.bevm.io"]
-  },
-  {
-    "chainId": 11501,
-    "name": "BEVM Mainnet",
-    "rpcEndpoints": ["https://rpc-mainnet-1.bevm.io", "https://rpc-mainnet-2.bevm.io"]
-  },
-  {
-    "chainId": 200901,
-    "name": "Bitlayer",
-    "rpcEndpoints": ["https://ws.bitlayer.org", "https://ws.bitlayer-rpc.com"]
-  },
-  {
-    "chainId": 56,
-    "name": "BNB Smart Chain",
-    "rpcEndpoints": ["https://binance.llamarpc.com", "https://bsc.drpc.org"]
-  },
-  {
-    "chainId": 97,
-    "name": "BNB Smart Chain Testnet",
-    "rpcEndpoints": ["https://bsc-testnet.public.blastapi.io"]
-  },
-  {
-    "chainId": 60808,
-    "name": "BOB Mainnet",
-    "rpcEndpoints": ["https://rpc.gobob.xyz", "https://bob.drpc.org"]
-  },
-  {
-    "chainId": 56288,
-    "name": "Boba BNB Mainnet",
-    "rpcEndpoints": ["https://bnb.boba.network", "https://boba-bnb.drpc.org"]
-  },
-  {
-    "chainId": 3636,
-    "name": "Botanix Testnet",
-    "rpcEndpoints": ["https://node.botanixlabs.dev"]
-  },
-  {
-    "chainId": 1113,
-    "name": "B2 Hub Testnet",
-    "rpcEndpoints": ["https://testnet-hub-rpc.bsquared.network"]
-  },
-  {
-    "chainId": 88882,
-    "name": "Chiliz Testnet Spicy",
-    "rpcEndpoints": ["https://spicy-rpc.chiliz.com"]
-  },
-  {
-    "chainId": 62298,
-    "name": "Citrea Devnet",
-    "rpcEndpoints": ["https://rpc.devnet.citrea.xyz"]
-  },
-  {
-    "chainId": 1116,
-    "name": "Core",
-    "rpcEndpoints": ["https://rpc.ankr.com/core", "https://rpc-core.icecreamswap.com"]
-  },
-  {
-    "chainId": 66665,
-    "name": "Creator Testnet",
-    "rpcEndpoints": ["https://rpc.creatorchain.io"]
-  },
-  {
-    "chainId": 388,
-    "name": "Cronos ZKEVM",
-    "rpcEndpoints": ["https://mainnet.zkevm.cronos.org"]
-  },
-  {
-    "chainId": 240,
-    "name": "Cronos ZKEVM Testnet",
-    "rpcEndpoints": ["https://testnet.zkevm.cronos.org"]
-  },
-  {
-    "chainId": 4157,
-    "name": "CrossFi Testnet",
-    "rpcEndpoints": ["https://rpc.testnet.ms"]
-  },
-  {
-    "chainId": 666666666,
-    "name": "Degen Chain",
-    "rpcEndpoints": ["https://rpc.degen.tips"]
-  },
-  {
-    "chainId": 7979,
-    "name": "DOS Chain",
-    "rpcEndpoints": ["https://main.doschain.com"]
-  },
-  {
-    "chainId": 246,
-    "name": "Energy Web",
-    "rpcEndpoints": ["https://rpc.energyweb.org"]
-  },
-  {
-    "chainId": 17777,
-    "name": "EOS",
-    "rpcEndpoints": ["https://api.evm.eosnetwork.com"]
-  },
-  {
-    "chainId": 19,
-    "name": "Flare Songbird",
-    "rpcEndpoints": ["https://songbird-api.flare.network/ext/C/rpc", "https://songbird-api.flare.network/ext/C/rpc", "https://rpc.ftso.au/songbird"]
-  },
-  {
-    "chainId": 747,
-    "name": "Flow",
-    "rpcEndpoints": ["https://mainnet.evm.nodes.onflow.org"]
-  },
-  {
-    "chainId": 545,
-    "name": "Flow Testnet",
-    "rpcEndpoints": ["https://testnet.evm.nodes.onflow.org"]
-  },
-  {
-    "chainId": 1625,
-    "name": "Gravity Alpha Mainnet",
-    "rpcEndpoints": ["https://rpc.gravity.xyz", "https://rpc.ankr.com/gravity"]
-  },
-  {
-    "chainId": 128,
-    "name": "Heco Chain",
-    "rpcEndpoints": ["https://http-mainnet.hecochain.com", "https://heco.drpc.org"]
-  },
- {
-    "chainId": 13371,
-    "name": "Immutable zkEVM",
-    "rpcEndpoints": ["https://immutable-zkevm.drpc.org", "https://rpc.immutable.com", "https://immutable.gateway.tenderly.co"]
-  },
-  {
-    "chainId": 13473,
-    "name": "Immutable zkEVM Testnet",
-    "rpcEndpoints": ["https://rpc.testnet.immutable.com", "https://immutable-zkevm-testnet.drpc.org", "https://immutable-zkevm-testnet.drpc.org"]
-  },
-  {
-    "chainId": 4689,
-    "name": "Iotex Network",
-    "rpcEndpoints": ["https://rpc.ankr.com/iotex", "https://iotex-network.rpc.thirdweb.com", "https://babel-api.mainnet.iotex.one"]
-  },
-  {
-    "chainId": 81,
-    "name": "Japan Open Chain",
-    "rpcEndpoints": ["https://rpc-1.japanopenchain.org:8545", "https://rpc-2.japanopenchain.org:8545", "https://rpc-3.japanopenchain.org"]
-  },
-  {
-    "chainId": 8217,
-    "name": "Kaia",
-    "rpcEndpoints": ["https://kaia.blockpi.network/v1/rpc/public", "https://public-en.node.kaia.io", "https://klaytn.drpc.org"]
-  },
-  {
-    "chainId": 920637907288165,
-    "name": "Kakarot Starknet Sepolia",
-    "rpcEndpoints": ["https://sepolia-rpc.kakarot.org"]
-  },
-  {
-    "chainId": 3456,
-    "name": "LayerEdge Testnet",
-    "rpcEndpoints": ["https://testnet-rpc.layeredge.io"]
-  },
-  {
-    "chainId": 1890,
-    "name": "Lightlink Phoenix",
-    "rpcEndpoints": ["https://replicator.phoenix.lightlink.io/rpc/v1", "https://endpoints.omniatech.io/v1/lightlink/phoenix/public"]
-  },
-  {
-    "chainId": 1891,
-    "name": "Lightlink Pegasus Testnet",
-    "rpcEndpoints": ["https://replicator.pegasus.lightlink.io/rpc/v1", "https://endpoints.omniatech.io/v1/lightlink/pegasus/public"]
-  },
-  {
-    "chainId": 82,
-    "name": "Meter Mainnet",
-    "rpcEndpoints": ["https://rpc.meter.io", "https://meter.blockpi.network/v1/rpc/public"]
-  },
-  {
-    "chainId": 83,
-    "name": "Meter Testnet",
-    "rpcEndpoints": ["https://rpctest.meter.io"]
-  },
-  {
-    "chainId": 185,
-    "name": "Mint Mainnet",
-    "rpcEndpoints": ["https://asia.rpc.mintchain.io", "https://global.rpc.mintchain.io", "https://rpc.mintchain.io"]
-  },
-  {
-    "chainId": 22222,
-    "name": "Nautilus",
-    "rpcEndpoints": ["https://api.nautilus.nautchain.xyz"]
-  },
-  {
-    "chainId": 12227332,
-    "name": "Neo X Testnet",
-    "rpcEndpoints": ["https://testnet.rpc.banelabs.org"]
-  },
-  {
-    "chainId": 7210,
-    "name": "Nibiru Testnet",
-    "rpcEndpoints": ["https://evm-rpc.testnet-1.nibiru.fi"]
-  },
-  {
-    "chainId": 2488,
-    "name": "Now Chaint",
-    "rpcEndpoints": ["https://rpc.nowscan.io"]
-  },
-  {
-    "chainId": 42262,
-    "name": "Oasis Emerald",
-    "rpcEndpoints": ["https://emerald.oasis.io", "https://1rpc.io/oasis/emerald"]
-  },
-  {
-    "chainId": 23294,
-    "name": "Oasis Sapphire",
-    "rpcEndpoints": ["https://1rpc.io/oasis/sapphire", "https://sapphire.oasis.io"]
-  },
-  {
-    "chainId": 5040,
-    "name": "ONIGIRI Subnet",
-    "rpcEndpoints": ["https://subnets.avax.network/onigiri/mainnet/rpc"]
-  },
-  {
-    "chainId": 5039,
-    "name": "ONIGIRI Test Subnet",
-    "rpcEndpoints": ["https://subnets.avax.network/onigiri/testnet/rpc"]
-  },
-  {
-    "chainId": 58,
-    "name": "Ontology Mainnet",
-    "rpcEndpoints": ["https://dappnode1.ont.io:10339", "https://dappnode2.ont.io:10339", "https://dappnode3.ont.io:10339"]
-  },
-  {
-    "chainId": 5851,
-    "name": "Ontology Testnet",
-    "rpcEndpoints": ["https://polaris1.ont.io:10339", "https://polaris2.ont.io:10339", "https://polaris3.ont.io:10339"]
-  },
-  {
-    "chainId": 62050,
-    "name": "Optopia",
-    "rpcEndpoints": ["https://rpc-mainnet.optopia.ai", "https://rpc-mainnet-2.optopia.ai"]
-  },
-  {
-    "chainId": 424,
-    "name": "Public Goods Network",
-    "rpcEndpoints": ["https://rpc.publicgoods.network"]
-  },
-  {
-    "chainId": 369,
-    "name": "PulseChain",
-    "rpcEndpoints": ["https://rpc.pulsechain.com", "https://pulsechain-rpc.publicnode.com", "https://rpc-pulsechain.g4mm4.io"]
-  },
-  {
-    "chainId": 2020,
-    "name": "Ronin",
-    "rpcEndpoints": ["https://ronin.drpc.org", "https://ronin.lgns.net/rpc", "https://api.roninchain.com/rpc"]
-  },
-  {
-    "chainId": 3109,
-    "name": "SatoshiVM",
-    "rpcEndpoints": ["https://alpha-rpc-node-http.svmscan.io"]
-  },
-  {
-    "chainId": 534351,
-    "name": "Scroll Sepolia",
-    "rpcEndpoints": ["https://rpc.ankr.com/scroll_sepolia_testnet", "https://sepolia-rpc.scroll.io", "https://scroll-sepolia-rpc.publicnode.com"]
-  },
-  {
-    "chainId": 2046399126,
-    "name": "Skale Europa",
-    "rpcEndpoints": ["https://mainnet.skalenodes.com/v1/elated-tan-skat"]
-  },
-  {
-    "chainId": 167000,
-    "name": "Taiko",
-    "rpcEndpoints": ["https://taiko-mainnet.gateway.tenderly.co", "https://rpc.ankr.com/taiko", "https://taiko.drpc.org"]
-  },
-  {
-    "chainId": 40,
-    "name": "Telos EVM Mainnet",
-    "rpcEndpoints": ["https://rpc.telos.net", "https://telos.drpc.org", "https://mainnet.telos.net/evm"]
-  },
-  {
-    "chainId": 41,
-    "name": "Telos EVM Testnet",
-    "rpcEndpoints": ["https://testnet.telos.net/evm", "https://telos-testnet.drpc.org"]
-  },
-  {
-    "chainId": 8192,
-    "name": "Torus Mainnet",
-    "rpcEndpoints": ["https://rpc.toruschain.com"]
-  },
-  {
-    "chainId": 8194,
-    "name": "Torus Testnet",
-    "rpcEndpoints": ["https://rpc.testnet.toruschain.com"]
-  },
-  {
-    "chainId": 2484,
-    "name": "Unicorn Ultra Nebulas Testnet",
-    "rpcEndpoints": ["https://rpc-nebulas-testnet.uniultra.xyz"]
-  },
-  {
-    "chainId": 106,
-    "name": "Velas Mainnet",
-    "rpcEndpoints": ["https://evmexplorer.velas.com/rpc", "https://explorer.velas.com/rpc"]
-  },
- {
-    "chainId": 88,
-    "name": "Viction",
-    "rpcEndpoints": ["https://rpc.viction.xyz", "https://viction.drpc.org", "https://viction.drpc.org"]
-  },
- {
-    "chainId": 196,
-    "name": "X Layer Mainnet",
-    "rpcEndpoints": ["https://xlayer.drpc.org","https://endpoints.omniatech.io/v1/xlayer/mainnet/public", "https://xlayerrpc.okx.com"]
-  },
 {
-    "chainId": 195,
-    "name": "X Layer Testnet",
-    "rpcEndpoints": ["https://endpoints.omniatech.io/v1/xlayer/testnet/public", "https://xlayertestrpc.okx.com", "https://testrpc.xlayer.tech"]
-  },
-{
-    "chainId": 50,
-    "name": "XDC Network",
-    "rpcEndpoints": ["https://rpc.ankr.com/xdc", "https://erpc.xdcrpc.com", "https://rpc.xdcrpc.com"]
-  },
-{
-    "chainId": 51,
-    "name": "XDC Apothem Testnet",
-    "rpcEndpoints": ["https://earpc.apothem.network", "https://erpc.apothem.network", "https://apothem.xdcrpc.com"]
-  },
-{
-    "chainId": 7001,
-    "name": "Zeta Testnet",
-    "rpcEndpoints": ["https://zetachain-testnet.public.blastapi.io", "https://zeta-chain-testnet.drpc.org", "https://zetachain-athens.g.allthatnode.com/archive/evm"]
-  },
-{
-    "chainId": 16600,
-    "name": "0G Newton Testnet",
-    "rpcEndpoints": ["https://0g-json-rpc-public.originstake.com"]
-  },
-{
-    "chainId": 41455,
-    "name": "Aleph Zero EVM",
-    "rpcEndpoints": ["https://rpc.alephzero.raas.gelato.cloud", "https://alephzero.drpc.org"]
-  },
-{
-    "chainId": 10242,
-    "name": "Arthera Mainnet",
-    "rpcEndpoints": ["https://rpc.arthera.net"]
-  },
-{
-    "chainId": 8333,
-    "name": "B3",
-    "rpcEndpoints": ["https://mainnet-rpc.b3.fun"]
-  },
-{
-    "chainId": 1993,
-    "name": "B3 Sepolia Testnet",
-    "rpcEndpoints": ["https://sepolia.b3.fun"]
-  },
-{
-    "chainId": 355110,
-    "name": "Bitfinity Mainnet",
-    "rpcEndpoints": ["https://mainnet.bitfinity.network"]
-  },
-{
-    "chainId": 355113,
-    "name": "Bitfinity Testnet",
-    "rpcEndpoints": ["https://testnet.bitfinity.network"]
-  },
-{
-    "chainId": 32520,
-    "name": "Bitgert Mainnet",
-    "rpcEndpoints": ["https://rpc-bitgert.icecreamswap.com", "https://serverrpc.com", "https://chainrpc.com"]
-  },
-{
-    "chainId": 7700,
-    "name": "Canto",
-    "rpcEndpoints": ["https://canto.dexrouting.com", "https://canto.slingshot.finance", "https://canto-rpc.ansybl.io"]
-  },
-{
-    "chainId": 7701,
-    "name": "Canto Testnet",
-    "rpcEndpoints": ["https://testnet-archive.plexnode.wtf"]
-  },
-{
-    "chainId": 44787,
-    "name": "Celo Alfajores Testnet",
-    "rpcEndpoints": ["https://alfajores-forno.celo-testnet.org"]
-  },
-{
-    "chainId": 4158,
-    "name": "CrossFi Mainnet",
-    "rpcEndpoints": ["https://rpc.mainnet.ms"]
-  },
-{
-    "chainId": 4158,
-    "name": "CrossFi Mainnet",
-    "rpcEndpoints": ["https://rpc.mainnet.ms"]
-  },
-{
-    "chainId": 53935,
-    "name": "DFK Chain",
-    "rpcEndpoints": ["https://subnets.avax.network/defi-kingdoms/dfk-chain/rpc"]
-  },
-{
-    "chainId": 2000,
-    "name": "Dogechain Mainnet",
-    "rpcEndpoints": ["https://rpc02-sg.dogechain.dog", "https://rpc-us.dogechain.dog", "https://rpc.dogechain.dog"]
-  },
-{
-    "chainId": 568,
-    "name": "Dogechain Testnet",
-    "rpcEndpoints": ["https://rpc-testnet.dogechain.dog"]
-  },
-{
-    "chainId": 128123,
-    "name": "Etherlink Testnet",
-    "rpcEndpoints": ["https://node.ghostnet.etherlink.com"]
-  },
-{
-    "chainId": 2109,
-    "name": "Exosama",
-    "rpcEndpoints": ["https://rpc.exosama.com"]
-  },
-{
-    "chainId": 4002,
-    "name": "Fantom Testnet",
-    "rpcEndpoints": ["https://rpc.ankr.com/fantom_testnet", "https://rpc.testnet.fantom.network", "https://fantom-testnet-rpc.publicnode.com"]
-  },
-{
-    "chainId": 88153591557,
-    "name": "Arbitrum Blueberry",
-    "rpcEndpoints": ["https://rpc.arb-blueberry.gelato.digital"]
-  },
-{
-    "chainId": 123420111,
-    "name": "OP Celestia Raspberry",
-    "rpcEndpoints": ["https://rpc.opcelestia-raspberry.gelato.digital"]
-  },
-{
-    "chainId": 3441006,
-    "name": "Manta Pacific Sepolia",
-    "rpcEndpoints": ["https://pacific-rpc.sepolia-testnet.manta.network/http", "https://endpoints.omniatech.io/v1/manta-pacific/sepolia/public"]
-  },
-{
-    "chainId": 3338,
-    "name": "Peaq",
-    "rpcEndpoints": ["https://evm.peaq.network", "https://peaq.api.onfinality.io/public", "https://peaq-rpc.publicnode.com"]
-  },
-{
-    "chainId": 2442,
-    "name": "Polygon zkEVM Cardona Testnet",
-    "rpcEndpoints": ["https://rpc.cardona.zkevm-rpc.com", "https://polygon-zkevm-cardona.blockpi.network/v1/rpc/private"]
-  },
-{
-    "chainId": 157,
-    "name": "Puppynet Shibarium",
-    "rpcEndpoints": ["https://puppynet.shibrpc.com"]
-  },
-{
-    "chainId": 109,
-    "name": "Shibarium",
-    "rpcEndpoints": ["https://www.shibrpc.com"]
-  },
-{
-    "chainId": 93747,
-    "name": "StratoVM Testnet",
-    "rpcEndpoints": ["https://rpc.stratovm.io"]
-  },
-{
-    "chainId": 93747,
-    "name": "StratoVM Testnet",
-    "rpcEndpoints": ["https://rpc.stratovm.io"]
-  },
-{
-    "chainId": 53302,
-    "name": "Superseed Sepolia Testnet",
-    "rpcEndpoints": ["https://sepolia.superseed.xyz"]
-  },
-{
-    "chainId": 810180,
-    "name": "ZkLink Nova Mainnet",
-    "rpcEndpoints": ["https://rpc.zklink.io"]
-  },
-{
-    "chainId": 300,
-    "name": "ZkSync Sepolia Testnet",
-    "rpcEndpoints": ["https://zksync-era-sepolia.blockpi.network/v1/rpc/private", "https://zksync-sepolia.drpc.org", "https://sepolia.era.zksync.dev"]
-  },
-{
-    "chainId": 999999999,
-    "name": "Zora Sepolia",
-    "rpcEndpoints": ["https://sepolia.rpc.zora.energy"]
-  },
-{
-    "chainId": 5678,
-    "name": "Tanssi Demo",
-    "rpcEndpoints": ["https://fraa-dancebox-3001-rpc.a.dancebox.tanssi.network"]
-  },
-{
-    "chainId": 1868,
-    "name": "Soneium",
-    "rpcEndpoints": ["https://rpc.minato.soneium.org/"]
-  }
-]
+  "rpcNetworks": [
+    {
+      "chainId": 9997,
+      "name": "Altlayer OP Demo Testnet",
+      "rpcEndpoints": [
+        "https://rpc-altlayer.optestnet.io",
+        "https://rpc-testnet-altlayer.com",
+        "https://altlayer-rpc.io"
+      ]
+    },
+    {
+      "chainId": 888888888,
+      "name": "Ancient8",
+      "rpcEndpoints": [
+        "https://rpc.ancient8.gg"
+      ]
+    },
+    {
+      "chainId": 11822,
+      "name": "Artela Testnet",
+      "rpcEndpoints": [
+        "https://betanet-rpc1.artela.network"
+      ]
+    },
+    {
+      "chainId": 42420,
+      "name": "Asset Chain Mainnet",
+      "rpcEndpoints": [
+        "https://mainnet-rpc.assetchain.org"
+      ]
+    },
+    {
+      "chainId": 3776,
+      "name": "Astar zkEVM",
+      "rpcEndpoints": [
+        "https://rpc.startale.com/astar-zkevm"
+      ]
+    },
+    {
+      "chainId": 6038361,
+      "name": "Astar zKyoto",
+      "rpcEndpoints": [
+        "https://rpc.startale.com/zkyoto"
+      ]
+    },
+    {
+      "chainId": 4337,
+      "name": "Beam",
+      "rpcEndpoints": [
+        "https://build.onbeam.com/rpc"
+      ]
+    },
+    {
+      "chainId": 80085,
+      "name": "Berachain Artio Testnet",
+      "rpcEndpoints": [
+        "https://artio.rpc.berachain.com",
+        "https://rpc.ankr.com/berachain_testnet"
+      ]
+    },
+    {
+      "chainId": 11503,
+      "name": "BEVM Testnet",
+      "rpcEndpoints": [
+        "https://testnet.bevm.io"
+      ]
+    },
+    {
+      "chainId": 11501,
+      "name": "BEVM Mainnet",
+      "rpcEndpoints": [
+        "https://rpc-mainnet-1.bevm.io",
+        "https://rpc-mainnet-2.bevm.io"
+      ]
+    },
+    {
+      "chainId": 200901,
+      "name": "Bitlayer",
+      "rpcEndpoints": [
+        "https://ws.bitlayer.org",
+        "https://ws.bitlayer-rpc.com"
+      ]
+    },
+    {
+      "chainId": 56,
+      "name": "BNB Smart Chain",
+      "rpcEndpoints": [
+        "https://binance.llamarpc.com",
+        "https://bsc.drpc.org"
+      ]
+    },
+    {
+      "chainId": 97,
+      "name": "BNB Smart Chain Testnet",
+      "rpcEndpoints": [
+        "https://bsc-testnet.public.blastapi.io"
+      ]
+    },
+    {
+      "chainId": 60808,
+      "name": "BOB Mainnet",
+      "rpcEndpoints": [
+        "https://rpc.gobob.xyz",
+        "https://bob.drpc.org"
+      ]
+    },
+    {
+      "chainId": 56288,
+      "name": "Boba BNB Mainnet",
+      "rpcEndpoints": [
+        "https://bnb.boba.network",
+        "https://boba-bnb.drpc.org"
+      ]
+    },
+    {
+      "chainId": 3636,
+      "name": "Botanix Testnet",
+      "rpcEndpoints": [
+        "https://node.botanixlabs.dev"
+      ]
+    },
+    {
+      "chainId": 1113,
+      "name": "B2 Hub Testnet",
+      "rpcEndpoints": [
+        "https://testnet-hub-rpc.bsquared.network"
+      ]
+    },
+    {
+      "chainId": 88882,
+      "name": "Chiliz Testnet Spicy",
+      "rpcEndpoints": [
+        "https://spicy-rpc.chiliz.com"
+      ]
+    },
+    {
+      "chainId": 62298,
+      "name": "Citrea Devnet",
+      "rpcEndpoints": [
+        "https://rpc.devnet.citrea.xyz"
+      ]
+    },
+    {
+      "chainId": 1116,
+      "name": "Core",
+      "rpcEndpoints": [
+        "https://rpc.ankr.com/core",
+        "https://rpc-core.icecreamswap.com"
+      ]
+    },
+    {
+      "chainId": 66665,
+      "name": "Creator Testnet",
+      "rpcEndpoints": [
+        "https://rpc.creatorchain.io"
+      ]
+    },
+    {
+      "chainId": 388,
+      "name": "Cronos ZKEVM",
+      "rpcEndpoints": [
+        "https://mainnet.zkevm.cronos.org"
+      ]
+    },
+    {
+      "chainId": 240,
+      "name": "Cronos ZKEVM Testnet",
+      "rpcEndpoints": [
+        "https://testnet.zkevm.cronos.org"
+      ]
+    },
+    {
+      "chainId": 4157,
+      "name": "CrossFi Testnet",
+      "rpcEndpoints": [
+        "https://rpc.testnet.ms"
+      ]
+    },
+    {
+      "chainId": 666666666,
+      "name": "Degen Chain",
+      "rpcEndpoints": [
+        "https://rpc.degen.tips"
+      ]
+    },
+    {
+      "chainId": 7979,
+      "name": "DOS Chain",
+      "rpcEndpoints": [
+        "https://main.doschain.com"
+      ]
+    },
+    {
+      "chainId": 246,
+      "name": "Energy Web",
+      "rpcEndpoints": [
+        "https://rpc.energyweb.org"
+      ]
+    },
+    {
+      "chainId": 17777,
+      "name": "EOS",
+      "rpcEndpoints": [
+        "https://api.evm.eosnetwork.com"
+      ]
+    },
+    {
+      "chainId": 19,
+      "name": "Flare Songbird",
+      "rpcEndpoints": [
+        "https://songbird-api.flare.network/ext/C/rpc",
+        "https://songbird-api.flare.network/ext/C/rpc",
+        "https://rpc.ftso.au/songbird"
+      ]
+    },
+    {
+      "chainId": 747,
+      "name": "Flow",
+      "rpcEndpoints": [
+        "https://mainnet.evm.nodes.onflow.org"
+      ]
+    },
+    {
+      "chainId": 545,
+      "name": "Flow Testnet",
+      "rpcEndpoints": [
+        "https://testnet.evm.nodes.onflow.org"
+      ]
+    },
+    {
+      "chainId": 1625,
+      "name": "Gravity Alpha Mainnet",
+      "rpcEndpoints": [
+        "https://rpc.gravity.xyz",
+        "https://rpc.ankr.com/gravity"
+      ]
+    },
+    {
+      "chainId": 128,
+      "name": "Heco Chain",
+      "rpcEndpoints": [
+        "https://http-mainnet.hecochain.com",
+        "https://heco.drpc.org"
+      ]
+    },
+    {
+      "chainId": 13371,
+      "name": "Immutable zkEVM",
+      "rpcEndpoints": [
+        "https://immutable-zkevm.drpc.org",
+        "https://rpc.immutable.com",
+        "https://immutable.gateway.tenderly.co"
+      ]
+    },
+    {
+      "chainId": 13473,
+      "name": "Immutable zkEVM Testnet",
+      "rpcEndpoints": [
+        "https://rpc.testnet.immutable.com",
+        "https://immutable-zkevm-testnet.drpc.org",
+        "https://immutable-zkevm-testnet.drpc.org"
+      ]
+    },
+    {
+      "chainId": 4689,
+      "name": "Iotex Network",
+      "rpcEndpoints": [
+        "https://rpc.ankr.com/iotex",
+        "https://iotex-network.rpc.thirdweb.com",
+        "https://babel-api.mainnet.iotex.one"
+      ]
+    },
+    {
+      "chainId": 81,
+      "name": "Japan Open Chain",
+      "rpcEndpoints": [
+        "https://rpc-1.japanopenchain.org:8545",
+        "https://rpc-2.japanopenchain.org:8545",
+        "https://rpc-3.japanopenchain.org"
+      ]
+    },
+    {
+      "chainId": 8217,
+      "name": "Kaia",
+      "rpcEndpoints": [
+        "https://kaia.blockpi.network/v1/rpc/public",
+        "https://public-en.node.kaia.io",
+        "https://klaytn.drpc.org"
+      ]
+    },
+    {
+      "chainId": 920637907288165,
+      "name": "Kakarot Starknet Sepolia",
+      "rpcEndpoints": [
+        "https://sepolia-rpc.kakarot.org"
+      ]
+    },
+    {
+      "chainId": 3456,
+      "name": "LayerEdge Testnet",
+      "rpcEndpoints": [
+        "https://testnet-rpc.layeredge.io"
+      ]
+    },
+    {
+      "chainId": 1890,
+      "name": "Lightlink Phoenix",
+      "rpcEndpoints": [
+        "https://replicator.phoenix.lightlink.io/rpc/v1",
+        "https://endpoints.omniatech.io/v1/lightlink/phoenix/public"
+      ]
+    },
+    {
+      "chainId": 1891,
+      "name": "Lightlink Pegasus Testnet",
+      "rpcEndpoints": [
+        "https://replicator.pegasus.lightlink.io/rpc/v1",
+        "https://endpoints.omniatech.io/v1/lightlink/pegasus/public"
+      ]
+    },
+    {
+      "chainId": 82,
+      "name": "Meter Mainnet",
+      "rpcEndpoints": [
+        "https://rpc.meter.io",
+        "https://meter.blockpi.network/v1/rpc/public"
+      ]
+    },
+    {
+      "chainId": 83,
+      "name": "Meter Testnet",
+      "rpcEndpoints": [
+        "https://rpctest.meter.io"
+      ]
+    },
+    {
+      "chainId": 185,
+      "name": "Mint Mainnet",
+      "rpcEndpoints": [
+        "https://asia.rpc.mintchain.io",
+        "https://global.rpc.mintchain.io",
+        "https://rpc.mintchain.io"
+      ]
+    },
+    {
+      "chainId": 22222,
+      "name": "Nautilus",
+      "rpcEndpoints": [
+        "https://api.nautilus.nautchain.xyz"
+      ]
+    },
+    {
+      "chainId": 12227332,
+      "name": "Neo X Testnet",
+      "rpcEndpoints": [
+        "https://testnet.rpc.banelabs.org"
+      ]
+    },
+    {
+      "chainId": 7210,
+      "name": "Nibiru Testnet",
+      "rpcEndpoints": [
+        "https://evm-rpc.testnet-1.nibiru.fi"
+      ]
+    },
+    {
+      "chainId": 2488,
+      "name": "Now Chaint",
+      "rpcEndpoints": [
+        "https://rpc.nowscan.io"
+      ]
+    },
+    {
+      "chainId": 42262,
+      "name": "Oasis Emerald",
+      "rpcEndpoints": [
+        "https://emerald.oasis.io",
+        "https://1rpc.io/oasis/emerald"
+      ]
+    },
+    {
+      "chainId": 23294,
+      "name": "Oasis Sapphire",
+      "rpcEndpoints": [
+        "https://1rpc.io/oasis/sapphire",
+        "https://sapphire.oasis.io"
+      ]
+    },
+    {
+      "chainId": 5040,
+      "name": "ONIGIRI Subnet",
+      "rpcEndpoints": [
+        "https://subnets.avax.network/onigiri/mainnet/rpc"
+      ]
+    },
+    {
+      "chainId": 5039,
+      "name": "ONIGIRI Test Subnet",
+      "rpcEndpoints": [
+        "https://subnets.avax.network/onigiri/testnet/rpc"
+      ]
+    },
+    {
+      "chainId": 58,
+      "name": "Ontology Mainnet",
+      "rpcEndpoints": [
+        "https://dappnode1.ont.io:10339",
+        "https://dappnode2.ont.io:10339",
+        "https://dappnode3.ont.io:10339"
+      ]
+    },
+    {
+      "chainId": 5851,
+      "name": "Ontology Testnet",
+      "rpcEndpoints": [
+        "https://polaris1.ont.io:10339",
+        "https://polaris2.ont.io:10339",
+        "https://polaris3.ont.io:10339"
+      ]
+    },
+    {
+      "chainId": 62050,
+      "name": "Optopia",
+      "rpcEndpoints": [
+        "https://rpc-mainnet.optopia.ai",
+        "https://rpc-mainnet-2.optopia.ai"
+      ]
+    },
+    {
+      "chainId": 424,
+      "name": "Public Goods Network",
+      "rpcEndpoints": [
+        "https://rpc.publicgoods.network"
+      ]
+    },
+    {
+      "chainId": 369,
+      "name": "PulseChain",
+      "rpcEndpoints": [
+        "https://rpc.pulsechain.com",
+        "https://pulsechain-rpc.publicnode.com",
+        "https://rpc-pulsechain.g4mm4.io"
+      ]
+    },
+    {
+      "chainId": 2020,
+      "name": "Ronin",
+      "rpcEndpoints": [
+        "https://ronin.drpc.org",
+        "https://ronin.lgns.net/rpc",
+        "https://api.roninchain.com/rpc"
+      ]
+    },
+    {
+      "chainId": 3109,
+      "name": "SatoshiVM",
+      "rpcEndpoints": [
+        "https://alpha-rpc-node-http.svmscan.io"
+      ]
+    },
+    {
+      "chainId": 534351,
+      "name": "Scroll Sepolia",
+      "rpcEndpoints": [
+        "https://rpc.ankr.com/scroll_sepolia_testnet",
+        "https://sepolia-rpc.scroll.io",
+        "https://scroll-sepolia-rpc.publicnode.com"
+      ]
+    },
+    {
+      "chainId": 2046399126,
+      "name": "Skale Europa",
+      "rpcEndpoints": [
+        "https://mainnet.skalenodes.com/v1/elated-tan-skat"
+      ]
+    },
+    {
+      "chainId": 167000,
+      "name": "Taiko",
+      "rpcEndpoints": [
+        "https://taiko-mainnet.gateway.tenderly.co",
+        "https://rpc.ankr.com/taiko",
+        "https://taiko.drpc.org"
+      ]
+    },
+    {
+      "chainId": 40,
+      "name": "Telos EVM Mainnet",
+      "rpcEndpoints": [
+        "https://rpc.telos.net",
+        "https://telos.drpc.org",
+        "https://mainnet.telos.net/evm"
+      ]
+    },
+    {
+      "chainId": 41,
+      "name": "Telos EVM Testnet",
+      "rpcEndpoints": [
+        "https://testnet.telos.net/evm",
+        "https://telos-testnet.drpc.org"
+      ]
+    },
+    {
+      "chainId": 8192,
+      "name": "Torus Mainnet",
+      "rpcEndpoints": [
+        "https://rpc.toruschain.com"
+      ]
+    },
+    {
+      "chainId": 8194,
+      "name": "Torus Testnet",
+      "rpcEndpoints": [
+        "https://rpc.testnet.toruschain.com"
+      ]
+    },
+    {
+      "chainId": 2484,
+      "name": "Unicorn Ultra Nebulas Testnet",
+      "rpcEndpoints": [
+        "https://rpc-nebulas-testnet.uniultra.xyz"
+      ]
+    },
+    {
+      "chainId": 106,
+      "name": "Velas Mainnet",
+      "rpcEndpoints": [
+        "https://evmexplorer.velas.com/rpc",
+        "https://explorer.velas.com/rpc"
+      ]
+    },
+    {
+      "chainId": 88,
+      "name": "Viction",
+      "rpcEndpoints": [
+        "https://rpc.viction.xyz",
+        "https://viction.drpc.org",
+        "https://viction.drpc.org"
+      ]
+    },
+    {
+      "chainId": 196,
+      "name": "X Layer Mainnet",
+      "rpcEndpoints": [
+        "https://xlayer.drpc.org",
+        "https://endpoints.omniatech.io/v1/xlayer/mainnet/public",
+        "https://xlayerrpc.okx.com"
+      ]
+    },
+    {
+      "chainId": 195,
+      "name": "X Layer Testnet",
+      "rpcEndpoints": [
+        "https://endpoints.omniatech.io/v1/xlayer/testnet/public",
+        "https://xlayertestrpc.okx.com",
+        "https://testrpc.xlayer.tech"
+      ]
+    },
+    {
+      "chainId": 50,
+      "name": "XDC Network",
+      "rpcEndpoints": [
+        "https://rpc.ankr.com/xdc",
+        "https://erpc.xdcrpc.com",
+        "https://rpc.xdcrpc.com"
+      ]
+    },
+    {
+      "chainId": 51,
+      "name": "XDC Apothem Testnet",
+      "rpcEndpoints": [
+        "https://earpc.apothem.network",
+        "https://erpc.apothem.network",
+        "https://apothem.xdcrpc.com"
+      ]
+    },
+    {
+      "chainId": 7001,
+      "name": "Zeta Testnet",
+      "rpcEndpoints": [
+        "https://zetachain-testnet.public.blastapi.io",
+        "https://zeta-chain-testnet.drpc.org",
+        "https://zetachain-athens.g.allthatnode.com/archive/evm"
+      ]
+    },
+    {
+      "chainId": 16600,
+      "name": "0G Newton Testnet",
+      "rpcEndpoints": [
+        "https://0g-json-rpc-public.originstake.com"
+      ]
+    },
+    {
+      "chainId": 41455,
+      "name": "Aleph Zero EVM",
+      "rpcEndpoints": [
+        "https://rpc.alephzero.raas.gelato.cloud",
+        "https://alephzero.drpc.org"
+      ]
+    },
+    {
+      "chainId": 10242,
+      "name": "Arthera Mainnet",
+      "rpcEndpoints": [
+        "https://rpc.arthera.net"
+      ]
+    },
+    {
+      "chainId": 8333,
+      "name": "B3",
+      "rpcEndpoints": [
+        "https://mainnet-rpc.b3.fun"
+      ]
+    },
+    {
+      "chainId": 1993,
+      "name": "B3 Sepolia Testnet",
+      "rpcEndpoints": [
+        "https://sepolia.b3.fun"
+      ]
+    },
+    {
+      "chainId": 355110,
+      "name": "Bitfinity Mainnet",
+      "rpcEndpoints": [
+        "https://mainnet.bitfinity.network"
+      ]
+    },
+    {
+      "chainId": 355113,
+      "name": "Bitfinity Testnet",
+      "rpcEndpoints": [
+        "https://testnet.bitfinity.network"
+      ]
+    },
+    {
+      "chainId": 32520,
+      "name": "Bitgert Mainnet",
+      "rpcEndpoints": [
+        "https://rpc-bitgert.icecreamswap.com",
+        "https://serverrpc.com",
+        "https://chainrpc.com"
+      ]
+    },
+    {
+      "chainId": 7700,
+      "name": "Canto",
+      "rpcEndpoints": [
+        "https://canto.dexrouting.com",
+        "https://canto.slingshot.finance",
+        "https://canto-rpc.ansybl.io"
+      ]
+    },
+    {
+      "chainId": 7701,
+      "name": "Canto Testnet",
+      "rpcEndpoints": [
+        "https://testnet-archive.plexnode.wtf"
+      ]
+    },
+    {
+      "chainId": 44787,
+      "name": "Celo Alfajores Testnet",
+      "rpcEndpoints": [
+        "https://alfajores-forno.celo-testnet.org"
+      ]
+    },
+    {
+      "chainId": 4158,
+      "name": "CrossFi Mainnet",
+      "rpcEndpoints": [
+        "https://rpc.mainnet.ms"
+      ]
+    },
+    {
+      "chainId": 4158,
+      "name": "CrossFi Mainnet",
+      "rpcEndpoints": [
+        "https://rpc.mainnet.ms"
+      ]
+    },
+    {
+      "chainId": 53935,
+      "name": "DFK Chain",
+      "rpcEndpoints": [
+        "https://subnets.avax.network/defi-kingdoms/dfk-chain/rpc"
+      ]
+    },
+    {
+      "chainId": 2000,
+      "name": "Dogechain Mainnet",
+      "rpcEndpoints": [
+        "https://rpc02-sg.dogechain.dog",
+        "https://rpc-us.dogechain.dog",
+        "https://rpc.dogechain.dog"
+      ]
+    },
+    {
+      "chainId": 568,
+      "name": "Dogechain Testnet",
+      "rpcEndpoints": [
+        "https://rpc-testnet.dogechain.dog"
+      ]
+    },
+    {
+      "chainId": 128123,
+      "name": "Etherlink Testnet",
+      "rpcEndpoints": [
+        "https://node.ghostnet.etherlink.com"
+      ]
+    },
+    {
+      "chainId": 2109,
+      "name": "Exosama",
+      "rpcEndpoints": [
+        "https://rpc.exosama.com"
+      ]
+    },
+    {
+      "chainId": 4002,
+      "name": "Fantom Testnet",
+      "rpcEndpoints": [
+        "https://rpc.ankr.com/fantom_testnet",
+        "https://rpc.testnet.fantom.network",
+        "https://fantom-testnet-rpc.publicnode.com"
+      ]
+    },
+    {
+      "chainId": 88153591557,
+      "name": "Arbitrum Blueberry",
+      "rpcEndpoints": [
+        "https://rpc.arb-blueberry.gelato.digital"
+      ]
+    },
+    {
+      "chainId": 123420111,
+      "name": "OP Celestia Raspberry",
+      "rpcEndpoints": [
+        "https://rpc.opcelestia-raspberry.gelato.digital"
+      ]
+    },
+    {
+      "chainId": 3441006,
+      "name": "Manta Pacific Sepolia",
+      "rpcEndpoints": [
+        "https://pacific-rpc.sepolia-testnet.manta.network/http",
+        "https://endpoints.omniatech.io/v1/manta-pacific/sepolia/public"
+      ]
+    },
+    {
+      "chainId": 3338,
+      "name": "Peaq",
+      "rpcEndpoints": [
+        "https://evm.peaq.network",
+        "https://peaq.api.onfinality.io/public",
+        "https://peaq-rpc.publicnode.com"
+      ]
+    },
+    {
+      "chainId": 2442,
+      "name": "Polygon zkEVM Cardona Testnet",
+      "rpcEndpoints": [
+        "https://rpc.cardona.zkevm-rpc.com",
+        "https://polygon-zkevm-cardona.blockpi.network/v1/rpc/private"
+      ]
+    },
+    {
+      "chainId": 157,
+      "name": "Puppynet Shibarium",
+      "rpcEndpoints": [
+        "https://puppynet.shibrpc.com"
+      ]
+    },
+    {
+      "chainId": 109,
+      "name": "Shibarium",
+      "rpcEndpoints": [
+        "https://www.shibrpc.com"
+      ]
+    },
+    {
+      "chainId": 93747,
+      "name": "StratoVM Testnet",
+      "rpcEndpoints": [
+        "https://rpc.stratovm.io"
+      ]
+    },
+    {
+      "chainId": 53302,
+      "name": "Superseed Sepolia Testnet",
+      "rpcEndpoints": [
+        "https://sepolia.superseed.xyz"
+      ]
+    },
+    {
+      "chainId": 810180,
+      "name": "ZkLink Nova Mainnet",
+      "rpcEndpoints": [
+        "https://rpc.zklink.io"
+      ]
+    },
+    {
+      "chainId": 300,
+      "name": "ZkSync Sepolia Testnet",
+      "rpcEndpoints": [
+        "https://zksync-era-sepolia.blockpi.network/v1/rpc/private",
+        "https://zksync-sepolia.drpc.org",
+        "https://sepolia.era.zksync.dev"
+      ]
+    },
+    {
+      "chainId": 999999999,
+      "name": "Zora Sepolia",
+      "rpcEndpoints": [
+        "https://sepolia.rpc.zora.energy"
+      ]
+    },
+    {
+      "chainId": 5678,
+      "name": "Tanssi Demo",
+      "rpcEndpoints": [
+        "https://fraa-dancebox-3001-rpc.a.dancebox.tanssi.network"
+      ]
+    }
+  ]
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
