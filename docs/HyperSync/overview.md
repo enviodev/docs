@@ -5,7 +5,7 @@ sidebar_label: Overview
 slug: /overview
 ---
 
-# HyperSync: Fast & Flexible Data API
+# HyperSync: Ultra-Fast & Flexible Data API
 
 ## What is HyperSync?
 
