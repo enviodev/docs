@@ -245,8 +245,8 @@ This quickstart repository powers [LogTUI](https://www.npmjs.com/package/logtui)
 Try it with a single command:
 
 ```bash
-# Monitor Uniswap events on Ethereum
-pnpx logtui uniswap ethereum
+# Monitor Uniswap events on unichain
+pnpx logtui uniswap-v4 unichain
 
 # Monitor Aave events on Arbitrum
 pnpx logtui aave arbitrum
