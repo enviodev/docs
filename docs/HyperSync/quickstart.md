@@ -9,6 +9,15 @@ slug: /hypersync-quickstart
 
 Get up and running with HyperSync in minutes. This guide will help you start accessing blockchain data at unprecedented speeds with minimal setup.
 
+## Quickest Start: Try LogTUI
+
+Want to see HyperSync in action with zero setup? Try LogTUI, a terminal-based blockchain event viewer:
+
+```bash
+# Monitor Aave events on Arbitrum (no installation needed)
+pnpx logtui aave arbitrum
+```
+
 ## Clone the Quickstart Repository
 
 The fastest way to get started is to clone our minimal example repository:
@@ -228,6 +237,25 @@ const client = HypersyncClient.new({ url: "http://base.hypersync.xyz" });
 ```
 
 See the [Supported Networks](/docs/HyperSync/hypersync-supported-networks) page for a complete list.
+
+## Using LogTUI
+
+This quickstart repository powers [LogTUI](https://www.npmjs.com/package/logtui), a terminal-based blockchain event viewer built on HyperSync. LogTUI lets you monitor events from popular protocols across multiple chains with zero configuration.
+
+Try it with a single command:
+
+```bash
+# Monitor Uniswap events on Ethereum
+pnpx logtui uniswap ethereum
+
+# Monitor Aave events on Arbitrum
+pnpx logtui aave arbitrum
+
+# See all available options
+pnpx logtui --help
+```
+
+LogTUI supports scanning historically for any events across all networks supported by HyperSync.
 
 ## Next Steps
 
