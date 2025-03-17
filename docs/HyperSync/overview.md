@@ -5,7 +5,7 @@ sidebar_label: Overview
 slug: /overview
 ---
 
-# HyperSync: High-Performance Blockchain Data Access
+# HyperSync: Ultra-Fast & Flexible Data API
 
 ## What is HyperSync?
 
