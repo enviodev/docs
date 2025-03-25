@@ -95,11 +95,12 @@ ERC20.Transfer.handlerWithLoader({
 
 ### How Batching Works
 
-When Envio processes events:
+1. HyperIndex will create an ordered batch of events from its in memory queue
+2. All loader functions will be run concurrently for the batch.
 
-1. First, all loader functions run for a batch of events
-2. Similar database requests are automatically batched
-3. Then, all handler functions run with the pre-loaded data
+   _**Note:** at this stage, some entities being loaded may not exist yet since the handlers have not been run. [Be careful of throwing errors in loaders when an entity is undefined](#beware-of-double-run-footgun)._
+
+3. On each event of the batch its loader will be run a second time and then pass the result to the handler. This step is sequential.
 
 For our 5,000 transfer events example, this reduces database roundtrips from 10,000 to just 2!
 
@@ -139,7 +140,7 @@ ERC20.Approval.handlerWithLoader({
   loader: async ({ event, context }) => {
     // Find all approvals for this owner
     const currentOwnerApprovals = await context.Approval.getWhere.owner_id.eq(
-      event.params.owner
+      event.params.owner,
     );
 
     return { currentOwnerApprovals };
@@ -183,6 +184,62 @@ Loaders provide the most benefit when:
 2. Put all database operations in the loader function
 3. Keep handler functions focused on business logic
 4. Use concurrent requests when loading multiple unrelated entities
+
+### Beware of Double Run Footgun
+
+In the example below, the loader will be run twice (once at the start of the batch and once during the processing of each event).
+This means that the "sender" `Account` entity may not exist yet on the first run of the loader.
+
+During the processing of the batch, another handler may set it before it is available.
+
+```typescript
+ERC20.Transfer.handlerWithLoader({
+  loader: async ({ event, context }) => {
+    const sender = await context.Account.get(event.params.from);
+
+    // BE CAREFUL HERE
+    // The loader will be run twice and sender may not exist on the first run
+    if (!sender) {
+      throw new Error(`Sender account not found: ${event.params.from}`);
+    }
+
+    return {
+      sender,
+    };
+  },
+
+  handler: async ({ event, context, loaderReturn }) => {
+    const { sender } = loaderReturn;
+    // ... handler logic
+  },
+});
+```
+
+The example above could crash unnecessarily. If you want to achieve this behaviour you should rather throw the error in the handler.
+
+```typescript
+ERC20.Transfer.handlerWithLoader({
+  loader: async ({ event, context }) => {
+    const sender = await context.Account.get(event.params.from);
+
+    return {
+      sender,
+    };
+  },
+
+  handler: async ({ event, context, loaderReturn }) => {
+    const { sender } = loaderReturn;
+
+    if (!sender) {
+      throw new Error(`Sender account not found: ${event.params.from}`);
+    }
+
+    // ... handler logic
+  },
+});
+```
+
+Now the indexer behaves as expected. The indexer will only crash if the "sender" `Account` entity was actually not set in an event preceding the one being processed.
 
 ## Limitations
 
