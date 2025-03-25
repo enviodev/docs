@@ -19,7 +19,7 @@ slug: /base
 
 ### Tier
 
-SILVER 🥈
+GOLD 🏅
 
 ### Overview
 

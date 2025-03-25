@@ -19,7 +19,7 @@ slug: /harmony-shard-0
 
 ### Tier
 
-SILVER 🥈
+STONE 🪨
 
 ### Overview
 

@@ -19,7 +19,7 @@ slug: /cyber
 
 ### Tier
 
-SILVER 🥈
+STONE 🪨
 
 ### Overview
 

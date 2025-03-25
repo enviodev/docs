@@ -90,6 +90,50 @@ HyperSync enforces several types of limits to ensure efficient query execution:
 4. When a limit is reached, it finishes processing the current block group
 5. It returns results with pagination information
 
+### Understanding Pagination
+
+HyperSync uses a time-based pagination model that differs from traditional RPC calls:
+
+- By default, HyperSync has a **5-second query execution limit**
+- Within this time window, it processes as many blocks as possible
+- For example, starting with `from_block: 0` might progress to block 10 million in a single request
+- Each response includes a `next_block` value indicating where to resume for the next query
+- This differs from RPC calls where you typically specify fixed block ranges (e.g., 0-1000)
+
+For most use cases, the `stream` function handles pagination automatically, making it the recommended approach for processing large ranges of blocks.
+
+### Reverse Search
+
+HyperSync supports searching from the head of the chain backwards, which is useful for:
+
+- Block explorers showing the most recent activity
+- UIs displaying latest transactions for a user
+- Any use case where recent data is more relevant
+
+To use reverse search, add the `reverse: true` parameter to your stream call:
+
+```javascript
+// Example of reverse search to get recent transactions
+const receiver = await client.stream(query, { reverse: true });
+
+let count = 0;
+while (true) {
+  let res = await receiver.recv();
+  if (res === null) {
+    break;
+  }
+  for (const tx of res.data.transactions) {
+    console.log(JSON.stringify(tx, null, 2));
+  }
+  count += res.data.transactions.length;
+  if (count >= 20) {
+    break;
+  }
+}
+```
+
+With reverse search, HyperSync starts from the latest block and works backwards, allowing you to efficiently access the most recent blockchain data first.
+
 ## Query Structure Reference
 
 A complete HyperSync query can include the following components:

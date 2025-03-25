@@ -19,7 +19,7 @@ slug: /linea
 
 ### Tier
 
-SILVER 🥈
+BRONZE 🥉
 
 ### Overview
 
