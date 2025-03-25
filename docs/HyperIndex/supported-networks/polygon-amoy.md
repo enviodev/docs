@@ -19,7 +19,7 @@ slug: /polygon-amoy
 
 ### Tier
 
-SILVER 🥈
+BRONZE 🥉
 
 ### Overview
 

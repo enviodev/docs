@@ -133,10 +133,10 @@ All HyperSync clients require an API token for authentication. Tokens are used t
 
 To get an API token:
 
-1. Visit the [Envio Dashboard](https://dash.envio.dev)
-2. Register or sign in with your account
+1. Visit [Envio](https://.envio.dev)
+2. Register or sign in with your github account
 3. Navigate to the API Tokens section
-4. Create a new token with the appropriate permissions
+4. Create a new token
 
 For detailed instructions, see our [API Tokens](./api-tokens.mdx) guide.
 
