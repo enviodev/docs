@@ -6,6 +6,16 @@ slug: /what-is-multi-chain-indexing
 
 <img src="/blog-assets/what-is-multi-chain-indexing.png" alt="Cover Image What is Multi-chain Indexing?" width="100%"/>
 
+<iframe
+  width="100%"
+  height="400"
+  src="https://www.youtube.com/embed/Yucbr7SMprg"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+></iframe>
+
 <!--truncate-->
 
 
@@ -20,7 +30,7 @@ Multi-chain indexing is the process of ingesting, organizing, and providing bloc
 
 This means:
 
-* You don’t need to manage separate data pipelines for each chain.
+* You don't need to manage separate data pipelines for each chain.
 * Access to faster, more efficient queries across multiple networks.
 * Reduced dependency on rate-limited RPC endpoints.
 
@@ -112,7 +122,7 @@ This [Aerodrome indexer](https://docs.envio.dev/docs/HyperIndex/example-aerodrom
 
 ## Conclusion
 
-Multi-chain indexing is no longer just a convenience, it’s a core infrastructure layer for Web3 apps. Solutions like HyperIndex empower developers to achieve scalable, real-time data access across chains, enabling the next generation of multi-chain apps.
+Multi-chain indexing is no longer just a convenience, it's a core infrastructure layer for Web3 apps. Solutions like HyperIndex empower developers to achieve scalable, real-time data access across chains, enabling the next generation of multi-chain apps.
 
 Web3 is inherently multi-chain, and applications need data infrastructure that reflects this reality. Whether building DeFi platforms, NFT marketplaces, or analytics tools, multi-chain indexing is now a cornerstone of scalable, efficient Web3 development.
 

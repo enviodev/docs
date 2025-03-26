@@ -19,7 +19,7 @@ slug: /arbitrum-nova
 
 ### Tier
 
-GOLD 🏅
+BRONZE 🥉
 
 ### Overview
 

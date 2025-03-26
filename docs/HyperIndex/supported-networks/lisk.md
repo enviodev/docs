@@ -19,7 +19,7 @@ slug: /lisk
 
 ### Tier
 
-SILVER 🥈
+BRONZE 🥉
 
 ### Overview
 
