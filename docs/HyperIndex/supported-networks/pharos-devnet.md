@@ -19,7 +19,11 @@ slug: /pharos-devnet
 
 ### Tier
 
+<<<<<<<< HEAD:docs/HyperIndex/supported-networks/pharos-devnet.md
 STONE 🪨
+========
+BRONZE 🥉
+>>>>>>>> 6e23cc26110481ee822b8d47433a0e34faf71ee8:docs/HyperIndex/supported-networks/arbitrum-nova.md
 
 ### Overview
 
