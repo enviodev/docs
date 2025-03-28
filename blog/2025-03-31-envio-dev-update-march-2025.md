@@ -42,7 +42,7 @@ ERC20.Transfer.handler(
   }
 );
 ```
-## Stricter `chainId` type 🔐
+### Stricter `chainId` type 🔐
 The `chainId` type on `event` is now a union of chain ids the event belongs to. This is much safer than a number type used before.
 
 
