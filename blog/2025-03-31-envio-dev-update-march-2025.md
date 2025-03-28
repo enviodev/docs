@@ -8,15 +8,46 @@ slug: /envio-developer-update-march-2025
 
 <!--truncate-->
 
-March was madness! We’re excited to roll out HyperIndex v2.14.0 with RPC failover support, LogTui for fast chain scans, and integrations with V12, XDC Network, Monad, and Chiliz. With new tools, powerful partnerships, tutorials, and more, we’re empowering developers to build smarter and faster than ever. Let’s dive into the latest updates!
+March was madness! We’re excited to roll out HyperIndex v2.15.0 with RPC failover support, LogTui for fast chain scans, and integrations with V12, XDC Network, Monad, and Chiliz. With new tools, powerful partnerships, tutorials, and more, we’re empowering developers to build smarter and faster than ever. Let’s dive into the latest updates!
 
 
-## 🚀 HyperIndex Version 2.14.0 is now available 🚀
+## 🚀 HyperIndex Version 2.15.0 is now available 🚀
 
-<img src="/blog-assets/envio-dev-update-march-1-2025.png" alt="v2.14.0" width="100%"/>
+Topic Filtering goes Multichain ⛓️
+Now the `eventFilters` option can also accept a callback, allowing for building different filters depending on `chainId`:
+
+```
+import { ERC20 } from "generated";
+
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+
+const WHITELISTED_ADDRESSES = {
+  1: [
+    "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+  ],
+  100: ["0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"],
+};
+
+ERC20.Transfer.handler(
+  async ({ event, context }) => {
+    //... your handler logic
+  },
+  {
+    wildcard: true,
+    eventFilters: ({ chainId }) => [
+      { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chainId] },
+      { from: WHITELISTED_ADDRESSES[chainId], to: ZERO_ADDRESS },
+    ],
+  }
+);
+```
+Stricter `chainId` type 🔐
+The `chainId` type on `event` is now a union of chain ids the event belongs to. This is much safer than a number type used before.
 
 
-HyperIndex v2.14.1 is live! This update brings enhanced reliability with RPC failover support—ensuring 100% uptime for your indexer. If HyperSync becomes unavailable, your indexer will automatically switch to an RPC provider.
+
+HyperIndex v2.14.1 also went live with this update bringing enhanced reliability with RPC failover support—ensuring 100% uptime for your indexer. If HyperSync becomes unavailable, your indexer will automatically switch to an RPC provider.
 
 
 #### What's new?
@@ -59,7 +90,9 @@ Want more control? You got it. Now you can explicitly define primary vs. fallbac
 networks:
   - id: 137 # Polygon
     start_block: 0
-+   rpc: https://eth-mainnet.your-rpc-provider.com
++   rpc:
++     url: https://eth-mainnet.your-rpc-provider.com
++     for: sync
     contracts:
       - name: PolygonGreeter
         address: 0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c
