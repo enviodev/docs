@@ -11,9 +11,9 @@ slug: /envio-developer-update-march-2025
 March was madness! We’re excited to roll out HyperIndex v2.15.0 with RPC failover support, LogTui for fast chain scans, and integrations with V12, XDC Network, Monad, and Chiliz. With new tools, powerful partnerships, tutorials, and more, we’re empowering developers to build smarter and faster than ever. Let’s dive into the latest updates!
 
 
-## 🚀 HyperIndex Version 2.15.0 is now available 🚀
+## 🚀 HyperIndex Version 2.14.0 & 2.15.0 is now available 🚀
 
-Topic Filtering goes Multichain ⛓️
+## Topic Filtering goes Multichain ⛓️
 Now the `eventFilters` option can also accept a callback, allowing for building different filters depending on `chainId`:
 
 ```
@@ -42,11 +42,11 @@ ERC20.Transfer.handler(
   }
 );
 ```
-Stricter `chainId` type 🔐
+## Stricter `chainId` type 🔐
 The `chainId` type on `event` is now a union of chain ids the event belongs to. This is much safer than a number type used before.
 
 
-
+## V2.14.0
 HyperIndex v2.14.1 also went live with this update bringing enhanced reliability with RPC failover support—ensuring 100% uptime for your indexer. If HyperSync becomes unavailable, your indexer will automatically switch to an RPC provider.
 
 
