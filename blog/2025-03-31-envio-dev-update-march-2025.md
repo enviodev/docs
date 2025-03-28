@@ -46,7 +46,7 @@ ERC20.Transfer.handler(
 The `chainId` type on `event` is now a union of chain ids the event belongs to. This is much safer than a number type used before.
 
 
-## V2.14.0
+### RPC as a fallback
 HyperIndex v2.14.1 also went live with this update bringing enhanced reliability with RPC failover support—ensuring 100% uptime for your indexer. If HyperSync becomes unavailable, your indexer will automatically switch to an RPC provider.
 
 
