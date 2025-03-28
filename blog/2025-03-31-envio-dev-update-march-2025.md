@@ -13,7 +13,7 @@ March was madness! We’re excited to roll out HyperIndex v2.15.0 with RPC failo
 
 ## 🚀 HyperIndex Version 2.14.0 & 2.15.0 is now available 🚀
 
-## Topic Filtering goes Multichain ⛓️
+### Topic Filtering goes Multichain ⛓️
 Now the `eventFilters` option can also accept a callback, allowing for building different filters depending on `chainId`:
 
 ```
