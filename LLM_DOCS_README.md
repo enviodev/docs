@@ -5,10 +5,27 @@ This project includes a special build configuration for creating LLM-friendly do
 ## How It Works
 
 1. The build process checks for the `DOCS_FOR_LLM` environment variable
-2. When `DOCS_FOR_LLM=true`, the build:
-   - Skips generating all supported network pages
-   - Creates a minimal list of important networks
-   - Produces a streamlined documentation site optimized for LLM context windows
+2. When `DOCS_FOR_LLM=true`:
+   - The sidebar code in `sidebarsHyperIndex.js` directly filters to show only important networks
+   - Canonical URLs are added to tell search engines that docs.envio.dev is the primary source
+
+## Implementation Details
+
+Our approach is simple and efficient:
+
+1. **Sidebar Filtering**: We filter the networks list directly in `sidebarsHyperIndex.js` when the environment variable is present, showing only the most important networks.
+
+2. **Canonical URLs**: A custom Docusaurus plugin adds canonical links to all pages, pointing to the main docs site.
+
+3. **No File Modifications**: All markdown files are still generated normally, we just control what appears in the navigation.
+
+## SEO Considerations
+
+The LLM-friendly version (llm-docs.envio.dev) includes canonical links pointing to the main documentation site (docs.envio.dev). This ensures:
+
+1. Search engines know which version to index (the main docs)
+2. The LLM version won't cause SEO penalties for duplicate content
+3. Users who find the LLM version through direct links will still get a good experience
 
 ## Vercel Setup Instructions
 
@@ -21,20 +38,11 @@ To set up the LLM-friendly documentation in Vercel:
    - Add a new Environment Variable:
      - Name: `DOCS_FOR_LLM`
      - Value: `true`
-   - In the "Environments" dropdown, select only the environment you want for LLM docs (e.g., "Preview")
+   - Apply this to your LLM documentation environment
 
-2. **Create a Preview Deployment**:
-
-   - In Vercel, go to Deployments
-   - Create a new deployment
-   - Select your repository and branch
-   - Choose the environment where `DOCS_FOR_LLM=true`
-   - Deploy
-
-3. **Alternative: Create a Git Branch**:
-   - Create a branch named `llm-docs` in your repository
-   - Configure Vercel to use the `DOCS_FOR_LLM=true` environment variable for this branch
-   - Vercel will automatically deploy with the LLM-friendly configuration
+2. **Set Up Custom Domain**:
+   - Add your custom domain: `llm-docs.envio.dev`
+   - Vercel will provide DNS setup instructions
 
 ## Local Testing
 
@@ -50,10 +58,11 @@ yarn start
 
 ## Files Modified for This Feature
 
-1. `scripts/conditionally-update-endpoints.js` - Conditionally generates network pages
-2. `package.json` - Updated build scripts to use the conditional script
-3. `sidebarsHyperIndex.js` - Modified to conditionally include networks in the sidebar
+1. `sidebarsHyperIndex.js` - Contains logic to filter networks when DOCS_FOR_LLM is true
+2. `docusaurus.config.js` - Adds canonical URL support via a custom plugin
 
 ## Maintenance Notes
 
-When adding new features or sections to the documentation, consider whether they should be included in both versions or just the full version.
+- When adding new networks, no changes are needed for the LLM version
+- The filtered networks are defined in `sidebarsHyperIndex.js` in the `keyNetworks` array
+- Canonical URLs are automatically generated via the custom plugin in `docusaurus.config.js`
