@@ -248,10 +248,6 @@ Powered by HyperSync, Chain Density delivers fast, intuitive insights.
 
 ## Congratulations to the Modular DeFi Denver Hackathon Winners
 
-
-<img src="/blog-assets/envio-dev-update-march-11-2025.png" alt="encode winners denver" width="100%"/>
-
-
 A huge thanks to the Encode Club team for hosting the Modular DeFi Hackathon in Denver! It was amazing to see all the hackers bring their best ideas to life. Big shoutout to everyone for their incredible submissions.
 
 For more details about our winners and prizes, check out this [thread](https://x.com/envio_indexer/status/1900163549105664042).
