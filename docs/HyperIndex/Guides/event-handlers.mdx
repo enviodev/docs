@@ -62,25 +62,28 @@ Here's a handler example for the `NewGreeting` event. It belongs to the `Greeter
 ```typescript
 import { Greeter, User } from "generated";
 
+// Handler for the NewGreeting event
 Greeter.NewGreeting.handler(async ({ event, context }) => {
-  const userId = event.params.user.toString();
-  const currentUser = await context.User.get(userId);
+  const userId = event.params.user; // The id for the User entity
+  const latestGreeting = event.params.greeting; // The greeting string that was added
+  const currentUserEntity = await context.User.get(userId); // Optional user entity that may already exist
 
-  const userObject: User = currentUser
+  // Update or create a new User entity
+  const userEntity: User = currentUserEntity
     ? {
         id: userId,
-        latestGreeting: event.params.greeting,
-        numberOfGreetings: currentUser.numberOfGreetings + 1,
-        greetings: [...currentUser.greetings, event.params.greeting],
+        latestGreeting,
+        numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
+        greetings: [...currentUserEntity.greetings, latestGreeting],
       }
     : {
         id: userId,
-        latestGreeting: event.params.greeting,
+        latestGreeting,
         numberOfGreetings: 1,
-        greetings: [event.params.greeting],
+        greetings: [latestGreeting],
       };
 
-  context.User.set(userObject);
+  context.User.set(userEntity); // Set the User entity in the DB
 });
 ```
 
@@ -88,27 +91,30 @@ Greeter.NewGreeting.handler(async ({ event, context }) => {
   <TabItem value="javascript" label="JavaScript">
 
 ```javascript
-let { Greeter } = require("generated");
+const { Greeter } = require("generated");
 
+// Handler for the NewGreeting event
 Greeter.NewGreeting.handler(async ({ event, context }) => {
-  let userId = event.params.user.toString();
-  let user = await context.User.get(userId);
+  const userId = event.params.user; // The id for the User entity
+  const latestGreeting = event.params.greeting; // The greeting string that was added
+  const currentUserEntity = await context.User.get(userId); // Optional user entity that may already exist
 
-  if (user) {
-    context.User.set({
-      id: userId,
-      latestGreeting: event.params.greeting,
-      numberOfGreetings: user.numberOfGreetings + 1,
-      greetings: [...user.greetings, event.params.greeting],
-    });
-  } else {
-    context.User.set({
-      id: userId,
-      latestGreeting: event.params.greeting,
-      numberOfGreetings: 1,
-      greetings: [event.params.greeting],
-    });
-  }
+  // Update or create a new User entity
+  const userEntity = currentUserEntity
+    ? {
+        id: userId,
+        latestGreeting,
+        numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
+        greetings: [...currentUserEntity.greetings, latestGreeting],
+      }
+    : {
+        id: userId,
+        latestGreeting,
+        numberOfGreetings: 1,
+        greetings: [latestGreeting],
+      };
+
+  context.User.set(userEntity); // Set the User entity in the DB
 });
 ```
 
@@ -116,29 +122,32 @@ Greeter.NewGreeting.handler(async ({ event, context }) => {
   <TabItem value="rescript" label="ReScript">
 
 ```rescript
-open Types;
+open Types
 
-Handlers.Greeter.NewGreeting.handler(async ({ event, context }) => {
-  let userId = event.params.user->Ethers.ethAddressToString;
-  let currentUserOpt = context.user.get(userId);
+// Handler for the NewGreeting event
+Handlers.Greeter.NewGreeting.handler(async ({event, context}) => {
+  let userId = event.params.user->Address.toString // The id for the User entity
+  let latestGreeting = event.params.greeting // The greeting string that was added
+  let maybeCurrentUserEntity = await context.user.get(userId) // Optional User entity that may already exist
 
-  switch currentUserOpt {
-  | Some(existingUser) =>
-      context.user.set({
-        id: userId,
-        latestGreeting: event.params.greeting,
-        numberOfGreetings: existingUser.numberOfGreetings + 1,
-        greetings: existingUser.greetings->Belt.Array.concat([event.params.greeting]),
-      })
-  | None =>
-      context.user.set({
-        id: userId,
-        latestGreeting: event.params.greeting,
-        numberOfGreetings: 1,
-        greetings: [event.params.greeting],
-      })
+  // Update or create a new User entity
+  let userEntity: Entities.User.t = switch maybeCurrentUserEntity {
+  | Some(existingUserEntity) => {
+      id: userId,
+      latestGreeting,
+      numberOfGreetings: existingUserEntity.numberOfGreetings + 1,
+      greetings: existingUserEntity.greetings->Belt.Array.concat([latestGreeting]),
+    }
+  | None => {
+      id: userId,
+      latestGreeting,
+      numberOfGreetings: 1,
+      greetings: [latestGreeting],
+    }
   }
-});
+
+  context.user.set(userEntity) // Set the User entity in the DB
+})
 ```
 
   </TabItem>
@@ -224,16 +233,14 @@ context.<ENTITY_NAME>.deleteUnsafe(entityId);
 The `deleteUnsafe` method is experimental and **unsafe**. Manually handle all entity references after deletion to maintain database consistency.
 :::
 
----
-
-## Updating Specific Entity Fields
+### Updating Specific Entity Fields
 
 Use the following approach to update specific fields in an existing entity:
 
 <Tabs>
-  <TabItem value="javascript" label="JavaScript">
+  <TabItem value="typescript" label="TypeScript">
 
-```javascript
+```typescript
 const pool = await context.Pool.get(poolId);
 if (pool) {
   context.Pool.set({
@@ -244,9 +251,9 @@ if (pool) {
 ```
 
   </TabItem>
-  <TabItem value="typescript" label="TypeScript">
+  <TabItem value="javascript" label="JavaScript">
 
-```typescript
+```javascript
 const pool = await context.Pool.get(poolId);
 if (pool) {
   context.Pool.set({
@@ -279,10 +286,10 @@ pool->Option.forEach(pool => {
 You can access your indexer configuration within handlers using `getConfigByChainId`:
 
 <Tabs>
-  <TabItem value="javascript" label="JavaScript">
+  <TabItem value="typescript" label="TypeScript">
 
-```javascript
-const { getConfigByChainId } = require("../generated/src/ConfigYAML.bs.js");
+```typescript
+import { getConfigByChainId } from "../generated/src/ConfigYAML.gen";
 
 Greeter.NewGreeting.handler(async ({ event, context }) => {
   const config = getConfigByChainId(event.chainId);
@@ -290,10 +297,10 @@ Greeter.NewGreeting.handler(async ({ event, context }) => {
 ```
 
   </TabItem>
-  <TabItem value="typescript" label="TypeScript">
+  <TabItem value="javascript" label="JavaScript">
 
-```typescript
-import { getConfigByChainId } from "../generated/src/ConfigYAML.gen";
+```javascript
+const { getConfigByChainId } = require("../generated/src/ConfigYAML.bs.js");
 
 Greeter.NewGreeting.handler(async ({ event, context }) => {
   const config = getConfigByChainId(event.chainId);
