@@ -58,6 +58,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Lukso Testnet        | 4201       | https://lukso-testnet.rpc.hypersync.xyz or https://4201.rpc.hypersync.xyz           |                 |
 | Manta                | 169        | https://manta.rpc.hypersync.xyz or https://169.rpc.hypersync.xyz                    |                 |
 | Mantle               | 5000       | https://mantle.rpc.hypersync.xyz or https://5000.rpc.hypersync.xyz                  |                 |
+| Megaeth Testnet      | 6342       | https://megaeth-testnet.rpc.hypersync.xyz or https://6342.rpc.hypersync.xyz         |                 |
 | Merlin               | 4200       | https://merlin.rpc.hypersync.xyz or https://4200.rpc.hypersync.xyz                  |                 |
 | Metall2              | 1750       | https://metall2.rpc.hypersync.xyz or https://1750.rpc.hypersync.xyz                 |                 |
 | Metis                | 1088       | https://metis.rpc.hypersync.xyz or https://1088.rpc.hypersync.xyz                   |                 |
@@ -83,6 +84,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Soneium              | 1868       | https://soneium.rpc.hypersync.xyz or https://1868.rpc.hypersync.xyz                 |                 |
 | Sophon               | 50104      | https://sophon.rpc.hypersync.xyz or https://50104.rpc.hypersync.xyz                 |                 |
 | Sophon Testnet       | 531050104  | https://sophon-testnet.rpc.hypersync.xyz or https://531050104.rpc.hypersync.xyz     |                 |
+| Superseed            | 5330       | https://superseed.rpc.hypersync.xyz or https://5330.rpc.hypersync.xyz               |                 |
 | Unichain             | 130        | https://unichain.rpc.hypersync.xyz or https://130.rpc.hypersync.xyz                 |                 |
 | Unichain Sepolia     | 1301       | https://unichain-sepolia.rpc.hypersync.xyz or https://1301.rpc.hypersync.xyz        |                 |
 | Xdc                  | 50         | https://xdc.rpc.hypersync.xyz or https://50.rpc.hypersync.xyz                       |                 |

@@ -74,6 +74,7 @@ If you are a network operator or user and would like improved service support or
 | Lukso Testnet        | 4201       | https://lukso-testnet.hypersync.xyz or https://4201.hypersync.xyz                   | 🎒   |                 |
 | Manta                | 169        | https://manta.hypersync.xyz or https://169.hypersync.xyz                            | 🪨   |                 |
 | Mantle               | 5000       | https://mantle.hypersync.xyz or https://5000.hypersync.xyz                          | 🪨   |                 |
+| Megaeth Testnet      | 6342       | https://megaeth-testnet.hypersync.xyz or https://6342.hypersync.xyz                 | 🪨   |                 |
 | Merlin               | 4200       | https://merlin.hypersync.xyz or https://4200.hypersync.xyz                          | 🪨   |                 |
 | Metall2              | 1750       | https://metall2.hypersync.xyz or https://1750.hypersync.xyz                         | 🪨   |                 |
 | Metis                | 1088       | https://metis.hypersync.xyz or https://1088.hypersync.xyz                           | 🪨   |                 |
@@ -99,6 +100,7 @@ If you are a network operator or user and would like improved service support or
 | Soneium              | 1868       | https://soneium.hypersync.xyz or https://1868.hypersync.xyz                         | 🪨   |                 |
 | Sophon               | 50104      | https://sophon.hypersync.xyz or https://50104.hypersync.xyz                         | 🥉   |                 |
 | Sophon Testnet       | 531050104  | https://sophon-testnet.hypersync.xyz or https://531050104.hypersync.xyz             | 🎒   |                 |
+| Superseed            | 5330       | https://superseed.hypersync.xyz or https://5330.hypersync.xyz                       | 🪨   |                 |
 | Unichain             | 130        | https://unichain.hypersync.xyz or https://130.hypersync.xyz                         | 🪨   |                 |
 | Unichain Sepolia     | 1301       | https://unichain-sepolia.hypersync.xyz or https://1301.hypersync.xyz                | 🎒   |                 |
 | Xdc                  | 50         | https://xdc.hypersync.xyz or https://50.hypersync.xyz                               | 🥈   |                 |
