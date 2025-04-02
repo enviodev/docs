@@ -85,7 +85,7 @@ cd your-indexer-directory
 3. Start the indexer by running:
 
 ```bash
-pnpm envio dev
+pnpm dev
 ```
 
 This command automatically launches your local environment and opens the Hasura dashboard, where you can view indexed blockchain data.

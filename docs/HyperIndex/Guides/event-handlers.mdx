@@ -10,17 +10,9 @@ import TabItem from "@theme/TabItem";
 
 # Event Handlers
 
-Event handlers define how your indexer processes blockchain events. After defining your configuration (`config.yaml`) and GraphQL schema (`schema.graphql`), generate the boilerplate code for event handlers by running:
+## Registration
 
-```bash
-pnpm codegen
-```
-
----
-
-## Registering Event Handlers
-
-Register an asynchronous handler for each blockchain event you want to process. The basic handler registration syntax is shown below:
+A handler is a function that receives blockchain data, processes it, and inserts it into the database. You can register handlers in the file defined in the `handler` field in your `config.yaml` file. By default this is `src/EventHandlers.*` file.
 
 <Tabs>
   <TabItem value="typescript" label="TypeScript">
@@ -50,6 +42,102 @@ const { <CONTRACT_NAME> } = require("generated");
 ```rescript
 Handlers.<CONTRACT_NAME>.<EVENT_NAME>.handler(async ({ event, context }) => {
   // Your logic here
+});
+```
+
+  </TabItem>
+</Tabs>
+
+:::note
+The `generated` module contains code and types based on `config.yaml` and `schema.graphql` files. Update it by running **`pnpm codegen`** command whenever you change these files.
+:::
+
+### Basic Example
+
+Here's a handler example for the `NewGreeting` event. It belongs to the `Greeter` contract from our beginners [Greeter Tutorial](/docs/HyperIndex/greeter-tutorial):
+
+<Tabs>
+  <TabItem value="typescript" label="TypeScript">
+
+```typescript
+import { Greeter, User } from "generated";
+
+Greeter.NewGreeting.handler(async ({ event, context }) => {
+  const userId = event.params.user.toString();
+  const currentUser = await context.User.get(userId);
+
+  const userObject: User = currentUser
+    ? {
+        id: userId,
+        latestGreeting: event.params.greeting,
+        numberOfGreetings: currentUser.numberOfGreetings + 1,
+        greetings: [...currentUser.greetings, event.params.greeting],
+      }
+    : {
+        id: userId,
+        latestGreeting: event.params.greeting,
+        numberOfGreetings: 1,
+        greetings: [event.params.greeting],
+      };
+
+  context.User.set(userObject);
+});
+```
+
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
+
+```javascript
+let { Greeter } = require("generated");
+
+Greeter.NewGreeting.handler(async ({ event, context }) => {
+  let userId = event.params.user.toString();
+  let user = await context.User.get(userId);
+
+  if (user) {
+    context.User.set({
+      id: userId,
+      latestGreeting: event.params.greeting,
+      numberOfGreetings: user.numberOfGreetings + 1,
+      greetings: [...user.greetings, event.params.greeting],
+    });
+  } else {
+    context.User.set({
+      id: userId,
+      latestGreeting: event.params.greeting,
+      numberOfGreetings: 1,
+      greetings: [event.params.greeting],
+    });
+  }
+});
+```
+
+  </TabItem>
+  <TabItem value="rescript" label="ReScript">
+
+```rescript
+open Types;
+
+Handlers.Greeter.NewGreeting.handler(async ({ event, context }) => {
+  let userId = event.params.user->Ethers.ethAddressToString;
+  let currentUserOpt = context.user.get(userId);
+
+  switch currentUserOpt {
+  | Some(existingUser) =>
+      context.user.set({
+        id: userId,
+        latestGreeting: event.params.greeting,
+        numberOfGreetings: existingUser.numberOfGreetings + 1,
+        greetings: existingUser.greetings->Belt.Array.concat([event.params.greeting]),
+      })
+  | None =>
+      context.user.set({
+        id: userId,
+        latestGreeting: event.params.greeting,
+        numberOfGreetings: 1,
+        greetings: [event.params.greeting],
+      })
+  }
 });
 ```
 
@@ -178,100 +266,6 @@ pool->Option.forEach(pool => {
     ...pool,
     totalValueLockedETH: pool.totalValueLockedETH.plus(newDeposit),
   });
-});
-```
-
-  </TabItem>
-</Tabs>
-
----
-
-## Handler Example: `NewGreeting` Event
-
-Here's a complete example handler for the `NewGreeting` event:
-
-<Tabs>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
-let { Greeter } = require("generated");
-
-Greeter.NewGreeting.handler(async ({ event, context }) => {
-  let userId = event.params.user.toString();
-  let user = await context.User.get(userId);
-
-  if (user) {
-    context.User.set({
-      id: userId,
-      latestGreeting: event.params.greeting,
-      numberOfGreetings: user.numberOfGreetings + 1,
-      greetings: [...user.greetings, event.params.greeting],
-    });
-  } else {
-    context.User.set({
-      id: userId,
-      latestGreeting: event.params.greeting,
-      numberOfGreetings: 1,
-      greetings: [event.params.greeting],
-    });
-  }
-});
-```
-
-  </TabItem>
-  <TabItem value="typescript" label="TypeScript">
-
-```typescript
-import { Greeter, User } from "generated";
-
-Greeter.NewGreeting.handler(async ({ event, context }) => {
-  const userId = event.params.user.toString();
-  const currentUser = await context.User.get(userId);
-
-  const userObject: User = currentUser
-    ? {
-        id: userId,
-        latestGreeting: event.params.greeting,
-        numberOfGreetings: currentUser.numberOfGreetings + 1,
-        greetings: [...currentUser.greetings, event.params.greeting],
-      }
-    : {
-        id: userId,
-        latestGreeting: event.params.greeting,
-        numberOfGreetings: 1,
-        greetings: [event.params.greeting],
-      };
-
-  context.User.set(userObject);
-});
-```
-
-  </TabItem>
-  <TabItem value="rescript" label="ReScript">
-
-```rescript
-open Types;
-
-Handlers.Greeter.NewGreeting.handler(async ({ event, context }) => {
-  let userId = event.params.user->Ethers.ethAddressToString;
-  let currentUserOpt = context.user.get(userId);
-
-  switch currentUserOpt {
-  | Some(existingUser) =>
-      context.user.set({
-        id: userId,
-        latestGreeting: event.params.greeting,
-        numberOfGreetings: existingUser.numberOfGreetings + 1,
-        greetings: existingUser.greetings->Belt.Array.concat([event.params.greeting]),
-      })
-  | None =>
-      context.user.set({
-        id: userId,
-        latestGreeting: event.params.greeting,
-        numberOfGreetings: 1,
-        greetings: [event.params.greeting],
-      })
-  }
 });
 ```
 
