@@ -153,6 +153,20 @@ Handlers.Greeter.NewGreeting.handler(async ({event, context}) => {
   </TabItem>
 </Tabs>
 
+### Advanced Use Cases
+
+HyperIndex provides many features to help you build more powerful and efficient indexers. Read more about these on separate pages:
+
+- Handle Factory Contracts with [Dynamic Contract Registration](/docs/HyperIndex/dynamic-contracts) (with nested factories support)
+- Index all ERC20 token transfers with [Wildcard Indexing](/docs/HyperIndex/wildcard-indexing)
+- Use [Topic Filtering](/docs/HyperIndex/wildcard-indexing) to ignore irrelevant events
+  - With [multiple filters for single event](/docs/HyperIndex/wildcard-indexing#multiple-filters-example)
+  - With different filters per network
+  - With filter by dynamicly registered contracts (eg Get all ERC20 transfers for your child factory contract)
+- [Access Contract State](/docs/HyperIndex/contract-state) directly from handlers
+- Perform external calls from handlers by following the [IPFS Integration guide](/docs/HyperIndex/ipfs)
+- Optimise database access with [Loaders](/docs/HyperIndex/loaders)
+
 ---
 
 ## Event Object
@@ -181,15 +195,19 @@ The event object also contains additional metadata:
 - `event.chainId` – Chain ID of the network emitting the event.
 - `event.srcAddress` – Contract address emitting the event.
 - `event.logIndex` – Index of the log within the block.
-- `event.block` – Block information (number, timestamp, etc.).
-- `event.transaction` – Transaction details (hash, index, gas used, etc.).
+- `event.block` – Block fields (By default: `number`, `timestamp`, `hash`).
+- `event.transaction` – Transaction fields (eg `hash`, `gasUsed`, etc. Empty by default).
+
+:::note
+Configure block and transaction fields with [`field_selection`](/docs/HyperIndex/configuration-file#field-selection) in your `config.yaml` file.
+:::
 
 **Example event type definition:**
 
 ```typescript
 type Event<Params, TransactionFields, BlockFields> = {
   params: Params;
-  chainId: number;
+  chainId: 1 | 137;
   srcAddress: string;
   logIndex: number;
   transaction: TransactionFields;
@@ -197,11 +215,9 @@ type Event<Params, TransactionFields, BlockFields> = {
 };
 ```
 
-You can configure additional block and transaction fields in your `config.yaml` under `field_selection`.
-
 ---
 
-## Using the Handler `context`
+## Context Object
 
 The handler `context` provides methods to interact with entities stored in the database.
 
@@ -278,6 +294,12 @@ pool->Option.forEach(pool => {
 
   </TabItem>
 </Tabs>
+
+### `context.log`
+
+The context object also provides a logger that you can use to log messages to the console. Compared to `console.log` calls, these logs will be displayed on our [Hosted Service](/docs/HyperIndex/hosted-service) runtime logs page.
+
+Read more in the [Logging Guide](/docs/HyperIndex/logging).
 
 ---
 
