@@ -19,11 +19,11 @@ The Optimism Standard Bridge enables the movement of ETH and ERC-20 tokens betwe
 
 Before starting, ensure you have the following installed:
 
-- Node.js (v18 or newer)
-- pnpm (v8 or newer)
-- Docker Desktop
+- **[Node.js](https://nodejs.org/en/download/current)** _(v18 or newer recommended)_
+- **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
+- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
-For detailed installation instructions, see the [Prerequisites section](https://docs.envio.dev/docs/getting-started#prerequisites).
+> **Note:** Docker is specifically required to run your indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
 
 ## Step 1: Initialize Your Indexer
 
@@ -92,7 +92,7 @@ pnpm envio stop
 2. Start your new indexer:
 
 ```bash
-pnpm envio dev
+pnpm dev
 ```
 
 This command:

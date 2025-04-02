@@ -27,15 +27,11 @@ By the end of this tutorial, you'll have:
 
 Before starting, ensure you have the following installed:
 
-- **Node.js** (v18 or newer) - We recommend using [fnm](https://github.com/Schniz/fnm) or [nvm](https://github.com/nvm-sh/nvm) for installation
-- **pnpm** (v8 or newer) - [Installation guide](https://pnpm.io/installation)
-- **Docker Desktop** - [Download here](https://www.docker.com/products/docker-desktop/)
+- **[Node.js](https://nodejs.org/en/download/current)** _(v18 or newer recommended)_
+- **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
+- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
-You'll also need to install the Envio CLI:
-
-```bash
-npm i -g envio
-```
+> **Note:** Docker is specifically required to run your indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
 
 ## Step 1: Initialize Your Project
 
@@ -111,7 +107,7 @@ envio_node:
 This schema defines the data structures for the indexed events:
 
 ```graphql
-type Greeting @entity {
+type Greeting {
   id: ID!
   user: String!
   greeting: String!
@@ -120,7 +116,7 @@ type Greeting @entity {
   transactionHash: String!
 }
 
-type User @entity {
+type User {
   id: ID!
   latestGreeting: String!
   numberOfGreetings: Int!
@@ -139,7 +135,7 @@ This file contains the logic to process events emitted by the Greeter contract.
 1. Start the indexer with:
 
 ```bash
-pnpm envio dev
+pnpm dev
 ```
 
 This command:

@@ -25,9 +25,11 @@ Sway Farm is a simple farming game and for the sake of a real-world example, let
 
 ### Environment tooling
 
-1. [<ins>Node.js</ins>](https://nodejs.org/en/download/current) we recommend using something like [fnm](https://github.com/Schniz/fnm) or [nvm](https://github.com/nvm-sh/nvm) to install Node
-1. [<ins>pnpm</ins>](https://pnpm.io/installation)
-1. [<ins>Docker Desktop</ins>](https://www.docker.com/products/docker-desktop/)
+- **[Node.js](https://nodejs.org/en/download/current)** _(v18 or newer recommended)_
+- **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
+- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
+
+> **Note:** Docker is specifically required to run your indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
 
 ## Initialize the project
 

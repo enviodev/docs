@@ -121,20 +121,9 @@ Note that enabling this option will increase database storage requirements and m
 
 ### Field Selection
 
-You can optimize data retrieval by specifying exactly which fields to fetch (this is used to enhance performance, see [Interactive Schema Explorer](#interactive-schema-explorer) section):
+To improve indexing performance and reduce credits usage the `block` and `transaction` fields on event contain only a subset of the fields available on the blockchain.
 
-```yaml
-field_selection:
-  transaction_fields:
-    - hash
-    - gasUsed
-  block_fields:
-    - parentHash
-```
-
-#### Per-event Field Selection
-
-Starting from `envio@2.11.0`, you can specify fields per event (see [Interactive Schema Explorer](#interactive-schema-explorer) for possibilities):
+To access fields that are not provided by default, specify them using the `field_selection` option for your event:
 
 ```yaml
 events:
@@ -145,6 +134,27 @@ events:
       block_fields:
         - timestamp
 ```
+
+See all possible options in the [Interactive Schema Explorer](#interactive-schema-explorer) or use IDE autocomplete for your help.
+
+#### Global Field Selection
+
+You can also specify fields globally for all events in the root of the config file:
+
+```yaml
+field_selection:
+  transaction_fields:
+    - hash
+    - gasUsed
+  block_fields:
+    - parentHash
+```
+
+Try to use this option sparingly as it can cause redundant Data Source calls and increased credits usage.
+
+:::note
+Field Selection per Event is available from `envio@2.11.0` and above. Please, upgrade your indexer to access this feature.
+:::
 
 ---
 
