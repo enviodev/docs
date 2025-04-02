@@ -57,7 +57,7 @@ Starting from **9 May 2024**, HyperSync (the data engine powering HyperIndex) wi
 - **Self-Hosted Deployments**: API tokens are required for unlimited HyperSync access in self-hosted deployments. The token can be set via the `ENVIO_API_TOKEN` environment variable in your indexer configuration. This can be read from the `.env` file in the root of your HyperIndex project.
 - **Hosted Service**: Indexers deployed to our hosted service will have special access that doesn't require a custom API token.
 - **Free Usage**: The service remains free to use until the end of May 2024.
-- **Future Pricing**: From June 2024 onwards, we will introduce tiered packages based on usage.
+- **Future Pricing**: From June 2024 onwards, we will introduce tiered packages based on usage. For preferred introductory pricing based on your specific use case, reach out to us on [Discord](https://discord.gg/Q9qt8gZ2fX).
 
 For more details about API tokens, including how to generate and implement them, see our [API Tokens documentation](/docs/HyperSync/api-tokens).
 
