@@ -15,7 +15,7 @@ Wildcard Indexing is supported for [HyperSync](/docs/HyperIndex/Advanced/hypersy
 For the [RPC](/docs/HyperIndex/Advanced/rpc-sync.md) data source support added in the `v2.12.0` release.
 :::
 
-## Index all ERC20 token transfers
+## Index all ERC20 transfers
 
 As an example, let's say we want to index all ERC20 `Transfer` events. Start with a [`config.yaml`](/docs/HyperIndex/configuration-file) file:
 
@@ -28,7 +28,7 @@ networks:
       - name: ERC20
         handler: ./src/EventHandlers.ts
         events:
-          - event: "Transfer(address indexed from, address indexed to, uint256 value)"
+          - event: Transfer(address indexed from, address indexed to, uint256 value)
 ```
 
 Let's also define some entities in [`schema.graphql`](/docs/HyperIndex/schema) file, so our handlers can store the processed data:
@@ -248,6 +248,242 @@ Handlers.ERC20.Transfer.handler(
     ]),
   },
 )
+```
+
+  </TabItem>
+</Tabs>
+
+## Different Filters per Network
+
+For [Multichain Indexers](/docs/HyperIndex/multichain-indexing) you can pass a function to `eventFilters` and use `chainId` to filter by different values per network:
+
+<Tabs groupId="lang" defaultValue="ts">
+  <TabItem value="ts" label="TypeScript">
+
+```ts
+import { ERC20 } from "generated";
+
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+
+const WHITELISTED_ADDRESSES = {
+  1: ["0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"],
+  137: [
+    "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+    "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+  ],
+};
+
+ERC20.Transfer.handler(
+  async ({ event, context }) => {
+    //... your handler logic
+  },
+  {
+    wildcard: true,
+    eventFilters: ({ chainId }) => [
+      { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chainId] },
+      { from: WHITELISTED_ADDRESSES[chainId], to: ZERO_ADDRESS },
+    ],
+  }
+);
+```
+
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+
+```js
+const { ERC20 } = require("generated");
+
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+
+const WHITELISTED_ADDRESSES = {
+  1: ["0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"],
+  137: [
+    "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+    "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+  ],
+};
+
+ERC20.Transfer.handler(
+  async ({ event, context }) => {
+    //... your handler logic
+  },
+  {
+    wildcard: true,
+    eventFilters: ({ chainId }) => [
+      { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chainId] },
+      { from: WHITELISTED_ADDRESSES[chainId], to: ZERO_ADDRESS },
+    ],
+  }
+);
+```
+
+  </TabItem>
+</Tabs>
+
+## Index all ERC20 transfers to your Contract
+
+Besides `chainId` you can also access the `addresses` value to filter by.
+
+For example, if you have a `Safe` contract, you can index all ERC20 transfers sent specifically to/from your `Safe` contracts. The event filter gets addresses belonging to the contract, so we need to define the `Transfer` event on the `Safe` contract:
+
+```yaml
+name: locker
+networks:
+  - id: 1
+    start_block: 0
+    contracts:
+      - name: Safe
+        handler: ./src/EventHandlers.ts
+        events:
+          - event: Transfer(address indexed from, address indexed to, uint256 value)
+        addresses:
+          - 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+          - 0x70997970C51812dc3A010C7d01b50e0d17dc79C8
+          - 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC
+```
+
+<Tabs groupId="lang" defaultValue="ts">
+  <TabItem value="ts" label="TypeScript">
+
+```ts
+import { Safe } from "generated";
+
+Safe.Transfer.handler(async ({ event, context }) => {}, {
+  wildcard: true,
+  eventFilters: ({ addresses }) => [{ from: addresses }, { to: addresses }],
+});
+```
+
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+
+```js
+const { Safe } = require("generated");
+
+Safe.Transfer.handler(async ({ event, context }) => {}, {
+  wildcard: true,
+  eventFilters: ({ addresses }) => [{ from: addresses }, { to: addresses }],
+});
+```
+
+  </TabItem>
+</Tabs>
+
+This example is not much different from using a `WHITELISTED_ADDRESSES` constant, but this becomes much more powerful when the `Safe` contract addresses are [registered dynamically](/docs/HyperIndex/dynamic-contracts) by a factory contract:
+
+```yaml
+name: locker
+networks:
+  - id: 1
+    start_block: 0
+    contracts:
+      - name: SafeRegistry
+        handler: ./src/EventHandlers.ts
+        events:
+          - event: NewSafe(address safe)
+        addresses:
+          - 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+      - name: Safe
+        handler: ./src/EventHandlers.ts
+        events:
+          - event: Transfer(address indexed from, address indexed to, uint256 value)
+```
+
+<Tabs groupId="lang" defaultValue="ts">
+  <TabItem value="ts" label="TypeScript">
+
+```ts
+import { SafeRegistry, Safe } from "generated";
+
+SafeRegistry.NewSafe.contractRegister(async ({ event, context }) => {
+  context.addSafe(event.params.safe);
+});
+
+Safe.Transfer.handler(async ({ event, context }) => {}, {
+  wildcard: true,
+  eventFilters: ({ addresses }) => [{ from: addresses }, { to: addresses }],
+});
+```
+
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+
+```js
+const { SafeRegistry, Safe } = require("generated");
+
+SafeRegistry.NewSafe.contractRegister(async ({ event, context }) => {
+  context.addSafe(event.params.safe);
+});
+
+Safe.Transfer.handler(async ({ event, context }) => {}, {
+  wildcard: true,
+  eventFilters: ({ addresses }) => [{ from: addresses }, { to: addresses }],
+});
+```
+
+  </TabItem>
+</Tabs>
+
+### Assert ERC20 Transfers in Handler
+
+After you got all ERC20 Transfers relevant to your contracts, you can additionally filter them in the handler. For example, to get only `USDC` transfers:
+
+<Tabs groupId="lang" defaultValue="ts">
+  <TabItem value="ts" label="TypeScript">
+
+```ts
+import { Safe } from "generated";
+
+const USDC_ADDRESS = {
+  84532: "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+  11155111: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+};
+
+Safe.Transfer.handler(
+  async ({ event, context }) => {
+    // Filter and store only the USDC transfers that involve a Safe address
+    if (event.srcAddress === USDC_ADDRESS[event.chainId]) {
+      context.Transfer.set({
+        id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+        from: event.params.from,
+        to: event.params.to,
+      });
+    }
+  },
+  {
+    wildcard: true,
+    eventFilters: ({ addresses }) => [{ from: addresses }, { to: addresses }],
+  }
+);
+```
+
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+
+```js
+const { Safe } = require("generated");
+
+const USDC_ADDRESS = {
+  84532: "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+  11155111: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+};
+
+Safe.Transfer.handler(
+  async ({ event, context }) => {
+    // Filter and store only the USDC transfers that involve a Safe address
+    if (event.srcAddress === USDC_ADDRESS[event.chainId]) {
+      context.Transfer.set({
+        id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+        from: event.params.from,
+        to: event.params.to,
+      });
+    }
+  },
+  {
+    wildcard: true,
+    eventFilters: ({ addresses }) => [{ from: addresses }, { to: addresses }],
+  }
+);
 ```
 
   </TabItem>
