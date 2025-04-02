@@ -491,73 +491,70 @@ Safe.Transfer.handler(
 
 ## Contract Register Example
 
-The same can be applied to contractRegister and handlerWithLoader APIs. Here is an example where we only register Uniswap pools that contain DAI token:
+The same `eventFilters` can be applied to `contractRegister` and `handlerWithLoader` APIs. Here is an example where we only register Uniswap pools that contain DAI token:
 
 <Tabs groupId="lang" defaultValue="ts">
   <TabItem value="ts" label="TypeScript">
+
 ```ts
-// ./src/EventHandlers.ts
 import { UniV3Factory } from "generated";
 
 const DAI_ADDRESS = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
 
 UniV3Factory.PoolCreated.contractRegister(
-async ({ event, context }) => {
-const poolAddress = event.params.pool;
-context.UniV3Pool.add(poolAddress);
-},
-{ eventFilters: [{ token0: DAI_ADDRESS }, { token1: DAI_ADDRESS }] },
+  async ({ event, context }) => {
+    const poolAddress = event.params.pool;
+    context.UniV3Pool.add(poolAddress);
+  },
+  { eventFilters: [{ token0: DAI_ADDRESS }, { token1: DAI_ADDRESS }] }
 );
-
-````
+```
 
   </TabItem>
   <TabItem value="js" label="JavaScript">
+
 ```js
-// ./src/EventHandlers.js
 const { UniV3Factory } = require("generated");
 
 const DAI_ADDRESS = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
 
 UniV3Factory.PoolCreated.contractRegister(
-async ({ event, context }) => {
-const poolAddress = event.params.pool;
-context.UniV3Pool.add(poolAddress);
-},
-{ eventFilters: [{ token0: DAI_ADDRESS }, { token1: DAI_ADDRESS }] },
+  async ({ event, context }) => {
+    const poolAddress = event.params.pool;
+    context.UniV3Pool.add(poolAddress);
+  },
+  { eventFilters: [{ token0: DAI_ADDRESS }, { token1: DAI_ADDRESS }] }
 );
-
-````
+```
 
   </TabItem>
   <TabItem value="res" label="ReScript">
+
 ```rescript
-// ./src/EventHandlers.res
 open Types.SingleOrMultiple
 
 let daiAddress = Address.unsafeFromString("0x6B175474E89094C44Da98b954EedeAC495271d0F")
 
 Handlers.UniV3Factory.PoolCreated.contractRegister(
-async ({ event, context }) => {
-let poolAddress = event.params.pool
-context.UniV3Pool.add(poolAddress)
-},
-~eventConfig={
-eventFilters: multiple([
-{ token0: single(daiAddress) },
-{ token1: single(daiAddress) }
-])
-},
+  async ({ event, context }) => {
+    let poolAddress = event.params.pool
+    context.UniV3Pool.add(poolAddress)
+  },
+  ~eventConfig={
+    eventFilters: Multiple([
+      { token0: single(daiAddress) },
+      { token1: single(daiAddress) }
+    ])
+  },
 )
-
-````
+```
 
   </TabItem>
 </Tabs>
 
 ## Handler With Loader Example
 
-For handlerWithLoader API simply add wildcard or eventFilters to the loader function:
+For `handlerWithLoader` API simply add `wildcard` or `eventFilters` options to the single argument object:
 
 ```ts
 ERC20.Transfer.handlerWithLoader({
@@ -566,8 +563,7 @@ ERC20.Transfer.handlerWithLoader({
   wildcard: ...,
   eventFilters: ...,
 });
-}
-````
+```
 
 ## Limitations
 
