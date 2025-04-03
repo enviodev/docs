@@ -51,7 +51,6 @@ If you are a network operator or user and would like improved service support or
 | Cyber                | 7560       | https://cyber.hypersync.xyz or https://7560.hypersync.xyz                           | 🪨   |                 |
 | Darwinia             | 46         | https://darwinia.hypersync.xyz or https://46.hypersync.xyz                          | 🪨   | ✔️              |
 | Ethereum Mainnet     | 1          | https://eth.hypersync.xyz or https://1.hypersync.xyz                                | 🏅   | ✔️              |
-| Extrabud             | 283027429  | https://extrabud.hypersync.xyz or https://283027429.hypersync.xyz                   | 🏗️  |                 |
 | Fantom               | 250        | https://fantom.hypersync.xyz or https://250.hypersync.xyz                           | 🥉   |                 |
 | Flare                | 14         | https://flare.hypersync.xyz or https://14.hypersync.xyz                             | 🪨   |                 |
 | Fraxtal              | 252        | https://fraxtal.hypersync.xyz or https://252.hypersync.xyz                          | 🪨   |                 |
