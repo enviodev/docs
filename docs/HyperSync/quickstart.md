@@ -70,6 +70,8 @@ const client = HypersyncClient.new({
 });
 ```
 
+> **Note:** To connect to different networks, see the [Supported Networks](/docs/HyperSync/hypersync-supported-networks) page for a complete list of available URLs.
+
 ### 2. Build Your Query
 
 The heart of HyperSync is the query object, which defines what data you want to retrieve:
