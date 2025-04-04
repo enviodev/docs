@@ -256,6 +256,76 @@ async def collect_usdc_transfers():
 asyncio.run(collect_usdc_transfers())
 ```
 
+## Decoding Event Logs
+
+When working with blockchain data, event logs contain encoded data that needs to be properly decoded to extract meaningful information. HyperSync provides powerful decoding capabilities to simplify this process.
+
+### Understanding Log Structure
+
+Event logs in Ethereum have the following structure:
+
+- **Address**: The contract that emitted the event
+- **Topic0**: The event signature hash (keccak256 of the event signature)
+- **Topics 1-3**: Indexed parameters (up to 3)
+- **Data**: Non-indexed parameters packed together
+
+### Using the Decoder
+
+HyperSync's client libraries include a `Decoder` class that can parse these raw logs into structured data:
+
+```javascript
+// Create a decoder with event signatures
+const decoder = Decoder.fromSignatures([
+  "Transfer(address indexed from, address indexed to, uint256 amount)",
+  "Approval(address indexed owner, address indexed spender, uint256 amount)",
+]);
+
+// Decode logs
+const decodedLogs = await decoder.decodeLogs(logs);
+```
+
+### Single vs. Multiple Event Types
+
+HyperSync provides flexibility to decode different types of event logs:
+
+- **Single Event Type**: For processing one type of event (e.g., only Swap events)
+
+  - See complete example: [run-decoder.js](https://github.com/enviodev/hypersync-quickstart/blob/main/run-decoder.js)
+
+- **Multiple Event Types**: For processing different events from the same contract (e.g., Transfer and Approval)
+  - See complete example: [run-decoder-multi.js](https://github.com/enviodev/hypersync-quickstart/blob/main/run-decoder-multi.js)
+
+### Working with Decoded Data
+
+After decoding, you can access the log parameters in a structured way:
+
+- **Indexed parameters**: Available in `decodedLog.indexed` array
+- **Non-indexed parameters**: Available in `decodedLog.body` array
+
+Each parameter object contains:
+
+- **name**: The parameter name from the signature
+- **type**: The Solidity type
+- **val**: The actual value
+
+For example, to access parameters from a Transfer event:
+
+```javascript
+// Access indexed parameters (from, to)
+const from = decodedLog.indexed[0]?.val.toString();
+const to = decodedLog.indexed[1]?.val.toString();
+
+// Access non-indexed parameters (amount)
+const amount = decodedLog.body[0]?.val.toString();
+```
+
+### Benefits of Using the Decoder
+
+- **Type Safety**: Values are properly converted to their corresponding types
+- **Simplified Access**: Direct access to named parameters
+- **Batch Processing**: Decode multiple logs with a single call
+- **Multiple Event Support**: Handle different event types in the same processing pipeline
+
 ## Next Steps
 
 Now that you understand the basics of using HyperSync:
