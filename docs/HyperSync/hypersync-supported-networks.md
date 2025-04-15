@@ -31,7 +31,7 @@ If you are a network operator or user and would like improved service support or
 | Network Name         | Network ID | URL                                                                                 | Tier | Supports Traces |
 | -------------------- | ---------- | ----------------------------------------------------------------------------------- | ---- | --------------- |
 | Abstract             | 2741       | https://abstract.hypersync.xyz or https://2741.hypersync.xyz                        | 🪨   |                 |
-| Arbitrum             | 42161      | https://arbitrum.hypersync.xyz or https://42161.hypersync.xyz                       | 🏅   |                 |
+| Arbitrum             | 42161      | https://arbitrum.hypersync.xyz or https://42161.hypersync.xyz                       | 🥈   |                 |
 | Arbitrum Nova        | 42170      | https://arbitrum-nova.hypersync.xyz or https://42170.hypersync.xyz                  | 🥉   |                 |
 | Arbitrum Sepolia     | 421614     | https://arbitrum-sepolia.hypersync.xyz or https://421614.hypersync.xyz              | 🎒   |                 |
 | Aurora               | 1313161554 | https://aurora.hypersync.xyz or https://1313161554.hypersync.xyz                    | 🪨   |                 |
@@ -48,6 +48,7 @@ If you are a network operator or user and would like improved service support or
 | Celo                 | 42220      | https://celo.hypersync.xyz or https://42220.hypersync.xyz                           | 🪨   |                 |
 | Chiliz               | 8888       | https://chiliz.hypersync.xyz or https://8888.hypersync.xyz                          | 🥉   |                 |
 | Citrea Testnet       | 5115       | https://citrea-testnet.hypersync.xyz or https://5115.hypersync.xyz                  | 🪨   |                 |
+| Curtis               | 33111      | https://curtis.hypersync.xyz or https://33111.hypersync.xyz                         | 🪨   |                 |
 | Cyber                | 7560       | https://cyber.hypersync.xyz or https://7560.hypersync.xyz                           | 🪨   |                 |
 | Darwinia             | 46         | https://darwinia.hypersync.xyz or https://46.hypersync.xyz                          | 🪨   | ✔️              |
 | Ethereum Mainnet     | 1          | https://eth.hypersync.xyz or https://1.hypersync.xyz                                | 🏅   | ✔️              |
@@ -80,15 +81,16 @@ If you are a network operator or user and would like improved service support or
 | Mev Commit           | 17864      | https://mev-commit.hypersync.xyz or https://17864.hypersync.xyz                     | 🪨   |                 |
 | Mode                 | 34443      | https://mode.hypersync.xyz or https://34443.hypersync.xyz                           | 🪨   |                 |
 | Monad Testnet        | 10143      | https://monad-testnet.hypersync.xyz or https://10143.hypersync.xyz                  | 🏅   |                 |
+| Monad Testnet Backup | 10143333333 | https://monad-testnet-backup.hypersync.xyz or https://10143333333.hypersync.xyz     | 🔒   |                 |
 | Moonbase Alpha       | 1287       | https://moonbase-alpha.hypersync.xyz or https://1287.hypersync.xyz                  | 🪨   |                 |
-| Moonbeam             | 1284       | https://moonbeam.hypersync.xyz or https://1284.hypersync.xyz                        | 🥈   |                 |
+| Moonbeam             | 1284       | https://moonbeam.hypersync.xyz or https://1284.hypersync.xyz                        | 🥉   |                 |
 | Morph                | 2818       | https://morph.hypersync.xyz or https://2818.hypersync.xyz                           | 🪨   |                 |
 | Morph Holesky        | 2810       | https://morph-holesky.hypersync.xyz or https://2810.hypersync.xyz                   | 🎒   |                 |
 | Opbnb                | 204        | https://opbnb.hypersync.xyz or https://204.hypersync.xyz                            | 🪨   |                 |
 | Optimism             | 10         | https://optimism.hypersync.xyz or https://10.hypersync.xyz                          | 🏅   |                 |
 | Optimism Sepolia     | 11155420   | https://optimism-sepolia.hypersync.xyz or https://11155420.hypersync.xyz            | 🎒   |                 |
 | Pharos Devnet        | 50002      | https://pharos-devnet.hypersync.xyz or https://50002.hypersync.xyz                  | 🪨   |                 |
-| Polygon              | 137        | https://polygon.hypersync.xyz or https://137.hypersync.xyz                          | 🏅   |                 |
+| Polygon              | 137        | https://polygon.hypersync.xyz or https://137.hypersync.xyz                          | 🥈   |                 |
 | Polygon Amoy         | 80002      | https://polygon-amoy.hypersync.xyz or https://80002.hypersync.xyz                   | 🥉   |                 |
 | Polygon zkEVM        | 1101       | https://polygon-zkevm.hypersync.xyz or https://1101.hypersync.xyz                   | 🪨   |                 |
 | Rootstock            | 30         | https://rootstock.hypersync.xyz or https://30.hypersync.xyz                         | 🥉   |                 |

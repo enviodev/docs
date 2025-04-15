@@ -1,31 +1,31 @@
 ---
-id: polygon
-title: Polygon
-sidebar_label: Polygon
-slug: /polygon
+id: curtis
+title: Curtis
+sidebar_label: Curtis
+slug: /curtis
 ---
 
-# Polygon
+# Curtis
 
-## Indexing Polygon Data with Envio
+## Indexing Curtis Data with Envio
 
 | **Field**                     | **Value**                                                                                          |
 |-------------------------------|----------------------------------------------------------------------------------------------------|
-| **Polygon Chain ID**     | 137                                                                                            |
-| **HyperSync URL Endpoint**    | [https://polygon.hypersync.xyz](https://polygon.hypersync.xyz) or [https://137.hypersync.xyz](https://137.hypersync.xyz) |
-| **HyperRPC URL Endpoint**     | [https://polygon.rpc.hypersync.xyz](https://polygon.rpc.hypersync.xyz) or [https://137.rpc.hypersync.xyz](https://137.rpc.hypersync.xyz) |
+| **Curtis Chain ID**     | 33111                                                                                            |
+| **HyperSync URL Endpoint**    | [https://curtis.hypersync.xyz](https://curtis.hypersync.xyz) or [https://33111.hypersync.xyz](https://33111.hypersync.xyz) |
+| **HyperRPC URL Endpoint**     | [https://curtis.rpc.hypersync.xyz](https://curtis.rpc.hypersync.xyz) or [https://33111.rpc.hypersync.xyz](https://33111.rpc.hypersync.xyz) |
 
 ---
 
 ### Tier
 
-SILVER 🥈
+STONE 🪨
 
 ### Overview
 
-Envio is a modular hyper-performant data indexing solution for Polygon, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperSync/overview-hyperrpc) (extremely fast read-only RPC).
+Envio is a modular hyper-performant data indexing solution for Curtis, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperSync/overview-hyperrpc) (extremely fast read-only RPC).
 
-HyperSync accelerates the synchronization of historical data on Polygon, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
+HyperSync accelerates the synchronization of historical data on Curtis, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted service.
 
@@ -39,7 +39,7 @@ To get started, see our documentation or follow our quickstart [guide](/docs/Hyp
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
 networks:
-  - id: 137 # Polygon  
+  - id: 33111 # Curtis  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
       - name: ContractName
@@ -52,7 +52,7 @@ networks:
           - event: Event
 ```
 
-With these steps completed, your application will be set to efficiently index Polygon data using Envio’s blockchain indexer.
+With these steps completed, your application will be set to efficiently index Curtis data using Envio’s blockchain indexer.
 
 For more information on how to set up your config, define a schema, and write event handlers, refer to the guides section in our [documentation](/docs/HyperIndex/configuration-file).
 
