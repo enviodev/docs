@@ -12,7 +12,7 @@ Oracles are the unsung heroes of DeFi. They connect blockchains to real-world da
 
 Enter [Oracle Wars](https://www.oraclewars.xyz/), a live feed of on-chain oracle data that compares how different providers behave in real-time. It helps developers visualize and gain a better understanding of how oracles actually function under different market conditions, so they can design more reliable and secure smart contracts.
 
-⭐ **Please note**: The dashboard shown above is no longer live on the site. Oracle Wars is currently displaying live ETH/USD price updates from the [Redstone Bolt](https://blog.redstone.finance/2025/04/08/introducing-redstone-bolt-the-fastest-blockchain-oracle-to-date/) oracle feed on MegaETH, rather than the multi-oracle comparison dashboard featured earlier. The platform remains an educational and experimental tool for surfacing real-time data from various oracle providers, helping developers better understand oracle behavior as the data and tooling continues to evolve.
+⭐ **Please note**: The dashboard shown above is no longer live on the site. Oracle Wars is currently displaying live ETH/USD price oracle updates from the [Redstone Bolt](https://blog.redstone.finance/2025/04/08/introducing-redstone-bolt-the-fastest-blockchain-oracle-to-date/) oracle feed on MegaETH, rather than the multi-oracle comparison dashboard featured above. Oracle Wars remains an educational and experimental tool for surfacing real-time data from various oracle providers, helping developers better understand oracle behavior as the data and tooling continues to evolve.
 
 
 ## What is a Blockchain Oracle?
