@@ -12,7 +12,7 @@ Oracles are the unsung heroes of DeFi. They connect blockchains to real-world da
 
 Enter [Oracle Wars](https://www.oraclewars.xyz/), a live feed of on-chain oracle data that compares how different providers behave in real-time. It helps developers visualize and gain a better understanding of how oracles actually function under different market conditions, so they can design more reliable and secure smart contracts.
 
-⭐ **Please note**: The dashboard shown above is no longer live on the site, but the platform remains focused on delivering valuable insights into oracle performance. Oracle Wars is an educational and experimental platform designed to showcase data from various oracle providers, with the goal of improving the understanding of oracle behavior through real-time data analysis, which is constantly evolving and being updated.
+⭐ **Please note**: The dashboard shown above is no longer live on the site. Oracle Wars is currently displaying live MegaETH updates, not the oracle comparison dashboard featured earlier. That said, the platform remains focused on delivering valuable insights into oracle performance. Oracle Wars is an educational and experimental platform designed to showcase data from various oracle providers, with the goal of improving the understanding of oracle behavior through real-time data analysis, which continues to evolve.
 
 
 ## What is a Blockchain Oracle?
