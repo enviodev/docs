@@ -24,11 +24,7 @@ Benchmarking is a critical tool for understanding and optimizing your indexer's 
 To collect performance metrics while your indexer is running:
 
 ```bash
-# Using NPM
-npm run envio start -- --bench
-
-# Using the Envio CLI directly
-envio start --bench
+pnpm envio start --bench
 ```
 
 > **Note:** Benchmarking adds some memory and processing overhead. It should not be enabled in production environments, as it holds benchmark data points in memory and periodically writes them to disk.
@@ -38,11 +34,7 @@ envio start --bench
 After running your indexer with benchmarking enabled, you can generate a performance summary:
 
 ```bash
-# Using NPM
-npm run envio benchmark-summary
-
-# Using the Envio CLI directly
-envio benchmark-summary
+pnpm envio benchmark-summary
 ```
 
 This command processes the collected benchmark data and displays a comprehensive performance report.
@@ -98,9 +90,9 @@ General
 **How to Interpret:**
 
 - Events per second is your key performance indicator
+- Over 10,000 events/second represents excellent performance
 - 1,000-5,000 events/second indicates good performance
 - Under 500 events/second may indicate optimization opportunities
-- Over 10,000 events/second represents excellent performance
 
 ### Block Fetching Performance
 
