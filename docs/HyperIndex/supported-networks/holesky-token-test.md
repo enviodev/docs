@@ -19,7 +19,7 @@ slug: /holesky-token-test
 
 ### Tier
 
-HIDDEN 🔒
+BRONZE 🥉
 
 ### Overview
 

@@ -19,7 +19,7 @@ slug: /monad-testnet-backup
 
 ### Tier
 
-HIDDEN 🔒
+SILVER 🥈
 
 ### Overview
 
