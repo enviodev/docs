@@ -35,15 +35,32 @@ ERC20.Transfer.handler(async ({ event, context }) => {
 
 **The Challenge:** If you're processing 5,000 transfer events, each with unique `from` and `to` addresses, this would result in **10,000 roundtrips** to the database—one for each sender and receiver lookup.
 
+### The External Calls Problem
+
+To ensure consistent and reliable data, all handlers are executed synchronously in the on-chain order. This means that external calls might easily blow up the processing time.
+
+```typescript
+// Without loaders: Blocking external calls
+ERC20.Transfer.handler(async ({ event, context }) => {
+  const metadata = await fetch(
+    `https://api.example.com/metadata/${event.params.from}`
+  );
+
+  // Process the transfer...
+});
+```
+
+**The Challenge:** If you're processing 5,000 transfer events, each with an external call, this would result in **5,000 external calls** executed one after another.
+
 ### How Loaders Solve This
 
 Loaders address this problem by:
 
-1. **Collecting all database requests** before processing events
-2. **Batching similar requests** into single database operations
+1. **Collecting all database and Effect requests** before processing events
+2. **Batching similar requests** into single I/O operations
 3. **Caching results** for use during event processing
 
-This approach can reduce thousands of database calls to just a handful, dramatically improving indexing performance.
+This approach can reduce thousands of database calls to just a handful, dramatically improving indexing performance. And using the Effect API, you can parallelize external calls and make the indexing process more efficient.
 
 ## How to Implement Loaders
 
@@ -140,7 +157,7 @@ ERC20.Approval.handlerWithLoader({
   loader: async ({ event, context }) => {
     // Find all approvals for this owner
     const currentOwnerApprovals = await context.Approval.getWhere.owner_id.eq(
-      event.params.owner,
+      event.params.owner
     );
 
     return { currentOwnerApprovals };

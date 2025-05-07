@@ -55,7 +55,7 @@ For a gentle introduction to viem with a similar example, check out this [medium
 First, create a new indexer:
 
 ```bash
-npx envio init
+pnpx envio init
 ```
 
 When prompted, enter the Ethereum mainnet Uniswap V3 Factory address: `0x1F98431c8aD98523631AE4a59f267346ea31F984`
