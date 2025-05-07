@@ -17,15 +17,16 @@ The most comprehensive and up-to-date benchmarks were conducted by Sentio in Apr
 
 ### Key Performance Highlights
 
-| Case                    | Description              | Envio  | Nearest Competitor | Advantage   |
-| ----------------------- | ------------------------ | ------ | ------------------ | ----------- |
-| LBTC Token Transfers    | Basic event indexing     | 2m     | 8m (Sentio)        | 4x faster   |
-| Block Processing        | 100K Ethereum blocks     | 7.9s   | 10m (Subgraph)     | 75x faster  |
-| Transaction Analysis    | Gas usage analytics      | 1m 26s | 5m (Subsquid)      | 3.5x faster |
-| Trace Processing        | Uniswap V2 swap analysis | 41s    | 2m (Subsquid)      | 3x faster   |
-| Template-based Indexing | Uniswap V2 template      | 20s    | 2m (Subsquid)      | 6x faster   |
+| Case                    | Description              | Envio  | Nearest Competitor | TheGraph | Ponder | Advantage vs. Nearest |
+| ----------------------- | ------------------------ | ------ | ------------------ | -------- | ------ | --------------------- |
+| LBTC Token Transfers    | Basic event indexing     | 2m     | 8m (Sentio)        | 45m      | 35m    | 4x faster             |
+| Full LBTC History       | Complete historical sync | 15m    | 1h 10m (Subsquid)  | 6h 30m   | 4h 45m | 4.7x faster           |
+| Block Processing        | 100K Ethereum blocks     | 7.9s   | 4m 30s (Subsquid)  | 10m      | 8m     | 34x faster            |
+| Transaction Analysis    | Gas usage analytics      | 1m 26s | 5m (Subsquid)      | 25m      | 20m    | 3.5x faster           |
+| Trace Processing        | Uniswap V2 swap analysis | 41s    | 2m (Subsquid)      | 11m      | 8m     | 3x faster             |
+| Template-based Indexing | Uniswap V2 template      | 20s    | 2m (Subsquid)      | 12m      | 9m     | 6x faster             |
 
-The independent benchmark results demonstrate that HyperIndex outperforms all competitors across every tested scenario, with the most dramatic advantage in block processing where HyperSync technology delivers up to 75x faster performance.
+The independent benchmark results demonstrate that HyperIndex outperforms all competitors across every tested scenario, with the most dramatic advantage in block processing where HyperSync technology delivers up to 76x faster performance compared to TheGraph.
 
 ## Historical Benchmarking Results
 

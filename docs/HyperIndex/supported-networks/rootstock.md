@@ -19,7 +19,7 @@ slug: /rootstock
 
 ### Tier
 
-SILVER 🥈
+STONE 🪨
 
 ### Overview
 

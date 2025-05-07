@@ -1,11 +1,11 @@
 ---
 id: migration-guide
-title: Migration Guide
-sidebar_label: Migrate to HyperIndex
+title: Migrate from TheGraph and Other Indexers to HyperIndex
+sidebar_label: Migrate from TheGraph
 slug: /migration-guide
 ---
 
-# HyperIndex Migration Guide
+# Migrate from TheGraph and Other Indexers to HyperIndex
 
 :::caution
 **This guide is currently under construction**

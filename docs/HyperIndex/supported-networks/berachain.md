@@ -19,7 +19,7 @@ slug: /berachain
 
 ### Tier
 
-STONE 🪨
+BRONZE 🥉
 
 ### Overview
 

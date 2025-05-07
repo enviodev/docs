@@ -19,7 +19,7 @@ slug: /superseed
 
 ### Tier
 
-BRONZE 🥉
+STONE 🪨
 
 ### Overview
 

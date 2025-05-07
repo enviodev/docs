@@ -19,7 +19,7 @@ slug: /monad-testnet
 
 ### Tier
 
-SILVER 🥈
+GOLD 🏅
 
 ### Overview
 

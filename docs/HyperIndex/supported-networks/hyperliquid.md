@@ -19,7 +19,7 @@ slug: /hyperliquid
 
 ### Tier
 
-SILVER 🥈
+STONE 🪨
 
 ### Overview
 
