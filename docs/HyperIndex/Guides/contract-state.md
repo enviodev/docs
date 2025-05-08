@@ -405,6 +405,10 @@ export class Entry<T extends Shape> {
 
 > **Note:** The hosted service supports basic JSON file caching in beta. Speak to the team if you want to discuss caching options.
 
+### Step 6: Improve Performance with Loaders
+
+The solution will perform external calls for each handler one by one. This is not efficient and can be improved with loaders. Read more about loaders in the [Loaders](/docs/HyperIndex/Advanced/loaders) guide.
+
 ## Key Considerations
 
 ### Understanding Current vs. Historical State

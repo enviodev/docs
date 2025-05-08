@@ -320,9 +320,10 @@ import { ERC20 } from "generated";
 // Define an effect that will be called from the handler.
 const getMetadata = experimental_createEffect(
   {
+    name: "getMetadata",
     input: S.string,
     output: {
-      name: S.string,
+      description: S.string,
       value: S.bigint,
     },
   },
@@ -330,7 +331,7 @@ const getMetadata = experimental_createEffect(
     const response = await fetch(`https://api.example.com/metadata/${input}`);
     const data = await response.json();
     return {
-      name: data.name,
+      description: data.description,
       value: data.value,
     };
   }
