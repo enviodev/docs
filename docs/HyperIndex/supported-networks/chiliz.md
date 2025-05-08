@@ -19,7 +19,7 @@ slug: /chiliz
 
 ### Tier
 
-BRONZE 🥉
+STONE 🪨
 
 ### Overview
 

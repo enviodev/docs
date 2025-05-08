@@ -311,7 +311,7 @@ Check out our [IPFS Integration](/docs/HyperIndex/ipfs) and [Accessing Contract 
 
 To ensure consistent and reliable data, all handlers are executed synchronously in the on-chain order. This means that external calls might easily blow up the processing time.
 
-To avoid this, you can use [Loaders](/docs/HyperIndex/loaders) together with [Effect API](/docs/HyperIndex/loaders) to parallelize external calls and make the indexing process more efficient.
+To avoid this, you can use [Loaders](/docs/HyperIndex/loaders) together with [Effect API](/docs/HyperIndex/loaders#effect-api-experimental) to parallelize external calls and make the indexing process more efficient.
 
 ```typescript
 import { experimental_createEffect, S } from "envio";
@@ -357,7 +357,7 @@ ERC20.Transfer.handlerWithLoader({
 });
 ```
 
-Read more about the [Effect API](/docs/HyperIndex/loaders) and [Loaders](/docs/HyperIndex/loaders) in the dedicated guides.
+Read more about the [Effect API](/docs/HyperIndex/loaders#effect-api-experimental) and [Loaders](/docs/HyperIndex/loaders) in the dedicated guides.
 
 ---
 

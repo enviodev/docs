@@ -284,7 +284,7 @@ async function getMetadata(tokenId: string) {
 
 ### 4. Improve Performance with Loaders
 
-The solution will perform external calls for each handler one by one. This is not efficient and can be improved with loaders. Read more about loaders in the [Loaders](/docs/HyperIndex/Advanced/loaders) guide.
+The solution will perform external calls for each handler one by one. This is not efficient and can be improved with loaders. Read more about the [Effect API](/docs/HyperIndex/loaders#effect-api-experimental) and [Loaders](/docs/HyperIndex/loaders) in the dedicated guides.
 
 ## Understanding IPFS
 

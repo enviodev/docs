@@ -19,7 +19,7 @@ slug: /moonbeam
 
 ### Tier
 
-BRONZE 🥉
+STONE 🪨
 
 ### Overview
 
