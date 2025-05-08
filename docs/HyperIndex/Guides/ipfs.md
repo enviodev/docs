@@ -32,7 +32,7 @@ First, let's create a basic indexer that tracks NFT ownership:
 ### Initialize the Indexer
 
 ```bash
-npx envio init
+pnpx envio init
 ```
 
 When prompted, enter the Bored Ape Yacht Club contract address: `0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D`
@@ -281,6 +281,10 @@ async function getMetadata(tokenId: string) {
 > **Note:** For production indexers, the Envio hosted service automatically handles optimizations. You should not implement persistent file-based caching mechanisms as they are not supported in the hosted environment. Please discuss with the team your options regarding caching.
 >
 > **Important:** While the example repository includes SQLite-based caching, this approach is not compatible with the Envio hosted service and should not be used for production deployments.
+
+### 4. Improve Performance with Loaders
+
+The solution will perform external calls for each handler one by one. This is not efficient and can be improved with loaders. Read more about the [Effect API](/docs/HyperIndex/loaders#effect-api-experimental) and [Loaders](/docs/HyperIndex/loaders) in the dedicated guides.
 
 ## Understanding IPFS
 

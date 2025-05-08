@@ -19,7 +19,7 @@ slug: /lisk
 
 ### Tier
 
-BRONZE 🥉
+STONE 🪨
 
 ### Overview
 

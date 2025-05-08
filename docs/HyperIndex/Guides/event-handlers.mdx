@@ -301,6 +301,64 @@ The context object also provides a logger that you can use to log messages to th
 
 Read more in the [Logging Guide](/docs/HyperIndex/logging).
 
+## External Calls
+
+Envio indexer runs using Node.js runtime. This means that you can use `fetch` or any other library like `viem` to perform external calls from your handlers.
+
+Check out our [IPFS Integration](/docs/HyperIndex/ipfs) and [Accessing Contract State](/docs/HyperIndex/contract-state) guides for more information.
+
+### `context.effect` (Experimental)
+
+To ensure consistent and reliable data, all handlers are executed synchronously in the on-chain order. This means that external calls might easily blow up the processing time.
+
+To avoid this, you can use [Loaders](/docs/HyperIndex/loaders) together with [Effect API](/docs/HyperIndex/loaders#effect-api-experimental) to parallelize external calls and make the indexing process more efficient.
+
+```typescript
+import { experimental_createEffect, S } from "envio";
+import { ERC20 } from "generated";
+
+// Define an effect that will be called from the handler.
+const getMetadata = experimental_createEffect(
+  {
+    name: "getMetadata",
+    input: S.string,
+    output: {
+      description: S.string,
+      value: S.bigint,
+    },
+  },
+  ({ input }) => {
+    const response = await fetch(`https://api.example.com/metadata/${input}`);
+    const data = await response.json();
+    return {
+      description: data.description,
+      value: data.value,
+    };
+  }
+);
+
+ERC20.Transfer.handlerWithLoader({
+  loader: async ({ event, context }) => {
+    // Load metadata for the token.
+    // This will be executed in parallel for all events in the batch.
+    // The call is automatically memoized, so you don't need to worry about duplicate requests.
+    const sender = await context.effect(getMetadata, event.params.from);
+
+    // Return the loaded data to the handler
+    return {
+      sender,
+    };
+  },
+  handler: async ({ event, context, loaderReturn }) => {
+    const { sender } = loaderReturn;
+
+    // Process the transfer with the pre-loaded data
+  },
+});
+```
+
+Read more about the [Effect API](/docs/HyperIndex/loaders#effect-api-experimental) and [Loaders](/docs/HyperIndex/loaders) in the dedicated guides.
+
 ---
 
 ## Accessing `config.yaml` Data in Handlers

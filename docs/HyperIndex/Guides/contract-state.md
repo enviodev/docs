@@ -55,7 +55,7 @@ For a gentle introduction to viem with a similar example, check out this [medium
 First, create a new indexer:
 
 ```bash
-npx envio init
+pnpx envio init
 ```
 
 When prompted, enter the Ethereum mainnet Uniswap V3 Factory address: `0x1F98431c8aD98523631AE4a59f267346ea31F984`
@@ -404,6 +404,10 @@ export class Entry<T extends Shape> {
 ```
 
 > **Note:** The hosted service supports basic JSON file caching in beta. Speak to the team if you want to discuss caching options.
+
+### Step 6: Improve Performance with Loaders
+
+The solution will perform external calls for each handler one by one. This is not efficient and can be improved with loaders. Read more about the [Effect API](/docs/HyperIndex/loaders#effect-api-experimental) and [Loaders](/docs/HyperIndex/loaders) in the dedicated guides.
 
 ## Key Considerations
 
