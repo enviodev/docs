@@ -46,6 +46,7 @@ Scalar types represent basic data types and map directly to JavaScript, TypeScri
 | `BigInt`           | Signed integer (`int256` in Solidity)        | `bigint`                  | `bigint`       |
 | `BigDecimal`       | Arbitrary-size floating-point                | `BigDecimal` (imported)   | `BigDecimal.t` |
 | `Timestamp`        | Timestamp with timezone                      | `Date`                    | `Js.Date.t`    |
+| `Json`             | JSON object (from envio@2.20)                | `Json`                    | `Js.Json.t`    |
 
 Learn more about GraphQL scalars [here](https://graphql.org/learn/).
 
