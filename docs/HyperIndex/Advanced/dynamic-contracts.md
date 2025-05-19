@@ -99,7 +99,7 @@ SimpleNft.Transfer.handler(async ({ event, context }) => {
 });
 ```
 
-## Async Contract Registrer
+## Async Contract Register
 
 Starting from version `2.21` you can use async contract registration.
 
