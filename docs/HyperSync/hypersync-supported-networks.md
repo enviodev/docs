@@ -42,16 +42,12 @@ If you are a network operator or user and would like improved service support or
 | Berachain Bartio     | 80084      | https://berachain-bartio.hypersync.xyz or https://80084.hypersync.xyz               | 🎒   |                 |
 | Blast                | 81457      | https://blast.hypersync.xyz or https://81457.hypersync.xyz                          | 🥉   |                 |
 | Blast Sepolia        | 168587773  | https://blast-sepolia.hypersync.xyz or https://168587773.hypersync.xyz              | 🎒   |                 |
-| Boba                 | 288        | https://boba.hypersync.xyz or https://288.hypersync.xyz                             | 🪨   |                 |
 | Bsc                  | 56         | https://bsc.hypersync.xyz or https://56.hypersync.xyz                               | 🥉   |                 |
 | Bsc Testnet          | 97         | https://bsc-testnet.hypersync.xyz or https://97.hypersync.xyz                       | 🎒   |                 |
 | Celo                 | 42220      | https://celo.hypersync.xyz or https://42220.hypersync.xyz                           | 🪨   |                 |
 | Chiliz               | 8888       | https://chiliz.hypersync.xyz or https://8888.hypersync.xyz                          | 🪨   |                 |
-| Citrea Testnet       | 5115       | https://citrea-testnet.hypersync.xyz or https://5115.hypersync.xyz                  | 🪨   |                 |
-| Crab                 | 44         | https://crab.hypersync.xyz or https://44.hypersync.xyz                              | 🪨   |                 |
 | Curtis               | 33111      | https://curtis.hypersync.xyz or https://33111.hypersync.xyz                         | 🪨   |                 |
 | Cyber                | 7560       | https://cyber.hypersync.xyz or https://7560.hypersync.xyz                           | 🪨   |                 |
-| Darwinia             | 46         | https://darwinia.hypersync.xyz or https://46.hypersync.xyz                          | 🪨   |                 |
 | Eth Traces           | 1          | https://eth-traces.hypersync.xyz or https://1.hypersync.xyz                         | 🏅   | ✔️              |
 | Ethereum Mainnet     | 1          | https://eth.hypersync.xyz or https://1.hypersync.xyz                                | 🏅   |                 |
 | Fantom               | 250        | https://fantom.hypersync.xyz or https://250.hypersync.xyz                           | 🪨   |                 |
@@ -67,7 +63,6 @@ If you are a network operator or user and would like improved service support or
 | Holesky Token Test   | 17000      | https://holesky-token-test.hypersync.xyz or https://17000.hypersync.xyz             | 🔒   |                 |
 | Hyperliquid          | 645749     | https://hyperliquid.hypersync.xyz or https://645749.hypersync.xyz                   | 🪨   |                 |
 | Ink                  | 57073      | https://ink.hypersync.xyz or https://57073.hypersync.xyz                            | 🪨   |                 |
-| Internal Test Chain  | 16858666   | https://internal-test-chain.hypersync.xyz or https://16858666.hypersync.xyz         | 🔒   |                 |
 | Kroma                | 255        | https://kroma.hypersync.xyz or https://255.hypersync.xyz                            | 🪨   |                 |
 | Linea                | 59144      | https://linea.hypersync.xyz or https://59144.hypersync.xyz                          | 🥉   |                 |
 | Lisk                 | 1135       | https://lisk.hypersync.xyz or https://1135.hypersync.xyz                            | 🪨   |                 |
@@ -78,13 +73,11 @@ If you are a network operator or user and would like improved service support or
 | Megaeth Testnet      | 6342       | https://megaeth-testnet.hypersync.xyz or https://6342.hypersync.xyz                 | 🪨   |                 |
 | Merlin               | 4200       | https://merlin.hypersync.xyz or https://4200.hypersync.xyz                          | 🪨   |                 |
 | Metall2              | 1750       | https://metall2.hypersync.xyz or https://1750.hypersync.xyz                         | 🪨   |                 |
-| Metis                | 1088       | https://metis.hypersync.xyz or https://1088.hypersync.xyz                           | 🪨   |                 |
 | Mev Commit           | 17864      | https://mev-commit.hypersync.xyz or https://17864.hypersync.xyz                     | 🪨   |                 |
 | Mode                 | 34443      | https://mode.hypersync.xyz or https://34443.hypersync.xyz                           | 🪨   |                 |
 | Monad Testnet        | 10143      | https://monad-testnet.hypersync.xyz or https://10143.hypersync.xyz                  | 🏅   |                 |
 | Monad Testnet Backup | 10143333333 | https://monad-testnet-backup.hypersync.xyz or https://10143333333.hypersync.xyz     | 🔒   |                 |
 | Moonbase Alpha       | 1287       | https://moonbase-alpha.hypersync.xyz or https://1287.hypersync.xyz                  | 🪨   |                 |
-| Moonbeam             | 1284       | https://moonbeam.hypersync.xyz or https://1284.hypersync.xyz                        | 🪨   |                 |
 | Morph                | 2818       | https://morph.hypersync.xyz or https://2818.hypersync.xyz                           | 🪨   |                 |
 | Morph Holesky        | 2810       | https://morph-holesky.hypersync.xyz or https://2810.hypersync.xyz                   | 🎒   |                 |
 | Opbnb                | 204        | https://opbnb.hypersync.xyz or https://204.hypersync.xyz                            | 🪨   |                 |

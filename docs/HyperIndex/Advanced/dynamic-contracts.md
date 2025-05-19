@@ -99,6 +99,23 @@ SimpleNft.Transfer.handler(async ({ event, context }) => {
 });
 ```
 
+## Async Contract Register
+
+As of version `2.21`, you can use async contract registration.
+
+This is a unique feature of Envio that allows you to perform an external call to determine the address of the contract to register.
+
+```typescript
+NftFactory.SimpleNftCreated.contractRegister(async ({ event, context }) => {
+  const version = await getContractVersion(event.params.contractAddress);
+  if (version === "v2") {
+    context.addSimpleNftV2(event.params.contractAddress);
+  } else {
+    context.addSimpleNft(event.params.contractAddress);
+  }
+});
+```
+
 ## When to Use Dynamic Contract Registration
 
 Use dynamic contract registration when:
