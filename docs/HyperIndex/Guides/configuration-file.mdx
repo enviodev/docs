@@ -209,6 +209,18 @@ CHAIN_ID=optimism ENVIO_ADDRESS=0xYourContractAddress pnpm dev
 
 ---
 
+### Schema File Path
+
+You can customize the path to the [schema file](./schema-file.md) using the `schema` option:
+
+```yaml
+schema: ./path/to/schema.graphql
+```
+
+By default, the `schema.graphql` is expected to be in rood directory of your project.
+
+---
+
 ## Full config file example
 
 This example indexes events from multiple contracts across multiple networks.

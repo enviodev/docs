@@ -26,16 +26,12 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Berachain Bartio     | 80084      | https://berachain-bartio.rpc.hypersync.xyz or https://80084.rpc.hypersync.xyz       |                 |
 | Blast                | 81457      | https://blast.rpc.hypersync.xyz or https://81457.rpc.hypersync.xyz                  |                 |
 | Blast Sepolia        | 168587773  | https://blast-sepolia.rpc.hypersync.xyz or https://168587773.rpc.hypersync.xyz      |                 |
-| Boba                 | 288        | https://boba.rpc.hypersync.xyz or https://288.rpc.hypersync.xyz                     |                 |
 | Bsc                  | 56         | https://bsc.rpc.hypersync.xyz or https://56.rpc.hypersync.xyz                       |                 |
 | Bsc Testnet          | 97         | https://bsc-testnet.rpc.hypersync.xyz or https://97.rpc.hypersync.xyz               |                 |
 | Celo                 | 42220      | https://celo.rpc.hypersync.xyz or https://42220.rpc.hypersync.xyz                   |                 |
 | Chiliz               | 8888       | https://chiliz.rpc.hypersync.xyz or https://8888.rpc.hypersync.xyz                  |                 |
-| Citrea Testnet       | 5115       | https://citrea-testnet.rpc.hypersync.xyz or https://5115.rpc.hypersync.xyz          |                 |
-| Crab                 | 44         | https://crab.rpc.hypersync.xyz or https://44.rpc.hypersync.xyz                      |                 |
 | Curtis               | 33111      | https://curtis.rpc.hypersync.xyz or https://33111.rpc.hypersync.xyz                 |                 |
 | Cyber                | 7560       | https://cyber.rpc.hypersync.xyz or https://7560.rpc.hypersync.xyz                   |                 |
-| Darwinia             | 46         | https://darwinia.rpc.hypersync.xyz or https://46.rpc.hypersync.xyz                  |                 |
 | Eth Traces           | 1          | https://eth-traces.rpc.hypersync.xyz or https://1.rpc.hypersync.xyz                 | ✔️              |
 | Ethereum Mainnet     | 1          | https://eth.rpc.hypersync.xyz or https://1.rpc.hypersync.xyz                        |                 |
 | Fantom               | 250        | https://fantom.rpc.hypersync.xyz or https://250.rpc.hypersync.xyz                   |                 |
@@ -51,7 +47,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Holesky Token Test   | 17000      | https://holesky-token-test.rpc.hypersync.xyz or https://17000.rpc.hypersync.xyz     |                 |
 | Hyperliquid          | 645749     | https://hyperliquid.rpc.hypersync.xyz or https://645749.rpc.hypersync.xyz           |                 |
 | Ink                  | 57073      | https://ink.rpc.hypersync.xyz or https://57073.rpc.hypersync.xyz                    |                 |
-| Internal Test Chain  | 16858666   | https://internal-test-chain.rpc.hypersync.xyz or https://16858666.rpc.hypersync.xyz |                 |
 | Kroma                | 255        | https://kroma.rpc.hypersync.xyz or https://255.rpc.hypersync.xyz                    |                 |
 | Linea                | 59144      | https://linea.rpc.hypersync.xyz or https://59144.rpc.hypersync.xyz                  |                 |
 | Lisk                 | 1135       | https://lisk.rpc.hypersync.xyz or https://1135.rpc.hypersync.xyz                    |                 |
@@ -62,13 +57,11 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Megaeth Testnet      | 6342       | https://megaeth-testnet.rpc.hypersync.xyz or https://6342.rpc.hypersync.xyz         |                 |
 | Merlin               | 4200       | https://merlin.rpc.hypersync.xyz or https://4200.rpc.hypersync.xyz                  |                 |
 | Metall2              | 1750       | https://metall2.rpc.hypersync.xyz or https://1750.rpc.hypersync.xyz                 |                 |
-| Metis                | 1088       | https://metis.rpc.hypersync.xyz or https://1088.rpc.hypersync.xyz                   |                 |
 | Mev Commit           | 17864      | https://mev-commit.rpc.hypersync.xyz or https://17864.rpc.hypersync.xyz             |                 |
 | Mode                 | 34443      | https://mode.rpc.hypersync.xyz or https://34443.rpc.hypersync.xyz                   |                 |
 | Monad Testnet        | 10143      | https://monad-testnet.rpc.hypersync.xyz or https://10143.rpc.hypersync.xyz          |                 |
 | Monad Testnet Backup | 10143333333 | https://monad-testnet-backup.rpc.hypersync.xyz or https://10143333333.rpc.hypersync.xyz |                 |
 | Moonbase Alpha       | 1287       | https://moonbase-alpha.rpc.hypersync.xyz or https://1287.rpc.hypersync.xyz          |                 |
-| Moonbeam             | 1284       | https://moonbeam.rpc.hypersync.xyz or https://1284.rpc.hypersync.xyz                |                 |
 | Morph                | 2818       | https://morph.rpc.hypersync.xyz or https://2818.rpc.hypersync.xyz                   |                 |
 | Morph Holesky        | 2810       | https://morph-holesky.rpc.hypersync.xyz or https://2810.rpc.hypersync.xyz           |                 |
 | Opbnb                | 204        | https://opbnb.rpc.hypersync.xyz or https://204.rpc.hypersync.xyz                    |                 |
