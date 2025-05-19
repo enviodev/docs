@@ -101,7 +101,7 @@ SimpleNft.Transfer.handler(async ({ event, context }) => {
 
 ## Async Contract Register
 
-Starting from version `2.21` you can use async contract registration.
+As of version `2.21`, you can use async contract registration.
 
 This is a unique feature of Envio that allows you to perform an external call to determine the address of the contract to register.
 
