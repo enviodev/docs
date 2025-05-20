@@ -97,6 +97,19 @@ events:
 
 By default, all events defined in the contract are indexed, but you can selectively disable them by removing them from this list.
 
+#### Custom Event Names
+
+You can assign custom names to events in `config.yaml`. This is handy when
+two events share the same name but have different signatures, or when you want
+a more descriptive name in your Envio project.
+
+```yaml
+events:
+  - event: Assigned(address indexed recipientId, uint256 amount, address token)
+  - event: Assigned(address indexed recipientId, uint256 amount, address token, address sender)
+    name: AssignedWithSender
+```
+
 ---
 
 ### Raw Events Storage
