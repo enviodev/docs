@@ -339,8 +339,8 @@ const generateMarkdownFiles = async () => {
     // Generate HyperSync files
     data.forEach((network) => {
       if (
-        network.tier.toLowerCase() != "HIDDEN".toLowerCase() ||
-        network.tier.toLowerCase() != "INTERNAL".toLowerCase()
+        network.tier.toLowerCase() !== "hidden" &&
+        network.tier.toLowerCase() !== "internal"
       ) {
         const content = generateHyperSyncMarkdownContent(network);
         const filePath = path.join(outputDir, `${network.name}.md`);
@@ -352,8 +352,8 @@ const generateMarkdownFiles = async () => {
 
     // Generate RPC files
     rpcNetworks.forEach(network => {
-      // if network.chainId exists in data, skip it, implies it's now supported in hypersync       
-      if (data.find(item => item.chainId === network.chainId)) {
+      // if network.chainId exists in data, skip it, implies it's now supported in hypersync
+      if (data.find(item => item.chain_id === network.chainId)) {
         return
       }
       const content = generateRPCMarkdownContent(network)
