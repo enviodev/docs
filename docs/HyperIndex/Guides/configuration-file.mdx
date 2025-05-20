@@ -95,6 +95,12 @@ events:
   - event: "ClearGreeting(address user)"
 ```
 
+:::important
+Choose **one** event definition style. Use either names from an ABI file *or*
+human&#x2011;readable event signatures. Mixing both in the same contract isn&#x2019;t
+supported and can cause errors.
+:::
+
 By default, all events defined in the contract are indexed, but you can selectively disable them by removing them from this list.
 
 #### Custom Event Names

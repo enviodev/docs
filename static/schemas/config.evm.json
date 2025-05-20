@@ -150,7 +150,7 @@
       "type": "object",
       "properties": {
         "event": {
-          "description": "The human readable signature of an event 'eg. Transfer(address indexed from, address indexed to, uint256 value)' OR a reference to the name of an event in a json ABI file defined in your contract config. A provided signature will take precedence over what is defined in the json ABI",
+          "description": "The human readable signature of an event 'eg. Transfer(address indexed from, address indexed to, uint256 value)' OR a reference to the name of an event in a json ABI file defined in your contract config. A provided signature will take precedence over what is defined in the json ABI. Use either signatures or ABI event names consistently - do not mix both styles.",
           "type": "string"
         },
         "name": {
