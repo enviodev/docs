@@ -9,6 +9,14 @@ slug: /hyperrpc-supported-networks
 Please note we are rapidly adding new supported networks. If you don't see your network here or would like us to add a network to HyperRPC, pop us a message in [Discord](https://discord.gg/Q9qt8gZ2fX).
 :::
 
+:::caution API Tokens Recommended
+Requests without an API token will be rate limited starting **June 2025** (following the same schedule as [HyperSync](/docs/HyperSync/api-tokens)). Append your token to the endpoint URL to maintain full speed:
+
+```text
+https://100.rpc.hypersync.xyz/<api-token>
+```
+:::
+
 Here is a table of the currently supported networks on HyperRPC and their respective URL endpoints.
 
 

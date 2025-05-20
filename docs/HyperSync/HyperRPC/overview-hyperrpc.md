@@ -83,11 +83,22 @@ To start using HyperRPC:
    - Visit our [Supported Networks](./hyperrpc-supported-networks) page to find all available HyperRPC endpoints
    - Each network has a ready-to-use URL that you can start using immediately
 
-2. **Use Like a Standard RPC**:
+2. **Add Your API Token** (recommended):
+
+   - Requests without an API token will be rate limited starting **June 2025** (same timeline as [HyperSync](/docs/HyperSync/api-tokens)).
+   - Append your token to the endpoint URL. Example:
+
+     ```text
+     https://100.rpc.hypersync.xyz/<api-token>
+     ```
+
+   - If you don't have a token yet, you can generate one through the [Envio Dashboard](https://envio.dev/app/api-tokens).
+
+3. **Use Like a Standard RPC**:
 
    ```javascript
    // Example: Fetching logs with HyperRPC
-   const response = await fetch("https://eth.rpc.hypersync.xyz", {
+   const response = await fetch("https://100.rpc.hypersync.xyz/<api-token>", {
      method: "POST",
      headers: { "Content-Type": "application/json" },
      body: JSON.stringify({
@@ -105,7 +116,7 @@ To start using HyperRPC:
    });
    ```
 
-3. **Provide Feedback**:
+4. **Provide Feedback**:
    Your testing and feedback are incredibly valuable as we continue to improve HyperRPC. Let us know about your experience in our [Discord](https://discord.gg/Q9qt8gZ2fX).
 
 ## Development Status
