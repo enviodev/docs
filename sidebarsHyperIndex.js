@@ -55,6 +55,7 @@ module.exports = {
         // "Guides/subgraph-mPigration",
         "Guides/testing",
         "Guides/navigating-hasura",
+        "Guides/environment-variables",
       ],
     },
     {
