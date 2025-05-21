@@ -27,7 +27,7 @@ ENVIO_RPC_URL=https://arbitrum.direct.dev/your-api-key
 # Starting block number for indexing
 ENVIO_START_BLOCK=12345678
 
-# Number of blocks to process in each batch
+# Coingecko API key
 ENVIO_COINGECKO_API_KEY=api-key
 
 ```
