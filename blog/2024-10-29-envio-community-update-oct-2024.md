@@ -39,6 +39,8 @@ PoolFactory.CreatePool.contractRegister(
 );
 ```
 
+> **Update:** The `preRegisterDynamicContracts` option was deprecated in version `2.19.0` because default contract registration became significantly faster. You no longer need to enable pre-registration explicitly.
+
 ## Envio Powers Developers on Fuel Ignition
 
 <img src="/blog-assets/envio-developer-community-oct-2024-2.png" alt="Fuel Envio Indexer Partnership" width="100%"/>
