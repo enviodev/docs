@@ -199,6 +199,12 @@ The event object also contains additional metadata:
 - `event.block` – Block fields (By default: `number`, `timestamp`, `hash`).
 - `event.transaction` – Transaction fields (eg `hash`, `gasUsed`, etc. Empty by default).
 
+:::tip
+All addresses returned in the `event` object, such as `event.transaction.from`,
+`event.transaction.to`, and `event.srcAddress`, are [EIP-55](https://eips.ethereum.org/EIPS/eip-55) checksummed.
+Use `.toLowerCase()` if you specifically need lowercase values.
+:::
+
 :::note
 Configure block and transaction fields with [`field_selection`](/docs/HyperIndex/configuration-file#field-selection) in your `config.yaml` file.
 :::
