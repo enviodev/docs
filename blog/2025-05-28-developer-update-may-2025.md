@@ -37,9 +37,7 @@ NftFactory.SimpleNftCreated.contractRegister(async ({ event, context }) => {
 
 #### **New EVM Fields**
 
-Added **<code>accessList</code>** and **<code>authorizationList</code>** (EIP-7702) to transactions for expanded chain compatibility.**
-**
-
+Added **<code>accessList</code>** and **<code>authorizationList</code>** (EIP-7702) to transactions for expanded chain compatibility.
 #### **JSON Field Support in Schema**
 
 You can now define flexible **<code>JSON</code>** fields in your GraphQL schema,  ideal for storing dynamic metadata.
