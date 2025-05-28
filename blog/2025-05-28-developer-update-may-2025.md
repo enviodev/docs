@@ -60,7 +60,7 @@ Check out the [walkthrough](https://www.loom.com/share/af44351d1a0a4d81882ea72e2
 
 #### **Contract Registration Boost**
 
-Dynamic contract indexing is now dramatically faster. We’ve deprecated preRegisterDynamicContracts, it’s no longer needed.
+Dynamic contract indexing is now dramatically faster. We’ve deprecated `preRegisterDynamicContracts` option, it’s no longer needed.
 
 
 #### **Improved RPC Error Handling**
