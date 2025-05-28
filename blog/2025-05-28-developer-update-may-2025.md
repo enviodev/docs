@@ -55,7 +55,7 @@ The new Effect API lets you batch, memoize, and deduplicate external calls direc
 
 Paired with loaders, it prevents overfetching and speeds up processing across large batches.
 
-Check out the [walkthrough](walkthrough) on Loom or dive into our [Loaders](Loaders) guide to learn more.
+Check out the [walkthrough](https://www.loom.com/share/af44351d1a0a4d81882ea72e2c750c44) on Loom or dive into our [Loaders](https://docs.envio.dev/docs/HyperIndex/loaders) guide to learn more.
 
 
 #### **Contract Registration Boost**
