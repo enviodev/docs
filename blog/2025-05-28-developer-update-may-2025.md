@@ -172,8 +172,7 @@ This month, we’re proud to spotlight Paul Berg, co-founder and CEO of Sablier 
 
 We’re especially thankful for Paul’s ongoing support of Envio and for being such an engaged developer and community member.
 
-We highly recommend exploring Paul’s contributions and projects in the space. He’s also an active voice on [X](https://x.com/PaulRBerg) and [Farcaster](https://farcaster.xyz/prberg), where he shares insights that go beyond crypto, diving into topics like longevity, epistemology, and physics. Give him a follow and check out his [GitHub](https://github.com/PaulRBerg
-) to stay in the loop! 
+We highly recommend exploring Paul’s contributions and projects in the space. He’s also an active voice on [X](https://x.com/PaulRBerg) and [Farcaster](https://farcaster.xyz/prberg), where he shares insights that go beyond crypto, diving into topics like longevity, epistemology, and physics. Give him a follow and check out his [GitHub](https://github.com/PaulRBerg) to stay in the loop!
 
 ## Playlist of the Month 🎧️ 
 
