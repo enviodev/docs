@@ -49,7 +49,7 @@ type User {
 }
 ```
 
-#### **Effect API for Effcient External Calls**
+#### **Effect API for Efficient External Calls**
 
 The new Effect API lets you batch, memoize, and deduplicate external calls directly from your handlers.
 
