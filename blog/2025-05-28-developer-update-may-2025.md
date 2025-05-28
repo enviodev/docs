@@ -16,7 +16,7 @@ We also landed some exciting integrations, improved tooling across the board, lo
 
 ## Latest Releases: v2.19.0 → v2.21.3
 
-#### **Fixed Invalid Rollback on Reorg Bug**
+### **Fixed Invalid Rollback on Reorg Bug**
 
 In v2.21.3, we addressed an issue with invalid rollbacks during reorgs. We highly recommend upgrading to this version to ensure smoother contract indexing and enhanced system stability.
 
