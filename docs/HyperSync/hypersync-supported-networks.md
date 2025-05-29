@@ -42,10 +42,12 @@ If you are a network operator or user and would like improved service support or
 | Berachain Bartio     | 80084      | https://berachain-bartio.hypersync.xyz or https://80084.hypersync.xyz               | 🎒   |                 |
 | Blast                | 81457      | https://blast.hypersync.xyz or https://81457.hypersync.xyz                          | 🥉   |                 |
 | Blast Sepolia        | 168587773  | https://blast-sepolia.hypersync.xyz or https://168587773.hypersync.xyz              | 🎒   |                 |
+| Boba                 | 288        | https://boba.hypersync.xyz or https://288.hypersync.xyz                             | 🪨   |                 |
 | Bsc                  | 56         | https://bsc.hypersync.xyz or https://56.hypersync.xyz                               | 🥉   |                 |
 | Bsc Testnet          | 97         | https://bsc-testnet.hypersync.xyz or https://97.hypersync.xyz                       | 🎒   |                 |
 | Celo                 | 42220      | https://celo.hypersync.xyz or https://42220.hypersync.xyz                           | 🪨   |                 |
 | Chiliz               | 8888       | https://chiliz.hypersync.xyz or https://8888.hypersync.xyz                          | 🪨   |                 |
+| Citrea Testnet       | 5115       | https://citrea-testnet.hypersync.xyz or https://5115.hypersync.xyz                  | 🪨   |                 |
 | Curtis               | 33111      | https://curtis.hypersync.xyz or https://33111.hypersync.xyz                         | 🪨   |                 |
 | Cyber                | 7560       | https://cyber.hypersync.xyz or https://7560.hypersync.xyz                           | 🪨   |                 |
 | Eth Traces           | 1          | https://eth-traces.hypersync.xyz or https://1.hypersync.xyz                         | 🏅   | ✔️              |
@@ -60,7 +62,6 @@ If you are a network operator or user and would like improved service support or
 | Gnosis Traces        | 100        | https://gnosis-traces.hypersync.xyz or https://100.hypersync.xyz                    | 🥉   |                 |
 | Harmony Shard 0      | 1666600000 | https://harmony-shard-0.hypersync.xyz or https://1666600000.hypersync.xyz           | 🪨   |                 |
 | Holesky              | 17000      | https://holesky.hypersync.xyz or https://17000.hypersync.xyz                        | 🎒   |                 |
-| Holesky Token Test   | 17000      | https://holesky-token-test.hypersync.xyz or https://17000.hypersync.xyz             | 🔒   |                 |
 | Hyperliquid          | 645749     | https://hyperliquid.hypersync.xyz or https://645749.hypersync.xyz                   | 🪨   |                 |
 | Ink                  | 57073      | https://ink.hypersync.xyz or https://57073.hypersync.xyz                            | 🪨   |                 |
 | Kroma                | 255        | https://kroma.hypersync.xyz or https://255.hypersync.xyz                            | 🪨   |                 |
@@ -76,8 +77,8 @@ If you are a network operator or user and would like improved service support or
 | Mev Commit           | 17864      | https://mev-commit.hypersync.xyz or https://17864.hypersync.xyz                     | 🪨   |                 |
 | Mode                 | 34443      | https://mode.hypersync.xyz or https://34443.hypersync.xyz                           | 🪨   |                 |
 | Monad Testnet        | 10143      | https://monad-testnet.hypersync.xyz or https://10143.hypersync.xyz                  | 🏅   |                 |
-| Monad Testnet Backup | 10143333333 | https://monad-testnet-backup.hypersync.xyz or https://10143333333.hypersync.xyz     | 🔒   |                 |
 | Moonbase Alpha       | 1287       | https://moonbase-alpha.hypersync.xyz or https://1287.hypersync.xyz                  | 🪨   |                 |
+| Moonbeam             | 1284       | https://moonbeam.hypersync.xyz or https://1284.hypersync.xyz                        | 🪨   |                 |
 | Morph                | 2818       | https://morph.hypersync.xyz or https://2818.hypersync.xyz                           | 🪨   |                 |
 | Morph Holesky        | 2810       | https://morph-holesky.hypersync.xyz or https://2810.hypersync.xyz                   | 🎒   |                 |
 | Opbnb                | 204        | https://opbnb.hypersync.xyz or https://204.hypersync.xyz                            | 🪨   |                 |
@@ -91,13 +92,13 @@ If you are a network operator or user and would like improved service support or
 | Saakuru              | 7225878    | https://saakuru.hypersync.xyz or https://7225878.hypersync.xyz                      | 🪨   |                 |
 | Scroll               | 534352     | https://scroll.hypersync.xyz or https://534352.hypersync.xyz                        | 🥉   |                 |
 | Sepolia              | 11155111   | https://sepolia.hypersync.xyz or https://11155111.hypersync.xyz                     | 🎒   |                 |
-| Sepolia Temp Eip 7702 | 21155111   | https://sepolia-temp-eip-7702.hypersync.xyz or https://21155111.hypersync.xyz       | 🔒   |                 |
 | Shimmer Evm          | 148        | https://shimmer-evm.hypersync.xyz or https://148.hypersync.xyz                      | 🪨   |                 |
 | Soneium              | 1868       | https://soneium.hypersync.xyz or https://1868.hypersync.xyz                         | 🪨   |                 |
 | Sonic                | 146        | https://sonic.hypersync.xyz or https://146.hypersync.xyz                            | 🪨   |                 |
 | Sophon               | 50104      | https://sophon.hypersync.xyz or https://50104.hypersync.xyz                         | 🪨   |                 |
 | Sophon Testnet       | 531050104  | https://sophon-testnet.hypersync.xyz or https://531050104.hypersync.xyz             | 🎒   |                 |
 | Superseed            | 5330       | https://superseed.hypersync.xyz or https://5330.hypersync.xyz                       | 🪨   |                 |
+| Swell                | 1923       | https://swell.hypersync.xyz or https://1923.hypersync.xyz                           | 🪨   |                 |
 | Unichain             | 130        | https://unichain.hypersync.xyz or https://130.hypersync.xyz                         | 🪨   |                 |
 | Unichain Sepolia     | 1301       | https://unichain-sepolia.hypersync.xyz or https://1301.hypersync.xyz                | 🎒   |                 |
 | Worldchain           | 480        | https://worldchain.hypersync.xyz or https://480.hypersync.xyz                       | 🪨   |                 |

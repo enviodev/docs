@@ -34,10 +34,12 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Berachain Bartio     | 80084      | https://berachain-bartio.rpc.hypersync.xyz or https://80084.rpc.hypersync.xyz       |                 |
 | Blast                | 81457      | https://blast.rpc.hypersync.xyz or https://81457.rpc.hypersync.xyz                  |                 |
 | Blast Sepolia        | 168587773  | https://blast-sepolia.rpc.hypersync.xyz or https://168587773.rpc.hypersync.xyz      |                 |
+| Boba                 | 288        | https://boba.rpc.hypersync.xyz or https://288.rpc.hypersync.xyz                     |                 |
 | Bsc                  | 56         | https://bsc.rpc.hypersync.xyz or https://56.rpc.hypersync.xyz                       |                 |
 | Bsc Testnet          | 97         | https://bsc-testnet.rpc.hypersync.xyz or https://97.rpc.hypersync.xyz               |                 |
 | Celo                 | 42220      | https://celo.rpc.hypersync.xyz or https://42220.rpc.hypersync.xyz                   |                 |
 | Chiliz               | 8888       | https://chiliz.rpc.hypersync.xyz or https://8888.rpc.hypersync.xyz                  |                 |
+| Citrea Testnet       | 5115       | https://citrea-testnet.rpc.hypersync.xyz or https://5115.rpc.hypersync.xyz          |                 |
 | Curtis               | 33111      | https://curtis.rpc.hypersync.xyz or https://33111.rpc.hypersync.xyz                 |                 |
 | Cyber                | 7560       | https://cyber.rpc.hypersync.xyz or https://7560.rpc.hypersync.xyz                   |                 |
 | Eth Traces           | 1          | https://eth-traces.rpc.hypersync.xyz or https://1.rpc.hypersync.xyz                 | ✔️              |
@@ -52,7 +54,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Gnosis Traces        | 100        | https://gnosis-traces.rpc.hypersync.xyz or https://100.rpc.hypersync.xyz            |                 |
 | Harmony Shard 0      | 1666600000 | https://harmony-shard-0.rpc.hypersync.xyz or https://1666600000.rpc.hypersync.xyz   |                 |
 | Holesky              | 17000      | https://holesky.rpc.hypersync.xyz or https://17000.rpc.hypersync.xyz                |                 |
-| Holesky Token Test   | 17000      | https://holesky-token-test.rpc.hypersync.xyz or https://17000.rpc.hypersync.xyz     |                 |
 | Hyperliquid          | 645749     | https://hyperliquid.rpc.hypersync.xyz or https://645749.rpc.hypersync.xyz           |                 |
 | Ink                  | 57073      | https://ink.rpc.hypersync.xyz or https://57073.rpc.hypersync.xyz                    |                 |
 | Kroma                | 255        | https://kroma.rpc.hypersync.xyz or https://255.rpc.hypersync.xyz                    |                 |
@@ -68,8 +69,8 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Mev Commit           | 17864      | https://mev-commit.rpc.hypersync.xyz or https://17864.rpc.hypersync.xyz             |                 |
 | Mode                 | 34443      | https://mode.rpc.hypersync.xyz or https://34443.rpc.hypersync.xyz                   |                 |
 | Monad Testnet        | 10143      | https://monad-testnet.rpc.hypersync.xyz or https://10143.rpc.hypersync.xyz          |                 |
-| Monad Testnet Backup | 10143333333 | https://monad-testnet-backup.rpc.hypersync.xyz or https://10143333333.rpc.hypersync.xyz |                 |
 | Moonbase Alpha       | 1287       | https://moonbase-alpha.rpc.hypersync.xyz or https://1287.rpc.hypersync.xyz          |                 |
+| Moonbeam             | 1284       | https://moonbeam.rpc.hypersync.xyz or https://1284.rpc.hypersync.xyz                |                 |
 | Morph                | 2818       | https://morph.rpc.hypersync.xyz or https://2818.rpc.hypersync.xyz                   |                 |
 | Morph Holesky        | 2810       | https://morph-holesky.rpc.hypersync.xyz or https://2810.rpc.hypersync.xyz           |                 |
 | Opbnb                | 204        | https://opbnb.rpc.hypersync.xyz or https://204.rpc.hypersync.xyz                    |                 |
@@ -83,13 +84,13 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Saakuru              | 7225878    | https://saakuru.rpc.hypersync.xyz or https://7225878.rpc.hypersync.xyz              |                 |
 | Scroll               | 534352     | https://scroll.rpc.hypersync.xyz or https://534352.rpc.hypersync.xyz                |                 |
 | Sepolia              | 11155111   | https://sepolia.rpc.hypersync.xyz or https://11155111.rpc.hypersync.xyz             |                 |
-| Sepolia Temp Eip 7702 | 21155111   | https://sepolia-temp-eip-7702.rpc.hypersync.xyz or https://21155111.rpc.hypersync.xyz |                 |
 | Shimmer Evm          | 148        | https://shimmer-evm.rpc.hypersync.xyz or https://148.rpc.hypersync.xyz              |                 |
 | Soneium              | 1868       | https://soneium.rpc.hypersync.xyz or https://1868.rpc.hypersync.xyz                 |                 |
 | Sonic                | 146        | https://sonic.rpc.hypersync.xyz or https://146.rpc.hypersync.xyz                    |                 |
 | Sophon               | 50104      | https://sophon.rpc.hypersync.xyz or https://50104.rpc.hypersync.xyz                 |                 |
 | Sophon Testnet       | 531050104  | https://sophon-testnet.rpc.hypersync.xyz or https://531050104.rpc.hypersync.xyz     |                 |
 | Superseed            | 5330       | https://superseed.rpc.hypersync.xyz or https://5330.rpc.hypersync.xyz               |                 |
+| Swell                | 1923       | https://swell.rpc.hypersync.xyz or https://1923.rpc.hypersync.xyz                   |                 |
 | Unichain             | 130        | https://unichain.rpc.hypersync.xyz or https://130.rpc.hypersync.xyz                 |                 |
 | Unichain Sepolia     | 1301       | https://unichain-sepolia.rpc.hypersync.xyz or https://1301.rpc.hypersync.xyz        |                 |
 | Worldchain           | 480        | https://worldchain.rpc.hypersync.xyz or https://480.rpc.hypersync.xyz               |                 |
