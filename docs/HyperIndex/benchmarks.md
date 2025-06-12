@@ -17,16 +17,16 @@ The most comprehensive and up-to-date benchmarks were conducted by Sentio in Apr
 
 ### Key Performance Highlights
 
-| Case                           | Description                                 | Envio  | Nearest Competitor | TheGraph | Ponder | Advantage vs. Nearest |
-| ------------------------------ | ------------------------------------------- | ------ | ------------------ | -------- | ------ | --------------------- |
-| LBTC Token Transfers           | Event handling, No RPC calls, Write-only    | 3m     | 8m (Sentio)        | 3h9m     | 1h40m  | 2.6x faster           |
-| LBTC Token with RPC calls      | Event handling, RPC calls, Read-after-write | 1m     | 6m (Sentio)        | 1h30m    | 45m    | 6x faster             |
-| Ethereum Block Processing      | 100K blocks with Metadata extraction        | 7.9s   | 1m (Subsquid)      | 10m      | 33m    | 7.5x faster           |
-| Ethereum Transaction Gas Usage | Transaction handling, Gas calculations      | 1m 26s | 7m (Subsquid)      | N/A      | 33m    | 4.8x faster           |
-| Uniswap V2 Swap Trace Analysis | Transaction trace handling, Swap decoding   | 41s    | 2m (Subsquid)      | 8m       | N/A    | 3x faster             |
-| Uniswap V2 Factory             | Event handling, Pair and swap analysis      | 8s     | 2m (Subsquid)      | 19m      | 21m    | 15x faster            |
+| Case                           | Description                                 | Envio  | Nearest Competitor          | TheGraph            | Ponder               |
+| ------------------------------ | ------------------------------------------- | ------ | --------------------------- | ------------------- | -------------------- |
+| LBTC Token Transfers           | Event handling, No RPC calls, Write-only    | 3m     | 8m - 2.6x slower (Sentio)   | 3h9m - 3780x slower | 1h40m - 2000x slower |
+| LBTC Token with RPC calls      | Event handling, RPC calls, Read-after-write | 1m     | 6m - 6x slower (Sentio)     | 1h3m - 63x slower   | 45m - 45x slower     |
+| Ethereum Block Processing      | 100K blocks with Metadata extraction        | 7.9s   | 1m - 7.5x slower (Subsquid) | 10m - 75x slower    | 33m - 250x slower    |
+| Ethereum Transaction Gas Usage | Transaction handling, Gas calculations      | 1m 26s | 7m - 4.8x slower (Subsquid) | N/A                 | 33m - 23x slower     |
+| Uniswap V2 Swap Trace Analysis | Transaction trace handling, Swap decoding   | 41s    | 2m - 3x slower (Subsquid)   | 8m - 11x slower     | N/A                  |
+| Uniswap V2 Factory             | Event handling, Pair and swap analysis      | 8s     | 2m - 15x slower (Subsquid)  | 19m - 142x slower   | 21m - 157x slower    |
 
-The independent benchmark results demonstrate that HyperIndex consistently outperforms all competitors across every tested scenario. This includes the most realistic real-world indexing scenario LBTC Token with RPC calls - where HyperIndex was up to 6x faster than the nearest competitor and over 90x faster than TheGraph.
+The independent benchmark results demonstrate that HyperIndex consistently outperforms all competitors across every tested scenario. This includes the most realistic real-world indexing scenario LBTC Token with RPC calls - where HyperIndex was up to 6x faster than the nearest competitor and over 63x faster than TheGraph.
 
 ## Historical Benchmarking Results
 
