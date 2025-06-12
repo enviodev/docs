@@ -56,7 +56,7 @@ services:
       - my-proxy-net
 
   graphql-engine:
-    image: hasura/graphql-engine:v2.23.0
+    image: hasura/graphql-engine:v2.43.0
     ports:
       - "${HASURA_EXTERNAL_PORT:-8080}:8080"
     user: 1001:1001
