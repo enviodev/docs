@@ -67,7 +67,7 @@ Envio offers a range of advanced capabilities that make it easy to build rich, f
 
 
 
-* **Flexible Language Suppor**t: Configure your event handling in familiar and widely supported languages such as JavaScript, TypeScript, or ReScript.
+* **Flexible Language Support**: Configure your event handling in familiar and widely supported languages such as JavaScript, TypeScript, or ReScript.
 * **No-Code Quickstart**: Autogenerate the key boilerplate for an entire indexer project based on single or multiple smart contracts. Deploy within minutes.
 * **Multichain Support**: Aggregate data across multiple networks into a single database and query everything through a unified GraphQL API.
 * **Join On-Chain and Off-Chain Data**: Connect indexed blockchain data with off-chain data to create a flexible API that goes beyond simple on-chain event logs, such as integrating external NFT metadata.
