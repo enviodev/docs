@@ -5,6 +5,7 @@ module.exports = {
     "hypersync-usage",
     "hypersync-clients",
     "hypersync-query",
+    "hypersync-presets",
     "hypersync-curl-examples",
     "api-tokens",
     "hypersync-supported-networks",
