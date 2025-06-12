@@ -19,14 +19,14 @@ The most comprehensive and up-to-date benchmarks were conducted by Sentio in Apr
 
 | Case                           | Description                                 | Envio  | Nearest Competitor | TheGraph | Ponder | Advantage vs. Nearest |
 | ------------------------------ | ------------------------------------------- | ------ | ------------------ | -------- | ------ | --------------------- |
-| LBTC Token Transfers           | Event handling, No RPC calls, Write-only    | 2m     | 8m (Sentio)        | 3h9m     | 1h40m  | 4x faster             |
-| LBTC Token with RPC calls      | Event handling, RPC calls, Read-after-write | 15s    | 32m (Subsquid)     | 18h38m   | 4h38m  | 128x faster           |
+| LBTC Token Transfers           | Event handling, No RPC calls, Write-only    | 3m     | 8m (Sentio)        | 3h9m     | 1h40m  | 2.6x faster           |
+| LBTC Token with RPC calls      | Event handling, RPC calls, Read-after-write | 1m     | 6m (Sentio)        | 1h30m    | 45m    | 6x faster             |
 | Ethereum Block Processing      | 100K blocks with Metadata extraction        | 7.9s   | 1m (Subsquid)      | 10m      | 33m    | 7.5x faster           |
-| Ethereum Transaction Gas Usage | Transaction handling, Gas calculations      | 1m 26s | 5m (Subsquid)      | N/A      | 33m    | 3.5x faster           |
+| Ethereum Transaction Gas Usage | Transaction handling, Gas calculations      | 1m 26s | 7m (Subsquid)      | N/A      | 33m    | 4.8x faster           |
 | Uniswap V2 Swap Trace Analysis | Transaction trace handling, Swap decoding   | 41s    | 2m (Subsquid)      | 8m       | N/A    | 3x faster             |
-| Uniswap V2 Factory             | Event handling, Pair and swap analysis      | 10s    | 2m (Subsquid)      | 19m      | 2h24m  | 12x faster            |
+| Uniswap V2 Factory             | Event handling, Pair and swap analysis      | 8s     | 2m (Subsquid)      | 19m      | 21m    | 15x faster            |
 
-The independent benchmark results demonstrate that HyperIndex consistently outperforms all competitors across every tested scenario. The most significant performance advantage was seen in real-world indexing scenarios with external RPC calls, where HyperIndex was up to 128x faster than the nearest competitor and over 4000x faster than TheGraph.
+The independent benchmark results demonstrate that HyperIndex consistently outperforms all competitors across every tested scenario. This includes the most realistic real-world indexing scenario LBTC Token with RPC calls - where HyperIndex was up to 6x faster than the nearest competitor and over 90x faster than TheGraph.
 
 ## Historical Benchmarking Results
 

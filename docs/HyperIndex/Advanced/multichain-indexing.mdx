@@ -84,11 +84,13 @@ networks:
 
 When indexing multiple chains, you have two approaches for handling event ordering:
 
-### Unordered Multichain Mode (Default)
+### Unordered Multichain Mode
 
-By default, the indexer processes events as soon as they're available from each chain, without waiting for other chains. This "Unordered Multichain Mode" provides better performance and lower latency.
+:::note
+Unordered mode is recommended for most applications.
+:::
 
-With unordered mode (the default):
+The indexer processes events as soon as they're available from each chain, without waiting for other chains. This "Unordered Multichain Mode" provides better performance and lower latency.
 
 - Events will still be processed in order within each individual chain
 - Events across different chains may be processed out of order
@@ -101,7 +103,20 @@ This mode is ideal for most applications, especially when:
 - Entities from different networks never interact with each other
 - Processing speed is more important than guaranteed cross-chain ordering
 
-### Ordered Mode (Optional)
+#### How to Enable Unordered Mode
+
+In your config.yaml:
+
+```yaml
+unordered_multichain_mode: true
+networks: ...
+```
+
+### Ordered Mode
+
+:::note
+Ordered mode is currently the default mode. But it'll be changed to unordered mode in the future. If you don't need strict deterministic ordering of events across all chains, it's recommended to use unordered mode.
+:::
 
 If your application requires strict deterministic ordering of events across all chains, you can enable "Ordered Mode". In this mode, the indexer synchronizes event processing across all chains, ensuring that events are processed in the exact same order in every indexer run, regardless of which chain they came from.
 
@@ -119,21 +134,6 @@ Cross-chain ordering is particularly important for applications like:
 - **Cross-chain governance**: Where decisions made on one chain affect operations on another chain
 - **Multi-chain financial applications**: Where the sequence of transactions across chains affects accounting or risk calculations
 - **Data consistency systems**: Where the state must be consistent across multiple chains in a specific order
-
-#### How to Enable Ordered Mode
-
-In your config.yaml:
-
-```yaml
-unordered_multichain_mode: false
-networks: ...
-```
-
-Or via environment variable:
-
-```sh
-UNORDERED_MULTICHAIN_MODE=false
-```
 
 #### Technical Details
 

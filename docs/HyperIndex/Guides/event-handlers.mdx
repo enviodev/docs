@@ -230,30 +230,71 @@ The handler `context` provides methods to interact with entities stored in the d
 
 ### Retrieving Entities
 
-Retrieve entities asynchronously using `get`:
+Retrieve entities from the database using `context.Entity.get` where `Entity` is the name of the entity you want to retrieve, which is defined in your [schema.graphql](/docs/HyperIndex/schema-file) file.
 
-```javascript
-await context.<ENTITY_NAME>.get(entityId);
+```typescript
+await context.Entity.get(entityId);
+```
+
+It'll return `Entity` object or `undefined` if the entity doesn't exist.
+
+Starting from `envio@2.22.0` you can use `context.Entity.getOrThrow` to conveniently throw an error if the entity doesn't exist:
+
+```typescript
+const pool = await context.Pool.getOrThrow(poolId);
+// Will throw: Entity 'Pool' with ID '...' is expected to exist.
+
+// Or you can pass a custom message as a second argument:
+const pool = await context.Pool.getOrThrow(
+  poolId,
+  `Pool with ID ${poolId} is expected.`
+);
+```
+
+Or use `context.Entity.getOrCreate` to automatically create an entity with default values if it doesn't exist:
+
+```typescript
+const pool = await context.Pool.getOrCreate({
+  id: poolId,
+  totalValueLockedETH: 0n,
+});
+
+// Which is equivalent to:
+let pool = await context.Pool.get(poolId);
+if (!pool) {
+  pool = {
+    id: poolId,
+    totalValueLockedETH: 0n,
+  };
+  context.Pool.set(pool);
+}
 ```
 
 ### Modifying Entities
 
-Use `set` to create or update an entity:
+Use `context.Entity.set` to create or update an entity:
 
-```javascript
-context.<ENTITY_NAME>.set(entityObject);
+```typescript
+context.Entity.set({
+  id: entityId,
+  ...otherEntityFields,
+});
 ```
+
+:::note
+Both `context.Entity.set` and `context.Entity.deleteUnsafe` methods use the In-Memory Storage under the hood and don't require `await` in front of them.
+:::
 
 ### Deleting Entities (Unsafe)
 
 To delete an entity:
 
-```javascript
-context.<ENTITY_NAME>.deleteUnsafe(entityId);
+```typescript
+context.Entity.deleteUnsafe(entityId);
 ```
 
 :::warning
-The `deleteUnsafe` method is experimental and **unsafe**. Manually handle all entity references after deletion to maintain database consistency.
+The `deleteUnsafe` method is experimental and **unsafe**. You need to manually handle all entity references after deletion to maintain database consistency.
 :::
 
 ### Updating Specific Entity Fields

@@ -333,13 +333,9 @@ During the processing of the batch, another handler may set it before it is avai
 ```typescript
 ERC20.Transfer.handlerWithLoader({
   loader: async ({ event, context }) => {
-    const sender = await context.Account.get(event.params.from);
-
     // BE CAREFUL HERE
     // The loader will be run twice and sender may not exist on the first run
-    if (!sender) {
-      throw new Error(`Sender account not found: ${event.params.from}`);
-    }
+    const sender = await context.Account.getOrThrow(event.params.from);
 
     return {
       sender,
@@ -353,31 +349,29 @@ ERC20.Transfer.handlerWithLoader({
 });
 ```
 
-The example above could crash unnecessarily. If you want to achieve this behaviour you should rather throw the error in the handler.
+Starting from `envio@2.22.0` errors on the first loader run will be automatically caught and silently ignored, making your indexer to continue processing the batch.
+
+If you're using an earlier version of `envio`, the example above could crash unnecessarily. If you want to achieve the same behaviour you should rather throw the error in the handler. But better to upgrade your indexer with `pnpm install envio@latest`!
 
 ```typescript
 ERC20.Transfer.handlerWithLoader({
   loader: async ({ event, context }) => {
     const sender = await context.Account.get(event.params.from);
-
     return {
       sender,
     };
   },
-
   handler: async ({ event, context, loaderReturn }) => {
     const { sender } = loaderReturn;
-
     if (!sender) {
       throw new Error(`Sender account not found: ${event.params.from}`);
     }
-
     // ... handler logic
   },
 });
 ```
 
-Now the indexer behaves as expected. The indexer will only crash if the "sender" `Account` entity was actually not set in an event preceding the one being processed.
+The indexer will only crash if the `sender` entity was actually not set in an event preceding the one being processed.
 
 ## Limitations
 
