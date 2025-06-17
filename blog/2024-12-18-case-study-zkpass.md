@@ -9,7 +9,7 @@ tags: ["case-studies"]
 
 <!--truncate-->
 
-We live in a world where every click, swipe, and post leaves a trail, protecting your data has never been more urgent. With privacy breaches becoming all too common, the question isn’t if your data is exposed, it’s when. Can we create a system where personal information stays private while still verifying crucial details? Enter Zero-Knowledge Proofs (ZKPs) a breakthrough technology that could change how we think about privacy and security in the digital age.
+We live in a world where every click, swipe, and post leaves a trail, protecting your data has never been more urgent. With privacy breaches becoming all too common, the question isn’t if your data is exposed, it’s when. Can we create a system where personal information stays private while still verifying crucial details? Enter Zero-Knowledge Proofs (ZKPs), a breakthrough technology that could change how we think about privacy and security in the digital age.
 
 ## What are Zero-Knowledge Proofs?
 
