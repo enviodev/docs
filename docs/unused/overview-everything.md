@@ -13,7 +13,7 @@ There are 3 main solutions you can use:
 
 **HyperIndex**: Blazingly fast multichain indexer with graphQL endpoint and access to postgres indexed data. 100x faster than Subgraphs. No RPC url needed.
 
-**HyperSync**: Special Binary API for retireving Logs, Transaction, Traces and Blocks from 35+ EVM chains (+ Fuel). 100x faster than JSON-RPC.
+**HyperSync**: Special Binary API for retrieving Logs, Transaction, Traces and Blocks from 35+ EVM chains (+ Fuel). 100x faster than JSON-RPC.
 
 **HyperRPC**: Drop in replacement for RPC (read-only requests). 3-5x Faster than JSON-RPC.
 
