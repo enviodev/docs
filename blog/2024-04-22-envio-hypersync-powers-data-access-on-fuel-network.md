@@ -1,5 +1,5 @@
 ---
-title: "Fast, Flexible & Fiercly Efficient Data Access: Envio HyperSync Now Supports Fuel Network"
+title: "Fast, Flexible & Fiercely Efficient Data Access: Envio HyperSync Now Supports Fuel Network"
 sidebar_label: "Fast, Flexible & Fiercly Efficient Data Access: Envio HyperSync Now Supports Fuel Network"
 slug: /envio-hypersync-powers-data-access-on-fuel-network
 ---
