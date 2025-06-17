@@ -30,7 +30,7 @@ Envio transformed GBlast’s operations by providing real-time smart contract da
 
 Efficient historical data retrieval capabilities have also empowered GBlast to gain deeper operational insights and optimize decision-making processes, enhancing operational efficiency and resource utilization. Envio’s blazing-fast indexing instantly makes all historical data available for querying via a custom [GraphQL](https://graphql.org/) API.
 
-By leveraging [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) for data ingestion instead of JSON-RPC, GBlast has drastically improved its syncing performance, and future-proofing their application, so that even the largest datasets only take a few minutes to index.
+By leveraging [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) for data ingestion instead of JSON-RPC, GBlast has drastically improved its syncing performance and future-proofed their application, so that even the largest datasets only take a few minutes to index.
 
 GBlast has further enriched its custom API by utilizing Envio’s support for asynchronous operations in its event handlers, enabling the addition of any data available on the internet to the indexer and storing it in a backend database for querying purposes. Simply put, this involves joining on-chain and off-chain data for a more flexible API.
 
