@@ -7,7 +7,7 @@ slug: /overview-everything
 
 Envio is the fastest indexing solution improving typical subgraph indexing speeds by more than 100x.
 
-Envio is a modern data and indexing solution for web3 teams foccussed on performance, scale and developer experience.
+Envio is a modern data and indexing solution for web3 teams focused on performance, scale and developer experience.
 
 There are 3 main solutions you can use:
 
