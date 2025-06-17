@@ -9,11 +9,11 @@ tags: ["case-studies"]
 
 <!--truncate-->
 
-We live in a world where every click, swipe, and post leaves a trail, protecting your data has never been more urgent. With privacy breaches becoming all too common, the question isn’t if your data is exposed, it’s when. Can we create a system where personal information stays private while still verifying crucial details? Enter Zero-Knowledge Proofs (ZKPs) a breakthrough technology that could change how we think about privacy and security in the digital age.
+We live in a world where every click, swipe, and post leaves a trail, protecting your data has never been more urgent. With privacy breaches becoming all too common, the question isn’t if your data is exposed, it’s when. Can we create a system where personal information stays private while still verifying crucial details? Enter Zero-Knowledge Proofs (ZKPs), a breakthrough technology that could change how we think about privacy and security in the digital age.
 
 ## What are Zero-Knowledge Proofs?
 
-ZKPs allow one party (the prover) to prove to another party (the verifier) that they know a specific piece of information without revealing the actual data. It’s a system based on trust but with privacy baked in. For example, you could prove you’re age without sharing your birthdate, or prove you have enough funds for a transaction without showing your full balance.
+ZKPs allow one party (the prover) to prove to another party (the verifier) that they know a specific piece of information without revealing the actual data. It’s a system based on trust but with privacy baked in. For example, you could prove your age without sharing your birthdate, or prove you have enough funds for a transaction without showing your full balance.
 
 Although this concept has been around for decades, its practical application in blockchain and Web3 is now gaining momentum. The rise of decentralized systems has created a demand for more secure, private ways of verifying transactions, identities, and sensitive data.
 

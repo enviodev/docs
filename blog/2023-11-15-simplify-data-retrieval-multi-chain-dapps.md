@@ -97,7 +97,7 @@ For a more complicated multi-chain indexing example, builders are encouraged to 
 
 ## Conclusion
 
-By gaining a deep understanding of how multi-chain indexing works, developers can leverage Envio’s mult-hain indexing feature for a more streamlined and efficient way for blazing-fast retrieval of data across multiple chains. Whether you're developing DeFi aggregators, cross-chain NFT marketplaces, or any Web3 application that requires data from multiple networks, Envio’s multi-chain indexing simplifies the development process, enhancing the user experience, and fostering cross-chain interoperability.
+By gaining a deep understanding of how multi-chain indexing works, developers can leverage Envio’s multi-chain indexing feature for a more streamlined and efficient way for blazing-fast retrieval of data across multiple chains. Whether you're developing DeFi aggregators, cross-chain NFT marketplaces, or any Web3 application that requires data from multiple networks, Envio’s multi-chain indexing simplifies the development process, enhancing the user experience, and fostering cross-chain interoperability.
 
 # Ship with us. 🚢
 
