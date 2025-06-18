@@ -1,6 +1,6 @@
 ---
-title: How to Index Monad Data using Envio
-sidebar_label: How to Index Monad Data using Envio
+title: How to Index Monad Data Using Envio
+sidebar_label: How to Index Monad Data Using Envio
 slug: /how-to-index-monad-data-using-envio
 ---
 
