@@ -28,7 +28,7 @@ Blockchain data is inherently scattered and sequential. For instance, fetching t
 
 Without an indexer, you must handle data processing logic within your app—adding technical debt and slowing down development. Indexers remove this burden, allowing you to concentrate on providing better user experiences.
 
-##### **3. Responsiveness Apps**
+##### **3. Responsive Apps**
 
 Indexers are optimized for low-latency queries, enabling access to real-time access and historical data. Whether your app requires real-time updates or rapid insights from past data, indexers are built to handle these demands efficiently.
 
