@@ -56,7 +56,7 @@ A typical blockchain indexer setup includes the following components:
 
 ## How Does Indexing Work?
 
-At its core, the indexing process begins with the indexer connecting to a network/s and monitoring new blocks as they are added to the chain. The indexer then extracts specific event data,, and organizes it in a structured database.
+At its core, the indexing process begins with the indexer connecting to a network/s and monitoring new blocks as they are added to the chain. The indexer then extracts specific event data and organizes it in a structured database.
 
 Instead of forcing you to comb through each block manually, the indexer uses predefined configurations to filter and store the data most relevant to your needs. This structured data can then be queried efficiently using GraphQL APIs.
 
