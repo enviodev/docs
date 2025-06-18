@@ -9,7 +9,7 @@ slug: /example-reNFT
 
 This [repo](https://github.com/enviodev/reNFT-index) contains an example Envio indexer built using TypeScript for the [reNFT contract](https://polygonscan.com/address/0x4e52B73Aa28b7FF84d88eA3A90C0668f46043450) deployed on Polygon.
 
-All of the events from the reNFT contract are indexed as entities and the `EventsSummary` entity is defined to track number of each event that the indexer has indexed.
+All of the events from the reNFT contract are indexed as entities and the `EventsSummary` entity is defined to track the number of each event that the indexer has indexed.
 
 The indexer has been built using v0.0.21 of Envio.
 
