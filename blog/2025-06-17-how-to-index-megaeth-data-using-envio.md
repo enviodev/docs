@@ -57,7 +57,7 @@ A high-performance data retrieval layer that gives developers unprecedented acce
 [Learn more](https://docs.envio.dev/docs/HyperSync/overview)
 
 
-#### HyperRPC
+### HyperRPC
 
 A local RPC proxy that supercharges blockchain data access by mapping standard RPC requests to HyperSync’s ultra-fast data engine. HyperRPC accepts typical RPC calls and translates them into HyperSync queries, dramatically reducing query time and eliminating the bottlenecks of traditional RPC endpoints. 
 
