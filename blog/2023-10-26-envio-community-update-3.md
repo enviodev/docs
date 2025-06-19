@@ -61,7 +61,7 @@ We’re thrilled to announce that we have released a new version of Envio, [v0.0
 - Reduced default batch sizes.
 - Added dynamic contracts to allow loading from all events.
 - Improved ERC20 templates with approval entity.
-- Handleed dynamic contracts in raw events worker.
+- Handled dynamic contracts in raw events worker.
 - Fixed raw events resync.
 - Implemented hooks for stop worker.
 - Fixed deferred breaking on an empty array.

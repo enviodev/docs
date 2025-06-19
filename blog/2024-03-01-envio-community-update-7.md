@@ -42,7 +42,7 @@ Join us for a masterclass in integrating blockchain data into AI to enhance your
 
 🗓️Date: 18th Mar, 6 weeks
 
-ℹ️ Appy here: [https://encode.club/ai-bootcamp](https://encode.club/ai-bootcamp)
+ℹ️ Apply here: [https://encode.club/ai-bootcamp](https://encode.club/ai-bootcamp)
 
 **Solidity Bootcamp:**
 

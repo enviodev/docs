@@ -58,7 +58,7 @@ Fuel application teams also have the option of hosting their indexer and custom 
 ## Data Indexer Use Cases on Fuel using Envio
 
 - [Data Indexer](https://github.com/compolabs/spark-envio-indexer) for [Spark](https://sprk.fi/), a DeFi super app with perpetual contracts, an orderbook. and as well as lending & borrowing features.
-- [Data Indexer](https://github.com/enviodev/fuel-thunder-exchange/tree/main) for [Thunder](https://thundernft.market/), a NFT Marketplace, allowing multiple purchases of NFTs in a single transaction thanks to parallen execution by Fuel.
+- [Data Indexer](https://github.com/enviodev/fuel-thunder-exchange/tree/main) for [Thunder](https://thundernft.market/), an NFT marketplace, allowing multiple purchases of NFTs in a single transaction thanks to parallel execution by Fuel.
 
 ## Getting Support
 
