@@ -208,22 +208,24 @@ Since `envio@2.9.0`, environment variable interpolation is supported for flexibi
 
 ```yaml
 networks:
-  - id: ${CHAIN_ID:-ethereum-mainnet}
+  - id: ${ENVIO_CHAIN_ID:-ethereum-mainnet}
     contracts:
       - name: Greeter
-        address: ${GREETER_ADDRESS}
+        address: ${ENVIO_GREETER_ADDRESS}
 ```
 
 Run your indexer with custom environment variables:
 
 ```bash
-CHAIN_ID=optimism ENVIO_ADDRESS=0xYourContractAddress pnpm dev
+ENVIO_CHAIN_ID=optimism ENVIO_GREETER_ADDRESS=0xYourContractAddress pnpm dev
 ```
 
 **Interpolation syntax:**
 
-- `${VAR}` – Use the value of `VAR`
-- `${VAR:-default}` – Use `VAR` if set, otherwise use `default`
+- `${ENVIO_VAR}` – Use the value of `ENVIO_VAR`
+- `${ENVIO_VAR:-default}` – Use `ENVIO_VAR` if set, otherwise use `default`
+
+For more detailed information about environment variables, see our [Environment Variables Guide](./environment-variables).
 
 ---
 
