@@ -38,7 +38,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Bsc                  | 56         | https://bsc.rpc.hypersync.xyz or https://56.rpc.hypersync.xyz                       |                 |
 | Bsc Testnet          | 97         | https://bsc-testnet.rpc.hypersync.xyz or https://97.rpc.hypersync.xyz               |                 |
 | Celo                 | 42220      | https://celo.rpc.hypersync.xyz or https://42220.rpc.hypersync.xyz                   |                 |
-| Chiliz               | 8888       | https://chiliz.rpc.hypersync.xyz or https://8888.rpc.hypersync.xyz                  |                 |
+| Chiliz               | 88888      | https://chiliz.rpc.hypersync.xyz or https://88888.rpc.hypersync.xyz                 |                 |
 | Citrea Testnet       | 5115       | https://citrea-testnet.rpc.hypersync.xyz or https://5115.rpc.hypersync.xyz          |                 |
 | Curtis               | 33111      | https://curtis.rpc.hypersync.xyz or https://33111.rpc.hypersync.xyz                 |                 |
 | Cyber                | 7560       | https://cyber.rpc.hypersync.xyz or https://7560.rpc.hypersync.xyz                   |                 |
