@@ -5,7 +5,7 @@ sidebar_label: Overview
 slug: /overview
 ---
 
-# HyperSync: High-Performance Blockchain Data Access
+# HyperSync: Ultra-Fast & Flexible Data API
 
 ## What is HyperSync?
 
@@ -75,12 +75,19 @@ HyperSync powers a wide range of blockchain applications, enabling developers to
 - **Ultra-fast Account Abstraction (AA) focused block explorer**
 - **Fast historical data retrieval** with minimal latency
 
+#### [LogTUI](https://www.npmjs.com/package/logtui)
+
+- **Terminal-based UI** for finding all historical blockchain events
+- **Built-in presets** for 20+ protocols (Uniswap, Chainlink, Aave, ENS, etc.)
+- **Try it**: `pnpx logtui aave arbitrum` to track Aave events on Arbitrum in your terminal
+
 ## See HyperSync in Action
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/iu_469ELotw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Next Steps
 
+- **[Try the Quick Start Guide](/docs/HyperSync/hypersync-quickstart)** to get up and running in minutes
 - [Get an API Token](/docs/HyperSync/api-tokens) to access HyperSync services
 - [View Supported Networks](/docs/HyperSync/hypersync-supported-networks) to see available chains
 - [Check Client Documentation](/docs/HyperSync/hypersync-clients) for language-specific guides

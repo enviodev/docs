@@ -40,6 +40,8 @@ module.exports = {
     "overview",
     "getting-started",
     "contract-import",
+    "benchmarks",
+    "migration-guide",
     // "migration-guide-v1-v2",
     {
       type: "category",

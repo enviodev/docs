@@ -47,7 +47,7 @@ In this specific case, Jarvis Network's decision to use the TimescaleDB extensio
 
 While Jarvis Network took charge of self-hosting, Envio offers a reliable hosted service that simplifies the deployment and maintenance process of managing infrastructure.
 
-Once configured, Envio’s hosted service streamlines deployment, by which are only required to push their latest indexer version to their GitHub repository to auto-deploy their indexer to the hosted service. Developers can easily manage and configure their indexers through the Envio Deployments GitHub app.
+Once configured, Envio’s hosted service streamlines deployment, as users are only required to push their latest indexer version to their GitHub repository to auto-deploy their indexer to the hosted service. Developers can easily manage and configure their indexers through the Envio Deployments GitHub app.
 
 Envio offers the easiest way to deploy and host your indexer, handling the entire infrastructure and eliminating worries about complex infrastructure setup and management. This approach allows developers to focus on their dApp's core functionality while ensuring their indexer guarantees performance with production-grade infrastructure.
 

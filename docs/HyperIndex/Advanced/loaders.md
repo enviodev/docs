@@ -35,15 +35,32 @@ ERC20.Transfer.handler(async ({ event, context }) => {
 
 **The Challenge:** If you're processing 5,000 transfer events, each with unique `from` and `to` addresses, this would result in **10,000 roundtrips** to the database—one for each sender and receiver lookup.
 
+### The External Calls Problem
+
+To ensure consistent and reliable data, all handlers are executed synchronously in the on-chain order. This means that external calls might easily blow up the processing time.
+
+```typescript
+// Without loaders: Blocking external calls
+ERC20.Transfer.handler(async ({ event, context }) => {
+  const metadata = await fetch(
+    `https://api.example.com/metadata/${event.params.from}`
+  );
+
+  // Process the transfer...
+});
+```
+
+**The Challenge:** If you're processing 5,000 transfer events, each with an external call, this would result in **5,000 external calls** executed one after another.
+
 ### How Loaders Solve This
 
 Loaders address this problem by:
 
-1. **Collecting all database requests** before processing events
-2. **Batching similar requests** into single database operations
+1. **Collecting all database and Effect requests** before processing events
+2. **Batching similar requests** into single I/O operations
 3. **Caching results** for use during event processing
 
-This approach can reduce thousands of database calls to just a handful, dramatically improving indexing performance.
+This approach can reduce thousands of database calls to just a handful, dramatically improving indexing performance. And using the [Effect API](#effect-api-experimental), you can parallelize external calls and make the indexing process more efficient.
 
 ## How to Implement Loaders
 
@@ -95,11 +112,12 @@ ERC20.Transfer.handlerWithLoader({
 
 ### How Batching Works
 
-When Envio processes events:
+1. HyperIndex will create an ordered batch of events from its in memory queue
+2. All loader functions will be run concurrently for the batch.
 
-1. First, all loader functions run for a batch of events
-2. Similar database requests are automatically batched
-3. Then, all handler functions run with the pre-loaded data
+   _**Note:** at this stage, some entities being loaded may not exist yet since the handlers have not been run. [Be careful of throwing errors in loaders when an entity is undefined](#beware-of-double-run-footgun)._
+
+3. On each event of the batch, its loader will be run a **second time** and then pass the result to the handler. This step is sequential.
 
 For our 5,000 transfer events example, this reduces database roundtrips from 10,000 to just 2!
 
@@ -161,6 +179,126 @@ This technique works with any entity field that:
 - Is used in a relationship with the [`@derivedFrom`](schema/#relationships-one-to-many-derivedfrom) directive
 - Has an [`@index`](database-performance-optimization/#creating-custom-indices) directive
 
+## Effect API `experimental`
+
+The Effect API is a convenient way to perform external calls from your handlers. It's especially powerful when used with loaders:
+
+- It automatically batches calls of the same kind
+- It memoizes calls, so you don't need to worry about the loader function being called multiple times
+- It deduplicates calls with the same arguments so that you won't overfetch
+- And we're working on adding support for automatic retrying of failed requests as well as persisting results to use on indexer reruns 🏗️
+
+To use the Effect API, you first need to define an effect using `experimental_createEffect` function from the `envio` package:
+
+```typescript
+import { experimental_createEffect, S } from "envio";
+
+export const getMetadata = experimental_createEffect(
+  {
+    name: "getMetadata",
+    input: S.string,
+    output: {
+      description: S.string,
+      value: S.bigint,
+    },
+  },
+  ({ input, context }) => {
+    const response = await fetch(`https://api.example.com/metadata/${input}`);
+    const data = await response.json();
+    context.log.info(`Fetched metadata for ${input}`);
+    return {
+      description: data.description,
+      value: data.value,
+    };
+  }
+);
+```
+
+The first argument is an options object that describes the effect:
+
+- `name` (required) - the name of the effect used for debugging and logging
+- `input` (required) - the input type of the effect
+- `output` (required) - the output type of the effect
+
+The second argument is a function that will be called with the effect's input.
+
+> **Note:** For type definitions, you should use `S` from the `envio` package, which uses [Sury](https://github.com/DZakh/sury) library under the hood.
+
+After you define an effect, you can use `context.effect` to call it from your handler, loader or other effect.
+
+The `context.effect` accepts an effect as the first argument and the effect's input as the second argument:
+
+```typescript
+ERC20.Transfer.handlerWithLoader({
+  loader: async ({ event, context }) => {
+    const metadata = await context.effect(getMetadata, event.params.from);
+    return { metadata };
+  },
+
+  handler: async ({ event, context, loaderReturn }) => {
+    const { metadata } = loaderReturn;
+    // Process the event with the metadata
+  },
+});
+```
+
+This way for our problem of 5,000 transfer events, we will be able to parallelize all external calls instead of executing them one by one.
+
+### Viem Pro Tip
+
+You can use `viem` or any other client inside of your effect function.
+
+In this case, it's really recommended to set the `batch` option to `true`. This way it'll allow to group all effect calls into a few RPC batched calls.
+
+```typescript
+// Create a public client to interact with the blockchain
+const client = createPublicClient({
+  chain: mainnet,
+  // Enable batching to group calls into fewer RPC requests
+  transport: http(rpcUrl, { batch: true }),
+});
+
+// Get the contract instance for your contract
+const lbtcContract = getContract({
+  abi: erc20Abi,
+  address: "0x8236a87084f8B84306f72007F36F2618A5634494",
+  client: client,
+});
+
+// Effect to get the balance of a specific address at a specific block
+export const getBalance = experimental_createEffect(
+  {
+    name: "getBalance",
+    input: {
+      address: S.string,
+      blockNumber: S.optional(S.bigint),
+    },
+    output: S.bigint,
+  },
+  async ({ input, context }) => {
+    try {
+      // If blockNumber is provided, use it to get balance at that specific block
+      const options = input.blockNumber
+        ? { blockNumber: input.blockNumber }
+        : undefined;
+      const balance = await lbtcContract.read.balanceOf(
+        [input.address as `0x${string}`],
+        options
+      );
+
+    return balance;
+  } catch (error) {
+    context.log.error(`Error getting balance for ${input.address}: ${error}`);
+    // Return 0 on error to prevent processing failures
+    return BigInt(0);
+  }
+}
+```
+
+### Why Experimental?
+
+The Effect API is still experimental, but we don't expect breaking changes in the future. It just means that we are going to iterate on it and add even more features, which can subtly change the indexer behavior. Hopefully, we'll be able to remove the `experimental` tag soon. And your feedback is more than welcome!
+
 ## Best Practices
 
 ### When to Use Loaders
@@ -181,8 +319,59 @@ Loaders provide the most benefit when:
 
 1. Use loaders if you are going to index more than say 5 million events
 2. Put all database operations in the loader function
-3. Keep handler functions focused on business logic
-4. Use concurrent requests when loading multiple unrelated entities
+3. Wrap all external calls in effects and try to use them in loaders
+4. Keep handler functions focused on business logic
+5. Use concurrent requests when loading multiple unrelated entities
+
+### Beware of Double Run Footgun
+
+In the example below, the loader will be run twice (once at the start of the batch and once during the processing of each event).
+This means that the "sender" `Account` entity may not exist yet on the first run of the loader.
+
+During the processing of the batch, another handler may set it before it is available.
+
+```typescript
+ERC20.Transfer.handlerWithLoader({
+  loader: async ({ event, context }) => {
+    // BE CAREFUL HERE
+    // The loader will be run twice and sender may not exist on the first run
+    const sender = await context.Account.getOrThrow(event.params.from);
+
+    return {
+      sender,
+    };
+  },
+
+  handler: async ({ event, context, loaderReturn }) => {
+    const { sender } = loaderReturn;
+    // ... handler logic
+  },
+});
+```
+
+Starting from `envio@2.22.0` errors on the first loader run will be automatically caught and silently ignored, making your indexer to continue processing the batch.
+
+If you're using an earlier version of `envio`, the example above could crash unnecessarily. If you want to achieve the same behaviour you should rather throw the error in the handler. But better to upgrade your indexer with `pnpm install envio@latest`!
+
+```typescript
+ERC20.Transfer.handlerWithLoader({
+  loader: async ({ event, context }) => {
+    const sender = await context.Account.get(event.params.from);
+    return {
+      sender,
+    };
+  },
+  handler: async ({ event, context, loaderReturn }) => {
+    const { sender } = loaderReturn;
+    if (!sender) {
+      throw new Error(`Sender account not found: ${event.params.from}`);
+    }
+    // ... handler logic
+  },
+});
+```
+
+The indexer will only crash if the `sender` entity was actually not set in an event preceding the one being processed.
 
 ## Limitations
 

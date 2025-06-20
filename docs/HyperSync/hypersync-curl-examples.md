@@ -1,7 +1,7 @@
 ---
 id: hypersync-curl-examples
 title: Using curl with HyperSync
-sidebar_label: curl Examples ⭐ Recommended
+sidebar_label: curl Examples ⭐ (Quick to try)
 slug: /hypersync-curl-examples
 ---
 

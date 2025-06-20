@@ -48,6 +48,11 @@ networks:
 
 Set the address of the smart contract you're indexing.
 
+:::note
+Addresses can be provided in **checksum** format or in **lowercase**.
+Envio accepts both and normalizes them internally.
+:::
+
 **Single address:**
 
 ```yaml
@@ -97,6 +102,19 @@ events:
 
 By default, all events defined in the contract are indexed, but you can selectively disable them by removing them from this list.
 
+#### Custom Event Names
+
+You can assign custom names to events in `config.yaml`. This is handy when
+two events share the same name but have different signatures, or when you want
+a more descriptive name in your Envio project.
+
+```yaml
+events:
+  - event: Assigned(address indexed recipientId, uint256 amount, address token)
+  - event: Assigned(address indexed recipientId, uint256 amount, address token, address sender)
+    name: AssignedWithSender
+```
+
 ---
 
 ### Raw Events Storage
@@ -121,20 +139,9 @@ Note that enabling this option will increase database storage requirements and m
 
 ### Field Selection
 
-You can optimize data retrieval by specifying exactly which fields to fetch (this is used to enhance performance, see [Interactive Schema Explorer](#interactive-schema-explorer) section):
+To improve indexing performance and reduce credits usage, the `block` and `transaction` fields on events contain only a subset of the fields available on the blockchain.
 
-```yaml
-field_selection:
-  transaction_fields:
-    - hash
-    - gasUsed
-  block_fields:
-    - parentHash
-```
-
-#### Per-event Field Selection
-
-Starting from `envio@2.11.0`, you can specify fields per event (see [Interactive Schema Explorer](#interactive-schema-explorer) for possibilities):
+To access fields that are not provided by default, specify them using the `field_selection` option for your event:
 
 ```yaml
 events:
@@ -145,6 +152,27 @@ events:
       block_fields:
         - timestamp
 ```
+
+See all possible options in the [Interactive Schema Explorer](#interactive-schema-explorer) or use IDE autocomplete for your help.
+
+#### Global Field Selection
+
+You can also specify fields globally for all events in the root of the config file:
+
+```yaml
+field_selection:
+  transaction_fields:
+    - hash
+    - gasUsed
+  block_fields:
+    - parentHash
+```
+
+Try to use this option sparingly as it can cause redundant Data Source calls and increased credits usage.
+
+:::note
+Field Selection per Event is available from `envio@2.11.0` and above. Please, upgrade your indexer to access this feature.
+:::
 
 ---
 
@@ -198,6 +226,18 @@ ENVIO_CHAIN_ID=optimism ENVIO_GREETER_ADDRESS=0xYourContractAddress pnpm dev
 - `${ENVIO_VAR:-default}` – Use `ENVIO_VAR` if set, otherwise use `default`
 
 For more detailed information about environment variables, see our [Environment Variables Guide](./environment-variables).
+
+---
+
+### Schema File Path
+
+You can customize the path to the [schema file](./schema-file.md) using the `schema` option:
+
+```yaml
+schema: ./path/to/schema.graphql
+```
+
+By default, the `schema.graphql` is expected to be in the root directory of your project.
 
 ---
 

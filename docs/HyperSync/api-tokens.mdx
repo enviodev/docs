@@ -14,6 +14,8 @@ import TabItem from "@theme/TabItem";
 
 API tokens provide authenticated access to HyperSync services, enabling enhanced capabilities and usage tracking. While currently optional, they will become mandatory in the future and offer significant advantages for serious usage.
 
+**Starting from 21 May 2025**, you will still be able to use HyperSync without API tokens, but **rate limits will be applied**. The service will remain **free to use until mid-June**. From **mid-June onwards**, we will introduce a set of **tiered packages based on usage**. Indexers deployed to our hosted service will have special access to HyperSync that does not require a custom API token.
+
 ## Table of Contents
 
 - [Benefits of Using API Tokens](#benefits-of-using-api-tokens)
@@ -77,6 +79,13 @@ let client = Client::new(ClientConfig {
 
   </TabItem>
 </Tabs>
+
+## Understanding Usage
+
+To understand your current month's usage, visit [https://envio.dev/app/api-tokens](https://envio.dev/app/api-tokens). Usage is composed of two main components:
+
+- **Number of Requests**: The total count of API requests made.
+- **Credits**: A comprehensive calculation that takes into account multiple factors including data bandwidth, disk read operations, and other resource utilization metrics. This provides the most accurate representation of actual service usage. We're happy to provide more detailed breakdowns of the credit calculation upon request.
 
 ## Security Best Practices
 

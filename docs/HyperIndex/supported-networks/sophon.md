@@ -19,7 +19,7 @@ slug: /sophon
 
 ### Tier
 
-BRONZE 🥉
+STONE 🪨
 
 ### Overview
 

@@ -1,5 +1,5 @@
 ---
-title: "Fast, Flexible & Fiercly Efficient Data Access: Envio HyperSync Now Supports Fuel Network"
+title: "Fast, Flexible & Fiercely Efficient Data Access: Envio HyperSync Now Supports Fuel Network"
 sidebar_label: "Fast, Flexible & Fiercly Efficient Data Access: Envio HyperSync Now Supports Fuel Network"
 slug: /envio-hypersync-powers-data-access-on-fuel-network
 ---
@@ -120,7 +120,7 @@ As part of the next evolution in the Envio x Fuel partnership, Envio will be loo
 
 [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) is a developer-first, feature-rich data indexing framework that allows indexed data to be easily accessed through GraphQL queries, empowering developers with the ability to retrieve specific information.
 
-HyperIndex is currently only available on EVM networks and offers application developers developers automatic code generation, flexible language support, quickstart templates, and a reliable cost-effective hosted service, overcoming challenges often associated with managing your own infrastructure.
+HyperIndex is currently only available on EVM networks and offers application developers automatic code generation, flexible language support, quickstart templates, and a reliable cost-effective hosted service, overcoming challenges often associated with managing your own infrastructure.
 
 Here are some HyperIndex features Fuel developers can expect:
 

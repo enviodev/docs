@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const {rpcNetworks} = require("./rpc-networks.json")
+const { rpcNetworks } = require("./rpc-networks.json")
 
 const URL = "https://chains.hyperquery.xyz/active_chains";
 
@@ -68,15 +68,16 @@ const generateTableRow = (columns, values) => {
   );
 };
 
-const emojiTier = (network) =>{
-return {
-  gold: "🏅",
-  silver: "🥈",
-  bronze: "🥉",
-  stone: "🪨",
-  hidden: "🔒",          
-  testnet: "🎒",          
-}[network.tier.toLowerCase()] || "🏗️";}
+const emojiTier = (network) => {
+  return {
+    gold: "🏅",
+    silver: "🥈",
+    bronze: "🥉",
+    stone: "🪨",
+    hidden: "🔒",
+    testnet: "🎒",
+  }[network.tier.toLowerCase()] || "🏗️";
+}
 
 const generateHyperSyncTable = (data) => {
   let table = generateCommonTableHeader(HYPERSYNC_COLUMNS);
@@ -90,7 +91,11 @@ const generateHyperSyncTable = (data) => {
       chain.additional_features && chain.additional_features.includes("TRACES")
         ? TICK
         : " ";
-    const url = `https://${chain.name}.hypersync.xyz or https://${chain.chain_id}.hypersync.xyz`;
+
+    // Check if this is a traces network and modify the URL accordingly
+    const isTracesNetwork = chain.name.toLowerCase().includes("traces");
+    const chainIdSuffix = isTracesNetwork ? `-traces` : "";
+    const url = `https://${chain.name}.hypersync.xyz or https://${chain.chain_id}${chainIdSuffix}.hypersync.xyz`;
 
     table += generateTableRow(HYPERSYNC_COLUMNS, [
       networkName,
@@ -109,7 +114,12 @@ const generateHyperRPCTable = (data) => {
 
   sortAndFilterChains(data).forEach((chain) => {
     const networkName = getNetworkName(chain);
-    const url = `https://${chain.name}.rpc.hypersync.xyz or https://${chain.chain_id}.rpc.hypersync.xyz`;
+
+    // Check if this is a traces network and modify the URL accordingly
+    const isTracesNetwork = chain.name.toLowerCase().includes("traces");
+    const chainIdSuffix = isTracesNetwork ? `-traces` : "";
+    const url = `https://${chain.name}.rpc.hypersync.xyz or https://${chain.chain_id}${chainIdSuffix}.rpc.hypersync.xyz`;
+
     const supportsTraces =
       chain.additional_features && chain.additional_features.includes("TRACES")
         ? TICK
@@ -181,15 +191,19 @@ const updateMarkdownFiles = async () => {
   }
 };
 
-    // Function to generate markdown content
-    const generateHyperSyncMarkdownContent = (network) => {
-      const capitalizedTitle = capitalizeAndSplit(network.name);
-      const tier = emojiTier(network);
+// Function to generate markdown content
+const generateHyperSyncMarkdownContent = (network) => {
+  const capitalizedTitle = capitalizeAndSplit(network.name);
+  const tier = emojiTier(network);
 
-      const hypersyncUrl = `https://${network.name}.hypersync.xyz`;
-      const hyperrpcUrl = `https://${network.name}.rpc.hypersync.xyz`;
+  const hypersyncUrl = `https://${network.name}.hypersync.xyz`;
+  const hyperrpcUrl = `https://${network.name}.rpc.hypersync.xyz`;
 
-      return `---
+  // Check if this is a traces network and modify the URL accordingly
+  const isTracesNetwork = network.name.toLowerCase().includes("traces");
+  const chainIdSuffix = isTracesNetwork ? `-traces` : "";
+
+  return `---
 id: ${network.name}
 title: ${capitalizedTitle}
 sidebar_label: ${capitalizedTitle}
@@ -203,8 +217,8 @@ slug: /${network.name}
 | **Field**                     | **Value**                                                                                          |
 |-------------------------------|----------------------------------------------------------------------------------------------------|
 | **${capitalizedTitle} Chain ID**     | ${network.chain_id}                                                                                            |
-| **HyperSync URL Endpoint**    | [${hypersyncUrl}](${hypersyncUrl}) or [https://${network.chain_id}.hypersync.xyz](https://${network.chain_id}.hypersync.xyz) |
-| **HyperRPC URL Endpoint**     | [${hyperrpcUrl}](${hyperrpcUrl}) or [https://${network.chain_id}.rpc.hypersync.xyz](https://${network.chain_id}.rpc.hypersync.xyz) |
+| **HyperSync URL Endpoint**    | [${hypersyncUrl}](${hypersyncUrl}) or [https://${network.chain_id}${chainIdSuffix}.hypersync.xyz](https://${network.chain_id}${chainIdSuffix}.hypersync.xyz) |
+| **HyperRPC URL Endpoint**     | [${hyperrpcUrl}](${hyperrpcUrl}) or [https://${network.chain_id}${chainIdSuffix}.rpc.hypersync.xyz](https://${network.chain_id}${chainIdSuffix}.rpc.hypersync.xyz) |
 
 ---
 
@@ -253,11 +267,12 @@ Can’t find what you’re looking for or need support? Reach out to us on [Disc
 
 ---
 `;
-    };
-    
-    const sluggifyName = (network) => { 
-      console.log(network.name.toLowerCase().replace(/\s+/g, "-"))
-      return network.name.toLowerCase().replace(/\s+/g, "-");}
+};
+
+const sluggifyName = (network) => {
+  console.log(network.name.toLowerCase().replace(/\s+/g, "-"))
+  return network.name.toLowerCase().replace(/\s+/g, "-");
+}
 // Function to generate markdown content for RPC networks
 const generateRPCMarkdownContent = (network) => {
 
@@ -339,21 +354,22 @@ const generateMarkdownFiles = async () => {
     // Generate HyperSync files
     data.forEach((network) => {
       if (
-        network.tier.toLowerCase() != "HIDDEN".toLowerCase() ||
-        network.tier.toLowerCase() != "INTERNAL".toLowerCase()
+        network.tier.toLowerCase() !== "hidden" &&
+        network.tier.toLowerCase() !== "internal" &&
+        !network.name.toLowerCase().includes("traces")  // Exclude traces networks from HyperIndex docs
       ) {
         const content = generateHyperSyncMarkdownContent(network);
         const filePath = path.join(outputDir, `${network.name}.md`);
         fs.writeFileSync(filePath, content, "utf8");
-        supportedNetworks.push(`"supported-networks/${network.name}"`); 
+        supportedNetworks.push(`"supported-networks/${network.name}"`);
         console.log(`Generated file: ${filePath}`);
       }
     });
 
     // Generate RPC files
     rpcNetworks.forEach(network => {
-      // if network.chainId exists in data, skip it, implies it's now supported in hypersync       
-      if (data.find(item => item.chainId === network.chainId)) {
+      // if network.chainId exists in data, skip it, implies it's now supported in hypersync
+      if (data.find(item => item.chain_id === network.chainId)) {
         return
       }
       const content = generateRPCMarkdownContent(network)

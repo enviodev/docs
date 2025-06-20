@@ -11,15 +11,15 @@ slug: /chiliz
 
 | **Field**                     | **Value**                                                                                          |
 |-------------------------------|----------------------------------------------------------------------------------------------------|
-| **Chiliz Chain ID**     | 8888                                                                                            |
-| **HyperSync URL Endpoint**    | [https://chiliz.hypersync.xyz](https://chiliz.hypersync.xyz) or [https://8888.hypersync.xyz](https://8888.hypersync.xyz) |
-| **HyperRPC URL Endpoint**     | [https://chiliz.rpc.hypersync.xyz](https://chiliz.rpc.hypersync.xyz) or [https://8888.rpc.hypersync.xyz](https://8888.rpc.hypersync.xyz) |
+| **Chiliz Chain ID**     | 88888                                                                                            |
+| **HyperSync URL Endpoint**    | [https://chiliz.hypersync.xyz](https://chiliz.hypersync.xyz) or [https://88888.hypersync.xyz](https://88888.hypersync.xyz) |
+| **HyperRPC URL Endpoint**     | [https://chiliz.rpc.hypersync.xyz](https://chiliz.rpc.hypersync.xyz) or [https://88888.rpc.hypersync.xyz](https://88888.rpc.hypersync.xyz) |
 
 ---
 
 ### Tier
 
-SILVER 🥈
+STONE 🪨
 
 ### Overview
 
@@ -39,7 +39,7 @@ To get started, see our documentation or follow our quickstart [guide](/docs/Hyp
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
 networks:
-  - id: 8888 # Chiliz  
+  - id: 88888 # Chiliz  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
       - name: ContractName

@@ -1,12 +1,20 @@
 module.exports = {
   someSidebar: [
     "overview",
+    "quickstart",
     "hypersync-usage",
     "hypersync-clients",
     "hypersync-query",
+    "hypersync-presets",
     "hypersync-curl-examples",
     "api-tokens",
     "hypersync-supported-networks",
+    {
+      type: "category",
+      label: "Tutorials",
+      collapsed: false,
+      items: ["tutorial-address-transactions"],
+    },
     {
       type: "category",
       label: "HyperRPC",

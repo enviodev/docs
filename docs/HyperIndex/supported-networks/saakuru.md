@@ -19,7 +19,7 @@ slug: /saakuru
 
 ### Tier
 
-SILVER 🥈
+STONE 🪨
 
 ### Overview
 

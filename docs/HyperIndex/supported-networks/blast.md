@@ -19,7 +19,7 @@ slug: /blast
 
 ### Tier
 
-SILVER 🥈
+BRONZE 🥉
 
 ### Overview
 

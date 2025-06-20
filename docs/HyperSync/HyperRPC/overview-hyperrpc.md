@@ -5,9 +5,28 @@ sidebar_label: Overview
 slug: /overview-hyperrpc
 ---
 
-# HyperRPC: Ultra-Fast Read-Only Blockchain Access
+# HyperRPC: Ultra-Fast Read-Only RPC
 
 HyperRPC is an extremely fast read-only RPC designed specifically for data-intensive blockchain tasks. Built from the ground up to optimize performance, it offers a simple drop-in solution with dramatic speed improvements over traditional nodes.
+
+:::info HyperSync vs. HyperRPC
+**For most use cases, we recommend using [HyperSync](/docs/HyperSync/overview) over HyperRPC.**
+
+HyperSync provides significantly faster performance and much greater flexibility in how you query and filter blockchain data. Behind the scenes, HyperRPC actually uses HyperSync to fulfill requests.
+
+**When to use HyperRPC:**
+
+- When you need a simple drop-in replacement for existing RPC-based code
+- When you don't have time for a deeper integration
+- When you're working with tools that expect standard JSON-RPC interfaces
+
+**When to use HyperSync:**
+
+- When performance is critical (HyperSync is much faster)
+- When you need advanced filtering capabilities
+- When you want more control over data formatting and field selection
+- For new projects where you're designing the data access layer
+  :::
 
 ## Table of Contents
 
@@ -43,13 +62,13 @@ This performance boost is particularly noticeable for:
 
 HyperRPC currently supports the following Ethereum JSON-RPC methods:
 
-| Category             | Methods                                                                                                                                   |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| **Chain Data**       | `eth_chainId`<br />`eth_blockNumber`                                                                                                      |
-| **Block Data**       | `eth_getBlockByNumber`<br />`eth_getBlockByHash`<br />`eth_getBlockReceipts`                                                              |
+| Category             | Methods                                                                                                                                                 |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Chain Data**       | `eth_chainId`<br />`eth_blockNumber`                                                                                                                    |
+| **Block Data**       | `eth_getBlockByNumber`<br />`eth_getBlockByHash`<br />`eth_getBlockReceipts`                                                                            |
 | **Transaction Data** | `eth_getTransactionByHash`<br />`eth_getTransactionByBlockHashAndIndex`<br />`eth_getTransactionByBlockNumberAndIndex`<br />`eth_getTransactionReceipt` |
-| **Event Logs**       | `eth_getLogs`                                                                                                                             |
-| **Traces**           | `trace_block` (only on [select chains](./hyperrpc-supported-networks))                                                                    |
+| **Event Logs**       | `eth_getLogs`                                                                                                                                           |
+| **Traces**           | `trace_block` (only on [select chains](./hyperrpc-supported-networks))                                                                                  |
 
 ## Supported Networks
 
@@ -64,11 +83,22 @@ To start using HyperRPC:
    - Visit our [Supported Networks](./hyperrpc-supported-networks) page to find all available HyperRPC endpoints
    - Each network has a ready-to-use URL that you can start using immediately
 
-2. **Use Like a Standard RPC**:
+2. **Add Your API Token** (recommended):
+
+   - Requests without an API token will be rate limited starting **June 2025** (same timeline as [HyperSync](/docs/HyperSync/api-tokens)).
+   - Append your token to the endpoint URL. Example:
+
+     ```text
+     https://100.rpc.hypersync.xyz/<api-token>
+     ```
+
+   - If you don't have a token yet, you can generate one through the [Envio Dashboard](https://envio.dev/app/api-tokens).
+
+3. **Use Like a Standard RPC**:
 
    ```javascript
    // Example: Fetching logs with HyperRPC
-   const response = await fetch("https://eth.rpc.hypersync.xyz", {
+   const response = await fetch("https://100.rpc.hypersync.xyz/<api-token>", {
      method: "POST",
      headers: { "Content-Type": "application/json" },
      body: JSON.stringify({
@@ -86,7 +116,7 @@ To start using HyperRPC:
    });
    ```
 
-3. **Provide Feedback**:
+4. **Provide Feedback**:
    Your testing and feedback are incredibly valuable as we continue to improve HyperRPC. Let us know about your experience in our [Discord](https://discord.gg/Q9qt8gZ2fX).
 
 ## Development Status

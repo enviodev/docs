@@ -19,7 +19,7 @@ slug: /zksync
 
 ### Tier
 
-GOLD 🏅
+BRONZE 🥉
 
 ### Overview
 

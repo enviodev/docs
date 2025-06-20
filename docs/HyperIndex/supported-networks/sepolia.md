@@ -19,7 +19,7 @@ slug: /sepolia
 
 ### Tier
 
-GOLD 🏅
+TESTNET 🎒
 
 ### Overview
 

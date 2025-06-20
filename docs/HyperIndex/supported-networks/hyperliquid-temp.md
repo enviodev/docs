@@ -11,15 +11,15 @@ slug: /hyperliquid-temp
 
 | **Field**                     | **Value**                                                                                          |
 |-------------------------------|----------------------------------------------------------------------------------------------------|
-| **Hyperliquid Temp Chain ID**     | 645749                                                                                            |
-| **HyperSync URL Endpoint**    | [https://hyperliquid-temp.hypersync.xyz](https://hyperliquid-temp.hypersync.xyz) or [https://645749.hypersync.xyz](https://645749.hypersync.xyz) |
-| **HyperRPC URL Endpoint**     | [https://hyperliquid-temp.rpc.hypersync.xyz](https://hyperliquid-temp.rpc.hypersync.xyz) or [https://645749.rpc.hypersync.xyz](https://645749.rpc.hypersync.xyz) |
+| **Hyperliquid Temp Chain ID**     | 645748                                                                                            |
+| **HyperSync URL Endpoint**    | [https://hyperliquid-temp.hypersync.xyz](https://hyperliquid-temp.hypersync.xyz) or [https://645748.hypersync.xyz](https://645748.hypersync.xyz) |
+| **HyperRPC URL Endpoint**     | [https://hyperliquid-temp.rpc.hypersync.xyz](https://hyperliquid-temp.rpc.hypersync.xyz) or [https://645748.rpc.hypersync.xyz](https://645748.rpc.hypersync.xyz) |
 
 ---
 
 ### Tier
 
-BRONSE 🏗️
+BRONZE 🥉
 
 ### Overview
 
@@ -39,7 +39,7 @@ To get started, see our documentation or follow our quickstart [guide](/docs/Hyp
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
 networks:
-  - id: 645749 # Hyperliquid Temp  
+  - id: 645748 # Hyperliquid Temp  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
       - name: ContractName

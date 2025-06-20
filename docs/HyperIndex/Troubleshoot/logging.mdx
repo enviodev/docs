@@ -29,36 +29,10 @@ When implementing handlers for your indexer, use the logging functions provided 
 - `<context>.log.info` - For general information about application flow
 - `<context>.log.warn` - For potentially problematic situations
 - `<context>.log.error` - For error events that might still allow the application to continue
-- `<context>.log.errorWithExn` - Same as `error`, but takes an exception as the first argument to include stacktraces and error messages in the log
 
 ### Examples by Language
 
 <Tabs>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
-// Inside your handler
-context.log.debug(
-  `Processing event with block hash: ${event.blockHash} (debug)`
-);
-context.log.info(`Processing event with block hash: ${event.blockHash} (info)`);
-context.log.warn(`Potential issue with event: ${event.blockHash} (warn)`);
-context.log.error(`Failed to process event: ${event.blockHash} (error)`);
-context.log.errorWithExn(
-  new Error("Error processing event"),
-  `Failed to process event: ${event.blockHash}`
-);
-
-// You can also pass objects to logs for structured logging:
-context.log.info({
-  msg: "Processing blockchain event",
-  type: "info",
-  extra: "Additional debugging context",
-  data: { blockHash: event.blockHash },
-});
-```
-
-  </TabItem>
   <TabItem value="typescript" label="TypeScript">
 
 ```typescript
@@ -69,43 +43,43 @@ context.log.debug(
 context.log.info(`Processing event with block hash: ${event.blockHash} (info)`);
 context.log.warn(`Potential issue with event: ${event.blockHash} (warn)`);
 context.log.error(`Failed to process event: ${event.blockHash} (error)`);
-context.log.errorWithExn(
-  new Error("Error processing event"),
-  `Failed to process event: ${event.blockHash}`
+
+// With exception:
+context.log.error(
+  `Failed to process event: ${event.blockHash}`,
+  new Error("Error processing event")
 );
+
+// You can also provide an object as the second argument for structured logging:
+context.log.info("Processing blockchain event", {
+  type: "info",
+  extra: "Additional debugging context",
+  data: { blockHash: event.blockHash },
+});
 ```
 
-{/* Note: Our TypeScript bindings currently only accept strings as arguments to logs. We have an open issue to allow the 'any' type for more flexibility */}
+  </TabItem>
+  <TabItem value="javascript" label="JavaScript">
 
-For structured logging with TypeScript, use the following pattern:
-
-```typescript
-import Logs from "generated/src/Logs.bs.js";
-
+```javascript
 // Inside your handler
-Logs.debug(context.log, {
-  msg: "Processing blockchain event",
-  type: "debug",
-  data: { blockHash: event.blockHash },
-});
-Logs.info(context.log, {
-  msg: "Processing blockchain event",
+context.log.debug(
+  `Processing event with block hash: ${event.blockHash} (debug)`
+);
+context.log.info(`Processing event with block hash: ${event.blockHash} (info)`);
+context.log.warn(`Potential issue with event: ${event.blockHash} (warn)`);
+context.log.error(`Failed to process event: ${event.blockHash} (error)`);
+
+// With exception:
+context.log.error(
+  `Failed to process event: ${event.blockHash}`,
+  new Error("Error processing event")
+);
+
+// You can also provide an object as the second argument for structured logging:
+context.log.info("Processing blockchain event", {
   type: "info",
-  data: { blockHash: event.blockHash },
-});
-Logs.warn(context.log, {
-  msg: "Potential issue with event",
-  type: "warn",
-  data: { blockHash: event.blockHash },
-});
-Logs.error(context.log, {
-  msg: "Failed to process event",
-  type: "error",
-  data: { blockHash: event.blockHash },
-});
-Logs.errorWithExn(context.log, new Error("Error in processing"), {
-  msg: "Failed to process event",
-  type: "error",
+  extra: "Additional debugging context",
   data: { blockHash: event.blockHash },
 });
 ```
@@ -114,52 +88,27 @@ Logs.errorWithExn(context.log, new Error("Error in processing"), {
   <TabItem value="rescript" label="ReScript">
 
 ```rescript
-  // Inside your handler
-  exception ExampleException(string) // Example of an exception
+// Inside your handler
+exception ExampleException(string) // Example of an exception
 
-  // Basic string logging
-  context.log.debug(`Processing event with block hash: ${event.blockHash} (debug)`)
-  context.log.info(`Processing event with block hash: ${event.blockHash} (info)`)
-  context.log.warn(`Potential issue with event: ${event.blockHash} (warn)`)
-  context.log.error(`Failed to process event: ${event.blockHash} (error)`)
-  context.log.errorWithExn(
-    ExampleException("Error processing event"),
-    `Failed to process event: ${event.blockHash}`,
-  )
-```
+// Basic string logging
+context.log.debug(`Processing event with block hash: ${event.blockHash} (debug)`)
+context.log.info(`Processing event with block hash: ${event.blockHash} (info)`)
+context.log.warn(`Potential issue with event: ${event.blockHash} (warn)`)
+context.log.error(`Failed to process event: ${event.blockHash} (error)`)
 
-For structured logging in ReScript (since records are strictly typed and not polymorphic):
+// With exception:
+context.log.errorWithExn(
+  `Failed to process event: ${event.blockHash}`,
+  ExampleException("Error processing event")
+)
 
-```rescript
-  // Structured logging with objects
-  context.log->Logs.debug({
-    "msg": "Processing blockchain event",
-    "type": "debug",
-    "data": {"blockHash": event.blockHash},
-  })
-  context.log->Logs.info({
-    "msg": "Processing blockchain event",
-    "type": "info",
-    "data": {"blockHash": event.blockHash},
-  })
-  context.log->Logs.warn({
-    "msg": "Potential issue with event",
-    "type": "warn",
-    "data": {"blockHash": event.blockHash},
-  })
-  context.log->Logs.error({
-    "msg": "Failed to process event",
-    "type": "error",
-    "data": {"blockHash": event.blockHash},
-  })
-  context.log->Logs.errorWithExn(
-    ExampleException("Error processing event"),
-    {
-      "msg": "Failed to process event",
-      "type": "error",
-      "data": {"blockHash": event.blockHash},
-    },
-  )
+// You can also provide an object as the second argument for structured logging:
+context.log.info("Processing blockchain event", ~params={
+  "type": "info",
+  "extra": "Additional debugging context",
+  "data": { "blockHash": event.blockHash },
+});
 ```
 
   </TabItem>

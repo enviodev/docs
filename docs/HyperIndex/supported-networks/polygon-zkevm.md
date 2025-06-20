@@ -19,7 +19,7 @@ slug: /polygon-zkevm
 
 ### Tier
 
-BRONZE 🥉
+STONE 🪨
 
 ### Overview
 
