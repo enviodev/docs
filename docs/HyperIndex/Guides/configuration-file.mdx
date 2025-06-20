@@ -241,6 +241,22 @@ By default, the `schema.graphql` is expected to be in the root directory of your
 
 ---
 
+### Output Directory Path
+
+You can customize the path where the generated directory will be placed using the `output` option:
+
+```yaml
+output: ./custom/generated/path
+```
+
+By default, the generated directory is placed in `generated` relative to the current working directory. If set, it will be a path relative to the config file location.
+
+:::warning Advanced Configuration
+This is an advanced configuration option. When using a custom output directory, you'll need to manually adjust your `.gitignore` file and project structure to match the new configuration.
+:::
+
+---
+
 ## Full config file example
 
 This example indexes events from multiple contracts across multiple networks.
