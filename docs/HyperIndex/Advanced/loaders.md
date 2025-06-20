@@ -9,13 +9,13 @@ slug: /loaders
 
 ## What Are Loaders?
 
-Loaders are specialized functions that optimize how your event handlers fetch data from the database. They provide a mechanism to:
+Loaders are specialized functions that dramatically optimize how your event handlers fetch data from the database. They provide a powerful mechanism to:
 
-- **Batch multiple database requests** into a single operation
-- **Cache database results** in memory
-- **Reduce I/O operations**, which are often the primary performance bottleneck
+- **Batch multiple database requests** into single operations
+- **Cache database results** in memory for instant access
+- **Reduce I/O operations**, which are typically the primary performance bottleneck in indexing
 
-By using loaders, you can significantly reduce the number of database roundtrips required to process events, especially when dealing with large batches of events.
+By using loaders, you can reduce database roundtrips from thousands to just a handful, especially when processing large batches of events.
 
 ## Why Use Loaders?
 
@@ -33,11 +33,11 @@ ERC20.Transfer.handler(async ({ event, context }) => {
 });
 ```
 
-**The Challenge:** If you're processing 5,000 transfer events, each with unique `from` and `to` addresses, this would result in **10,000 roundtrips** to the database—one for each sender and receiver lookup.
+**The Performance Challenge:** If you're processing 5,000 transfer events, each with unique `from` and `to` addresses, this results in **10,000 total database roundtrips**—one for each sender and receiver lookup (2 per event × 5,000 events). This creates a significant bottleneck that slows down your entire indexing process.
 
 ### The External Calls Problem
 
-To ensure consistent and reliable data, all handlers are executed synchronously in the on-chain order. This means that external calls might easily blow up the processing time.
+To ensure consistent and reliable data, all handlers execute synchronously in on-chain order. This means external calls can dramatically increase processing time:
 
 ```typescript
 // Without loaders: Blocking external calls
@@ -50,23 +50,23 @@ ERC20.Transfer.handler(async ({ event, context }) => {
 });
 ```
 
-**The Challenge:** If you're processing 5,000 transfer events, each with an external call, this would result in **5,000 external calls** executed one after another.
+**The Performance Challenge:** If you're processing 5,000 transfer events, each with an external call, this results in **5,000 sequential external calls**—each waiting for the previous one to complete. This can turn a fast indexing process into a slow, sequential crawl.
 
 ### How Loaders Solve This
 
-Loaders address this problem by:
+Loaders address these performance bottlenecks through intelligent optimization:
 
-1. **Collecting all database and Effect requests** before processing events
-2. **Batching similar requests** into single I/O operations
-3. **Caching results** for use during event processing
+1. **Collect all database and Effect requests** before processing events
+2. **Batch similar requests** into single I/O operations
+3. **Cache results** in memory for efficient reuse
 
-This approach can reduce thousands of database calls to just a handful, dramatically improving indexing performance. And using the [Effect API](#effect-api-experimental), you can parallelize external calls and make the indexing process more efficient.
+This approach reduces thousands of database calls to just a handful per batch, dramatically improving indexing performance. When combined with the [Effect API](#effect-api-experimental), you can also parallelize external calls for even greater efficiency.
 
 ## How to Implement Loaders
 
 ### Basic Structure
 
-Loaders use the `handlerWithLoader` pattern, which separates data loading from event processing:
+Loaders use the `handlerWithLoader` pattern, which elegantly separates data loading from event processing:
 
 ```typescript
 ContractName.EventName.handlerWithLoader({
@@ -85,12 +85,12 @@ ContractName.EventName.handlerWithLoader({
 
 ### Basic Example: Converting a Simple Handler
 
-Let's convert our previous example to use loaders:
+Let's convert our previous inefficient example to use loaders:
 
 ```typescript
 ERC20.Transfer.handlerWithLoader({
   loader: async ({ event, context }) => {
-    // Load sender and receiver accounts
+    // Load sender and receiver accounts efficiently
     const sender = await context.Account.get(event.params.from);
     const receiver = await context.Account.get(event.params.to);
 
@@ -112,25 +112,27 @@ ERC20.Transfer.handlerWithLoader({
 
 ### How Batching Works
 
-1. HyperIndex will create an ordered batch of events from its in memory queue
-2. All loader functions will be run concurrently for the batch.
+The batching process follows these three key steps:
 
-   _**Note:** at this stage, some entities being loaded may not exist yet since the handlers have not been run. [Be careful of throwing errors in loaders when an entity is undefined](#beware-of-double-run-footgun)._
+1. **Batch Creation**: HyperIndex creates an ordered batch of events from the event buffer accumulated in memory
+2. **Preload Phase**: All loader functions run concurrently for the entire batch. This is called the `Preload` phase.
 
-3. On each event of the batch, its loader will be run a **second time** and then pass the result to the handler. This step is sequential.
+   _**Note:** During the preload phase, some entities being loaded may not exist yet since the handlers haven't been executed. This is expected behavior - the loader runs twice per event to ensure data consistency._
 
-For our 5,000 transfer events example, this reduces database roundtrips from 10,000 to just 2!
+3. **Sequential Processing**: For each event in the batch, its loader runs a **second time** and then passes the result to the handler. This step is sequential to maintain order.
+
+For our 5,000 transfer events example, this reduces database roundtrips from 10,000 total calls to just 2!
 
 ## Advanced Loader Techniques
 
 ### Optimizing for Concurrency
 
-You can further optimize by requesting multiple entities concurrently:
+You can further optimize performance by requesting multiple entities concurrently:
 
 ```typescript
 ERC20.Transfer.handlerWithLoader({
   loader: async ({ event, context }) => {
-    // Request sender and receiver concurrently
+    // Request sender and receiver concurrently for maximum efficiency
     const [sender, receiver] = await Promise.all([
       context.Account.get(event.params.from),
       context.Account.get(event.params.to),
@@ -150,12 +152,12 @@ This approach can reduce the database roundtrips to just 1 for the entire batch 
 
 ### Querying by Field Values
 
-Loaders also support more complex queries using the `getWhere` method, which allows you to retrieve arrays of entities based on field values:
+Loaders also support complex queries using the `getWhere` method, which allows you to retrieve arrays of entities based on field values:
 
 ```typescript
 ERC20.Approval.handlerWithLoader({
   loader: async ({ event, context }) => {
-    // Find all approvals for this owner
+    // Find all approvals for this specific owner
     const currentOwnerApprovals = await context.Approval.getWhere.owner_id.eq(
       event.params.owner
     );
@@ -166,7 +168,7 @@ ERC20.Approval.handlerWithLoader({
   handler: async ({ event, context, loaderReturn }) => {
     const { currentOwnerApprovals } = loaderReturn;
 
-    // Process all the owner's approvals
+    // Process all the owner's approvals efficiently
     for (const approval of currentOwnerApprovals) {
       // Process each approval
     }
@@ -181,12 +183,12 @@ This technique works with any entity field that:
 
 ## Effect API `experimental`
 
-The Effect API is a convenient way to perform external calls from your handlers. It's especially powerful when used with loaders:
+The Effect API provides a powerful and convenient way to perform external calls from your handlers. It's especially effective when used with loaders:
 
-- It automatically batches calls of the same kind
-- It memoizes calls, so you don't need to worry about the loader function being called multiple times
-- It deduplicates calls with the same arguments so that you won't overfetch
-- And we're working on adding support for automatic retrying of failed requests as well as persisting results to use on indexer reruns 🏗️
+- **Automatic batching**: Calls of the same kind are automatically batched together
+- **Intelligent memoization**: Calls are memoized, so you don't need to worry about the handler function being called multiple times
+- **Deduplication**: Calls with the same arguments are deduplicated to prevent overfetching
+- **Future enhancements**: We're working on automatic retry logic and result persistence for indexer reruns 🏗️
 
 To use the Effect API, you first need to define an effect using `experimental_createEffect` function from the `envio` package:
 
@@ -202,7 +204,7 @@ export const getMetadata = experimental_createEffect(
       value: S.bigint,
     },
   },
-  ({ input, context }) => {
+  async ({ input, context }) => {
     const response = await fetch(`https://api.example.com/metadata/${input}`);
     const data = await response.json();
     context.log.info(`Fetched metadata for ${input}`);
@@ -224,9 +226,9 @@ The second argument is a function that will be called with the effect's input.
 
 > **Note:** For type definitions, you should use `S` from the `envio` package, which uses [Sury](https://github.com/DZakh/sury) library under the hood.
 
-After you define an effect, you can use `context.effect` to call it from your handler, loader or other effect.
+After defining an effect, you can use `context.effect` to call it from your handler, loader, or another effect.
 
-The `context.effect` accepts an effect as the first argument and the effect's input as the second argument:
+The `context.effect` function accepts an effect as the first argument and the effect's input as the second argument:
 
 ```typescript
 ERC20.Transfer.handlerWithLoader({
@@ -246,9 +248,7 @@ This way for our problem of 5,000 transfer events, we will be able to paralleliz
 
 ### Viem Pro Tip
 
-You can use `viem` or any other client inside of your effect function.
-
-In this case, it's really recommended to set the `batch` option to `true`. This way it'll allow to group all effect calls into a few RPC batched calls.
+You can use `viem` or any other blockchain client inside your effect functions. When doing so, it's highly recommended to enable the `batch` option to group all effect calls into fewer RPC requests:
 
 ```typescript
 // Create a public client to interact with the blockchain
@@ -286,55 +286,70 @@ export const getBalance = experimental_createEffect(
         options
       );
 
-    return balance;
-  } catch (error) {
-    context.log.error(`Error getting balance for ${input.address}: ${error}`);
-    // Return 0 on error to prevent processing failures
-    return BigInt(0);
+      return balance;
+    } catch (error) {
+      context.log.error(`Error getting balance for ${input.address}: ${error}`);
+      // Return 0 on error to prevent processing failures
+      return BigInt(0);
+    }
   }
-}
+);
 ```
 
 ### Why Experimental?
 
-The Effect API is still experimental, but we don't expect breaking changes in the future. It just means that we are going to iterate on it and add even more features, which can subtly change the indexer behavior. Hopefully, we'll be able to remove the `experimental` tag soon. And your feedback is more than welcome!
+The Effect API is currently marked as experimental, but we don't expect breaking changes in the future. This designation simply means we're actively iterating on the feature and may add new capabilities that could subtly change indexer behavior. We plan to remove the `experimental` tag soon, and your feedback is invaluable in this process!
 
 ## Best Practices
 
 ### When to Use Loaders
 
-Loaders provide the most benefit when:
+Loaders provide the most significant benefits when:
 
-- Processing batches of events that require similar database lookups
+- Processing large batches of events that require similar database lookups
 - Reading the same entities multiple times across different events
 - Performing relationship queries that affect multiple entities
+- Building high-performance indexers that need to handle millions of events
 
 ### Performance Considerations
+
+When using loaders, keep these performance factors in mind:
 
 - **Memory Usage**: All loaded entities are stored in memory during batch processing
 - **Query Size**: Very large `getWhere` queries might cause memory issues
 - **Complexity**: Balance the benefits of batching against code complexity
+- **Batch Size**: Larger batches provide better performance but use more memory
 
 ### Rules of Thumb
 
-1. Use loaders if you are going to index more than say 5 million events
-2. Put all database operations in the loader function
-3. Wrap all external calls in effects and try to use them in loaders
-4. Keep handler functions focused on business logic
-5. Use concurrent requests when loading multiple unrelated entities
+Follow these guidelines for optimal loader usage:
 
-### Beware of Double Run Footgun
+1. **Use loaders for large-scale indexing**: Implement loaders if you're indexing more than 1 million events
+2. **Centralize database operations**: Put all database operations in the loader function
+3. **Wrap external calls in effects**: Use the Effect API for external calls and implement them in loaders
+4. **Keep handlers focused**: Reserve handler functions for business logic, not data fetching
+5. **Optimize with concurrency**: Use concurrent requests when loading multiple unrelated entities
+6. **Monitor memory usage**: Be mindful of memory consumption with large batches
 
-In the example below, the loader will be run twice (once at the start of the batch and once during the processing of each event).
-This means that the "sender" `Account` entity may not exist yet on the first run of the loader.
+### Understanding Double Run Behavior
 
-During the processing of the batch, another handler may set it before it is available.
+Loaders are designed to run twice per event to ensure data consistency across the batch. This is intentional and expected behavior:
+
+1. **First Run (Preload Phase)**: All loaders run concurrently at the start of batch processing
+2. **Second Run (Event Processing)**: Each loader runs again sequentially before its corresponding handler
+
+This double execution pattern ensures that:
+
+- Entities created by earlier events in the batch are available to later events
+- Data consistency is maintained across the entire batch
+- The benefits of batching are preserved while ensuring accurate data access
 
 ```typescript
 ERC20.Transfer.handlerWithLoader({
   loader: async ({ event, context }) => {
-    // BE CAREFUL HERE
-    // The loader will be run twice and sender may not exist on the first run
+    // This loader will run twice per event
+    // First run: May not find the sender if it's created by an earlier event in this batch
+    // Second run: Will find the sender if it was created by an earlier event
     const sender = await context.Account.getOrThrow(event.params.from);
 
     return {
@@ -344,51 +359,95 @@ ERC20.Transfer.handlerWithLoader({
 
   handler: async ({ event, context, loaderReturn }) => {
     const { sender } = loaderReturn;
-    // ... handler logic
+    // Process the event with the loaded sender data
   },
 });
 ```
 
-Starting from `envio@2.22.0` errors on the first loader run will be automatically caught and silently ignored, making your indexer to continue processing the batch.
+The indexer will only crash if the `sender` entity was actually not set in an event preceding the one being processed, which indicates a genuine data consistency issue.
 
-If you're using an earlier version of `envio`, the example above could crash unnecessarily. If you want to achieve the same behaviour you should rather throw the error in the handler. But better to upgrade your indexer with `pnpm install envio@latest`!
+### Preload Phase Behavior
+
+Starting from `envio@2.23.0`, the preload phase has been enhanced to prevent batch processing failures. During the first run (preload phase), the following operations are silently ignored:
+
+- **Thrown exceptions**: Any errors thrown during the preload phase are caught and ignored
+- **Entity setting**: Calls to `context.Entity.set()` and other entity operations are ignored during preload
+- **Logging**: Calls to `context.log.*()` are ignored during preload
+
+Only during the second run (actual event processing) are all operations fully enabled:
+
+- Exceptions will crash the indexer if not handled
+- Entity setting operations will persist to the database
+- Logging will output to the console
+
+This design ensures that the preload phase can safely attempt to load data that may not exist yet, while the actual processing phase handles all operations normally.
+
+If you're using an earlier version of `envio`, we strongly recommend upgrading to the latest version with `pnpm install envio@latest` to take advantage of this improved preload phase behavior.
+
+### Going All-In with Loaders
+
+Starting from `envio@2.23.0`, loaders support setting entities directly, making handlers optional. You can now process all your events entirely within the loader function:
 
 ```typescript
 ERC20.Transfer.handlerWithLoader({
   loader: async ({ event, context }) => {
-    const sender = await context.Account.get(event.params.from);
-    return {
-      sender,
-    };
+    // Load existing data efficiently
+    const [sender, receiver] = await Promise.all([
+      context.Account.getOrThrow(event.params.from),
+      context.Account.getOrThrow(event.params.to),
+    ]);
+
+    // Skip expensive operations during preload
+    if (context.isPreload) {
+      return;
+    }
+
+    // CPU-intensive calculations only happen once
+    const complexCalculation = performExpensiveOperation(event.params.value); // Placeholder function for demonstration
+
+    // Create or update sender account
+    const senderAccount = context.Account.set({
+      id: event.params.from,
+      balance: sender.balance - event.params.value,
+      computedValue: complexCalculation,
+    });
+
+    // Create or update receiver account
+    const receiverAccount = context.Account.set({
+      id: event.params.to,
+      balance: receiver.balance + event.params.value,
+    });
+
+    // No need to return anything - all work is done in the loader
   },
   handler: async ({ event, context, loaderReturn }) => {
-    const { sender } = loaderReturn;
-    if (!sender) {
-      throw new Error(`Sender account not found: ${event.params.from}`);
-    }
-    // ... handler logic
+    // Handler can be empty - all logic is handled in the loader
   },
 });
 ```
 
-The indexer will only crash if the `sender` entity was actually not set in an event preceding the one being processed.
+**For power users, we recommend moving all event processing to the loader function** to take advantage of this enhanced functionality. This approach will be the most compatible with future Envio versions.
 
-## Limitations
+If you need to skip the preload phase for CPU-intensive operations or to perform certain actions only once, you can use `context.isPreload`. This allows you to replicate the traditional handler behavior within a loader.
 
-**Note:** The `getWhere` queries can be resource-intensive and should be used carefully:
+**Note:** While `context.isPreload` can be useful for bypassing double execution, it's recommended to use the [Effect API](#effect-api-experimental) for external calls instead, as it provides automatic batching and memoization benefits.
 
-- They are currently unrestricted
-- Large result sets can cause "out of memory" errors
-- All processing happens in memory
+### Future: Version 3.0 Unified Handler Behavior
 
-For performance-critical applications, consider limiting the scope of your queries or processing data in smaller batches.
+In Envio V3, the separation between handlers and loaders will be removed entirely. All handlers will behave like loaders by default, running twice per event to ensure data consistency. This change will:
+
+- **Make many indexers faster by default** without requiring explicit configuration
+- **Simplify the mental model** (similar to React's double-render pattern)
+- **Provide the benefits of loaders** without requiring explicit configuration
+
+The double execution pattern should be familiar to JavaScript/React developers and will be thoroughly documented to help users understand this new behavior.
 
 ## Summary
 
-Loaders provide a powerful way to optimize database access in your Envio indexers by:
+Loaders provide a powerful and efficient way to optimize database access in your Envio indexers by:
 
-- Reducing database roundtrips from thousands to just a few
-- Automatically batching similar requests
-- Caching results in memory for efficient processing
+- **Dramatically reducing database roundtrips** from thousands to just a few per batch
+- **Automatically batching similar requests** for maximum efficiency
+- **Caching results in memory** for instant access during processing
 
-By separating data loading from event processing, loaders allow you to write more efficient and performant indexers while maintaining clean, readable code.
+By elegantly separating data loading from event processing, loaders enable you to build more efficient and performant indexers while maintaining clean, readable code. Whether you're processing thousands or millions of events, loaders can transform your indexing performance from slow and sequential to fast and parallel.
