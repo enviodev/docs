@@ -211,7 +211,7 @@ struct TransactionSelection {
     status: Optional<u8>,
 
     /// Transaction types to match (e.g., 0 = legacy, 2 = EIP-1559)
-    kind: Array<u8>,
+    type: Array<u8>,
 
     /// Created contract addresses to match
     contract_address: Array<Address>,
@@ -343,7 +343,7 @@ class TransactionField(StrEnum):
     BLOB_VERSIONED_HASHES = 'blob_versioned_hashes' # List of blob versioned hashes
 
     # Transaction type
-    KIND = 'type'                       # Transaction type (0=legacy, 1=EIP-2930, 2=EIP-1559, 3=EIP-4844)
+    KIND = 'type'                       # Transaction type (0=legacy, 1=EIP-2930, 2=EIP-1559, 3=EIP-4844, 4=EIP-7702) # note - in old versions of the clients this was called 'kind', in newer versions its called 'type'
 
     # L2-specific fields (for rollups)
     L1_FEE = 'l1_fee'                   # Fee for L1 data (L1GasPrice × L1GasUsed)

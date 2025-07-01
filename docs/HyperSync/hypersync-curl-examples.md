@@ -201,7 +201,7 @@ curl --request POST \
         {
             "from": ["0x6887246668a3b87F54DeB3b94Ba47a6f63F32985"],
             "to": ["0xFF00000000000000000000000000000000000010"],
-            "type": "0x3"
+            "type": [3]
         }
     ],
     "field_selection": {
