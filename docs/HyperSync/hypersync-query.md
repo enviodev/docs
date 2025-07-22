@@ -218,6 +218,18 @@ struct TransactionSelection {
 }
 ```
 
+#### Block Selection
+
+```rust
+struct BlockSelection {
+    /// Block hashes to match (empty = match all)
+    hash: Array<Hash>,
+
+    /// Miner/validator addresses to match (empty = match all)
+    miner: Array<Address>,
+}
+```
+
 #### Trace Selection
 
 ```rust
