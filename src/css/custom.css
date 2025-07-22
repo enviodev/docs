@@ -17,25 +17,48 @@
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-    --ifm-color-primary: #e3e3e3;
-    --ifm-color-primary-dark: #cccccc;
-    --ifm-color-primary-darker: #c1c1c1;
-    --ifm-color-primary-darkest: #9f9f9f;
-    --ifm-color-primary-light: #fafafa;
-    --ifm-color-primary-lighter: #ffffff;
-    --ifm-color-primary-lightest: #ffffff;
-  
+  --ifm-color-primary: #e3e3e3;
+  --ifm-color-primary-dark: #cccccc;
+  --ifm-color-primary-darker: #c1c1c1;
+  --ifm-color-primary-darkest: #9f9f9f;
+  --ifm-color-primary-light: #fafafa;
+  --ifm-color-primary-lighter: #ffffff;
+  --ifm-color-primary-lightest: #ffffff;
 
-  }
 
-  [data-theme='dark'] .hero {
-  color:white;
 }
- 
+
+[data-theme='dark'] .hero {
+  color: white;
+}
+
 article a {
   text-decoration: underline;
 }
 
 article a:hover {
   opacity: 60%;
+}
+
+/* HyperSync Query Builder Component Styles Fix */
+/* Ensure the component has proper scoping and doesn't interfere with Docusaurus */
+.hypersync-query-builder-wrapper * {
+  box-sizing: border-box;
+}
+
+/* Fix potential Tailwind reset conflicts with Docusaurus */
+.hypersync-query-builder-wrapper button {
+  all: revert;
+}
+
+.hypersync-query-builder-wrapper input,
+.hypersync-query-builder-wrapper select,
+.hypersync-query-builder-wrapper textarea {
+  all: revert;
+  margin: 0;
+}
+
+/* Ensure proper spacing and styling for the component */
+.hypersync-query-builder-wrapper {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }

@@ -1,0 +1,121 @@
+---
+id: hypersync-query-creator
+title: Interactive Query Builder
+sidebar_label: 🧪 Interactive Query Builder
+slug: /hypersync-query-creator
+---
+
+import HyperSyncQueryBuilderWrapper from '@site/src/components/HyperSyncQueryBuilderWrapper';
+
+# Interactive HyperSync Query Builder
+
+Welcome to the interactive HyperSync query builder! This powerful tool allows you to build, visualize, and execute HyperSync queries directly in your browser. Whether you're new to HyperSync or an experienced user, this interactive interface makes it easy to construct complex blockchain queries with a user-friendly UI.
+
+## 🚀 Try It Now
+
+<HyperSyncQueryBuilderWrapper />
+
+## What You Can Do
+
+With this interactive query builder, you can:
+
+### 🎯 **Build Queries Visually**
+- **Multi-chain support**: Select from dozens of supported blockchain networks
+- **Advanced filtering**: Configure filters for logs, transactions, and blocks
+- **Field selection**: Choose exactly which data fields you want returned
+- **Real-time validation**: Get immediate feedback on your query structure
+
+### 🔍 **Learn by Doing**
+- **Interactive exploration**: Experiment with different query configurations
+- **Instant JSON output**: See the generated query structure in real-time
+- **cURL generation**: Get ready-to-use command-line examples
+- **Live execution**: Run queries directly and see results immediately
+
+### 📊 **Query Types Supported**
+
+#### **Log Queries**
+Filter blockchain event logs by:
+- Contract addresses
+- Event topics
+- Block ranges
+- And more...
+
+#### **Transaction Queries** 
+Filter transactions by:
+- Sender/receiver addresses
+- Function signatures
+- Transaction status
+- Contract interactions
+
+#### **Block Queries**
+Query block data with:
+- Block range specification
+- Field selection
+- Custom filtering options
+
+## 🛠 Getting Started Guide
+
+### 1. **Select Your Network**
+Start by choosing the blockchain network you want to query from the dropdown menu. HyperSync supports major networks including Ethereum, Polygon, Arbitrum, Optimism, and many more.
+
+### 2. **Configure Your Query**
+- **Set block range**: Define the `fromBlock` and optionally `toBlock` for your query
+- **Add filters**: Use the interface to add log, transaction, or block filters
+- **Select fields**: Choose which data fields you want in your response to optimize performance
+
+### 3. **Build and Execute**
+- **Review JSON**: Check the generated query structure in the JSON output panel
+- **Copy cURL**: Get a ready-to-use cURL command for your terminal
+- **Execute directly**: Run the query and see results immediately
+
+### 4. **Optimize Your Query**
+- **Use field selection**: Only request the data you need for better performance
+- **Set appropriate limits**: Configure `maxNumBlocks`, `maxNumTransactions`, etc.
+- **Choose join modes**: Understand how different join modes affect your results
+
+## 💡 Pro Tips
+
+:::tip Performance Optimization
+- **Use field selection** to only request the data you need - this significantly improves query performance
+- **Set reasonable block ranges** for initial testing, then expand as needed
+- **Use specific contract addresses** in log filters rather than querying all contracts
+:::
+
+:::tip Query Building Strategy
+1. **Start simple**: Begin with a basic query and add complexity incrementally
+2. **Test iteratively**: Execute small queries first to validate your approach
+3. **Use the examples**: The generated cURL commands are perfect starting points for your applications
+:::
+
+:::tip Understanding Results
+- **Pagination**: Large result sets may be paginated - use the `nextBlock` field to continue querying
+- **Join modes**: Different join modes change how logs, transactions, and blocks are related in results
+- **Field availability**: Not all fields are available on every network - the UI will guide you
+:::
+
+## 🔗 Next Steps
+
+After experimenting with the interactive builder:
+
+1. **Integrate with your app**: Use the generated queries in your application
+2. **Explore client libraries**: Check out our [HyperSync clients](./hypersync-clients.md) for different programming languages
+3. **Learn advanced techniques**: Visit our [advanced query guide](./hypersync-query.md) for complex use cases
+4. **Get an API token**: [Sign up for an API token](./api-tokens.mdx) to use HyperSync in production
+
+## 📚 Learn More
+
+- **[HyperSync Overview](./overview.md)**: Understanding HyperSync's architecture and benefits
+- **[Query Reference](./hypersync-query.md)**: Comprehensive guide to query structure and options
+- **[Client Libraries](./hypersync-clients.md)**: Language-specific libraries for Node.js, Python, Rust, and Go
+- **[cURL Examples](./hypersync-curl-examples.md)**: Ready-to-run command-line examples
+- **[Usage Guide](./hypersync-usage.md)**: Detailed usage patterns and best practices
+
+## 🤝 Need Help?
+
+- **[Join our Discord](https://discord.gg/envio)**: Connect with the community and get support
+- **[GitHub Issues](https://github.com/enviodev/hyperindex)**: Report bugs or request features
+- **[Documentation](https://docs.envio.dev)**: Comprehensive guides and tutorials
+
+---
+
+**Happy querying!** 🎉 This interactive tool is designed to make HyperSync accessible to everyone, from beginners exploring blockchain data to experienced developers building production applications. 

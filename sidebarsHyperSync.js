@@ -2,6 +2,7 @@ module.exports = {
   someSidebar: [
     "overview",
     "quickstart",
+    "hypersync-query-creator",
     "hypersync-usage",
     "hypersync-clients",
     "hypersync-query",

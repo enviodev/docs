@@ -46,6 +46,8 @@ If you are a network operator or user and would like improved service support or
 | Bsc                  | 56         | https://bsc.hypersync.xyz or https://56.hypersync.xyz                               | 🥉   |                 |
 | Bsc Testnet          | 97         | https://bsc-testnet.hypersync.xyz or https://97.hypersync.xyz                       | 🎒   |                 |
 | Celo                 | 42220      | https://celo.hypersync.xyz or https://42220.hypersync.xyz                           | 🪨   |                 |
+| Chainweb Testnet 20  | 5920       | https://chainweb-testnet-20.hypersync.xyz or https://5920.hypersync.xyz             | 🪨   |                 |
+| Chainweb Testnet 21  | 5921       | https://chainweb-testnet-21.hypersync.xyz or https://5921.hypersync.xyz             | 🪨   |                 |
 | Chiliz               | 88888      | https://chiliz.hypersync.xyz or https://88888.hypersync.xyz                         | 🪨   |                 |
 | Citrea Testnet       | 5115       | https://citrea-testnet.hypersync.xyz or https://5115.hypersync.xyz                  | 🪨   |                 |
 | Curtis               | 33111      | https://curtis.hypersync.xyz or https://33111.hypersync.xyz                         | 🪨   |                 |
@@ -80,11 +82,10 @@ If you are a network operator or user and would like improved service support or
 | Moonbase Alpha       | 1287       | https://moonbase-alpha.hypersync.xyz or https://1287.hypersync.xyz                  | 🪨   |                 |
 | Moonbeam             | 1284       | https://moonbeam.hypersync.xyz or https://1284.hypersync.xyz                        | 🪨   |                 |
 | Morph                | 2818       | https://morph.hypersync.xyz or https://2818.hypersync.xyz                           | 🪨   |                 |
-| Morph Holesky        | 2810       | https://morph-holesky.hypersync.xyz or https://2810.hypersync.xyz                   | 🎒   |                 |
 | Opbnb                | 204        | https://opbnb.hypersync.xyz or https://204.hypersync.xyz                            | 🪨   |                 |
 | Optimism             | 10         | https://optimism.hypersync.xyz or https://10.hypersync.xyz                          | 🏅   |                 |
 | Optimism Sepolia     | 11155420   | https://optimism-sepolia.hypersync.xyz or https://11155420.hypersync.xyz            | 🎒   |                 |
-| Pharos Devnet        | 50002      | https://pharos-devnet.hypersync.xyz or https://50002.hypersync.xyz                  | 🪨   |                 |
+| Plume                | 98866      | https://plume.hypersync.xyz or https://98866.hypersync.xyz                          | 🪨   |                 |
 | Polygon              | 137        | https://polygon.hypersync.xyz or https://137.hypersync.xyz                          | 🥈   |                 |
 | Polygon Amoy         | 80002      | https://polygon-amoy.hypersync.xyz or https://80002.hypersync.xyz                   | 🥉   |                 |
 | Polygon zkEVM        | 1101       | https://polygon-zkevm.hypersync.xyz or https://1101.hypersync.xyz                   | 🪨   |                 |
@@ -99,6 +100,8 @@ If you are a network operator or user and would like improved service support or
 | Sophon Testnet       | 531050104  | https://sophon-testnet.hypersync.xyz or https://531050104.hypersync.xyz             | 🎒   |                 |
 | Superseed            | 5330       | https://superseed.hypersync.xyz or https://5330.hypersync.xyz                       | 🪨   |                 |
 | Swell                | 1923       | https://swell.hypersync.xyz or https://1923.hypersync.xyz                           | 🪨   |                 |
+| Tangle               | 5845       | https://tangle.hypersync.xyz or https://5845.hypersync.xyz                          | 🪨   |                 |
+| Taraxa               | 841        | https://taraxa.hypersync.xyz or https://841.hypersync.xyz                           | 🥉   |                 |
 | Unichain             | 130        | https://unichain.hypersync.xyz or https://130.hypersync.xyz                         | 🪨   |                 |
 | Unichain Sepolia     | 1301       | https://unichain-sepolia.hypersync.xyz or https://1301.hypersync.xyz                | 🎒   |                 |
 | Worldchain           | 480        | https://worldchain.hypersync.xyz or https://480.hypersync.xyz                       | 🪨   |                 |
