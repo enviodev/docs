@@ -2658,6 +2658,11 @@
   resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.2.8.tgz#21a907684723bbbaa5f0974cf7730bd797eb8e62"
   integrity sha512-kym7SodPp8/wloecOpcmSnWJsK7M0E5Wg8UcFA+uO4B9s5d0ywXOEro/8HM9x0rW+TljRzul/14UYz3TleT3ig==
 
+"@glennsl/rescript-fetch@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@glennsl/rescript-fetch/-/rescript-fetch-0.2.3.tgz#99ab3c2a9c87fcc301d71e906f8cd476a2a17321"
+  integrity sha512-0MuaXeJHGii0/SKzR4ASB1Wal+ogdnNsD1K6HSTFUVc+TQzAZY+V8Nb7Z8K4OUqMJzmurIgVXNmirx3DC1Huyg==
+
 "@hapi/hoek@^9.0.0", "@hapi/hoek@^9.3.0":
   version "9.3.0"
   resolved "https://registry.npmjs.org/@hapi/hoek/-/hoek-9.3.0.tgz"
@@ -3524,6 +3529,11 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@radix-ui/rect/-/rect-1.1.0.tgz#f817d1d3265ac5415dadc67edab30ae196696438"
   integrity sha512-A9+lCBZoaMJlVKcRBz2YByCG+Cp2t6nAnMnNba+XiWxnj6r4JUFqfsgwocMBZU9LPtdxC6wB56ySYpc7LQIoJg==
+
+"@rescript/react@^0.13.0":
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/@rescript/react/-/react-0.13.1.tgz#19a90b2de39e4742bf73f834fe795fa9db5e06d5"
+  integrity sha512-VIWtu/sAJyYmDVoAhit0LHDYQrW6RqZ6z8sh8san5cjEAT4klv8JWkiaSK3FGUfooUDkGUXXgKTkqyj8zRR21w==
 
 "@scure/base@~1.1.0", "@scure/base@~1.1.2":
   version "1.1.9"
@@ -9113,6 +9123,14 @@ human-signals@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/human-signals/-/human-signals-2.1.0.tgz"
   integrity sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==
+
+hypersync-query-builder-component@0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/hypersync-query-builder-component/-/hypersync-query-builder-component-0.2.1.tgz#096f29b2c6d5831fb4d41216c129b585dfefd70b"
+  integrity sha512-TFm5S0ULIgIPY6Mpft/Fv0pgAIlGAx+xmNBWDzUN4GFhOy91JvQIEg6Msdj7CZjJ4qMxxHTxrUuoHaUhRB1MQA==
+  dependencies:
+    "@glennsl/rescript-fetch" "^0.2.3"
+    "@rescript/react" "^0.13.0"
 
 iconv-lite@0.4.24:
   version "0.4.24"
