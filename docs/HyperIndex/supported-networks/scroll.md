@@ -19,7 +19,7 @@ slug: /scroll
 
 ### Tier
 
-BRONZE 🥉
+STONE 🪨
 
 ### Overview
 
