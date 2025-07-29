@@ -188,9 +188,8 @@ The Effect API provides a powerful and convenient way to perform external calls 
 - **Automatic batching**: Calls of the same kind are automatically batched together
 - **Intelligent memoization**: Calls are memoized, so you don't need to worry about the handler function being called multiple times
 - **Deduplication**: Calls with the same arguments are deduplicated to prevent overfetching
-- **Persistence**: Built-in persistence of effect results for indexer reruns
-- **Future enhancements**: We're working on automatic retry logic and result persistence for indexer reruns 🏗️
-
+- **Persistence**: Built-in support for result persistence (opt-in via `cache: true`) for indexer reruns
+- **Future enhancements**: We're working on automatic retry logic and enhanced caching workflows 🏗️
 To use the Effect API, you first need to define an effect using `experimental_createEffect` function from the `envio` package:
 
 ```typescript
