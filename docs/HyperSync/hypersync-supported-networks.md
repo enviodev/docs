@@ -35,6 +35,7 @@ If you are a network operator or user and would like improved service support or
 | Arbitrum Nova        | 42170      | https://arbitrum-nova.hypersync.xyz or https://42170.hypersync.xyz                  | 🥉   |                 |
 | Arbitrum Sepolia     | 421614     | https://arbitrum-sepolia.hypersync.xyz or https://421614.hypersync.xyz              | 🎒   |                 |
 | Aurora               | 1313161554 | https://aurora.hypersync.xyz or https://1313161554.hypersync.xyz                    | 🪨   |                 |
+| Aurora Turbo         | 1313161567 | https://aurora-turbo.hypersync.xyz or https://1313161567.hypersync.xyz              | 🪨   |                 |
 | Avalanche            | 43114      | https://avalanche.hypersync.xyz or https://43114.hypersync.xyz                      | 🥉   |                 |
 | Base                 | 8453       | https://base.hypersync.xyz or https://8453.hypersync.xyz                            | 🏅   |                 |
 | Base Sepolia         | 84532      | https://base-sepolia.hypersync.xyz or https://84532.hypersync.xyz                   | 🎒   |                 |
@@ -91,7 +92,7 @@ If you are a network operator or user and would like improved service support or
 | Polygon zkEVM        | 1101       | https://polygon-zkevm.hypersync.xyz or https://1101.hypersync.xyz                   | 🪨   |                 |
 | Rootstock            | 30         | https://rootstock.hypersync.xyz or https://30.hypersync.xyz                         | 🪨   |                 |
 | Saakuru              | 7225878    | https://saakuru.hypersync.xyz or https://7225878.hypersync.xyz                      | 🪨   |                 |
-| Scroll               | 534352     | https://scroll.hypersync.xyz or https://534352.hypersync.xyz                        | 🥉   |                 |
+| Scroll               | 534352     | https://scroll.hypersync.xyz or https://534352.hypersync.xyz                        | 🪨   |                 |
 | Sepolia              | 11155111   | https://sepolia.hypersync.xyz or https://11155111.hypersync.xyz                     | 🎒   |                 |
 | Shimmer Evm          | 148        | https://shimmer-evm.hypersync.xyz or https://148.hypersync.xyz                      | 🪨   |                 |
 | Soneium              | 1868       | https://soneium.hypersync.xyz or https://1868.hypersync.xyz                         | 🪨   |                 |

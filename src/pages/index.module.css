@@ -3,22 +3,129 @@
  * and scoped locally.
  */
 
-.heroBanner {
-  padding: 4rem 0;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  background-color: black;
-}
-
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
-}
-
-.buttons {
+.main {
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 2rem;
+  background: #000;
+  color: #fff;
+}
+
+.container {
+  max-width: 900px;
+  width: 100%;
+  text-align: center;
+}
+
+.title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: #a1a1aa;
+  margin-bottom: 4rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.docsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.docSection {
+  padding: 2rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
+}
+
+.docSection:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.docSection h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.llmDescription {
+  font-size: 0.875rem;
+  color: #a1a1aa;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.docLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.docLink {
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.docLink:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+  text-decoration: none;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .docsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .docSection {
+    padding: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.125rem;
+    margin-bottom: 3rem;
+  }
 }

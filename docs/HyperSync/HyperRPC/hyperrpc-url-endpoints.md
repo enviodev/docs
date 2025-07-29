@@ -27,6 +27,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Arbitrum Nova        | 42170      | https://arbitrum-nova.rpc.hypersync.xyz or https://42170.rpc.hypersync.xyz          |                 |
 | Arbitrum Sepolia     | 421614     | https://arbitrum-sepolia.rpc.hypersync.xyz or https://421614.rpc.hypersync.xyz      |                 |
 | Aurora               | 1313161554 | https://aurora.rpc.hypersync.xyz or https://1313161554.rpc.hypersync.xyz            |                 |
+| Aurora Turbo         | 1313161567 | https://aurora-turbo.rpc.hypersync.xyz or https://1313161567.rpc.hypersync.xyz      |                 |
 | Avalanche            | 43114      | https://avalanche.rpc.hypersync.xyz or https://43114.rpc.hypersync.xyz              |                 |
 | Base                 | 8453       | https://base.rpc.hypersync.xyz or https://8453.rpc.hypersync.xyz                    |                 |
 | Base Sepolia         | 84532      | https://base-sepolia.rpc.hypersync.xyz or https://84532.rpc.hypersync.xyz           |                 |
