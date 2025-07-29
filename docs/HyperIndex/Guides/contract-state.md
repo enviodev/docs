@@ -219,9 +219,8 @@ export const getTokenMetadata = experimental_createEffect(
     const { tokenAddress, chainId } = input;
 
     // Prepare contract instances for different token standard variations
-    const erc20 = getERC20Contract(contractAddress as `0x${string}`);
-    const erc20Bytes = getERC20BytesContract(contractAddress as `0x${string}`);
-
+    const erc20 = getERC20Contract(tokenAddress as `0x${string}`);
+    const erc20Bytes = getERC20BytesContract(tokenAddress as `0x${string}`);
     let results: [number, string, string];
     try {
       // Try standard ERC20 interface first (most common)
