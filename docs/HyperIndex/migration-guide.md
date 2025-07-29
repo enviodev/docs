@@ -13,7 +13,7 @@ Please reach out to our team on [Discord](https://discord.gg/envio) for personal
 
 ## Introduction
 
-Migrating from a subgraph to HyperIndex is designed to be a developer-friendly process. HyperIndex draws strong inspiration from TheGraph’s subgraph architecture, which makes the migration simple, especially with the help of coding assistants like Cursor and AI tools (don't forget to use our ai friendly docs [llm-docs.envio.dev](https://llm-docs.envio.dev)). 
+Migrating from a subgraph to HyperIndex is designed to be a developer-friendly process. HyperIndex draws strong inspiration from TheGraph’s subgraph architecture, which makes the migration simple, especially with the help of coding assistants like Cursor and AI tools (don't forget to use our ai friendly docs [llm-docs.envio.dev](https://llm-docs.envio.dev)).
 
 The process is simple but requires a good understanding of the underlying concepts. If you are new to HyperIndex, we recommend starting with the [Getting Started](../HyperIndex/getting-started) guide.
 
@@ -28,17 +28,18 @@ The process is simple but requires a good understanding of the underlying concep
 ## Subgraph to HyperIndex Migration Overview
 
 Migration consists of three major steps:
-1. Subgraph.yaml migration 
+
+1. Subgraph.yaml migration
 1. Schema migration - near copy paste
 1. Event handler migration
 
-At any point in the migration run 
+At any point in the migration run
 
-`pnpm envio codegen` 
+`pnpm envio codegen`
 
 to verify the `config.yaml` and `schema.graphql` files are valid.
 
-or run 
+or run
 
 `pnpm dev`
 
@@ -50,10 +51,9 @@ As a first step, we recommend using `npx envio init` to generate a boilerplate f
 
 ### 1. `subgraph.yaml` → `config.yaml`
 
-`npx envio init` will generate this for you. It's a simple configuration file conversion. Effectively specifying which contracts to index, which networks to index (multiple networks can be specified with envio) and which events from those contracts to index. 
+`npx envio init` will generate this for you. It's a simple configuration file conversion. Effectively specifying which contracts to index, which networks to index (multiple networks can be specified with envio) and which events from those contracts to index.
 
 Take the following conversion as an example, where the `subgraph.yaml` file is converted to `config.yaml` the below comparisons is for the Uniswap v4 pool manager subgraph.
-
 
 <div className="row">
 <div className="col col--6">
@@ -121,19 +121,20 @@ For any potential hurdles, please refer to the [Configuration File](../HyperInde
 
 Small nuance differences:
 
-- You can remove the `@entity` directive 
+- You can remove the `@entity` directive
 - [Enums](../HyperIndex/schema#enum-types)
-- [BigDecimals](../HyperIndex/schema#working-with-bigdecimal) 
+- [BigDecimals](../HyperIndex/schema#working-with-bigdecimal)
 
 ## 3. Event handler migration
 
 This consists of two parts
+
 1. Converting assemblyscript to typescript
 1. Converting the subgraph syntax to HyperIndex syntax
 
 ### 3.1 Converting Assemblyscript to Typescript
 
-The subgraph uses assemblyscript to write event handlers. The HyperIndex syntax is usually in typescript. Since assemblyscript is a subset of typescript, it's quite simple to copy and paste the code, especially so for pure functions. 
+The subgraph uses assemblyscript to write event handlers. The HyperIndex syntax is usually in typescript. Since assemblyscript is a subset of typescript, it's quite simple to copy and paste the code, especially so for pure functions.
 
 ### 3.2 Converting the subgraph syntax to HyperIndex syntax
 
@@ -142,7 +143,7 @@ There are some subtle differences in the syntax of the subgraph and HyperIndex. 
 - Replace Entity.save() with context.Entity.set()
 - Convert to async handler functions
 - Use `await` for loading entities `const x = await context.Entity.get(id)`
-- Use [dynamic contract registration](../HyperIndex/configuration-file#dynamic-contracts) to register contracts
+- Use [dynamic contract registration](../HyperIndex/dynamic-contracts) to register contracts
 
 The below code snippets can give you a basic idea of what this difference might look like.
 
@@ -153,15 +154,16 @@ theGraph - `eventHandler.ts`
 export function handleSubscription(event: SubscriptionEvent): void {
   const subscription = new Subscribe(event.transaction.hash + event.logIndex)
 
-  subscription.tokenId = event.params.tokenId
-  subscription.address = event.params.subscriber.toHexString()  
-  subscription.logIndex = event.logIndex
-  subscription.blockNumber = event.block.number
-  subscription.position = event.params.tokenId
+subscription.tokenId = event.params.tokenId
+subscription.address = event.params.subscriber.toHexString()  
+ subscription.logIndex = event.logIndex
+subscription.blockNumber = event.block.number
+subscription.position = event.params.tokenId
 
-  subscription.save()
+subscription.save()
 }
-          ```
+```
+
 </div>
 <div className="col col--6">
 HyperIndex - `eventHandler.ts`
@@ -176,12 +178,12 @@ PoolManager.Subscription.handler( async (event, context) => {
     position: event.params.tokenId
   }
 
-  context.Subscription.set(entity);
+context.Subscription.set(entity);
 })
-          ```
-</div>
-</div>
+```
 
+</div>
+</div>
 
 ## Extra tips
 
@@ -201,5 +203,3 @@ If you discover helpful tips during your migration, we’d love contributions! O
 ## Getting Help
 
 **Join Our Discord**: The fastest way to get personalized help is through our [Discord community](https://discord.gg/envio).
-
-
