@@ -19,7 +19,10 @@
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
-    "preinstall": "npx only-allow yarn"
+    "preinstall": "npx only-allow yarn",
+    "consolidate-docs": "node ./scripts/consolidate-hyperindex-docs.js --all",
+    "build-llm": "yarn consolidate-docs && npx docusaurus build --config docusaurus.config.llm.js",
+    "start-llm": "yarn consolidate-docs && npx docusaurus start --config docusaurus.config.llm.js"
   },
   "dependencies": {
     "@cookbookdev/docsbot": "^4.21.23",
