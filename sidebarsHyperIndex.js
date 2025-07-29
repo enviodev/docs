@@ -141,6 +141,11 @@ module.exports = {
     },
     networksSection,
     "fuel/fuel",
+    {
+      type: "link",
+      label: "LLM Documentation",
+      href: "/docs/HyperIndex-LLM/hyperindex-complete",
+    },
     "licensing",
     "terms-of-service",
     "privacy-policy",
