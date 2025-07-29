@@ -265,6 +265,7 @@ You're now ready to build with HyperSync! Here are some resources for diving dee
 
 - [Client Libraries](/docs/HyperSync/hypersync-clients) - Explore language-specific clients
 - [Query Reference](/docs/HyperSync/hypersync-query) - Learn advanced query techniques
+- **[Build queries visually](http://builder.hypersync.xyz)** - Use our Intuitive Query Builder
 - [curl Examples](/docs/HyperSync/hypersync-curl-examples) - Test queries directly in your terminal
 - [Complete Getting Started Guide](/docs/HyperSync/hypersync-usage) - More comprehensive guidance
 

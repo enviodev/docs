@@ -30,6 +30,10 @@ Additionally, we maintain a comprehensive collection of real-world examples cove
 
 For more details on client libraries, see the [HyperSync Clients](./hypersync-clients) documentation.
 
+:::tip Visual Query Builder
+Need help building queries? Try our **[Intuitive Query Builder](http://builder.hypersync.xyz)** to construct queries visually and see the results in real-time.
+:::
+
 :::tip Developer Tip
 Set the `RUST_LOG` environment variable to `trace` for more detailed logs when using client libraries.
 :::
