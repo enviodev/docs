@@ -18,9 +18,9 @@ slug: /navigating-hasura
 
 This guide explains how to navigate the Hasura dashboard to effectively work with your indexed data.
 
-## Accessing Hasura
+## Accessing Hasura Console
 
-When running HyperIndex locally, Hasura is automatically available at:
+When running HyperIndex locally, Hasura Console is automatically available at:
 
 ```
 http://localhost:8080
@@ -137,6 +137,10 @@ When testing, you may need to reset your database:
 - **Query Testing**: Test complex queries in the API tab before implementing them in your application
 - **Schema Validation**: Use the Data tab to verify that relationships between entities are correctly established
 - **Performance Monitoring**: Watch for tables that grow unusually large, which might indicate inefficient indexing
+
+## Disable Hasura for Self-Hosted Indexers
+
+Starting from `envio@2.26.0` it's possible to disable Hasura integration for self-hosted indexers. To do so, set the `ENVIO_HASURA` environment variable to `false`.
 
 ---
 

@@ -39,8 +39,6 @@ In general, if you want to self-host, you will likely use a Docker setup.
 For a working example, check out the [local-docker-example repository](https://github.com/enviodev/local-docker-example).
 It contains a minimal `Dockerfile` and `docker-compose.yaml` that configure the Envio indexer together with PostgreSQL and Hasura.
 
-
-
 ## Configuration Explained
 
 The compose file in that repository sets up three main services:
@@ -53,7 +51,7 @@ The compose file in that repository sets up three main services:
 
 The configuration uses environment variables with sensible defaults. For production, you should customize:
 
-- Database credentials (`ENVIO_POSTGRES_PASSWORD`, `ENVIO_PG_USER`, etc.)
+- Database credentials (`ENVIO_PG_PASSWORD`, `ENVIO_PG_USER`, etc.)
 - Hasura admin secret (`HASURA_GRAPHQL_ADMIN_SECRET`)
 - Resource limits based on your workload requirements
 

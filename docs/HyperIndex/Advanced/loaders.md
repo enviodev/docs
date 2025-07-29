@@ -179,7 +179,7 @@ ERC20.Approval.handlerWithLoader({
 This technique works with any entity field that:
 
 - Is used in a relationship with the [`@derivedFrom`](schema/#relationships-one-to-many-derivedfrom) directive
-- Has an [`@index`](database-performance-optimization/#creating-custom-indices) directive
+- Has an [`@index`](database-performance-optimization/#creating-custom-indices-in-your-schema) directive
 
 ## Effect API `experimental`
 
@@ -188,6 +188,7 @@ The Effect API provides a powerful and convenient way to perform external calls 
 - **Automatic batching**: Calls of the same kind are automatically batched together
 - **Intelligent memoization**: Calls are memoized, so you don't need to worry about the handler function being called multiple times
 - **Deduplication**: Calls with the same arguments are deduplicated to prevent overfetching
+- **Persistence**: Built-in persistence of effect results for indexer reruns
 - **Future enhancements**: We're working on automatic retry logic and result persistence for indexer reruns 🏗️
 
 To use the Effect API, you first need to define an effect using `experimental_createEffect` function from the `envio` package:
@@ -203,6 +204,7 @@ export const getMetadata = experimental_createEffect(
       description: S.string,
       value: S.bigint,
     },
+    cache: true,
   },
   async ({ input, context }) => {
     const response = await fetch(`https://api.example.com/metadata/${input}`);
@@ -221,6 +223,7 @@ The first argument is an options object that describes the effect:
 - `name` (required) - the name of the effect used for debugging and logging
 - `input` (required) - the input type of the effect
 - `output` (required) - the output type of the effect
+- `cache` (optional) - save effect results in the database to prevent duplicate calls
 
 The second argument is a function that will be called with the effect's input.
 
@@ -274,6 +277,7 @@ export const getBalance = experimental_createEffect(
       blockNumber: S.optional(S.bigint),
     },
     output: S.bigint,
+    cache: true,
   },
   async ({ input, context }) => {
     try {
@@ -296,9 +300,39 @@ export const getBalance = experimental_createEffect(
 );
 ```
 
+### Persistence
+
+By default, effect results are not persisted in the database. This means if the effect with the same input is called again, the function will be executed the second time.
+
+To persist effect results, you can set the `cache` option to `true` when creating the effect. This will save the effect results in the database and reuse them in future indexer runs.
+
+Every effect cache creates a new table in the database `envio_effect_${effectName}`. You can see it and query in Hasura console with admin secret.
+
+Also, use our [Development Console](https://envio.dev/console) to track the cache size and see number of calls which didn't hit the cache.
+
+### Reuse Effect Cache on Indexer Reruns
+
+To prevent invalid data we don't keep the effect cache on indexer reruns. But you can explicitly configure cache, which should be preloaded when the indexer is rerun.
+
+Open [Development Console](https://envio.dev/console) of the running indexer which accumulated the cache. You'll be able to see the `Sync Cache` button right at the `Effects` section. Clicking the button will load the cache from the indexer database to the `.envio/cache` directory in your indexer project.
+
+When the indexer is rerun by using `envio dev` or `envio start -r` call, the initial cache will be loaded from the `.envio/cache` directory and used for the indexer run.
+
+### Cache on Hosted Service
+
+The same `.envio/cache` can be also used to populate the initial cache on the hosted service.
+
+Although this solution is very limited, and we're actively working on a better integration:
+
+- It requires to commit `.envio/cache` to the GitHub repository, increasing the repository and git history size
+- The file size is limited to 100MB, which is not enough for some use cases
+- There might be issues with pulling big caches from the GitHub repository
+
+Join our [Discord](https://discord.gg/envio) to get updates on the progress of the hosted service integration.
+
 ### Why Experimental?
 
-The Effect API is currently marked as experimental, but we don't expect breaking changes in the future. This designation simply means we're actively iterating on the feature and may add new capabilities that could subtly change indexer behavior. We plan to remove the `experimental` tag soon, and your feedback is invaluable in this process!
+The Effect API is currently marked as experimental, but we don't expect major breaking changes in the future. This designation simply means we're actively iterating on the feature and may add new capabilities that could subtly change indexer behavior. We plan to remove the `experimental` tag soon, and your feedback is invaluable in this process!
 
 ## Best Practices
 

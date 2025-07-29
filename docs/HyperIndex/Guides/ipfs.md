@@ -75,26 +75,24 @@ Track ownership changes by handling Transfer events:
 
 ```typescript
 // src/EventHandler.ts
-import { BoredApeYachtClub, Nft } from "generated";
+import { BoredApeYachtClub } from "generated";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 BoredApeYachtClub.Transfer.handler(async ({ event, context }) => {
   if (event.params.from === ZERO_ADDRESS) {
     // mint
-    const nft: Nft = {
+    context.Nft.set({
       id: event.params.tokenId.toString(),
       owner: event.params.to,
-    };
-    context.Nft.set(nft);
+    });
   } else {
     // transfer
-    let nft = await context.Nft.get(event.params.tokenId.toString());
-    if (!nft) {
-      throw new Error("Can't transfer non-existing NFT");
-    }
-    nft = { ...nft, owner: event.params.to };
-    context.Nft.set(nft);
+    const nft = await context.Nft.getOrThrow(event.params.tokenId.toString());
+    context.Nft.set({
+      ...nft,
+      owner: event.params.to,
+    });
   }
 });
 ```
@@ -121,101 +119,114 @@ type Nft {
 }
 ```
 
-### Create IPFS Utility Functions
+### Create IPFS Effect
 
-Create a new file to handle IPFS requests with fallbacks to multiple gateways:
+We'll use the [Effect API](/docs/HyperIndex/loaders#effect-api-experimental) to fetch the IPFS metadata. Let's put it in the `src/effects/ipfs.ts` file:
 
 ```typescript
 // src/utils/ipfs.ts
-import { handlerContext } from "generated";
+import { experimental_createEffect, S, type EffectContext } from "envio";
 
-type NftMetadata = {
-  image: string;
-  attributes: Array<any>;
-};
+const nftMetadataSchema = S.schema({
+  image: S.string,
+  attributes: S.string,
+});
+
+type NftMetadata = S.Output<typeof nftMetadataSchema>;
 
 // unique identifier for the BoredApeYachtClub IPFS tokenURI
 const BASE_URI_UID = "QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq";
 
+const endpoints = [
+  // Try multiple endpoints to ensure data availability
+  // Optional paid gateway (set in .env)
+  ...(process.env.PINATA_IPFS_GATEWAY ? [process.env.PINATA_IPFS_GATEWAY] : []),
+  "https://cloudflare-ipfs.com/ipfs",
+  "https://ipfs.io/ipfs",
+];
+
 async function fetchFromEndpoint(
+  context: EffectContext,
   endpoint: string,
-  tokenId: string,
-  context: handlerContext
+  tokenId: string
 ): Promise<NftMetadata | null> {
   try {
     const response = await fetch(`${endpoint}/${BASE_URI_UID}/${tokenId}`);
     if (response.ok) {
       const metadata: any = await response.json();
-      context.log.info(metadata);
-      return { attributes: metadata.attributes, image: metadata.image };
+      return {
+        image: metadata.image,
+        attributes: JSON.stringify(metadata.attributes),
+      };
     } else {
-      throw new Error("Unable to fetch from endpoint");
+      context.log.warn(`IPFS didn't return 200`, { tokenId, endpoint });
+      return null;
     }
   } catch (e) {
-    context.log.warn(`Unable to fetch from ${endpoint}`);
+    context.log.warn(`IPFS fetch failed`, { tokenId, endpoint, err: e });
+    return null;
   }
-  return null;
 }
 
-export async function tryFetchIpfsFile(
-  tokenId: string,
-  context: handlerContext
-): Promise<NftMetadata> {
-  const endpoints = [
-    // Try multiple endpoints to ensure data availability
-    process.env.PINATA_IPFS_GATEWAY || "", // Optional paid gateway (set in .env)
-    "https://cloudflare-ipfs.com/ipfs",
-    "https://ipfs.io/ipfs",
-  ];
-
-  for (const endpoint of endpoints) {
-    if (!endpoint) continue; // Skip empty endpoints
-
-    const metadata = await fetchFromEndpoint(endpoint, tokenId, context);
-    if (metadata) {
-      return metadata;
+export const getIpfsMetadata = experimental_createEffect(
+  {
+    name: "getIpfsMetadata",
+    input: S.string,
+    output: nftMetadataSchema,
+  },
+  async ({ input: tokenId, context }) => {
+    for (const endpoint of endpoints) {
+      const metadata = await fetchFromEndpoint(context, endpoint, tokenId);
+      if (metadata) {
+        return metadata;
+      }
     }
-  }
 
-  context.log.error("Unable to fetch from all endpoints");
-  return { attributes: ["unknown"], image: "unknown" };
-}
+    // ⚠️ Dangerous: Sometimes it's better to crash, to prevent corrupted data
+    // But we're going to use a fallback value, to keep the indexer process running.
+    // Both approaches have their pros and cons.
+    context.log.warn(
+      "Unable to fetch IPFS. Continuing with fallback metadata.",
+      {
+        tokenId,
+      }
+    );
+    return { attributes: `["unknown"]`, image: "unknown" };
+  }
+);
 ```
 
 ### Update the Event Handler
 
-Modify the event handler to fetch and store metadata:
+Let's modify the event handler to fetch and store metadata using the `getIpfsMetadata` effect:
 
 ```typescript
 // src/EventHandlers.ts
-import { BoredApeYachtClub, Nft } from "generated";
-import { tryFetchIpfsFile } from "./utils/ipfs";
+import { BoredApeYachtClub } from "generated";
+import { getIpfsMetadata } from "./utils/ipfs";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 BoredApeYachtClub.Transfer.handler(async ({ event, context }) => {
   if (event.params.from === ZERO_ADDRESS) {
     // mint
-    let metadata = await tryFetchIpfsFile(
-      event.params.tokenId.toString(),
-      context
+    const metadata = await context.effect(
+      getIpfsMetadata,
+      event.params.tokenId.toString()
     );
-
-    const nft: Nft = {
+    context.Nft.set({
       id: event.params.tokenId.toString(),
       owner: event.params.to,
       image: metadata.image,
-      attributes: JSON.stringify(metadata.attributes),
-    };
-    context.Nft.set(nft);
+      attributes: metadata.attributes,
+    });
   } else {
     // transfer
-    let nft = await context.Nft.get(event.params.tokenId.toString());
-    if (!nft) {
-      throw new Error("Can't transfer non-existing NFT");
-    }
-    nft = { ...nft, owner: event.params.to };
-    context.Nft.set(nft);
+    const nft = await context.Nft.getOrThrow(event.params.tokenId.toString());
+    context.Nft.set({
+      ...nft,
+      owner: event.params.to,
+    });
   }
 });
 ```
@@ -234,7 +245,7 @@ IPFS gateways can be unreliable, so always implement multiple fallback options:
 
 ```typescript
 const endpoints = [
-  process.env.PAID_IPFS_GATEWAY || "",
+  ...(process.env.PAID_IPFS_GATEWAY ? [process.env.PAID_IPFS_GATEWAY] : []),
   "https://cloudflare-ipfs.com/ipfs",
   "https://ipfs.io/ipfs",
   "https://gateway.pinata.cloud/ipfs",
@@ -249,42 +260,69 @@ Always include error handling and provide fallback values:
 try {
   // IPFS fetch logic
 } catch (error) {
-  context.log.error(`Failed to fetch from IPFS: ${error.message}`);
+  context.log.error(`Failed to fetch from IPFS`, error as Error);
   return { attributes: [], image: "default-image-url" };
 }
 ```
 
 ### 3. Implement Local Caching (For Local Development)
 
-For local development, consider implementing in-memory caching to avoid repeatedly fetching the same data:
+Follow the [Effect API Persistence](/docs/HyperIndex/loaders#persistence) guide to implement caching for local development. This should allow you to avoid repeatedly fetching the same data.
 
 ```typescript
-// Simple in-memory cache for local development
-const metadataCache = new Map<string, any>();
-
-async function getMetadata(tokenId: string) {
-  // Check cache first
-  if (metadataCache.has(tokenId)) {
-    return metadataCache.get(tokenId);
-  }
-
-  // Fetch from IPFS
-  const metadata = await fetchFromIPFS(tokenId);
-
-  // Store in cache
-  metadataCache.set(tokenId, metadata);
-
-  return metadata;
-}
+export const getIpfsMetadata = experimental_createEffect(
+  {
+    name: "getIpfsMetadata",
+    input: S.string,
+    output: nftMetadataSchema,
+    cache: true, // Enable caching
+  },
+  async ({ input: tokenId, context }) => {...}
+);
 ```
 
-> **Note:** For production indexers, the Envio hosted service automatically handles optimizations. You should not implement persistent file-based caching mechanisms as they are not supported in the hosted environment. Please discuss with the team your options regarding caching.
->
-> **Important:** While the example repository includes SQLite-based caching, this approach is not compatible with the Envio hosted service and should not be used for production deployments.
+> **Important:** While the example repository includes SQLite-based caching, this approach is outdated and leads to many indexing issues.
+
+> **Note:** We're working on a better integration with the hosted service. Currently, due to the cache size, it's not recommended to commit the `.envio/cache` directory to the GitHub repository.
 
 ### 4. Improve Performance with Loaders
 
-The solution will perform external calls for each handler one by one. This is not efficient and can be improved with loaders. Read more about the [Effect API](/docs/HyperIndex/loaders#effect-api-experimental) and [Loaders](/docs/HyperIndex/loaders) in the dedicated guides.
+The solution will perform external calls for each handler one by one. This is not efficient and can be improved with loaders.
+Follow the [Going All-In with Loaders](/docs/HyperIndex/loaders#going-all-in-with-loaders) guide to make your indexer dozens of times faster.
+
+```typescript
+// src/EventHandlers.ts
+import { BoredApeYachtClub } from "generated";
+import { getIpfsMetadata } from "../utils/ipfs";
+
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+
+BoredApeYachtClub.Transfer.handlerWithLoader({
+  loader: async ({ event, context }) => {
+    if (event.params.from === ZERO_ADDRESS) {
+      // mint
+      const metadata = await context.effect(
+        getIpfsMetadata,
+        event.params.tokenId.toString()
+      );
+      context.Nft.set({
+        id: event.params.tokenId.toString(),
+        owner: event.params.to,
+        image: metadata.image,
+        attributes: metadata.attributes,
+      });
+    } else {
+      // transfer
+      const nft = await context.Nft.getOrThrow(event.params.tokenId.toString());
+      context.Nft.set({
+        ...nft,
+        owner: event.params.to,
+      });
+    }
+  },
+  handler: async (_) => {},
+});
+```
 
 ## Understanding IPFS
 

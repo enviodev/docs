@@ -175,7 +175,7 @@ pnpm dev
 
 You can further customize your Postgres connection with these additional environment variables:
 
-- `ENVIO_POSTGRES_PASSWORD`: Set a custom password
+- `ENVIO_PG_PASSWORD`: Set a custom password
 - `ENVIO_PG_USER`: Set a custom username
 - `ENVIO_PG_DATABASE`: Set a custom database name
 
