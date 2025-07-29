@@ -223,7 +223,7 @@ The first argument is an options object that describes the effect:
 - `name` (required) - the name of the effect used for debugging and logging
 - `input` (required) - the input type of the effect
 - `output` (required) - the output type of the effect
-- `cache` (optional) - save effect results in the database to prevent duplicate calls
+- `cache` (optional) - save effect results in the database to prevent duplicate calls (Starting from `envio@2.26.0`)
 
 The second argument is a function that will be called with the effect's input.
 
@@ -317,6 +317,8 @@ To prevent invalid data we don't keep the effect cache on indexer reruns. But yo
 Open [Development Console](https://envio.dev/console) of the running indexer which accumulated the cache. You'll be able to see the `Sync Cache` button right at the `Effects` section. Clicking the button will load the cache from the indexer database to the `.envio/cache` directory in your indexer project.
 
 When the indexer is rerun by using `envio dev` or `envio start -r` call, the initial cache will be loaded from the `.envio/cache` directory and used for the indexer run.
+
+> **Note:** This feature is available starting from `envio@2.26.0`. It also doesn't support rollbacks on reorgs. The support for reorgs will be added in the future.
 
 ### Cache on Hosted Service
 
