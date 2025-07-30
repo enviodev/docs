@@ -111,7 +111,7 @@ Let's select the events we want to index. I opened the code of the [contract fil
 [↑↓ to move, space to select one, → to all, ← to none, type to filter]
 ```
 
-> 📖 For the tutorial we only need to index `LOG_DATA` receipts, but you can also index `Mint`, `Burn`, `Transfer` and `Call` receipts. Read more about [Supported Event Types](/docs/HyperIndex/fuel#supported-event-types).
+> 📖 For the tutorial we only need to index `LOG_DATA` receipts, but you can also index `Mint`, `Burn`, `Transfer` and `Call` receipts. Read more about [Supported Event Types](/docs/HyperIndex/fuel#features-supported-on-fuel).
 
 Just a few simple questions left. Let's call our contract `SwayFarm`:
 

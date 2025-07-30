@@ -143,7 +143,7 @@ There are some subtle differences in the syntax of the subgraph and HyperIndex. 
 - Replace Entity.save() with context.Entity.set()
 - Convert to async handler functions
 - Use `await` for loading entities `const x = await context.Entity.get(id)`
-- Use [dynamic contract registration](../HyperIndex/configuration-file#dynamic-contracts) to register contracts
+- Use [dynamic contract registration](../HyperIndex/dynamic-contracts) to register contracts
 
 The below code snippets can give you a basic idea of what this difference might look like.
 
@@ -163,7 +163,10 @@ subscription.position = event.params.tokenId
 subscription.save()
 }
 
-````
+
+```
+
+
 
 </div>
 <div className="col col--6">
@@ -181,7 +184,9 @@ PoolManager.Subscription.handler( async (event, context) => {
 
 context.Subscription.set(entity);
 })
-````
+
+
+```
 
 </div>
 </div>

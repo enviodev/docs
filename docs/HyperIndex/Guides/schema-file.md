@@ -312,8 +312,8 @@ type Token {
 }
 ```
 
-- The `tokens` field in `NftCollection` is a virtual field, populated automatically when querying the API.
-- Set relationships by referencing the related entity's `id`.
+ - The `tokens` field in `NftCollection` is a virtual field, populated automatically when querying the API.
+ - Set relationships in your handlers by assigning `<field>_id` with the related entity's `id`. For example, create or update a `Token` entity with `collection_id: collectionId`.
 
 ---
 
