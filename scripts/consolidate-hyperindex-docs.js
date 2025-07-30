@@ -328,7 +328,15 @@ ${fixedBody}
     const supportedNetworksDir = path.join(sourceDir, "supported-networks");
     if (fs.existsSync(supportedNetworksDir)) {
       const networkFiles = findMarkdownFiles(supportedNetworksDir);
-      for (const networkFile of networkFiles) {
+
+      // Limit to only the first 5 supported network files for HyperIndex complete docs
+      const limitedNetworkFiles = networkFiles.slice(0, 5);
+
+      console.log(
+        `Processing ${limitedNetworkFiles.length} supported network files (limited from ${networkFiles.length} total)`
+      );
+
+      for (const networkFile of limitedNetworkFiles) {
         const relativePath = path.relative(sourceDir, networkFile);
         console.log(`Processing: ${relativePath}`);
 
