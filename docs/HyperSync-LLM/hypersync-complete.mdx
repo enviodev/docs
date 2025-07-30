@@ -11,375 +11,714 @@ This document contains all HyperSync documentation consolidated into a single fi
 
 ---
 
-## Query Structure
+## HyperSync: Ultra-Fast & Flexible Data API
 
-**File:** `HyperFuel/hyperfuel-query.md`
+**File:** `overview.md`
 
-This section is dedicated to giving an exhaustive list of all the fields and query parameters of a HyperFuel query.  HyperFuel is extremely powerful but learning how to craft queries can take some practice.  It is recommended to look at the examples and reference this page.  HyperFuel query structure is the same across clients.
+## What is HyperSync?
 
-# Top-level query structure
-Illustrated as json
+HyperSync is a purpose-built, high-performance data retrieval layer that gives developers unprecedented access to blockchain data. Built from the ground up in Rust, HyperSync serves as an alternative to traditional JSON-RPC endpoints, offering dramatically faster queries and more flexible data access patterns.
 
+:::info HyperSync & HyperIndex
 
-# ReceiptSelection
-The query takes an array of ReceiptSelection objects and returns receipts that match any of the selections.  All fields are optional.
-Below is an exhaustive list of all fields in a ReceiptSelection JSON object.  Reference the [Fuel docs on receipts for field explanations.
+**HyperSync** is Envio's high-performance blockchain data engine that serves as a direct replacement for traditional RPC endpoints, delivering up to 2000x faster data access.
 
+**HyperIndex** is built on top of HyperSync, providing a complete indexing framework with schema management, event handling, and GraphQL APIs.
 
-
-# InputSelection
-The query takes an array of InputSelection objects and returns inputs that match any of the selections.  All fields are optional.
-Below is an exhaustive list of all fields in an InputSelection JSON object.  Reference the Fuel docs on inputs for field explanations.
-
-
-# OutputSelection
-The query takes an array of OutputSelection objects and returns outputs that match any of the selections.  All fields are optional.
-Below is an exhaustive list of all fields in an OutputSelection JSON object.  Reference the Fuel docs on outputs for field explanations.
-
-
-# FieldSelection
-The query takes a FieldSelection JSON object where the user specifies what they want returned from data matched by their `ReceiptSelection`, `OutputSelection`, and `InputSelection`.  There is no `BlockSelection` or `TransactionSelection` because the query returns all blocks and transactions that include the data you specified in your `ReceiptSelection`, `OutputSelection`, or `InputSelection`.
-
-For best performance, select a minimal amount of fields.
-
-*Important note:* all fields draw inspiration from Fuel's graphql schema.  Mainly Blocks, Transactions, Receipts, Inputs, and Outputs.  Enums of each type (ex: Receipt has 12 different types, two of which are Log and LogData, Input has 3: InputCoin, InputContract, InputMessage, and Output has 5: CoinOutput, ContractOutput, ChangeOutput, VariableOutput, ContractCreated) are flattened into the parent type.  This is why  multiple fields on any returned Receipt, Input, or Output might be null; it's not a field on all possible enums of that type, so null is inserted.
-
-All fields are optional.  Below is an exhaustive list of all fields in a FieldSelection JSON object.
-
-
----
-
-## Hyperfuel
-
-**File:** `HyperFuel/hyperfuel.md`
-
-HyperSync is a high-performance data node and accelerated data query layer that powers Envio’s Indexing framework, HyperIndex, for up to 1000x faster data retrieval than standard RPC methods.
-
-HyperFuel is HyperSync adapted for the Fuel Network and is exposed as a low-level API for developers and data analysts to create flexible, high-speed queries for all fuel data.
-
-Users can interact with the HyperFuel in Rust, Python, NodeJS clients, or directly via the JSON API to extract data into parquet files, arrow format, or as typed data. Client examples are listed furhter below.
-
-Using HyperFuel, application developers can easily sync and search large datasets in a few minutes. HyperFuel is an ideal solution for indexers, block explorers, data analysts, bridges, and other applications or use cases focused on performance.
-
-You can integrate with HyperFuel using any of our clients:
-
-- Rust: https://github.com/enviodev/hyperfuel-client-rust
-- Python: https://github.com/enviodev/hyperfuel-client-python
-- Nodejs: https://github.com/enviodev/hyperfuel-client-node
-- JSON API: https://github.com/enviodev/hyperfuel-json-api
-
-
-:::info
-HyperFuel supports Fuel mainnet and testnet: 
-Mainnet: https://fuel.hypersync.xyz 
-Testnet: https://fuel-testnet.hypersync.xyz
+Use HyperSync directly when you need raw blockchain data at maximum speed, or use HyperIndex when you need a full-featured indexing solution.
 :::
 
+## The Problem HyperSync Solves
 
-## Example usage
+Traditional blockchain data access through JSON-RPC faces several limitations:
 
-Below is an example of a Hyperfuel query in each of our clients searching the first 1,300,000 blocks for all `input` objects of a specific `asset-id`. This example returns 10,543 inputs in around 100ms - not including latency.
+- **Speed constraints**: Retrieving large amounts of historical data can take days
+- **Query flexibility**: Complex data analysis requires many separate calls
+- **Cost inefficiency**: Expensive for data-intensive applications
 
-## Rust (repo)
+## Key Benefits
+
+- **Exceptional Performance**: Retrieve and process blockchain data up to 1000x faster than traditional RPC methods
+- **Comprehensive Coverage**: Access data across 70+ EVM chains and Fuel, with new networks added regularly
+- **Flexible Query Capabilities**: Filter, select, and process exactly the data you need with powerful query options
+- **Cost Efficiency**: Dramatically reduce infrastructure costs for data-intensive applications
+- **Simple Integration**: Client libraries available for Python, Rust, Node.js, and Go
+
+## Performance Benchmarks
+
+HyperSync delivers transformative performance compared to traditional methods:
+
+| Task                                             | Traditional RPC | HyperSync | Improvement   |
+| ------------------------------------------------ | --------------- | --------- | ------------- |
+| Scan Arbitrum blockchain for sparse log data     | Hours/Days      | 2 seconds | ~2000x faster |
+| Fetch all Uniswap v3 PoolCreated events ethereum | Hours           | Seconds   | ~500x faster  |
+
+## Use Cases
+
+HyperSync powers a wide range of blockchain applications, enabling developers to build tools that would be impractical with traditional data access methods:
+
+### General Applications
+
+- **Indexers**: Build high-performance data indexers with minimal infrastructure
+- **Data Analytics**: Perform complex on-chain analysis in seconds instead of days
+- **Block Explorers**: Create responsive explorers with comprehensive data access
+- **Monitoring Tools**: Track blockchain activity with near real-time updates
+- **Cross-chain Applications**: Access unified data across multiple networks
+- **ETL Pipelines**: Create pipelines to extract and save data fast
+
+### Powered by HyperSync
+
+#### HyperIndex
+
+- **100x faster blockchain indexing** across 70+ EVM chains and Fuel
+- **Powers 100 plus applications** like v4.xyz analytics
+
+#### ChainDensity.xyz
+
+- **Fast transaction/event density analysis** for any address
+- **Generates insights in seconds** that would take hours with traditional methods
+
+#### Scope.sh
+
+- **Ultra-fast Account Abstraction (AA) focused block explorer**
+- **Fast historical data retrieval** with minimal latency
+
+#### LogTUI
+
+- **Terminal-based UI** for finding all historical blockchain events
+- **Built-in presets** for 20+ protocols (Uniswap, Chainlink, Aave, ENS, etc.)
+- **Try it**: `pnpx logtui aave arbitrum` to track Aave events on Arbitrum in your terminal
+
+## See HyperSync in Action
 
 
 
----
+## Next Steps
 
-## Hyperrpc Url Endpoints
-
-**File:** `HyperRPC/hyperrpc-url-endpoints.md`
+- **Try the Quick Start Guide** to get up and running in minutes
+- Get an API Token to access HyperSync services
+- View Supported Networks to see available chains
+- Check Client Documentation for language-specific guides
+- Join our Discord for support and updates
 
 :::note
-Please note we are rapidly adding new supported networks. If you don't see your network here or would like us to add a network to HyperRPC, pop us a message in Discord.
+Our documentation is continuously improving! If you have questions or need assistance, please reach out in our Discord community.
 :::
-
-:::caution API Tokens Recommended
-Requests without an API token will be rate limited starting **June 2025** (following the same schedule as HyperSync). Append your token to the endpoint URL to maintain full speed:
-
-
-:::
-
-Here is a table of the currently supported networks on HyperRPC and their respective URL endpoints.
-
-
-| Network Name         | Network ID | URL                                                                                 | Supports Traces |
-| -------------------- | ---------- | ----------------------------------------------------------------------------------- | --------------- |
-| Abstract             | 2741       | https://abstract.rpc.hypersync.xyz or https://2741.rpc.hypersync.xyz                |                 |
-| Arbitrum             | 42161      | https://arbitrum.rpc.hypersync.xyz or https://42161.rpc.hypersync.xyz               |                 |
-| Arbitrum Nova        | 42170      | https://arbitrum-nova.rpc.hypersync.xyz or https://42170.rpc.hypersync.xyz          |                 |
-| Arbitrum Sepolia     | 421614     | https://arbitrum-sepolia.rpc.hypersync.xyz or https://421614.rpc.hypersync.xyz      |                 |
-| Aurora               | 1313161554 | https://aurora.rpc.hypersync.xyz or https://1313161554.rpc.hypersync.xyz            |                 |
-| Aurora Turbo         | 1313161567 | https://aurora-turbo.rpc.hypersync.xyz or https://1313161567.rpc.hypersync.xyz      |                 |
-| Avalanche            | 43114      | https://avalanche.rpc.hypersync.xyz or https://43114.rpc.hypersync.xyz              |                 |
-| Base                 | 8453       | https://base.rpc.hypersync.xyz or https://8453.rpc.hypersync.xyz                    |                 |
-| Base Sepolia         | 84532      | https://base-sepolia.rpc.hypersync.xyz or https://84532.rpc.hypersync.xyz           |                 |
-| Berachain            | 80094      | https://berachain.rpc.hypersync.xyz or https://80094.rpc.hypersync.xyz              |                 |
-| Berachain Bartio     | 80084      | https://berachain-bartio.rpc.hypersync.xyz or https://80084.rpc.hypersync.xyz       |                 |
-| Blast                | 81457      | https://blast.rpc.hypersync.xyz or https://81457.rpc.hypersync.xyz                  |                 |
-| Blast Sepolia        | 168587773  | https://blast-sepolia.rpc.hypersync.xyz or https://168587773.rpc.hypersync.xyz      |                 |
-| Boba                 | 288        | https://boba.rpc.hypersync.xyz or https://288.rpc.hypersync.xyz                     |                 |
-| Bsc                  | 56         | https://bsc.rpc.hypersync.xyz or https://56.rpc.hypersync.xyz                       |                 |
-| Bsc Testnet          | 97         | https://bsc-testnet.rpc.hypersync.xyz or https://97.rpc.hypersync.xyz               |                 |
-| Celo                 | 42220      | https://celo.rpc.hypersync.xyz or https://42220.rpc.hypersync.xyz                   |                 |
-| Chainweb Testnet 20  | 5920       | https://chainweb-testnet-20.rpc.hypersync.xyz or https://5920.rpc.hypersync.xyz     |                 |
-| Chainweb Testnet 21  | 5921       | https://chainweb-testnet-21.rpc.hypersync.xyz or https://5921.rpc.hypersync.xyz     |                 |
-| Chiliz               | 88888      | https://chiliz.rpc.hypersync.xyz or https://88888.rpc.hypersync.xyz                 |                 |
-| Citrea Testnet       | 5115       | https://citrea-testnet.rpc.hypersync.xyz or https://5115.rpc.hypersync.xyz          |                 |
-| Curtis               | 33111      | https://curtis.rpc.hypersync.xyz or https://33111.rpc.hypersync.xyz                 |                 |
-| Cyber                | 7560       | https://cyber.rpc.hypersync.xyz or https://7560.rpc.hypersync.xyz                   |                 |
-| Eth Traces           | 1          | https://eth-traces.rpc.hypersync.xyz or https://1-traces.rpc.hypersync.xyz          | ✔️              |
-| Ethereum Mainnet     | 1          | https://eth.rpc.hypersync.xyz or https://1.rpc.hypersync.xyz                        |                 |
-| Fantom               | 250        | https://fantom.rpc.hypersync.xyz or https://250.rpc.hypersync.xyz                   |                 |
-| Flare                | 14         | https://flare.rpc.hypersync.xyz or https://14.rpc.hypersync.xyz                     |                 |
-| Fraxtal              | 252        | https://fraxtal.rpc.hypersync.xyz or https://252.rpc.hypersync.xyz                  |                 |
-| Fuji                 | 43113      | https://fuji.rpc.hypersync.xyz or https://43113.rpc.hypersync.xyz                   |                 |
-| Galadriel Devnet     | 696969     | https://galadriel-devnet.rpc.hypersync.xyz or https://696969.rpc.hypersync.xyz      |                 |
-| Gnosis               | 100        | https://gnosis.rpc.hypersync.xyz or https://100.rpc.hypersync.xyz                   |                 |
-| Gnosis Chiado        | 10200      | https://gnosis-chiado.rpc.hypersync.xyz or https://10200.rpc.hypersync.xyz          |                 |
-| Gnosis Traces        | 100        | https://gnosis-traces.rpc.hypersync.xyz or https://100-traces.rpc.hypersync.xyz     |                 |
-| Harmony Shard 0      | 1666600000 | https://harmony-shard-0.rpc.hypersync.xyz or https://1666600000.rpc.hypersync.xyz   |                 |
-| Holesky              | 17000      | https://holesky.rpc.hypersync.xyz or https://17000.rpc.hypersync.xyz                |                 |
-| Hyperliquid          | 645749     | https://hyperliquid.rpc.hypersync.xyz or https://645749.rpc.hypersync.xyz           |                 |
-| Ink                  | 57073      | https://ink.rpc.hypersync.xyz or https://57073.rpc.hypersync.xyz                    |                 |
-| Kroma                | 255        | https://kroma.rpc.hypersync.xyz or https://255.rpc.hypersync.xyz                    |                 |
-| Linea                | 59144      | https://linea.rpc.hypersync.xyz or https://59144.rpc.hypersync.xyz                  |                 |
-| Lisk                 | 1135       | https://lisk.rpc.hypersync.xyz or https://1135.rpc.hypersync.xyz                    |                 |
-| Lukso                | 42         | https://lukso.rpc.hypersync.xyz or https://42.rpc.hypersync.xyz                     |                 |
-| Lukso Testnet        | 4201       | https://lukso-testnet.rpc.hypersync.xyz or https://4201.rpc.hypersync.xyz           |                 |
-| Manta                | 169        | https://manta.rpc.hypersync.xyz or https://169.rpc.hypersync.xyz                    |                 |
-| Mantle               | 5000       | https://mantle.rpc.hypersync.xyz or https://5000.rpc.hypersync.xyz                  |                 |
-| Megaeth Testnet      | 6342       | https://megaeth-testnet.rpc.hypersync.xyz or https://6342.rpc.hypersync.xyz         |                 |
-| Merlin               | 4200       | https://merlin.rpc.hypersync.xyz or https://4200.rpc.hypersync.xyz                  |                 |
-| Metall2              | 1750       | https://metall2.rpc.hypersync.xyz or https://1750.rpc.hypersync.xyz                 |                 |
-| Mev Commit           | 17864      | https://mev-commit.rpc.hypersync.xyz or https://17864.rpc.hypersync.xyz             |                 |
-| Mode                 | 34443      | https://mode.rpc.hypersync.xyz or https://34443.rpc.hypersync.xyz                   |                 |
-| Monad Testnet        | 10143      | https://monad-testnet.rpc.hypersync.xyz or https://10143.rpc.hypersync.xyz          |                 |
-| Moonbase Alpha       | 1287       | https://moonbase-alpha.rpc.hypersync.xyz or https://1287.rpc.hypersync.xyz          |                 |
-| Moonbeam             | 1284       | https://moonbeam.rpc.hypersync.xyz or https://1284.rpc.hypersync.xyz                |                 |
-| Morph                | 2818       | https://morph.rpc.hypersync.xyz or https://2818.rpc.hypersync.xyz                   |                 |
-| Opbnb                | 204        | https://opbnb.rpc.hypersync.xyz or https://204.rpc.hypersync.xyz                    |                 |
-| Optimism             | 10         | https://optimism.rpc.hypersync.xyz or https://10.rpc.hypersync.xyz                  |                 |
-| Optimism Sepolia     | 11155420   | https://optimism-sepolia.rpc.hypersync.xyz or https://11155420.rpc.hypersync.xyz    |                 |
-| Plume                | 98866      | https://plume.rpc.hypersync.xyz or https://98866.rpc.hypersync.xyz                  |                 |
-| Polygon              | 137        | https://polygon.rpc.hypersync.xyz or https://137.rpc.hypersync.xyz                  |                 |
-| Polygon Amoy         | 80002      | https://polygon-amoy.rpc.hypersync.xyz or https://80002.rpc.hypersync.xyz           |                 |
-| Polygon zkEVM        | 1101       | https://polygon-zkevm.rpc.hypersync.xyz or https://1101.rpc.hypersync.xyz           |                 |
-| Rootstock            | 30         | https://rootstock.rpc.hypersync.xyz or https://30.rpc.hypersync.xyz                 |                 |
-| Saakuru              | 7225878    | https://saakuru.rpc.hypersync.xyz or https://7225878.rpc.hypersync.xyz              |                 |
-| Scroll               | 534352     | https://scroll.rpc.hypersync.xyz or https://534352.rpc.hypersync.xyz                |                 |
-| Sepolia              | 11155111   | https://sepolia.rpc.hypersync.xyz or https://11155111.rpc.hypersync.xyz             |                 |
-| Shimmer Evm          | 148        | https://shimmer-evm.rpc.hypersync.xyz or https://148.rpc.hypersync.xyz              |                 |
-| Soneium              | 1868       | https://soneium.rpc.hypersync.xyz or https://1868.rpc.hypersync.xyz                 |                 |
-| Sonic                | 146        | https://sonic.rpc.hypersync.xyz or https://146.rpc.hypersync.xyz                    |                 |
-| Sophon               | 50104      | https://sophon.rpc.hypersync.xyz or https://50104.rpc.hypersync.xyz                 |                 |
-| Sophon Testnet       | 531050104  | https://sophon-testnet.rpc.hypersync.xyz or https://531050104.rpc.hypersync.xyz     |                 |
-| Superseed            | 5330       | https://superseed.rpc.hypersync.xyz or https://5330.rpc.hypersync.xyz               |                 |
-| Swell                | 1923       | https://swell.rpc.hypersync.xyz or https://1923.rpc.hypersync.xyz                   |                 |
-| Tangle               | 5845       | https://tangle.rpc.hypersync.xyz or https://5845.rpc.hypersync.xyz                  |                 |
-| Taraxa               | 841        | https://taraxa.rpc.hypersync.xyz or https://841.rpc.hypersync.xyz                   |                 |
-| Unichain             | 130        | https://unichain.rpc.hypersync.xyz or https://130.rpc.hypersync.xyz                 |                 |
-| Unichain Sepolia     | 1301       | https://unichain-sepolia.rpc.hypersync.xyz or https://1301.rpc.hypersync.xyz        |                 |
-| Worldchain           | 480        | https://worldchain.rpc.hypersync.xyz or https://480.rpc.hypersync.xyz               |                 |
-| Xdc                  | 50         | https://xdc.rpc.hypersync.xyz or https://50.rpc.hypersync.xyz                       |                 |
-| Xdc Testnet          | 51         | https://xdc-testnet.rpc.hypersync.xyz or https://51.rpc.hypersync.xyz               |                 |
-| Zeta                 | 7000       | https://zeta.rpc.hypersync.xyz or https://7000.rpc.hypersync.xyz                    |                 |
-| Zircuit              | 48900      | https://zircuit.rpc.hypersync.xyz or https://48900.rpc.hypersync.xyz                |                 |
-| ZKsync               | 324        | https://zksync.rpc.hypersync.xyz or https://324.rpc.hypersync.xyz                   |                 |
-| Zora                 | 7777777    | https://zora.rpc.hypersync.xyz or https://7777777.rpc.hypersync.xyz                 |                 |
 
 ---
 
-## HyperRPC: Ultra-Fast Read-Only RPC
+## HyperSync Quickstart
 
-**File:** `HyperRPC/overview-hyperrpc.md`
+**File:** `quickstart.md`
 
-HyperRPC is an extremely fast read-only RPC designed specifically for data-intensive blockchain tasks. Built from the ground up to optimize performance, it offers a simple drop-in solution with dramatic speed improvements over traditional nodes.
+Get up and running with HyperSync in minutes. This guide will help you start accessing blockchain data at unprecedented speeds with minimal setup.
 
-:::info HyperSync vs. HyperRPC
-**For most use cases, we recommend using HyperSync over HyperRPC.**
+## Quickest Start: Try LogTUI
 
-HyperSync provides significantly faster performance and much greater flexibility in how you query and filter blockchain data. Behind the scenes, HyperRPC actually uses HyperSync to fulfill requests.
+Want to see HyperSync in action with zero setup? Try LogTUI, a terminal-based blockchain event viewer:
 
-**When to use HyperRPC:**
+```bash
+# Monitor Aave events on Arbitrum (no installation needed)
+pnpx logtui aave arbitrum
+```
 
-- When you need a simple drop-in replacement for existing RPC-based code
-- When you don't have time for a deeper integration
-- When you're working with tools that expect standard JSON-RPC interfaces
+## Clone the Quickstart Repository
 
-**When to use HyperSync:**
+The fastest way to get started is to clone our minimal example repository:
 
-- When performance is critical (HyperSync is much faster)
-- When you need advanced filtering capabilities
-- When you want more control over data formatting and field selection
-- For new projects where you're designing the data access layer
-  :::
+```bash
+git clone https://github.com/enviodev/hypersync-quickstart.git
+cd hypersync-quickstart
+```
 
-## Table of Contents
+This repository contains everything you need to start streaming blockchain data using HyperSync.
 
-- What is HyperRPC?
-- Performance Advantages
-- Supported Methods
-- Supported Networks
-- Getting Started
-- Development Status
+## Install Dependencies
 
-## What is HyperRPC?
+```bash
+# Using pnpm (recommended)
+pnpm install
+```
 
-HyperRPC is a specialized JSON-RPC endpoint that focuses exclusively on **read operations** to deliver exceptional performance. By optimizing specifically for data retrieval workflows, HyperRPC can significantly outperform traditional nodes for data-intensive applications.
+## Choose Your Adventure
 
-Key characteristics:
+The repository includes three different script options, all of which retrieve Uniswap V3 events from Ethereum mainnet:
 
-- **Read-only**: Optimized for data retrieval (cannot send transactions)
-- **Drop-in compatible**: Works with existing tooling that uses standard RPC methods
-- **Specialized**: Designed specifically for data-intensive operations like `eth_getLogs`
+```bash
+# Run minimal version (recommended for beginners)
+node run-simple.js
 
-## Performance Advantages
+# Run full version with progress bar
+node run.js
 
-Early benchmarks show that HyperRPC can deliver up to **5x performance improvement** for data-intensive operations compared to traditional nodes like `geth`, `erigon`, and `reth`.
+# Run version with terminal UI
+node run-tui.js
+```
 
-This performance boost is particularly noticeable for:
+That's it! You're now streaming data directly from Ethereum mainnet through HyperSync! (TUI version below)
 
-- Historical data queries
-- Log event filtering
-- Block and transaction retrievals
-- Analytics applications
+!HyperSync in Action
 
-## Supported Methods
+## Understanding the Code
 
-HyperRPC currently supports the following Ethereum JSON-RPC methods:
+Let's look at the core concepts in the example code:
 
-| Category             | Methods                                                                                                                                                 |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Chain Data**       | `eth_chainId``eth_blockNumber`                                                                                                                    |
-| **Block Data**       | `eth_getBlockByNumber``eth_getBlockByHash``eth_getBlockReceipts`                                                                            |
-| **Transaction Data** | `eth_getTransactionByHash``eth_getTransactionByBlockHashAndIndex``eth_getTransactionByBlockNumberAndIndex``eth_getTransactionReceipt` |
-| **Event Logs**       | `eth_getLogs`                                                                                                                                           |
-| **Traces**           | `trace_block` (only on select chains)                                                                                  |
+### 1. Initialize the Client
+
+```javascript
+
+// Initialize Hypersync client
+const client = HypersyncClient.new({
+  url: "http://eth.hypersync.xyz", // Change this URL for different networks
+});
+```
+
+> **Note:** To connect to different networks, see the Supported Networks page for a complete list of available URLs.
+
+### 2. Build Your Query
+
+The heart of HyperSync is the query object, which defines what data you want to retrieve:
+
+```javascript
+let query = {
+  fromBlock: 0, // Start block (0 = genesis)
+  logs: [
+    // Filter for specific events
+    {
+      topics: [topic0_list], // Event signatures we're interested in
+    },
+  ],
+  fieldSelection: {
+    // Only return fields we need
+    log: [
+      LogField.Data,
+      LogField.Address,
+      LogField.Topic0,
+      LogField.Topic1,
+      LogField.Topic2,
+      LogField.Topic3,
+    ],
+  },
+  joinMode: JoinMode.JoinTransactions, // How to join related data
+};
+```
+
+### 3. Stream and Process Results
+
+```javascript
+// Start streaming events
+const stream = await client.stream(query, {});
+
+while (true) {
+  const res = await stream.recv();
+
+  // Process results
+  if (res.data && res.data.logs) {
+    // Do something with the logs
+    totalEvents += res.data.logs.length;
+  }
+
+  // Update starting block for next batch
+  if (res.nextBlock) {
+    query.fromBlock = res.nextBlock;
+  }
+}
+```
+
+## Key Concepts for Building Queries
+
+### Filtering Data
+
+HyperSync lets you filter blockchain data in several ways:
+
+- **Log filters**: Find specific events by contract address and event signature
+- **Transaction filters**: Filter by sender/receiver addresses, method signatures, etc.
+- **Trace filters**: Access internal transactions and state changes (only supported on select networks like Ethereum Mainnet)
+- **Block filters**: Get data from specific block ranges
+
+### Field Selection
+
+One of HyperSync's most powerful features is the ability to retrieve only the fields you need:
+
+```javascript
+fieldSelection: {
+  // Block fields
+  block: [BlockField.Number, BlockField.Timestamp],
+
+  // Log fields
+  log: [LogField.Address, LogField.Topic0, LogField.Data],
+
+  // Transaction fields
+  transaction: [TransactionField.From, TransactionField.To, TransactionField.Value],
+}
+```
+
+This selective approach dramatically reduces unnecessary data transfer and improves performance.
+
+### Join Modes
+
+HyperSync allows you to control how related data is joined:
+
+- **JoinNothing**: Return only exact matches
+- **JoinAll**: Return matches plus all related objects
+- **JoinTransactions**: Return matches plus their transactions
+- **Default**: Return a reasonable set of related objects
+
+## Examples
+
+### Finding Uniswap V3 Events
+
+This example (from the quickstart repo) streams all Uniswap V3 events from the beginning of Ethereum:
+
+```javascript
+
+import {
+  HypersyncClient,
+  LogField,
+  JoinMode,
+} from "@envio-dev/hypersync-client";
+
+// Define Uniswap V3 event signatures
+const event_signatures = [
+  "PoolCreated(address,address,uint24,int24,address)",
+  "Burn(address,int24,int24,uint128,uint256,uint256)",
+  "Initialize(uint160,int24)",
+  "Mint(address,address,int24,int24,uint128,uint256,uint256)",
+  "Swap(address,address,int256,int256,uint160,uint128,int24)",
+];
+
+// Create topic0 hashes from event signatures
+const topic0_list = event_signatures.map((sig) => keccak256(toHex(sig)));
+
+// Initialize Hypersync client
+const client = HypersyncClient.new({
+  url: "http://eth.hypersync.xyz",
+});
+
+// Define query for Uniswap V3 events
+let query = {
+  fromBlock: 0,
+  logs: [
+    {
+      topics: [topic0_list],
+    },
+  ],
+  fieldSelection: {
+    log: [
+      LogField.Data,
+      LogField.Address,
+      LogField.Topic0,
+      LogField.Topic1,
+      LogField.Topic2,
+      LogField.Topic3,
+    ],
+  },
+  joinMode: JoinMode.JoinTransactions,
+};
+
+const main = async () => {
+  console.log("Starting Uniswap V3 event scan...");
+  const stream = await client.stream(query, {});
+
+  // Process stream...
+};
+
+main();
+```
 
 ## Supported Networks
 
-HyperRPC is available across numerous EVM-compatible networks. For the most up-to-date list of supported chains, please see our Supported Networks page.
+HyperSync supports 70+ EVM-compatible networks. You can change networks by simply changing the client URL:
 
-## Getting Started
+```javascript
+// Ethereum Mainnet
+const client = HypersyncClient.new({ url: "http://eth.hypersync.xyz" });
 
-To start using HyperRPC:
+// Arbitrum
+const client = HypersyncClient.new({ url: "http://arbitrum.hypersync.xyz" });
 
-1. **Get Access**:
+// Base
+const client = HypersyncClient.new({ url: "http://base.hypersync.xyz" });
+```
 
-   - Visit our Supported Networks page to find all available HyperRPC endpoints
-   - Each network has a ready-to-use URL that you can start using immediately
+See the Supported Networks page for a complete list.
 
-2. **Add Your API Token** (recommended):
+## Using LogTUI
 
-   - Requests without an API token will be rate limited starting **June 2025** (same timeline as HyperSync).
-   - Append your token to the endpoint URL. Example:
+This quickstart repository powers LogTUI, a terminal-based blockchain event viewer built on HyperSync. LogTUI lets you monitor events from popular protocols across multiple chains with zero configuration.
 
-     
+Try it with a single command:
 
-   - If you don't have a token yet, you can generate one through the Envio Dashboard.
+```bash
+# Monitor Uniswap events on unichain
+pnpx logtui uniswap-v4 unichain
 
-3. **Use Like a Standard RPC**:
+# Monitor Aave events on Arbitrum
+pnpx logtui aave arbitrum
 
-   
+# See all available options
+pnpx logtui --help
+```
 
-4. **Provide Feedback**:
-   Your testing and feedback are incredibly valuable as we continue to improve HyperRPC. Let us know about your experience in our Discord.
+LogTUI supports scanning historically for any events across all networks supported by HyperSync.
 
-## Development Status
+## Next Steps
 
-:::caution Important Notice
+You're now ready to build with HyperSync! Here are some resources for diving deeper:
 
-- HyperRPC is under active development to further improve performance and stability
-- It is designed for read-only operations and does not support all standard RPC methods
-- It has not yet undergone formal security audits
-- We welcome questions and feedback in our Discord
-  :::
+- Client Libraries - Explore language-specific clients
+- Query Reference - Learn advanced query techniques
+- curl Examples - Test queries directly in your terminal
+- Complete Getting Started Guide - More comprehensive guidance
+
+## API Token for Production Use
+
+For development, you can use HyperSync without an API token. For production applications, you'll need to get an API token and update your client initialization:
+
+```javascript
+const client = HypersyncClient.new({
+  url: "http://eth.hypersync.xyz",
+  bearerToken: "your-api-token-here",
+});
+```
+
+Congratulations! You've taken your first steps with HyperSync, bringing ultra-fast blockchain data access to your applications. Happy building!
 
 ---
 
-## Api Tokens
+## Getting Started with HyperSync
 
-**File:** `api-tokens.mdx`
+**File:** `hypersync-usage.md`
 
+HyperSync is Envio's high-performance blockchain data engine that provides up to 2000x faster access to blockchain data compared to traditional RPC endpoints. This guide will help you understand how to effectively use HyperSync in your applications.
 
+## Quick Start Video
 
-# API Tokens for HyperSync
-
-## Overview
-
-API tokens provide authenticated access to HyperSync services, enabling enhanced capabilities and usage tracking. While currently optional, they will become mandatory in the future and offer significant advantages for serious usage.
-
-**Starting from 21 May 2025**, you will still be able to use HyperSync without API tokens, but **rate limits will be applied**. The service will remain **free to use until mid-June**. From **mid-June onwards**, we will introduce a set of **tiered packages based on usage**. Indexers deployed to our hosted service will have special access to HyperSync that does not require a custom API token.
-
-## Table of Contents
-
-- Benefits of Using API Tokens
-- Generating API Tokens
-- Implementation Guide
-- Security Best Practices
-
-## Benefits of Using API Tokens
-
-Using API tokens with HyperSync provides several advantages:
-
-- **Dedicated Resources**: Access to reserved capacity and bandwidth
-- **Performance Guarantees**: Higher quality of service with better reliability
-- **Usage Analytics**: Track and monitor your consumption patterns
-- **Future-Proofing**: Early adoption before tokens become mandatory
-- **Enhanced Support**: Better visibility for troubleshooting assistance
-
-## Generating API Tokens
-
-You can generate API tokens through the Envio Dashboard:
-
-1. Visit https://envio.dev/app/api-tokens
-2. Sign in to your account (or create one if you don't have one)
-3. Follow the prompts to create a new token
-4. Copy and securely store your token
-
-## Implementation Guide
-
-To use an API token, pass it as a `bearer_token` when creating a HyperSync client:
-
-
-  
+Watch this quick tutorial to see HyperSync in action:
 
 
 
-  
-  
+## Core Concepts
 
+HyperSync revolves around two main concepts:
 
+1. **Queries** - Define what blockchain data you want to retrieve
+2. **Output Configuration** - Specify how you want that data formatted and delivered
 
-  
-  
+Think of queries as your data filter and the output configuration as your data processor.
 
+## Building Effective Queries
 
+Queries are the heart of working with HyperSync. They allow you to filter for specific blocks, logs, transactions, and traces.
 
-  
+### Query Structure
 
+A basic HyperSync query contains:
 
-## Understanding Usage
+```python
+query = hypersync.Query(
+    from_block=12345678,               # Required: Starting block number
+    to_block=12345778,                 # Optional: Ending block number
+    field_selection=field_selection,   # Required: What fields to return
+    logs=[log_selection],              # Optional: Filter for specific logs
+    transactions=[tx_selection],       # Optional: Filter for specific transactions
+    traces=[trace_selection],          # Optional: Filter for specific traces
+    include_all_blocks=False,          # Optional: Include blocks with no matches
+    max_num_blocks=1000,               # Optional: Limit number of blocks processed
+    max_num_transactions=5000,         # Optional: Limit number of transactions processed
+    max_num_logs=5000,                 # Optional: Limit number of logs processed
+    max_num_traces=5000                # Optional: Limit number of traces processed
+)
+```
 
-To understand your current month's usage, visit https://envio.dev/app/api-tokens. Usage is composed of two main components:
+### Field Selection
 
-- **Number of Requests**: The total count of API requests made.
-- **Credits**: A comprehensive calculation that takes into account multiple factors including data bandwidth, disk read operations, and other resource utilization metrics. This provides the most accurate representation of actual service usage. We're happy to provide more detailed breakdowns of the credit calculation upon request.
+Field selection allows you to specify exactly which data fields you want to retrieve. This improves performance by only fetching what you need:
 
-## Security Best Practices
+```python
+field_selection = hypersync.FieldSelection(
+    # Block fields you want to retrieve
+    block=[
+        BlockField.NUMBER,
+        BlockField.TIMESTAMP,
+        BlockField.HASH
+    ],
 
-When working with API tokens:
+    # Transaction fields you want to retrieve
+    transaction=[
+        TransactionField.HASH,
+        TransactionField.FROM,
+        TransactionField.TO,
+        TransactionField.VALUE
+    ],
 
-- **Never commit tokens to git repositories**
-- **Use environment variables** to store tokens instead of hardcoding
-- **Add token files like `.env` to your `.gitignore**
-- **Rotate tokens periodically** for enhanced security
-- **Limit token sharing** to only those who require access
+    # Log fields you want to retrieve
+    log=[
+        LogField.ADDRESS,
+        LogField.TOPIC0,
+        LogField.TOPIC1,
+        LogField.TOPIC2,
+        LogField.TOPIC3,
+        LogField.DATA,
+        LogField.TRANSACTION_HASH
+    ],
 
+    # Trace fields you want to retrieve (if applicable)
+    trace=[
+        TraceField.ACTION_FROM,
+        TraceField.ACTION_TO,
+        TraceField.ACTION_VALUE
+    ]
+)
+```
 
+### Filtering for Specific Data
 
-This approach keeps your tokens secure while making them available to your application at runtime.
+For most use cases, you'll want to filter for specific logs, transactions, or traces:
+
+#### Log Selection Example
+
+```python
+# Filter for Transfer events from USDC contract
+log_selection = hypersync.LogSelection(
+    address=["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"],  # USDC contract
+    topics=[
+        ["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"]  # Transfer event signature
+    ]
+)
+```
+
+#### Transaction Selection Example
+
+```python
+# Filter for transactions to the Uniswap V3 router
+tx_selection = hypersync.TransactionSelection(
+    to=["0xE592427A0AEce92De3Edee1F18E0157C05861564"]  # Uniswap V3 Router
+)
+```
+
+## Processing the Results
+
+HyperSync provides multiple ways to process query results:
+
+### Stream to Parquet Files
+
+Parquet is the recommended format for large data sets:
+
+```python
+# Configure output format
+config = hypersync.StreamConfig(
+    hex_output=hypersync.HexOutput.PREFIXED,
+    event_signature="Transfer(address indexed from, address indexed to, uint256 value)"
+)
+
+# Stream results to a Parquet file
+await client.collect_parquet("data_directory", query, config)
+```
+
+### Stream to JSON Files
+
+For smaller datasets or debugging:
+
+```python
+# Stream results to JSON
+await client.collect_json("output.json", query, config)
+```
+
+### Process Data in Memory
+
+For immediate processing:
+
+```python
+# Process data directly
+async for result in client.stream(query, config):
+    for log in result.logs:
+        # Process each log
+        print(f"Transfer from {log.event_params['from']} to {log.event_params['to']}")
+```
+
+## Tips and Best Practices
+
+### Performance Optimization
+
+- **Use Appropriate Batch Sizes**: Adjust batch size based on your chain and use case:
+
+  ```python
+  config = hypersync.ParquetConfig(
+      path="data",
+      hex_output=hypersync.HexOutput.PREFIXED,
+      batch_size=1000000,  # Process 1M blocks at a time
+      concurrency=10,      # Use 10 concurrent workers
+  )
+  ```
+
+- **Enable Trace Logs**: Set `RUST_LOG=trace` to see detailed progress:
+
+  ```bash
+  export RUST_LOG=trace
+  ```
+
+- **Paginate Large Queries**: HyperSync requests have a 5-second time limit. For large data sets, paginate results:
+  ```python
+  current_block = start_block
+  while current_block < end_block:
+      query.from_block = current_block
+      query.to_block = min(current_block + 1000000, end_block)
+      result = await client.collect_parquet("data", query, config)
+      current_block = result.end_block + 1
+  ```
+
+### Network-Specific Considerations
+
+- **High-Volume Networks**: For networks like Ethereum Mainnet, use smaller block ranges or more specific filters
+- **Low-Volume Networks**: For smaller chains, you can process the entire chain in one query
+
+## Complete Example
+
+Here's a complete example that fetches all USDC Transfer events:
+
+```python
+import hypersync
+from hypersync import (
+    LogSelection,
+    LogField,
+    BlockField,
+    FieldSelection,
+    TransactionField,
+    HexOutput
+)
+import asyncio
+
+async def collect_usdc_transfers():
+    # Initialize client
+    client = hypersync.HypersyncClient(
+        hypersync.ClientConfig(
+            url="https://ethereum.hypersync.xyz",
+            bearer_token="your-token-here",  # Get from https://docs.envio.dev/docs/HyperSync/api-tokens
+        )
+    )
+
+    # Define field selection
+    field_selection = hypersync.FieldSelection(
+        block=[BlockField.NUMBER, BlockField.TIMESTAMP],
+        transaction=[TransactionField.HASH],
+        log=[
+            LogField.ADDRESS,
+            LogField.TOPIC0,
+            LogField.TOPIC1,
+            LogField.TOPIC2,
+            LogField.DATA,
+        ]
+    )
+
+    # Define query for USDC transfers
+    query = hypersync.Query(
+        from_block=12000000,
+        to_block=12100000,
+        field_selection=field_selection,
+        logs=[
+            LogSelection(
+                address=["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"],  # USDC contract
+                topics=[
+                    ["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"]  # Transfer signature
+                ]
+            )
+        ]
+    )
+
+    # Configure output
+    config = hypersync.StreamConfig(
+        hex_output=HexOutput.PREFIXED,
+        event_signature="Transfer(address indexed from, address indexed to, uint256 value)"
+    )
+
+    # Collect data to a Parquet file
+    result = await client.collect_parquet("usdc_transfers", query, config)
+    print(f"Processed blocks {query.from_block} to {result.end_block}")
+
+asyncio.run(collect_usdc_transfers())
+```
+
+## Decoding Event Logs
+
+When working with blockchain data, event logs contain encoded data that needs to be properly decoded to extract meaningful information. HyperSync provides powerful decoding capabilities to simplify this process.
+
+### Understanding Log Structure
+
+Event logs in Ethereum have the following structure:
+
+- **Address**: The contract that emitted the event
+- **Topic0**: The event signature hash (keccak256 of the event signature)
+- **Topics 1-3**: Indexed parameters (up to 3)
+- **Data**: Non-indexed parameters packed together
+
+### Using the Decoder
+
+HyperSync's client libraries include a `Decoder` class that can parse these raw logs into structured data:
+
+```javascript
+// Create a decoder with event signatures
+const decoder = Decoder.fromSignatures([
+  "Transfer(address indexed from, address indexed to, uint256 amount)",
+  "Approval(address indexed owner, address indexed spender, uint256 amount)",
+]);
+
+// Decode logs
+const decodedLogs = await decoder.decodeLogs(logs);
+```
+
+### Single vs. Multiple Event Types
+
+HyperSync provides flexibility to decode different types of event logs:
+
+- **Single Event Type**: For processing one type of event (e.g., only Swap events)
+
+  - See complete example: run-decoder.js
+
+- **Multiple Event Types**: For processing different events from the same contract (e.g., Transfer and Approval)
+  - See complete example: run-decoder-multi.js
+
+### Working with Decoded Data
+
+After decoding, you can access the log parameters in a structured way:
+
+- **Indexed parameters**: Available in `decodedLog.indexed` array
+- **Non-indexed parameters**: Available in `decodedLog.body` array
+
+Each parameter object contains:
+
+- **name**: The parameter name from the signature
+- **type**: The Solidity type
+- **val**: The actual value
+
+For example, to access parameters from a Transfer event:
+
+```javascript
+// Access indexed parameters (from, to)
+const from = decodedLog.indexed[0]?.val.toString();
+const to = decodedLog.indexed[1]?.val.toString();
+
+// Access non-indexed parameters (amount)
+const amount = decodedLog.body[0]?.val.toString();
+```
+
+### Benefits of Using the Decoder
+
+- **Type Safety**: Values are properly converted to their corresponding types
+- **Simplified Access**: Direct access to named parameters
+- **Batch Processing**: Decode multiple logs with a single call
+- **Multiple Event Support**: Handle different event types in the same processing pipeline
+
+## Next Steps
+
+Now that you understand the basics of using HyperSync:
+
+- Browse the Python Client or other language-specific clients
+- Learn about advanced query options
+- See example queries for common use cases
+- Get your API token to start building
+
+For detailed API references and examples in other languages, check our client documentation.
 
 ---
 
@@ -433,7 +772,16 @@ The Node.js client provides a TypeScript-first experience for JavaScript develop
 
 ### Installation
 
+```bash
+# Using npm
+npm install @envio-dev/hypersync-client
 
+# Using yarn
+yarn add @envio-dev/hypersync-client
+
+# Using pnpm
+pnpm add @envio-dev/hypersync-client
+```
 
 ## Python Client
 
@@ -448,7 +796,9 @@ The Python client provides a Pythonic interface with full type hinting support.
 
 ### Installation
 
-
+```bash
+pip install hypersync
+```
 
 ## Rust Client
 
@@ -466,7 +816,11 @@ The Rust client provides the most efficient and direct access to HyperSync, with
 
 Add the following to your `Cargo.toml`:
 
-
+```toml
+[dependencies]
+hypersync-client = "0.1"
+tokio = { version = "1", features = ["full"] }
+```
 
 ## Go Client
 
@@ -484,7 +838,9 @@ The Go client provides a native Go interface for accessing HyperSync, with suppo
 
 ### Installation
 
-
+```bash
+go get github.com/enviodev/hypersync-client-go
+```
 
 ## Using API Tokens
 
@@ -538,163 +894,9 @@ Need help getting started or have questions about our clients? Connect with our 
 - GitHub Issues
 - Documentation Feedback
 
+```
 
-
----
-
-## Using curl with HyperSync
-
-**File:** `hypersync-curl-examples.md`
-
-This guide demonstrates how to interact with HyperSync using direct HTTP requests via curl. These examples provide a quick way to explore HyperSync functionality without installing client libraries.
-
-:::info Recommended Approach
-We highly recommend trying these curl examples as they're super quick and easy to run directly in your terminal. It's one of the fastest ways to experience HyperSync's performance firsthand and see just how quickly you can retrieve blockchain data without any setup overhead. Simply copy, paste, and be amazed by the response speed!
-
-While curl requests are technically slower than our client libraries (since they use HTTP rather than binary data transfer protocols), they're still impressively fast and provide an excellent demonstration of HyperSync's capabilities without any installation requirements.
-:::
-
-## Table of Contents
-
-1. Curl vs. Client Libraries
-2. Common Use Cases
-   - ERC-20 Transfers for an Address
-   - Contract Event Logs
-   - Blob Transactions
-   - Token Mint Events
-   - Address Transactions
-   - Transaction Status Filtering
-
-## Curl vs. Client Libraries
-
-When deciding whether to use curl commands or client libraries, consider the following comparison:
-
-### When to Use curl (JSON API)
-
-- **Quick Prototyping**: Test endpoints and explore data structure without setup
-- **Simple Scripts**: Perfect for shell scripts and automation
-- **Language Independence**: When working with languages without HyperSync client libraries
-- **API Exploration**: When learning the HyperSync API capabilities
-
-### When to Use Client Libraries
-
-- **Production Applications**: For stable, maintained codebases
-- **Complex Data Processing**: When working with large datasets or complex workflows
-- **Performance**: Client libraries offer automatic compression and pagination
-- **Error Handling**: Built-in retry mechanisms and better error reporting
-- **Data Formats**: Support for efficient formats like Apache Arrow
-
-## Common Use Cases
-
-### Get All ERC-20 Transfers for an Address
-
-This example filters for all ERC-20 transfer events involving a specific address, either as sender or recipient. Feel free to swap your address into the example.
-
-**What this query does:**
-
-- Filters logs for the Transfer event signature (topic0)
-- Matches when the address appears in either topic1 (sender) or topic2 (recipient)
-- Also includes direct transactions to/from the address
-
-
-
-### Get All Logs for a Smart Contract
-
-This example retrieves all event logs emitted by a specific contract (USDC in this case).
-
-**Key points:**
-
-- Sets `from_block: 0` to scan from the beginning of the chain
-- Uses `next_block` in the response for pagination to fetch subsequent data
-- Includes relevant block, log, and transaction fields
-
-
-
-### Get Blob Data for the Optimism Chain
-
-This example finds blob transactions used by the Optimism chain for data availability.
-
-**Key points:**
-
-- Starts at a relatively recent block (20,000,000)
-- Filters for transactions from the Optimism sequencer address
-- Specifically looks for type 3 (blob) transactions
-- Results can be used to retrieve the actual blob data from Ethereum
-
-
-
-### Get Mint USDC Events
-
-This example identifies USDC token minting events.
-
-**How it works:**
-
-- Filters for the USDC contract address
-- Looks for Transfer events (topic0)
-- Specifically matches when topic1 (from address) is the zero address, indicating a mint
-- Returns detailed information about each mint event
-
-
-
-### Get All Transactions for an Address
-
-This example retrieves all transactions where a specific address is either the sender or receiver.
-
-**Implementation notes:**
-
-- Starts from a specific block (15,362,000) for efficiency
-- Uses two transaction filters in an OR relationship
-- Only includes essential fields in the response
-- Multiple queries may be needed for complete history
-
-
-
-### Get Successful or Failed Transactions
-
-This example shows how to filter transactions based on their status (successful or failed) for recent blocks.
-
-**How it works:**
-
-1. First, query the current chain height
-2. Calculate a starting point (current height minus 10)
-3. Query transactions with status=1 (successful) or status=0 (failed)
-
-
-
----
-
-## HyperSync Preset Queries
-
-**File:** `hypersync-presets.md`
-
-HyperSync's client libraries include helper functions that build common queries. These presets are useful when you need raw blockchain objects without crafting a query manually.
-
-Each preset returns a `Query` object so you can pass it directly to `client.get`, `client.stream`, or `client.collect`.
-
-## Available Presets
-
-### `preset_query_blocks_and_transactions(from_block, to_block)`
-Returns every block and all associated transactions within the supplied block range.
-
-
-
-### `preset_query_blocks_and_transaction_hashes(from_block, to_block)`
-Returns each block in the range along with only the transaction hashes.
-
-### `preset_query_get_logs(addresses, from_block, to_block)`
-Fetches all logs emitted by the provided contract addresses in the given block range.
-
-
-
-### `preset_query_logs(from_block, to_block)`
-Fetches every log across the specified blocks.
-
-### `preset_query_logs_of_event(event_signature, from_block, to_block)`
-Fetches logs for the specified event signature over the block range.
-
-Client libraries for other languages expose the same presets under similar names. See the Python and Node.js example repositories for more details.
-
-Use these helpers whenever you need a quick query without specifying field selections or joins manually.
+```
 
 ---
 
@@ -807,7 +1009,25 @@ HyperSync supports searching from the head of the chain backwards, which is usef
 
 To use reverse search, add the `reverse: true` parameter to your stream call:
 
+```javascript
+// Example of reverse search to get recent transactions
+const receiver = await client.stream(query, { reverse: true });
 
+let count = 0;
+while (true) {
+  let res = await receiver.recv();
+  if (res === null) {
+    break;
+  }
+  for (const tx of res.data.transactions) {
+    console.log(JSON.stringify(tx, null, 2));
+  }
+  count += res.data.transactions.length;
+  if (count >= 20) {
+    break;
+  }
+}
+```
 
 With reverse search, HyperSync starts from the latest block and works backwards, allowing you to efficiently access the most recent blockchain data first.
 
@@ -817,25 +1037,130 @@ A complete HyperSync query can include the following components:
 
 ### Core Query Parameters
 
+```rust
+struct Query {
+    /// The block to start the query from
+    from_block: u64,
 
+    /// The block to end the query at (exclusive)
+    /// If not specified, the query runs until the end of available data
+    to_block: Optional,
+
+    /// Log selection criteria (OR relationship between selections)
+    logs: Array,
+
+    /// Transaction selection criteria (OR relationship between selections)
+    transactions: Array,
+
+    /// Trace selection criteria (OR relationship between selections)
+    traces: Array,
+
+    /// Whether to include all blocks in the requested range
+    /// Default: only return blocks related to matched transactions/logs
+    include_all_blocks: bool,
+
+    /// Fields to include in the response
+    field_selection: FieldSelection,
+
+    /// Maximum results limits (approximate)
+    max_num_blocks: Optional,
+    max_num_transactions: Optional,
+    max_num_logs: Optional,
+    max_num_traces: Optional,
+
+    /// Data relationship model (Default, JoinAll, or JoinNothing)
+    join_mode: JoinMode,
+}
+```
 
 ### Selection Types
 
 #### Log Selection
 
+```rust
+struct LogSelection {
+    /// Contract addresses to match (empty = match all)
+    address: Array,
 
+    /// Topics to match by position (empty = match all)
+    /// Each array element corresponds to a topic position (0-3)
+    /// Within each position, any matching value will satisfy the condition
+    topics: Array>,
+}
+```
 
 #### Transaction Selection
 
+```rust
+struct TransactionSelection {
+    /// Sender addresses (empty = match all)
+    /// Has AND relationship with 'to' field
+    from: Array,
 
+    /// Recipient addresses (empty = match all)
+    /// Has AND relationship with 'from' field
+    to: Array,
+
+    /// Method signatures to match (first 4 bytes of input)
+    sighash: Array,
+
+    /// Transaction status to match (1 = success, 0 = failure)
+    status: Optional,
+
+    /// Transaction types to match (e.g., 0 = legacy, 2 = EIP-1559)
+    type: Array,
+
+    /// Created contract addresses to match
+    contract_address: Array,
+}
+```
 
 #### Trace Selection
 
+```rust
+struct TraceSelection {
+    /// Sender addresses (empty = match all)
+    /// Has AND relationship with 'to' field
+    from: Array,
 
+    /// Recipient addresses (empty = match all)
+    /// Has AND relationship with 'from' field
+    to: Array,
+
+    /// Created contract addresses to match
+    address: Array,
+
+    /// Call types to match (e.g., "call", "delegatecall")
+    call_type: Array,
+
+    /// Reward types to match (e.g., "block", "uncle")
+    reward_type: Array,
+
+    /// Trace types to match (e.g., "call", "create", "suicide", "reward")
+    kind: Array,
+
+    /// Method signatures to match (first 4 bytes of input)
+    sighash: Array,
+}
+```
 
 #### Field Selection
 
+```rust
+struct FieldSelection {
+    /// Block fields to include in response
+    block: Array,
 
+    /// Transaction fields to include in response
+    transaction: Array,
+
+    /// Log fields to include in response
+    log: Array,
+
+    /// Trace fields to include in response
+    trace: Array,
+}
+```
 
 ## Data Schema
 
@@ -847,19 +1172,156 @@ When specifying fields in your query, always use snake_case names (e.g., `block_
 
 ### Block Fields
 
-
+```python
+class BlockField(StrEnum):
+    NUMBER = 'number'               # Block number
+    HASH = 'hash'                   # Block hash
+    PARENT_HASH = 'parent_hash'     # Parent block hash
+    TIMESTAMP = 'timestamp'         # Block timestamp (Unix time)
+    MINER = 'miner'                 # Miner/validator address
+    GAS_LIMIT = 'gas_limit'         # Block gas limit
+    GAS_USED = 'gas_used'           # Total gas used in block
+    BASE_FEE_PER_GAS = 'base_fee_per_gas'  # EIP-1559 base fee
+    # Many more fields available...
+```
 
 ### Transaction Fields
 
+```python
+class TransactionField(StrEnum):
+    # Block-related fields
+    BLOCK_HASH = 'block_hash'           # The Keccak 256-bit hash of the block
+    BLOCK_NUMBER = 'block_number'       # Block number containing the transaction
 
+    # Transaction identifiers
+    HASH = 'hash'                       # Transaction hash (keccak hash of RLP encoded signed transaction)
+    TRANSACTION_INDEX = 'transaction_index' # Index of the transaction in the block
+
+    # Transaction participants
+    FROM = 'from'                       # 160-bit address of the sender
+    TO = 'to'                           # 160-bit address of the recipient (null for contract creation)
+
+    # Gas information
+    GAS = 'gas'                         # Gas limit set by sender
+    GAS_PRICE = 'gas_price'             # Wei paid per unit of gas
+    GAS_USED = 'gas_used'               # Actual gas used by the transaction
+    CUMULATIVE_GAS_USED = 'cumulative_gas_used' # Total gas used in the block up to this transaction
+    EFFECTIVE_GAS_PRICE = 'effective_gas_price' # Sum of base fee and tip paid per unit of gas
+
+    # EIP-1559 fields
+    MAX_PRIORITY_FEE_PER_GAS = 'max_priority_fee_per_gas' # Max priority fee (a.k.a. GasTipCap)
+    MAX_FEE_PER_GAS = 'max_fee_per_gas' # Max fee per gas (a.k.a. GasFeeCap)
+
+    # Transaction data
+    INPUT = 'input'                     # Transaction input data or contract initialization code
+    VALUE = 'value'                     # Amount of ETH transferred in wei
+    NONCE = 'nonce'                     # Number of transactions sent by the sender
+
+    # Signature fields
+    V = 'v'                             # Replay protection value (based on chain_id)
+    R = 'r'                             # The R field of the signature
+    S = 's'                             # The S field of the signature
+    Y_PARITY = 'y_parity'               # Signature Y parity
+    CHAIN_ID = 'chain_id'               # Chain ID for replay protection (EIP-155)
+
+    # Contract-related fields
+    CONTRACT_ADDRESS = 'contract_address' # Address of created contract (for contract creation txs)
+
+    # Transaction result fields
+    STATUS = 'status'                   # Success (1) or failure (0)
+    LOGS_BLOOM = 'logs_bloom'           # Bloom filter for logs produced by this transaction
+    ROOT = 'root'                       # State root (pre-Byzantium)
+
+    # EIP-2930 fields
+    ACCESS_LIST = 'access_list'         # List of addresses and storage keys to pre-warm
+
+    # EIP-4844 (blob transactions) fields
+    MAX_FEE_PER_BLOB_GAS = 'max_fee_per_blob_gas' # Max fee per data gas (blob fee cap)
+    BLOB_VERSIONED_HASHES = 'blob_versioned_hashes' # List of blob versioned hashes
+
+    # Transaction type
+    KIND = 'type'                       # Transaction type (0=legacy, 1=EIP-2930, 2=EIP-1559, 3=EIP-4844, 4=EIP-7702) # note - in old versions of the clients this was called 'kind', in newer versions its called 'type'
+
+    # L2-specific fields (for rollups)
+    L1_FEE = 'l1_fee'                   # Fee for L1 data (L1GasPrice × L1GasUsed)
+    L1_GAS_PRICE = 'l1_gas_price'       # Gas price on L1
+    L1_GAS_USED = 'l1_gas_used'         # Amount of gas consumed on L1
+    L1_FEE_SCALAR = 'l1_fee_scalar'     # Multiplier for L1 fee calculation
+    GAS_USED_FOR_L1 = 'gas_used_for_l1' # Gas spent on L1 calldata in L2 gas units
+```
 
 ### Log Fields
 
+```python
+class LogField(StrEnum):
+    # Log identification
+    LOG_INDEX = 'log_index'             # Index of the log in the block
+    TRANSACTION_INDEX = 'transaction_index' # Index of the transaction in the block
 
+    # Transaction information
+    TRANSACTION_HASH = 'transaction_hash' # Hash of the transaction that created this log
+
+    # Block information
+    BLOCK_HASH = 'block_hash'           # Hash of the block containing this log
+    BLOCK_NUMBER = 'block_number'       # Block number containing this log
+
+    # Log content
+    ADDRESS = 'address'                 # Contract address that emitted the event
+    DATA = 'data'                       # Non-indexed data from the event
+
+    # Topics (indexed parameters)
+    TOPIC0 = 'topic0'                   # Event signature hash
+    TOPIC1 = 'topic1'                   # First indexed parameter
+    TOPIC2 = 'topic2'                   # Second indexed parameter
+    TOPIC3 = 'topic3'                   # Third indexed parameter
+
+    # Reorg information
+    REMOVED = 'removed'                 # True if log was removed due to chain reorganization
+```
 
 ### Trace Fields
 
+```python
+class TraceField(StrEnum):
+    # Trace identification
+    TRANSACTION_HASH = 'transaction_hash'   # Hash of the transaction
+    TRANSACTION_POSITION = 'transaction_position' # Index of the transaction in the block
+    SUBTRACES = 'subtraces'                 # Number of sub-traces created during execution
+    TRACE_ADDRESS = 'trace_address'         # Array indicating position in the trace tree
 
+    # Block information
+    BLOCK_HASH = 'block_hash'               # Hash of the block containing this trace
+    BLOCK_NUMBER = 'block_number'           # Block number containing this trace
+
+    # Transaction participants
+    FROM = 'from'                           # Address of the sender
+    TO = 'to'                               # Address of the recipient (null for contract creation)
+
+    # Value and gas
+    VALUE = 'value'                         # ETH value transferred (in wei)
+    GAS = 'gas'                             # Gas limit
+    GAS_USED = 'gas_used'                   # Gas actually used
+
+    # Call data
+    INPUT = 'input'                         # Call data for function calls
+    INIT = 'init'                           # Initialization code for contract creation
+    OUTPUT = 'output'                       # Return data from the call
+
+    # Contract information
+    ADDRESS = 'address'                     # Contract address (for creation/destruction)
+    CODE = 'code'                           # Contract code
+
+    # Trace types and categorization
+    TYPE = 'type'                           # Trace type (call, create, suicide, reward)
+    CALL_TYPE = 'call_type'                 # Call type (call, delegatecall, staticcall, etc.)
+    REWARD_TYPE = 'reward_type'             # Reward type (block, uncle)
+
+    # Other actors
+    AUTHOR = 'author'                       # Address of receiver for reward transactions
+
+    # Result information
+    ERROR = 'error'                         # Error message if failed
+```
 
 For a complete list of all available fields, refer to the HyperSync API Reference.
 
@@ -867,13 +1329,41 @@ For a complete list of all available fields, refer to the HyperSync API Referenc
 
 When you execute a HyperSync query, the response includes both metadata and the requested data:
 
+```rust
+struct QueryResponse {
+    /// Current height of the blockchain in HyperSync
+    archive_height: Optional,
 
+    /// Block number to use as from_block in your next query for pagination
+    next_block: u64,
+
+    /// Query execution time in milliseconds
+    total_execution_time: u64,
+
+    /// The actual blockchain data matching your query
+    data: ResponseData,
+
+    /// Information to help handle chain reorganizations
+    rollback_guard: Optional,
+}
+```
 
 ### Rollback Guard
 
 The optional `rollback_guard` helps manage chain reorganizations:
 
+```rust
+struct RollbackGuard {
+    /// Last block scanned
+    block_number: u64,
+    timestamp: i64,
+    hash: Hash,
 
+    /// First block scanned
+    first_block_number: u64,
+    first_parent_hash: Hash,
+}
+```
 
 ## Stream and Collect Functions
 
@@ -916,13 +1406,24 @@ With the default join mode:
 2. Those transactions' traces are also included
 3. The blocks containing these transactions are included
 
-
+```
+┌───────┐     ┌───────────────┐     ┌───────┐     ┌───────┐
+│  Logs │ ──> │ Transactions  │ ──> │ Traces│ ──> │ Blocks│
+└───────┘     └───────────────┘     └───────┘     └───────┘
+```
 
 ### JoinAll Mode
 
 JoinAll creates a more comprehensive network of related data:
 
-
+```
+                 ┌─────────────────────────────┐
+                 │                             │
+                 ▼                             │
+┌───────┐  ┌───────────────┐  ┌───────┐  ┌───────┐
+│  Logs │      │ Transactions  │      │ Traces│      │ Blocks│
+└───────┘      └───────────────┘      └───────┘      └───────┘
+```
 
 For example, if you query a trace:
 
@@ -935,7 +1436,11 @@ For example, if you query a trace:
 
 JoinNothing is the most restrictive:
 
-
+```
+┌───────┐     ┌───────────────┐     ┌───────┐     ┌───────┐
+│  Logs │     │ Transactions  │     │ Traces│     │ Blocks│
+└───────┘     └───────────────┘     └───────┘     └───────┘
+```
 
 Only data directly matching your selection criteria is returned, with no related records included.
 
@@ -949,6 +1454,527 @@ To get the most out of HyperSync queries:
 4. **Process in chunks** - For large datasets, use pagination or the `stream` function
 5. **Consider Parquet** - For analytical workloads, use `collect_parquet` for efficient storage
 6. **Handle chain tip carefully** - Near the chain tip, implement custom rollback handling
+
+---
+
+## HyperSync Preset Queries
+
+**File:** `hypersync-presets.md`
+
+HyperSync's client libraries include helper functions that build common queries. These presets are useful when you need raw blockchain objects without crafting a query manually.
+
+Each preset returns a `Query` object so you can pass it directly to `client.get`, `client.stream`, or `client.collect`.
+
+## Available Presets
+
+### `preset_query_blocks_and_transactions(from_block, to_block)`
+Returns every block and all associated transactions within the supplied block range.
+
+```python
+import hypersync
+import asyncio
+
+async def main():
+    client = hypersync.HypersyncClient(hypersync.ClientConfig())
+
+    query = hypersync.preset_query_blocks_and_transactions(17_000_000, 17_000_050)
+    result = await client.get(query)
+    print(f"Query returned {len(result.data.blocks)} blocks and {len(result.data.transactions)} transactions")
+
+asyncio.run(main())
+```
+
+### `preset_query_blocks_and_transaction_hashes(from_block, to_block)`
+Returns each block in the range along with only the transaction hashes.
+
+### `preset_query_get_logs(addresses, from_block, to_block)`
+Fetches all logs emitted by the provided contract addresses in the given block range.
+
+```python
+logs_res = await client.get(
+    hypersync.preset_query_get_logs(["0xYourContract"], 17_000_000, 17_000_050)
+)
+```
+
+### `preset_query_logs(from_block, to_block)`
+Fetches every log across the specified blocks.
+
+### `preset_query_logs_of_event(event_signature, from_block, to_block)`
+Fetches logs for the specified event signature over the block range.
+
+Client libraries for other languages expose the same presets under similar names. See the Python and Node.js example repositories for more details.
+
+Use these helpers whenever you need a quick query without specifying field selections or joins manually.
+
+---
+
+## Using curl with HyperSync
+
+**File:** `hypersync-curl-examples.md`
+
+This guide demonstrates how to interact with HyperSync using direct HTTP requests via curl. These examples provide a quick way to explore HyperSync functionality without installing client libraries.
+
+:::info Recommended Approach
+We highly recommend trying these curl examples as they're super quick and easy to run directly in your terminal. It's one of the fastest ways to experience HyperSync's performance firsthand and see just how quickly you can retrieve blockchain data without any setup overhead. Simply copy, paste, and be amazed by the response speed!
+
+While curl requests are technically slower than our client libraries (since they use HTTP rather than binary data transfer protocols), they're still impressively fast and provide an excellent demonstration of HyperSync's capabilities without any installation requirements.
+:::
+
+## Table of Contents
+
+1. Curl vs. Client Libraries
+2. Common Use Cases
+   - ERC-20 Transfers for an Address
+   - Contract Event Logs
+   - Blob Transactions
+   - Token Mint Events
+   - Address Transactions
+   - Transaction Status Filtering
+
+## Curl vs. Client Libraries
+
+When deciding whether to use curl commands or client libraries, consider the following comparison:
+
+### When to Use curl (JSON API)
+
+- **Quick Prototyping**: Test endpoints and explore data structure without setup
+- **Simple Scripts**: Perfect for shell scripts and automation
+- **Language Independence**: When working with languages without HyperSync client libraries
+- **API Exploration**: When learning the HyperSync API capabilities
+
+### When to Use Client Libraries
+
+- **Production Applications**: For stable, maintained codebases
+- **Complex Data Processing**: When working with large datasets or complex workflows
+- **Performance**: Client libraries offer automatic compression and pagination
+- **Error Handling**: Built-in retry mechanisms and better error reporting
+- **Data Formats**: Support for efficient formats like Apache Arrow
+
+## Common Use Cases
+
+### Get All ERC-20 Transfers for an Address
+
+This example filters for all ERC-20 transfer events involving a specific address, either as sender or recipient. Feel free to swap your address into the example.
+
+**What this query does:**
+
+- Filters logs for the Transfer event signature (topic0)
+- Matches when the address appears in either topic1 (sender) or topic2 (recipient)
+- Also includes direct transactions to/from the address
+
+```bash
+curl --request POST \
+  --url https://eth.hypersync.xyz/query \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "from_block": 0,
+    "logs": [
+        {
+            "topics": [
+                [
+                    "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+                ],
+                [],
+                [
+                    "0x0000000000000000000000001e037f97d730Cc881e77F01E409D828b0bb14de0"
+                ]
+            ]
+        },
+        {
+            "topics": [
+                [
+                    "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+                ],
+                [
+                    "0x0000000000000000000000001e037f97d730Cc881e77F01E409D828b0bb14de0"
+                ],
+                []
+            ]
+        }
+    ],
+    "transactions": [
+        {
+            "from": [
+                "0x1e037f97d730Cc881e77F01E409D828b0bb14de0"
+            ]
+        },
+        {
+            "to": [
+                "0x1e037f97d730Cc881e77F01E409D828b0bb14de0"
+            ]
+        }
+    ],
+    "field_selection": {
+        "block": [
+            "number",
+            "timestamp",
+            "hash"
+        ],
+        "log": [
+            "block_number",
+            "log_index",
+            "transaction_index",
+            "data",
+            "address",
+            "topic0",
+            "topic1",
+            "topic2",
+            "topic3"
+        ],
+        "transaction": [
+            "block_number",
+            "transaction_index",
+            "hash",
+            "from",
+            "to",
+            "value",
+            "input"
+        ]
+    }
+}'
+```
+
+### Get All Logs for a Smart Contract
+
+This example retrieves all event logs emitted by a specific contract (USDC in this case).
+
+**Key points:**
+
+- Sets `from_block: 0` to scan from the beginning of the chain
+- Uses `next_block` in the response for pagination to fetch subsequent data
+- Includes relevant block, log, and transaction fields
+
+```bash
+curl --request POST \
+  --url https://eth.hypersync.xyz/query \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "from_block": 0,
+    "logs": [
+        {
+            "address": ["0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"]
+        }
+    ],
+    "field_selection": {
+        "block": [
+            "number",
+            "timestamp",
+            "hash"
+        ],
+        "log": [
+            "block_number",
+            "log_index",
+            "transaction_index",
+            "data",
+            "address",
+            "topic0",
+            "topic1",
+            "topic2",
+            "topic3"
+        ],
+        "transaction": [
+            "block_number",
+            "transaction_index",
+            "hash",
+            "from",
+            "to",
+            "value",
+            "input"
+        ]
+    }
+}'
+```
+
+### Get Blob Data for the Optimism Chain
+
+This example finds blob transactions used by the Optimism chain for data availability.
+
+**Key points:**
+
+- Starts at a relatively recent block (20,000,000)
+- Filters for transactions from the Optimism sequencer address
+- Specifically looks for type 3 (blob) transactions
+- Results can be used to retrieve the actual blob data from Ethereum
+
+```bash
+curl --request POST \
+  --url https://eth.hypersync.xyz/query \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "from_block": 20000000,
+    "transactions": [
+        {
+            "from": ["0x6887246668a3b87F54DeB3b94Ba47a6f63F32985"],
+            "to": ["0xFF00000000000000000000000000000000000010"],
+            "type": [3]
+        }
+    ],
+    "field_selection": {
+        "block": [
+            "number",
+            "timestamp",
+            "hash"
+        ],
+        "transaction": [
+            "block_number",
+            "transaction_index",
+            "hash",
+            "from",
+            "to",
+            "type"
+        ]
+    }
+}'
+```
+
+### Get Mint USDC Events
+
+This example identifies USDC token minting events.
+
+**How it works:**
+
+- Filters for the USDC contract address
+- Looks for Transfer events (topic0)
+- Specifically matches when topic1 (from address) is the zero address, indicating a mint
+- Returns detailed information about each mint event
+
+```bash
+curl --request POST \
+  --url https://eth.hypersync.xyz/query \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "from_block": 0,
+    "logs": [
+        {
+            "address": ["0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"],
+            "topics": [
+                [
+                    "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+                ],
+                [
+                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+                ],
+                []
+            ]
+        }
+    ],
+    "field_selection": {
+        "block": [
+            "number",
+            "timestamp",
+            "hash"
+        ],
+        "log": [
+            "block_number",
+            "log_index",
+            "transaction_index",
+            "data",
+            "address",
+            "topic0",
+            "topic1",
+            "topic2",
+            "topic3"
+        ],
+        "transaction": [
+            "block_number",
+            "transaction_index",
+            "hash",
+            "from",
+            "to",
+            "value",
+            "input"
+        ]
+    }
+}'
+```
+
+### Get All Transactions for an Address
+
+This example retrieves all transactions where a specific address is either the sender or receiver.
+
+**Implementation notes:**
+
+- Starts from a specific block (15,362,000) for efficiency
+- Uses two transaction filters in an OR relationship
+- Only includes essential fields in the response
+- Multiple queries may be needed for complete history
+
+```bash
+curl --request POST \
+  --url https://eth.hypersync.xyz/query \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "from_block": 15362000,
+    "transactions": [
+        {
+            "from": ["0xdb255746609baadd67ef44fc15b5e1d04befbca7"]
+        },
+        {
+            "to": ["0xdb255746609baadd67ef44fc15b5e1d04befbca7"]
+        }
+    ],
+    "field_selection": {
+        "block": [
+            "number",
+            "timestamp",
+            "hash"
+        ],
+        "transaction": [
+            "block_number",
+            "transaction_index",
+            "hash",
+            "from",
+            "to"
+        ]
+    }
+}'
+```
+
+### Get Successful or Failed Transactions
+
+This example shows how to filter transactions based on their status (successful or failed) for recent blocks.
+
+**How it works:**
+
+1. First, query the current chain height
+2. Calculate a starting point (current height minus 10)
+3. Query transactions with status=1 (successful) or status=0 (failed)
+
+```bash
+# Get current height and calculate starting block
+height=$((`curl https://eth.hypersync.xyz/height | jq .height` - 10))
+
+# Query successful transactions (change status to 0 for failed transactions)
+curl --request POST \
+  --url https://eth.hypersync.xyz/query \
+  --header 'Content-Type: application/json' \
+  --data "{
+    \"from_block\": ${height},
+    \"transactions\": [
+        {
+            \"status\": 1
+        }
+    ],
+    \"field_selection\": {
+        \"block\": [
+            \"number\",
+            \"timestamp\",
+            \"hash\"
+        ],
+        \"transaction\": [
+            \"block_number\",
+            \"transaction_index\",
+            \"hash\",
+            \"from\",
+            \"to\"
+        ]
+    }
+  }"
+```
+
+---
+
+## Api Tokens
+
+**File:** `api-tokens.mdx`
+
+
+
+# API Tokens for HyperSync
+
+## Overview
+
+API tokens provide authenticated access to HyperSync services, enabling enhanced capabilities and usage tracking. While currently optional, they will become mandatory in the future and offer significant advantages for serious usage.
+
+**Starting from 21 May 2025**, you will still be able to use HyperSync without API tokens, but **rate limits will be applied**. The service will remain **free to use until mid-June**. From **mid-June onwards**, we will introduce a set of **tiered packages based on usage**. Indexers deployed to our hosted service will have special access to HyperSync that does not require a custom API token.
+
+## Table of Contents
+
+- Benefits of Using API Tokens
+- Generating API Tokens
+- Implementation Guide
+- Security Best Practices
+
+## Benefits of Using API Tokens
+
+Using API tokens with HyperSync provides several advantages:
+
+- **Dedicated Resources**: Access to reserved capacity and bandwidth
+- **Performance Guarantees**: Higher quality of service with better reliability
+- **Usage Analytics**: Track and monitor your consumption patterns
+- **Future-Proofing**: Early adoption before tokens become mandatory
+- **Enhanced Support**: Better visibility for troubleshooting assistance
+
+## Generating API Tokens
+
+You can generate API tokens through the Envio Dashboard:
+
+1. Visit https://envio.dev/app/api-tokens
+2. Sign in to your account (or create one if you don't have one)
+3. Follow the prompts to create a new token
+4. Copy and securely store your token
+
+## Implementation Guide
+
+To use an API token, pass it as a `bearer_token` when creating a HyperSync client:
+
+
+  
+
+```typescript
+const client = HypersyncClient.new({
+  url: "https://eth.hypersync.xyz",
+  bearerToken: process.env.HYPERSYNC_BEARER_TOKEN,
+});
+```
+
+  
+  
+
+```python
+client = hypersync.HypersyncClient(hypersync.ClientConfig(
+    url="https://eth.hypersync.xyz",
+    bearer_token=os.environ.get("HYPERSYNC_BEARER_TOKEN")
+))
+```
+
+  
+  
+
+```rust
+let client = Client::new(ClientConfig {
+    bearer_token: Some(std::env::var("HYPERSYNC_BEARER_TOKEN").unwrap_or_default()),
+    ..Default::default()
+})
+.unwrap();
+```
+
+  
+
+
+## Understanding Usage
+
+To understand your current month's usage, visit https://envio.dev/app/api-tokens. Usage is composed of two main components:
+
+- **Number of Requests**: The total count of API requests made.
+- **Credits**: A comprehensive calculation that takes into account multiple factors including data bandwidth, disk read operations, and other resource utilization metrics. This provides the most accurate representation of actual service usage. We're happy to provide more detailed breakdowns of the credit calculation upon request.
+
+## Security Best Practices
+
+When working with API tokens:
+
+- **Never commit tokens to git repositories**
+- **Use environment variables** to store tokens instead of hardcoding
+- **Add token files like `.env` to your `.gitignore**
+- **Rotate tokens periodically** for enhanced security
+- **Limit token sharing** to only those who require access
+
+```bash
+# Example .env file
+HYPERSYNC_BEARER_TOKEN=your_secret_token_here
+```
+
+This approach keeps your tokens secure while making them available to your application at runtime.
 
 ---
 
@@ -1066,393 +2092,6 @@ If you are a network operator or user and would like improved service support or
 
 ---
 
-## Getting Started with HyperSync
-
-**File:** `hypersync-usage.md`
-
-HyperSync is Envio's high-performance blockchain data engine that provides up to 2000x faster access to blockchain data compared to traditional RPC endpoints. This guide will help you understand how to effectively use HyperSync in your applications.
-
-## Quick Start Video
-
-Watch this quick tutorial to see HyperSync in action:
-
-
-
-## Core Concepts
-
-HyperSync revolves around two main concepts:
-
-1. **Queries** - Define what blockchain data you want to retrieve
-2. **Output Configuration** - Specify how you want that data formatted and delivered
-
-Think of queries as your data filter and the output configuration as your data processor.
-
-## Building Effective Queries
-
-Queries are the heart of working with HyperSync. They allow you to filter for specific blocks, logs, transactions, and traces.
-
-### Query Structure
-
-A basic HyperSync query contains:
-
-
-
-### Field Selection
-
-Field selection allows you to specify exactly which data fields you want to retrieve. This improves performance by only fetching what you need:
-
-
-
-### Filtering for Specific Data
-
-For most use cases, you'll want to filter for specific logs, transactions, or traces:
-
-#### Log Selection Example
-
-
-
-#### Transaction Selection Example
-
-
-
-## Processing the Results
-
-HyperSync provides multiple ways to process query results:
-
-### Stream to Parquet Files
-
-Parquet is the recommended format for large data sets:
-
-
-
-### Stream to JSON Files
-
-For smaller datasets or debugging:
-
-
-
-### Process Data in Memory
-
-For immediate processing:
-
-
-
-## Tips and Best Practices
-
-### Performance Optimization
-
-- **Use Appropriate Batch Sizes**: Adjust batch size based on your chain and use case:
-
-  
-
-- **Enable Trace Logs**: Set `RUST_LOG=trace` to see detailed progress:
-
-  
-
-- **Paginate Large Queries**: HyperSync requests have a 5-second time limit. For large data sets, paginate results:
-  
-
-### Network-Specific Considerations
-
-- **High-Volume Networks**: For networks like Ethereum Mainnet, use smaller block ranges or more specific filters
-- **Low-Volume Networks**: For smaller chains, you can process the entire chain in one query
-
-## Complete Example
-
-Here's a complete example that fetches all USDC Transfer events:
-
-
-
-## Decoding Event Logs
-
-When working with blockchain data, event logs contain encoded data that needs to be properly decoded to extract meaningful information. HyperSync provides powerful decoding capabilities to simplify this process.
-
-### Understanding Log Structure
-
-Event logs in Ethereum have the following structure:
-
-- **Address**: The contract that emitted the event
-- **Topic0**: The event signature hash (keccak256 of the event signature)
-- **Topics 1-3**: Indexed parameters (up to 3)
-- **Data**: Non-indexed parameters packed together
-
-### Using the Decoder
-
-HyperSync's client libraries include a `Decoder` class that can parse these raw logs into structured data:
-
-
-
-### Single vs. Multiple Event Types
-
-HyperSync provides flexibility to decode different types of event logs:
-
-- **Single Event Type**: For processing one type of event (e.g., only Swap events)
-
-  - See complete example: run-decoder.js
-
-- **Multiple Event Types**: For processing different events from the same contract (e.g., Transfer and Approval)
-  - See complete example: run-decoder-multi.js
-
-### Working with Decoded Data
-
-After decoding, you can access the log parameters in a structured way:
-
-- **Indexed parameters**: Available in `decodedLog.indexed` array
-- **Non-indexed parameters**: Available in `decodedLog.body` array
-
-Each parameter object contains:
-
-- **name**: The parameter name from the signature
-- **type**: The Solidity type
-- **val**: The actual value
-
-For example, to access parameters from a Transfer event:
-
-
-
-### Benefits of Using the Decoder
-
-- **Type Safety**: Values are properly converted to their corresponding types
-- **Simplified Access**: Direct access to named parameters
-- **Batch Processing**: Decode multiple logs with a single call
-- **Multiple Event Support**: Handle different event types in the same processing pipeline
-
-## Next Steps
-
-Now that you understand the basics of using HyperSync:
-
-- Browse the Python Client or other language-specific clients
-- Learn about advanced query options
-- See example queries for common use cases
-- Get your API token to start building
-
-For detailed API references and examples in other languages, check our client documentation.
-
----
-
-## HyperSync: Ultra-Fast & Flexible Data API
-
-**File:** `overview.md`
-
-## What is HyperSync?
-
-HyperSync is a purpose-built, high-performance data retrieval layer that gives developers unprecedented access to blockchain data. Built from the ground up in Rust, HyperSync serves as an alternative to traditional JSON-RPC endpoints, offering dramatically faster queries and more flexible data access patterns.
-
-:::info HyperSync & HyperIndex
-
-**HyperSync** is Envio's high-performance blockchain data engine that serves as a direct replacement for traditional RPC endpoints, delivering up to 2000x faster data access.
-
-**HyperIndex** is built on top of HyperSync, providing a complete indexing framework with schema management, event handling, and GraphQL APIs.
-
-Use HyperSync directly when you need raw blockchain data at maximum speed, or use HyperIndex when you need a full-featured indexing solution.
-:::
-
-## The Problem HyperSync Solves
-
-Traditional blockchain data access through JSON-RPC faces several limitations:
-
-- **Speed constraints**: Retrieving large amounts of historical data can take days
-- **Query flexibility**: Complex data analysis requires many separate calls
-- **Cost inefficiency**: Expensive for data-intensive applications
-
-## Key Benefits
-
-- **Exceptional Performance**: Retrieve and process blockchain data up to 1000x faster than traditional RPC methods
-- **Comprehensive Coverage**: Access data across 70+ EVM chains and Fuel, with new networks added regularly
-- **Flexible Query Capabilities**: Filter, select, and process exactly the data you need with powerful query options
-- **Cost Efficiency**: Dramatically reduce infrastructure costs for data-intensive applications
-- **Simple Integration**: Client libraries available for Python, Rust, Node.js, and Go
-
-## Performance Benchmarks
-
-HyperSync delivers transformative performance compared to traditional methods:
-
-| Task                                             | Traditional RPC | HyperSync | Improvement   |
-| ------------------------------------------------ | --------------- | --------- | ------------- |
-| Scan Arbitrum blockchain for sparse log data     | Hours/Days      | 2 seconds | ~2000x faster |
-| Fetch all Uniswap v3 PoolCreated events ethereum | Hours           | Seconds   | ~500x faster  |
-
-## Use Cases
-
-HyperSync powers a wide range of blockchain applications, enabling developers to build tools that would be impractical with traditional data access methods:
-
-### General Applications
-
-- **Indexers**: Build high-performance data indexers with minimal infrastructure
-- **Data Analytics**: Perform complex on-chain analysis in seconds instead of days
-- **Block Explorers**: Create responsive explorers with comprehensive data access
-- **Monitoring Tools**: Track blockchain activity with near real-time updates
-- **Cross-chain Applications**: Access unified data across multiple networks
-- **ETL Pipelines**: Create pipelines to extract and save data fast
-
-### Powered by HyperSync
-
-#### HyperIndex
-
-- **100x faster blockchain indexing** across 70+ EVM chains and Fuel
-- **Powers 100 plus applications** like v4.xyz analytics
-
-#### ChainDensity.xyz
-
-- **Fast transaction/event density analysis** for any address
-- **Generates insights in seconds** that would take hours with traditional methods
-
-#### Scope.sh
-
-- **Ultra-fast Account Abstraction (AA) focused block explorer**
-- **Fast historical data retrieval** with minimal latency
-
-#### LogTUI
-
-- **Terminal-based UI** for finding all historical blockchain events
-- **Built-in presets** for 20+ protocols (Uniswap, Chainlink, Aave, ENS, etc.)
-- **Try it**: `pnpx logtui aave arbitrum` to track Aave events on Arbitrum in your terminal
-
-## See HyperSync in Action
-
-
-
-## Next Steps
-
-- **Try the Quick Start Guide** to get up and running in minutes
-- Get an API Token to access HyperSync services
-- View Supported Networks to see available chains
-- Check Client Documentation for language-specific guides
-- Join our Discord for support and updates
-
-:::note
-Our documentation is continuously improving! If you have questions or need assistance, please reach out in our Discord community.
-:::
-
----
-
-## HyperSync Quickstart
-
-**File:** `quickstart.md`
-
-Get up and running with HyperSync in minutes. This guide will help you start accessing blockchain data at unprecedented speeds with minimal setup.
-
-## Quickest Start: Try LogTUI
-
-Want to see HyperSync in action with zero setup? Try LogTUI, a terminal-based blockchain event viewer:
-
-
-
-## Clone the Quickstart Repository
-
-The fastest way to get started is to clone our minimal example repository:
-
-
-
-This repository contains everything you need to start streaming blockchain data using HyperSync.
-
-## Install Dependencies
-
-
-
-## Choose Your Adventure
-
-The repository includes three different script options, all of which retrieve Uniswap V3 events from Ethereum mainnet:
-
-
-
-That's it! You're now streaming data directly from Ethereum mainnet through HyperSync! (TUI version below)
-
-!HyperSync in Action
-
-## Understanding the Code
-
-Let's look at the core concepts in the example code:
-
-### 1. Initialize the Client
-
-
-
-> **Note:** To connect to different networks, see the Supported Networks page for a complete list of available URLs.
-
-### 2. Build Your Query
-
-The heart of HyperSync is the query object, which defines what data you want to retrieve:
-
-
-
-### 3. Stream and Process Results
-
-
-
-## Key Concepts for Building Queries
-
-### Filtering Data
-
-HyperSync lets you filter blockchain data in several ways:
-
-- **Log filters**: Find specific events by contract address and event signature
-- **Transaction filters**: Filter by sender/receiver addresses, method signatures, etc.
-- **Trace filters**: Access internal transactions and state changes (only supported on select networks like Ethereum Mainnet)
-- **Block filters**: Get data from specific block ranges
-
-### Field Selection
-
-One of HyperSync's most powerful features is the ability to retrieve only the fields you need:
-
-
-
-This selective approach dramatically reduces unnecessary data transfer and improves performance.
-
-### Join Modes
-
-HyperSync allows you to control how related data is joined:
-
-- **JoinNothing**: Return only exact matches
-- **JoinAll**: Return matches plus all related objects
-- **JoinTransactions**: Return matches plus their transactions
-- **Default**: Return a reasonable set of related objects
-
-## Examples
-
-### Finding Uniswap V3 Events
-
-This example (from the quickstart repo) streams all Uniswap V3 events from the beginning of Ethereum:
-
-
-
-## Supported Networks
-
-HyperSync supports 70+ EVM-compatible networks. You can change networks by simply changing the client URL:
-
-
-
-See the Supported Networks page for a complete list.
-
-## Using LogTUI
-
-This quickstart repository powers LogTUI, a terminal-based blockchain event viewer built on HyperSync. LogTUI lets you monitor events from popular protocols across multiple chains with zero configuration.
-
-Try it with a single command:
-
-
-
-LogTUI supports scanning historically for any events across all networks supported by HyperSync.
-
-## Next Steps
-
-You're now ready to build with HyperSync! Here are some resources for diving deeper:
-
-- Client Libraries - Explore language-specific clients
-- Query Reference - Learn advanced query techniques
-- curl Examples - Test queries directly in your terminal
-- Complete Getting Started Guide - More comprehensive guidance
-
-## API Token for Production Use
-
-For development, you can use HyperSync without an API token. For production applications, you'll need to get an API token and update your client initialization:
-
-
-
-Congratulations! You've taken your first steps with HyperSync, bringing ultra-fast blockchain data access to your applications. Happy building!
-
----
-
 ## Analyzing All Transactions To and From an Address
 
 **File:** `tutorial-address-transactions.md`
@@ -1495,14 +2134,21 @@ It calculates the following:
 
 1. **Clone the Repository**
 
-   
+   ```bash
+   git clone https://github.com/enviodev/evm-address-summary.git
+   cd evm-address-summary
+   ```
 
 2. **Install Dependencies**
 
-   
+   ```bash
+   pnpm install
+   ```
 
 3. **Run a Script** (example with all-transfers)
-   
+   ```bash
+   pnpm run all-transfers 0xYourAddressHere
+   ```
 
 For complete details on all available scripts, their usage, and example outputs, refer to the project README.
 
@@ -1510,7 +2156,10 @@ For complete details on all available scripts, their usage, and example outputs,
 
 The scripts work with any network supported by HyperSync. To change networks, edit the `hyperSyncEndpoint` in the appropriate config file:
 
-
+```typescript
+// For Ethereum Mainnet
+export const hyperSyncEndpoint = "https://eth.hypersync.xyz";
+```
 
 For a complete list of supported networks, see our HyperSync Supported Networks documentation.
 
@@ -1533,6 +2182,667 @@ Other use cases include:
 - Learn more about HyperSync's capabilities for blockchain data analysis
 
 For any questions or support, join our Discord community or create an issue on the GitHub repository.
+
+---
+
+## HyperRPC: Ultra-Fast Read-Only RPC
+
+**File:** `HyperRPC/overview-hyperrpc.md`
+
+HyperRPC is an extremely fast read-only RPC designed specifically for data-intensive blockchain tasks. Built from the ground up to optimize performance, it offers a simple drop-in solution with dramatic speed improvements over traditional nodes.
+
+:::info HyperSync vs. HyperRPC
+**For most use cases, we recommend using HyperSync over HyperRPC.**
+
+HyperSync provides significantly faster performance and much greater flexibility in how you query and filter blockchain data. Behind the scenes, HyperRPC actually uses HyperSync to fulfill requests.
+
+**When to use HyperRPC:**
+
+- When you need a simple drop-in replacement for existing RPC-based code
+- When you don't have time for a deeper integration
+- When you're working with tools that expect standard JSON-RPC interfaces
+
+**When to use HyperSync:**
+
+- When performance is critical (HyperSync is much faster)
+- When you need advanced filtering capabilities
+- When you want more control over data formatting and field selection
+- For new projects where you're designing the data access layer
+  :::
+
+## Table of Contents
+
+- What is HyperRPC?
+- Performance Advantages
+- Supported Methods
+- Supported Networks
+- Getting Started
+- Development Status
+
+## What is HyperRPC?
+
+HyperRPC is a specialized JSON-RPC endpoint that focuses exclusively on **read operations** to deliver exceptional performance. By optimizing specifically for data retrieval workflows, HyperRPC can significantly outperform traditional nodes for data-intensive applications.
+
+Key characteristics:
+
+- **Read-only**: Optimized for data retrieval (cannot send transactions)
+- **Drop-in compatible**: Works with existing tooling that uses standard RPC methods
+- **Specialized**: Designed specifically for data-intensive operations like `eth_getLogs`
+
+## Performance Advantages
+
+Early benchmarks show that HyperRPC can deliver up to **5x performance improvement** for data-intensive operations compared to traditional nodes like `geth`, `erigon`, and `reth`.
+
+This performance boost is particularly noticeable for:
+
+- Historical data queries
+- Log event filtering
+- Block and transaction retrievals
+- Analytics applications
+
+## Supported Methods
+
+HyperRPC currently supports the following Ethereum JSON-RPC methods:
+
+| Category             | Methods                                                                                                                                                 |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Chain Data**       | `eth_chainId``eth_blockNumber`                                                                                                                    |
+| **Block Data**       | `eth_getBlockByNumber``eth_getBlockByHash``eth_getBlockReceipts`                                                                            |
+| **Transaction Data** | `eth_getTransactionByHash``eth_getTransactionByBlockHashAndIndex``eth_getTransactionByBlockNumberAndIndex``eth_getTransactionReceipt` |
+| **Event Logs**       | `eth_getLogs`                                                                                                                                           |
+| **Traces**           | `trace_block` (only on select chains)                                                                                  |
+
+## Supported Networks
+
+HyperRPC is available across numerous EVM-compatible networks. For the most up-to-date list of supported chains, please see our Supported Networks page.
+
+## Getting Started
+
+To start using HyperRPC:
+
+1. **Get Access**:
+
+   - Visit our Supported Networks page to find all available HyperRPC endpoints
+   - Each network has a ready-to-use URL that you can start using immediately
+
+2. **Add Your API Token** (recommended):
+
+   - Requests without an API token will be rate limited starting **June 2025** (same timeline as HyperSync).
+   - Append your token to the endpoint URL. Example:
+
+     ```text
+     https://100.rpc.hypersync.xyz/
+     ```
+
+   - If you don't have a token yet, you can generate one through the Envio Dashboard.
+
+3. **Use Like a Standard RPC**:
+
+   ```javascript
+   // Example: Fetching logs with HyperRPC
+   const response = await fetch("https://100.rpc.hypersync.xyz/", {
+     method: "POST",
+     headers: { "Content-Type": "application/json" },
+     body: JSON.stringify({
+       jsonrpc: "2.0",
+       id: 1,
+       method: "eth_getLogs",
+       params: [
+         {
+           fromBlock: "0x1000000",
+           toBlock: "0x1000100",
+           address: "0xYourContractAddress",
+         },
+       ],
+     }),
+   });
+   ```
+
+4. **Provide Feedback**:
+   Your testing and feedback are incredibly valuable as we continue to improve HyperRPC. Let us know about your experience in our Discord.
+
+## Development Status
+
+:::caution Important Notice
+
+- HyperRPC is under active development to further improve performance and stability
+- It is designed for read-only operations and does not support all standard RPC methods
+- It has not yet undergone formal security audits
+- We welcome questions and feedback in our Discord
+  :::
+
+---
+
+## Hyperfuel
+
+**File:** `HyperFuel/hyperfuel.md`
+
+HyperSync is a high-performance data node and accelerated data query layer that powers Envio’s Indexing framework, HyperIndex, for up to 1000x faster data retrieval than standard RPC methods.
+
+HyperFuel is HyperSync adapted for the Fuel Network and is exposed as a low-level API for developers and data analysts to create flexible, high-speed queries for all fuel data.
+
+Users can interact with the HyperFuel in Rust, Python, NodeJS clients, or directly via the JSON API to extract data into parquet files, arrow format, or as typed data. Client examples are listed furhter below.
+
+Using HyperFuel, application developers can easily sync and search large datasets in a few minutes. HyperFuel is an ideal solution for indexers, block explorers, data analysts, bridges, and other applications or use cases focused on performance.
+
+You can integrate with HyperFuel using any of our clients:
+
+- Rust: https://github.com/enviodev/hyperfuel-client-rust
+- Python: https://github.com/enviodev/hyperfuel-client-python
+- Nodejs: https://github.com/enviodev/hyperfuel-client-node
+- JSON API: https://github.com/enviodev/hyperfuel-json-api
+
+
+:::info
+HyperFuel supports Fuel mainnet and testnet: 
+Mainnet: https://fuel.hypersync.xyz 
+Testnet: https://fuel-testnet.hypersync.xyz
+:::
+
+
+## Example usage
+
+Below is an example of a Hyperfuel query in each of our clients searching the first 1,300,000 blocks for all `input` objects of a specific `asset-id`. This example returns 10,543 inputs in around 100ms - not including latency.
+
+## Rust (repo)
+
+```rust
+use std::num::NonZeroU64;
+
+use hyperfuel_client::{Client, Config};
+use hyperfuel_net_types::Query;
+use url::Url;
+
+#[tokio::main]
+async fn main() {
+    let client_config = Config {
+        url: Url::parse("https://fuel-testnet.hypersync.xyz").unwrap(),
+        bearer_token: None,
+        http_req_timeout_millis: NonZeroU64::new(30000).unwrap(),
+    };
+    let client = Client::new(client_config).unwrap();
+
+    // Construct query in json.  Can also construct it as a typed struct (see predicate-root example)
+    let query: Query = serde_json::from_value(serde_json::json!({
+        // start query from block 0
+        "from_block": 0,
+        // if to_block is not set, query runs to the end of the chain
+        "to_block":   1300000,
+        // load inputs that have `asset_id` = 0x2a0d0ed9d2217ec7f32dcd9a1902ce2a66d68437aeff84e3a3cc8bebee0d2eea
+        "inputs": [
+            {
+            "asset_id": ["0x2a0d0ed9d2217ec7f32dcd9a1902ce2a66d68437aeff84e3a3cc8bebee0d2eea"]
+            }
+        ],
+        // fields we want returned from loaded inputs
+        "field_selection": {
+            "input": [
+                "tx_id",
+                "block_height",
+                "input_type",
+                "utxo_id",
+                "owner",
+                "amount",
+                "asset_id"
+            ]
+        }
+    }))
+    .unwrap();
+
+    let res = client.get_selected_data(&query).await.unwrap();
+
+    println!("inputs: {:?}", res.data.inputs);
+}
+
+```
+
+## Python (repo)
+
+```python
+import hyperfuel
+from hyperfuel import InputField
+import asyncio
+
+async def main():
+    client = hyperfuel.HyperfuelClient()
+
+    query = hyperfuel.Query(
+        # start query from block 0
+        from_block=0,
+        # if to_block is not set, query runs to the end of the chain
+        to_block = 1300000,
+        # load inputs that have `asset_id` = 0x2a0d0ed9d2217ec7f32dcd9a1902ce2a66d68437aeff84e3a3cc8bebee0d2eea
+        inputs=[
+            hyperfuel.InputSelection(
+                asset_id=["0x2a0d0ed9d2217ec7f32dcd9a1902ce2a66d68437aeff84e3a3cc8bebee0d2eea"]
+            )
+        ],
+        # what data we want returned from the inputs we loaded
+        field_selection=hyperfuel.FieldSelection(
+            input=[
+                InputField.TX_ID,
+                InputField.BLOCK_HEIGHT,
+                InputField.INPUT_TYPE,
+                InputField.UTXO_ID,
+                InputField.OWNER,
+                InputField.AMOUNT,
+                InputField.ASSET_ID,
+            ]
+        )
+    )
+
+    res = await client.get_selected_data(query)
+
+    print("inputs: " + str(res.data.inputs))
+
+asyncio.run(main())
+
+```
+
+## Node Js (repo)
+
+```js
+
+async function main() {
+  const client = HyperfuelClient.new({
+    url: "https://fuel-testnet.hypersync.xyz",
+  });
+
+  const query: Query = {
+    // start query from block 0
+    fromBlock: 0,
+    // if to_block is not set, query runs to the end of the chain
+    toBlock: 1300000,
+    // load inputs that have `asset_id` = 0x2a0d0ed9d2217ec7f32dcd9a1902ce2a66d68437aeff84e3a3cc8bebee0d2eea
+    inputs: [
+      {
+        assetId: [
+          "0x2a0d0ed9d2217ec7f32dcd9a1902ce2a66d68437aeff84e3a3cc8bebee0d2eea",
+        ],
+      },
+    ],
+    // fields we want returned from loaded inputs
+    fieldSelection: {
+      input: [
+        "tx_id",
+        "block_height",
+        "input_type",
+        "utxo_id",
+        "owner",
+        "amount",
+        "asset_id",
+      ],
+    },
+  };
+
+  const res = await client.getSelectedData(query);
+
+  console.log(`inputs: ${JSON.stringify(res.data.inputs)}`);
+}
+
+main();
+```
+
+## Json Api (repo)
+
+```bash
+curl --request POST \
+  --url https://fuel-testnet.hypersync.xyz/query \
+  --header 'Content-Type: application/json' \
+  --data '{
+        "from_block": 0,
+        "to_block":   1300000,
+        "inputs": [
+            {
+            "asset_id": ["0x2a0d0ed9d2217ec7f32dcd9a1902ce2a66d68437aeff84e3a3cc8bebee0d2eea"]
+            }
+        ],
+        "field_selection": {
+            "input": [
+                "tx_id",
+                "block_height",
+                "input_type",
+                "utxo_id",
+                "owner",
+                "amount",
+                "asset_id"
+            ]
+        }
+    }'
+```
+
+---
+
+## Query Structure
+
+**File:** `HyperFuel/hyperfuel-query.md`
+
+This section is dedicated to giving an exhaustive list of all the fields and query parameters of a HyperFuel query.  HyperFuel is extremely powerful but learning how to craft queries can take some practice.  It is recommended to look at the examples and reference this page.  HyperFuel query structure is the same across clients.
+
+# Top-level query structure
+Illustrated as json
+```json
+{
+    // The block to start the query from
+    "from_block": Number,
+
+    // The block to end the query at. If not specified, the query will go until the
+    //  end of data. Exclusive, the returned range will be [from_block..to_block).
+    //
+    // The query will return before it reaches this target block if it hits the time limit
+    //  configured on the server. The user should continue their query by putting the
+    //  next_block field in the response into from_block field of their next query. This implements
+    //  pagination.
+    "to_block": Number, // Optional, defaults to latest block
+
+    // List of receipt selections, the query will return receipts that match any of these selections.
+    // All selections have an OR relationship with each other.
+    "receipts": [{ReceiptSelection}], // Optional
+
+    // List of input selections, the query will return inputs that match any of these selections.
+    // All selections have an OR relationship with each other.
+    "inputs": [{InputSelection}], // Optional
+
+    // List of output selections, the query will return outputs that match any of these selections.
+    // All selections have an OR relationship with each other.
+    "outputs": [{OutputSelection}], // Optional
+
+    // Whether to include all blocks regardless of whether they match a receipt, input, or output selection.  Normally
+    // The server will return only the blocks that are related to the receipts, inputs, or outputs in the response. But if this
+    //  is set to true, the server will return data for all blocks in the requested range from_block, to_block).
+    "include_all_blocks": bool, // Optional, defaults to false
+
+    // The user selects which fields they want returned. Requesting fewer fields will improve
+    //  query execution time and reduce the payload size so the user should always use a minimal number of fields.
+    "field_selection": {FieldSelection},
+
+    // Maximum number of blocks that should be returned, the server might return more blocks than this number but
+    //It won't overshoot by too much.
+    "max_num_blocks": Number, // Optional, defaults to no maximum
+}
+```
+
+# ReceiptSelection
+The query takes an array of ReceiptSelection objects and returns receipts that match any of the selections.  All fields are optional.
+Below is an exhaustive list of all fields in a ReceiptSelection JSON object.  Reference the [Fuel docs on receipts for field explanations.
+
+```json
+{
+    // address that emitted the receipt
+    "root_contract_id": [String],
+
+    // The recipient address
+    "to_address": [String],
+
+    // The asset id of the coins transferred.
+    "asset_id": [String],
+
+    // the type of receipt
+    // 0 = Call
+    // 1 = Return,
+    // 2 = ReturnData,
+    // 3 = Panic,
+    // 4 = Revert,
+    // 5 = Log,
+    // 6 = LogData,
+    // 7 = Transfer,
+    // 8 = TransferOut,
+    // 9 = ScriptResult,
+    // 10 = MessageOut,
+    // 11 = Mint,
+    // 12 = Burn,
+    "receipt_type": [Number],
+
+    // The address of the message sender.
+    "sender": [String],
+
+    // The address of the message recipient.
+    "recipient": [String],
+
+    // The contract id of the current context is in an internal context. null otherwise
+    "contract_id": [String],
+
+    // receipt register values.
+    "ra": [Number],
+    "rb": [Number],
+    "rc": [Number],
+    "rd": [Number],
+
+    // the status of the transaction that the receipt originated from
+    // 1 = Success
+    // 3 = Failure
+    "tx_status": [Number],
+
+    // the type of the transaction that the receipt originated from
+    // 0 = script
+    // 1 = create
+    // 2 = mint
+    // 3 = upgrade
+    // 4 = upload
+    "tx_type": [Number]
+}
+```
+
+# InputSelection
+The query takes an array of InputSelection objects and returns inputs that match any of the selections.  All fields are optional.
+Below is an exhaustive list of all fields in an InputSelection JSON object.  Reference the Fuel docs on inputs for field explanations.
+```json
+{
+    // The owning address or predicate root.
+    "owner": [String],
+
+    // The asset ID of the coins.
+    "asset_id": [String],
+
+    // The input contract.
+    "contract": [String],
+
+    // The sender address of the message.
+    "sender": [String],
+
+    // The recipient address of the message.
+    "recipient": [String],
+
+    // The type of input
+    // 0 = InputCoin,
+    // 1 = InputContract,
+    // 2 = InputMessage,
+    "input_type": [Number],
+
+    // the status of the transaction that the input originated from
+    // 1 = Success
+    // 3 = Failure
+    "tx_status": [Number],
+
+    // the type of the transaction that the input originated from
+    // 0 = script
+    // 1 = create
+    // 2 = mint
+    // 3 = upgrade
+    // 4 = upload
+    "tx_type": [Number]
+}
+```
+
+# OutputSelection
+The query takes an array of OutputSelection objects and returns outputs that match any of the selections.  All fields are optional.
+Below is an exhaustive list of all fields in an OutputSelection JSON object.  Reference the Fuel docs on outputs for field explanations.
+```json
+{
+    // The address the coins were sent to.
+    "to": [String],
+
+    // The asset id for the coins sent.
+    "asset_id": [String],
+
+    // The contract that was created.
+    "contract": [String],
+
+    // the type of output
+    // 0 = CoinOutput,
+    // 1 = ContractOutput,
+    // 2 = ChangeOutput,
+    // 3 = VariableOutput,
+    // 4 = ContractCreated,
+    "output_type": [Number],
+
+    // the status of the transaction that the input originated from
+    // 1 = Success
+    // 3 = Failure
+    "tx_status": [Number],
+
+    // the type of the transaction that the input originated from
+    // 0 = script
+    // 1 = create
+    // 2 = mint
+    // 3 = upgrade
+    // 4 = upload
+    "tx_type": [Number]
+}
+```
+
+# FieldSelection
+The query takes a FieldSelection JSON object where the user specifies what they want returned from data matched by their `ReceiptSelection`, `OutputSelection`, and `InputSelection`.  There is no `BlockSelection` or `TransactionSelection` because the query returns all blocks and transactions that include the data you specified in your `ReceiptSelection`, `OutputSelection`, or `InputSelection`.
+
+For best performance, select a minimal amount of fields.
+
+*Important note:* all fields draw inspiration from Fuel's graphql schema.  Mainly Blocks, Transactions, Receipts, Inputs, and Outputs.  Enums of each type (ex: Receipt has 12 different types, two of which are Log and LogData, Input has 3: InputCoin, InputContract, InputMessage, and Output has 5: CoinOutput, ContractOutput, ChangeOutput, VariableOutput, ContractCreated) are flattened into the parent type.  This is why  multiple fields on any returned Receipt, Input, or Output might be null; it's not a field on all possible enums of that type, so null is inserted.
+
+All fields are optional.  Below is an exhaustive list of all fields in a FieldSelection JSON object.
+```json
+{
+    "block": [
+        "id",
+        "da_height",
+        "consensus_parameters_version",
+        "state_transition_bytecode_version",
+        "transactions_count",
+        "message_receipt_count",
+        "transactions_root",
+        "message_outbox_root",
+        "event_inbox_root",
+        "height",
+        "prev_root",
+        "time",
+        "application_hash"
+    ],
+    "transaction": [
+        "block_height",
+        "id",
+        "input_asset_ids",
+        "input_contracts",
+        "input_contract_utxo_id",
+        "input_contract_balance_root",
+        "input_contract_state_root",
+        "input_contract_tx_pointer_tx_index",
+        "input_contract",
+        "policies_tip",
+        "policies_witness_limit",
+        "policies_maturity",
+        "policies_max_fee",
+        "script_gas_limit",
+        "maturity",
+        "mint_amount",
+        "mint_asset_id",
+        "mint_gas_price",
+        "tx_pointer_block_height",
+        "tx_pointer_tx_index",
+        "tx_type",
+        "output_contract_input_index",
+        "output_contract_balance_root",
+        "output_contract_state_root",
+        "witnesses",
+        "receipts_root",
+        "status",
+        "time",
+        "reason",
+        "script",
+        "script_data",
+        "bytecode_witness_index",
+        "bytecode_root",
+        "subsection_index",
+        "subsections_number",
+        "proof_set",
+        "consensus_parameters_upgrade_purpose_witness_index",
+        "consensus_parameters_upgrade_purpose_checksum",
+        "state_transition_upgrade_purpose_root",
+        "salt"
+    ],
+    "receipt": [
+        "receipt_index",
+        "root_contract_id",
+        "tx_id",
+        "tx_status",
+        "tx_type",
+        "block_height",
+        "pc",
+        "is",
+        "to",
+        "to_address",
+        "amount",
+        "asset_id",
+        "gas",
+        "param1",
+        "param2",
+        "val",
+        "ptr",
+        "digest",
+        "reason",
+        "ra",
+        "rb",
+        "rc",
+        "rd",
+        "len",
+        "receipt_type",
+        "result",
+        "gas_used",
+        "data",
+        "sender",
+        "recipient",
+        "nonce",
+        "contract_id",
+        "sub_id"
+    ],
+    "input": [
+        "tx_id",
+        "tx_status",
+        "tx_type",
+        "block_height",
+        "input_type",
+        "utxo_id",
+        "owner",
+        "amount",
+        "asset_id",
+        "tx_pointer_block_height",
+        "tx_pointer_tx_index",
+        "witness_index",
+        "predicate_gas_used",
+        "predicate",
+        "predicate_data",
+        "balance_root",
+        "state_root",
+        "contract",
+        "sender",
+        "recipient",
+        "nonce",
+        "data"
+    ],
+    "output": [
+        "tx_id",
+        "tx_status",
+        "tx_type",
+        "block_height",
+        "output_type",
+        "to",
+        "amount",
+        "asset_id",
+        "input_index",
+        "balance_root",
+        "state_root",
+        "contract",
+    ]
+}
+```
 
 ---
 

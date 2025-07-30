@@ -110,14 +110,8 @@ function fixInternalLinks(content, relativePath) {
   // Remove CSS imports
   content = content.replace(/^import\s+["'][^"']*\.css["'];?\s*$/gm, "");
 
-  // Remove HTML elements that cause parsing errors
-  content = content.replace(/<[^>]*>/g, "");
-
-  // Remove any remaining problematic syntax
-  content = content.replace(/```[^`]*```/g, "");
-
-  // Remove any remaining code blocks that might cause issues
-  content = content.replace(/```[\s\S]*?```/g, "");
+  // Remove HTML elements that cause parsing errors (but preserve code blocks)
+  content = content.replace(/<(?!\/?(?:code|pre))[^>]*>/g, "");
 
   // Remove any remaining image references
   content = content.replace(/image\.png/g, "");
@@ -127,6 +121,87 @@ function fixInternalLinks(content, relativePath) {
   content = content.replace(/image\.webp/g, "");
 
   return content;
+}
+
+// Function to parse sidebar configuration and extract file order
+function parseSidebarOrder(sidebarPath) {
+  try {
+    // Read the sidebar file
+    const sidebarContent = fs.readFileSync(sidebarPath, "utf8");
+
+    // Extract the sidebar configuration by evaluating it
+    // We need to handle the require statement for supported networks
+    const supportedNetworksPath = path.join(
+      __dirname,
+      "../supported-networks.json"
+    );
+    const supportedNetworks = JSON.parse(
+      fs.readFileSync(supportedNetworksPath, "utf8")
+    );
+
+    // Create a mock environment for the sidebar evaluation
+    const mockRequire = (modulePath) => {
+      if (modulePath === "./supported-networks.json") {
+        return supportedNetworks;
+      }
+      throw new Error(`Unexpected require: ${modulePath}`);
+    };
+
+    // Evaluate the sidebar configuration
+    const sidebarConfig = eval(`(function() {
+      const require = arguments[0];
+      const process = { env: { DOCS_FOR_LLM: "true" } };
+      ${sidebarContent}
+      return module.exports;
+    })`)(mockRequire);
+
+    return extractFileOrderFromSidebar(sidebarConfig.someSidebar);
+  } catch (error) {
+    console.error(`Error parsing sidebar ${sidebarPath}:`, error.message);
+    return [];
+  }
+}
+
+// Function to extract file order from sidebar items
+function extractFileOrderFromSidebar(items) {
+  const fileOrder = [];
+
+  for (const item of items) {
+    if (typeof item === "string") {
+      // Direct file reference - try both .md and .mdx extensions
+      fileOrder.push(item);
+    } else if (item.type === "category" && item.items) {
+      // Category with items
+      for (const subItem of item.items) {
+        if (typeof subItem === "string") {
+          fileOrder.push(subItem);
+        }
+        // Handle nested categories if needed
+      }
+    }
+    // Skip other types like "link"
+  }
+
+  return fileOrder;
+}
+
+// Function to parse HyperSync sidebar configuration
+function parseHyperSyncSidebarOrder(sidebarPath) {
+  try {
+    const sidebarContent = fs.readFileSync(sidebarPath, "utf8");
+    const sidebarConfig = eval(`(function() {
+      ${sidebarContent}
+      return module.exports;
+    })`)();
+
+    return extractFileOrderFromSidebar(sidebarConfig.someSidebar);
+  } catch (error) {
+    console.error(
+      `Error parsing HyperSync sidebar ${sidebarPath}:`,
+      error.message
+    );
+    return [];
+  }
 }
 
 // Function to consolidate all HyperIndex docs
@@ -143,39 +218,130 @@ function consolidateHyperIndexDocs() {
     fs.mkdirSync(outputDir, { recursive: true });
   }
 
-  // Find all markdown files
-  const markdownFiles = findMarkdownFiles(hyperIndexDir);
+  // Get file order from sidebar configuration
+  const sidebarPath = path.join(__dirname, "../sidebarsHyperIndex.js");
+  const fileOrder = parseSidebarOrder(sidebarPath);
 
-  console.log(`Found ${markdownFiles.length} markdown files to consolidate`);
+  if (fileOrder.length === 0) {
+    console.error(
+      "Failed to parse sidebar order, falling back to alphabetical order"
+    );
+    const markdownFiles = findMarkdownFiles(hyperIndexDir);
+    const fallbackOrder = markdownFiles.map((file) =>
+      path.relative(hyperIndexDir, file)
+    );
+    return processFilesInOrder(hyperIndexDir, fallbackOrder, outputFile);
+  }
+
+  console.log(
+    `Processing HyperIndex documentation in logical order from sidebar...`
+  );
+  return processFilesInOrder(hyperIndexDir, fileOrder, outputFile);
+}
+
+// Function to process files in a given order
+function processFilesInOrder(sourceDir, fileOrder, outputFile) {
+  // Determine if this is HyperIndex or HyperSync based on the source directory
+  const isHyperIndex = sourceDir.includes("HyperIndex");
+  const isHyperSync = sourceDir.includes("HyperSync");
 
   let consolidatedContent = `---
-id: hyperindex-complete
-title: HyperIndex Complete Documentation
-sidebar_label: HyperIndex Complete Documentation
-slug: /hyperindex-complete
+id: ${isHyperIndex ? "hyperindex-complete" : "hypersync-complete"}
+title: ${
+    isHyperIndex
+      ? "HyperIndex Complete Documentation"
+      : "HyperSync Complete Documentation"
+  }
+sidebar_label: ${
+    isHyperIndex
+      ? "HyperIndex Complete Documentation"
+      : "HyperSync Complete Documentation"
+  }
+slug: /${isHyperIndex ? "hyperindex-complete" : "hypersync-complete"}
 ---
 
-# HyperIndex Complete Documentation
+# ${
+    isHyperIndex
+      ? "HyperIndex Complete Documentation"
+      : "HyperSync Complete Documentation"
+  }
 
-This document contains all HyperIndex documentation consolidated into a single file for LLM consumption.
+This document contains all ${
+    isHyperIndex ? "HyperIndex" : "HyperSync"
+  } documentation consolidated into a single file for LLM consumption.
 
 ---
 
 `;
 
-  // Process each file
-  for (const filePath of markdownFiles) {
-    const relativePath = path.relative(hyperIndexDir, filePath);
-    console.log(`Processing: ${relativePath}`);
+  // Process files in the defined order
+  for (const fileName of fileOrder) {
+    // Try different file extensions
+    const possibleExtensions = [".md", ".mdx"];
+    let filePath = null;
+    let actualFileName = null;
 
-    const content = readMarkdownFile(filePath);
-    if (content) {
-      const { title, body } = processMarkdownContent(content, filePath);
+    for (const ext of possibleExtensions) {
+      const testPath = path.join(sourceDir, fileName + ext);
+      if (fs.existsSync(testPath)) {
+        filePath = testPath;
+        actualFileName = fileName + ext;
+        break;
+      }
+    }
 
-      // Fix internal links
-      const fixedBody = fixInternalLinks(body, relativePath);
+    if (filePath) {
+      console.log(`Processing: ${actualFileName}`);
 
-      consolidatedContent += `## ${title}
+      const content = readMarkdownFile(filePath);
+      if (content) {
+        const { title, body } = processMarkdownContent(content, filePath);
+
+        // Fix internal links
+        const fixedBody = fixInternalLinks(body, actualFileName);
+
+        consolidatedContent += `## ${title}
+
+**File:** \`${actualFileName}\`
+
+${fixedBody}
+
+---
+
+`;
+      }
+    } else {
+      console.warn(
+        `Warning: File not found: ${fileName} (tried .md and .mdx extensions)`
+      );
+    }
+  }
+
+  // Handle supported networks separately (they're in a category) - only for HyperIndex
+  if (isHyperIndex) {
+    const supportedNetworksDir = path.join(sourceDir, "supported-networks");
+    if (fs.existsSync(supportedNetworksDir)) {
+      const networkFiles = findMarkdownFiles(supportedNetworksDir);
+
+      // Limit to only the first 5 supported network files for HyperIndex complete docs
+      const limitedNetworkFiles = networkFiles.slice(0, 5);
+
+      console.log(
+        `Processing ${limitedNetworkFiles.length} supported network files (limited from ${networkFiles.length} total)`
+      );
+
+      for (const networkFile of limitedNetworkFiles) {
+        const relativePath = path.relative(sourceDir, networkFile);
+        console.log(`Processing: ${relativePath}`);
+
+        const content = readMarkdownFile(networkFile);
+        if (content) {
+          const { title, body } = processMarkdownContent(content, networkFile);
+
+          // Fix internal links
+          const fixedBody = fixInternalLinks(body, relativePath);
+
+          consolidatedContent += `## ${title}
 
 **File:** \`${relativePath}\`
 
@@ -184,6 +350,8 @@ ${fixedBody}
 ---
 
 `;
+        }
+      }
     }
   }
 
@@ -206,53 +374,25 @@ function consolidateHyperSyncDocs() {
     fs.mkdirSync(outputDir, { recursive: true });
   }
 
-  // Find all markdown files
-  const markdownFiles = findMarkdownFiles(hyperSyncDir);
+  // Get file order from sidebar configuration
+  const sidebarPath = path.join(__dirname, "../sidebarsHyperSync.js");
+  const fileOrder = parseHyperSyncSidebarOrder(sidebarPath);
 
-  console.log(`Found ${markdownFiles.length} markdown files to consolidate`);
-
-  let consolidatedContent = `---
-id: hypersync-complete
-title: HyperSync Complete Documentation
-sidebar_label: HyperSync Complete Documentation
-slug: /hypersync-complete
----
-
-# HyperSync Complete Documentation
-
-This document contains all HyperSync documentation consolidated into a single file for LLM consumption.
-
----
-
-`;
-
-  // Process each file
-  for (const filePath of markdownFiles) {
-    const relativePath = path.relative(hyperSyncDir, filePath);
-    console.log(`Processing: ${relativePath}`);
-
-    const content = readMarkdownFile(filePath);
-    if (content) {
-      const { title, body } = processMarkdownContent(content, filePath);
-
-      // Fix internal links
-      const fixedBody = fixInternalLinks(body, relativePath);
-
-      consolidatedContent += `## ${title}
-
-**File:** \`${relativePath}\`
-
-${fixedBody}
-
----
-
-`;
-    }
+  if (fileOrder.length === 0) {
+    console.error(
+      "Failed to parse HyperSync sidebar order, falling back to alphabetical order"
+    );
+    const markdownFiles = findMarkdownFiles(hyperSyncDir);
+    const fallbackOrder = markdownFiles.map((file) =>
+      path.relative(hyperSyncDir, file)
+    );
+    return processFilesInOrder(hyperSyncDir, fallbackOrder, outputFile);
   }
 
-  // Write the consolidated file
-  fs.writeFileSync(outputFile, consolidatedContent);
-  console.log(`Consolidated documentation written to: ${outputFile}`);
+  console.log(
+    `Processing HyperSync documentation in logical order from sidebar...`
+  );
+  return processFilesInOrder(hyperSyncDir, fileOrder, outputFile);
 }
 
 // Main execution
