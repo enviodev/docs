@@ -161,7 +161,7 @@ HyperIndex provides many features to help you build more powerful and efficient 
 - Perform external calls to decide which contract address to register using [Async Contract Register](/docs/HyperIndex/dynamic-contracts#async-contract-register)
 - Index all ERC20 token transfers with [Wildcard Indexing](/docs/HyperIndex/wildcard-indexing)
 - Use [Topic Filtering](/docs/HyperIndex/wildcard-indexing) to ignore irrelevant events
-  - With [multiple filters for single event](/docs/HyperIndex/wildcard-indexing#multiple-filters-example)
+  - With [multiple filters for single event](/docs/HyperIndex/wildcard-indexing#multiple-filters)
   - With [different filters per network](/docs/HyperIndex/wildcard-indexing#different-filters-per-network)
   - With [filter by dynamicly registered contract addresses](/docs/HyperIndex/wildcard-indexing#index-all-erc20-transfers-to-your-contract) (eg Index all ERC20 transfers to/from your Contract)
 - [Access Contract State](/docs/HyperIndex/contract-state) directly from handlers
@@ -284,6 +284,30 @@ context.Entity.set({
 :::note
 Both `context.Entity.set` and `context.Entity.deleteUnsafe` methods use the In-Memory Storage under the hood and don't require `await` in front of them.
 :::
+
+### Referencing Linked Entities
+
+When your schema defines a field that links to another entity type, set the relationship using `<field>_id` with the referenced entity's `id`. You are storing the ID, not the full entity object.
+
+```graphql
+type A {
+  id: ID!
+  b: B!
+}
+
+type B {
+  id: ID!
+}
+```
+
+```typescript
+context.A.set({
+  id: aId,
+  b_id: bId, // ID of the linked B entity
+});
+```
+
+HyperIndex automatically resolves `A.b` based on the stored `b_id` when querying the API.
 
 ### Deleting Entities (Unsafe)
 
