@@ -280,6 +280,11 @@ const config = {
 
     ({
       image: "img/preview-banner.png",
+      colorMode: {
+        defaultMode: "dark",
+        disableSwitch: false,
+        respectPrefersColorScheme: true,
+      },
       announcementBar: {
         id: "support_us",
         content:
