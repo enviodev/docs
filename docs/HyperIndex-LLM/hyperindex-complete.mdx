@@ -1296,36 +1296,6 @@ These are official indexers maintained by the Sablier team and represent product
 
 ---
 
-## Velodrome & Aerodrome DEX Indexer
-
-**File:** `Examples/example-aerodrome-velodrome.md`
-
-This indexer provides a comprehensive implementation for tracking data from the popular Velodrome and Aerodrome decentralized exchanges across multiple chains.
-
-## Overview
-
-The Velodrome & Aerodrome Indexer demonstrates how to:
-
-- Create a **multi-chain indexer** that works across Superchain networks
-- Index core DEX functionality including pools, swaps, and liquidity positions
-- Unify data access through a single GraphQL API
-- Build efficient handlers using TypeScript
-
-## Key Features
-
-- Complete tracking of liquidity pools and trading activity
-- Real-time synchronization across multiple networks
-- Well-documented codebase suitable as a starting point for similar DEX indexers
-- Making ad-hoc RPC requests for additional data (use with caution)
-
-For implementation details, usage examples, and setup instructions, see the project's README.
-
-:::note
-This indexer was built by Envio partners and community builders. While it provides a valuable reference implementation, it may not be using the latest version of Envio's tooling. Always perform appropriate testing and data validation before using in production environments.
-:::
-
----
-
 ## Envio Hosted Service
 
 **File:** `Hosted_Service/hosted-service.md`
@@ -5517,6 +5487,138 @@ These types are used internally by Envio and cannot be used as enum or entity na
 4. **Use prefixes for domain entities** (e.g., `TokenTransfer` instead of `Transfer`)
 
 If you encounter persistent issues with reserved words or need help refactoring your schema to avoid them, please reach out for support on our Discord community.
+
+---
+
+## Any EVM with RPC 🐌
+
+**File:** `supported-networks/any-evm-with-rpc.md`
+
+
+
+---
+
+## Local network - Anvil
+
+**File:** `supported-networks/local-anvil.md`
+
+
+
+---
+
+## Local network - Hardhat
+
+**File:** `supported-networks/local-hardhat.md`
+
+
+
+---
+
+## Arbitrum
+
+**File:** `supported-networks/arbitrum.md`
+
+## Indexing Arbitrum Data with Envio
+
+| **Field**                     | **Value**                                                                                          |
+|-------------------------------|----------------------------------------------------------------------------------------------------|
+| **Arbitrum Chain ID**     | 42161                                                                                            |
+| **HyperSync URL Endpoint**    | https://arbitrum.hypersync.xyz or https://42161.hypersync.xyz |
+| **HyperRPC URL Endpoint**     | https://arbitrum.rpc.hypersync.xyz or https://42161.rpc.hypersync.xyz |
+
+
+### Defining Network Configurations
+
+
+
+With these steps completed, your application will be set to efficiently index Arbitrum data using Envio’s blockchain indexer.
+
+For more information on how to set up your config, define a schema, and write event handlers, refer to the guides section in our documentation.
+
+### Support
+
+Can’t find what you’re looking for or need support? Reach out to us on Discord; we’re always happy to help!
+
+---
+
+## Eth
+
+**File:** `supported-networks/eth.md`
+
+## Indexing Eth Data with Envio
+
+| **Field**                     | **Value**                                                                                          |
+|-------------------------------|----------------------------------------------------------------------------------------------------|
+| **Eth Chain ID**     | 1                                                                                            |
+| **HyperSync URL Endpoint**    | https://eth.hypersync.xyz or https://1.hypersync.xyz |
+| **HyperRPC URL Endpoint**     | https://eth.rpc.hypersync.xyz or https://1.rpc.hypersync.xyz |
+
+
+### Defining Network Configurations
+
+
+
+With these steps completed, your application will be set to efficiently index Eth data using Envio’s blockchain indexer.
+
+For more information on how to set up your config, define a schema, and write event handlers, refer to the guides section in our documentation.
+
+### Support
+
+Can’t find what you’re looking for or need support? Reach out to us on Discord; we’re always happy to help!
+
+---
+
+## Optimism
+
+**File:** `supported-networks/optimism.md`
+
+## Indexing Optimism Data with Envio
+
+| **Field**                     | **Value**                                                                                          |
+|-------------------------------|----------------------------------------------------------------------------------------------------|
+| **Optimism Chain ID**     | 10                                                                                            |
+| **HyperSync URL Endpoint**    | https://optimism.hypersync.xyz or https://10.hypersync.xyz |
+| **HyperRPC URL Endpoint**     | https://optimism.rpc.hypersync.xyz or https://10.rpc.hypersync.xyz |
+
+
+### Defining Network Configurations
+
+
+
+With these steps completed, your application will be set to efficiently index Optimism data using Envio’s blockchain indexer.
+
+For more information on how to set up your config, define a schema, and write event handlers, refer to the guides section in our documentation.
+
+### Support
+
+Can’t find what you’re looking for or need support? Reach out to us on Discord; we’re always happy to help!
+
+---
+
+## Polygon
+
+**File:** `supported-networks/polygon.md`
+
+## Indexing Polygon Data with Envio
+
+| **Field**                     | **Value**                                                                                          |
+|-------------------------------|----------------------------------------------------------------------------------------------------|
+| **Polygon Chain ID**     | 137                                                                                            |
+| **HyperSync URL Endpoint**    | https://polygon.hypersync.xyz or https://137.hypersync.xyz |
+| **HyperRPC URL Endpoint**     | https://polygon.rpc.hypersync.xyz or https://137.rpc.hypersync.xyz |
+
+
+### Defining Network Configurations
+
+
+
+With these steps completed, your application will be set to efficiently index Polygon data using Envio’s blockchain indexer.
+
+For more information on how to set up your config, define a schema, and write event handlers, refer to the guides section in our documentation.
+
+### Support
+
+Can’t find what you’re looking for or need support? Reach out to us on Discord; we’re always happy to help!
 
 ---
 
