@@ -143,10 +143,65 @@ function consolidateHyperIndexDocs() {
     fs.mkdirSync(outputDir, { recursive: true });
   }
 
-  // Find all markdown files
-  const markdownFiles = findMarkdownFiles(hyperIndexDir);
+  // Define the logical order based on the HyperIndex sidebar structure
+  const fileOrder = [
+    "overview.md",
+    "getting-started.md",
+    "contract-import.md",
+    "benchmarks.md",
+    "migration-guide.md",
+    // Guides category
+    "Guides/configuration-file.mdx",
+    "Guides/schema-file.md",
+    "Guides/event-handlers.mdx",
+    "Advanced/multichain-indexing.mdx",
+    "Guides/testing.mdx",
+    "Guides/navigating-hasura.md",
+    "Guides/environment-variables.md",
+    // Examples category
+    "Examples/example-uniswap-v4.md",
+    "Examples/example-sablier.md",
+    "Examples/example-aerodrome-velodrome.md",
+    // Hosting category
+    "Hosted_Service/hosted-service.md",
+    "Hosted_Service/hosted-service-deployment.md",
+    "Hosted_Service/hosted-service-billing.mdx",
+    "Hosted_Service/self-hosting.md",
+    // Tutorials category
+    "Tutorials/tutorial-op-bridge-deposits.md",
+    "Tutorials/tutorial-erc20-token-transfers.md",
+    "Tutorials/tutorial-indexing-fuel.md",
+    "Tutorials/greeter-tutorial.md",
+    "Tutorials/price-data.md",
+    // Advanced category
+    "Advanced/dynamic-contracts.md",
+    "Advanced/wildcard-indexing.mdx",
+    "Guides/contract-state.md",
+    "Advanced/hypersync.md",
+    "Advanced/rpc-sync.md",
+    "Guides/ipfs.md",
+    "Guides/cli-commands.md",
+    "migration-guide-v1-v2.md",
+    "Advanced/reorgs-support.md",
+    "Advanced/generated-files.md",
+    "Advanced/terminology.md",
+    "Advanced/loaders.md",
+    "Advanced/performance/database-performance-optimization.md",
+    "Advanced/performance/latency-at-head.md",
+    "Advanced/performance/benchmarking.md",
+    // Troubleshoot category
+    "Troubleshoot/logging.mdx",
+    "Troubleshoot/common-issues.md",
+    "Troubleshoot/error-codes.md",
+    "Troubleshoot/reserved-words.md",
+    // Supported Networks (will be handled separately)
+    "fuel/fuel.md",
+    "licensing.md",
+    "terms-of-service.md",
+    "privacy-policy.md",
+  ];
 
-  console.log(`Found ${markdownFiles.length} markdown files to consolidate`);
+  console.log(`Processing HyperIndex documentation in logical order...`);
 
   let consolidatedContent = `---
 id: hyperindex-complete
@@ -163,19 +218,51 @@ This document contains all HyperIndex documentation consolidated into a single f
 
 `;
 
-  // Process each file
-  for (const filePath of markdownFiles) {
-    const relativePath = path.relative(hyperIndexDir, filePath);
-    console.log(`Processing: ${relativePath}`);
+  // Process files in the defined order
+  for (const fileName of fileOrder) {
+    const filePath = path.join(hyperIndexDir, fileName);
 
-    const content = readMarkdownFile(filePath);
-    if (content) {
-      const { title, body } = processMarkdownContent(content, filePath);
+    if (fs.existsSync(filePath)) {
+      console.log(`Processing: ${fileName}`);
 
-      // Fix internal links
-      const fixedBody = fixInternalLinks(body, relativePath);
+      const content = readMarkdownFile(filePath);
+      if (content) {
+        const { title, body } = processMarkdownContent(content, filePath);
 
-      consolidatedContent += `## ${title}
+        // Fix internal links
+        const fixedBody = fixInternalLinks(body, fileName);
+
+        consolidatedContent += `## ${title}
+
+**File:** \`${fileName}\`
+
+${fixedBody}
+
+---
+
+`;
+      }
+    } else {
+      console.warn(`Warning: File not found: ${fileName}`);
+    }
+  }
+
+  // Handle supported networks separately (they're in a category)
+  const supportedNetworksDir = path.join(hyperIndexDir, "supported-networks");
+  if (fs.existsSync(supportedNetworksDir)) {
+    const networkFiles = findMarkdownFiles(supportedNetworksDir);
+    for (const networkFile of networkFiles) {
+      const relativePath = path.relative(hyperIndexDir, networkFile);
+      console.log(`Processing: ${relativePath}`);
+
+      const content = readMarkdownFile(networkFile);
+      if (content) {
+        const { title, body } = processMarkdownContent(content, networkFile);
+
+        // Fix internal links
+        const fixedBody = fixInternalLinks(body, relativePath);
+
+        consolidatedContent += `## ${title}
 
 **File:** \`${relativePath}\`
 
@@ -184,6 +271,7 @@ ${fixedBody}
 ---
 
 `;
+      }
     }
   }
 
@@ -206,10 +294,25 @@ function consolidateHyperSyncDocs() {
     fs.mkdirSync(outputDir, { recursive: true });
   }
 
-  // Find all markdown files
-  const markdownFiles = findMarkdownFiles(hyperSyncDir);
+  // Define the logical order based on the sidebar structure
+  const fileOrder = [
+    "overview.md",
+    "quickstart.md",
+    "hypersync-usage.md",
+    "hypersync-clients.md",
+    "hypersync-query.md",
+    "hypersync-presets.md",
+    "hypersync-curl-examples.md",
+    "api-tokens.mdx",
+    "hypersync-supported-networks.md",
+    "tutorial-address-transactions.md",
+    "HyperRPC/overview-hyperrpc.md",
+    "HyperRPC/hyperrpc-url-endpoints.md",
+    "HyperFuel/hyperfuel.md",
+    "HyperFuel/hyperfuel-query.md",
+  ];
 
-  console.log(`Found ${markdownFiles.length} markdown files to consolidate`);
+  console.log(`Processing HyperSync documentation in logical order...`);
 
   let consolidatedContent = `---
 id: hypersync-complete
@@ -226,27 +329,32 @@ This document contains all HyperSync documentation consolidated into a single fi
 
 `;
 
-  // Process each file
-  for (const filePath of markdownFiles) {
-    const relativePath = path.relative(hyperSyncDir, filePath);
-    console.log(`Processing: ${relativePath}`);
+  // Process files in the defined order
+  for (const fileName of fileOrder) {
+    const filePath = path.join(hyperSyncDir, fileName);
 
-    const content = readMarkdownFile(filePath);
-    if (content) {
-      const { title, body } = processMarkdownContent(content, filePath);
+    if (fs.existsSync(filePath)) {
+      console.log(`Processing: ${fileName}`);
 
-      // Fix internal links
-      const fixedBody = fixInternalLinks(body, relativePath);
+      const content = readMarkdownFile(filePath);
+      if (content) {
+        const { title, body } = processMarkdownContent(content, filePath);
 
-      consolidatedContent += `## ${title}
+        // Fix internal links
+        const fixedBody = fixInternalLinks(body, fileName);
 
-**File:** \`${relativePath}\`
+        consolidatedContent += `## ${title}
+
+**File:** \`${fileName}\`
 
 ${fixedBody}
 
 ---
 
 `;
+      }
+    } else {
+      console.warn(`Warning: File not found: ${fileName}`);
     }
   }
 
