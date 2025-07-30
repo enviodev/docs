@@ -376,10 +376,10 @@ const config = {
         ],
       },
       metadata: [
-        { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:site', content: '@envio_indexer' },
-        { property: 'og:type', content: 'website' },
-        { property: 'og:locale', content: 'en' },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:site", content: "@envio_indexer" },
+        { property: "og:type", content: "website" },
+        { property: "og:locale", content: "en" },
       ],
     }),
   plugins: [
@@ -418,6 +418,30 @@ const config = {
             path: "",
           },
         },
+      },
+    ],
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "HyperIndex-LLM",
+        path: "docs/HyperIndex-LLM",
+        routeBasePath: "docs/HyperIndex-LLM",
+        sidebarPath: require.resolve("./sidebarsHyperIndexLLM.js"),
+        editUrl: "https://github.com/enviodev/docs/edit/main/",
+        showLastUpdateAuthor: false,
+        showLastUpdateTime: false,
+      },
+    ],
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "HyperSync-LLM",
+        path: "docs/HyperSync-LLM",
+        routeBasePath: "docs/HyperSync-LLM",
+        sidebarPath: require.resolve("./sidebarsHyperSyncLLM.js"),
+        editUrl: "https://github.com/enviodev/docs/edit/main/",
+        showLastUpdateAuthor: false,
+        showLastUpdateTime: false,
       },
     ],
     [
