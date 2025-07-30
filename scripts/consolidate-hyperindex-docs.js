@@ -110,14 +110,8 @@ function fixInternalLinks(content, relativePath) {
   // Remove CSS imports
   content = content.replace(/^import\s+["'][^"']*\.css["'];?\s*$/gm, "");
 
-  // Remove HTML elements that cause parsing errors
-  content = content.replace(/<[^>]*>/g, "");
-
-  // Remove any remaining problematic syntax
-  content = content.replace(/```[^`]*```/g, "");
-
-  // Remove any remaining code blocks that might cause issues
-  content = content.replace(/```[\s\S]*?```/g, "");
+  // Remove HTML elements that cause parsing errors (but preserve code blocks)
+  content = content.replace(/<(?!\/?(?:code|pre))[^>]*>/g, "");
 
   // Remove any remaining image references
   content = content.replace(/image\.png/g, "");
