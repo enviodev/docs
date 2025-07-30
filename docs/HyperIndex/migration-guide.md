@@ -163,7 +163,9 @@ subscription.position = event.params.tokenId
 subscription.save()
 }
 
+
 ```
+
 
 
 </div>
@@ -182,6 +184,7 @@ PoolManager.Subscription.handler( async (event, context) => {
 
 context.Subscription.set(entity);
 })
+
 
 ```
 

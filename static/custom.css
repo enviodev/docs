@@ -1,13 +1,210 @@
-/* Custom styles to adjust sidebar item text size */
+/* Clean sidebar styling with Vercel-inspired design */
 .menu__link {
-  font-size: 0.85rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  border-radius: 4px !important;
+  margin: 1px 8px 1px 0 !important;
+  padding: 6px 12px !important;
+  transition: all 0.2s ease !important;
+  color: #525252 !important;
+}
+
+.menu__link:hover {
+  background: #f0f0f0 !important;
+  color: #000000 !important;
+  text-decoration: none !important;
+}
+
+[data-theme="dark"] .menu__link {
+  color: #a3a3a3 !important;
+}
+
+[data-theme="dark"] .menu__link:hover {
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+.menu__link--active {
+  background: #000000 !important;
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="dark"] .menu__link--active {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+.menu__link--active:hover {
+  background: #1a1a1a !important;
+  color: white !important;
+}
+
+[data-theme="dark"] .menu__link--active:hover {
+  background: #e5e5e5 !important;
+  color: #000000 !important;
 }
 
 .menu__list-item-collapsible {
-  font-size: 0.85rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  color: #000000 !important;
 }
 
-/* Make category labels (section headers) still stand out */
+[data-theme="dark"] .menu__list-item-collapsible {
+  color: #ffffff !important;
+}
+
+/* Make category labels (section headers) stand out */
 .menu__list-item-collapsible .menu__link {
   font-weight: 600 !important;
+  color: #000000 !important;
+  font-size: 0.9rem !important;
+}
+
+[data-theme="dark"] .menu__list-item-collapsible .menu__link {
+  color: #ffffff !important;
+}
+
+/* Clean sidebar container styling */
+.theme-doc-sidebar-container {
+  border-right: 1px solid #e5e5e5 !important;
+  background: #fafafa !important;
+}
+
+[data-theme="dark"] .theme-doc-sidebar-container {
+  border-right: 1px solid #262626 !important;
+  background: #111111 !important;
+}
+
+/* Clean menu list styling */
+.menu__list {
+  padding: 0.5rem 0 !important;
+}
+
+.menu__list-item {
+  margin: 0 !important;
+}
+
+/* Clean nested menu styling */
+.menu__list-item .menu__list {
+  padding-left: 1rem !important;
+}
+
+/* Clean menu button styling */
+.menu__button {
+  border-radius: 4px !important;
+  transition: all 0.2s ease !important;
+}
+
+.menu__button:hover {
+  background: #f0f0f0 !important;
+  color: #000000 !important;
+}
+
+[data-theme="dark"] .menu__button:hover {
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+}
+
+/* Clean menu icon styling */
+.menu__caret {
+  transition: transform 0.2s ease !important;
+}
+
+.menu__list-item--collapsed .menu__caret {
+  transform: rotate(-90deg) !important;
+}
+
+/* Clean search bar styling */
+.aa-Input {
+  border-radius: 6px !important;
+  border: 1px solid #e5e5e5 !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  font-size: 0.875rem !important;
+  padding: 8px 12px !important;
+  transition: border-color 0.2s ease !important;
+}
+
+[data-theme="dark"] .aa-Input {
+  border: 1px solid #262626 !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+.aa-Input:focus {
+  border-color: #000000 !important;
+  outline: none !important;
+}
+
+[data-theme="dark"] .aa-Input:focus {
+  border-color: #ffffff !important;
+}
+
+/* Clean navbar improvements */
+.navbar__title {
+  font-weight: 600 !important;
+  font-size: 1.125rem !important;
+}
+
+.navbar__item {
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+  transition: color 0.2s ease !important;
+}
+
+.navbar__item:hover {
+  color: #000000 !important;
+}
+
+[data-theme="dark"] .navbar__item:hover {
+  color: #ffffff !important;
+}
+
+/* Clean footer improvements */
+.footer__title {
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  color: #000000 !important;
+  margin-bottom: 1rem !important;
+}
+
+[data-theme="dark"] .footer__title {
+  color: #ffffff !important;
+}
+
+.footer__link-item {
+  font-size: 0.875rem !important;
+  color: #525252 !important;
+  transition: color 0.2s ease !important;
+}
+
+.footer__link-item:hover {
+  color: #000000 !important;
+  text-decoration: none !important;
+}
+
+[data-theme="dark"] .footer__link-item {
+  color: #a3a3a3 !important;
+}
+
+[data-theme="dark"] .footer__link-item:hover {
+  color: #ffffff !important;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .menu__link {
+    font-size: 0.8rem !important;
+    padding: 5px 10px !important;
+  }
+
+  .navbar__title {
+    font-size: 1rem !important;
+  }
+
+  .navbar__item {
+    font-size: 0.8rem !important;
+  }
 }

@@ -11,6 +11,13 @@
   padding: 2rem;
   background: #000;
   color: #fff;
+  transition: all 0.3s ease;
+}
+
+/* Light mode styles */
+[data-theme="light"] .main {
+  background: #ffffff;
+  color: #000;
 }
 
 .container {
@@ -28,6 +35,15 @@
   background-clip: text;
   margin-bottom: 1rem;
   letter-spacing: -0.02em;
+  transition: all 0.3s ease;
+}
+
+/* Light mode title */
+[data-theme="light"] .title {
+  background: linear-gradient(135deg, #000 0%, #404040 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .subtitle {
@@ -36,6 +52,12 @@
   margin-bottom: 4rem;
   font-weight: 400;
   line-height: 1.6;
+  transition: all 0.3s ease;
+}
+
+/* Light mode subtitle */
+[data-theme="light"] .subtitle {
+  color: #525252;
 }
 
 .docsGrid {
@@ -54,10 +76,22 @@
   transition: all 0.2s ease;
 }
 
+/* Light mode doc section */
+[data-theme="light"] .docSection {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
 .docSection:hover {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
+}
+
+/* Light mode doc section hover */
+[data-theme="light"] .docSection:hover {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.2);
 }
 
 .docSection h2 {
@@ -66,6 +100,12 @@
   color: #fff;
   margin-bottom: 1rem;
   letter-spacing: -0.01em;
+  transition: all 0.3s ease;
+}
+
+/* Light mode doc section heading */
+[data-theme="light"] .docSection h2 {
+  color: #000;
 }
 
 .llmDescription {
@@ -73,6 +113,12 @@
   color: #a1a1aa;
   margin-bottom: 1.5rem;
   line-height: 1.5;
+  transition: all 0.3s ease;
+}
+
+/* Light mode LLM description */
+[data-theme="light"] .llmDescription {
+  color: #525252;
 }
 
 .docLinks {
@@ -96,6 +142,13 @@
   backdrop-filter: blur(10px);
 }
 
+/* Light mode doc link */
+[data-theme="light"] .docLink {
+  background: rgba(0, 0, 0, 0.1);
+  color: #000;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
 .docLink:hover {
   background: rgba(255, 255, 255, 0.15);
   border-color: rgba(255, 255, 255, 0.2);
@@ -103,6 +156,14 @@
   text-decoration: none;
   color: #fff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Light mode doc link hover */
+[data-theme="light"] .docLink:hover {
+  background: rgba(0, 0, 0, 0.15);
+  border-color: rgba(0, 0, 0, 0.2);
+  color: #000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Responsive design */
