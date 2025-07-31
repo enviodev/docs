@@ -4,7 +4,7 @@ sidebar_label: Envio Developer Update July 2025
 slug: /envio-developer-update-july-2025
 ---
 
-<img src="/dev-update-july-2025.png" alt="Cover Image Envio Developer Community Update July 2025" width="100%"/>
+<img src="/blog-assets/dev-update-july-2025.png" alt="Cover Image Envio Developer Community Update July 2025" width="100%"/>
 
 <!--truncate-->
 
@@ -62,7 +62,7 @@ Love what we’re building as much as we do and want to stay updated on our late
 
 ## New Feature: Instantly Generate an Indexer from Your Contract Address
 
-<img src="/generate-indexer-contract-address.gif" alt="contract address" width="100%"/>
+<img src="/blog-assets/generate-indexer-contract-address.gif" alt="contract address" width="100%"/>
 
 We’ve refreshed our landing page with a handy new tool. Simply paste your contract address to:
 
@@ -76,7 +76,7 @@ Try it out now by visiting our landing [page](https://envio.dev/).
 
 ## Envio Supports Base with Lightning Fast Data Retrieval
 
-<img src="/base-support.png" alt="base support" width="100%"/>
+<img src="/blog-assets/base-support.png" alt="base support" width="100%"/>
 
 
 [Base](https://www.base.org/) is booming. Your data should too. Envio’s HyperSync supports Base with the most advanced indexing on the market. Sync historical data in minutes, access it up to 2000x faster than RPC, and query structured logs, traces, events, and functions.
@@ -86,7 +86,7 @@ Learn how to index millions of events in Seconds on Base using Envio in this [th
 
 ## Internal Hackathon July 2025
 
-<img src="/internal-hack-turkey.png" alt="internal hack turkey" width="100%"/>
+<img src="/blog-assets/internal-hack-turkey.png" alt="internal hack turkey" width="100%"/>
 
 We wrapped up another successful internal hackathon during our team offsite this month. The goal? Build tools that push Envio forward. Some are already live.
 
@@ -97,7 +97,7 @@ Check out this [thread](https://x.com/envio_indexer/status/1950145932516880605) 
 
 ## Supercharge Your Ethereum Data With Envio’s HyperSync
 
-<img src="/eth-support.png" alt="eth support" width="100%"/>
+<img src="/blog-assets/eth-support.png" alt="eth support" width="100%"/>
 
 
 [Ethereum](https://ethereum.org/en/) is on fire. ETF inflows are climbing, regulatory clarity is coming, and price action is picking up. The network’s heating up, but can your infrastructure keep up? Envio’s HyperSync lets you index millions of events on Ethereum in seconds. No delays. Just fast, structured access to the data that matters.
@@ -107,7 +107,7 @@ Learn how in this [thread](https://x.com/envio_indexer/status/194584907774632763
 
 ## EthCC & Pragma Cannes 2025 Recap
 
-<img src="/ethcc-pragma.png" alt="ethcc & pragma" width="100%"/>
+<img src="/blog-assets/ethcc-pragma.png" alt="ethcc & pragma" width="100%"/>
 
 
 Yes, we Cannes!
@@ -128,7 +128,7 @@ Missed our workshop on lightning-fast multi-chain indexing? Catch the replay on 
 
 ## Featured Developer 🧑‍💻
 
-<img src="/dev-of-the-month-july-2025.png" alt="july 2025 DOTM" width="100%"/>
+<img src="/blog-assets/dev-of-the-month-july-2025.png" alt="july 2025 DOTM" width="100%"/>
 
 
 This month’s featured developer is Nikhil, a software developer and technical content creator who’s been sharing practical insights with Web3 devs for years. He’s worked with teams like Figment, Celo, and Bitquery, crafting developer-facing content. Nikhil has also contributed as a Solidity developer on smaller DeFi projects and is now focusing on personal projects while exploring new opportunities.
@@ -146,7 +146,7 @@ Be sure to follow Nikhil on [X](https://x.com/nikbhintade) and check out their w
 
 ## Playlist of the Month 🎧️ 
 
-<img src="/july-2025-playlist.png" alt="july 2025 playlist" width="100%"/>
+<img src="/blog-assets/july-2025-playlist.png" alt="july 2025 playlist" width="100%"/>
 
 
 ▶️ [Open Spotify](https://open.spotify.com/playlist/1vyctkfc1CrmnVv2dMCrUo?si=84f39e6a4b1d436e)
