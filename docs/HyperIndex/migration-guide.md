@@ -13,7 +13,7 @@ Please reach out to our team on [Discord](https://discord.gg/envio) for personal
 
 ## Introduction
 
-Migrating from a subgraph to HyperIndex is designed to be a developer-friendly process. HyperIndex draws strong inspiration from TheGraph’s subgraph architecture, which makes the migration simple, especially with the help of coding assistants like Cursor and AI tools (don't forget to use our ai friendly docs [llm-docs.envio.dev](https://llm-docs.envio.dev)).
+Migrating from a subgraph to HyperIndex is designed to be a developer-friendly process. HyperIndex draws strong inspiration from TheGraph’s subgraph architecture, which makes the migration simple, especially with the help of coding assistants like Cursor and AI tools (don't forget to use our [ai friendly docs](/docs/HyperIndex-LLM/hyperindex-complete)).
 
 The process is simple but requires a good understanding of the underlying concepts. If you are new to HyperIndex, we recommend starting with the [Getting Started](../HyperIndex/getting-started) guide.
 
@@ -162,7 +162,11 @@ subscription.position = event.params.tokenId
 
 subscription.save()
 }
+
+
 ```
+
+
 
 </div>
 <div className="col col--6">
@@ -180,6 +184,8 @@ PoolManager.Subscription.handler( async (event, context) => {
 
 context.Subscription.set(entity);
 })
+
+
 ```
 
 </div>

@@ -1,59 +1,75 @@
 # LLM-Friendly Documentation Setup
 
-This project includes a special build configuration for creating LLM-friendly documentation that excludes the large number of auto-generated supported network pages.
+This project includes a special build configuration for creating LLM-friendly documentation that consolidates all documentation into single files for easier consumption by Large Language Models.
 
 ## How It Works
 
-1. The build process checks for the `DOCS_FOR_LLM` environment variable
-2. When `DOCS_FOR_LLM=true`, the build:
-   - Skips generating all supported network pages
-   - Creates a minimal list of important networks
-   - Produces a streamlined documentation site optimized for LLM context windows
+1. The build process consolidates all HyperIndex and HyperSync documentation into single MDX files
+2. Blog content is completely excluded from the LLM documentation
+3. Creates a streamlined documentation site optimized for LLM context windows
+4. Provides separate consolidated files for HyperIndex and HyperSync documentation
+5. All internal links and problematic content are cleaned up for LLM consumption
 
-## Vercel Setup Instructions
+## Structure
 
-To set up the LLM-friendly documentation in Vercel:
+- `docs/HyperIndex-LLM/hyperindex-complete.mdx` - All HyperIndex documentation in one file
+- `docs/HyperSync-LLM/hypersync-complete.mdx` - All HyperSync documentation in one file
+- `docusaurus.config.llm.js` - Special configuration for LLM docs
+- `scripts/consolidate-hyperindex-docs.js` - Script to consolidate documentation
 
-1. **Create a new Environment in Vercel**:
+## Usage
 
-   - Go to your Vercel project dashboard
-   - Navigate to Settings → Environment Variables
-   - Add a new Environment Variable:
-     - Name: `DOCS_FOR_LLM`
-     - Value: `true`
-   - In the "Environments" dropdown, select only the environment you want for LLM docs (e.g., "Preview")
-
-2. **Create a Preview Deployment**:
-
-   - In Vercel, go to Deployments
-   - Create a new deployment
-   - Select your repository and branch
-   - Choose the environment where `DOCS_FOR_LLM=true`
-   - Deploy
-
-3. **Alternative: Create a Git Branch**:
-   - Create a branch named `llm-docs` in your repository
-   - Configure Vercel to use the `DOCS_FOR_LLM=true` environment variable for this branch
-   - Vercel will automatically deploy with the LLM-friendly configuration
-
-## Local Testing
-
-To test the LLM-friendly build locally:
+### Building LLM Documentation
 
 ```bash
-# Run with LLM mode enabled
-DOCS_FOR_LLM=true yarn start
+# Build the LLM documentation
+yarn build-llm
 
-# Run normal mode (full documentation)
-yarn start
+# Start the LLM documentation server
+yarn start-llm
+
+# Consolidate documentation files
+yarn consolidate-docs
 ```
 
-## Files Modified for This Feature
+### Accessing the Documentation
 
-1. `scripts/conditionally-update-endpoints.js` - Conditionally generates network pages
-2. `package.json` - Updated build scripts to use the conditional script
-3. `sidebarsHyperIndex.js` - Modified to conditionally include networks in the sidebar
+Once built, you can access:
 
-## Maintenance Notes
+- HyperIndex documentation at `/docs/HyperIndex-LLM/hyperindex-complete`
+- HyperSync documentation at `/docs/HyperSync-LLM/hypersync-complete`
 
-When adding new features or sections to the documentation, consider whether they should be included in both versions or just the full version.
+## Features
+
+- **Single File Per Product**: All HyperIndex docs in one file, all HyperSync docs in another
+- **No Blog Content**: Blog posts are completely excluded
+- **Clean Content**: Internal links, images, and problematic syntax are removed
+- **LLM Optimized**: Content is structured for easy LLM consumption
+- **Separate Build**: Uses a separate docusaurus configuration to avoid conflicts
+
+## Scripts
+
+- `yarn build-llm` - Build the LLM documentation
+- `yarn start-llm` - Start the development server for LLM docs
+- `yarn consolidate-docs` - Regenerate the consolidated documentation files
+
+## Configuration
+
+The LLM documentation uses a separate docusaurus configuration (`docusaurus.config.llm.js`) that:
+
+- Disables blog functionality
+- Uses simplified sidebar configurations
+- Focuses only on the consolidated documentation files
+- Optimizes for LLM consumption
+
+## File Processing
+
+The consolidation script:
+
+- Processes all markdown and MDX files from the source directories
+- Removes internal links and references
+- Cleans up problematic syntax
+- Maintains content structure for LLM consumption
+- Generates clean MDX files
+
+This setup provides a clean, consolidated documentation experience perfect for LLM context windows and automated processing.

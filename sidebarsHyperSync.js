@@ -29,5 +29,10 @@ module.exports = {
       label: "HyperFuel",
       items: ["HyperFuel/hyperfuel", "HyperFuel/hyperfuel-query"],
     },
+    {
+      type: "link",
+      label: "LLM Documentation",
+      href: "/docs/HyperSync-LLM/hypersync-complete",
+    },
   ],
 };
