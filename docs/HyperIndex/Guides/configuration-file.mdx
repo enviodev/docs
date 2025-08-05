@@ -133,15 +133,7 @@ networks:
 - **Optional override**: The per-contract `start_block` field allows you to override the default for specific contracts
 - The `start_block` field must be an integer ≥ 0 or `null` when specified
 - Only specify per-contract `start_block` when you need different behavior than the network default
-- This feature is available from Envio v2.12.0 and above
-  :::
-
-:::tip Performance Optimization
-When contracts are deployed after your network start_block, using per-contract start_block overrides can improve indexing performance by:
-
-- Reducing the amount of historical data processed for specific contracts
-- Allowing faster initial sync for contracts deployed later than the network start_block
-- Enabling selective historical data collection only where needed
+- This feature is available from Envio v2.27.0 and above
   :::
 
 ---
