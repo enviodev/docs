@@ -75,10 +75,3 @@ Upcoming features on our development roadmap:
 
 - [GitHub Repository](https://github.com/enviodev/hyperindex) ⭐
 - [Join our Discord Community](https://discord.gg/Q9qt8gZ2fX)
-
----
-
-:::note
-**Windows Users:**  
-For optimal performance, please use [WSL (Windows Subsystem for Linux)](https://learn.microsoft.com/en-us/windows/wsl/install).
-:::

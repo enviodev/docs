@@ -163,8 +163,7 @@ subscription.position = event.params.tokenId
 subscription.save()
 }
 
-
-```
+````
 
 
 
@@ -186,7 +185,7 @@ context.Subscription.set(entity);
 })
 
 
-```
+````
 
 </div>
 </div>
@@ -200,7 +199,7 @@ HyperIndex is a powerful tool that can be used to index any contract. There are 
 - Use wildcard indexing to index by event signatures rather than by contract address.
 - HyperIndex uses the standard graphql query language, where as the subgraph uses a custom query language. You can read about the slight nuances [here](https://docs.sablier.com/api/caveats). (We are working on a basic tool to help with backwards compatibility, please check in with us on discord for it's current status).
 - Loaders are a powerful feature to optimize historical sync performance. You can read more about them [here](../HyperIndex/loaders).
-- HyperIndex is very flexible and can be used to index offchain data too or send messages to a queue etc for fetching external data, you can further optimise the fetching by using the [effects api](../HyperIndex/loaders#effect-api-experimental)
+- HyperIndex is very flexible and can be used to index offchain data too or send messages to a queue etc for fetching external data, you can further optimise the fetching by using the [effects api](/docs/HyperIndex/effect-api)
 
 ## Share Your Learnings
 

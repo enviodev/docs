@@ -228,7 +228,7 @@ Edit your `config.yaml` file to track both the API3 oracle and the Uniswap V3 po
 ```yaml
 # yaml-language-server: $schema=./node_modules/envio/evm.schema.json
 name: envio-indexer
-rollback_on_reorg: false
+preload_handlers: true
 networks:
   - id: 81457
     start_block: 11000000

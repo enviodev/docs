@@ -204,21 +204,11 @@
 /* Clean link styling */
 article a {
   color: #000000;
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-bottom-color 0.2s ease;
-}
-
-article a:hover {
-  border-bottom-color: #000000;
+  text-decoration: underline;
 }
 
 [data-theme="dark"] article a {
   color: #ffffff;
-}
-
-[data-theme="dark"] article a:hover {
-  border-bottom-color: #ffffff;
 }
 
 /* Clean code block styling */

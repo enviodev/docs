@@ -9,11 +9,15 @@ slug: /getting-started
 
 ### Prerequisites
 
-- **[Node.js](https://nodejs.org/en/download/current)** _(v18 or newer recommended)_
+- **[Node.js](https://nodejs.org/en/download/current)** _(v22 or newer recommended)_
 - **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
-> **Note:** Docker is specifically required to run your indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
+> **Note:** Docker is required only if you plan to run your indexer locally. You can skip installing Docker if you'll only be using Envio's hosted service.
+
+#### Additionally for Windows Users:
+
+- **[WSL](https://learn.microsoft.com/en-us/windows/wsl/install)** _Windows Subsystem for Linux_
 
 ---
 

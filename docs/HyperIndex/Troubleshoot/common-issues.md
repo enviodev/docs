@@ -68,12 +68,12 @@ pnpm codegen
 
 **Problem:** Compatibility issues or unexpected errors when running the indexer.
 
-**Solution:** Envio requires Node.js v18 or newer. If you're using Node.js v16 or older, please update:
+**Solution:** Envio requires Node.js v22 or newer. If you're using Node.js v16 or older, please update:
 
 ```bash
 # Using nvm (recommended)
-nvm install 18
-nvm use 18
+nvm install 22
+nvm use 22
 
 # Or download directly from https://nodejs.org/
 ```

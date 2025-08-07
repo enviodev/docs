@@ -8,8 +8,6 @@ slug: /ipfs
 # Indexing IPFS Data with Envio
 
 > **Example Repository:** The complete code for this guide can be found [here](https://github.com/enviodev/bored-ape-yacht-club-indexer)
->
-> **Important Note:** The example repository contains a SQLite caching implementation which is **not supported** on the Envio hosted service. This guide has been updated to exclude the SQLite implementation, focusing only on approaches compatible with the hosted environment.
 
 ## Introduction
 
@@ -44,6 +42,7 @@ Modify the configuration to focus on the Transfer events:
 ```yaml
 # config.yaml
 name: bored-ape-yacht-club-nft-indexer
+preload_handlers: true
 networks:
   - id: 1
     start_block: 0
@@ -121,20 +120,26 @@ type Nft {
 
 ### Create IPFS Effect
 
-We'll use the [Effect API](/docs/HyperIndex/loaders#effect-api-experimental) to fetch the IPFS metadata. Let's put it in the `src/effects/ipfs.ts` file:
+**Important!** Preload optimization makes your handlers run **twice**. So instead of direct RPC calls, we're doing it through the [Effect API](/docs/HyperIndex/effect-api).
+
+Learn how Preload Optimization works in a [dedicated guide](/docs/HyperIndex/preload-optimization). It might be a new mental model for you, but this is what can make indexing thousands of times faster.
+
+Let's create the `getIpfsMetadata` effect in the `src/utils/ipfs.ts` file:
 
 ```typescript
-// src/utils/ipfs.ts
 import { experimental_createEffect, S, type EffectContext } from "envio";
 
+// Define the schema for the IPFS metadata
+// It uses Sury library to define the schema
 const nftMetadataSchema = S.schema({
   image: S.string,
   attributes: S.string,
 });
 
-type NftMetadata = S.Output<typeof nftMetadataSchema>;
+// Infer the type from the schema
+type NftMetadata = S.Infer<typeof nftMetadataSchema>;
 
-// unique identifier for the BoredApeYachtClub IPFS tokenURI
+// Unique identifier for the BoredApeYachtClub IPFS tokenURI
 const BASE_URI_UID = "QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq";
 
 const endpoints = [
@@ -285,44 +290,9 @@ export const getIpfsMetadata = experimental_createEffect(
 
 > **Note:** We're working on a better integration with the hosted service. Currently, due to the cache size, it's not recommended to commit the `.envio/cache` directory to the GitHub repository.
 
-### 4. Improve Performance with Loaders
+### 4. Learn about Preload Optimization
 
-The solution will perform external calls for each handler one by one. This is not efficient and can be improved with loaders.
-Follow the [Going All-In with Loaders](/docs/HyperIndex/loaders#going-all-in-with-loaders) guide to make your indexer dozens of times faster.
-
-```typescript
-// src/EventHandlers.ts
-import { BoredApeYachtClub } from "generated";
-import { getIpfsMetadata } from "../utils/ipfs";
-
-const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
-
-BoredApeYachtClub.Transfer.handlerWithLoader({
-  loader: async ({ event, context }) => {
-    if (event.params.from === ZERO_ADDRESS) {
-      // mint
-      const metadata = await context.effect(
-        getIpfsMetadata,
-        event.params.tokenId.toString()
-      );
-      context.Nft.set({
-        id: event.params.tokenId.toString(),
-        owner: event.params.to,
-        image: metadata.image,
-        attributes: metadata.attributes,
-      });
-    } else {
-      // transfer
-      const nft = await context.Nft.getOrThrow(event.params.tokenId.toString());
-      context.Nft.set({
-        ...nft,
-        owner: event.params.to,
-      });
-    }
-  },
-  handler: async (_) => {},
-});
-```
+Learn how Preload Optimization works and the [Double-Run Footgun](/docs/HyperIndex/preload-optimization#double-run-footgun) in a [dedicated guide](/docs/HyperIndex/preload-optimization). It might be a new mental model for you, but this is what can make indexing thousands of times faster.
 
 ## Understanding IPFS
 
