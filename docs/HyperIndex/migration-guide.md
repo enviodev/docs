@@ -150,22 +150,20 @@ The below code snippets can give you a basic idea of what this difference might 
 <div className="row">
 <div className="col col--6">
 theGraph - `eventHandler.ts`
+
 ```typescript
 export function handleSubscription(event: SubscriptionEvent): void {
-  const subscription = new Subscribe(event.transaction.hash + event.logIndex)
+  const subscription = new Subscribe(event.transaction.hash + event.logIndex);
 
-subscription.tokenId = event.params.tokenId
-subscription.address = event.params.subscriber.toHexString()  
- subscription.logIndex = event.logIndex
-subscription.blockNumber = event.block.number
-subscription.position = event.params.tokenId
+  subscription.tokenId = event.params.tokenId;
+  subscription.address = event.params.subscriber.toHexString();
+  subscription.logIndex = event.logIndex;
+  subscription.blockNumber = event.block.number;
+  subscription.position = event.params.tokenId;
 
-subscription.save()
+  subscription.save();
 }
-
-````
-
-
+```
 
 </div>
 <div className="col col--6">
@@ -184,8 +182,7 @@ PoolManager.Subscription.handler( async (event, context) => {
 context.Subscription.set(entity);
 })
 
-
-````
+```
 
 </div>
 </div>
@@ -208,3 +205,4 @@ If you discover helpful tips during your migration, we’d love contributions! O
 ## Getting Help
 
 **Join Our Discord**: The fastest way to get personalized help is through our [Discord community](https://discord.gg/envio).
+```
