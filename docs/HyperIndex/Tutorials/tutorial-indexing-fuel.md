@@ -25,7 +25,7 @@ Sway Farm is a simple farming game and for the sake of a real-world example, let
 
 ### Environment tooling
 
-- **[Node.js](https://nodejs.org/en/download/current)** _(v18 or newer recommended)_
+- **[Node.js](https://nodejs.org/en/download/current)** _(v22 or newer recommended)_
 - **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 

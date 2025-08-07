@@ -150,23 +150,20 @@ The below code snippets can give you a basic idea of what this difference might 
 <div className="row">
 <div className="col col--6">
 theGraph - `eventHandler.ts`
+
 ```typescript
 export function handleSubscription(event: SubscriptionEvent): void {
-  const subscription = new Subscribe(event.transaction.hash + event.logIndex)
+  const subscription = new Subscribe(event.transaction.hash + event.logIndex);
 
-subscription.tokenId = event.params.tokenId
-subscription.address = event.params.subscriber.toHexString()  
- subscription.logIndex = event.logIndex
-subscription.blockNumber = event.block.number
-subscription.position = event.params.tokenId
+  subscription.tokenId = event.params.tokenId;
+  subscription.address = event.params.subscriber.toHexString();
+  subscription.logIndex = event.logIndex;
+  subscription.blockNumber = event.block.number;
+  subscription.position = event.params.tokenId;
 
-subscription.save()
+  subscription.save();
 }
-
-
 ```
-
-
 
 </div>
 <div className="col col--6">
@@ -185,7 +182,6 @@ PoolManager.Subscription.handler( async (event, context) => {
 context.Subscription.set(entity);
 })
 
-
 ```
 
 </div>
@@ -200,7 +196,7 @@ HyperIndex is a powerful tool that can be used to index any contract. There are 
 - Use wildcard indexing to index by event signatures rather than by contract address.
 - HyperIndex uses the standard graphql query language, where as the subgraph uses a custom query language. You can read about the slight nuances [here](https://docs.sablier.com/api/caveats). (We are working on a basic tool to help with backwards compatibility, please check in with us on discord for it's current status).
 - Loaders are a powerful feature to optimize historical sync performance. You can read more about them [here](../HyperIndex/loaders).
-- HyperIndex is very flexible and can be used to index offchain data too or send messages to a queue etc for fetching external data, you can further optimise the fetching by using the [effects api](../HyperIndex/loaders#effect-api-experimental)
+- HyperIndex is very flexible and can be used to index offchain data too or send messages to a queue etc for fetching external data, you can further optimise the fetching by using the [effects api](/docs/HyperIndex/effect-api)
 
 ## Share Your Learnings
 
@@ -209,3 +205,4 @@ If you discover helpful tips during your migration, we’d love contributions! O
 ## Getting Help
 
 **Join Our Discord**: The fastest way to get personalized help is through our [Discord community](https://discord.gg/envio).
+```

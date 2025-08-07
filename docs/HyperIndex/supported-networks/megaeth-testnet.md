@@ -19,7 +19,7 @@ slug: /megaeth-testnet
 
 ### Tier
 
-STONE 🪨
+SILVER 🥈
 
 ### Overview
 

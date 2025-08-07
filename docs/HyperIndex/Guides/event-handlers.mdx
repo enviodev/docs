@@ -153,9 +153,24 @@ Handlers.Greeter.NewGreeting.handler(async ({event, context}) => {
   </TabItem>
 </Tabs>
 
+### Preload Optimization
+
+> **Important!** Preload optimization makes your handlers run **twice**.
+
+Starting from `envio@2.27` all new indexers are created with preload optimization pre-configured by default.
+
+This optimization enables HyperIndex to efficiently preload entities used by handlers through batched database queries, while ensuring events are processed synchronously in their original order. When combined with the [Effect API](/docs/HyperIndex/effect-api) for external calls, this feature delivers performance improvements of multiple orders of magnitude compared to other indexing solutions.
+
+Read more in the dedicated guides:
+
+- [How Preload Optimization Works](/docs/HyperIndex/preload-optimization)
+- [Double-Run Footgun](/docs/HyperIndex/preload-optimization#double-run-footgun)
+- [Effect API](/docs/HyperIndex/event-handlers#external-calls)
+- [Migrating from Loaders](/docs/HyperIndex/preload-optimization#migrating-from-loaders) (recommended)
+
 ### Advanced Use Cases
 
-HyperIndex provides many features to help you build more powerful and efficient indexers. Read more about these on separate pages:
+HyperIndex provides many features to help you build more powerful and efficient indexers. There's definitely the one for you:
 
 - Handle Factory Contracts with [Dynamic Contract Registration](/docs/HyperIndex/dynamic-contracts) (with nested factories support)
 - Perform external calls to decide which contract address to register using [Async Contract Register](/docs/HyperIndex/dynamic-contracts#async-contract-register)
@@ -166,7 +181,6 @@ HyperIndex provides many features to help you build more powerful and efficient 
   - With [filter by dynamicly registered contract addresses](/docs/HyperIndex/wildcard-indexing#index-all-erc20-transfers-to-your-contract) (eg Index all ERC20 transfers to/from your Contract)
 - [Access Contract State](/docs/HyperIndex/contract-state) directly from handlers
 - Perform external calls from handlers by following the [IPFS Integration guide](/docs/HyperIndex/ipfs)
-- Optimise database access with [Loaders](/docs/HyperIndex/loaders)
 
 ---
 
@@ -269,6 +283,39 @@ if (!pool) {
   context.Pool.set(pool);
 }
 ```
+
+### Retrieving Entities by Field
+
+```typescript
+ERC20.Approval.handler(async ({ event, context }) => {
+  // Find all approvals for this specific owner
+  const currentOwnerApprovals = await context.Approval.getWhere.owner_id.eq(
+    event.params.owner
+  );
+
+  // Process all the owner's approvals efficiently
+  for (const approval of currentOwnerApprovals) {
+    // Process each approval
+  }
+});
+```
+
+You can also use `context.<Entity>.getWhere.<FieldName>.gt` to get all entities where the field value is greater than the given value.
+
+**Important:**
+
+- This feature requires [Preload Optimization](/docs/HyperIndex/preload-optimization) to be enabled.
+
+  - Either by `preload_handlers: true` in your `config.yaml` file
+  - Or by using [Loaders](/docs/HyperIndex/loaders) (Deprecated)
+
+- Works with any field that:
+
+  - Is used in a relationship with the [`@derivedFrom`](schema/#relationships-one-to-many-derivedfrom) directive
+  - Has an [`@index`](database-performance-optimization/#creating-custom-indices-in-your-schema) directive
+
+- Potential Memory Issues: Very large `getWhere` queries might cause memory overflows.
+- Tip: Try to put the `getWhere` query to the top of the handler, to make sure it's being preloaded. Read more about how [Preload Optimization](/docs/HyperIndex/preload-optimization) works.
 
 ### Modifying Entities
 
@@ -373,17 +420,53 @@ The context object also provides a logger that you can use to log messages to th
 
 Read more in the [Logging Guide](/docs/HyperIndex/logging).
 
+### `context.isPreload`
+
+If you need to skip the preload phase for CPU-intensive operations or to perform certain actions only once per event, you can use `context.isPreload`.
+
+```typescript
+ERC20.Transfer.handler(async ({ event, context }) => {
+  // Load existing data efficiently
+  const [sender, receiver] = await Promise.all([
+    context.Account.getOrThrow(event.params.from),
+    context.Account.getOrThrow(event.params.to),
+  ]);
+
+  // Skip expensive operations during preload
+  if (context.isPreload) {
+    return;
+  }
+
+  // CPU-intensive calculations only happen once
+  const complexCalculation = performExpensiveOperation(event.params.value); // Placeholder function for demonstration
+
+  // Create or update sender account
+  context.Account.set({
+    id: event.params.from,
+    balance: sender.balance - event.params.value,
+    computedValue: complexCalculation,
+  });
+  // Create or update receiver account
+  context.Account.set({
+    id: event.params.to,
+    balance: receiver.balance + event.params.value,
+  });
+});
+```
+
+**Note:** While `context.isPreload` can be useful for bypassing double execution, it's recommended to use the [Effect API](/docs/HyperIndex/effect-api) for external calls instead, as it provides automatic batching and memoization benefits.
+
 ## External Calls
 
 Envio indexer runs using Node.js runtime. This means that you can use `fetch` or any other library like `viem` to perform external calls from your handlers.
 
-Check out our [IPFS Integration](/docs/HyperIndex/ipfs) and [Accessing Contract State](/docs/HyperIndex/contract-state) guides for more information.
+Note that with [Preload Optimization](/docs/HyperIndex/preload-optimization) all handlers run twice. But with [Effect API](/docs/HyperIndex/effect-api) this behavior makes your external calls run in parallel, while keeping the processing data consistent.
 
-### `context.effect` (Experimental)
+Check out our [IPFS Integration](/docs/HyperIndex/ipfs), [Accessing Contract State](/docs/HyperIndex/contract-state) and [Effect API](/docs/HyperIndex/effect-api) guides for more information.
 
-To ensure consistent and reliable data, all handlers are executed synchronously in the on-chain order. This means that external calls might easily blow up the processing time.
+### `context.effect`
 
-To avoid this, you can use [Loaders](/docs/HyperIndex/loaders) together with [Effect API](/docs/HyperIndex/loaders#effect-api-experimental) to parallelize external calls and make the indexing process more efficient.
+Define an effect and use it in your handler with `context.effect`:
 
 ```typescript
 import { experimental_createEffect, S } from "envio";
@@ -398,6 +481,7 @@ const getMetadata = experimental_createEffect(
       description: S.string,
       value: S.bigint,
     },
+    cache: true, // Optionally persist the results in the database
   },
   ({ input }) => {
     const response = await fetch(`https://api.example.com/metadata/${input}`);
@@ -409,27 +493,15 @@ const getMetadata = experimental_createEffect(
   }
 );
 
-ERC20.Transfer.handlerWithLoader({
-  loader: async ({ event, context }) => {
-    // Load metadata for the token.
-    // This will be executed in parallel for all events in the batch.
-    // The call is automatically memoized, so you don't need to worry about duplicate requests.
-    const sender = await context.effect(getMetadata, event.params.from);
+ERC20.Transfer.handler(async ({ event, context }) => {
+  // Load metadata for the token.
+  // This will be executed in parallel for all events in the batch.
+  // The call is automatically memoized, so you don't need to worry about duplicate requests.
+  const sender = await context.effect(getMetadata, event.params.from);
 
-    // Return the loaded data to the handler
-    return {
-      sender,
-    };
-  },
-  handler: async ({ event, context, loaderReturn }) => {
-    const { sender } = loaderReturn;
-
-    // Process the transfer with the pre-loaded data
-  },
+  // Process the transfer with the pre-loaded data
 });
 ```
-
-Read more about the [Effect API](/docs/HyperIndex/loaders#effect-api-experimental) and [Loaders](/docs/HyperIndex/loaders) in the dedicated guides.
 
 ---
 
@@ -485,7 +557,7 @@ This exposes configuration data such as:
 For performance optimization and best practices, refer to:
 
 - [Benchmarking](/docs/HyperIndex/benchmarking)
-- [Loaders](/docs/HyperIndex/loaders)
+- [Preload Optimization](/docs/HyperIndex/preload-optimization)
 
 These guides offer detailed recommendations on optimizing entity loading and indexing performance.
 

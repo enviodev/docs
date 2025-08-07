@@ -15,9 +15,9 @@ This guide demonstrates how to access on-chain contract state from your event ha
 
 1. Make RPC calls to external contracts within your event handlers
 2. Batch multiple calls using multicall for efficiency
-3. Use [Effect API](/docs/HyperIndex/loaders#effect-api-experimental) with built-in caching to prevent duplicate calls
-4. Handle common edge cases that arise when accessing token contract data
-5. Use [Loaders](/docs/HyperIndex/loaders) to make your indexer dozens of times faster
+3. Learn about [Preload Optimisation](/docs/HyperIndex/preload-optimization) and how it makes your indexer thousands of times faster
+4. Use [Effect API](/docs/HyperIndex/effect-api) with built-in caching and Viem transport level batching
+5. Handle common edge cases that arise when accessing token contract data
 
 ## The Challenge: Token Data from Pool Creation Events
 
@@ -66,6 +66,7 @@ Then modify your configuration to focus only on the PoolCreated event:
 ```yaml
 # config.yaml
 name: uniswap-v3-factory-token-indexer
+preload_handlers: true
 networks:
   - id: 1
     start_block: 0
@@ -108,6 +109,10 @@ The event handler needs to:
 1. Create a Pool entity from the event data
 2. Make RPC calls to fetch token information for both token0 and token1
 3. Create Token entities with the retrieved data
+
+**Important!** Preload optimization makes your handlers run **twice**. So instead of direct RPC calls, we're doing it through `context.effect` - the [Effect API](/docs/HyperIndex/effect-api).
+
+Learn how Preload Optimization works in a [dedicated guide](/docs/HyperIndex/preload-optimization). It might be a new mental model for you, but this is what can make indexing thousands of times faster.
 
 ```typescript
 // src/EventHandlers.ts
@@ -192,17 +197,19 @@ const RPC_URL = process.env.RPC_URL;
 
 const client = createPublicClient({
   chain: mainnet,
-  transport: http(RPC_URL, { batch: true }), // Also enable batching on transport level (You'll see the power of this with loaders)
   batch: { multicall: true }, // Enable multicall batching for efficiency
+  transport: http(RPC_URL, { batch: true }), // Thanks to automatic Effect API batching, we can also enable batching for Viem transport level
 });
 
+// Use Sury library to define the schema
 const tokenMetadataSchema = S.schema({
   name: S.string,
   symbol: S.string,
   decimals: S.number,
 });
 
-type TokenMetadata = S.Output<typeof tokenMetadataSchema>;
+// Infer the type from the schema
+type TokenMetadata = S.Infer<typeof tokenMetadataSchema>;
 
 export const getTokenMetadata = experimental_createEffect(
   {
@@ -284,11 +291,7 @@ export const getTokenMetadata = experimental_createEffect(
 
 > **Important:** The `hexToString` method from Viem adds byte padding to the string. We remove this padding with `replace(/\u0000/g, '')` to avoid errors when writing to the database.
 
-> **Note:** Read more about Effect API and caching in the [Effect API](/docs/HyperIndex/loaders#effect-api-experimental) guide.
-
-### Step 5: Improve Performance with Loaders
-
-The solution will perform external calls for each handler one by one. This is not efficient and can be improved with loaders. Read more about the [Effect API](/docs/HyperIndex/loaders#effect-api-experimental) and [Loaders](/docs/HyperIndex/loaders) in the dedicated guides.
+> **Note:** Read more about Effect API and caching in the [Effect API](/docs/HyperIndex/effect-api) guide.
 
 ## Key Considerations
 
@@ -303,7 +306,7 @@ However, if you need historical state (like an account balance at a specific blo
 RPC providers often limit the number of requests per time period. To avoid hitting rate limits:
 
 1. **Use multicall** (as shown in our example) to batch multiple contract calls into a single RPC request
-2. **Use loaders and transport level batching** to make your indexer dozens of times faster
+2. **Learn about Preload Optimization** to make your indexer thousands of times faster
 3. **Enable caching** to avoid redundant requests
 4. **Use a paid, unthrottled RPC provider** for production indexers
 5. **Implement request throttling** to space out requests when needed

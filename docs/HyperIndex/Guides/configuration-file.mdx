@@ -202,6 +202,24 @@ See detailed configuration options [here](./reorgs-support).
 
 ---
 
+### Preload Optimization
+
+Enable [Preload Optimization](/docs/HyperIndex/preload-optimization) for your handlers.
+
+This will make most indexers processing much faster without any additional code changes.
+
+```yaml
+preload_handlers: true # default is false
+```
+
+Be aware of:
+
+- [Double-Run Footgun](/docs/HyperIndex/preload-optimization#double-run-footgun)
+- [Effect API for External Calls](/docs/HyperIndex/effect-api)
+- [Migrating from Loaders](/docs/HyperIndex/preload-optimization#migrating-from-loaders) (recommended)
+
+---
+
 ### Environment Variables
 
 Since `envio@2.9.0`, environment variable interpolation is supported for flexibility and security:
@@ -264,7 +282,7 @@ This example indexes events from multiple contracts across multiple networks.
 ```yaml
 name: envio-indexer
 unordered_multichain_mode: true
-rollback_on_reorg: false
+preload_handlers: true
 contracts:
   - name: PoolManager
     handler: src/EventHandlers.ts

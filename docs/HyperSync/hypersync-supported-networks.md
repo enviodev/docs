@@ -53,7 +53,7 @@ If you are a network operator or user and would like improved service support or
 | Citrea Testnet       | 5115       | https://citrea-testnet.hypersync.xyz or https://5115.hypersync.xyz                  | 🪨   |                 |
 | Curtis               | 33111      | https://curtis.hypersync.xyz or https://33111.hypersync.xyz                         | 🪨   |                 |
 | Cyber                | 7560       | https://cyber.hypersync.xyz or https://7560.hypersync.xyz                           | 🪨   |                 |
-| Eth Traces           | 1          | https://eth-traces.hypersync.xyz or https://1-traces.hypersync.xyz                  | 🏅   | ✔️              |
+| Eth Traces           | 1          | https://eth-traces.hypersync.xyz or https://1-traces.hypersync.xyz                  | 🏅   |                 |
 | Ethereum Mainnet     | 1          | https://eth.hypersync.xyz or https://1.hypersync.xyz                                | 🏅   |                 |
 | Fantom               | 250        | https://fantom.hypersync.xyz or https://250.hypersync.xyz                           | 🪨   |                 |
 | Flare                | 14         | https://flare.hypersync.xyz or https://14.hypersync.xyz                             | 🪨   |                 |
@@ -74,7 +74,7 @@ If you are a network operator or user and would like improved service support or
 | Lukso Testnet        | 4201       | https://lukso-testnet.hypersync.xyz or https://4201.hypersync.xyz                   | 🎒   |                 |
 | Manta                | 169        | https://manta.hypersync.xyz or https://169.hypersync.xyz                            | 🪨   |                 |
 | Mantle               | 5000       | https://mantle.hypersync.xyz or https://5000.hypersync.xyz                          | 🪨   |                 |
-| Megaeth Testnet      | 6342       | https://megaeth-testnet.hypersync.xyz or https://6342.hypersync.xyz                 | 🪨   |                 |
+| Megaeth Testnet      | 6342       | https://megaeth-testnet.hypersync.xyz or https://6342.hypersync.xyz                 | 🥈   |                 |
 | Merlin               | 4200       | https://merlin.hypersync.xyz or https://4200.hypersync.xyz                          | 🪨   |                 |
 | Metall2              | 1750       | https://metall2.hypersync.xyz or https://1750.hypersync.xyz                         | 🪨   |                 |
 | Mev Commit           | 17864      | https://mev-commit.hypersync.xyz or https://17864.hypersync.xyz                     | 🪨   |                 |

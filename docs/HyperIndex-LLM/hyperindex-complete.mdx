@@ -64,11 +64,15 @@ For more details about API tokens, including how to generate and implement them,
 
 ### Prerequisites
 
-- **Node.js** _(v18 or newer recommended)_
+- **Node.js** _(v22 or newer recommended)_
 - **pnpm** _(v8 or newer)_
 - **Docker Desktop** _(required to run the Envio indexer locally)_
 
-> **Note:** Docker is specifically required to run your indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
+> **Note:** Docker is required only if you plan to run your indexer locally. You can skip installing Docker if you'll only be using Envio's hosted service.
+
+#### Additionally for Windows Users:
+
+- **WSL** _Windows Subsystem for Linux_
 
 
 ## Essential Files
@@ -389,20 +393,20 @@ The below code snippets can give you a basic idea of what this difference might 
 
 
 theGraph - `eventHandler.ts`
+
 ```typescript
 export function handleSubscription(event: SubscriptionEvent): void {
-  const subscription = new Subscribe(event.transaction.hash + event.logIndex)
+  const subscription = new Subscribe(event.transaction.hash + event.logIndex);
 
-subscription.tokenId = event.params.tokenId
-subscription.address = event.params.subscriber.toHexString()  
- subscription.logIndex = event.logIndex
-subscription.blockNumber = event.block.number
-subscription.position = event.params.tokenId
+  subscription.tokenId = event.params.tokenId;
+  subscription.address = event.params.subscriber.toHexString();
+  subscription.logIndex = event.logIndex;
+  subscription.blockNumber = event.block.number;
+  subscription.position = event.params.tokenId;
 
-subscription.save()
+  subscription.save();
 }
-
-````
+```
 
 
 
@@ -420,7 +424,8 @@ PoolManager.Subscription.handler( async (event, context) => {
 
 context.Subscription.set(entity);
 })
-````
+
+```
 
 
 
@@ -443,6 +448,7 @@ If you discover helpful tips during your migration, we’d love contributions! O
 ## Getting Help
 
 **Join Our Discord**: The fastest way to get personalized help is through our Discord community.
+```
 
 ---
 
@@ -540,55 +546,83 @@ unordered_multichain_mode: true
 Learn more about when and how to use this feature here.
 
 
-### Environment Variables
+### Preload Optimization
 
-Since `envio@2.9.0`, environment variable interpolation is supported for flexibility and security:
+Enable Preload Optimization for your handlers.
+
+This will make most indexers processing much faster without any additional code changes.
 
 ```yaml
+preload_handlers: true # default is false
+```
+
+Be aware of:
+
+- Double-Run Footgun
+- Effect API for External Calls
+- Migrating from Loaders (recommended)
+
+
+### Schema File Path
+
+You can customize the path to the schema file using the `schema` option:
+
+```yaml
+schema: ./path/to/schema.graphql
+```
+
+By default, the `schema.graphql` is expected to be in the root directory of your project.
+
+
+## Full config file example
+
+This example indexes events from multiple contracts across multiple networks.
+
+```yaml
+name: envio-indexer
+unordered_multichain_mode: true
+preload_handlers: true
+contracts:
+  - name: PoolManager
+    handler: src/EventHandlers.ts
+    events:
+      - event: Swap(bytes32 indexed id, address indexed sender, int128 amount0, int128 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick, uint24 fee)
+  - name: PositionManager
+    handler: src/EventHandlers.ts
+    events:
+      - event: Transfer(address indexed from, address indexed to, uint256 indexed id)
 networks:
-  - id: ${ENVIO_CHAIN_ID:-ethereum-mainnet}
+  - id: 1
+    start_block: 0
     contracts:
-      - name: Greeter
-        address: ${ENVIO_GREETER_ADDRESS}
+      - name: PositionManager
+        address:
+          - 0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e
+      - name: PoolManager
+        address:
+          - "0x000000000004444c5dc75cB358380D2e3dE08A90"
+  - id: 10
+    start_block: 0
+    contracts:
+      - name: PositionManager
+        address:
+          - 0x3C3Ea4B57a46241e54610e5f022e5c45859A1017
+      - name: PoolManager
+        address:
+          - 0x9a13F98Cb987694C9F086b1F5eB990EeA8264Ec3
+  - id: 42161
+    start_block: 0
+    contracts:
+      - name: PositionManager
+        address:
+          - 0xd88f38f930b7952f2db2432cb002e7abbf3dd869
+      - name: PoolManager
+        address:
+          - 0x360e68faccca8ca495c1b759fd9eee466db9fb32
 ```
 
-Run your indexer with custom environment variables:
 
-```bash
-ENVIO_CHAIN_ID=optimism ENVIO_GREETER_ADDRESS=0xYourContractAddress pnpm dev
-```
-
-**Interpolation syntax:**
-
-- `${ENVIO_VAR}` – Use the value of `ENVIO_VAR`
-- `${ENVIO_VAR:-default}` – Use `ENVIO_VAR` if set, otherwise use `default`
-
-For more detailed information about environment variables, see our Environment Variables Guide.
-
-
-### Output Directory Path
-
-You can customize the path where the generated directory will be placed using the `output` option:
-
-```yaml
-output: ./custom/generated/path
-```
-
-By default, the generated directory is placed in `generated` relative to the current working directory. If set, it will be a path relative to the config file location.
-
-:::warning Advanced Configuration
-This is an advanced configuration option. When using a custom output directory, you'll need to manually adjust your `.gitignore` file and project structure to match the new configuration.
-:::
-
-
-## Interactive Schema Explorer
-
-Explore detailed configuration schema parameters here:
-
-
-
-
-
+Now your configuration file is set, you're ready to start indexing with HyperIndex!
 
 ---
 
@@ -840,9 +874,24 @@ Handlers.Greeter.NewGreeting.handler(async ({event, context}) => {
   
 
 
+### Preload Optimization
+
+> **Important!** Preload optimization makes your handlers run **twice**.
+
+Starting from `envio@2.27` all new indexers are created with preload optimization pre-configured by default.
+
+This optimization enables HyperIndex to efficiently preload entities used by handlers through batched database queries, while ensuring events are processed synchronously in their original order. When combined with the Effect API for external calls, this feature delivers performance improvements of multiple orders of magnitude compared to other indexing solutions.
+
+Read more in the dedicated guides:
+
+- How Preload Optimization Works
+- Double-Run Footgun
+- Effect API
+- Migrating from Loaders (recommended)
+
 ### Advanced Use Cases
 
-HyperIndex provides many features to help you build more powerful and efficient indexers. Read more about these on separate pages:
+HyperIndex provides many features to help you build more powerful and efficient indexers. There's definitely the one for you:
 
 - Handle Factory Contracts with Dynamic Contract Registration (with nested factories support)
 - Perform external calls to decide which contract address to register using Async Contract Register
@@ -853,7 +902,6 @@ HyperIndex provides many features to help you build more powerful and efficient 
   - With filter by dynamicly registered contract addresses (eg Index all ERC20 transfers to/from your Contract)
 - Access Contract State directly from handlers
 - Perform external calls from handlers by following the IPFS Integration guide
-- Optimise database access with Loaders
 
 
 ## Context Object
@@ -902,6 +950,39 @@ if (!pool) {
 }
 ```
 
+### Retrieving Entities by Field
+
+```typescript
+ERC20.Approval.handler(async ({ event, context }) => {
+  // Find all approvals for this specific owner
+  const currentOwnerApprovals = await context.Approval.getWhere.owner_id.eq(
+    event.params.owner
+  );
+
+  // Process all the owner's approvals efficiently
+  for (const approval of currentOwnerApprovals) {
+    // Process each approval
+  }
+});
+```
+
+You can also use `context..getWhere..gt` to get all entities where the field value is greater than the given value.
+
+**Important:**
+
+- This feature requires Preload Optimization to be enabled.
+
+  - Either by `preload_handlers: true` in your `config.yaml` file
+  - Or by using Loaders (Deprecated)
+
+- Works with any field that:
+
+  - Is used in a relationship with the `@derivedFrom` directive
+  - Has an `@index` directive
+
+- Potential Memory Issues: Very large `getWhere` queries might cause memory overflows.
+- Tip: Try to put the `getWhere` query to the top of the handler, to make sure it's being preloaded. Read more about how Preload Optimization works.
+
 ### Modifying Entities
 
 Use `context.Entity.set` to create or update an entity:
@@ -916,6 +997,30 @@ context.Entity.set({
 :::note
 Both `context.Entity.set` and `context.Entity.deleteUnsafe` methods use the In-Memory Storage under the hood and don't require `await` in front of them.
 :::
+
+### Referencing Linked Entities
+
+When your schema defines a field that links to another entity type, set the relationship using `_id` with the referenced entity's `id`. You are storing the ID, not the full entity object.
+
+```graphql
+type A {
+  id: ID!
+  b: B!
+}
+
+type B {
+  id: ID!
+}
+```
+
+```typescript
+context.A.set({
+  id: aId,
+  b_id: bId, // ID of the linked B entity
+});
+```
+
+HyperIndex automatically resolves `A.b` based on the stored `b_id` when querying the API.
 
 ### Deleting Entities (Unsafe)
 
@@ -981,17 +1086,53 @@ The context object also provides a logger that you can use to log messages to th
 
 Read more in the Logging Guide.
 
+### `context.isPreload`
+
+If you need to skip the preload phase for CPU-intensive operations or to perform certain actions only once per event, you can use `context.isPreload`.
+
+```typescript
+ERC20.Transfer.handler(async ({ event, context }) => {
+  // Load existing data efficiently
+  const [sender, receiver] = await Promise.all([
+    context.Account.getOrThrow(event.params.from),
+    context.Account.getOrThrow(event.params.to),
+  ]);
+
+  // Skip expensive operations during preload
+  if (context.isPreload) {
+    return;
+  }
+
+  // CPU-intensive calculations only happen once
+  const complexCalculation = performExpensiveOperation(event.params.value); // Placeholder function for demonstration
+
+  // Create or update sender account
+  context.Account.set({
+    id: event.params.from,
+    balance: sender.balance - event.params.value,
+    computedValue: complexCalculation,
+  });
+  // Create or update receiver account
+  context.Account.set({
+    id: event.params.to,
+    balance: receiver.balance + event.params.value,
+  });
+});
+```
+
+**Note:** While `context.isPreload` can be useful for bypassing double execution, it's recommended to use the Effect API for external calls instead, as it provides automatic batching and memoization benefits.
+
 ## External Calls
 
 Envio indexer runs using Node.js runtime. This means that you can use `fetch` or any other library like `viem` to perform external calls from your handlers.
 
-Check out our IPFS Integration and Accessing Contract State guides for more information.
+Note that with Preload Optimization all handlers run twice. But with Effect API this behavior makes your external calls run in parallel, while keeping the processing data consistent.
 
-### `context.effect` (Experimental)
+Check out our IPFS Integration, Accessing Contract State and Effect API guides for more information.
 
-To ensure consistent and reliable data, all handlers are executed synchronously in the on-chain order. This means that external calls might easily blow up the processing time.
+### `context.effect`
 
-To avoid this, you can use Loaders together with Effect API to parallelize external calls and make the indexing process more efficient.
+Define an effect and use it in your handler with `context.effect`:
 
 ```typescript
 
@@ -1005,6 +1146,7 @@ const getMetadata = experimental_createEffect(
       description: S.string,
       value: S.bigint,
     },
+    cache: true, // Optionally persist the results in the database
   },
   ({ input }) => {
     const response = await fetch(`https://api.example.com/metadata/${input}`);
@@ -1016,27 +1158,15 @@ const getMetadata = experimental_createEffect(
   }
 );
 
-ERC20.Transfer.handlerWithLoader({
-  loader: async ({ event, context }) => {
-    // Load metadata for the token.
-    // This will be executed in parallel for all events in the batch.
-    // The call is automatically memoized, so you don't need to worry about duplicate requests.
-    const sender = await context.effect(getMetadata, event.params.from);
+ERC20.Transfer.handler(async ({ event, context }) => {
+  // Load metadata for the token.
+  // This will be executed in parallel for all events in the batch.
+  // The call is automatically memoized, so you don't need to worry about duplicate requests.
+  const sender = await context.effect(getMetadata, event.params.from);
 
-    // Return the loaded data to the handler
-    return {
-      sender,
-    };
-  },
-  handler: async ({ event, context, loaderReturn }) => {
-    const { sender } = loaderReturn;
-
-    // Process the transfer with the pre-loaded data
-  },
+  // Process the transfer with the pre-loaded data
 });
 ```
-
-Read more about the Effect API and Loaders in the dedicated guides.
 
 
 ## Performance Considerations
@@ -1044,7 +1174,7 @@ Read more about the Effect API and Loaders in the dedicated guides.
 For performance optimization and best practices, refer to:
 
 - Benchmarking
-- Loaders
+- Preload Optimization
 
 These guides offer detailed recommendations on optimizing entity loading and indexing performance.
 
@@ -1405,9 +1535,9 @@ Hasura is a GraphQL engine that provides a web interface for interacting with yo
 
 This guide explains how to navigate the Hasura dashboard to effectively work with your indexed data.
 
-## Accessing Hasura
+## Accessing Hasura Console
 
-When running HyperIndex locally, Hasura is automatically available at:
+When running HyperIndex locally, Hasura Console is automatically available at:
 
 ```
 http://localhost:8080
@@ -1525,6 +1655,10 @@ When testing, you may need to reset your database:
 - **Schema Validation**: Use the Data tab to verify that relationships between entities are correctly established
 - **Performance Monitoring**: Watch for tables that grow unusually large, which might indicate inefficient indexing
 
+## Disable Hasura for Self-Hosted Indexers
+
+Starting from `envio@2.26.0` it's possible to disable Hasura integration for self-hosted indexers. To do so, set the `ENVIO_HASURA` environment variable to `false`.
+
 ---
 
 ## Environment Variables
@@ -1536,6 +1670,7 @@ Environment variables are a crucial part of configuring your Envio indexer. They
 ## Naming Convention
 
 All environment variables used by Envio must be prefixed with `ENVIO_`. This naming convention:
+
 - Prevents conflicts with other environment variables
 - Makes it clear which variables are used by the Envio indexer
 - Ensures consistency across different environments
@@ -1553,7 +1688,6 @@ ENVIO_START_BLOCK=12345678
 
 # Coingecko API key
 ENVIO_COINGECKO_API_KEY=api-key
-
 ```
 
 ## Setting Environment Variables
@@ -1563,6 +1697,7 @@ ENVIO_COINGECKO_API_KEY=api-key
 For local development, you can set environment variables in several ways:
 
 1. Using a `.env` file in your project root:
+
 ```bash
 # .env
 ENVIO_RPC_URL=https://arbitrum.direct.dev/your-api-key
@@ -1570,6 +1705,7 @@ ENVIO_START_BLOCK=12345678
 ```
 
 2. Directly in your terminal:
+
 ```bash
 export ENVIO_RPC_URL=https://arbitrum.direct.dev/your-api-key
 ```
@@ -1930,8 +2066,6 @@ In general, if you want to self-host, you will likely use a Docker setup.
 For a working example, check out the local-docker-example repository.
 It contains a minimal `Dockerfile` and `docker-compose.yaml` that configure the Envio indexer together with PostgreSQL and Hasura.
 
-
-
 ## Configuration Explained
 
 The compose file in that repository sets up three main services:
@@ -1944,7 +2078,7 @@ The compose file in that repository sets up three main services:
 
 The configuration uses environment variables with sensible defaults. For production, you should customize:
 
-- Database credentials (`ENVIO_POSTGRES_PASSWORD`, `ENVIO_PG_USER`, etc.)
+- Database credentials (`ENVIO_PG_PASSWORD`, `ENVIO_PG_USER`, etc.)
 - Hasura admin secret (`HASURA_GRAPHQL_ADMIN_SECRET`)
 - Resource limits based on your workload requirements
 
@@ -1977,7 +2111,7 @@ The Optimism Standard Bridge enables the movement of ETH and ERC-20 tokens betwe
 
 Before starting, ensure you have the following installed:
 
-- **Node.js** _(v18 or newer recommended)_
+- **Node.js** _(v22 or newer recommended)_
 - **pnpm** _(v8 or newer)_
 - **Docker Desktop** _(required to run the Envio indexer locally)_
 
@@ -2174,7 +2308,7 @@ We'll create an indexer that tracks all USDC token transfers on Base by extracti
 
 Before starting, ensure you have the following installed:
 
-- **Node.js** _(v18 or newer recommended)_
+- **Node.js** _(v22 or newer recommended)_
 - **pnpm** _(v8 or newer)_
 - **Docker Desktop** _(required to run the Envio indexer locally)_
 
@@ -2364,7 +2498,7 @@ Website | X | Discord
 
 ### Environment tooling
 
-- **Node.js** _(v18 or newer recommended)_
+- **Node.js** _(v22 or newer recommended)_
 - **pnpm** _(v8 or newer)_
 - **Docker Desktop** _(required to run the Envio indexer locally)_
 
@@ -2684,7 +2818,7 @@ By the end of this tutorial, you'll have:
 
 Before starting, ensure you have the following installed:
 
-- **Node.js** _(v18 or newer recommended)_
+- **Node.js** _(v22 or newer recommended)_
 - **pnpm** _(v8 or newer)_
 - **Docker Desktop** _(required to run the Envio indexer locally)_
 
@@ -3107,7 +3241,7 @@ Edit your `config.yaml` file to track both the API3 oracle and the Uniswap V3 po
 ```yaml
 # yaml-language-server: $schema=./node_modules/envio/evm.schema.json
 name: envio-indexer
-rollback_on_reorg: false
+preload_handlers: true
 networks:
   - id: 81457
     start_block: 11000000
@@ -4040,6 +4174,382 @@ ERC20.Transfer.handlerWithLoader({
 
 ---
 
+## Preload Optimization
+
+**File:** `Advanced/preload-optimization.md`
+
+> **Important!** Preload optimization makes your handlers run **twice**.
+
+Starting from `envio@2.27` all new indexers are created with preload optimization pre-configured by default.
+
+This optimization enables HyperIndex to efficiently preload entities used by handlers through batched database queries, while ensuring events are processed synchronously in their original order. When combined with the Effect API for external calls, this feature delivers performance improvements of multiple orders of magnitude compared to other indexing solutions.
+
+## Configure
+
+Currently, you need to explicitly enable the preloaded configuration in your `config.yaml` file. In the future, this will be enabled by default.
+
+```yaml
+preload_handlers: true
+```
+
+## Why Preload?
+
+To ensure reliable data, HyperIndex guarantees that all events will be processed in the same order as they occurred on-chain.
+
+This guarantee is crucial as it allows you to build indexers that depend on the sequential order of events.
+
+However, this leads to a challenge: Handlers must run one at a time, sequentially for each event. Any asynchronous operations will block the entire process.
+
+To solve this, we introduced Preload Optimization.
+
+It combines in-memory storage, batching, deduplication, and the Effect API to parallelize asynchronous operations across batches of events.
+
+## How It Works?
+
+With Preload Optimization handlers run twice per event:
+
+1. **First Run (Preload Phase)**: All event handlers run concurrently for the whole batch of events. During the phase all DB write operations are skipped and only DB read operations and external calls are performed.
+2. **Second Run (Processing Phase)**: Each event handler runs sequentially in the on-chain order. During the phase it'll get the data from the in-memory store, reflecting changes made by previously processed events.
+
+This double execution pattern ensures that entities created by earlier events in the batch are available to later events.
+
+### The Database I/O Problem
+
+Consider this common pattern of getting entities in event handlers:
+
+```typescript
+ERC20.Transfer.handler(async ({ event, context }) => {
+  const sender = await context.Account.get(event.params.from);
+  const receiver = await context.Account.get(event.params.to);
+  // Process the transfer...
+});
+```
+
+**Without Preload Optimization:** If you're processing 5,000 transfer events, each with unique `from` and `to` addresses, this results in **10,000 total database roundtrips**—one for each sender and receiver lookup (2 per event × 5,000 events). This creates a significant bottleneck that slows down your entire indexing process.
+
+**With Preload Optimization:** During the Preload Phase, all 5,000 events are processed in parallel. HyperIndex batches database reads that occur simultaneously into single database queries - one query for sender lookups and one for receiver lookups. The loaded accounts are cached in memory. After the Preload Phase completes, the second processing phase begins. This phase runs handlers sequentially in on-chain order, but instead of making database calls, it retrieves the data from the in-memory cache.
+
+For our example of 5,000 transfer events, this optimization reduces database roundtrips from 10,000 calls to just 2!
+
+#### Optimizing for Concurrency
+
+You can further optimize performance by requesting multiple entities concurrently:
+
+```typescript
+ERC20.Transfer.handler(async ({ event, context }) => {
+  // Request sender and receiver concurrently for maximum efficiency
+  const [sender, receiver] = await Promise.all([
+    context.Account.get(event.params.from),
+    context.Account.get(event.params.to),
+  ]);
+  // Process the transfer...
+});
+```
+
+This approach can reduce the database roundtrips to just 1 for the entire batch of events!
+
+### The External Calls Problem
+
+Let's say you want to populate your indexer with offchain data:
+
+```typescript
+ERC20.Transfer.handler(async ({ event, context }) => {
+  // Without Preload: Blocking external calls
+  const metadata = await fetch(
+    `https://api.example.com/metadata/${event.params.from}`
+  );
+
+  // Process the transfer...
+});
+```
+
+**Without Preload Optimization:** If you're processing 5,000 transfer events, each with an external call, this results in **5,000 sequential external calls**—each waiting for the previous one to complete. This can turn a fast indexing process into a slow, sequential crawl.
+
+**With Preload Optimization:** Since handlers run **twice** for each event, making direct external calls can be problematic. The Effect API provides a solution. During the Preload Phase, it batches all external calls and runs them in parallel. Then during the Processing Phase, it runs the handlers sequentially, retrieving the already requested data from the in-memory store.
+
+```typescript
+
+const fetchMetadata = experimental_createEffect(
+  {
+    name: "fetchMetadata",
+    input: {
+      from: S.string,
+    },
+    output: {
+      decimals: S.number,
+      symbol: S.string,
+    },
+  },
+  async ({ input }) => {
+    const metadata = await fetch(
+      `https://api.example.com/metadata/${input.from}`
+    );
+    return metadata;
+  }
+);
+
+ERC20.Transfer.handler(async ({ event, context }) => {
+  // With Preload: Performs the call in parallel
+  const metadata = await context.effect(fetchMetadata, {
+    from: event.params.from,
+  });
+
+  // Process the transfer...
+});
+```
+
+Assuming an average call takes 200ms, this optimization reduces the total processing time for 5,000 events from ~16 minutes to ~200 milliseconds - making it 5,000 times faster!
+
+Learn more about the Effect API in our dedicated guide.
+
+### Preload Phase Behavior
+
+The Preload Phase is a special phase that runs before the actual event processing. It's designed to preload data that will be used during event processing.
+
+Key characteristics of the Preload Phase:
+
+- It runs in parallel for all events in the batch
+- Exceptions won't crash the indexer but will silently abort the Preload Phase for that specific event (Starting from `envio@2.23`)
+- All storage updates are ignored
+- All `context.log` calls are ignored
+
+During the second run (Processing Phase), all operations become fully enabled:
+
+- Exceptions will crash the indexer if not handled
+- Entity setting operations will persist to the database
+- Logging will output to the console
+
+This two-phase design allows the Preload Phase to optimistically attempt loading data that may not exist yet, while ensuring data consistency during the Processing Phase when all operations are executed normally.
+
+If you're using an earlier version of `envio`, we strongly recommend upgrading to the latest version using `pnpm install envio@latest` to benefit from this improved Preload Phase behavior.
+
+## Double-Run Footgun
+
+As mentioned above, the Preload Phase gives a lot of benefits for the event processing, but also it means that you must be aware of its table run nature:
+
+- Never call `fetch` or other external calls directly in the handler.
+  - Use the Effect API instead.
+  - Or use `context.isPreload` to guarantee that the code will run once.
+
+Due to the optimistic nature of the Preload Phase, the Effect API may occasionally execute with stale data, leading to redundant external calls. If you need to ensure that external calls are made with the most up-to-date data, you can use the `context.isPreload` check to restrict execution to only the processing phase.
+
+> Note: This will disable the Preload Optimization for the external calls.
+
+```typescript
+ERC20.Transfer.handler(async ({ event, context }) => {
+  const sender = await context.Account.get(event.params.from);
+
+  if (context.isPreload) {
+    return;
+  }
+
+  const metadata = await fetch(
+    `https://api.example.com/metadata/${sender.metadataId}`
+  );
+});
+```
+
+## Best Practices
+
+- Use `Promise.all` to load multiple entities concurrently for better performance
+- Place database reads and external calls at the beginning of your handler to maximize the benefits of Preload Optimization
+- Consider using `context.isPreload` to exit early from the Preload Phase after loading required data
+
+## Migrating from Loaders
+
+The Preload Optimization for handlers was born from a concept we had before called Loaders. If you're using loaders, we recommend you to migrate to preload optimization by enabling it in the config and moving all your code to the handler.
+
+```typescript
+// Before:
+ERC20.Transfer.handlerWithLoader({
+  loader: async ({ event, context }) => {
+    // Load sender and receiver accounts efficiently
+    const sender = await context.Account.get(event.params.from);
+    const receiver = await context.Account.get(event.params.to);
+
+    // Return the loaded data to the handler
+    return {
+      sender,
+      receiver,
+    };
+  },
+
+  handler: async ({ event, context, loaderReturn }) => {
+    const { sender, receiver } = loaderReturn;
+
+    // Process the transfer with the pre-loaded data
+    // No database lookups needed here!
+  },
+});
+
+// After:
+ERC20.Transfer.handler(async ({ event, context }) => {
+  // Load sender and receiver accounts efficiently
+  const sender = await context.Account.get(event.params.from);
+  const receiver = await context.Account.get(event.params.to);
+
+  // To imitate the behavior of the loader,
+  // we can use `context.isPreload` to make next code run only once.
+  // Note: This is not required, but might be useful for CPU-intensive operations.
+  if (context.isPreload) {
+    return;
+  }
+
+  // Process the transfer with the pre-loaded data
+});
+```
+
+---
+
+## Effect Api
+
+**File:** `Advanced/effect-api.md`
+
+The Effect API provides a powerful and convenient way to perform external calls from your handlers. It's especially effective when used with Preload Optimization:
+
+- **Automatic batching**: Calls of the same kind are automatically batched together
+- **Intelligent memoization**: Calls are memoized, so you don't need to worry about the handler function being called multiple times
+- **Deduplication**: Calls with the same arguments are deduplicated to prevent overfetching
+- **Persistence**: Built-in support for result persistence for indexer reruns (opt-in via `cache: true`)
+- **Future enhancements**: We're working on automatic retry logic and enhanced caching workflows 🏗️
+
+To use the Effect API, you first need to define an effect using `experimental_createEffect` function from the `envio` package:
+
+```typescript
+
+export const getMetadata = experimental_createEffect(
+  {
+    name: "getMetadata",
+    input: S.string,
+    output: {
+      description: S.string,
+      value: S.bigint,
+    },
+    cache: true,
+  },
+  async ({ input, context }) => {
+    const response = await fetch(`https://api.example.com/metadata/${input}`);
+    const data = await response.json();
+    context.log.info(`Fetched metadata for ${input}`);
+    return {
+      description: data.description,
+      value: data.value,
+    };
+  }
+);
+```
+
+The first argument is an options object that describes the effect:
+
+- `name` (required) - the name of the effect used for debugging and logging
+- `input` (required) - the input type of the effect
+- `output` (required) - the output type of the effect
+- `cache` (optional) - save effect results in the database to prevent duplicate calls (Starting from `envio@2.26.0`)
+
+The second argument is a function that will be called with the effect's input.
+
+> **Note:** For type definitions, you should use `S` from the `envio` package, which uses Sury library under the hood.
+
+After defining an effect, you can use `context.effect` to call it from your handler, loader, or another effect.
+
+The `context.effect` function accepts an effect as the first argument and the effect's input as the second argument:
+
+```typescript
+ERC20.Transfer.handler(async ({ event, context }) => {
+  const metadata = await context.effect(getMetadata, event.params.from);
+  // Process the event with the metadata
+});
+```
+
+### Viem Transport Batching
+
+You can use `viem` or any other blockchain client inside your effect functions. When doing so, it's highly recommended to enable the `batch` option to group all effect calls into fewer RPC requests:
+
+```typescript
+// Create a public client to interact with the blockchain
+const client = createPublicClient({
+  chain: mainnet,
+  // Enable batching to group calls into fewer RPC requests
+  transport: http(rpcUrl, { batch: true }),
+});
+
+// Get the contract instance for your contract
+const lbtcContract = getContract({
+  abi: erc20Abi,
+  address: "0x8236a87084f8B84306f72007F36F2618A5634494",
+  client: client,
+});
+
+// Effect to get the balance of a specific address at a specific block
+export const getBalance = experimental_createEffect(
+  {
+    name: "getBalance",
+    input: {
+      address: S.string,
+      blockNumber: S.optional(S.bigint),
+    },
+    output: S.bigint,
+    cache: true,
+  },
+  async ({ input, context }) => {
+    try {
+      // If blockNumber is provided, use it to get balance at that specific block
+      const options = input.blockNumber
+        ? { blockNumber: input.blockNumber }
+        : undefined;
+      const balance = await lbtcContract.read.balanceOf(
+        [input.address as `0x${string}`],
+        options
+      );
+
+      return balance;
+    } catch (error) {
+      context.log.error(`Error getting balance for ${input.address}: ${error}`);
+      // Return 0 on error to prevent processing failures
+      return BigInt(0);
+    }
+  }
+);
+```
+
+### Persistence
+
+By default, effect results are not persisted in the database. This means if the effect with the same input is called again, the function will be executed the second time.
+
+To persist effect results, you can set the `cache` option to `true` when creating the effect. This will save the effect results in the database and reuse them in future indexer runs.
+
+Every effect cache creates a new table in the database `envio_effect_${effectName}`. You can see it and query in Hasura console with admin secret.
+
+Also, use our Development Console to track the cache size and see number of calls which didn't hit the cache.
+
+### Reuse Effect Cache on Indexer Reruns
+
+To prevent invalid data we don't keep the effect cache on indexer reruns. But you can explicitly configure cache, which should be preloaded when the indexer is rerun.
+
+Open Development Console of the running indexer which accumulated the cache. You'll be able to see the `Sync Cache` button right at the `Effects` section. Clicking the button will load the cache from the indexer database to the `.envio/cache` directory in your indexer project.
+
+When the indexer is rerun by using `envio dev` or `envio start -r` call, the initial cache will be loaded from the `.envio/cache` directory and used for the indexer run.
+
+> **Note:** This feature is available starting from `envio@2.26.0`. It also doesn't support rollbacks on reorgs. The support for reorgs will be added in the future.
+
+### Cache on Hosted Service
+
+The same `.envio/cache` can be also used to populate the initial cache on the hosted service.
+
+Although this solution is very limited, and we're actively working on a better integration:
+
+- It requires to commit `.envio/cache` to the GitHub repository, increasing the repository and git history size
+- The file size is limited to 100MB, which is not enough for some use cases
+- There might be issues with pulling big caches from the GitHub repository
+
+Join our Discord to get updates on the progress of the hosted service integration.
+
+### Why Experimental?
+
+The Effect API is currently marked as experimental, but we don't expect major breaking changes in the future. This designation simply means we're actively iterating on the feature and may add new capabilities that could subtly change indexer behavior. We plan to remove the `experimental` tag soon, and your feedback is invaluable in this process!
+
+---
+
 ## Accessing Contract State in Event Handlers
 
 **File:** `Guides/contract-state.md`
@@ -4052,8 +4562,9 @@ This guide demonstrates how to access on-chain contract state from your event ha
 
 1. Make RPC calls to external contracts within your event handlers
 2. Batch multiple calls using multicall for efficiency
-3. Implement caching to reduce redundant RPC requests
-4. Handle common edge cases that arise when accessing token contract data
+3. Learn about Preload Optimisation and how it makes your indexer thousands of times faster
+4. Use Effect API with built-in caching and Viem transport level batching
+5. Handle common edge cases that arise when accessing token contract data
 
 ## The Challenge: Token Data from Pool Creation Events
 
@@ -4102,9 +4613,10 @@ Then modify your configuration to focus only on the PoolCreated event:
 ```yaml
 # config.yaml
 name: uniswap-v3-factory-token-indexer
+preload_handlers: true
 networks:
   - id: 1
-    start_block: 21000000 # Starting at a higher block to speed up initial sync
+    start_block: 0
     contracts:
       - name: UniswapV3Factory
         address:
@@ -4112,10 +4624,7 @@ networks:
         handler: src/EventHandlers.ts
         events:
           - event: PoolCreated(address indexed token0, address indexed token1, uint24 indexed fee, int24 tickSpacing, address pool)
-rollback_on_reorg: false
 ```
-
-> **Note**: We're starting at block 21,000,000 to reduce initial sync time, as RPC calls can be slow. See the Rate Limiting section for optimization strategies.
 
 ### Step 2: Define the Schema
 
@@ -4148,69 +4657,72 @@ The event handler needs to:
 2. Make RPC calls to fetch token information for both token0 and token1
 3. Create Token entities with the retrieved data
 
+**Important!** Preload optimization makes your handlers run **twice**. So instead of direct RPC calls, we're doing it through `context.effect` - the Effect API.
+
+Learn how Preload Optimization works in a dedicated guide. It might be a new mental model for you, but this is what can make indexing thousands of times faster.
+
 ```typescript
 // src/EventHandlers.ts
 
 
 UniswapV3Factory.PoolCreated.handler(async ({ event, context }) => {
   // Create Pool entity
-  const entity: Pool = {
+  context.Pool.set({
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     token0_id: event.params.token0,
     token1_id: event.params.token1,
     fee: event.params.fee,
     tickSpacing: event.params.tickSpacing,
     pool: event.params.pool,
-  };
-  context.Pool.set(entity);
+  });
 
   // Fetch and store token0 information
   try {
-    const {
-      name: name0,
-      symbol: symbol0,
-      decimals: decimals0,
-    } = await getTokenDetails(
-      event.params.token0,
-      event.chainId,
-      event.params.pool
-    );
+    const tokenMetadata0 = await context.effect(getTokenMetadata, {
+      tokenAddress: event.params.token0,
+      chainId: event.chainId,
+    });
     context.Token.set({
       id: event.params.token0,
-      name: name0,
-      symbol: symbol0,
-      decimals: decimals0,
+      name: tokenMetadata0.name,
+      symbol: tokenMetadata0.symbol,
+      decimals: tokenMetadata0.decimals,
     });
   } catch (error) {
-    console.log("failed token0 with address", event.params.token0);
+    context.log.error("Failed to fetch token0 metadata", {
+      tokenAddress: event.params.token0,
+      chainId: event.chainId,
+      pool: event.params.pool,
+      err: error,
+    });
     return;
   }
 
   // Fetch and store token1 information
   try {
-    const {
-      name: name1,
-      symbol: symbol1,
-      decimals: decimals1,
-    } = await getTokenDetails(
-      event.params.token1,
-      event.chainId,
-      event.params.pool
-    );
+    const tokenMetadata1 = await context.effect(getTokenMetadata, {
+      tokenAddress: event.params.token1,
+      chainId: event.chainId,
+    });
     context.Token.set({
       id: event.params.token1,
-      name: name1,
-      symbol: symbol1,
-      decimals: decimals1,
+      name: tokenMetadata1.name,
+      symbol: tokenMetadata1.symbol,
+      decimals: tokenMetadata1.decimals,
     });
   } catch (error) {
-    console.log("failed token1 with address", event.params.token1);
+    context.log.error("Failed to fetch token1 metadata", {
+      tokenAddress: event.params.token1,
+      chainId: event.chainId,
+      pool: event.params.pool,
+      err: error,
+    });
     return;
   }
 });
 ```
 
-### Step 4: Create the Token Details Helper
+### Step 4: Create the Token Metadata Effect
 
 This is where the magic happens. We need to:
 
@@ -4229,215 +4741,101 @@ const RPC_URL = process.env.RPC_URL;
 
 const client = createPublicClient({
   chain: mainnet,
-  transport: http(RPC_URL),
   batch: { multicall: true }, // Enable multicall batching for efficiency
+  transport: http(RPC_URL, { batch: true }), // Thanks to automatic Effect API batching, we can also enable batching for Viem transport level
 });
 
-export async function getTokenDetails(
-  contractAddress: string,
-  chainId: number,
-  pool: string
-): Promise {
-  // Check cache first to avoid redundant RPC calls
-  const cache = await Cache.init(CacheCategory.Token, chainId);
-  const token = await cache.read(contractAddress.toLowerCase());
+// Use Sury library to define the schema
+const tokenMetadataSchema = S.schema({
+  name: S.string,
+  symbol: S.string,
+  decimals: S.number,
+});
 
-  if (token) {
-    return token;
-  }
+// Infer the type from the schema
+type TokenMetadata = S.Infer;
 
-  // Prepare contract instances for different token standard variations
-  const erc20 = getERC20Contract(contractAddress as `0x${string}`);
-  const erc20Bytes = getERC20BytesContract(contractAddress as `0x${string}`);
+export const getTokenMetadata = experimental_createEffect(
+  {
+    name: "getTokenMetadata",
+    input: {
+      tokenAddress: S.string,
+      chainId: S.number,
+    },
+    output: tokenMetadataSchema,
+    // Enable caching to avoid duplicated calls
+    cache: true,
+  },
+  async ({ input, context }) => {
+    const { tokenAddress, chainId } = input;
 
-  let results: [number, string, string];
-  try {
-    // Try standard ERC20 interface first (most common)
-    results = await client.multicall({
-      allowFailure: false,
-      contracts: [
-        {
-          ...erc20,
-          functionName: "decimals",
-        },
-        {
-          ...erc20,
-          functionName: "name",
-        },
-        {
-          ...erc20,
-          functionName: "symbol",
-        },
-      ],
-    });
-  } catch (error) {
-    console.log("First multicall failed, trying alternate method");
+    // Prepare contract instances for different token standard variations
+    const erc20 = getERC20Contract(tokenAddress as `0x${string}`);
+    const erc20Bytes = getERC20BytesContract(tokenAddress as `0x${string}`);
+    let results: [number, string, string];
     try {
-      // Some tokens use bytes32 for name/symbol instead of string
-      const alternateResults = await client.multicall({
+      // Try standard ERC20 interface first (most common)
+      results = await client.multicall({
         allowFailure: false,
         contracts: [
           {
-            ...erc20Bytes,
+            ...erc20,
             functionName: "decimals",
           },
           {
-            ...erc20Bytes,
+            ...erc20,
             functionName: "name",
           },
           {
-            ...erc20Bytes,
+            ...erc20,
             functionName: "symbol",
           },
         ],
       });
-      results = [
-        alternateResults[0],
-        hexToString(alternateResults[1]).replace(/\u0000/g, ""), // Remove null byte padding
-        hexToString(alternateResults[2]).replace(/\u0000/g, ""), // Remove null byte padding
-      ];
-    } catch (alternateError) {
-      console.error(`Alternate method failed for pool ${pool}:`);
-      results = [0, "unknown", "unknown"]; // Fallback for completely non-standard tokens
+    } catch (error) {
+      try {
+        // Some tokens use bytes32 for name/symbol instead of string
+        const alternateResults = await client.multicall({
+          allowFailure: false,
+          contracts: [
+            {
+              ...erc20Bytes,
+              functionName: "decimals",
+            },
+            {
+              ...erc20Bytes,
+              functionName: "name",
+            },
+            {
+              ...erc20Bytes,
+              functionName: "symbol",
+            },
+          ],
+        });
+        results = [
+          alternateResults[0],
+          hexToString(alternateResults[1]).replace(/\u0000/g, ""), // Remove null byte padding
+          hexToString(alternateResults[2]).replace(/\u0000/g, ""), // Remove null byte padding
+        ];
+      } catch (alternateError) {
+        results = [0, "unknown", "unknown"]; // Fallback for completely non-standard tokens
+      }
     }
+
+    const [decimals, name, symbol] = results;
+
+    return {
+      name,
+      symbol,
+      decimals,
+    };
   }
-
-  const [decimals, name, symbol] = results;
-
-  console.log(
-    `Got token details for ${contractAddress}: ${name} (${symbol}) with ${decimals} decimals`
-  );
-
-  // Prepare and cache the result
-  const entry = {
-    name,
-    symbol,
-    decimals,
-  } as const;
-
-  cache.add({ [contractAddress.toLowerCase()]: entry as any });
-  return entry;
-}
+);
 ```
 
 > **Important:** The `hexToString` method from Viem adds byte padding to the string. We remove this padding with `replace(/\u0000/g, '')` to avoid errors when writing to the database.
 
-### Step 5: Implement Caching
-
-Caching is crucial for efficiency. Many pools share common tokens (like USDC, WETH, etc.), and we don't want to make redundant RPC calls for the same token addresses.
-
-```typescript
-// src/cache.ts
-
-
-export const CacheCategory = {
-  Token: "token",
-} as const;
-
-export type CacheCategory = (typeof CacheCategory)[keyof typeof CacheCategory];
-
-type Address = string;
-
-type Shape = Record>;
-type ShapeRoot = Shape & Record;
-
-type ShapeToken = Shape &
-  Record;
-
-export class Cache {
-  static init(
-    category: C,
-    chainId: number | string | bigint
-  ) {
-    if (!Object.values(CacheCategory).find((c) => c === category)) {
-      throw new Error("Unsupported cache category");
-    }
-
-    type S = C extends "token" ? ShapeToken : ShapeRoot;
-    const entry = new Entry(`${category}-${chainId.toString()}`);
-    return entry;
-  }
-}
-
-export class Entry {
-  private memory: Shape = {};
-
-  static encoding = "utf8" as const;
-  static folder = "./.cache" as const;
-
-  public readonly key: string;
-  public readonly file: string;
-
-  constructor(key: string) {
-    this.key = key;
-    this.file = Entry.resolve(key);
-
-    this.preflight();
-    this.load();
-  }
-
-  public read(key: string) {
-    const memory = this.memory || {};
-    return memory[key] as T[typeof key];
-  }
-
-  public load() {
-    try {
-      const data = fs.readFileSync(this.file, Entry.encoding);
-      this.memory = JSON.parse(data) as T;
-    } catch (error) {
-      console.error(error);
-      this.memory = {};
-    }
-  }
-
-  public add(fields: N) {
-    if (!this.memory || Object.values(this.memory).length === 0) {
-      this.memory = fields;
-    } else {
-      Object.keys(fields).forEach((key) => {
-        if (!this.memory[key]) {
-          this.memory[key] = {};
-        }
-        Object.keys(fields[key]).forEach((nested) => {
-          this.memory[key][nested] = fields[key][nested];
-        });
-      });
-    }
-
-    this.publish();
-  }
-
-  private preflight() {
-    /** Ensure cache folder exists */
-    if (!fs.existsSync(Entry.folder)) {
-      fs.mkdirSync(Entry.folder);
-    }
-    if (!fs.existsSync(this.file)) {
-      fs.writeFileSync(this.file, JSON.stringify({}));
-    }
-  }
-
-  private publish() {
-    const prepared = JSON.stringify(this.memory);
-    try {
-      fs.writeFileSync(this.file, prepared);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  static resolve(key: string) {
-    return path.join(Entry.folder, key.toLowerCase().concat(".json"));
-  }
-}
-```
-
-> **Note:** The hosted service supports basic JSON file caching in beta. Speak to the team if you want to discuss caching options.
-
-### Step 6: Improve Performance with Loaders
-
-The solution will perform external calls for each handler one by one. This is not efficient and can be improved with loaders. Read more about the Effect API and Loaders in the dedicated guides.
+> **Note:** Read more about Effect API and caching in the Effect API guide.
 
 ## Key Considerations
 
@@ -4452,10 +4850,11 @@ However, if you need historical state (like an account balance at a specific blo
 RPC providers often limit the number of requests per time period. To avoid hitting rate limits:
 
 1. **Use multicall** (as shown in our example) to batch multiple contract calls into a single RPC request
-2. **Implement caching** to avoid redundant requests
-3. **Use a paid, unthrottled RPC provider** for production indexers
-4. **Implement request throttling** to space out requests when needed
-5. **Use multiple RPC providers** and rotate between them for high-volume indexing
+2. **Learn about Preload Optimization** to make your indexer thousands of times faster
+3. **Enable caching** to avoid redundant requests
+4. **Use a paid, unthrottled RPC provider** for production indexers
+5. **Implement request throttling** to space out requests when needed
+6. **Use multiple RPC providers** and rotate between them for high-volume indexing
 
 ## Conclusion
 
@@ -4465,6 +4864,330 @@ For more advanced techniques, explore:
 
 - Implementing retry logic for failed RPC calls
 - Handling complex contract interactions beyond basic ERC20 tokens
+
+---
+
+## Indexing IPFS Data with Envio
+
+**File:** `Guides/ipfs.md`
+
+> **Example Repository:** The complete code for this guide can be found here
+
+## Introduction
+
+This guide demonstrates how to fetch and index data stored on IPFS within your Envio indexer. We'll use the Bored Ape Yacht Club NFT collection as a practical example, showing you how to retrieve and store token metadata from IPFS.
+
+IPFS (InterPlanetary File System) is commonly used in blockchain applications to store larger data like images and metadata that would be prohibitively expensive to store on-chain. By integrating IPFS fetching capabilities into your indexers, you can provide a more complete data model that combines on-chain events with off-chain metadata.
+
+## Implementation Overview
+
+Our implementation will follow these steps:
+
+1. Create a basic indexer for Bored Ape Yacht Club NFT transfers
+2. Extend the indexer to fetch and store metadata from IPFS
+3. Handle IPFS connection issues with fallback gateways
+
+## Step 1: Setting Up the Basic NFT Indexer
+
+First, let's create a basic indexer that tracks NFT ownership:
+
+### Initialize the Indexer
+
+```bash
+pnpx envio init
+```
+
+When prompted, enter the Bored Ape Yacht Club contract address: `0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D`
+
+### Configure the Indexer
+
+Modify the configuration to focus on the Transfer events:
+
+```yaml
+# config.yaml
+name: bored-ape-yacht-club-nft-indexer
+preload_handlers: true
+networks:
+  - id: 1
+    start_block: 0
+    end_block: 12299114 # Optional: limit blocks for development
+    contracts:
+      - name: BoredApeYachtClub
+        address:
+          - 0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D
+        handler: src/EventHandlers.ts
+        events:
+          - event: Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
+```
+
+### Define the Schema
+
+Create a schema to store NFT ownership data:
+
+```graphql
+# schema.graphql
+type Nft {
+  id: ID! # tokenId
+  owner: String!
+}
+```
+
+### Implement the Event Handler
+
+Track ownership changes by handling Transfer events:
+
+```typescript
+// src/EventHandler.ts
+
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+
+BoredApeYachtClub.Transfer.handler(async ({ event, context }) => {
+  if (event.params.from === ZERO_ADDRESS) {
+    // mint
+    context.Nft.set({
+      id: event.params.tokenId.toString(),
+      owner: event.params.to,
+    });
+  } else {
+    // transfer
+    const nft = await context.Nft.getOrThrow(event.params.tokenId.toString());
+    context.Nft.set({
+      ...nft,
+      owner: event.params.to,
+    });
+  }
+});
+```
+
+Run your indexer with `pnpm dev` and visit http://localhost:8080 to see the ownership data:
+
+!Basic NFT ownership data
+
+## Step 2: Fetching IPFS Metadata
+
+Now, let's enhance our indexer to fetch metadata from IPFS:
+
+### Update the Schema
+
+Extend the schema to include metadata fields:
+
+```graphql
+# schema.graphql
+type Nft {
+  id: ID! # tokenId
+  owner: String!
+  image: String!
+  attributes: String! # JSON string of attributes
+}
+```
+
+### Create IPFS Effect
+
+**Important!** Preload optimization makes your handlers run **twice**. So instead of direct RPC calls, we're doing it through the Effect API.
+
+Learn how Preload Optimization works in a dedicated guide. It might be a new mental model for you, but this is what can make indexing thousands of times faster.
+
+Let's create the `getIpfsMetadata` effect in the `src/utils/ipfs.ts` file:
+
+```typescript
+
+// Define the schema for the IPFS metadata
+// It uses Sury library to define the schema
+const nftMetadataSchema = S.schema({
+  image: S.string,
+  attributes: S.string,
+});
+
+// Infer the type from the schema
+type NftMetadata = S.Infer;
+
+// Unique identifier for the BoredApeYachtClub IPFS tokenURI
+const BASE_URI_UID = "QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq";
+
+const endpoints = [
+  // Try multiple endpoints to ensure data availability
+  // Optional paid gateway (set in .env)
+  ...(process.env.PINATA_IPFS_GATEWAY ? [process.env.PINATA_IPFS_GATEWAY] : []),
+  "https://cloudflare-ipfs.com/ipfs",
+  "https://ipfs.io/ipfs",
+];
+
+async function fetchFromEndpoint(
+  context: EffectContext,
+  endpoint: string,
+  tokenId: string
+): Promise {
+  try {
+    const response = await fetch(`${endpoint}/${BASE_URI_UID}/${tokenId}`);
+    if (response.ok) {
+      const metadata: any = await response.json();
+      return {
+        image: metadata.image,
+        attributes: JSON.stringify(metadata.attributes),
+      };
+    } else {
+      context.log.warn(`IPFS didn't return 200`, { tokenId, endpoint });
+      return null;
+    }
+  } catch (e) {
+    context.log.warn(`IPFS fetch failed`, { tokenId, endpoint, err: e });
+    return null;
+  }
+}
+
+export const getIpfsMetadata = experimental_createEffect(
+  {
+    name: "getIpfsMetadata",
+    input: S.string,
+    output: nftMetadataSchema,
+  },
+  async ({ input: tokenId, context }) => {
+    for (const endpoint of endpoints) {
+      const metadata = await fetchFromEndpoint(context, endpoint, tokenId);
+      if (metadata) {
+        return metadata;
+      }
+    }
+
+    // ⚠️ Dangerous: Sometimes it's better to crash, to prevent corrupted data
+    // But we're going to use a fallback value, to keep the indexer process running.
+    // Both approaches have their pros and cons.
+    context.log.warn(
+      "Unable to fetch IPFS. Continuing with fallback metadata.",
+      {
+        tokenId,
+      }
+    );
+    return { attributes: `["unknown"]`, image: "unknown" };
+  }
+);
+```
+
+### Update the Event Handler
+
+Let's modify the event handler to fetch and store metadata using the `getIpfsMetadata` effect:
+
+```typescript
+// src/EventHandlers.ts
+
+
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+
+BoredApeYachtClub.Transfer.handler(async ({ event, context }) => {
+  if (event.params.from === ZERO_ADDRESS) {
+    // mint
+    const metadata = await context.effect(
+      getIpfsMetadata,
+      event.params.tokenId.toString()
+    );
+    context.Nft.set({
+      id: event.params.tokenId.toString(),
+      owner: event.params.to,
+      image: metadata.image,
+      attributes: metadata.attributes,
+    });
+  } else {
+    // transfer
+    const nft = await context.Nft.getOrThrow(event.params.tokenId.toString());
+    context.Nft.set({
+      ...nft,
+      owner: event.params.to,
+    });
+  }
+});
+```
+
+When you run the indexer now, it will populate both ownership data and token metadata:
+
+!NFT ownership and metadata
+
+## Best Practices for IPFS Integration
+
+When working with IPFS in your indexers, consider these best practices:
+
+### 1. Use Multiple Gateways
+
+IPFS gateways can be unreliable, so always implement multiple fallback options:
+
+```typescript
+const endpoints = [
+  ...(process.env.PAID_IPFS_GATEWAY ? [process.env.PAID_IPFS_GATEWAY] : []),
+  "https://cloudflare-ipfs.com/ipfs",
+  "https://ipfs.io/ipfs",
+  "https://gateway.pinata.cloud/ipfs",
+];
+```
+
+### 2. Handle Failures Gracefully
+
+Always include error handling and provide fallback values:
+
+```typescript
+try {
+  // IPFS fetch logic
+} catch (error) {
+  context.log.error(`Failed to fetch from IPFS`, error as Error);
+  return { attributes: [], image: "default-image-url" };
+}
+```
+
+### 3. Implement Local Caching (For Local Development)
+
+Follow the Effect API Persistence guide to implement caching for local development. This should allow you to avoid repeatedly fetching the same data.
+
+```typescript
+export const getIpfsMetadata = experimental_createEffect(
+  {
+    name: "getIpfsMetadata",
+    input: S.string,
+    output: nftMetadataSchema,
+    cache: true, // Enable caching
+  },
+  async ({ input: tokenId, context }) => {...}
+);
+```
+
+> **Important:** While the example repository includes SQLite-based caching, this approach is outdated and leads to many indexing issues.
+
+> **Note:** We're working on a better integration with the hosted service. Currently, due to the cache size, it's not recommended to commit the `.envio/cache` directory to the GitHub repository.
+
+### 4. Learn about Preload Optimization
+
+Learn how Preload Optimization works and the Double-Run Footgun in a dedicated guide. It might be a new mental model for you, but this is what can make indexing thousands of times faster.
+
+## Understanding IPFS
+
+### What is IPFS?
+
+IPFS (InterPlanetary File System) is a distributed system for storing and accessing files, websites, applications, and data. It works by:
+
+1. Splitting files into chunks
+2. Creating content-addressed identifiers (CIDs) based on the content itself
+3. Distributing these chunks across a network of nodes
+4. Retrieving data based on its CID rather than its location
+
+### Common Use Cases with Smart Contracts
+
+IPFS is frequently used alongside smart contracts for:
+
+- **NFTs**: Storing images, videos, and metadata while the contract manages ownership
+- **Decentralized Identity Systems**: Storing credential documents and personal information
+- **DAOs**: Maintaining governance documents, proposals, and organizational assets
+- **dApps**: Hosting front-end interfaces and application assets
+
+### IPFS Challenges
+
+IPFS integration comes with several challenges:
+
+1. **Slow Retrieval Times**: IPFS data can be slow to retrieve, especially for less widely replicated content
+2. **Gateway Reliability**: Public gateways can be inconsistent in their availability
+3. **Data Persistence**: Content may become unavailable if nodes stop hosting it
+
+To mitigate these issues:
+
+- Use pinning services like Pinata or Infura to ensure data persistence
+- Implement multiple gateway fallbacks
+- Consider paid gateways for production applications
 
 ---
 
@@ -4792,322 +5515,6 @@ For any questions about using RPC with HyperIndex, please contact the Envio team
 
 ---
 
-## Indexing IPFS Data with Envio
-
-**File:** `Guides/ipfs.md`
-
-> **Example Repository:** The complete code for this guide can be found here
->
-> **Important Note:** The example repository contains a SQLite caching implementation which is **not supported** on the Envio hosted service. This guide has been updated to exclude the SQLite implementation, focusing only on approaches compatible with the hosted environment.
-
-## Introduction
-
-This guide demonstrates how to fetch and index data stored on IPFS within your Envio indexer. We'll use the Bored Ape Yacht Club NFT collection as a practical example, showing you how to retrieve and store token metadata from IPFS.
-
-IPFS (InterPlanetary File System) is commonly used in blockchain applications to store larger data like images and metadata that would be prohibitively expensive to store on-chain. By integrating IPFS fetching capabilities into your indexers, you can provide a more complete data model that combines on-chain events with off-chain metadata.
-
-## Implementation Overview
-
-Our implementation will follow these steps:
-
-1. Create a basic indexer for Bored Ape Yacht Club NFT transfers
-2. Extend the indexer to fetch and store metadata from IPFS
-3. Handle IPFS connection issues with fallback gateways
-
-## Step 1: Setting Up the Basic NFT Indexer
-
-First, let's create a basic indexer that tracks NFT ownership:
-
-### Initialize the Indexer
-
-```bash
-pnpx envio init
-```
-
-When prompted, enter the Bored Ape Yacht Club contract address: `0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D`
-
-### Configure the Indexer
-
-Modify the configuration to focus on the Transfer events:
-
-```yaml
-# config.yaml
-name: bored-ape-yacht-club-nft-indexer
-networks:
-  - id: 1
-    start_block: 0
-    end_block: 12299114 # Optional: limit blocks for development
-    contracts:
-      - name: BoredApeYachtClub
-        address:
-          - 0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D
-        handler: src/EventHandlers.ts
-        events:
-          - event: Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
-```
-
-### Define the Schema
-
-Create a schema to store NFT ownership data:
-
-```graphql
-# schema.graphql
-type Nft {
-  id: ID! # tokenId
-  owner: String!
-}
-```
-
-### Implement the Event Handler
-
-Track ownership changes by handling Transfer events:
-
-```typescript
-// src/EventHandler.ts
-
-const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
-
-BoredApeYachtClub.Transfer.handler(async ({ event, context }) => {
-  if (event.params.from === ZERO_ADDRESS) {
-    // mint
-    const nft: Nft = {
-      id: event.params.tokenId.toString(),
-      owner: event.params.to,
-    };
-    context.Nft.set(nft);
-  } else {
-    // transfer
-    let nft = await context.Nft.get(event.params.tokenId.toString());
-    if (!nft) {
-      throw new Error("Can't transfer non-existing NFT");
-    }
-    nft = { ...nft, owner: event.params.to };
-    context.Nft.set(nft);
-  }
-});
-```
-
-Run your indexer with `pnpm dev` and visit http://localhost:8080 to see the ownership data:
-
-!Basic NFT ownership data
-
-## Step 2: Fetching IPFS Metadata
-
-Now, let's enhance our indexer to fetch metadata from IPFS:
-
-### Update the Schema
-
-Extend the schema to include metadata fields:
-
-```graphql
-# schema.graphql
-type Nft {
-  id: ID! # tokenId
-  owner: String!
-  image: String!
-  attributes: String! # JSON string of attributes
-}
-```
-
-### Create IPFS Utility Functions
-
-Create a new file to handle IPFS requests with fallbacks to multiple gateways:
-
-```typescript
-// src/utils/ipfs.ts
-
-type NftMetadata = {
-  image: string;
-  attributes: Array;
-};
-
-// unique identifier for the BoredApeYachtClub IPFS tokenURI
-const BASE_URI_UID = "QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq";
-
-async function fetchFromEndpoint(
-  endpoint: string,
-  tokenId: string,
-  context: handlerContext
-): Promise {
-  try {
-    const response = await fetch(`${endpoint}/${BASE_URI_UID}/${tokenId}`);
-    if (response.ok) {
-      const metadata: any = await response.json();
-      context.log.info(metadata);
-      return { attributes: metadata.attributes, image: metadata.image };
-    } else {
-      throw new Error("Unable to fetch from endpoint");
-    }
-  } catch (e) {
-    context.log.warn(`Unable to fetch from ${endpoint}`);
-  }
-  return null;
-}
-
-export async function tryFetchIpfsFile(
-  tokenId: string,
-  context: handlerContext
-): Promise {
-  const endpoints = [
-    // Try multiple endpoints to ensure data availability
-    process.env.PINATA_IPFS_GATEWAY || "", // Optional paid gateway (set in .env)
-    "https://cloudflare-ipfs.com/ipfs",
-    "https://ipfs.io/ipfs",
-  ];
-
-  for (const endpoint of endpoints) {
-    if (!endpoint) continue; // Skip empty endpoints
-
-    const metadata = await fetchFromEndpoint(endpoint, tokenId, context);
-    if (metadata) {
-      return metadata;
-    }
-  }
-
-  context.log.error("Unable to fetch from all endpoints");
-  return { attributes: ["unknown"], image: "unknown" };
-}
-```
-
-### Update the Event Handler
-
-Modify the event handler to fetch and store metadata:
-
-```typescript
-// src/EventHandlers.ts
-
-
-const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
-
-BoredApeYachtClub.Transfer.handler(async ({ event, context }) => {
-  if (event.params.from === ZERO_ADDRESS) {
-    // mint
-    let metadata = await tryFetchIpfsFile(
-      event.params.tokenId.toString(),
-      context
-    );
-
-    const nft: Nft = {
-      id: event.params.tokenId.toString(),
-      owner: event.params.to,
-      image: metadata.image,
-      attributes: JSON.stringify(metadata.attributes),
-    };
-    context.Nft.set(nft);
-  } else {
-    // transfer
-    let nft = await context.Nft.get(event.params.tokenId.toString());
-    if (!nft) {
-      throw new Error("Can't transfer non-existing NFT");
-    }
-    nft = { ...nft, owner: event.params.to };
-    context.Nft.set(nft);
-  }
-});
-```
-
-When you run the indexer now, it will populate both ownership data and token metadata:
-
-!NFT ownership and metadata
-
-## Best Practices for IPFS Integration
-
-When working with IPFS in your indexers, consider these best practices:
-
-### 1. Use Multiple Gateways
-
-IPFS gateways can be unreliable, so always implement multiple fallback options:
-
-```typescript
-const endpoints = [
-  process.env.PAID_IPFS_GATEWAY || "",
-  "https://cloudflare-ipfs.com/ipfs",
-  "https://ipfs.io/ipfs",
-  "https://gateway.pinata.cloud/ipfs",
-];
-```
-
-### 2. Handle Failures Gracefully
-
-Always include error handling and provide fallback values:
-
-```typescript
-try {
-  // IPFS fetch logic
-} catch (error) {
-  context.log.error(`Failed to fetch from IPFS: ${error.message}`);
-  return { attributes: [], image: "default-image-url" };
-}
-```
-
-### 3. Implement Local Caching (For Local Development)
-
-For local development, consider implementing in-memory caching to avoid repeatedly fetching the same data:
-
-```typescript
-// Simple in-memory cache for local development
-const metadataCache = new Map();
-
-async function getMetadata(tokenId: string) {
-  // Check cache first
-  if (metadataCache.has(tokenId)) {
-    return metadataCache.get(tokenId);
-  }
-
-  // Fetch from IPFS
-  const metadata = await fetchFromIPFS(tokenId);
-
-  // Store in cache
-  metadataCache.set(tokenId, metadata);
-
-  return metadata;
-}
-```
-
-> **Note:** For production indexers, the Envio hosted service automatically handles optimizations. You should not implement persistent file-based caching mechanisms as they are not supported in the hosted environment. Please discuss with the team your options regarding caching.
->
-> **Important:** While the example repository includes SQLite-based caching, this approach is not compatible with the Envio hosted service and should not be used for production deployments.
-
-### 4. Improve Performance with Loaders
-
-The solution will perform external calls for each handler one by one. This is not efficient and can be improved with loaders. Read more about the Effect API and Loaders in the dedicated guides.
-
-## Understanding IPFS
-
-### What is IPFS?
-
-IPFS (InterPlanetary File System) is a distributed system for storing and accessing files, websites, applications, and data. It works by:
-
-1. Splitting files into chunks
-2. Creating content-addressed identifiers (CIDs) based on the content itself
-3. Distributing these chunks across a network of nodes
-4. Retrieving data based on its CID rather than its location
-
-### Common Use Cases with Smart Contracts
-
-IPFS is frequently used alongside smart contracts for:
-
-- **NFTs**: Storing images, videos, and metadata while the contract manages ownership
-- **Decentralized Identity Systems**: Storing credential documents and personal information
-- **DAOs**: Maintaining governance documents, proposals, and organizational assets
-- **dApps**: Hosting front-end interfaces and application assets
-
-### IPFS Challenges
-
-IPFS integration comes with several challenges:
-
-1. **Slow Retrieval Times**: IPFS data can be slow to retrieve, especially for less widely replicated content
-2. **Gateway Reliability**: Public gateways can be inconsistent in their availability
-3. **Data Persistence**: Content may become unavailable if nodes stop hosting it
-
-To mitigate these issues:
-
-- Use pinning services like Pinata or Infura to ensure data persistence
-- Implement multiple gateway fallbacks
-- Consider paid gateways for production applications
-
----
-
 ## Envio Command Line Interface
 
 **File:** `Guides/cli-commands.md`
@@ -5423,391 +5830,6 @@ envio dev
 envio start --bench
 envio benchmark-summary
 ```
-
----
-
-## Migration Guide: HyperIndex v1 to v2
-
-**File:** `migration-guide-v1-v2.md`
-
-## Introduction
-
-Welcome to HyperIndex v2 - a major upgrade that significantly enhances your indexing experience! This new version introduces asynchronous processing, streamlined workflows, and improved flexibility for your indexers. With v2, you'll benefit from faster development, better performance, and a more intuitive API.
-
-While the full release changes can be found in the v2.0.0 release notes, here are some key highlights before we dive into the comprehensive migration guide:
-
-- Handlers are now asynchronous, with `loaders` becoming an optional tool for additional optimizations.
-- Async-mode has been removed as it's no longer needed in v2.
-- Loaders (when used) are more expressive and directly connected to the handler context via their return type.
-  - In v2, you can access loader fields in the handler the same way you do in the loader, using an async 'get' function.
-  - The return type of the loader can be used to directly access loaded data in the handler via the context.
-- Indexing parameters with names that are reserved words in ReScript have been fixed.
-- Validation and autocompletion for `config.yaml` is now available. Enable it by adding `# yaml-language-server: $schema=./node_modules/envio/evm.schema.json` at the top of your `config.yaml` file.
-
-These changes simplify the development process and provide a more consistent and powerful indexing experience. The following sections will guide you through the necessary steps to migrate your existing v1 indexers to v2.
-
-## Changes to Make
-
-### Handlers
-
-- Handlers are now asynchronous - add the `async` keyword and rename `handlerAsync` to `handler`.
-- You can use `handlerWithLoader` if you need a loader, otherwise, use `handler` directly.
-- The 'get' function is now asynchronous, so add an `await` before those functions.
-- No labeled entities.
-
-### Loaders
-
-- Loaders are merged into the handlers using `handlerWithLoader`.
-- Loading linked entities is done directly with promises in the loader.
-- Loaders are completely optional - only use the if you care about high throughput indexing.
-- Loaders return the required entities which are then used in the handler.
-- The dynamic contract registration moved from loaders to its own `..contractRegister` handler.
-- The return type of the loader is used directly in the handler to access the loaded data. No need to re-'get' it again in the handler.
-
-### Configuration
-
-- There is no async-mode anymore, so you can remove `isAsync: true` from each of the events in your `config.yaml`.
-- There is no more 'required_entities' in the config file. This includes sub-fields such as `label` and `arrayLabels`.
-
-```diff
-- isAsync: true
-```
-
-- Removed entity labels and required entities.
-
-```diff
-- required_entities:
--   - name: User
-```
-
-#### Field Selection and Event Parameter Changes
-
-In v2, the structure of the `event` parameter has changed significantly. Some fields have been moved or renamed, and new fields are available through the `field_selection` configuration.
-
-Field selection allows you to add additional data points to each event that gets passed to your handlers. This feature enhances the flexibility and efficiency of your indexer, as by default you don't fetch data that isn't required.
-
-To use field selection, add a `field_selection` section to your `config.yaml` file. For example:
-
-```yaml
-field_selection:
-  transaction_fields:
-    - "from"
-    - "to"
-    - "hash"
-    - "transactionIndex"
-  block_fields:
-    # Not required for migration, but more fields can be added here
-    - "parentHash"
-```
-
-For an exhaustive list of fields that can be added and more detailed information about field selection, please refer to the Field Selection section in the Configuration File guide.
-
-Note: By default, `number`, `hash`, and `timestamp` are already selected for `block_fields` and do not need to be configured.
-
-#### 'event' Parameter Changes
-
-The structure of the `event` parameter has changed in v2. This affects loaders, handlers, and dynamic contract registration. Here are the key changes:
-
-1. Block and transaction fields are now scoped under `event.block` and `event.transaction` respectively.
-2. Some field names have changed:
-   - `event.txOrigin` is now `event.transaction.from` (requires adding to config)
-   - `event.txTo` is now `event.transaction.to` (requires adding to config)
-   - `event.txHash` is now `event.transaction.hash` (requires adding to config)
-   - `event.blockTimestamp` is now `event.block.timestamp` (no config change)
-   - `event.blockNumber` is now `event.block.number` (no config change)
-   - `event.blockHash` is now `event.block.hash` (no config change)
-
-### Miscellaneous breaking changes and deprecations
-
-- The `context.Entity.load` function is deprecated and should be replaced with direct calls to `context.Entity.get` in the loader.
-- The `context.ParentEntity.loadField` functions are deprecated and should be replaced with direct calls to `context.ChildEntity.get`.
-- Remove the `Contract` and `Entity` suffixes from the generated code.
-- For JavaScript/TypeScript users:
-  - The event param names are not uncapitalized anymore. So you might need to change `event.params.capitalizedParamName` to `event.params.CapitalizedParamName`.
-- For ReScript users:
-  - We moved to the built-in `bigint` type instead of the `Ethers.BigInt.t`.
-  - We migrated to ReScript 11 uncurried mode. Curried mode is not supported anymore. So you need to remove `uncurried: false` from your rescript.json file. Also, we vendored `RescriptMocha` bindings to support uncurried mode. Please use it instead of `rescript-mocha`.
-- The config parsing is more strict, unknown fields will result in an error.
-  - You can add `# yaml-language-server: $schema=./node_modules/envio/evm.schema.json` at the top of your 'config.yaml' file to get autocomplete and validation for the config file.
-
-## Migration Steps
-
-### 1. Update Imports
-
-Replace the old import statements with the new ones.
-
-**Before:**
-
-```typescript
-import {
-  GreeterContract_NewGreeting_handler,
-  // or you aren't using these `_` versions of the imports
-  GreeterContract,
-  // ...
-} from "../generated/src/Handlers.gen"; // Not all imports still look like this, but on old indexers they do.
-
-import {
-  GreetingEntity,
-  UserEntity,
-  // ... other entities
-} from "../generated/src/Types.gen";
-```
-
-**After:**
-
-```typescript
-import {
-  Greeter, // the Greeter Contract
-  // ...
-  Greeting, // the Greeting Entity
-  User, // The User Entity
-  // ... other entities
-} from "generated"; // Note this requires adding the 'generated' folder to your 'optionalDependencies' in your package.json
-```
-
-### 2. Update Handler Definitions
-
-**Before:**
-
-```typescript
-/// or if your indexer is very old: GreeterContract_Event1_loader
-GreeterContract.Event1.loader(({ event, context }) => {
-  // Loader code
-});
-GreeterContract.Event1.handler(({ event, context }) => {
-  // Handler code
-});
-```
-
-**After:**
-
-```typescript
-Greeter.Event1.handlerWithLoader({
-  loader: async ({ event, context }) => {
-    // Loader code
-    return {
-      /* loaded data, this data is available in the "handler" via the `loaderReturn` parameter */
-    };
-  },
-  handler: async ({ event, context, loaderReturn }) => {
-    // Handler code using loaderReturn
-  },
-});
-```
-
-#### Or without a loader:
-
-**Before:**
-
-```typescript
-GreeterContract.Event1.handler(({ event, context }) => {
-  // Handler code
-});
-```
-
-**After:**
-
-```typescript
-Greeter.Event1.handler(async ({ event, context }) => {
-  // Handler code
-});
-```
-
-### 3. Dynamic Contract Registration
-
-Use `contractRegister` for dynamic contract registration. Assuming there is an event called NewGreeterCreated that creates a contract called Greeter that has the address of the `newGreeter` as a field.
-
-**Before:**
-
-```typescript
-GreeterContract.NewGreeterCreated.loader(({ event, context }) => {
-  context.contractRegistration.addGreeter(event.params.newGreeter);
-});
-```
-
-**After:**
-
-```typescript
-Greeter.NewGreeterCreated.contractRegister(({ event, context }) => {
-  context.addGreeter(event.params.newGreeter);
-});
-```
-
-### 4. Handling Entities
-
-**Before**
-
-```typescript
-const greetingInstance: GreetingEntity = {
-  ...currentGreeting,
-  // ...loaderReturn
-};
-context.Greeting.set(greetingInstance);
-```
-
-**After**
-
-```typescript
-const greetingInstance: Greeting = {
-  ...currentGreeting,
-  // ...
-};
-context.Greeting.set(greetingInstance);
-```
-
-The only change is in the TypeScript/ReScript type for the entity 💪
-
-### 5. Accessing Loaded Data
-
-#### Access data via asynchronous get functions:
-
-**Before:**
-
-```typescript
-let currentEntity = context.Entity.get(event.srcAddress.toString());
-```
-
-**After:**
-
-```typescript
-let currentEntity = await context.Entity.get(event.srcAddress.toString());
-```
-
-#### Access loaded data through the `loaderReturn` if you are using loaders:
-
-**Before:**
-
-```typescript
-let currentEntity = context.Entity.get(event.srcAddress.toString());
-```
-
-**After:**
-
-```typescript
-const { currentEntity } = loaderReturn;
-```
-
-### 6. Loading Linked Entities
-
-Before:
-
-```typescript
-GreeterContract.Event1.loader(({ event, context }) => {
-  context.Entity.load(event.srcAddress.toString(), {
-    loadField1: true,
-    loadField2: true,
-  });
-});
-```
-
-After:
-
-```typescript
-Greeter.Event1.handlerWithLoader({
-  loader: async ({ event, context }) => {
-    const currentEntity = await context.Entity.get(event.srcAddress.toString());
-    if (currentEntity == undefined) return null;
-
-    const field1Instance = await context.Entity.getField1(
-      currentEntity.field1_id
-    );
-    const field2Instance = await context.Entity.getField2(
-      currentEntity.field2_id
-    );
-
-    return { currentEntity, field1Instance, field2Instance };
-  },
-});
-```
-
-### 7. Config File Changes
-
-Before:
-
-```yaml
-contracts:
-  - name: Greeter
-    sameRandomFieldThatIsntPartOfSchema: true
-    handler: src/EventHandlers.ts
-    events:
-      - event: Greet(address indexed recipient, string greeting)
-        isAsync: true
-        requiredEntities:
-          - name: User
-            label: recipient
-          - name: Greetings
-            arrayLabels: previousGreetings
-```
-
-After:
-
-```yaml
-contracts:
-  - name: Greeter
-    handler: src/EventHandlers.ts
-    events:
-      - event: Greet(address indexed recipient, string greeting)
-```
-
-### 8. Event Fields
-
-Before (v1):
-
-```typescript
-GreeterContract.Event1.handler(({ event, context }) => {
-  console.log(
-    "The event timestamp and block number",
-    event.txOrigin,
-    event.txTo,
-    event.transactionHash,
-    event.transactionIndex,
-    event.blockNumber,
-    event.blockTimestamp,
-    event.blockHash
-  );
-});
-```
-
-After (v2):
-
-```typescript
-Greeter.Event1.handlerWithLoader(async ({ event, context }) => {
-  // NOTE: these fields are in the loader and the contractRegister function too
-  console.log(
-    "The event timestamp and block number",
-    event.transaction.from,
-    event.transaction.to,
-    event.transaction.hash,
-    event.transaction.transactionIndex,
-    event.block.number,
-    event.block.timestamp,
-    event.block.hash
-  );
-});
-```
-
-And in your `config.yaml` file:
-
-```yaml
-field_selection:
-  transaction_fields:
-    - "from"
-    - "to"
-    - "hash"
-    - "transactionIndex"
-```
-
-## Examples
-
-As we upgrade public repos on GitHub, we'll add the commits of the upgrade to this page for reference:
-
-- Velodrome Indexer Upgrade Commit
-
-### Additional Tips
-
-- Make sure to thoroughly test your migrated code to catch any issues that might arise from the asynchronous nature of the new handlers.
-
-- If performance isn't a massive concern, you can simply use the `handler` function without a loader.
 
 ---
 
@@ -6399,456 +6421,6 @@ The commutative property is a property of the operation itself, not necessarily 
 
 ---
 
-## Optimizing Database Access with Loaders
-
-**File:** `Advanced/loaders.md`
-
-## What Are Loaders?
-
-Loaders are specialized functions that dramatically optimize how your event handlers fetch data from the database. They provide a powerful mechanism to:
-
-- **Batch multiple database requests** into single operations
-- **Cache database results** in memory for instant access
-- **Reduce I/O operations**, which are typically the primary performance bottleneck in indexing
-
-By using loaders, you can reduce database roundtrips from thousands to just a handful, especially when processing large batches of events.
-
-## Why Use Loaders?
-
-### The Database I/O Problem
-
-Consider this common pattern in event handlers:
-
-```typescript
-// Without loaders: Inefficient database access
-ERC20.Transfer.handler(async ({ event, context }) => {
-  const sender = await context.Account.get(event.params.from);
-  const receiver = await context.Account.get(event.params.to);
-
-  // Process the transfer...
-});
-```
-
-**The Performance Challenge:** If you're processing 5,000 transfer events, each with unique `from` and `to` addresses, this results in **10,000 total database roundtrips**—one for each sender and receiver lookup (2 per event × 5,000 events). This creates a significant bottleneck that slows down your entire indexing process.
-
-### The External Calls Problem
-
-To ensure consistent and reliable data, all handlers execute synchronously in on-chain order. This means external calls can dramatically increase processing time:
-
-```typescript
-// Without loaders: Blocking external calls
-ERC20.Transfer.handler(async ({ event, context }) => {
-  const metadata = await fetch(
-    `https://api.example.com/metadata/${event.params.from}`
-  );
-
-  // Process the transfer...
-});
-```
-
-**The Performance Challenge:** If you're processing 5,000 transfer events, each with an external call, this results in **5,000 sequential external calls**—each waiting for the previous one to complete. This can turn a fast indexing process into a slow, sequential crawl.
-
-### How Loaders Solve This
-
-Loaders address these performance bottlenecks through intelligent optimization:
-
-1. **Collect all database and Effect requests** before processing events
-2. **Batch similar requests** into single I/O operations
-3. **Cache results** in memory for efficient reuse
-
-This approach reduces thousands of database calls to just a handful per batch, dramatically improving indexing performance. When combined with the Effect API, you can also parallelize external calls for even greater efficiency.
-
-## How to Implement Loaders
-
-### Basic Structure
-
-Loaders use the `handlerWithLoader` pattern, which elegantly separates data loading from event processing:
-
-```typescript
-ContractName.EventName.handlerWithLoader({
-  // The loader function runs before event processing starts
-  loader: async ({ event, context }) => {
-    // Load all required data from the database
-    // Return the data needed for event processing
-  },
-
-  // The handler function processes each event with pre-loaded data
-  handler: async ({ event, context, loaderReturn }) => {
-    // Process the event using the data returned by the loader
-  },
-});
-```
-
-### Basic Example: Converting a Simple Handler
-
-Let's convert our previous inefficient example to use loaders:
-
-```typescript
-ERC20.Transfer.handlerWithLoader({
-  loader: async ({ event, context }) => {
-    // Load sender and receiver accounts efficiently
-    const sender = await context.Account.get(event.params.from);
-    const receiver = await context.Account.get(event.params.to);
-
-    // Return the loaded data to the handler
-    return {
-      sender,
-      receiver,
-    };
-  },
-
-  handler: async ({ event, context, loaderReturn }) => {
-    const { sender, receiver } = loaderReturn;
-
-    // Process the transfer with the pre-loaded data
-    // No database lookups needed here!
-  },
-});
-```
-
-### How Batching Works
-
-The batching process follows these three key steps:
-
-1. **Batch Creation**: HyperIndex creates an ordered batch of events from the event buffer accumulated in memory
-2. **Preload Phase**: All loader functions run concurrently for the entire batch. This is called the `Preload` phase.
-
-   _**Note:** During the preload phase, some entities being loaded may not exist yet since the handlers haven't been executed. This is expected behavior - the loader runs twice per event to ensure data consistency._
-
-3. **Sequential Processing**: For each event in the batch, its loader runs a **second time** and then passes the result to the handler. This step is sequential to maintain order.
-
-For our 5,000 transfer events example, this reduces database roundtrips from 10,000 total calls to just 2!
-
-## Advanced Loader Techniques
-
-### Optimizing for Concurrency
-
-You can further optimize performance by requesting multiple entities concurrently:
-
-```typescript
-ERC20.Transfer.handlerWithLoader({
-  loader: async ({ event, context }) => {
-    // Request sender and receiver concurrently for maximum efficiency
-    const [sender, receiver] = await Promise.all([
-      context.Account.get(event.params.from),
-      context.Account.get(event.params.to),
-    ]);
-
-    return { sender, receiver };
-  },
-
-  handler: async ({ event, context, loaderReturn }) => {
-    const { sender, receiver } = loaderReturn;
-    // Process with pre-loaded data
-  },
-});
-```
-
-This approach can reduce the database roundtrips to just 1 for the entire batch of events!
-
-### Querying by Field Values
-
-Loaders also support complex queries using the `getWhere` method, which allows you to retrieve arrays of entities based on field values:
-
-```typescript
-ERC20.Approval.handlerWithLoader({
-  loader: async ({ event, context }) => {
-    // Find all approvals for this specific owner
-    const currentOwnerApprovals = await context.Approval.getWhere.owner_id.eq(
-      event.params.owner
-    );
-
-    return { currentOwnerApprovals };
-  },
-
-  handler: async ({ event, context, loaderReturn }) => {
-    const { currentOwnerApprovals } = loaderReturn;
-
-    // Process all the owner's approvals efficiently
-    for (const approval of currentOwnerApprovals) {
-      // Process each approval
-    }
-  },
-});
-```
-
-This technique works with any entity field that:
-
-- Is used in a relationship with the `@derivedFrom` directive
-- Has an `@index` directive
-
-## Effect API `experimental`
-
-The Effect API provides a powerful and convenient way to perform external calls from your handlers. It's especially effective when used with loaders:
-
-- **Automatic batching**: Calls of the same kind are automatically batched together
-- **Intelligent memoization**: Calls are memoized, so you don't need to worry about the handler function being called multiple times
-- **Deduplication**: Calls with the same arguments are deduplicated to prevent overfetching
-- **Future enhancements**: We're working on automatic retry logic and result persistence for indexer reruns 🏗️
-
-To use the Effect API, you first need to define an effect using `experimental_createEffect` function from the `envio` package:
-
-```typescript
-
-export const getMetadata = experimental_createEffect(
-  {
-    name: "getMetadata",
-    input: S.string,
-    output: {
-      description: S.string,
-      value: S.bigint,
-    },
-  },
-  async ({ input, context }) => {
-    const response = await fetch(`https://api.example.com/metadata/${input}`);
-    const data = await response.json();
-    context.log.info(`Fetched metadata for ${input}`);
-    return {
-      description: data.description,
-      value: data.value,
-    };
-  }
-);
-```
-
-The first argument is an options object that describes the effect:
-
-- `name` (required) - the name of the effect used for debugging and logging
-- `input` (required) - the input type of the effect
-- `output` (required) - the output type of the effect
-
-The second argument is a function that will be called with the effect's input.
-
-> **Note:** For type definitions, you should use `S` from the `envio` package, which uses Sury library under the hood.
-
-After defining an effect, you can use `context.effect` to call it from your handler, loader, or another effect.
-
-The `context.effect` function accepts an effect as the first argument and the effect's input as the second argument:
-
-```typescript
-ERC20.Transfer.handlerWithLoader({
-  loader: async ({ event, context }) => {
-    const metadata = await context.effect(getMetadata, event.params.from);
-    return { metadata };
-  },
-
-  handler: async ({ event, context, loaderReturn }) => {
-    const { metadata } = loaderReturn;
-    // Process the event with the metadata
-  },
-});
-```
-
-This way for our problem of 5,000 transfer events, we will be able to parallelize all external calls instead of executing them one by one.
-
-### Viem Pro Tip
-
-You can use `viem` or any other blockchain client inside your effect functions. When doing so, it's highly recommended to enable the `batch` option to group all effect calls into fewer RPC requests:
-
-```typescript
-// Create a public client to interact with the blockchain
-const client = createPublicClient({
-  chain: mainnet,
-  // Enable batching to group calls into fewer RPC requests
-  transport: http(rpcUrl, { batch: true }),
-});
-
-// Get the contract instance for your contract
-const lbtcContract = getContract({
-  abi: erc20Abi,
-  address: "0x8236a87084f8B84306f72007F36F2618A5634494",
-  client: client,
-});
-
-// Effect to get the balance of a specific address at a specific block
-export const getBalance = experimental_createEffect(
-  {
-    name: "getBalance",
-    input: {
-      address: S.string,
-      blockNumber: S.optional(S.bigint),
-    },
-    output: S.bigint,
-  },
-  async ({ input, context }) => {
-    try {
-      // If blockNumber is provided, use it to get balance at that specific block
-      const options = input.blockNumber
-        ? { blockNumber: input.blockNumber }
-        : undefined;
-      const balance = await lbtcContract.read.balanceOf(
-        [input.address as `0x${string}`],
-        options
-      );
-
-      return balance;
-    } catch (error) {
-      context.log.error(`Error getting balance for ${input.address}: ${error}`);
-      // Return 0 on error to prevent processing failures
-      return BigInt(0);
-    }
-  }
-);
-```
-
-### Why Experimental?
-
-The Effect API is currently marked as experimental, but we don't expect breaking changes in the future. This designation simply means we're actively iterating on the feature and may add new capabilities that could subtly change indexer behavior. We plan to remove the `experimental` tag soon, and your feedback is invaluable in this process!
-
-## Best Practices
-
-### When to Use Loaders
-
-Loaders provide the most significant benefits when:
-
-- Processing large batches of events that require similar database lookups
-- Reading the same entities multiple times across different events
-- Performing relationship queries that affect multiple entities
-- Building high-performance indexers that need to handle millions of events
-
-### Performance Considerations
-
-When using loaders, keep these performance factors in mind:
-
-- **Memory Usage**: All loaded entities are stored in memory during batch processing
-- **Query Size**: Very large `getWhere` queries might cause memory issues
-- **Complexity**: Balance the benefits of batching against code complexity
-- **Batch Size**: Larger batches provide better performance but use more memory
-
-### Rules of Thumb
-
-Follow these guidelines for optimal loader usage:
-
-1. **Use loaders for large-scale indexing**: Implement loaders if you're indexing more than 1 million events
-2. **Centralize database operations**: Put all database operations in the loader function
-3. **Wrap external calls in effects**: Use the Effect API for external calls and implement them in loaders
-4. **Keep handlers focused**: Reserve handler functions for business logic, not data fetching
-5. **Optimize with concurrency**: Use concurrent requests when loading multiple unrelated entities
-6. **Monitor memory usage**: Be mindful of memory consumption with large batches
-
-### Understanding Double Run Behavior
-
-Loaders are designed to run twice per event to ensure data consistency across the batch. This is intentional and expected behavior:
-
-1. **First Run (Preload Phase)**: All loaders run concurrently at the start of batch processing
-2. **Second Run (Event Processing)**: Each loader runs again sequentially before its corresponding handler
-
-This double execution pattern ensures that:
-
-- Entities created by earlier events in the batch are available to later events
-- Data consistency is maintained across the entire batch
-- The benefits of batching are preserved while ensuring accurate data access
-
-```typescript
-ERC20.Transfer.handlerWithLoader({
-  loader: async ({ event, context }) => {
-    // This loader will run twice per event
-    // First run: May not find the sender if it's created by an earlier event in this batch
-    // Second run: Will find the sender if it was created by an earlier event
-    const sender = await context.Account.getOrThrow(event.params.from);
-
-    return {
-      sender,
-    };
-  },
-
-  handler: async ({ event, context, loaderReturn }) => {
-    const { sender } = loaderReturn;
-    // Process the event with the loaded sender data
-  },
-});
-```
-
-The indexer will only crash if the `sender` entity was actually not set in an event preceding the one being processed, which indicates a genuine data consistency issue.
-
-### Preload Phase Behavior
-
-Starting from `envio@2.23.0`, the preload phase has been enhanced to prevent batch processing failures. During the first run (preload phase), the following operations are silently ignored:
-
-- **Thrown exceptions**: Any errors thrown during the preload phase are caught and ignored
-- **Entity setting**: Calls to `context.Entity.set()` and other entity operations are ignored during preload
-- **Logging**: Calls to `context.log.*()` are ignored during preload
-
-Only during the second run (actual event processing) are all operations fully enabled:
-
-- Exceptions will crash the indexer if not handled
-- Entity setting operations will persist to the database
-- Logging will output to the console
-
-This design ensures that the preload phase can safely attempt to load data that may not exist yet, while the actual processing phase handles all operations normally.
-
-If you're using an earlier version of `envio`, we strongly recommend upgrading to the latest version with `pnpm install envio@latest` to take advantage of this improved preload phase behavior.
-
-### Going All-In with Loaders
-
-Starting from `envio@2.23.0`, loaders support setting entities directly, making handlers optional. You can now process all your events entirely within the loader function:
-
-```typescript
-ERC20.Transfer.handlerWithLoader({
-  loader: async ({ event, context }) => {
-    // Load existing data efficiently
-    const [sender, receiver] = await Promise.all([
-      context.Account.getOrThrow(event.params.from),
-      context.Account.getOrThrow(event.params.to),
-    ]);
-
-    // Skip expensive operations during preload
-    if (context.isPreload) {
-      return;
-    }
-
-    // CPU-intensive calculations only happen once
-    const complexCalculation = performExpensiveOperation(event.params.value); // Placeholder function for demonstration
-
-    // Create or update sender account
-    const senderAccount = context.Account.set({
-      id: event.params.from,
-      balance: sender.balance - event.params.value,
-      computedValue: complexCalculation,
-    });
-
-    // Create or update receiver account
-    const receiverAccount = context.Account.set({
-      id: event.params.to,
-      balance: receiver.balance + event.params.value,
-    });
-
-    // No need to return anything - all work is done in the loader
-  },
-  handler: async ({ event, context, loaderReturn }) => {
-    // Handler can be empty - all logic is handled in the loader
-  },
-});
-```
-
-**For power users, we recommend moving all event processing to the loader function** to take advantage of this enhanced functionality. This approach will be the most compatible with future Envio versions.
-
-If you need to skip the preload phase for CPU-intensive operations or to perform certain actions only once, you can use `context.isPreload`. This allows you to replicate the traditional handler behavior within a loader.
-
-**Note:** While `context.isPreload` can be useful for bypassing double execution, it's recommended to use the Effect API for external calls instead, as it provides automatic batching and memoization benefits.
-
-### Future: Version 3.0 Unified Handler Behavior
-
-In Envio V3, the separation between handlers and loaders will be removed entirely. All handlers will behave like loaders by default, running twice per event to ensure data consistency. This change will:
-
-- **Make many indexers faster by default** without requiring explicit configuration
-- **Simplify the mental model** (similar to React's double-render pattern)
-- **Provide the benefits of loaders** without requiring explicit configuration
-
-The double execution pattern should be familiar to JavaScript/React developers and will be thoroughly documented to help users understand this new behavior.
-
-## Summary
-
-Loaders provide a powerful and efficient way to optimize database access in your Envio indexers by:
-
-- **Dramatically reducing database roundtrips** from thousands to just a few per batch
-- **Automatically batching similar requests** for maximum efficiency
-- **Caching results in memory** for instant access during processing
-
-By elegantly separating data loading from event processing, loaders enable you to build more efficient and performant indexers while maintaining clean, readable code. Whether you're processing thousands or millions of events, loaders can transform your indexing performance from slow and sequential to fast and parallel.
-
----
-
 ## Optimizing Database Performance in HyperIndex
 
 **File:** `Advanced/performance/database-performance-optimization.md`
@@ -7403,6 +6975,88 @@ By regularly benchmarking your indexer and methodically addressing performance b
 
 ---
 
+## Loaders Optimization (Deprecated)
+
+**File:** `Advanced/loaders.md`
+
+:::warning
+Loaders are a predecessor of Preload Optimization. We recommend using Preload Optimization instead of loaders. This guide is kept for historical purposes.
+:::
+
+## What Are Loaders?
+
+Loaders were a feature in early versions of HyperIndex that significantly improved database access performance for event handlers.
+
+They worked by implementing the Preload Optimization - loading required data upfront before processing events.
+
+The preloaded data would then be available to event handlers through a `loaderReturn` object, eliminating the need for individual database queries during event processing.
+
+Compared to the current Preload Optimization approach, handlers with loaders didn't have the Preload Phase, and always ran once.
+
+```typescript
+ContractName.EventName.handlerWithLoader({
+  // The loader function runs before event processing starts
+  loader: async ({ event, context }) => {
+    // Load all required data from the database
+    // Return the data needed for event processing
+    return {}; // This will be available in the handler as loaderReturn
+  },
+
+  // The handler function processes each event with pre-loaded data
+  handler: async ({ event, context, loaderReturn }) => {
+    // Process the event using the data returned by the loader
+  },
+});
+```
+
+## How It Works?
+
+Find more information about how Loaders work by reading the Preload Optimization - How It Works? guide. Loaders share the same concept, but with a different API.
+
+For example, this is how a loader can be turned into a handler with Preload Optimization enabled:
+
+```typescript
+// Before:
+ERC20.Transfer.handlerWithLoader({
+  loader: async ({ event, context }) => {
+    // Load sender and receiver accounts efficiently
+    const sender = await context.Account.get(event.params.from);
+    const receiver = await context.Account.get(event.params.to);
+
+    // Return the loaded data to the handler
+    return {
+      sender,
+      receiver,
+    };
+  },
+
+  handler: async ({ event, context, loaderReturn }) => {
+    const { sender, receiver } = loaderReturn;
+
+    // Process the transfer with the pre-loaded data
+    // No database lookups needed here!
+  },
+});
+
+// After:
+ERC20.Transfer.handler(async ({ event, context }) => {
+  // Load sender and receiver accounts efficiently
+  const sender = await context.Account.get(event.params.from);
+  const receiver = await context.Account.get(event.params.to);
+
+  // To imitate the behavior of the loader,
+  // we can use `context.isPreload` to make next code run only once.
+  // Note: This is not required, but might be useful for CPU-intensive operations.
+  if (context.isPreload) {
+    return;
+  }
+
+  // Process the transfer with the pre-loaded data
+});
+```
+
+---
+
 ## Logging
 
 **File:** `Troubleshoot/logging.mdx`
@@ -7659,12 +7313,12 @@ pnpm codegen
 
 **Problem:** Compatibility issues or unexpected errors when running the indexer.
 
-**Solution:** Envio requires Node.js v18 or newer. If you're using Node.js v16 or older, please update:
+**Solution:** Envio requires Node.js v22 or newer. If you're using Node.js v16 or older, please update:
 
 ```bash
 # Using nvm (recommended)
-nvm install 18
-nvm use 18
+nvm install 22
+nvm use 22
 
 # Or download directly from https://nodejs.org/
 ```
@@ -7766,7 +7420,7 @@ pnpm dev
 
 You can further customize your Postgres connection with these additional environment variables:
 
-- `ENVIO_POSTGRES_PASSWORD`: Set a custom password
+- `ENVIO_PG_PASSWORD`: Set a custom password
 - `ENVIO_PG_USER`: Set a custom username
 - `ENVIO_PG_DATABASE`: Set a custom database name
 
