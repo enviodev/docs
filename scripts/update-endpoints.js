@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { rpcNetworks } = require("./rpc-networks.json")
+const { rpcNetworks } = require("./rpc-networks.json");
 
 const URL = "https://chains.hyperquery.xyz/active_chains";
 
@@ -51,7 +51,7 @@ const sortAndFilterChains = (data) => {
       return nameA.localeCompare(nameB);
     })
     .filter(
-      (chain) => !FILTER_ENDPOINTS.some((regex) => regex.test(chain.name)),
+      (chain) => !FILTER_ENDPOINTS.some((regex) => regex.test(chain.name))
     );
 };
 
@@ -69,15 +69,17 @@ const generateTableRow = (columns, values) => {
 };
 
 const emojiTier = (network) => {
-  return {
-    gold: "🏅",
-    silver: "🥈",
-    bronze: "🥉",
-    stone: "🪨",
-    hidden: "🔒",
-    testnet: "🎒",
-  }[network.tier.toLowerCase()] || "🏗️";
-}
+  return (
+    {
+      gold: "🏅",
+      silver: "🥈",
+      bronze: "🥉",
+      stone: "🪨",
+      hidden: "🔒",
+      testnet: "🎒",
+    }[network.tier.toLowerCase()] || "🏗️"
+  );
+};
 
 const generateHyperSyncTable = (data) => {
   let table = generateCommonTableHeader(HYPERSYNC_COLUMNS);
@@ -156,7 +158,7 @@ const updateMarkdownFiles = async () => {
         hyperSyncMatch[1] + "\n" + hyperSyncTable + "\n" + hyperSyncMatch[2];
       hyperSyncContent = hyperSyncContent.replace(
         hyperSyncRegex,
-        updatedHyperSyncContent,
+        updatedHyperSyncContent
       );
       fs.writeFileSync(HYPERSYNC_FILE_PATH, hyperSyncContent, "utf8");
       console.log("HyperSync markdown file updated successfully.");
@@ -167,7 +169,7 @@ const updateMarkdownFiles = async () => {
     // Update HyperRPC file
     const hyperRPCTable = generateHyperRPCTable(data);
     const HYPERRPC_FILE_PATH =
-      "docs/HyperSync/HyperRPC/hyperrpc-url-endpoints.md";
+      "docs/HyperSync/HyperRPC/hyperrpc-supported-networks.md";
     let hyperRPCContent = fs.readFileSync(HYPERRPC_FILE_PATH, "utf8");
 
     const hyperRPCRegex =
@@ -179,7 +181,7 @@ const updateMarkdownFiles = async () => {
         hyperRPCMatch[1] + "\n" + hyperRPCTable + "\n" + hyperRPCMatch[2];
       hyperRPCContent = hyperRPCContent.replace(
         hyperRPCRegex,
-        updatedHyperRPCContent,
+        updatedHyperRPCContent
       );
       fs.writeFileSync(HYPERRPC_FILE_PATH, hyperRPCContent, "utf8");
       console.log("HyperRPC markdown file updated successfully.");
@@ -270,13 +272,12 @@ Can’t find what you’re looking for or need support? Reach out to us on [Disc
 };
 
 const sluggifyName = (network) => {
-  console.log(network.name.toLowerCase().replace(/\s+/g, "-"))
+  console.log(network.name.toLowerCase().replace(/\s+/g, "-"));
   return network.name.toLowerCase().replace(/\s+/g, "-");
-}
+};
 // Function to generate markdown content for RPC networks
 const generateRPCMarkdownContent = (network) => {
-
-  let slugFriendlyName = sluggifyName(network)
+  let slugFriendlyName = sluggifyName(network);
 
   return `---
 id: ${slugFriendlyName}
@@ -297,13 +298,17 @@ We suggest getting the latest from [chainlist.org](https://chainlist.org).
 
 ### Overview
 
-Envio supports ${network.name} through an RPC-based indexing approach. This method allows you to ingest blockchain data via an RPC endpoint by setting the RPC configuration.
+Envio supports ${
+    network.name
+  } through an RPC-based indexing approach. This method allows you to ingest blockchain data via an RPC endpoint by setting the RPC configuration.
 
 ---
 
 ### Defining Network Configurations
 
-To use ${network.name}, define the RPC configuration in your network configuration file as follows:
+To use ${
+    network.name
+  }, define the RPC configuration in your network configuration file as follows:
 
 :::info
 You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
@@ -315,7 +320,13 @@ description: Indexer Description # Include indexer description
 networks:
   - id: ${network.chainId} # ${network.name}
     rpc_config:
-      url: ${network.rpcEndpoints[0]} ${network.rpcEndpoints.length <= 1 ? "" : network.rpcEndpoints.slice(1).map((url) => `\n    # url: ${url} # alternative`)}
+      url: ${network.rpcEndpoints[0]} ${
+    network.rpcEndpoints.length <= 1
+      ? ""
+      : network.rpcEndpoints
+          .slice(1)
+          .map((url) => `\n    # url: ${url} # alternative`)
+  }
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName
@@ -328,7 +339,9 @@ networks:
           - event: Event
 \`\`\`
 
-Want HyperSync for ${network.name}? Request network support here [Discord](https://discord.gg/fztEvj79m3)!
+Want HyperSync for ${
+    network.name
+  }? Request network support here [Discord](https://discord.gg/fztEvj79m3)!
 `;
 };
 
@@ -341,7 +354,7 @@ const generateMarkdownFiles = async () => {
     // Directory where the markdown files will be saved
     const outputDir = path.join(
       __dirname,
-      "../docs/HyperIndex/supported-networks",
+      "../docs/HyperIndex/supported-networks"
     );
 
     // Ensure output directory exists
@@ -356,7 +369,7 @@ const generateMarkdownFiles = async () => {
       if (
         network.tier.toLowerCase() !== "hidden" &&
         network.tier.toLowerCase() !== "internal" &&
-        !network.name.toLowerCase().includes("traces")  // Exclude traces networks from HyperIndex docs
+        !network.name.toLowerCase().includes("traces") // Exclude traces networks from HyperIndex docs
       ) {
         const content = generateHyperSyncMarkdownContent(network);
         const filePath = path.join(outputDir, `${network.name}.md`);
@@ -367,17 +380,17 @@ const generateMarkdownFiles = async () => {
     });
 
     // Generate RPC files
-    rpcNetworks.forEach(network => {
+    rpcNetworks.forEach((network) => {
       // if network.chainId exists in data, skip it, implies it's now supported in hypersync
-      if (data.find(item => item.chain_id === network.chainId)) {
-        return
+      if (data.find((item) => item.chain_id === network.chainId)) {
+        return;
       }
-      const content = generateRPCMarkdownContent(network)
+      const content = generateRPCMarkdownContent(network);
       const filePath = path.join(outputDir, `${sluggifyName(network)}.md`);
       fs.writeFileSync(filePath, content, "utf8");
       supportedNetworks.push(`"supported-networks/${sluggifyName(network)}"`);
       console.log(`Generated file: ${filePath}`);
-    })
+    });
 
     const rootDir = path.join(__dirname, "..");
 
@@ -389,7 +402,7 @@ const generateMarkdownFiles = async () => {
         "supported-networks/local-anvil",
         "supported-networks/local-hardhat",
  ${supportedNetworks.sort().join(",")}]}`,
-      "utf8",
+      "utf8"
     );
 
     console.log("Markdown files generated successfully.");

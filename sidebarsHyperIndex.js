@@ -106,7 +106,7 @@ module.exports = {
         "Advanced/hypersync",
         "Advanced/rpc-sync",
         "Guides/cli-commands",
-        "migration-guide-v1-v2",
+        // "migration-guide-v1-v2",
         "Advanced/reorgs-support",
         // "Advanced/persisted-files",
         "Advanced/generated-files",

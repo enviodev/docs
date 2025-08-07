@@ -272,7 +272,7 @@ try {
 
 ### 3. Implement Local Caching (For Local Development)
 
-Follow the [Effect API Persistence](/docs/HyperIndex/loaders#persistence) guide to implement caching for local development. This should allow you to avoid repeatedly fetching the same data.
+Follow the [Effect API Persistence](/docs/HyperIndex/effect-api#persistence) guide to implement caching for local development. This should allow you to avoid repeatedly fetching the same data.
 
 ```typescript
 export const getIpfsMetadata = experimental_createEffect(
