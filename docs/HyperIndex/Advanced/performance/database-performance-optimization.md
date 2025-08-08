@@ -189,7 +189,7 @@ Request only the fields you actually need:
 ```graphql
 # Good
 query {
-  tokenTransfers(first: 10, where: { token: "0x123" }) {
+  tokenTransfers(where: { token: { _eq: "0x123" } }, limit: 10) {
     id
     amount
   }
@@ -197,7 +197,7 @@ query {
 
 # Bad - fetches unnecessary fields
 query {
-  tokenTransfers(first: 10, where: { token: "0x123" }) {
+  tokenTransfers(where: { token: { _eq: "0x123" } }, limit: 10) {
     id
     amount
     from
@@ -217,9 +217,9 @@ Always paginate large result sets:
 ```graphql
 query {
   tokenTransfers(
-    first: 20
-    skip: 40 # Skip first 40 results (page 3 with 20 items per page)
-    where: { token: "0x123" }
+    where: { token: { _eq: "0x123" } }
+    limit: 20
+    offset: 40 # Skip first 40 results (page 3 with 20 items per page)
   ) {
     id
     amount
@@ -233,7 +233,7 @@ When building applications that poll for updates, use timestamps to fetch only n
 
 ```graphql
 query getUpdatedTransfers($lastFetched: BigInt!) {
-  tokenTransfers(where: { timestamp_gt: $lastFetched }) {
+  tokenTransfers(where: { timestamp: { _gt: $lastFetched } }) {
     id
     from
     to
