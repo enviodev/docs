@@ -514,115 +514,130 @@ networks:
 ```
 
 
-### Raw Events Storage
+### Events Selection
 
-By default, HyperIndex doesn't store raw event data in the database to optimize performance and reduce storage requirements. However, you can enable this feature for debugging purposes or if you need to access the original event data.
-
-To enable storage of raw events, add the following to your `config.yaml`:
+Define specific events to index in a human-readable format:
 
 ```yaml
-raw_events: true
+events:
+  - event: "NewGreeting(address user, string greeting)"
+  - event: "ClearGreeting(address user)"
 ```
 
-When enabled, all indexed events will be stored in the `raw_events` table in the database, which you can view through the Hasura interface. This is particularly useful for:
+By default, all events defined in the contract are indexed, but you can selectively disable them by removing them from this list.
 
-- Debugging event processing issues
-- Verifying that events are being captured correctly
-- Creating custom queries against raw blockchain data
+#### Custom Event Names
 
-Note that enabling this option will increase database storage requirements and may slightly impact indexing performance.
-
-
-### Unordered Multichain Mode
-
-To improve indexing performance when indexing multiple blockchains, you can enable **Unordered Multichain Mode**. This setting allows parallel processing of events from different networks without strictly maintaining cross-chain event ordering. Useful for minimizing indexing latency when indexing at the head.
-
-Activate this by adding to your `config.yaml`:
+You can assign custom names to events in `config.yaml`. This is handy when
+two events share the same name but have different signatures, or when you want
+a more descriptive name in your Envio project.
 
 ```yaml
-unordered_multichain_mode: true
+events:
+  - event: Assigned(address indexed recipientId, uint256 amount, address token)
+  - event: Assigned(address indexed recipientId, uint256 amount, address token, address sender)
+    name: AssignedWithSender
 ```
 
-Learn more about when and how to use this feature here.
 
+### Field Selection
 
-### Preload Optimization
+To improve indexing performance and reduce credits usage, the `block` and `transaction` fields on events contain only a subset of the fields available on the blockchain.
 
-Enable Preload Optimization for your handlers.
-
-This will make most indexers processing much faster without any additional code changes.
+To access fields that are not provided by default, specify them using the `field_selection` option for your event:
 
 ```yaml
-preload_handlers: true # default is false
+events:
+  - event: "Assigned(address indexed user, uint256 amount)"
+    field_selection:
+      transaction_fields:
+        - transactionIndex
+      block_fields:
+        - timestamp
 ```
 
-Be aware of:
+See all possible options in the Interactive Schema Explorer or use IDE autocomplete for your help.
 
-- Double-Run Footgun
-- Effect API for External Calls
-- Migrating from Loaders (recommended)
+#### Global Field Selection
 
-
-### Schema File Path
-
-You can customize the path to the schema file using the `schema` option:
+You can also specify fields globally for all events in the root of the config file:
 
 ```yaml
-schema: ./path/to/schema.graphql
+field_selection:
+  transaction_fields:
+    - hash
+    - gasUsed
+  block_fields:
+    - parentHash
 ```
 
-By default, the `schema.graphql` is expected to be in the root directory of your project.
+Try to use this option sparingly as it can cause redundant Data Source calls and increased credits usage.
+
+:::note
+Field Selection per Event is available from `envio@2.11.0` and above. Please, upgrade your indexer to access this feature.
+:::
 
 
-## Full config file example
+### Rollback on Reorg
 
-This example indexes events from multiple contracts across multiple networks.
+HyperIndex automatically handles blockchain reorganizations by default. To disable or customize this behavior, set the `rollback_on_reorg` flag in your `config.yaml`:
 
 ```yaml
-name: envio-indexer
-unordered_multichain_mode: true
-preload_handlers: true
-contracts:
-  - name: PoolManager
-    handler: src/EventHandlers.ts
-    events:
-      - event: Swap(bytes32 indexed id, address indexed sender, int128 amount0, int128 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick, uint24 fee)
-  - name: PositionManager
-    handler: src/EventHandlers.ts
-    events:
-      - event: Transfer(address indexed from, address indexed to, uint256 indexed id)
+rollback_on_reorg: true # default is true
+```
+
+See detailed configuration options here.
+
+
+### Environment Variables
+
+Since `envio@2.9.0`, environment variable interpolation is supported for flexibility and security:
+
+```yaml
 networks:
-  - id: 1
-    start_block: 0
+  - id: ${ENVIO_CHAIN_ID:-ethereum-mainnet}
     contracts:
-      - name: PositionManager
-        address:
-          - 0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e
-      - name: PoolManager
-        address:
-          - "0x000000000004444c5dc75cB358380D2e3dE08A90"
-  - id: 10
-    start_block: 0
-    contracts:
-      - name: PositionManager
-        address:
-          - 0x3C3Ea4B57a46241e54610e5f022e5c45859A1017
-      - name: PoolManager
-        address:
-          - 0x9a13F98Cb987694C9F086b1F5eB990EeA8264Ec3
-  - id: 42161
-    start_block: 0
-    contracts:
-      - name: PositionManager
-        address:
-          - 0xd88f38f930b7952f2db2432cb002e7abbf3dd869
-      - name: PoolManager
-        address:
-          - 0x360e68faccca8ca495c1b759fd9eee466db9fb32
+      - name: Greeter
+        address: ${ENVIO_GREETER_ADDRESS}
 ```
 
+Run your indexer with custom environment variables:
 
-Now your configuration file is set, you're ready to start indexing with HyperIndex!
+```bash
+ENVIO_CHAIN_ID=optimism ENVIO_GREETER_ADDRESS=0xYourContractAddress pnpm dev
+```
+
+**Interpolation syntax:**
+
+- `${ENVIO_VAR}` – Use the value of `ENVIO_VAR`
+- `${ENVIO_VAR:-default}` – Use `ENVIO_VAR` if set, otherwise use `default`
+
+For more detailed information about environment variables, see our Environment Variables Guide.
+
+
+### Output Directory Path
+
+You can customize the path where the generated directory will be placed using the `output` option:
+
+```yaml
+output: ./custom/generated/path
+```
+
+By default, the generated directory is placed in `generated` relative to the current working directory. If set, it will be a path relative to the config file location.
+
+:::warning Advanced Configuration
+This is an advanced configuration option. When using a custom output directory, you'll need to manually adjust your `.gitignore` file and project structure to match the new configuration.
+:::
+
+
+## Interactive Schema Explorer
+
+Explore detailed configuration schema parameters here:
+
+
+
+
+
 
 ---
 
@@ -6607,7 +6622,7 @@ Request only the fields you actually need:
 ```graphql
 # Good
 query {
-  tokenTransfers(first: 10, where: { token: "0x123" }) {
+  tokenTransfers(where: { token: { _eq: "0x123" } }, limit: 10) {
     id
     amount
   }
@@ -6615,7 +6630,7 @@ query {
 
 # Bad - fetches unnecessary fields
 query {
-  tokenTransfers(first: 10, where: { token: "0x123" }) {
+  tokenTransfers(where: { token: { _eq: "0x123" } }, limit: 10) {
     id
     amount
     from
@@ -6635,9 +6650,9 @@ Always paginate large result sets:
 ```graphql
 query {
   tokenTransfers(
-    first: 20
-    skip: 40 # Skip first 40 results (page 3 with 20 items per page)
-    where: { token: "0x123" }
+    where: { token: { _eq: "0x123" } }
+    limit: 20
+    offset: 40 # Skip first 40 results (page 3 with 20 items per page)
   ) {
     id
     amount
@@ -6651,7 +6666,7 @@ When building applications that poll for updates, use timestamps to fetch only n
 
 ```graphql
 query getUpdatedTransfers($lastFetched: BigInt!) {
-  tokenTransfers(where: { timestamp_gt: $lastFetched }) {
+  tokenTransfers(where: { timestamp: { _gt: $lastFetched } }) {
     id
     from
     to
