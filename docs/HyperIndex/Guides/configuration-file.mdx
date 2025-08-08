@@ -322,7 +322,8 @@ contracts:
       - event: Transfer(address indexed from, address indexed to, uint256 indexed id)
 networks:
   - id: 1
-    start_block: 18000000
+    # Keep it 0 and HyperSync will automatically find the first block for your contracts
+    start_block: 0
     contracts:
       - name: PositionManager
         address:
@@ -333,7 +334,7 @@ networks:
           - "0x000000000004444c5dc75cB358380D2e3dE08A90"
         # Uses default network start_block (18000000)
   - id: 10
-    start_block: 109000000
+    start_block: 0
     contracts:
       - name: PositionManager
         address:
@@ -343,7 +344,7 @@ networks:
         address:
           - 0x9a13F98Cb987694C9F086b1F5eB990EeA8264Ec3
   - id: 42161
-    start_block: 150000000
+    start_block: 0
     contracts:
       - name: PositionManager
         address:
