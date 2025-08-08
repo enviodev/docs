@@ -92,11 +92,12 @@ networks:
 
 ### Per-Contract Start Block Override
 
-By default, all contracts on a network inherit the network-level `start_block`. However, you can optionally specify a custom `start_block` for individual contracts to override this default behavior. This provides more granular control over data ingestion and is particularly useful when:
+By default, contracts use the network `start_block`. Starting from `envio@2.27`, you can set a per-contract `start_block` to override it. Handy when:
 
-- Different contracts were deployed at different blocks than the network start_block
-- You only need data from a specific contract starting at a certain block
-- You want to optimize indexing performance by avoiding unnecessary historical data for specific contracts
+- Contracts were deployed at different blocks
+- You only need data from a contract starting at a specific block
+- You want to skip unnecessary historical data for some contracts
+- Works nicely with [Factory Contracts](/docs/HyperIndex/Guides/factory-contracts)
 
 **Example with optional per-contract start_block override:**
 
@@ -106,35 +107,14 @@ networks:
     start_block: 18000000 # Default start block for all contracts on this network
     contracts:
       - name: ERC20Token
-        address: 0x1234567890123456789012345678901234567890
-        start_block: 18500000 # OPTIONAL: Override network start_block for this contract only
-      - name: Greeter
-        address: 0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c
-        # No start_block specified - uses default network start_block (18000000)
-```
-
-**Multiple addresses with optional override:**
-
-```yaml
-networks:
-  - id: 1
-    start_block: 18000000 # Default for all contracts
-    contracts:
-      - name: ERC20Token
         address:
           - 0x1111111111111111111111111111111111111111
           - 0x2222222222222222222222222222222222222222
-        start_block: 18500000 # OPTIONAL: Override applies to all addresses for this contract
+        start_block: 18500000 # Override for this contract
+      - name: Greeter
+        address: 0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c
+        # Uses network default (18000000)
 ```
-
-:::note
-
-- **Default behavior**: All contracts inherit the network-level `start_block`
-- **Optional override**: The per-contract `start_block` field allows you to override the default for specific contracts
-- The `start_block` field must be an integer ≥ 0 or `null` when specified
-- Only specify per-contract `start_block` when you need different behavior than the network default
-- This feature is available from Envio v2.27.0 and above
-  :::
 
 ---
 
