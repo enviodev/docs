@@ -332,14 +332,12 @@ networks:
       - name: PoolManager
         address:
           - "0x000000000004444c5dc75cB358380D2e3dE08A90"
-        # Uses default network start_block (18000000)
   - id: 10
     start_block: 0
     contracts:
       - name: PositionManager
         address:
           - 0x3C3Ea4B57a46241e54610e5f022e5c45859A1017
-        start_block: 110000000 # OPTIONAL: Override for this contract
       - name: PoolManager
         address:
           - 0x9a13F98Cb987694C9F086b1F5eB990EeA8264Ec3
@@ -352,7 +350,6 @@ networks:
       - name: PoolManager
         address:
           - 0x360e68faccca8ca495c1b759fd9eee466db9fb32
-        start_block: 151000000 # OPTIONAL: Override for this contract
 ```
 
 ---
