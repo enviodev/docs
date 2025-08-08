@@ -90,6 +90,34 @@ networks:
 
 ---
 
+### Per-Contract Start Block Override
+
+By default, contracts use the network `start_block`. Starting from `envio@2.27`, you can set a per-contract `start_block` to override it. Handy when:
+
+- Contracts were deployed at different blocks
+- You only need data from a contract starting at a specific block
+- You want to skip unnecessary historical data for some contracts
+- Works nicely with [Dynamic Contract Registration](/docs/HyperIndex/dynamic-contracts)
+
+**Example with optional per-contract start_block override:**
+
+```yaml
+networks:
+  - id: 1 # ethereum-mainnet
+    start_block: 18000000 # Default start block for all contracts on this network
+    contracts:
+      - name: ERC20Token
+        address:
+          - 0x1111111111111111111111111111111111111111
+          - 0x2222222222222222222222222222222222222222
+        start_block: 18500000 # Override for this contract
+      - name: Greeter
+        address: 0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c
+        # Uses network default (18000000)
+```
+
+---
+
 ### Events Selection
 
 Define specific events to index in a human-readable format:
@@ -294,11 +322,13 @@ contracts:
       - event: Transfer(address indexed from, address indexed to, uint256 indexed id)
 networks:
   - id: 1
+    # Keep it 0 and HyperSync will automatically find the first block for your contracts
     start_block: 0
     contracts:
       - name: PositionManager
         address:
           - 0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e
+        start_block: 18500000 # OPTIONAL: Override for contract deployed later
       - name: PoolManager
         address:
           - "0x000000000004444c5dc75cB358380D2e3dE08A90"
