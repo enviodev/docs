@@ -13,6 +13,8 @@ Starting from `envio@2.27` all new indexers are created with preload optimizatio
 
 This optimization enables HyperIndex to efficiently preload entities used by handlers through batched database queries, while ensuring events are processed synchronously in their original order. When combined with the [Effect API](/docs/HyperIndex/effect-api) for external calls, this feature delivers performance improvements of multiple orders of magnitude compared to other indexing solutions.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/QqbH78CEid8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Configure
 
 Currently, you need to explicitly enable the preloaded configuration in your [`config.yaml`](/docs/HyperIndex/configuration-file) file. In the future, this will be enabled by default.
