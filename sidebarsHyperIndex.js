@@ -98,6 +98,7 @@ module.exports = {
       label: "Advanced",
       items: [
         "Advanced/dynamic-contracts",
+        "Advanced/config-schema-reference",
         "Advanced/wildcard-indexing",
         "Advanced/preload-optimization",
         "Advanced/effect-api",
