@@ -17,11 +17,21 @@ All environment variables used by Envio must be prefixed with `ENVIO_`. This nam
 - Makes it clear which variables are used by the Envio indexer
 - Ensures consistency across different environments
 
+## Envio API Token (required for HyperSync)
+
+To ensure continued access to HyperSync, set an Envio API token in your environment.
+
+- Use `ENVIO_API_TOKEN` to provide your token at runtime
+- See the API Tokens guide for how to generate a token: [API Tokens](/docs/HyperSync/api-tokens)
+
 ## Example Environment Variables
 
 Here are some commonly used environment variables:
 
 ```bash
+# Envio API Token (required for continued HyperSync access)
+ENVIO_API_TOKEN=your-secret-token
+
 # Blockchain RPC URL
 ENVIO_RPC_URL=https://arbitrum.direct.dev/your-api-key
 
@@ -42,6 +52,7 @@ For local development, you can set environment variables in several ways:
 
 ```bash
 # .env
+ENVIO_API_TOKEN=your-secret-token
 ENVIO_RPC_URL=https://arbitrum.direct.dev/your-api-key
 ENVIO_START_BLOCK=12345678
 ```
@@ -49,6 +60,7 @@ ENVIO_START_BLOCK=12345678
 2. Directly in your terminal:
 
 ```bash
+export ENVIO_API_TOKEN=your-secret-token
 export ENVIO_RPC_URL=https://arbitrum.direct.dev/your-api-key
 ```
 

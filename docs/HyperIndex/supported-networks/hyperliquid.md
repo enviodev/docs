@@ -11,9 +11,9 @@ slug: /hyperliquid
 
 | **Field**                     | **Value**                                                                                          |
 |-------------------------------|----------------------------------------------------------------------------------------------------|
-| **Hyperliquid Chain ID**     | 645749                                                                                            |
-| **HyperSync URL Endpoint**    | [https://hyperliquid.hypersync.xyz](https://hyperliquid.hypersync.xyz) or [https://645749.hypersync.xyz](https://645749.hypersync.xyz) |
-| **HyperRPC URL Endpoint**     | [https://hyperliquid.rpc.hypersync.xyz](https://hyperliquid.rpc.hypersync.xyz) or [https://645749.rpc.hypersync.xyz](https://645749.rpc.hypersync.xyz) |
+| **Hyperliquid Chain ID**     | 999                                                                                            |
+| **HyperSync URL Endpoint**    | [https://hyperliquid.hypersync.xyz](https://hyperliquid.hypersync.xyz) or [https://999.hypersync.xyz](https://999.hypersync.xyz) |
+| **HyperRPC URL Endpoint**     | [https://hyperliquid.rpc.hypersync.xyz](https://hyperliquid.rpc.hypersync.xyz) or [https://999.rpc.hypersync.xyz](https://999.rpc.hypersync.xyz) |
 
 ---
 
@@ -39,7 +39,7 @@ To get started, see our documentation or follow our quickstart [guide](/docs/Hyp
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
 networks:
-  - id: 645749 # Hyperliquid  
+  - id: 999 # Hyperliquid  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
       - name: ContractName

@@ -32,6 +32,7 @@ Before self-hosting, ensure you have:
 - Sufficient storage for blockchain data and the indexer database
 - Adequate CPU and memory resources (requirements vary based on chains and indexing complexity)
 - Required HyperSync and/or RPC endpoints
+- Envio API token for HyperSync access (`ENVIO_API_TOKEN`) — required for continued access. See [API Tokens](/docs/HyperSync/api-tokens).
 
 ## Getting Started
 
@@ -51,6 +52,7 @@ The compose file in that repository sets up three main services:
 
 The configuration uses environment variables with sensible defaults. For production, you should customize:
 
+- Envio API token (`ENVIO_API_TOKEN`)
 - Database credentials (`ENVIO_PG_PASSWORD`, `ENVIO_PG_USER`, etc.)
 - Hasura admin secret (`HASURA_GRAPHQL_ADMIN_SECRET`)
 - Resource limits based on your workload requirements
