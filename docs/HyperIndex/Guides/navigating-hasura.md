@@ -138,6 +138,66 @@ When testing, you may need to reset your database:
 - **Schema Validation**: Use the Data tab to verify that relationships between entities are correctly established
 - **Performance Monitoring**: Watch for tables that grow unusually large, which might indicate inefficient indexing
 
+## Aggregations: local vs hosted (avoid the foot‑gun)
+
+When developing locally with Hasura, you may notice that GraphQL aggregate helpers (for example, count/sum-style aggregations) are available. On the hosted service, these aggregate endpoints are intentionally not exposed. Aggregations over large datasets can be very slow and unpredictable in production.
+
+The recommended approach is to compute and store aggregates at indexing time, not at query time. In practice this means maintaining counters, sums, and other rollups in entities as part of your event handlers, and then querying those precomputed values.
+
+### Example: indexing-time aggregation
+
+schema.graphql
+
+```graphql
+# singleton; you hardcode the id and load it in and out
+entity GlobalState {
+  id: ID! # "global-state"
+  count: INT!
+}
+
+entity Token {
+  id: ID! # incremental number
+  description: String!
+}
+```
+
+EventHandler.ts
+
+```typescript
+const globalStateId = "global-state";
+
+NftContract.Mint.loader((event, context) => {
+  context.GlobalState.load(globalStateId);
+});
+
+NftContract.Mint.handler((event, context) => {
+  const globalState = context.GlobalState.get(globalStateId);
+
+  if (!globalState) {
+    context.log.error("global state doesn't exist");
+    return;
+  }
+
+  const incrementedTokenId = globalState.count + 1;
+
+  context.Token.set({
+    id: incrementedTokenId,
+    description: event.params.description,
+  });
+
+  context.GlobalState.set({
+    ...globalState,
+    count: incrementedTokenId,
+  });
+});
+```
+
+This pattern scales: you can keep per-entity counters, rolling windows (daily/hourly entities keyed by date), and top-N caches by updating entities as events arrive. Your queries then read these precomputed values directly, avoiding expensive runtime aggregations.
+
+#### Exceptional cases
+
+If runtime aggregate queries are a hard requirement for your use case, please reach out and we can evaluate options for your project on the hosted service. Contact us on [Discord](https://discord.gg/envio).
+
 ## Disable Hasura for Self-Hosted Indexers
 
 Starting from `envio@2.26.0` it's possible to disable Hasura integration for self-hosted indexers. To do so, set the `ENVIO_HASURA` environment variable to `false`.
