@@ -30,7 +30,6 @@ The following variables are used by HyperIndex:
 
 - `ENVIO_API_TOKEN`: API token for HyperSync access (required for continued access in self-hosted deployments)
 - `ENVIO_HASURA`: Set to `false` to disable Hasura integration for self-hosted indexers
-- `ENVIO_SAVE_BENCHMARK_DATA`: When `true`, saves benchmark data during runs for later summary
 
 - `ENVIO_PG_PORT`: Port for the Postgres service used by HyperIndex during local development
 - `ENVIO_PG_PASSWORD`: Postgres password (self-hosted)
