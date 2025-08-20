@@ -166,8 +166,8 @@ EventHandler.ts
 ```typescript
 const globalStateId = "global-state";
 
-NftContract.Mint.handler(async (event, context) => {
-  const globalState = await context.GlobalState.get(globalStateId);
+NftContract.Mint.handler((event, context) => {
+  const globalState = context.GlobalState.get(globalStateId);
 
   if (!globalState) {
     context.log.error("global state doesn't exist");
