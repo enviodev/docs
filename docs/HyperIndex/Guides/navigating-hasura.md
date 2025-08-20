@@ -152,7 +152,7 @@ schema.graphql
 # singleton; you hardcode the id and load it in and out
 type GlobalState {
   id: ID! # "global-state"
-  count: INT!
+  count: Int!
 }
 
 type Token {
