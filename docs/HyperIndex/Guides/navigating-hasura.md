@@ -150,12 +150,12 @@ schema.graphql
 
 ```graphql
 # singleton; you hardcode the id and load it in and out
-entity GlobalState {
+type GlobalState {
   id: ID! # "global-state"
-  count: INT!
+  count: Int!
 }
 
-entity Token {
+type Token {
   id: ID! # incremental number
   description: String!
 }
@@ -166,12 +166,8 @@ EventHandler.ts
 ```typescript
 const globalStateId = "global-state";
 
-NftContract.Mint.loader((event, context) => {
-  context.GlobalState.load(globalStateId);
-});
-
-NftContract.Mint.handler((event, context) => {
-  const globalState = context.GlobalState.get(globalStateId);
+NftContract.Mint.handler(async ({event, context}) => {
+  const globalState = await context.GlobalState.get(globalStateId);
 
   if (!globalState) {
     context.log.error("global state doesn't exist");
