@@ -509,41 +509,13 @@ ERC20.Transfer.handler(async ({ event, context }) => {
 
 You can access your indexer configuration within handlers using `getConfigByChainId`:
 
-<Tabs>
-  <TabItem value="typescript" label="TypeScript">
-
 ```typescript
-import { getConfigByChainId } from "../generated/src/ConfigYAML.gen";
+import { getGeneratedByChainId } from "generated/src/ConfigYAML.gen";
 
 Greeter.NewGreeting.handler(async ({ event, context }) => {
-  const config = getConfigByChainId(event.chainId);
+  const config = getGeneratedByChainId(event.chainId);
 });
 ```
-
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
-const { getConfigByChainId } = require("../generated/src/ConfigYAML.bs.js");
-
-Greeter.NewGreeting.handler(async ({ event, context }) => {
-  const config = getConfigByChainId(event.chainId);
-});
-```
-
-  </TabItem>
-  <TabItem value="rescript" label="ReScript">
-
-```rescript
-open Types;
-
-Handlers.Greeter.NewGreeting.handler(async ({ event, context }) => {
-  let config = ConfigYAML.getConfigByChainId(event.chainId);
-});
-```
-
-  </TabItem>
-</Tabs>
 
 This exposes configuration data such as:
 
