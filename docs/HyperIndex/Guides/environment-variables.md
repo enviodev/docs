@@ -24,6 +24,20 @@ To ensure continued access to HyperSync, set an Envio API token in your environm
 - Use `ENVIO_API_TOKEN` to provide your token at runtime
 - See the API Tokens guide for how to generate a token: [API Tokens](/docs/HyperSync/api-tokens)
 
+## Envio-specific environment variables
+
+The following variables are used by HyperIndex:
+
+- `ENVIO_API_TOKEN`: API token for HyperSync access (required for continued access in self-hosted deployments)
+- `ENVIO_HASURA`: Set to `false` to disable Hasura integration for self-hosted indexers
+- `ENVIO_SAVE_BENCHMARK_DATA`: When `true`, saves benchmark data during runs for later summary
+
+- `ENVIO_PG_PORT`: Port for the Postgres service used by HyperIndex during local development
+- `ENVIO_PG_PASSWORD`: Postgres password (self-hosted)
+- `ENVIO_PG_USER`: Postgres username (self-hosted)
+- `ENVIO_PG_DATABASE`: Postgres database name (self-hosted)
+- `ENVIO_PG_PUBLIC_SCHEMA`: Postgres schema name override for the generated/public schema
+
 ## Example Environment Variables
 
 Here are some commonly used environment variables:
