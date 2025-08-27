@@ -6,7 +6,7 @@ Welcome to the documentation source for Envio. This project utilizes [Docusaurus
 
 Before you begin, ensure you have the following installed:
 
-- [Node.js](https://nodejs.org/) (>=18.0)
+- [Node.js](https://nodejs.org/) (>=20.0)
 - [Yarn](https://yarnpkg.com/)
 
 ## Installation
