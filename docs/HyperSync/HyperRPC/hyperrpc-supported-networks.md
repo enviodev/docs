@@ -54,9 +54,11 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Galadriel Devnet     | 696969     | https://galadriel-devnet.rpc.hypersync.xyz or https://696969.rpc.hypersync.xyz      |                 |
 | Gnosis               | 100        | https://gnosis.rpc.hypersync.xyz or https://100.rpc.hypersync.xyz                   |                 |
 | Gnosis Chiado        | 10200      | https://gnosis-chiado.rpc.hypersync.xyz or https://10200.rpc.hypersync.xyz          |                 |
+| Gnosis Traces        | 100        | https://gnosis-traces.rpc.hypersync.xyz or https://100-traces.rpc.hypersync.xyz     |                 |
+| Gnosistemp           | 100101     | https://gnosistemp.rpc.hypersync.xyz or https://100101.rpc.hypersync.xyz            |                 |
 | Harmony Shard 0      | 1666600000 | https://harmony-shard-0.rpc.hypersync.xyz or https://1666600000.rpc.hypersync.xyz   |                 |
 | Holesky              | 17000      | https://holesky.rpc.hypersync.xyz or https://17000.rpc.hypersync.xyz                |                 |
-| Hyperliquid          | 645749     | https://hyperliquid.rpc.hypersync.xyz or https://645749.rpc.hypersync.xyz           |                 |
+| Hyperliquid          | 999        | https://hyperliquid.rpc.hypersync.xyz or https://999.rpc.hypersync.xyz              |                 |
 | Ink                  | 57073      | https://ink.rpc.hypersync.xyz or https://57073.rpc.hypersync.xyz                    |                 |
 | Kroma                | 255        | https://kroma.rpc.hypersync.xyz or https://255.rpc.hypersync.xyz                    |                 |
 | Linea                | 59144      | https://linea.rpc.hypersync.xyz or https://59144.rpc.hypersync.xyz                  |                 |
