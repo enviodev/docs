@@ -63,7 +63,6 @@ If you are a network operator or user and would like improved service support or
 | Gnosis               | 100        | https://gnosis.hypersync.xyz or https://100.hypersync.xyz                           | 🏅   |                 |
 | Gnosis Chiado        | 10200      | https://gnosis-chiado.hypersync.xyz or https://10200.hypersync.xyz                  | 🎒   |                 |
 | Gnosis Traces        | 100        | https://gnosis-traces.hypersync.xyz or https://100-traces.hypersync.xyz             | 🪨   |                 |
-| Gnosistemp           | 100101     | https://gnosistemp.hypersync.xyz or https://100101.hypersync.xyz                    | 🏅   |                 |
 | Harmony Shard 0      | 1666600000 | https://harmony-shard-0.hypersync.xyz or https://1666600000.hypersync.xyz           | 🪨   |                 |
 | Holesky              | 17000      | https://holesky.hypersync.xyz or https://17000.hypersync.xyz                        | 🎒   |                 |
 | Hyperliquid          | 999        | https://hyperliquid.hypersync.xyz or https://999.hypersync.xyz                      | 🪨   |                 |
