@@ -370,6 +370,47 @@ table td {
   color: #000000;
 }
 
+/* Ensure mobile navbar sidebar uses full viewport height */
+.navbar-sidebar {
+  top: 0; /* start at very top */
+  bottom: 0;
+  height: 100dvh; /* modern mobile viewport unit */
+  display: flex;
+  flex-direction: column;
+}
+
+@supports not (height: 100dvh) {
+  .navbar-sidebar {
+    height: 100vh; /* fallback */
+  }
+}
+
+.navbar-sidebar__items {
+  margin-top: var(--ifm-navbar-height);
+  height: calc(100dvh - var(--ifm-navbar-height));
+  max-height: calc(100dvh - var(--ifm-navbar-height));
+  overflow: visible; /* avoid clipping links; let inner list handle scroll */
+  flex: 1 1 auto;
+}
+
+/* Let the inner list area scroll instead of the container */
+.navbar-sidebar__item.menu {
+  overflow-y: auto;
+}
+
+/* While sidebar is open, ensure clicks go to the sidebar, not the navbar */
+.navbar.navbar-sidebar--show .navbar__inner {
+  pointer-events: none;
+}
+
+.navbar.navbar-sidebar--show .navbar-sidebar {
+  z-index: 10001;
+}
+
+.navbar.navbar-sidebar--show .navbar-sidebar__backdrop {
+  z-index: 10000;
+}
+
 /* Clean doc item styling */
 .theme-doc-markdown {
   line-height: 1.7;
