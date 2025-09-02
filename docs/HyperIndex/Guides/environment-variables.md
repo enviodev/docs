@@ -31,6 +31,8 @@ The following variables are used by HyperIndex:
 - `ENVIO_API_TOKEN`: API token for HyperSync access (required for continued access in self-hosted deployments)
 - `ENVIO_HASURA`: Set to `false` to disable Hasura integration for self-hosted indexers
 
+- `MAX_BATCH_SIZE`: Size of the in-memory batch before writing to the database. Default: `5000`. Set to `1` to help isolate which event or data save is causing Postgres write errors.
+
 - `ENVIO_PG_PORT`: Port for the Postgres service used by HyperIndex during local development
 - `ENVIO_PG_PASSWORD`: Postgres password (self-hosted)
 - `ENVIO_PG_USER`: Postgres username (self-hosted)
@@ -53,6 +55,9 @@ ENVIO_START_BLOCK=12345678
 
 # Coingecko API key
 ENVIO_COINGECKO_API_KEY=api-key
+
+# In-memory batch size (default 5000)
+MAX_BATCH_SIZE=1
 ```
 
 ## Setting Environment Variables
