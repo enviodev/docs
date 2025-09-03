@@ -70,6 +70,11 @@ const config = {
             position: "left",
           },
           {
+            to: "showcase",
+            label: "Showcase",
+            position: "left",
+          },
+          {
             href: "https://github.com/enviodev",
             label: "GitHub",
             position: "right",

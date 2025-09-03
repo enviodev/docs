@@ -324,6 +324,11 @@ const config = {
             position: "left",
           },
           {
+            to: "showcase",
+            label: "Showcase",
+            position: "left",
+          },
+          {
             to: "blog",
             label: "Blog",
             position: "left",
