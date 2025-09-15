@@ -19,7 +19,7 @@ slug: /damon
 
 ### Tier
 
-GOLD 🏅
+STONE 🪨
 
 ### Overview
 

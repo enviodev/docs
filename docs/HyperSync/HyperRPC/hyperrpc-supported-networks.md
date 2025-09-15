@@ -61,7 +61,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Hyperliquid          | 999        | https://hyperliquid.rpc.hypersync.xyz or https://999.rpc.hypersync.xyz              |                 |
 | Ink                  | 57073      | https://ink.rpc.hypersync.xyz or https://57073.rpc.hypersync.xyz                    |                 |
 | Kroma                | 255        | https://kroma.rpc.hypersync.xyz or https://255.rpc.hypersync.xyz                    |                 |
-| Lightlink            | 1890       | https://lightlink.rpc.hypersync.xyz or https://1890.rpc.hypersync.xyz               |                 |
 | Linea                | 59144      | https://linea.rpc.hypersync.xyz or https://59144.rpc.hypersync.xyz                  |                 |
 | Lisk                 | 1135       | https://lisk.rpc.hypersync.xyz or https://1135.rpc.hypersync.xyz                    |                 |
 | Lukso                | 42         | https://lukso.rpc.hypersync.xyz or https://42.rpc.hypersync.xyz                     |                 |
@@ -87,7 +86,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Rootstock            | 30         | https://rootstock.rpc.hypersync.xyz or https://30.rpc.hypersync.xyz                 |                 |
 | Saakuru              | 7225878    | https://saakuru.rpc.hypersync.xyz or https://7225878.rpc.hypersync.xyz              |                 |
 | Scroll               | 534352     | https://scroll.rpc.hypersync.xyz or https://534352.rpc.hypersync.xyz                |                 |
-| Sei                  | 1329       | https://sei.rpc.hypersync.xyz or https://1329.rpc.hypersync.xyz                     |                 |
 | Sepolia              | 11155111   | https://sepolia.rpc.hypersync.xyz or https://11155111.rpc.hypersync.xyz             |                 |
 | Shimmer Evm          | 148        | https://shimmer-evm.rpc.hypersync.xyz or https://148.rpc.hypersync.xyz              |                 |
 | Soneium              | 1868       | https://soneium.rpc.hypersync.xyz or https://1868.rpc.hypersync.xyz                 |                 |

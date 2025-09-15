@@ -53,7 +53,7 @@ If you are a network operator or user and would like improved service support or
 | Citrea Testnet       | 5115       | https://citrea-testnet.hypersync.xyz or https://5115.hypersync.xyz                  | 🪨   |                 |
 | Curtis               | 33111      | https://curtis.hypersync.xyz or https://33111.hypersync.xyz                         | 🪨   |                 |
 | Cyber                | 7560       | https://cyber.hypersync.xyz or https://7560.hypersync.xyz                           | 🪨   |                 |
-| Damon                | 341        | https://damon.hypersync.xyz or https://341.hypersync.xyz                            | 🏅   |                 |
+| Damon                | 341        | https://damon.hypersync.xyz or https://341.hypersync.xyz                            | 🪨   |                 |
 | Eth Traces           | 1          | https://eth-traces.hypersync.xyz or https://1-traces.hypersync.xyz                  | 🏅   |                 |
 | Ethereum Mainnet     | 1          | https://eth.hypersync.xyz or https://1.hypersync.xyz                                | 🏅   |                 |
 | Fantom               | 250        | https://fantom.hypersync.xyz or https://250.hypersync.xyz                           | 🪨   |                 |
@@ -63,13 +63,12 @@ If you are a network operator or user and would like improved service support or
 | Galadriel Devnet     | 696969     | https://galadriel-devnet.hypersync.xyz or https://696969.hypersync.xyz              | 🎒   |                 |
 | Gnosis               | 100        | https://gnosis.hypersync.xyz or https://100.hypersync.xyz                           | 🏅   |                 |
 | Gnosis Chiado        | 10200      | https://gnosis-chiado.hypersync.xyz or https://10200.hypersync.xyz                  | 🎒   |                 |
-| Gnosis Traces        | 100        | https://gnosis-traces.hypersync.xyz or https://100-traces.hypersync.xyz             | 🪨   |                 |
+| Gnosis Traces        | 100        | https://gnosis-traces.hypersync.xyz or https://100-traces.hypersync.xyz             | 🥉   |                 |
 | Harmony Shard 0      | 1666600000 | https://harmony-shard-0.hypersync.xyz or https://1666600000.hypersync.xyz           | 🪨   |                 |
 | Holesky              | 17000      | https://holesky.hypersync.xyz or https://17000.hypersync.xyz                        | 🎒   |                 |
 | Hyperliquid          | 999        | https://hyperliquid.hypersync.xyz or https://999.hypersync.xyz                      | 🪨   |                 |
 | Ink                  | 57073      | https://ink.hypersync.xyz or https://57073.hypersync.xyz                            | 🪨   |                 |
 | Kroma                | 255        | https://kroma.hypersync.xyz or https://255.hypersync.xyz                            | 🪨   |                 |
-| Lightlink            | 1890       | https://lightlink.hypersync.xyz or https://1890.hypersync.xyz                       | 🪨   |                 |
 | Linea                | 59144      | https://linea.hypersync.xyz or https://59144.hypersync.xyz                          | 🥉   |                 |
 | Lisk                 | 1135       | https://lisk.hypersync.xyz or https://1135.hypersync.xyz                            | 🪨   |                 |
 | Lukso                | 42         | https://lukso.hypersync.xyz or https://42.hypersync.xyz                             | 🪨   |                 |
@@ -95,7 +94,6 @@ If you are a network operator or user and would like improved service support or
 | Rootstock            | 30         | https://rootstock.hypersync.xyz or https://30.hypersync.xyz                         | 🪨   |                 |
 | Saakuru              | 7225878    | https://saakuru.hypersync.xyz or https://7225878.hypersync.xyz                      | 🪨   |                 |
 | Scroll               | 534352     | https://scroll.hypersync.xyz or https://534352.hypersync.xyz                        | 🪨   |                 |
-| Sei                  | 1329       | https://sei.hypersync.xyz or https://1329.hypersync.xyz                             | 🪨   |                 |
 | Sepolia              | 11155111   | https://sepolia.hypersync.xyz or https://11155111.hypersync.xyz                     | 🎒   |                 |
 | Shimmer Evm          | 148        | https://shimmer-evm.hypersync.xyz or https://148.hypersync.xyz                      | 🪨   |                 |
 | Soneium              | 1868       | https://soneium.hypersync.xyz or https://1868.hypersync.xyz                         | 🪨   |                 |
