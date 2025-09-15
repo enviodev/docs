@@ -40,8 +40,8 @@ The `onBlock` function accepts an options object as the first argument with the 
 - `name` (required) - The name of the block handler. It's used for logging, debugging and metrics.
 - `chain` (required) - The chain ID of the blockchain to run the block handler on.
 - `interval` - The interval of blocks to run the block handler on. Default is `1` - runs on every block.
-- `startBlock` - The block number to start the block handler on. Uses the chain start block by default.
-- `endBlock` - The block number to end the block handler on. Uses the chain end block by default.
+- `startBlock` - The inclusive block number to start the block handler on. Uses the chain start block by default.
+- `endBlock` - The inclusive block number to end the block handler on. Uses the chain end block by default.
 
 ## Handler Function
 
