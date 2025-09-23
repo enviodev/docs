@@ -92,6 +92,7 @@ module.exports = {
         "Tutorials/tutorial-indexing-fuel",
         "Tutorials/greeter-tutorial",
         "Tutorials/price-data",
+        "Tutorials/tutorial-scaffold-eth-2",
       ],
     },
     {

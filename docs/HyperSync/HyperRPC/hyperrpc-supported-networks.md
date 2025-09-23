@@ -41,6 +41,9 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Celo                 | 42220      | https://celo.rpc.hypersync.xyz or https://42220.rpc.hypersync.xyz                   |                 |
 | Chainweb Testnet 20  | 5920       | https://chainweb-testnet-20.rpc.hypersync.xyz or https://5920.rpc.hypersync.xyz     |                 |
 | Chainweb Testnet 21  | 5921       | https://chainweb-testnet-21.rpc.hypersync.xyz or https://5921.rpc.hypersync.xyz     |                 |
+| Chainweb Testnet 22  | 5922       | https://chainweb-testnet-22.rpc.hypersync.xyz or https://5922.rpc.hypersync.xyz     |                 |
+| Chainweb Testnet 23  | 5923       | https://chainweb-testnet-23.rpc.hypersync.xyz or https://5923.rpc.hypersync.xyz     |                 |
+| Chainweb Testnet 24  | 5924       | https://chainweb-testnet-24.rpc.hypersync.xyz or https://5924.rpc.hypersync.xyz     |                 |
 | Chiliz               | 88888      | https://chiliz.rpc.hypersync.xyz or https://88888.rpc.hypersync.xyz                 |                 |
 | Citrea Testnet       | 5115       | https://citrea-testnet.rpc.hypersync.xyz or https://5115.rpc.hypersync.xyz          |                 |
 | Curtis               | 33111      | https://curtis.rpc.hypersync.xyz or https://33111.rpc.hypersync.xyz                 |                 |
@@ -86,6 +89,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Rootstock            | 30         | https://rootstock.rpc.hypersync.xyz or https://30.rpc.hypersync.xyz                 |                 |
 | Saakuru              | 7225878    | https://saakuru.rpc.hypersync.xyz or https://7225878.rpc.hypersync.xyz              |                 |
 | Scroll               | 534352     | https://scroll.rpc.hypersync.xyz or https://534352.rpc.hypersync.xyz                |                 |
+| Sentient Testnet     | 1184075182 | https://sentient-testnet.rpc.hypersync.xyz or https://1184075182.rpc.hypersync.xyz  |                 |
 | Sepolia              | 11155111   | https://sepolia.rpc.hypersync.xyz or https://11155111.rpc.hypersync.xyz             |                 |
 | Shimmer Evm          | 148        | https://shimmer-evm.rpc.hypersync.xyz or https://148.rpc.hypersync.xyz              |                 |
 | Soneium              | 1868       | https://soneium.rpc.hypersync.xyz or https://1868.rpc.hypersync.xyz                 |                 |

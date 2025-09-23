@@ -49,6 +49,9 @@ If you are a network operator or user and would like improved service support or
 | Celo                 | 42220      | https://celo.hypersync.xyz or https://42220.hypersync.xyz                           | 🪨   |                 |
 | Chainweb Testnet 20  | 5920       | https://chainweb-testnet-20.hypersync.xyz or https://5920.hypersync.xyz             | 🪨   |                 |
 | Chainweb Testnet 21  | 5921       | https://chainweb-testnet-21.hypersync.xyz or https://5921.hypersync.xyz             | 🪨   |                 |
+| Chainweb Testnet 22  | 5922       | https://chainweb-testnet-22.hypersync.xyz or https://5922.hypersync.xyz             | 🪨   |                 |
+| Chainweb Testnet 23  | 5923       | https://chainweb-testnet-23.hypersync.xyz or https://5923.hypersync.xyz             | 🪨   |                 |
+| Chainweb Testnet 24  | 5924       | https://chainweb-testnet-24.hypersync.xyz or https://5924.hypersync.xyz             | 🪨   |                 |
 | Chiliz               | 88888      | https://chiliz.hypersync.xyz or https://88888.hypersync.xyz                         | 🪨   |                 |
 | Citrea Testnet       | 5115       | https://citrea-testnet.hypersync.xyz or https://5115.hypersync.xyz                  | 🪨   |                 |
 | Curtis               | 33111      | https://curtis.hypersync.xyz or https://33111.hypersync.xyz                         | 🪨   |                 |
@@ -94,6 +97,7 @@ If you are a network operator or user and would like improved service support or
 | Rootstock            | 30         | https://rootstock.hypersync.xyz or https://30.hypersync.xyz                         | 🪨   |                 |
 | Saakuru              | 7225878    | https://saakuru.hypersync.xyz or https://7225878.hypersync.xyz                      | 🪨   |                 |
 | Scroll               | 534352     | https://scroll.hypersync.xyz or https://534352.hypersync.xyz                        | 🪨   |                 |
+| Sentient Testnet     | 1184075182 | https://sentient-testnet.hypersync.xyz or https://1184075182.hypersync.xyz          | 🪨   |                 |
 | Sepolia              | 11155111   | https://sepolia.hypersync.xyz or https://11155111.hypersync.xyz                     | 🎒   |                 |
 | Shimmer Evm          | 148        | https://shimmer-evm.hypersync.xyz or https://148.hypersync.xyz                      | 🪨   |                 |
 | Soneium              | 1868       | https://soneium.hypersync.xyz or https://1868.hypersync.xyz                         | 🪨   |                 |
