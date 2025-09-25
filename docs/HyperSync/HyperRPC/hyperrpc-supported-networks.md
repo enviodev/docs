@@ -39,10 +39,8 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Bsc                  | 56         | https://bsc.rpc.hypersync.xyz or https://56.rpc.hypersync.xyz                       |                 |
 | Bsc Testnet          | 97         | https://bsc-testnet.rpc.hypersync.xyz or https://97.rpc.hypersync.xyz               |                 |
 | Celo                 | 42220      | https://celo.rpc.hypersync.xyz or https://42220.rpc.hypersync.xyz                   |                 |
-| Chainweb Testnet 20  | 5920       | https://chainweb-testnet-20.rpc.hypersync.xyz or https://5920.rpc.hypersync.xyz     |                 |
 | Chainweb Testnet 21  | 5921       | https://chainweb-testnet-21.rpc.hypersync.xyz or https://5921.rpc.hypersync.xyz     |                 |
 | Chainweb Testnet 22  | 5922       | https://chainweb-testnet-22.rpc.hypersync.xyz or https://5922.rpc.hypersync.xyz     |                 |
-| Chainweb Testnet 23  | 5923       | https://chainweb-testnet-23.rpc.hypersync.xyz or https://5923.rpc.hypersync.xyz     |                 |
 | Chainweb Testnet 24  | 5924       | https://chainweb-testnet-24.rpc.hypersync.xyz or https://5924.rpc.hypersync.xyz     |                 |
 | Chiliz               | 88888      | https://chiliz.rpc.hypersync.xyz or https://88888.rpc.hypersync.xyz                 |                 |
 | Citrea Testnet       | 5115       | https://citrea-testnet.rpc.hypersync.xyz or https://5115.rpc.hypersync.xyz          |                 |

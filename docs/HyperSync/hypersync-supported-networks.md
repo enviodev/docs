@@ -47,10 +47,8 @@ If you are a network operator or user and would like improved service support or
 | Bsc                  | 56         | https://bsc.hypersync.xyz or https://56.hypersync.xyz                               | 🥉   |                 |
 | Bsc Testnet          | 97         | https://bsc-testnet.hypersync.xyz or https://97.hypersync.xyz                       | 🎒   |                 |
 | Celo                 | 42220      | https://celo.hypersync.xyz or https://42220.hypersync.xyz                           | 🪨   |                 |
-| Chainweb Testnet 20  | 5920       | https://chainweb-testnet-20.hypersync.xyz or https://5920.hypersync.xyz             | 🪨   |                 |
 | Chainweb Testnet 21  | 5921       | https://chainweb-testnet-21.hypersync.xyz or https://5921.hypersync.xyz             | 🪨   |                 |
 | Chainweb Testnet 22  | 5922       | https://chainweb-testnet-22.hypersync.xyz or https://5922.hypersync.xyz             | 🪨   |                 |
-| Chainweb Testnet 23  | 5923       | https://chainweb-testnet-23.hypersync.xyz or https://5923.hypersync.xyz             | 🪨   |                 |
 | Chainweb Testnet 24  | 5924       | https://chainweb-testnet-24.hypersync.xyz or https://5924.hypersync.xyz             | 🪨   |                 |
 | Chiliz               | 88888      | https://chiliz.hypersync.xyz or https://88888.hypersync.xyz                         | 🪨   |                 |
 | Citrea Testnet       | 5115       | https://citrea-testnet.hypersync.xyz or https://5115.hypersync.xyz                  | 🪨   |                 |
