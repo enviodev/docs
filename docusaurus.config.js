@@ -218,7 +218,7 @@ const redirectsList = [
   },
   {
     from: "/docs/HyperSync/hyperrpc-url-endpoints",
-    to: "/docs/HyperSync/hyperrpc-supported-networks",
+    to: "/docs/HyperRPC/hyperrpc-supported-networks",
   },
   {
     from: "/docs/hyperfuel-query",
@@ -226,7 +226,7 @@ const redirectsList = [
   },
   {
     from: "/docs/overview-hyperrpc",
-    to: "/docs/HyperSync/overview-hyperrpc",
+    to: "/docs/HyperRPC/overview-hyperrpc",
   },
 ];
 /** @type {import('@docusaurus/types').Config} */
@@ -321,6 +321,11 @@ const config = {
           {
             to: "docs/HyperSync/overview",
             label: "HyperSync Docs",
+            position: "left",
+          },
+          {
+            to: "docs/HyperRPC/overview-hyperrpc",
+            label: "HyperRPC Docs",
             position: "left",
           },
           {
@@ -422,12 +427,31 @@ const config = {
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,
         disableVersioning: true,
-        versions: {
-          current: {
-            label: "v2",
-            path: "",
-          },
-        },
+        // versions: {
+        //   current: {
+        //     label: "v2",
+        //     path: "",
+        //   },
+        // },
+      },
+    ],
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "HyperRPC",
+        path: "docs/HyperRPC",
+        routeBasePath: "docs/HyperRPC",
+        sidebarPath: require.resolve("./sidebarsHyperRPC.js"),
+        editUrl: "https://github.com/enviodev/docs/edit/main/",
+        showLastUpdateAuthor: false,
+        showLastUpdateTime: false,
+        //disableVersioning: true,
+        // versions: {
+        //   current: {
+        //     label: "v2",
+        //     path: "",
+        //   },
+        // },
       },
     ],
     [
@@ -449,6 +473,18 @@ const config = {
         path: "docs/HyperSync-LLM",
         routeBasePath: "docs/HyperSync-LLM",
         sidebarPath: require.resolve("./sidebarsHyperSyncLLM.js"),
+        editUrl: "https://github.com/enviodev/docs/edit/main/",
+        showLastUpdateAuthor: false,
+        showLastUpdateTime: false,
+      },
+    ],
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "HyperRPC-LLM",
+        path: "docs/HyperRPC-LLM",
+        routeBasePath: "docs/HyperRPC-LLM",
+        sidebarPath: require.resolve("./sidebarsHyperRPCLLM.js"),
         editUrl: "https://github.com/enviodev/docs/edit/main/",
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,

@@ -1,19 +1,157 @@
 ---
-id: hyperrpc-supported-networks
-title: Supported Networks
-sidebar_label: Supported Networks
-slug: /hyperrpc-supported-networks
+id: hyperrpc-complete
+title: HyperRPC Complete Documentation
+sidebar_label: HyperRPC Complete Documentation
+slug: /hyperrpc-complete
 ---
 
+# HyperRPC Complete Documentation
+
+This document contains all HyperRPC documentation consolidated into a single file for LLM consumption.
+
+---
+
+## HyperRPC: Ultra-Fast Read-Only RPC
+
+**File:** `overview-hyperrpc.md`
+
+HyperRPC is an extremely fast read-only RPC designed specifically for data-intensive blockchain tasks. Built from the ground up to optimize performance, it offers a simple drop-in solution with dramatic speed improvements over traditional nodes.
+
+:::info HyperSync vs. HyperRPC
+**For most use cases, we recommend using HyperSync over HyperRPC.**
+
+HyperSync provides significantly faster performance and much greater flexibility in how you query and filter blockchain data. Behind the scenes, HyperRPC actually uses HyperSync to fulfill requests.
+
+**When to use HyperRPC:**
+
+- When you need a simple drop-in replacement for existing RPC-based code
+- When you don't have time for a deeper integration
+- When you're working with tools that expect standard JSON-RPC interfaces
+
+**When to use HyperSync:**
+
+- When performance is critical (HyperSync is much faster)
+- When you need advanced filtering capabilities
+- When you want more control over data formatting and field selection
+- For new projects where you're designing the data access layer
+  :::
+
+## Table of Contents
+
+- What is HyperRPC?
+- Performance Advantages
+- Supported Methods
+- Supported Networks
+- Getting Started
+- Development Status
+
+## What is HyperRPC?
+
+HyperRPC is a specialized JSON-RPC endpoint that focuses exclusively on **read operations** to deliver exceptional performance. By optimizing specifically for data retrieval workflows, HyperRPC can significantly outperform traditional nodes for data-intensive applications.
+
+Key characteristics:
+
+- **Read-only**: Optimized for data retrieval (cannot send transactions)
+- **Drop-in compatible**: Works with existing tooling that uses standard RPC methods
+- **Specialized**: Designed specifically for data-intensive operations like `eth_getLogs`
+
+## Performance Advantages
+
+Early benchmarks show that HyperRPC can deliver up to **5x performance improvement** for data-intensive operations compared to traditional nodes like `geth`, `erigon`, and `reth`.
+
+This performance boost is particularly noticeable for:
+
+- Historical data queries
+- Log event filtering
+- Block and transaction retrievals
+- Analytics applications
+
+## Supported Methods
+
+HyperRPC currently supports the following Ethereum JSON-RPC methods:
+
+| Category             | Methods                                                                                                                                                 |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Chain Data**       | `eth_chainId``eth_blockNumber`                                                                                                                    |
+| **Block Data**       | `eth_getBlockByNumber``eth_getBlockByHash``eth_getBlockReceipts`                                                                            |
+| **Transaction Data** | `eth_getTransactionByHash``eth_getTransactionByBlockHashAndIndex``eth_getTransactionByBlockNumberAndIndex``eth_getTransactionReceipt` |
+| **Event Logs**       | `eth_getLogs`                                                                                                                                           |
+| **Traces**           | `trace_block` (only on select chains)                                                                                  |
+
+## Supported Networks
+
+HyperRPC is available across numerous EVM-compatible networks. For the most up-to-date list of supported chains, please see our Supported Networks page.
+
+## Getting Started
+
+To start using HyperRPC:
+
+1. **Get Access**:
+
+   - Visit our Supported Networks page to find all available HyperRPC endpoints
+   - Each network has a ready-to-use URL that you can start using immediately
+
+2. **Add Your API Token** (recommended):
+
+   - Requests without an API token will be rate limited starting **June 2025** (same timeline as HyperSync).
+   - Append your token to the endpoint URL. Example:
+
+     ```text
+     https://100.rpc.hypersync.xyz/
+     ```
+
+   - If you don't have a token yet, you can generate one through the Envio Dashboard.
+
+3. **Use Like a Standard RPC**:
+
+   ```javascript
+   // Example: Fetching logs with HyperRPC
+   const response = await fetch("https://100.rpc.hypersync.xyz/", {
+     method: "POST",
+     headers: { "Content-Type": "application/json" },
+     body: JSON.stringify({
+       jsonrpc: "2.0",
+       id: 1,
+       method: "eth_getLogs",
+       params: [
+         {
+           fromBlock: "0x1000000",
+           toBlock: "0x1000100",
+           address: "0xYourContractAddress",
+         },
+       ],
+     }),
+   });
+   ```
+
+4. **Provide Feedback**:
+   Your testing and feedback are incredibly valuable as we continue to improve HyperRPC. Let us know about your experience in our Discord.
+
+## Development Status
+
+:::caution Important Notice
+
+- HyperRPC is under active development to further improve performance and stability
+- It is designed for read-only operations and does not support all standard RPC methods
+- It has not yet undergone formal security audits
+- We welcome questions and feedback in our Discord
+  :::
+
+---
+
+## Hyperrpc Supported Networks
+
+**File:** `hyperrpc-supported-networks.md`
+
 :::note
-Please note we are rapidly adding new supported networks. If you don't see your network here or would like us to add a network to HyperRPC, pop us a message in [Discord](https://discord.gg/Q9qt8gZ2fX).
+Please note we are rapidly adding new supported networks. If you don't see your network here or would like us to add a network to HyperRPC, pop us a message in Discord.
 :::
 
 :::caution API Tokens Recommended
-Requests without an API token will be rate limited starting **June 2025** (following the same schedule as [HyperSync](/docs/HyperSync/api-tokens)). Append your token to the endpoint URL to maintain full speed:
+Requests without an API token will be rate limited starting **June 2025** (following the same schedule as HyperSync). Append your token to the endpoint URL to maintain full speed:
 
 ```text
-https://100.rpc.hypersync.xyz/<api-token>
+https://100.rpc.hypersync.xyz/
 ```
 :::
 
@@ -40,7 +178,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Bsc Testnet          | 97         | https://bsc-testnet.rpc.hypersync.xyz or https://97.rpc.hypersync.xyz               |                 |
 | Celo                 | 42220      | https://celo.rpc.hypersync.xyz or https://42220.rpc.hypersync.xyz                   |                 |
 | Chainweb Testnet 20  | 5920       | https://chainweb-testnet-20.rpc.hypersync.xyz or https://5920.rpc.hypersync.xyz     |                 |
-| Chainweb Testnet 21  | 5921       | https://chainweb-testnet-21.rpc.hypersync.xyz or https://5921.rpc.hypersync.xyz     |                 |
 | Chainweb Testnet 22  | 5922       | https://chainweb-testnet-22.rpc.hypersync.xyz or https://5922.rpc.hypersync.xyz     |                 |
 | Chainweb Testnet 23  | 5923       | https://chainweb-testnet-23.rpc.hypersync.xyz or https://5923.rpc.hypersync.xyz     |                 |
 | Chainweb Testnet 24  | 5924       | https://chainweb-testnet-24.rpc.hypersync.xyz or https://5924.rpc.hypersync.xyz     |                 |
@@ -109,4 +246,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Zircuit              | 48900      | https://zircuit.rpc.hypersync.xyz or https://48900.rpc.hypersync.xyz                |                 |
 | ZKsync               | 324        | https://zksync.rpc.hypersync.xyz or https://324.rpc.hypersync.xyz                   |                 |
 | Zora                 | 7777777    | https://zora.rpc.hypersync.xyz or https://7777777.rpc.hypersync.xyz                 |                 |
+
+---
 
