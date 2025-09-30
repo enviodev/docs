@@ -169,7 +169,7 @@ const updateMarkdownFiles = async () => {
     // Update HyperRPC file
     const hyperRPCTable = generateHyperRPCTable(data);
     const HYPERRPC_FILE_PATH =
-      "docs/HyperSync/HyperRPC/hyperrpc-supported-networks.md";
+      "docs/HyperRPC/hyperrpc-supported-networks.md";
     let hyperRPCContent = fs.readFileSync(HYPERRPC_FILE_PATH, "utf8");
 
     const hyperRPCRegex =

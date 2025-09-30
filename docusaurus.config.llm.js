@@ -70,6 +70,11 @@ const config = {
             position: "left",
           },
           {
+            to: "docs/HyperRPC-LLM/hyperrpc-complete",
+            label: "HyperRPC Docs",
+            position: "left",
+          },
+          {
             to: "showcase",
             label: "Showcase",
             position: "left",
@@ -149,6 +154,18 @@ const config = {
         path: "docs/HyperSync-LLM",
         routeBasePath: "docs/HyperSync-LLM",
         sidebarPath: require.resolve("./sidebarsHyperSyncLLM.js"),
+        editUrl: "https://github.com/enviodev/docs/edit/main/",
+        showLastUpdateAuthor: false,
+        showLastUpdateTime: false,
+      },
+    ],
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "HyperRPC-LLM",
+        path: "docs/HyperRPC-LLM",
+        routeBasePath: "docs/HyperRPC-LLM",
+        sidebarPath: require.resolve("./sidebarsHyperRPCLLM.js"),
         editUrl: "https://github.com/enviodev/docs/edit/main/",
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,
