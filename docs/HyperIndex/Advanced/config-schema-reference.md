@@ -312,6 +312,19 @@ Properties:
   - Available values:
 `parentHash`, `nonce`, `sha3Uncles`, `logsBloom`, `transactionsRoot`, `stateRoot`, `receiptsRoot`, `miner`, `difficulty`, `totalDifficulty`, `extraData`, `size`, `gasLimit`, `gasUsed`, `uncles`, `baseFeePerGas`, `blobGasUsed`, `excessBlobGas`, `parentBeaconBlockRoot`, `withdrawalsRoot`, `l1BlockNumber`, `sendCount`, `sendRoot`, `mixHash`
 
+Example (config.yaml):
+
+```yaml
+events:
+  - event: "Assigned(address indexed user, uint256 amount)"
+    # can be within an event as shown here, or globally for all events
+    field_selection:
+      transaction_fields:
+        - transactionIndex
+      block_fields:
+        - miner
+```
+
 ### Network {#def-network}
 
 - **type**: `object`

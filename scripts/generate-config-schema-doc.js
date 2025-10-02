@@ -41,6 +41,7 @@ const EXAMPLE_SNIPPETS = {
     raw_events: "raw_events: true",
   },
   defs: {
+    FieldSelection: `# within a contract\nevents:\n  - event: "Assigned(address indexed user, uint256 amount)"\n    # can be within an event as shown here, or globally for all events\n    field_selection:\n      transaction_fields:\n        - transactionIndex\n      block_fields:\n        - miner`,
     Network: `networks:\n  - id: 1\n    start_block: 0\n    end_block: 19000000\n    contracts:\n      - name: Greeter\n        address: 0x1111111111111111111111111111111111111111`,
     RpcConfig: `networks:\n  - id: 1\n    rpc_config:\n      url: https://eth.llamarpc.com\n      initial_block_interval: 1000`,
     Rpc: `networks:\n  - id: 1\n    rpc:\n      - url: https://eth.llamarpc.com\n        for: sync`,
