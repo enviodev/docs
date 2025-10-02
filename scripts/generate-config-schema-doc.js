@@ -37,11 +37,10 @@ const EXAMPLE_SNIPPETS = {
     event_decoder: "event_decoder: hypersync-client",
     rollback_on_reorg: "rollback_on_reorg: true",
     save_full_history: "save_full_history: false",
-    field_selection: `field_selection:\n  transaction_fields:\n    - hash\n  block_fields:\n    - timestamp`,
+    field_selection: `field_selection:\n  transaction_fields:\n    - hash\n  block_fields:\n    - miner`,
     raw_events: "raw_events: true",
   },
   defs: {
-    FieldSelection: `events:\n  - event: "Assigned(address indexed user, uint256 amount)"\n    field_selection:\n      transaction_fields:\n        - transactionIndex\n      block_fields:\n        - timestamp`,
     Network: `networks:\n  - id: 1\n    start_block: 0\n    end_block: 19000000\n    contracts:\n      - name: Greeter\n        address: 0x1111111111111111111111111111111111111111`,
     RpcConfig: `networks:\n  - id: 1\n    rpc_config:\n      url: https://eth.llamarpc.com\n      initial_block_interval: 1000`,
     Rpc: `networks:\n  - id: 1\n    rpc:\n      - url: https://eth.llamarpc.com\n        for: sync`,
@@ -57,18 +56,24 @@ const EXAMPLE_SNIPPETS = {
 };
 
 /** Utility functions **/
-function slugify(text) {
-  return String(text)
+function slugify(text, preserveUnderscores = false) {
+  let result = String(text)
     .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-");
+    .toLowerCase();
+
+  if (preserveUnderscores) {
+    result = result.replace(/[^a-z0-9\s_-]/g, "");
+  } else {
+    result = result.replace(/[^a-z0-9\s-]/g, "");
+  }
+
+  result = result.replace(/\s+/g, "-").replace(/-+/g, "-");
+
+  return result;
 }
 
 function toInlineCode(value) {
-  const s = String(value).replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  return "`" + s + "`";
+  return "`" + String(value) + "`";
 }
 
 function ensureDirSync(filePath) {
@@ -93,8 +98,17 @@ function resolveRef(ref, rootSchema) {
   return node;
 }
 
-function describeType(schema) {
+function describeType(schema, rootSchema = null) {
   if (!schema) return "unknown";
+
+  // Handle $ref first
+  if (schema.$ref && rootSchema) {
+    const refName = schema.$ref.split("/").slice(-1)[0];
+    const resolved = resolveRef(schema.$ref, rootSchema);
+    if (resolved) {
+      return `object<${refName}>`;
+    }
+  }
 
   if (schema.enum) {
     return `enum (${schema.enum.length} values)`;
@@ -103,21 +117,21 @@ function describeType(schema) {
     return `const ${String(schema.const)}`;
   }
   if (schema.anyOf) {
-    const parts = schema.anyOf.map((s) => describeType(s));
+    const parts = schema.anyOf.map((s) => describeType(s, rootSchema));
     return `anyOf(${parts.join(" | ")})`;
   }
   if (schema.oneOf) {
-    const parts = schema.oneOf.map((s) => describeType(s));
+    const parts = schema.oneOf.map((s) => describeType(s, rootSchema));
     return `oneOf(${parts.join(" | ")})`;
   }
   if (schema.allOf) {
-    const parts = schema.allOf.map((s) => describeType(s));
+    const parts = schema.allOf.map((s) => describeType(s, rootSchema));
     return `allOf(${parts.join(" & ")})`;
   }
   if (schema.type === "array") {
     const items = Array.isArray(schema.items)
-      ? schema.items.map(describeType).join(", ")
-      : describeType(schema.items);
+      ? schema.items.map(s => describeType(s, rootSchema)).join(", ")
+      : describeType(schema.items, rootSchema);
     return `array<${items}>`;
   }
   if (schema.type === "object") {
@@ -169,11 +183,11 @@ function renderProperty(name, schema, rootSchema, level = 4) {
     level === 3
       ? `\n### ${name} {#${anchor}}\n`
       : level === 4
-      ? `\n#### ${name} {#${anchor}}\n`
-      : `\n##### ${name} {#${anchor}}\n`;
+        ? `\n#### ${name} {#${anchor}}\n`
+        : `\n##### ${name} {#${anchor}}\n`;
   let out = heading;
   if (schema.description) out += `\n${schema.description}\n`;
-  out += `\n- **type**: ${toInlineCode(describeType(schema))}\n`;
+  out += `\n- **type**: ${toInlineCode(describeType(schema, rootSchema))}\n`;
   if (schema.enum) out += `- **allowed**: ${renderEnumValues(schema)}\n`;
   const nb = renderNumberBounds(schema);
   if (nb) out += `- **bounds**: ${nb}\n`;
@@ -184,19 +198,30 @@ function renderProperty(name, schema, rootSchema, level = 4) {
     if (target) {
       // link to defs if available
       const refName = schema.$ref.split("/").slice(-1)[0];
-      out += `- **ref**: [${refName}](#${slugify(refName)})\n`;
+      out += `- **ref**: [${refName}](#def-${slugify(refName)})\n`;
     }
   }
 
   // Arrays
   if (schema.type === "array" && schema.items) {
     const itemType = Array.isArray(schema.items)
-      ? schema.items.map(describeType).join(", ")
-      : describeType(schema.items);
+      ? schema.items.map(s => describeType(s, rootSchema)).join(", ")
+      : describeType(schema.items, rootSchema);
     out += `- **items**: ${toInlineCode(itemType)}\n`;
     if (!Array.isArray(schema.items) && schema.items.$ref) {
       const refName = schema.items.$ref.split("/").slice(-1)[0];
-      out += `- **items ref**: [${refName}](#${slugify(refName)})\n`;
+      out += `- **items ref**: [${refName}](#def-${slugify(refName)})\n`;
+
+      // Special handling for TransactionField and BlockField enums
+      if (refName === "TransactionField" || refName === "BlockField") {
+        const enumSchema = resolveRef(schema.items.$ref, rootSchema);
+        if (enumSchema && enumSchema.enum) {
+          out += `\nAvailable ${refName} values:\n`;
+          enumSchema.enum.forEach((value, index) => {
+            out += `${index + 1}. ${toInlineCode(value)}\n`;
+          });
+        }
+      }
     }
   }
 
@@ -211,8 +236,7 @@ function renderProperty(name, schema, rootSchema, level = 4) {
       propKeys.forEach((propName) => {
         const prop = props[propName];
         out +=
-          `- ${toInlineCode(propName)}: ${toInlineCode(describeType(prop))}${
-            prop.description ? ` – ${prop.description}` : ""
+          `- ${toInlineCode(propName)}: ${toInlineCode(describeType(prop))}${prop.description ? ` – ${prop.description}` : ""
           }` + "\n";
       });
     }
@@ -223,14 +247,14 @@ function renderProperty(name, schema, rootSchema, level = 4) {
     const variants = schema.anyOf || schema.oneOf;
     out += `\nVariants:\n`;
     variants.forEach((v, i) => {
-      const label = v.$ref ? v.$ref.split("/").slice(-1)[0] : describeType(v);
+      const label = v.$ref ? v.$ref.split("/").slice(-1)[0] : describeType(v, rootSchema);
       if (v.$ref) {
-        out += `- ${toInlineCode(String(i + 1))}: [${label}](#${slugify(
+        out += `- ${toInlineCode(String(i + 1))}: [${label}](#def-${slugify(
           label
         )})\n`;
       } else {
         out += `- ${toInlineCode(String(i + 1))}: ${toInlineCode(
-          describeType(v)
+          describeType(v, rootSchema)
         )}\n`;
       }
     });
@@ -282,10 +306,15 @@ function generateMarkdown(schema) {
   if (defNames.length) {
     md += h2("Definitions");
     defNames.forEach((defName) => {
+      // Skip separate TransactionField and BlockField sections since they're now shown inline in FieldSelection
+      if (defName === "TransactionField" || defName === "BlockField") {
+        return; // Skip these definitions
+      }
+
       const defSchema = defs[defName];
-      md += `\n### ${defName} {#${slugify(defName)}}\n`;
+      md += `\n### ${defName} {#def-${slugify(defName)}}\n`;
       if (defSchema.description) md += `\n${defSchema.description}\n`;
-      md += `\n- **type**: ${toInlineCode(describeType(defSchema))}\n`;
+      md += `\n- **type**: ${toInlineCode(describeType(defSchema, schema))}\n`;
       if (defSchema.enum) {
         md += `- **allowed**: ${renderEnumValues(defSchema)}\n`;
       }
@@ -302,9 +331,24 @@ function generateMarkdown(schema) {
           dPropNames.forEach((dpName) => {
             const dp = dProps[dpName];
             md +=
-              `- ${toInlineCode(dpName)}: ${toInlineCode(describeType(dp))}${
-                dp.description ? ` – ${dp.description}` : ""
+              `- ${toInlineCode(dpName)}: ${toInlineCode(describeType(dp, schema))}${dp.description ? ` – ${dp.description}` : ""
               }` + "\n";
+
+            // Special handling for TransactionField and BlockField arrays within FieldSelection
+            if (dpName === "transaction_fields" || dpName === "block_fields") {
+              if (dp.items && dp.items.$ref) {
+                const refName = dp.items.$ref.split("/").slice(-1)[0];
+                if (refName === "TransactionField" || refName === "BlockField") {
+                  const enumSchema = resolveRef(dp.items.$ref, schema);
+                  if (enumSchema && enumSchema.enum) {
+                    const values = enumSchema.enum.map(toInlineCode).join(", ");
+                    md += `  - Available values:
+${values}
+`;
+                  }
+                }
+              }
+            }
           });
         }
       }
@@ -312,8 +356,8 @@ function generateMarkdown(schema) {
       // arrays
       if (defSchema.type === "array" && defSchema.items) {
         const itemType = Array.isArray(defSchema.items)
-          ? defSchema.items.map(describeType).join(", ")
-          : describeType(defSchema.items);
+          ? defSchema.items.map(s => describeType(s, schema)).join(", ")
+          : describeType(defSchema.items, schema);
         md += `- **items**: ${toInlineCode(itemType)}\n`;
       }
 
@@ -324,14 +368,14 @@ function generateMarkdown(schema) {
         variants.forEach((v, i) => {
           const label = v.$ref
             ? v.$ref.split("/").slice(-1)[0]
-            : describeType(v);
+            : describeType(v, schema);
           if (v.$ref) {
-            md += `- ${toInlineCode(String(i + 1))}: [${label}](#${slugify(
+            md += `- ${toInlineCode(String(i + 1))}: [${label}](#def-${slugify(
               label
             )})\n`;
           } else {
             md += `- ${toInlineCode(String(i + 1))}: ${toInlineCode(
-              describeType(v)
+              describeType(v, schema)
             )}\n`;
           }
         });
