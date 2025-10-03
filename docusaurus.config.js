@@ -415,9 +415,10 @@ const config = {
                         main: true, // this will become llms.txt
                         name: "envio",
                         root: `
-# Envio
+# Envio: Fast, Multi-Chain Blockchain Indexer
 
-> The fastest most flexible way to get on-chain data.
+> Envio.dev is a high-performance, multi-chain blockchain indexing framework designed for developers. It offers real-time and historical data querying via GraphQL APIs, supports automatic reorg handling, and enables rapid deployment with zero-downtime rollbacks. Built for EVM-compatible chains and Fuel, Envio empowers developers to build scalable blockchain applications efficiently.
+
 
 This file contains links to documentation sections following the llmstxt.org standard.
 `,
@@ -445,8 +446,9 @@ This file contains links to documentation sections following the llmstxt.org sta
                             "docs/HyperSync/api-tokens.mdx",
                             "docs/HyperSync/hypersync-supported-networks.md",
                             "docs/HyperSync/tutorial-address-transactions.md",
-                            "docs/HyperSync/HyperRPC/**",
                             "docs/HyperSync/HyperFuel/**",
+                            "docs/HyperRPC/overview-hyperrpc.md",
+                            "docs/HyperRPC/hyperrpc-supported-networks.md",
                         ],
                     },
                     {
@@ -454,7 +456,9 @@ This file contains links to documentation sections following the llmstxt.org sta
                         root: `
 # HyperIndex Docs
 
-> HyperIndex description
+> HyperIndex is a complete indexing framework with schema management, event handling, and GraphQL APIs.
+
+This file contains links to documentation sections following the llmstxt.org standard.
 `,
                         includeOrder: [
                             "docs/HyperIndex/overview.md",
@@ -477,7 +481,9 @@ This file contains links to documentation sections following the llmstxt.org sta
                         root: `
 # HyperSync Docs
 
-> HyperIndex description
+> HyperSync is Envio's high-performance blockchain data engine that serves as a direct replacement for traditional RPC endpoints, delivering up to 2000x faster data access.
+
+This file contains links to documentation sections following the llmstxt.org standard.
 `,
                         includeOrder: [
                             "docs/HyperSync/overview.md",
@@ -490,8 +496,21 @@ This file contains links to documentation sections following the llmstxt.org sta
                             "docs/HyperSync/api-tokens.mdx",
                             "docs/HyperSync/hypersync-supported-networks.md",
                             "docs/HyperSync/tutorial-address-transactions.md",
-                            "docs/HyperSync/HyperRPC/**",
                             "docs/HyperSync/HyperFuel/**",
+                        ],
+                    },
+                    {
+                        name: "hyperrpc",
+                        root: `
+# HyperRPC Docs
+
+> HyperRPC is an extremely fast read-only RPC designed specifically for data-intensive blockchain tasks. It provides simple drop-in replacement for existing RPC-based code.
+
+This file contains links to documentation sections following the llmstxt.org standard.
+`,
+                        includeOrder: [
+                            "docs/HyperRPC/overview-hyperrpc.md",
+                            "docs/HyperRPC/hyperrpc-supported-networks.md",
                         ],
                     },
                 ],
