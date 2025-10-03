@@ -2043,11 +2043,14 @@ If you are a network operator or user and would like improved service support or
 | Bsc Testnet          | 97         | https://bsc-testnet.hypersync.xyz or https://97.hypersync.xyz                       | 🎒   |                 |
 | Celo                 | 42220      | https://celo.hypersync.xyz or https://42220.hypersync.xyz                           | 🪨   |                 |
 | Chainweb Testnet 20  | 5920       | https://chainweb-testnet-20.hypersync.xyz or https://5920.hypersync.xyz             | 🪨   |                 |
-| Chainweb Testnet 21  | 5921       | https://chainweb-testnet-21.hypersync.xyz or https://5921.hypersync.xyz             | 🪨   |                 |
+| Chainweb Testnet 22  | 5922       | https://chainweb-testnet-22.hypersync.xyz or https://5922.hypersync.xyz             | 🪨   |                 |
+| Chainweb Testnet 23  | 5923       | https://chainweb-testnet-23.hypersync.xyz or https://5923.hypersync.xyz             | 🪨   |                 |
+| Chainweb Testnet 24  | 5924       | https://chainweb-testnet-24.hypersync.xyz or https://5924.hypersync.xyz             | 🪨   |                 |
 | Chiliz               | 88888      | https://chiliz.hypersync.xyz or https://88888.hypersync.xyz                         | 🪨   |                 |
 | Citrea Testnet       | 5115       | https://citrea-testnet.hypersync.xyz or https://5115.hypersync.xyz                  | 🪨   |                 |
 | Curtis               | 33111      | https://curtis.hypersync.xyz or https://33111.hypersync.xyz                         | 🪨   |                 |
 | Cyber                | 7560       | https://cyber.hypersync.xyz or https://7560.hypersync.xyz                           | 🪨   |                 |
+| Damon                | 341        | https://damon.hypersync.xyz or https://341.hypersync.xyz                            | 🪨   |                 |
 | Eth Traces           | 1          | https://eth-traces.hypersync.xyz or https://1-traces.hypersync.xyz                  | 🏅   |                 |
 | Ethereum Mainnet     | 1          | https://eth.hypersync.xyz or https://1.hypersync.xyz                                | 🏅   |                 |
 | Fantom               | 250        | https://fantom.hypersync.xyz or https://250.hypersync.xyz                           | 🪨   |                 |
@@ -2060,7 +2063,7 @@ If you are a network operator or user and would like improved service support or
 | Gnosis Traces        | 100        | https://gnosis-traces.hypersync.xyz or https://100-traces.hypersync.xyz             | 🥉   |                 |
 | Harmony Shard 0      | 1666600000 | https://harmony-shard-0.hypersync.xyz or https://1666600000.hypersync.xyz           | 🪨   |                 |
 | Holesky              | 17000      | https://holesky.hypersync.xyz or https://17000.hypersync.xyz                        | 🎒   |                 |
-| Hyperliquid          | 645749     | https://hyperliquid.hypersync.xyz or https://645749.hypersync.xyz                   | 🪨   |                 |
+| Hyperliquid          | 999        | https://hyperliquid.hypersync.xyz or https://999.hypersync.xyz                      | 🪨   |                 |
 | Ink                  | 57073      | https://ink.hypersync.xyz or https://57073.hypersync.xyz                            | 🪨   |                 |
 | Kroma                | 255        | https://kroma.hypersync.xyz or https://255.hypersync.xyz                            | 🪨   |                 |
 | Linea                | 59144      | https://linea.hypersync.xyz or https://59144.hypersync.xyz                          | 🥉   |                 |
@@ -2088,6 +2091,7 @@ If you are a network operator or user and would like improved service support or
 | Rootstock            | 30         | https://rootstock.hypersync.xyz or https://30.hypersync.xyz                         | 🪨   |                 |
 | Saakuru              | 7225878    | https://saakuru.hypersync.xyz or https://7225878.hypersync.xyz                      | 🪨   |                 |
 | Scroll               | 534352     | https://scroll.hypersync.xyz or https://534352.hypersync.xyz                        | 🪨   |                 |
+| Sentient Testnet     | 1184075182 | https://sentient-testnet.hypersync.xyz or https://1184075182.hypersync.xyz          | 🪨   |                 |
 | Sepolia              | 11155111   | https://sepolia.hypersync.xyz or https://11155111.hypersync.xyz                     | 🎒   |                 |
 | Shimmer Evm          | 148        | https://shimmer-evm.hypersync.xyz or https://148.hypersync.xyz                      | 🪨   |                 |
 | Soneium              | 1868       | https://soneium.hypersync.xyz or https://1868.hypersync.xyz                         | 🪨   |                 |
@@ -2200,240 +2204,6 @@ Other use cases include:
 - Learn more about HyperSync's capabilities for blockchain data analysis
 
 For any questions or support, join our Discord community or create an issue on the GitHub repository.
-
----
-
-## HyperRPC: Ultra-Fast Read-Only RPC
-
-**File:** `HyperRPC/overview-hyperrpc.md`
-
-HyperRPC is an extremely fast read-only RPC designed specifically for data-intensive blockchain tasks. Built from the ground up to optimize performance, it offers a simple drop-in solution with dramatic speed improvements over traditional nodes.
-
-:::info HyperSync vs. HyperRPC
-**For most use cases, we recommend using HyperSync over HyperRPC.**
-
-HyperSync provides significantly faster performance and much greater flexibility in how you query and filter blockchain data. Behind the scenes, HyperRPC actually uses HyperSync to fulfill requests.
-
-**When to use HyperRPC:**
-
-- When you need a simple drop-in replacement for existing RPC-based code
-- When you don't have time for a deeper integration
-- When you're working with tools that expect standard JSON-RPC interfaces
-
-**When to use HyperSync:**
-
-- When performance is critical (HyperSync is much faster)
-- When you need advanced filtering capabilities
-- When you want more control over data formatting and field selection
-- For new projects where you're designing the data access layer
-  :::
-
-## Table of Contents
-
-- What is HyperRPC?
-- Performance Advantages
-- Supported Methods
-- Supported Networks
-- Getting Started
-- Development Status
-
-## What is HyperRPC?
-
-HyperRPC is a specialized JSON-RPC endpoint that focuses exclusively on **read operations** to deliver exceptional performance. By optimizing specifically for data retrieval workflows, HyperRPC can significantly outperform traditional nodes for data-intensive applications.
-
-Key characteristics:
-
-- **Read-only**: Optimized for data retrieval (cannot send transactions)
-- **Drop-in compatible**: Works with existing tooling that uses standard RPC methods
-- **Specialized**: Designed specifically for data-intensive operations like `eth_getLogs`
-
-## Performance Advantages
-
-Early benchmarks show that HyperRPC can deliver up to **5x performance improvement** for data-intensive operations compared to traditional nodes like `geth`, `erigon`, and `reth`.
-
-This performance boost is particularly noticeable for:
-
-- Historical data queries
-- Log event filtering
-- Block and transaction retrievals
-- Analytics applications
-
-## Supported Methods
-
-HyperRPC currently supports the following Ethereum JSON-RPC methods:
-
-| Category             | Methods                                                                                                                                                 |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Chain Data**       | `eth_chainId``eth_blockNumber`                                                                                                                    |
-| **Block Data**       | `eth_getBlockByNumber``eth_getBlockByHash``eth_getBlockReceipts`                                                                            |
-| **Transaction Data** | `eth_getTransactionByHash``eth_getTransactionByBlockHashAndIndex``eth_getTransactionByBlockNumberAndIndex``eth_getTransactionReceipt` |
-| **Event Logs**       | `eth_getLogs`                                                                                                                                           |
-| **Traces**           | `trace_block` (only on select chains)                                                                                  |
-
-## Supported Networks
-
-HyperRPC is available across numerous EVM-compatible networks. For the most up-to-date list of supported chains, please see our Supported Networks page.
-
-## Getting Started
-
-To start using HyperRPC:
-
-1. **Get Access**:
-
-   - Visit our Supported Networks page to find all available HyperRPC endpoints
-   - Each network has a ready-to-use URL that you can start using immediately
-
-2. **Add Your API Token** (recommended):
-
-   - Requests without an API token will be rate limited starting **June 2025** (same timeline as HyperSync).
-   - Append your token to the endpoint URL. Example:
-
-     ```text
-     https://100.rpc.hypersync.xyz/
-     ```
-
-   - If you don't have a token yet, you can generate one through the Envio Dashboard.
-
-3. **Use Like a Standard RPC**:
-
-   ```javascript
-   // Example: Fetching logs with HyperRPC
-   const response = await fetch("https://100.rpc.hypersync.xyz/", {
-     method: "POST",
-     headers: { "Content-Type": "application/json" },
-     body: JSON.stringify({
-       jsonrpc: "2.0",
-       id: 1,
-       method: "eth_getLogs",
-       params: [
-         {
-           fromBlock: "0x1000000",
-           toBlock: "0x1000100",
-           address: "0xYourContractAddress",
-         },
-       ],
-     }),
-   });
-   ```
-
-4. **Provide Feedback**:
-   Your testing and feedback are incredibly valuable as we continue to improve HyperRPC. Let us know about your experience in our Discord.
-
-## Development Status
-
-:::caution Important Notice
-
-- HyperRPC is under active development to further improve performance and stability
-- It is designed for read-only operations and does not support all standard RPC methods
-- It has not yet undergone formal security audits
-- We welcome questions and feedback in our Discord
-  :::
-
----
-
-## Hyperrpc Supported Networks
-
-**File:** `HyperRPC/hyperrpc-supported-networks.md`
-
-:::note
-Please note we are rapidly adding new supported networks. If you don't see your network here or would like us to add a network to HyperRPC, pop us a message in Discord.
-:::
-
-:::caution API Tokens Recommended
-Requests without an API token will be rate limited starting **June 2025** (following the same schedule as HyperSync). Append your token to the endpoint URL to maintain full speed:
-
-```text
-https://100.rpc.hypersync.xyz/
-```
-:::
-
-Here is a table of the currently supported networks on HyperRPC and their respective URL endpoints.
-
-
-| Network Name         | Network ID | URL                                                                                 | Supports Traces |
-| -------------------- | ---------- | ----------------------------------------------------------------------------------- | --------------- |
-| Abstract             | 2741       | https://abstract.rpc.hypersync.xyz or https://2741.rpc.hypersync.xyz                |                 |
-| Arbitrum             | 42161      | https://arbitrum.rpc.hypersync.xyz or https://42161.rpc.hypersync.xyz               |                 |
-| Arbitrum Nova        | 42170      | https://arbitrum-nova.rpc.hypersync.xyz or https://42170.rpc.hypersync.xyz          |                 |
-| Arbitrum Sepolia     | 421614     | https://arbitrum-sepolia.rpc.hypersync.xyz or https://421614.rpc.hypersync.xyz      |                 |
-| Aurora               | 1313161554 | https://aurora.rpc.hypersync.xyz or https://1313161554.rpc.hypersync.xyz            |                 |
-| Aurora Turbo         | 1313161567 | https://aurora-turbo.rpc.hypersync.xyz or https://1313161567.rpc.hypersync.xyz      |                 |
-| Avalanche            | 43114      | https://avalanche.rpc.hypersync.xyz or https://43114.rpc.hypersync.xyz              |                 |
-| Base                 | 8453       | https://base.rpc.hypersync.xyz or https://8453.rpc.hypersync.xyz                    |                 |
-| Base Sepolia         | 84532      | https://base-sepolia.rpc.hypersync.xyz or https://84532.rpc.hypersync.xyz           |                 |
-| Berachain            | 80094      | https://berachain.rpc.hypersync.xyz or https://80094.rpc.hypersync.xyz              |                 |
-| Berachain Bartio     | 80084      | https://berachain-bartio.rpc.hypersync.xyz or https://80084.rpc.hypersync.xyz       |                 |
-| Blast                | 81457      | https://blast.rpc.hypersync.xyz or https://81457.rpc.hypersync.xyz                  |                 |
-| Blast Sepolia        | 168587773  | https://blast-sepolia.rpc.hypersync.xyz or https://168587773.rpc.hypersync.xyz      |                 |
-| Boba                 | 288        | https://boba.rpc.hypersync.xyz or https://288.rpc.hypersync.xyz                     |                 |
-| Bsc                  | 56         | https://bsc.rpc.hypersync.xyz or https://56.rpc.hypersync.xyz                       |                 |
-| Bsc Testnet          | 97         | https://bsc-testnet.rpc.hypersync.xyz or https://97.rpc.hypersync.xyz               |                 |
-| Celo                 | 42220      | https://celo.rpc.hypersync.xyz or https://42220.rpc.hypersync.xyz                   |                 |
-| Chainweb Testnet 20  | 5920       | https://chainweb-testnet-20.rpc.hypersync.xyz or https://5920.rpc.hypersync.xyz     |                 |
-| Chainweb Testnet 21  | 5921       | https://chainweb-testnet-21.rpc.hypersync.xyz or https://5921.rpc.hypersync.xyz     |                 |
-| Chiliz               | 88888      | https://chiliz.rpc.hypersync.xyz or https://88888.rpc.hypersync.xyz                 |                 |
-| Citrea Testnet       | 5115       | https://citrea-testnet.rpc.hypersync.xyz or https://5115.rpc.hypersync.xyz          |                 |
-| Curtis               | 33111      | https://curtis.rpc.hypersync.xyz or https://33111.rpc.hypersync.xyz                 |                 |
-| Cyber                | 7560       | https://cyber.rpc.hypersync.xyz or https://7560.rpc.hypersync.xyz                   |                 |
-| Eth Traces           | 1          | https://eth-traces.rpc.hypersync.xyz or https://1-traces.rpc.hypersync.xyz          |                 |
-| Ethereum Mainnet     | 1          | https://eth.rpc.hypersync.xyz or https://1.rpc.hypersync.xyz                        |                 |
-| Fantom               | 250        | https://fantom.rpc.hypersync.xyz or https://250.rpc.hypersync.xyz                   |                 |
-| Flare                | 14         | https://flare.rpc.hypersync.xyz or https://14.rpc.hypersync.xyz                     |                 |
-| Fraxtal              | 252        | https://fraxtal.rpc.hypersync.xyz or https://252.rpc.hypersync.xyz                  |                 |
-| Fuji                 | 43113      | https://fuji.rpc.hypersync.xyz or https://43113.rpc.hypersync.xyz                   |                 |
-| Galadriel Devnet     | 696969     | https://galadriel-devnet.rpc.hypersync.xyz or https://696969.rpc.hypersync.xyz      |                 |
-| Gnosis               | 100        | https://gnosis.rpc.hypersync.xyz or https://100.rpc.hypersync.xyz                   |                 |
-| Gnosis Chiado        | 10200      | https://gnosis-chiado.rpc.hypersync.xyz or https://10200.rpc.hypersync.xyz          |                 |
-| Gnosis Traces        | 100        | https://gnosis-traces.rpc.hypersync.xyz or https://100-traces.rpc.hypersync.xyz     |                 |
-| Harmony Shard 0      | 1666600000 | https://harmony-shard-0.rpc.hypersync.xyz or https://1666600000.rpc.hypersync.xyz   |                 |
-| Holesky              | 17000      | https://holesky.rpc.hypersync.xyz or https://17000.rpc.hypersync.xyz                |                 |
-| Hyperliquid          | 645749     | https://hyperliquid.rpc.hypersync.xyz or https://645749.rpc.hypersync.xyz           |                 |
-| Ink                  | 57073      | https://ink.rpc.hypersync.xyz or https://57073.rpc.hypersync.xyz                    |                 |
-| Kroma                | 255        | https://kroma.rpc.hypersync.xyz or https://255.rpc.hypersync.xyz                    |                 |
-| Linea                | 59144      | https://linea.rpc.hypersync.xyz or https://59144.rpc.hypersync.xyz                  |                 |
-| Lisk                 | 1135       | https://lisk.rpc.hypersync.xyz or https://1135.rpc.hypersync.xyz                    |                 |
-| Lukso                | 42         | https://lukso.rpc.hypersync.xyz or https://42.rpc.hypersync.xyz                     |                 |
-| Lukso Testnet        | 4201       | https://lukso-testnet.rpc.hypersync.xyz or https://4201.rpc.hypersync.xyz           |                 |
-| Manta                | 169        | https://manta.rpc.hypersync.xyz or https://169.rpc.hypersync.xyz                    |                 |
-| Mantle               | 5000       | https://mantle.rpc.hypersync.xyz or https://5000.rpc.hypersync.xyz                  |                 |
-| Megaeth Testnet      | 6342       | https://megaeth-testnet.rpc.hypersync.xyz or https://6342.rpc.hypersync.xyz         |                 |
-| Merlin               | 4200       | https://merlin.rpc.hypersync.xyz or https://4200.rpc.hypersync.xyz                  |                 |
-| Metall2              | 1750       | https://metall2.rpc.hypersync.xyz or https://1750.rpc.hypersync.xyz                 |                 |
-| Mev Commit           | 17864      | https://mev-commit.rpc.hypersync.xyz or https://17864.rpc.hypersync.xyz             |                 |
-| Mode                 | 34443      | https://mode.rpc.hypersync.xyz or https://34443.rpc.hypersync.xyz                   |                 |
-| Monad Testnet        | 10143      | https://monad-testnet.rpc.hypersync.xyz or https://10143.rpc.hypersync.xyz          |                 |
-| Moonbase Alpha       | 1287       | https://moonbase-alpha.rpc.hypersync.xyz or https://1287.rpc.hypersync.xyz          |                 |
-| Moonbeam             | 1284       | https://moonbeam.rpc.hypersync.xyz or https://1284.rpc.hypersync.xyz                |                 |
-| Morph                | 2818       | https://morph.rpc.hypersync.xyz or https://2818.rpc.hypersync.xyz                   |                 |
-| Opbnb                | 204        | https://opbnb.rpc.hypersync.xyz or https://204.rpc.hypersync.xyz                    |                 |
-| Optimism             | 10         | https://optimism.rpc.hypersync.xyz or https://10.rpc.hypersync.xyz                  |                 |
-| Optimism Sepolia     | 11155420   | https://optimism-sepolia.rpc.hypersync.xyz or https://11155420.rpc.hypersync.xyz    |                 |
-| Plume                | 98866      | https://plume.rpc.hypersync.xyz or https://98866.rpc.hypersync.xyz                  |                 |
-| Polygon              | 137        | https://polygon.rpc.hypersync.xyz or https://137.rpc.hypersync.xyz                  |                 |
-| Polygon Amoy         | 80002      | https://polygon-amoy.rpc.hypersync.xyz or https://80002.rpc.hypersync.xyz           |                 |
-| Polygon zkEVM        | 1101       | https://polygon-zkevm.rpc.hypersync.xyz or https://1101.rpc.hypersync.xyz           |                 |
-| Rootstock            | 30         | https://rootstock.rpc.hypersync.xyz or https://30.rpc.hypersync.xyz                 |                 |
-| Saakuru              | 7225878    | https://saakuru.rpc.hypersync.xyz or https://7225878.rpc.hypersync.xyz              |                 |
-| Scroll               | 534352     | https://scroll.rpc.hypersync.xyz or https://534352.rpc.hypersync.xyz                |                 |
-| Sepolia              | 11155111   | https://sepolia.rpc.hypersync.xyz or https://11155111.rpc.hypersync.xyz             |                 |
-| Shimmer Evm          | 148        | https://shimmer-evm.rpc.hypersync.xyz or https://148.rpc.hypersync.xyz              |                 |
-| Soneium              | 1868       | https://soneium.rpc.hypersync.xyz or https://1868.rpc.hypersync.xyz                 |                 |
-| Sonic                | 146        | https://sonic.rpc.hypersync.xyz or https://146.rpc.hypersync.xyz                    |                 |
-| Sophon               | 50104      | https://sophon.rpc.hypersync.xyz or https://50104.rpc.hypersync.xyz                 |                 |
-| Sophon Testnet       | 531050104  | https://sophon-testnet.rpc.hypersync.xyz or https://531050104.rpc.hypersync.xyz     |                 |
-| Superseed            | 5330       | https://superseed.rpc.hypersync.xyz or https://5330.rpc.hypersync.xyz               |                 |
-| Swell                | 1923       | https://swell.rpc.hypersync.xyz or https://1923.rpc.hypersync.xyz                   |                 |
-| Tangle               | 5845       | https://tangle.rpc.hypersync.xyz or https://5845.rpc.hypersync.xyz                  |                 |
-| Taraxa               | 841        | https://taraxa.rpc.hypersync.xyz or https://841.rpc.hypersync.xyz                   |                 |
-| Unichain             | 130        | https://unichain.rpc.hypersync.xyz or https://130.rpc.hypersync.xyz                 |                 |
-| Unichain Sepolia     | 1301       | https://unichain-sepolia.rpc.hypersync.xyz or https://1301.rpc.hypersync.xyz        |                 |
-| Worldchain           | 480        | https://worldchain.rpc.hypersync.xyz or https://480.rpc.hypersync.xyz               |                 |
-| Xdc                  | 50         | https://xdc.rpc.hypersync.xyz or https://50.rpc.hypersync.xyz                       |                 |
-| Xdc Testnet          | 51         | https://xdc-testnet.rpc.hypersync.xyz or https://51.rpc.hypersync.xyz               |                 |
-| Zeta                 | 7000       | https://zeta.rpc.hypersync.xyz or https://7000.rpc.hypersync.xyz                    |                 |
-| Zircuit              | 48900      | https://zircuit.rpc.hypersync.xyz or https://48900.rpc.hypersync.xyz                |                 |
-| ZKsync               | 324        | https://zksync.rpc.hypersync.xyz or https://324.rpc.hypersync.xyz                   |                 |
-| Zora                 | 7777777    | https://zora.rpc.hypersync.xyz or https://7777777.rpc.hypersync.xyz                 |                 |
 
 ---
 

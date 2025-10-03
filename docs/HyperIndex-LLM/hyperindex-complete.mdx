@@ -556,7 +556,7 @@ events:
         - timestamp
 ```
 
-See all possible options in the Interactive Schema Explorer or use IDE autocomplete for your help.
+See all possible options in the Config File Reference or use IDE autocomplete for your help.
 
 #### Global Field Selection
 
@@ -630,14 +630,11 @@ This is an advanced configuration option. When using a custom output directory, 
 :::
 
 
-## Interactive Schema Explorer
+## Configuration Schema Reference
 
 Explore detailed configuration schema parameters here:
 
-
-
-
-
+- See the full, deep-linkable reference: Config Schema Reference
 
 ---
 
@@ -1195,6 +1192,14 @@ These guides offer detailed recommendations on optimizing entity loading and ind
 
 ---
 
+## Block Handlers (new in v2.29)
+
+**File:** `Guides/block-handlers.md`
+
+Run logic on every block or an interval.
+
+---
+
 ## Multichain Indexing
 
 **File:** `Advanced/multichain-indexing.mdx`
@@ -1670,6 +1675,62 @@ When testing, you may need to reset your database:
 - **Schema Validation**: Use the Data tab to verify that relationships between entities are correctly established
 - **Performance Monitoring**: Watch for tables that grow unusually large, which might indicate inefficient indexing
 
+## Aggregations: local vs hosted (avoid the foot‑gun)
+
+When developing locally with Hasura, you may notice that GraphQL aggregate helpers (for example, count/sum-style aggregations) are available. On the hosted service, these aggregate endpoints are intentionally not exposed. Aggregations over large datasets can be very slow and unpredictable in production.
+
+The recommended approach is to compute and store aggregates at indexing time, not at query time. In practice this means maintaining counters, sums, and other rollups in entities as part of your event handlers, and then querying those precomputed values.
+
+### Example: indexing-time aggregation
+
+schema.graphql
+
+```graphql
+# singleton; you hardcode the id and load it in and out
+type GlobalState {
+  id: ID! # "global-state"
+  count: Int!
+}
+
+type Token {
+  id: ID! # incremental number
+  description: String!
+}
+```
+
+EventHandler.ts
+
+```typescript
+const globalStateId = "global-state";
+
+NftContract.Mint.handler(async ({event, context}) => {
+  const globalState = await context.GlobalState.get(globalStateId);
+
+  if (!globalState) {
+    context.log.error("global state doesn't exist");
+    return;
+  }
+
+  const incrementedTokenId = globalState.count + 1;
+
+  context.Token.set({
+    id: incrementedTokenId,
+    description: event.params.description,
+  });
+
+  context.GlobalState.set({
+    ...globalState,
+    count: incrementedTokenId,
+  });
+});
+```
+
+This pattern scales: you can keep per-entity counters, rolling windows (daily/hourly entities keyed by date), and top-N caches by updating entities as events arrive. Your queries then read these precomputed values directly, avoiding expensive runtime aggregations.
+
+#### Exceptional cases
+
+If runtime aggregate queries are a hard requirement for your use case, please reach out and we can evaluate options for your project on the hosted service. Contact us on Discord.
+
 ## Disable Hasura for Self-Hosted Indexers
 
 Starting from `envio@2.26.0` it's possible to disable Hasura integration for self-hosted indexers. To do so, set the `ENVIO_HASURA` environment variable to `false`.
@@ -1690,11 +1751,36 @@ All environment variables used by Envio must be prefixed with `ENVIO_`. This nam
 - Makes it clear which variables are used by the Envio indexer
 - Ensures consistency across different environments
 
+## Envio API Token (required for HyperSync)
+
+To ensure continued access to HyperSync, set an Envio API token in your environment.
+
+- Use `ENVIO_API_TOKEN` to provide your token at runtime
+- See the API Tokens guide for how to generate a token: API Tokens
+
+## Envio-specific environment variables
+
+The following variables are used by HyperIndex:
+
+- `ENVIO_API_TOKEN`: API token for HyperSync access (required for continued access in self-hosted deployments)
+- `ENVIO_HASURA`: Set to `false` to disable Hasura integration for self-hosted indexers
+
+- `MAX_BATCH_SIZE`: Size of the in-memory batch before writing to the database. Default: `5000`. Set to `1` to help isolate which event or data save is causing Postgres write errors.
+
+- `ENVIO_PG_PORT`: Port for the Postgres service used by HyperIndex during local development
+- `ENVIO_PG_PASSWORD`: Postgres password (self-hosted)
+- `ENVIO_PG_USER`: Postgres username (self-hosted)
+- `ENVIO_PG_DATABASE`: Postgres database name (self-hosted)
+- `ENVIO_PG_PUBLIC_SCHEMA`: Postgres schema name override for the generated/public schema
+
 ## Example Environment Variables
 
 Here are some commonly used environment variables:
 
 ```bash
+# Envio API Token (required for continued HyperSync access)
+ENVIO_API_TOKEN=your-secret-token
+
 # Blockchain RPC URL
 ENVIO_RPC_URL=https://arbitrum.direct.dev/your-api-key
 
@@ -1703,6 +1789,9 @@ ENVIO_START_BLOCK=12345678
 
 # Coingecko API key
 ENVIO_COINGECKO_API_KEY=api-key
+
+# In-memory batch size (default 5000)
+MAX_BATCH_SIZE=1
 ```
 
 ## Setting Environment Variables
@@ -1715,6 +1804,7 @@ For local development, you can set environment variables in several ways:
 
 ```bash
 # .env
+ENVIO_API_TOKEN=your-secret-token
 ENVIO_RPC_URL=https://arbitrum.direct.dev/your-api-key
 ENVIO_START_BLOCK=12345678
 ```
@@ -1722,6 +1812,7 @@ ENVIO_START_BLOCK=12345678
 2. Directly in your terminal:
 
 ```bash
+export ENVIO_API_TOKEN=your-secret-token
 export ENVIO_RPC_URL=https://arbitrum.direct.dev/your-api-key
 ```
 
@@ -2074,6 +2165,7 @@ Before self-hosting, ensure you have:
 - Sufficient storage for blockchain data and the indexer database
 - Adequate CPU and memory resources (requirements vary based on chains and indexing complexity)
 - Required HyperSync and/or RPC endpoints
+- Envio API token for HyperSync access (`ENVIO_API_TOKEN`) — required for continued access. See API Tokens.
 
 ## Getting Started
 
@@ -2093,6 +2185,7 @@ The compose file in that repository sets up three main services:
 
 The configuration uses environment variables with sensible defaults. For production, you should customize:
 
+- Envio API token (`ENVIO_API_TOKEN`)
 - Database credentials (`ENVIO_PG_PASSWORD`, `ENVIO_PG_USER`, etc.)
 - Hasura admin secret (`HASURA_GRAPHQL_ADMIN_SECRET`)
 - Resource limits based on your workload requirements
@@ -3486,6 +3579,108 @@ By carefully choosing and implementing the right price data strategy, you can bu
 
 ---
 
+## Scaffold-Eth-2 Envio Extension
+
+**File:** `Tutorials/tutorial-scaffold-eth-2.md`
+
+## Introduction
+
+The Scaffold-ETH 2 Envio extension makes indexing your deployed smart contracts as simple as possible. Generate a boilerplate indexer for your deployed contracts with a single click and start indexing their events immediately.
+
+With this extension, you get:
+- 🔍 **Automatic indexer generation** from your deployed contracts
+- 📊 **Status dashboard** with links to Envio metrics and database
+- 🔄 **One-click regeneration** to update the indexer when you deploy new contracts
+- 📈 **GraphQL API** for querying your indexed blockchain data
+
+## Prerequisites
+
+Before starting, ensure you have the following installed:
+
+- **Node.js v20** _(v20 or newer required)_
+- **pnpm** _(for Envio indexer)_
+- **Docker Desktop** _(required to run the Envio indexer locally)_
+- **Yarn** _(for Scaffold-ETH)_
+
+## Step 1: Create a New Scaffold-ETH 2 Project with Envio Extension
+
+To create a new Scaffold-ETH 2 project with the Envio extension already integrated:
+
+```bash
+npx create-eth@latest -e enviodev/scaffold-eth-2-extension
+```
+
+
+## Step 2: Start the Local Blockchain
+
+Navigate to your project directory and start the local blockchain:
+
+```bash
+cd your-project-name
+yarn chain
+```
+
+This will start a local blockchain node for development.
+
+## Step 3: Deploy Your Contracts
+
+In a new terminal window, navigate to your project directory and deploy the default smart contracts:
+
+```bash
+cd your-project-name
+yarn deploy
+```
+
+This will deploy the default contracts to the local blockchain. This step is optional and can also be done once you've created your own smart contracts and deployed them using `yarn deploy`.
+
+## Step 4: Start Scaffold-ETH Frontend
+
+From your project directory, start the Scaffold-ETH frontend:
+
+```bash
+yarn start
+```
+
+This will start the Scaffold-ETH frontend at `http://localhost:3000`.
+
+## Step 5: Generate the Indexer
+
+Navigate to the Envio page in your Scaffold-ETH frontend at `http://localhost:3000/envio` and click the **"Generate"** button. This should only be done once you've created a smart contract and ran `yarn deploy`. This will create the boilerplate indexer from your deployed contracts.
+
+
+
+The Envio page also includes a helpful "How to Use" section with step-by-step instructions.
+
+## Step 6: Start the Indexer
+
+Navigate to the Envio package directory and start the indexer:
+
+```bash
+cd packages/envio
+pnpm dev
+```
+
+This will begin indexing your contract events.
+
+## Regenerating the Indexer
+
+When you deploy new contracts or make changes to existing ones, you'll need to regenerate the indexer:
+
+### Via Frontend Dashboard
+1. Go to the Envio page at `http://localhost:3000/envio`
+2. Click "Generate" to regenerate the boilerplate indexer
+
+### Via Command Line
+```bash
+cd packages/envio
+pnpm update
+pnpm codegen
+```
+
+> **Note:** Regenerating will overwrite any custom handlers, config, and schema changes, creating a fresh boilerplate indexer based on your deployed contracts. After regenerating, you'll need to stop the running indexer (Ctrl+C) and restart it with `pnpm dev` for the changes to take effect.
+
+---
+
 ## Dynamic Contracts / Factories
 
 **File:** `Advanced/dynamic-contracts.md`
@@ -4198,6 +4393,8 @@ ERC20.Transfer.handlerWithLoader({
 Starting from `envio@2.27` all new indexers are created with preload optimization pre-configured by default.
 
 This optimization enables HyperIndex to efficiently preload entities used by handlers through batched database queries, while ensuring events are processed synchronously in their original order. When combined with the Effect API for external calls, this feature delivers performance improvements of multiple orders of magnitude compared to other indexing solutions.
+
+
 
 ## Configure
 
@@ -5530,6 +5727,495 @@ For any questions about using RPC with HyperIndex, please contact the Envio team
 
 ---
 
+## Config Schema Reference
+
+**File:** `Advanced/config-schema-reference.md`
+
+Static, deep-linkable reference for the `config.yaml` JSON Schema.
+
+> Tip: Use the Table of Contents to jump to a field or definition.
+
+
+## Top-level Properties
+
+- description
+- name (required)
+- ecosystem
+- schema
+- output
+- contracts
+- networks (required)
+- unordered_multichain_mode
+- event_decoder
+- rollback_on_reorg
+- save_full_history
+- field_selection
+- raw_events
+
+### description {#description}
+
+Description of the project
+
+- **type**: `string | null`
+
+
+Example (config.yaml):
+
+```yaml
+description: Greeter indexer
+```
+
+### name {#name}
+
+Name of the project
+
+- **type**: `string`
+
+
+Example (config.yaml):
+
+```yaml
+name: MyIndexer
+```
+
+### ecosystem {#ecosystem}
+
+Ecosystem of the project.
+
+- **type**: `anyOf(unknown | null)`
+
+Variants:
+- `1`: EcosystemTag
+- `2`: `null`
+
+
+Example (config.yaml):
+
+```yaml
+ecosystem: evm
+```
+
+### schema {#schema}
+
+Custom path to schema.graphql file
+
+- **type**: `string | null`
+
+
+Example (config.yaml):
+
+```yaml
+schema: ./schema.graphql
+```
+
+### output {#output}
+
+Path where the generated directory will be placed. By default it's 'generated' relative to the current working directory. If set, it'll be a path relative to the config file location.
+
+- **type**: `string | null`
+
+
+Example (config.yaml):
+
+```yaml
+output: ./generated
+```
+
+### contracts {#contracts}
+
+Global contract definitions that must contain all definitions except addresses. You can share a single handler/abi/event definitions for contracts across multiple chains.
+
+- **type**: `array | null`
+
+
+Example (config.yaml):
+
+```yaml
+contracts:
+  - name: Greeter
+    handler: src/EventHandlers.ts
+    events:
+      - event: "NewGreeting(address user, string greeting)"
+```
+
+### networks {#networks}
+
+Configuration of the blockchain networks that the project is deployed on.
+
+- **type**: `array&lt;unknown&gt;`
+- **items**: `unknown`
+- **items ref**: Network
+
+
+Example (config.yaml):
+
+```yaml
+networks:
+  - id: 1
+    start_block: 0
+    contracts:
+      - name: Greeter
+        address: 0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c
+```
+
+### unordered_multichain_mode {#unorderedmultichainmode}
+
+A flag to indicate if the indexer should use a single queue for all chains or a queue per chain (default: false)
+
+- **type**: `boolean | null`
+
+
+Example (config.yaml):
+
+```yaml
+unordered_multichain_mode: true
+```
+
+### event_decoder {#eventdecoder}
+
+The event decoder to use for the indexer (default: hypersync-client)
+
+- **type**: `anyOf(unknown | null)`
+
+Variants:
+- `1`: EventDecoder
+- `2`: `null`
+
+
+Example (config.yaml):
+
+```yaml
+event_decoder: hypersync-client
+```
+
+### rollback_on_reorg {#rollbackonreorg}
+
+A flag to indicate if the indexer should rollback to the last known valid block on a reorg. This currently incurs a performance hit on historical sync and is recommended to turn this off while developing (default: true)
+
+- **type**: `boolean | null`
+
+
+Example (config.yaml):
+
+```yaml
+rollback_on_reorg: true
+```
+
+### save_full_history {#savefullhistory}
+
+A flag to indicate if the indexer should save the full history of events. This is useful for debugging but will increase the size of the database (default: false)
+
+- **type**: `boolean | null`
+
+
+Example (config.yaml):
+
+```yaml
+save_full_history: false
+```
+
+### field_selection {#fieldselection}
+
+Select the block and transaction fields to include in all events globally
+
+- **type**: `anyOf(unknown | null)`
+
+Variants:
+- `1`: FieldSelection
+- `2`: `null`
+
+
+Example (config.yaml):
+
+```yaml
+field_selection:
+  transaction_fields:
+    - hash
+  block_fields:
+    - timestamp
+```
+
+### raw_events {#rawevents}
+
+If true, the indexer will store the raw event data in the database. This is useful for debugging, but will increase the size of the database and the amount of time it takes to process events (default: false)
+
+- **type**: `boolean | null`
+
+
+Example (config.yaml):
+
+```yaml
+raw_events: true
+```
+
+## Definitions
+
+### EcosystemTag {#ecosystemtag}
+
+- **type**: `enum (1 values)`
+- **allowed**: `evm`
+
+Example (config.yaml):
+
+```yaml
+ecosystem: evm
+```
+
+### GlobalContract_for_ContractConfig {#globalcontractforcontractconfig}
+
+- **type**: `object`
+- **required**: `name`, `handler`, `events`
+
+Properties:
+- `name`: `string` – A unique project-wide name for this contract (no spaces)
+- `abi_file_path`: `string | null` – Relative path (from config) to a json abi. If this is used then each configured event should simply be referenced by its name
+- `handler`: `string` – The relative path to a file where handlers are registered for the given contract
+- `events`: `array&lt;unknown&gt;` – A list of events that should be indexed on this contract
+
+Example (config.yaml):
+
+```yaml
+contracts:
+  - name: Greeter
+    handler: src/EventHandlers.ts
+    events:
+      - event: "NewGreeting(address user, string greeting)"
+```
+
+### EventConfig {#eventconfig}
+
+- **type**: `object`
+- **required**: `event`
+
+Properties:
+- `event`: `string` – The human readable signature of an event 'eg. Transfer(address indexed from, address indexed to, uint256 value)' OR a reference to the name of an event in a json ABI file defined in your contract config. A provided signature will take precedence over what is defined in the json ABI
+- `name`: `string | null` – Name of the event in the HyperIndex generated code. When ommitted, the event field will be used. Should be unique per contract
+- `field_selection`: `anyOf(unknown | null)` – Select the block and transaction fields to include in the specific event
+
+Example (config.yaml):
+
+```yaml
+contracts:
+  - name: Greeter
+    handler: src/EventHandlers.ts
+    events:
+      - event: "Assigned(address indexed recipientId, uint256 amount, address token)"
+        name: Assigned
+        field_selection:
+          transaction_fields:
+            - transactionIndex
+```
+
+### FieldSelection {#fieldselection}
+
+- **type**: `object`
+
+Properties:
+- `transaction_fields`: `array | null` – The transaction fields to include in the event, or in all events if applied globally
+- `block_fields`: `array | null` – The block fields to include in the event, or in all events if applied globally
+
+Example (config.yaml):
+
+```yaml
+events:
+  - event: "Assigned(address indexed user, uint256 amount)"
+    field_selection:
+      transaction_fields:
+        - transactionIndex
+      block_fields:
+        - timestamp
+```
+
+### TransactionField {#transactionfield}
+
+- **type**: `enum (33 values)`
+- **allowed**: `transactionIndex`, `hash`, `from`, `to`, `gas`, `gasPrice`, `maxPriorityFeePerGas`, `maxFeePerGas`, `cumulativeGasUsed`, `effectiveGasPrice`, `gasUsed`, `input`, `nonce`, `value`, `v`, `r`, `s`, `contractAddress`, `logsBloom`, `root`, `status`, `yParity`, `chainId`, `accessList`, `maxFeePerBlobGas`, `blobVersionedHashes`, `kind`, `l1Fee`, `l1GasPrice`, `l1GasUsed`, `l1FeeScalar`, `gasUsedForL1`, `authorizationList`
+
+### BlockField {#blockfield}
+
+- **type**: `enum (24 values)`
+- **allowed**: `parentHash`, `nonce`, `sha3Uncles`, `logsBloom`, `transactionsRoot`, `stateRoot`, `receiptsRoot`, `miner`, `difficulty`, `totalDifficulty`, `extraData`, `size`, `gasLimit`, `gasUsed`, `uncles`, `baseFeePerGas`, `blobGasUsed`, `excessBlobGas`, `parentBeaconBlockRoot`, `withdrawalsRoot`, `l1BlockNumber`, `sendCount`, `sendRoot`, `mixHash`
+
+### Network {#network}
+
+- **type**: `object`
+- **required**: `id`, `start_block`, `contracts`
+
+Properties:
+- `id`: `integer` – The public blockchain network ID.
+- `rpc_config`: `anyOf(unknown | null)` – RPC configuration for utilizing as the network's data-source. Typically optional for chains with HyperSync support, which is highly recommended. HyperSync dramatically enhances performance, providing up to a 1000x speed boost over traditional RPC.
+- `rpc`: `anyOf(unknown | null)` – RPC configuration for your indexer. If not specified otherwise, for networks supported by HyperSync, RPC serves as a fallback for added reliability. For others, it acts as the primary data-source. HyperSync offers significant performance improvements, up to a 1000x faster than traditional RPC.
+- `hypersync_config`: `anyOf(unknown | null)` – Optional HyperSync Config for additional fine-tuning
+- `confirmed_block_threshold`: `integer | null` – The number of blocks from the head that the indexer should account for in case of reorgs.
+- `start_block`: `integer` – The block at which the indexer should start ingesting data
+- `end_block`: `integer | null` – The block at which the indexer should terminate.
+- `contracts`: `array&lt;unknown&gt;` – All the contracts that should be indexed on the given network
+
+Example (config.yaml):
+
+```yaml
+networks:
+  - id: 1
+    start_block: 0
+    end_block: 19000000
+    contracts:
+      - name: Greeter
+        address: 0x1111111111111111111111111111111111111111
+```
+
+### RpcConfig {#rpcconfig}
+
+- **type**: `object`
+- **required**: `url`
+
+Properties:
+- `url`: `anyOf(string | array&lt;string&gt;)` – URL of the RPC endpoint. Can be a single URL or an array of URLs. If multiple URLs are provided, the first one will be used as the primary RPC endpoint and the rest will be used as fallbacks.
+- `initial_block_interval`: `integer | null` – The starting interval in range of blocks per query
+- `backoff_multiplicative`: `number | null` – After an RPC error, how much to scale back the number of blocks requested at once
+- `acceleration_additive`: `integer | null` – Without RPC errors or timeouts, how much to increase the number of blocks requested by for the next batch
+- `interval_ceiling`: `integer | null` – Do not further increase the block interval past this limit
+- `backoff_millis`: `integer | null` – After an error, how long to wait before retrying
+- `fallback_stall_timeout`: `integer | null` – If a fallback RPC is provided, the amount of time in ms to wait before kicking off the next provider
+- `query_timeout_millis`: `integer | null` – How long to wait before cancelling an RPC request
+
+Example (config.yaml):
+
+```yaml
+networks:
+  - id: 1
+    rpc_config:
+      url: https://eth.llamarpc.com
+      initial_block_interval: 1000
+```
+
+### NetworkRpc {#networkrpc}
+
+- **type**: `anyOf(string | unknown | array&lt;unknown&gt;)`
+
+Variants:
+- `1`: `string`
+- `2`: Rpc
+- `3`: `array&lt;unknown&gt;`
+
+Example (config.yaml):
+
+```yaml
+networks:
+  - id: 1
+    rpc: https://eth.llamarpc.com
+```
+
+### Rpc {#rpc}
+
+- **type**: `object`
+- **required**: `url`, `for`
+
+Properties:
+- `url`: `string` – The RPC endpoint URL.
+- `for`: `unknown` – Determines if this RPC is for historical sync, real-time chain indexing, or as a fallback.
+- `initial_block_interval`: `integer | null` – The starting interval in range of blocks per query
+- `backoff_multiplicative`: `number | null` – After an RPC error, how much to scale back the number of blocks requested at once
+- `acceleration_additive`: `integer | null` – Without RPC errors or timeouts, how much to increase the number of blocks requested by for the next batch
+- `interval_ceiling`: `integer | null` – Do not further increase the block interval past this limit
+- `backoff_millis`: `integer | null` – After an error, how long to wait before retrying
+- `fallback_stall_timeout`: `integer | null` – If a fallback RPC is provided, the amount of time in ms to wait before kicking off the next provider
+- `query_timeout_millis`: `integer | null` – How long to wait before cancelling an RPC request
+
+Example (config.yaml):
+
+```yaml
+networks:
+  - id: 1
+    rpc:
+      - url: https://eth.llamarpc.com
+        for: sync
+```
+
+### For {#for}
+
+- **type**: `oneOf(const sync | const fallback)`
+
+Variants:
+- `1`: `const sync`
+- `2`: `const fallback`
+
+### HypersyncConfig {#hypersyncconfig}
+
+- **type**: `object`
+- **required**: `url`
+
+Properties:
+- `url`: `string` – URL of the HyperSync endpoint (default: The most performant HyperSync endpoint for the network)
+
+Example (config.yaml):
+
+```yaml
+networks:
+  - id: 1
+    hypersync_config:
+      url: https://eth.hypersync.xyz
+```
+
+### NetworkContract_for_ContractConfig {#networkcontractforcontractconfig}
+
+- **type**: `object`
+- **required**: `name`
+
+Properties:
+- `name`: `string` – A unique project-wide name for this contract if events and handler are defined OR a reference to the name of contract defined globally at the top level
+- `address`: `unknown` – A single address or a list of addresses to be indexed. This can be left as null in the case where this contracts addresses will be registered dynamically.
+- `abi_file_path`: `string | null` – Relative path (from config) to a json abi. If this is used then each configured event should simply be referenced by its name
+- `handler`: `string` – The relative path to a file where handlers are registered for the given contract
+- `events`: `array&lt;unknown&gt;` – A list of events that should be indexed on this contract
+
+Example (config.yaml):
+
+```yaml
+networks:
+  - id: 1
+    start_block: 0
+    contracts:
+      - name: Greeter
+        address:
+          - 0x1111111111111111111111111111111111111111
+        handler: src/EventHandlers.ts
+        events:
+          - event: Transfer(address indexed from, address indexed to, uint256 value)
+```
+
+### Addresses {#addresses}
+
+- **type**: `anyOf(anyOf(string | integer) | array&lt;anyOf(string | integer)&gt;)`
+
+Variants:
+- `1`: `anyOf(string | integer)`
+- `2`: `array&lt;anyOf(string | integer)&gt;`
+
+Example (config.yaml):
+
+```yaml
+networks:
+  - id: 1
+    contracts:
+      - name: Greeter
+        address:
+          - 0x1111111111111111111111111111111111111111
+          - 0x2222222222222222222222222222222222222222
+```
+
+### EventDecoder {#eventdecoder}
+
+- **type**: `enum (2 values)`
+- **allowed**: `viem`, `hypersync-client`
+
+Example (config.yaml):
+
+```yaml
+event_decoder: hypersync-client
+```
+
+---
+
 ## Envio Command Line Interface
 
 **File:** `Guides/cli-commands.md`
@@ -6256,6 +6942,97 @@ The generated files directly reflect the structure defined in your setup files:
 Generated files form the critical bridge between your indexing specifications and the actual runtime execution. While you shouldn't modify them directly, understanding their structure and purpose can help you debug issues and optimize your indexing process.
 
 If you encounter persistent errors in generated files, ensure your configuration, schema, and handlers follow Envio's best practices, or contact support for assistance.
+
+---
+
+## Metadata Query
+
+**File:** `Advanced/metadata-query.md`
+
+Starting from `envio@2.28` HyperIndex exposes an official `_meta` query to get indexing metadata per chain.
+
+```graphql
+{
+  _meta {
+    chainId
+    progressBlock
+    eventsProcessed
+    bufferBlock
+    firstEventBlock
+    sourceBlock
+    readyAt
+    isReady
+    startBlock
+    endBlock
+  }
+}
+```
+
+Result:
+
+```json
+{
+  "data": {
+    "_meta": [
+      {
+        "chainId": 1,
+        "progressBlock": 22817138,
+        "eventsProcessed": 2380000,
+        "bufferBlock": 22820499,
+        "firstEventBlock": 21688545,
+        "sourceBlock": 23368264,
+        "readyAt": null,
+        "isReady": false,
+        "startBlock": 0,
+        "endBlock": null
+      },
+      {
+        "chainId": 10,
+        "progressBlock": 137848820,
+        "eventsProcessed": 2455000,
+        "bufferBlock": 137873621,
+        "firstEventBlock": 130990676,
+        "sourceBlock": 141168975,
+        "readyAt": null,
+        "isReady": false,
+        "startBlock": 0,
+        "endBlock": null
+      }
+    ]
+  }
+}
+```
+
+## Usage
+
+You can use this query to track the indexing progress for each chain. For example, wait until the block data is ready before querying actuall data, building custom dashboards, health checks or sending notifications.
+
+## Metadata fields
+
+### Configuration
+
+The fields are populated on the indexer startup and don't change during the indexer process.
+
+- `chainId` - Metadata for the Chain ID. The metadata is sorted by chainId in ascending order. You can use `_meta(where: { chainId: { _eq: 1 } })` to get the metadata for a specific chain.
+- `startBlock` - Start block number from `config.yaml`
+- `endBlock` - End block number from `config.yaml`
+
+### Transactional
+
+The fields are updated in the batch write transaction, and guaranteed to be written to the Database at the same time. This means that the `progressBlock` and `eventsProcessed` will increase at the same time as the data for the processed events is written to the Database and available for querying.
+
+- `progressBlock` - Block number fully processed and written to the DB
+- `eventsProcessed` - Number of processed events and written to the DB. (not reorg resistant)
+
+### Throttled
+
+The fields are updated outside of the batch transaction and throttled to avoid performance overhead. There might be a small delay between the event processing and the metadata update.
+
+- `bufferBlock` - Block number of the latest event ready for processing
+- `firstEventBlock` - Block number of the first processed event for the chain
+- `sourceBlock` - The latest known block number of the actively using data source
+- `readyAt` - Timestamp when the chain finished historical sync or reached End Block
+- `isReady` - Whether the chain finished historical sync or reached End Block
 
 ---
 

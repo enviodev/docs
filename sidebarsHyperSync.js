@@ -15,15 +15,15 @@ module.exports = {
       collapsed: false,
       items: ["tutorial-address-transactions"],
     },
-    {
-      type: "category",
-      label: "HyperRPC",
-      collapsed: false,
-      items: [
-        "HyperRPC/overview-hyperrpc",
-        "HyperRPC/hyperrpc-supported-networks",
-      ],
-    },
+    // {
+    //   type: "category",
+    //   label: "HyperRPC",
+    //   collapsed: false,
+    //   items: [
+    //     "HyperRPC/overview-hyperrpc",
+    //     "HyperRPC/hyperrpc-supported-networks",
+    //   ],
+    // },
     {
       type: "category",
       label: "HyperFuel",

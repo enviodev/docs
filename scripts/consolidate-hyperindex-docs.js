@@ -241,33 +241,40 @@ function consolidateHyperIndexDocs() {
 
 // Function to process files in a given order
 function processFilesInOrder(sourceDir, fileOrder, outputFile) {
-  // Determine if this is HyperIndex or HyperSync based on the source directory
+  // Determine if this is HyperIndex, HyperSync, or HyperRPC based on the source directory
   const isHyperIndex = sourceDir.includes("HyperIndex");
   const isHyperSync = sourceDir.includes("HyperSync");
+  const isHyperRPC = sourceDir.includes("HyperRPC");
 
   let consolidatedContent = `---
-id: ${isHyperIndex ? "hyperindex-complete" : "hypersync-complete"}
+id: ${isHyperIndex ? "hyperindex-complete" : isHyperSync ? "hypersync-complete" : "hyperrpc-complete"}
 title: ${
     isHyperIndex
       ? "HyperIndex Complete Documentation"
-      : "HyperSync Complete Documentation"
+      : isHyperSync
+      ? "HyperSync Complete Documentation"
+      : "HyperRPC Complete Documentation"
   }
 sidebar_label: ${
     isHyperIndex
       ? "HyperIndex Complete Documentation"
-      : "HyperSync Complete Documentation"
+      : isHyperSync
+      ? "HyperSync Complete Documentation"
+      : "HyperRPC Complete Documentation"
   }
-slug: /${isHyperIndex ? "hyperindex-complete" : "hypersync-complete"}
+slug: /${isHyperIndex ? "hyperindex-complete" : isHyperSync ? "hypersync-complete" : "hyperrpc-complete"}
 ---
 
 # ${
     isHyperIndex
       ? "HyperIndex Complete Documentation"
-      : "HyperSync Complete Documentation"
+      : isHyperSync
+      ? "HyperSync Complete Documentation"
+      : "HyperRPC Complete Documentation"
   }
 
 This document contains all ${
-    isHyperIndex ? "HyperIndex" : "HyperSync"
+    isHyperIndex ? "HyperIndex" : isHyperSync ? "HyperSync" : "HyperRPC"
   } documentation consolidated into a single file for LLM consumption.
 
 ---
@@ -395,6 +402,41 @@ function consolidateHyperSyncDocs() {
   return processFilesInOrder(hyperSyncDir, fileOrder, outputFile);
 }
 
+// Function to consolidate all HyperRPC docs
+function consolidateHyperRPCDocs() {
+  const hyperRPCDir = path.join(__dirname, "../docs/HyperRPC");
+  const outputFile = path.join(
+    __dirname,
+    "../docs/HyperRPC-LLM/hyperrpc-complete.mdx"
+  );
+
+  // Create output directory if it doesn't exist
+  const outputDir = path.dirname(outputFile);
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir, { recursive: true });
+  }
+
+  // Get file order from sidebar configuration
+  const sidebarPath = path.join(__dirname, "../sidebarsHyperRPC.js");
+  const fileOrder = parseHyperSyncSidebarOrder(sidebarPath); // Reuse HyperSync parser since HyperRPC has simple sidebar
+
+  if (fileOrder.length === 0) {
+    console.error(
+      "Failed to parse HyperRPC sidebar order, falling back to alphabetical order"
+    );
+    const markdownFiles = findMarkdownFiles(hyperRPCDir);
+    const fallbackOrder = markdownFiles.map((file) =>
+      path.relative(hyperRPCDir, file)
+    );
+    return processFilesInOrder(hyperRPCDir, fallbackOrder, outputFile);
+  }
+
+  console.log(
+    `Processing HyperRPC documentation in logical order from sidebar...`
+  );
+  return processFilesInOrder(hyperRPCDir, fileOrder, outputFile);
+}
+
 // Main execution
 if (require.main === module) {
   const args = process.argv.slice(2);
@@ -409,14 +451,21 @@ if (require.main === module) {
     consolidateHyperSyncDocs();
   }
 
+  if (args.includes("--hyperrpc")) {
+    console.log("Consolidating HyperRPC documentation...");
+    consolidateHyperRPCDocs();
+  }
+
   if (args.includes("--all")) {
     console.log("Consolidating all documentation...");
     consolidateHyperIndexDocs();
     consolidateHyperSyncDocs();
+    consolidateHyperRPCDocs();
   }
 }
 
 module.exports = {
   consolidateHyperIndexDocs,
   consolidateHyperSyncDocs,
+  consolidateHyperRPCDocs,
 };
