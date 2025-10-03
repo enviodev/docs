@@ -6,47 +6,17 @@ const TITLE = "Envio Showcase";
 const DESCRIPTION = "Explore live demos built with HyperIndex and HyperSync.";
 
 const tags = {
-    dex: "DEX",
     hyperindex: "HyperIndex",
     hypersync: "HyperSync",
-    product: "Product",
-    openSource: "Open Source",
-    lending: "Lending",
-    oracle: "Oracle",
-    nft: "NFT",
-    analytics: "Analytics",
-    dashboard: "Dashboard",
-    defi: "DeFi",
-    wallet: "Wallet",
-    governance: "Governance",
-    tools: "Tools",
-    gamefi: "GameFi",
-    social: "Social",
-    marketplace: "Marketplace",
-    launchpad: "Launchpad",
-    aggregator: "Aggregator",
-    infrastructure: "Infrastructure",
-    education: "Education",
-    news: "News",
-    data: "Data",
-    charts: "Charts",
-    widgets: "Widgets",
-    portfolio: "Portfolio",
-    tracking: "Tracking",
-    alerts: "Alerts",
-    research: "Research",
-    stablecoin: "Stablecoin",
-    tui: "TUI",
 };
 
 const sites = [
     {
         title: "v4.xyz",
-        description:
-            "The hub for Uniswap V4 data, analytics, and insights—powered by HyperIndex by Envio.",
+        description: "The hub for Uniswap V4 data, analytics, and insights.",
         image: "/img/showcase/www.v4.xyz-scroll_original.gif",
         source: "https://v4.xyz",
-        tags: [tags.dex, tags.hyperindex, tags.defi],
+        tags: [tags.hyperindex],
     },
     {
         title: "Stable Volume",
@@ -54,20 +24,15 @@ const sites = [
             "A real-time dashboard for monitoring stablecoin transactions across 10+ chains.",
         image: "/img/showcase/www.stablevolume.com-scroll_original.gif",
         source: "https://www.stablevolume.com/",
-        tags: [
-            tags.analytics,
-            tags.hyperindex,
-            tags.stablecoin,
-            tags.openSource,
-        ],
+        tags: [tags.hyperindex],
     },
     {
         title: "Liqo",
         description:
-            "A multi-chain liquidation tracking platform built with HyperIndex by Envio.",
+            "A multi-chain liquidation tracking platform for DeFi Lending protocols.",
         image: "/img/showcase/www.liqo.xyz_.png",
         source: "https://liqo.xyz",
-        tags: [tags.lending, tags.hyperindex, tags.defi, tags.stablecoin],
+        tags: [tags.hyperindex],
     },
     {
         title: "Oracle Wars",
@@ -75,7 +40,7 @@ const sites = [
             "Visualize and compare real-time oracle price data across multiple oracles.",
         image: "/img/showcase/www.oraclewars.xyz_.png",
         source: "https://oraclewars.xyz/",
-        tags: [tags.oracle, tags.hyperindex, tags.openSource],
+        tags: [tags.hyperindex],
     },
     {
         title: "The List",
@@ -83,7 +48,7 @@ const sites = [
             "Track addresses banned from using major stablecoins across chains.",
         image: "/img/showcase/thebannedlist.xyz_.png",
         source: "https://thebannedlist.xyz/",
-        tags: [tags.stablecoin, tags.hyperindex, tags.openSource],
+        tags: [tags.hyperindex],
     },
     {
         title: "CryptoKitties Genome Visualiser",
@@ -91,7 +56,7 @@ const sites = [
             "Trace and explore the genetic traits of CryptoKitties from parents to offspring.",
         image: "/img/showcase/crypto-kitties-genome-visualiser.vercel.app_.png",
         source: "https://crypto-kitties-genome-visualiser.vercel.app/",
-        tags: [tags.nft, tags.openSource],
+        tags: [tags.hyperindex],
     },
     {
         title: "Chain Density",
@@ -99,7 +64,7 @@ const sites = [
             "Analyze and visualize transaction and event density for any address across 70+ chains.",
         image: "/img/showcase/chaindensity.xyz_.png",
         source: "https://chaindensity.xyz/",
-        tags: [tags.data, tags.analytics, tags.openSource],
+        tags: [tags.hyperindex],
     },
     {
         title: "Snubb",
@@ -107,24 +72,23 @@ const sites = [
             "A TUI tool for scanning token approvals and tracking exposure.",
         image: "/img/showcase/snubb.png",
         source: "https://www.npmjs.com/package/snubb",
-        tags: [tags.tui, tags.hypersync, tags.openSource],
+        tags: [tags.hypersync],
     },
     {
         title: "LogTUI",
-        description:
-            "A TUI for monitoring blockchain events in real time with HyperSync.",
+        description: "A TUI for monitoring blockchain events in real time.",
         image: "/img/showcase/logtui.gif",
         source: "https://www.npmjs.com/package/logtui",
-        tags: [tags.tui, tags.hypersync, tags.openSource],
+        tags: [tags.hypersync],
     },
 
     {
         title: "Chain Pulse",
         description:
-            "A TUI for tracking EVM chain activity and stats in real time with HyperSync.",
+            "A TUI for tracking EVM chain activity and stats in real time.",
         image: "/img/showcase/chainpulse.png",
         source: "https://www.npmjs.com/package/chainpulse",
-        tags: [tags.tui, tags.analytics, tags.hypersync],
+        tags: [tags.hypersync],
     },
 ];
 
