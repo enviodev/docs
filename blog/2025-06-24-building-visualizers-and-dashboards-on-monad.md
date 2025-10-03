@@ -153,7 +153,7 @@ A high-performance data retrieval layer that gives developers unprecedented acce
 
 A local RPC proxy that supercharges blockchain data access by mapping standard RPC requests to HyperSync’s ultra-fast data engine. HyperRPC accepts typical RPC calls and translates them into HyperSync queries, dramatically reducing latency and eliminating the bottlenecks of traditional RPC endpoints. 
 
-[Learn more](https://docs.envio.dev/docs/HyperSync/overview-hyperrpc)
+[Learn more](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc)
 
 Envio makes it easy to define events, build handlers, and deploy powerful indexers that power dashboards, data tools, analytics platforms, and more at scale.
 

@@ -31,7 +31,7 @@
 
 ### Overview
 
-Envio is a modular hyper-performant data indexing solution for the B² Testnet, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](https://docs.envio.dev/docs/HyperSync/overview-hyperrpc) (extremely fast read-only RPC).
+Envio is a modular hyper-performant data indexing solution for the B² Testnet, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
 
 HyperSync accelerates the synchronization of historical data on the B² Testnet, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
 
@@ -109,7 +109,7 @@ B² Testnet is a Layer-2 blockchain built on the B² Network, designed to improv
 
 ### Overview
 
-Envio is a modular hyper-performant data indexing solution for [Base](https://www.base.org/), enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](https://docs.envio.dev/docs/HyperSync/overview-hyperrpc) (extremely fast read-only RPC).
+Envio is a modular hyper-performant data indexing solution for [Base](https://www.base.org/), enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
 
 HyperSync accelerates the synchronization of historical data on Base, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
 
@@ -195,7 +195,7 @@ Base is an L2 blockchain developed by [Coinbase](https://www.coinbase.com/en-gb/
 
 ### Overview
 
-Envio is a modular hyper-performant data indexing solution for [Berachain](https://www.berachain.com/), enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](https://docs.envio.dev/docs/HyperSync/overview-hyperrpc) (extremely fast read-only RPC).
+Envio is a modular hyper-performant data indexing solution for [Berachain](https://www.berachain.com/), enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
 
 HyperSync accelerates the synchronization of historical data on Berachain, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
 
@@ -273,7 +273,7 @@ Berachain is a high-performance EVM-identical L1 blockchain that uses Proof-of-L
 
 ### Overview
 
-Envio is a modular hyper-performant data indexing solution for [Blast](https://blast.io/), enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](https://docs.envio.dev/docs/HyperSync/overview-hyperrpc) (extremely fast read-only RPC).
+Envio is a modular hyper-performant data indexing solution for [Blast](https://blast.io/), enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
 
 HyperSync accelerates the synchronization of historical data on Blast, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
 
@@ -358,7 +358,7 @@ The Blast Blockchain is an Ethereum L2 scaling solution that utilizes optimistic
 
 ### Overview
 
-Envio is a modular hyper-performant data indexing solution for [Boba](https://boba.network/), enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](https://docs.envio.dev/docs/HyperSync/overview-hyperrpc) (extremely fast read-only RPC).
+Envio is a modular hyper-performant data indexing solution for [Boba](https://boba.network/), enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
 
 HyperSync accelerates the synchronization of historical data on Boba, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
 
@@ -436,7 +436,7 @@ Boba is a compute-focused L2 solution built on top of L1 blockchains, Ethereum a
 
 ### Overview
 
-Envio is a modular hyper-performant data indexing solution for [BSC](https://www.bnbchain.org/en/bnb-smart-chain), enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](https://docs.envio.dev/docs/HyperSync/overview-hyperrpc) (extremely fast read-only RPC).
+Envio is a modular hyper-performant data indexing solution for [BSC](https://www.bnbchain.org/en/bnb-smart-chain), enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
 
 HyperSync accelerates the synchronization of historical data on BSC, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
 
@@ -521,7 +521,7 @@ Binance Smart Chain (BSC) is a blockchain network developed by Binance to suppor
 
 ### Overview
 
-Envio is a modular hyper-performant data indexing solution for Celo, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](https://docs.envio.dev/docs/HyperSync/overview-hyperrpc) (extremely fast read-only RPC).
+Envio is a modular hyper-performant data indexing solution for Celo, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
 
 HyperSync accelerates the synchronization of historical data on Celo, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
 
@@ -599,7 +599,7 @@ Celo is an emerging Ethereum L2 designed to make blockchain technology accessibl
 
 ### Overview
 
-Envio is a modular hyper-performant data indexing solution for [Chiliz](https://www.chiliz.com/), enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](https://docs.envio.dev/docs/HyperSync/overview-hyperrpc) (extremely fast read-only RPC).
+Envio is a modular hyper-performant data indexing solution for [Chiliz](https://www.chiliz.com/), enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
 
 HyperSync accelerates the synchronization of historical data on Chiliz, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
 

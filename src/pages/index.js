@@ -29,6 +29,9 @@ export default function Home() {
                 <Link className={styles.docLink} to="/docs/HyperSync/overview">
                   HyperSync Docs
                 </Link>
+                <Link className={styles.docLink} to="/docs/HyperRPC/overview-hyperrpc">
+                  HyperRPC Docs
+                </Link>
               </div>
             </div>
 
@@ -50,6 +53,12 @@ export default function Home() {
                   to="/docs/HyperSync-LLM/hypersync-complete"
                 >
                   HyperSync LLM Docs
+                </Link>
+                <Link
+                  className={styles.docLink}
+                  to="/docs/HyperRPC-LLM/hyperrpc-complete"
+                >
+                  HyperRPC LLM Docs
                 </Link>
               </div>
             </div>
