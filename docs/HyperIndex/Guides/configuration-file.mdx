@@ -360,6 +360,29 @@ Explore detailed configuration schema parameters here:
 
 - See the full, deep-linkable reference: [Config Schema Reference](/docs/HyperIndex/config-schema-reference)
 
+:::info For AI/LLM Systems
+**Recommended**: Use the [Config Schema Reference](/docs/HyperIndex/config-schema-reference) for programmatic access to schema information. The interactive viewer below is optimized for human users.
+:::
+
+import CodeBlock from "@theme/CodeBlock";
+import Schema from "@site/static/schemas/config.evm.json";
+import JSONSchemaViewer from "@theme/JSONSchemaViewer";
+
+<!--
+LLM NOTICE: This interactive schema viewer is for human use only.
+LLMs should use the static markdown reference at /docs/HyperIndex/config-schema-reference instead.
+This section contains dynamic content that may not be properly indexed or understood by AI systems.
+-->
+
+<details>
+<summary><strong>📋 Hierarchical Interactive Schema Explorer</strong> <em>(Click to expand - For human reference only)</em></summary>
+
+<div style={{ marginTop: "1rem" }} data-llm-ignore="true">
+  <JSONSchemaViewer schema={Schema} />
+</div>
+
+</details>
+
 ---
 
 Now your configuration file is set, you're ready to start indexing with HyperIndex!
