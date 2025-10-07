@@ -18,14 +18,14 @@ const sites = [
         source: "https://v4.xyz",
         tags: [tags.hyperindex],
     },
-    {
-        title: "Stable Volume",
-        description:
-            "A real-time dashboard for monitoring stablecoin transactions across 10+ chains.",
-        image: "/img/showcase/www.stablevolume.com-scroll_original.gif",
-        source: "https://www.stablevolume.com/",
-        tags: [tags.hyperindex],
-    },
+    // {
+    //     title: "Stable Volume",
+    //     description:
+    //         "A real-time dashboard for monitoring stablecoin transactions across 10+ chains.",
+    //     image: "/img/showcase/www.stablevolume.com-scroll_original.gif",
+    //     source: "https://www.stablevolume.com/",
+    //     tags: [tags.hyperindex],
+    // },
     {
         title: "Liqo",
         description:
