@@ -234,7 +234,7 @@ const config = {
     title: "Envio",
     tagline: "The fastest most flexible way to get on-chain data.",
     favicon: "img/favicon.ico",
-    url: "http://localhost:3000",
+    url: "https://docs.envio.dev",
     baseUrl: "/",
     organizationName: "enviodev",
     projectName: "indexer-docs",
@@ -268,15 +268,15 @@ const config = {
         ],
     ],
 
-    stylesheets: [
-        {
-            href: "/custom.css",
-            type: "text/css",
-        },
-    ],
+      stylesheets: [
+            {
+                  href: "/custom.css",
+                  type: "text/css",
+            },
+      ],
 
-    themeConfig:
-        /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+      themeConfig:
+            /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 
         ({
             image: "img/preview-banner.png",
