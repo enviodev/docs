@@ -64,7 +64,7 @@ const sites = [
             "Analyze and visualize transaction and event density for any address across 70+ chains.",
         image: "/img/showcase/chaindensity.xyz_.png",
         source: "https://chaindensity.xyz/",
-        tags: [tags.hyperindex],
+        tags: [tags.hypersync],
     },
     {
         title: "Snubb",
@@ -81,13 +81,20 @@ const sites = [
         source: "https://www.npmjs.com/package/logtui",
         tags: [tags.hypersync],
     },
-
     {
         title: "Chain Pulse",
         description:
             "A TUI for tracking EVM chain activity and stats in real time.",
         image: "/img/showcase/chainpulse.png",
         source: "https://www.npmjs.com/package/chainpulse",
+        tags: [tags.hypersync],
+    },
+    {
+        title: "HyperSync Query Builder",
+        description:
+            "Interactive playground for building and running HyperSync queries directly in your browser.",
+        image: "/img/showcase/builder.hypersync.xyz_.png",
+        source: "https://builder.hypersync.xyz",
         tags: [tags.hypersync],
     },
 ];
