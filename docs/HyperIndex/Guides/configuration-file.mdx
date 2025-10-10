@@ -27,17 +27,17 @@ name: Greeter
 description: Greeter Indexer Example
 
 contracts:
-  - name: Greeter
-    abi:
-      - event: "NewGreeting(address user, string greeting)"
-      - event: "ClearGreeting(address user)"
+    - name: Greeter
+      abi:
+          - event: "NewGreeting(address user, string greeting)"
+          - event: "ClearGreeting(address user)"
 
 networks:
-  - id: 1 # ethereum-mainnet
-    start_block: 12345678
-    contracts:
-      - name: Greeter
-        address: 0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c
+    - id: 1 # ethereum-mainnet
+      start_block: 12345678
+      contracts:
+          - name: Greeter
+            address: 0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c
 ```
 
 ---
@@ -63,10 +63,10 @@ address: 0xContractAddress
 
 ```yaml
 contracts:
-  - name: MyContract
-    address:
-      - 0xAddress1
-      - 0xAddress2
+    - name: MyContract
+      address:
+          - 0xAddress1
+          - 0xAddress2
 ```
 
 :::tip
@@ -78,14 +78,14 @@ You can also avoid repeating addresses by using global contract definitions:
 
 ```yaml
 contracts:
-  - name: Greeter
-    abi: greeter.json
+    - name: Greeter
+      abi: greeter.json
 
 networks:
-  - id: ethereum-mainnet
-    contracts:
-      - name: Greeter
-        address: 0xProxyAddressHere
+    - id: ethereum-mainnet
+      contracts:
+          - name: Greeter
+            address: 0xProxyAddressHere
 ```
 
 ---
@@ -94,26 +94,26 @@ networks:
 
 By default, contracts use the network `start_block`. Starting from `envio@2.27`, you can set a per-contract `start_block` to override it. Handy when:
 
-- Contracts were deployed at different blocks
-- You only need data from a contract starting at a specific block
-- You want to skip unnecessary historical data for some contracts
-- Works nicely with [Dynamic Contract Registration](/docs/HyperIndex/dynamic-contracts)
+-   Contracts were deployed at different blocks
+-   You only need data from a contract starting at a specific block
+-   You want to skip unnecessary historical data for some contracts
+-   Works nicely with [Dynamic Contract Registration](/docs/HyperIndex/dynamic-contracts)
 
 **Example with optional per-contract start_block override:**
 
 ```yaml
 networks:
-  - id: 1 # ethereum-mainnet
-    start_block: 18000000 # Default start block for all contracts on this network
-    contracts:
-      - name: ERC20Token
-        address:
-          - 0x1111111111111111111111111111111111111111
-          - 0x2222222222222222222222222222222222222222
-        start_block: 18500000 # Override for this contract
-      - name: Greeter
-        address: 0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c
-        # Uses network default (18000000)
+    - id: 1 # ethereum-mainnet
+      start_block: 18000000 # Default start block for all contracts on this network
+      contracts:
+          - name: ERC20Token
+            address:
+                - 0x1111111111111111111111111111111111111111
+                - 0x2222222222222222222222222222222222222222
+            start_block: 18500000 # Override for this contract
+          - name: Greeter
+            address: 0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c
+            # Uses network default (18000000)
 ```
 
 ---
@@ -124,8 +124,8 @@ Define specific events to index in a human-readable format:
 
 ```yaml
 events:
-  - event: "NewGreeting(address user, string greeting)"
-  - event: "ClearGreeting(address user)"
+    - event: "NewGreeting(address user, string greeting)"
+    - event: "ClearGreeting(address user)"
 ```
 
 By default, all events defined in the contract are indexed, but you can selectively disable them by removing them from this list.
@@ -138,9 +138,9 @@ a more descriptive name in your Envio project.
 
 ```yaml
 events:
-  - event: Assigned(address indexed recipientId, uint256 amount, address token)
-  - event: Assigned(address indexed recipientId, uint256 amount, address token, address sender)
-    name: AssignedWithSender
+    - event: Assigned(address indexed recipientId, uint256 amount, address token)
+    - event: Assigned(address indexed recipientId, uint256 amount, address token, address sender)
+      name: AssignedWithSender
 ```
 
 ---
@@ -157,9 +157,9 @@ raw_events: true
 
 When enabled, all indexed events will be stored in the `raw_events` table in the database, which you can view through the Hasura interface. This is particularly useful for:
 
-- Debugging event processing issues
-- Verifying that events are being captured correctly
-- Creating custom queries against raw blockchain data
+-   Debugging event processing issues
+-   Verifying that events are being captured correctly
+-   Creating custom queries against raw blockchain data
 
 Note that enabling this option will increase database storage requirements and may slightly impact indexing performance.
 
@@ -173,15 +173,15 @@ To access fields that are not provided by default, specify them using the `field
 
 ```yaml
 events:
-  - event: "Assigned(address indexed user, uint256 amount)"
-    field_selection:
-      transaction_fields:
-        - transactionIndex
-      block_fields:
-        - timestamp
+    - event: "Assigned(address indexed user, uint256 amount)"
+      field_selection:
+          transaction_fields:
+              - transactionIndex
+          block_fields:
+              - timestamp
 ```
 
-See all possible options in the [Config File Reference](/docs/HyperIndex/config-schema-reference#transactionfield) or use IDE autocomplete for your help.
+See all possible options in the [Config File Reference](/docs/HyperIndex/config-schema-reference#fieldselection) or use IDE autocomplete for your help.
 
 #### Global Field Selection
 
@@ -189,11 +189,11 @@ You can also specify fields globally for all events in the root of the config fi
 
 ```yaml
 field_selection:
-  transaction_fields:
-    - hash
-    - gasUsed
-  block_fields:
-    - parentHash
+    transaction_fields:
+        - hash
+        - gasUsed
+    block_fields:
+        - parentHash
 ```
 
 Try to use this option sparingly as it can cause redundant Data Source calls and increased credits usage.
@@ -242,9 +242,9 @@ preload_handlers: true # default is false
 
 Be aware of:
 
-- [Double-Run Footgun](/docs/HyperIndex/preload-optimization#double-run-footgun)
-- [Effect API for External Calls](/docs/HyperIndex/effect-api)
-- [Migrating from Loaders](/docs/HyperIndex/preload-optimization#migrating-from-loaders) (recommended)
+-   [Double-Run Footgun](/docs/HyperIndex/preload-optimization#double-run-footgun)
+-   [Effect API for External Calls](/docs/HyperIndex/effect-api)
+-   [Migrating from Loaders](/docs/HyperIndex/preload-optimization#migrating-from-loaders) (recommended)
 
 ---
 
@@ -254,10 +254,10 @@ Since `envio@2.9.0`, environment variable interpolation is supported for flexibi
 
 ```yaml
 networks:
-  - id: ${ENVIO_CHAIN_ID:-ethereum-mainnet}
-    contracts:
-      - name: Greeter
-        address: ${ENVIO_GREETER_ADDRESS}
+    - id: ${ENVIO_CHAIN_ID:-ethereum-mainnet}
+      contracts:
+          - name: Greeter
+            address: ${ENVIO_GREETER_ADDRESS}
 ```
 
 Run your indexer with custom environment variables:
@@ -268,8 +268,8 @@ ENVIO_CHAIN_ID=optimism ENVIO_GREETER_ADDRESS=0xYourContractAddress pnpm dev
 
 **Interpolation syntax:**
 
-- `${ENVIO_VAR}` – Use the value of `ENVIO_VAR`
-- `${ENVIO_VAR:-default}` – Use `ENVIO_VAR` if set, otherwise use `default`
+-   `${ENVIO_VAR}` – Use the value of `ENVIO_VAR`
+-   `${ENVIO_VAR:-default}` – Use `ENVIO_VAR` if set, otherwise use `default`
 
 For more detailed information about environment variables, see our [Environment Variables Guide](./environment-variables).
 
@@ -312,44 +312,44 @@ name: envio-indexer
 unordered_multichain_mode: true
 preload_handlers: true
 contracts:
-  - name: PoolManager
-    handler: src/EventHandlers.ts
-    events:
-      - event: Swap(bytes32 indexed id, address indexed sender, int128 amount0, int128 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick, uint24 fee)
-  - name: PositionManager
-    handler: src/EventHandlers.ts
-    events:
-      - event: Transfer(address indexed from, address indexed to, uint256 indexed id)
+    - name: PoolManager
+      handler: src/EventHandlers.ts
+      events:
+          - event: Swap(bytes32 indexed id, address indexed sender, int128 amount0, int128 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick, uint24 fee)
+    - name: PositionManager
+      handler: src/EventHandlers.ts
+      events:
+          - event: Transfer(address indexed from, address indexed to, uint256 indexed id)
 networks:
-  - id: 1
-    # Keep it 0 and HyperSync will automatically find the first block for your contracts
-    start_block: 0
-    contracts:
-      - name: PositionManager
-        address:
-          - 0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e
-        start_block: 18500000 # OPTIONAL: Override for contract deployed later
-      - name: PoolManager
-        address:
-          - "0x000000000004444c5dc75cB358380D2e3dE08A90"
-  - id: 10
-    start_block: 0
-    contracts:
-      - name: PositionManager
-        address:
-          - 0x3C3Ea4B57a46241e54610e5f022e5c45859A1017
-      - name: PoolManager
-        address:
-          - 0x9a13F98Cb987694C9F086b1F5eB990EeA8264Ec3
-  - id: 42161
-    start_block: 0
-    contracts:
-      - name: PositionManager
-        address:
-          - 0xd88f38f930b7952f2db2432cb002e7abbf3dd869
-      - name: PoolManager
-        address:
-          - 0x360e68faccca8ca495c1b759fd9eee466db9fb32
+    - id: 1
+      # Keep it 0 and HyperSync will automatically find the first block for your contracts
+      start_block: 0
+      contracts:
+          - name: PositionManager
+            address:
+                - 0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e
+            start_block: 18500000 # OPTIONAL: Override for contract deployed later
+          - name: PoolManager
+            address:
+                - "0x000000000004444c5dc75cB358380D2e3dE08A90"
+    - id: 10
+      start_block: 0
+      contracts:
+          - name: PositionManager
+            address:
+                - 0x3C3Ea4B57a46241e54610e5f022e5c45859A1017
+          - name: PoolManager
+            address:
+                - 0x9a13F98Cb987694C9F086b1F5eB990EeA8264Ec3
+    - id: 42161
+      start_block: 0
+      contracts:
+          - name: PositionManager
+            address:
+                - 0xd88f38f930b7952f2db2432cb002e7abbf3dd869
+          - name: PoolManager
+            address:
+                - 0x360e68faccca8ca495c1b759fd9eee466db9fb32
 ```
 
 ---
@@ -358,7 +358,7 @@ networks:
 
 Explore detailed configuration schema parameters here:
 
-- See the full, deep-linkable reference: [Config Schema Reference](/docs/HyperIndex/config-schema-reference)
+-   See the full, deep-linkable reference: [Config Schema Reference](/docs/HyperIndex/config-schema-reference)
 
 :::info For AI/LLM Systems
 **Recommended**: Use the [Config Schema Reference](/docs/HyperIndex/config-schema-reference) for programmatic access to schema information. The interactive viewer below is optimized for human users.
