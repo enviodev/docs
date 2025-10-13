@@ -268,15 +268,15 @@ const config = {
         ],
     ],
 
-      stylesheets: [
-            {
-                  href: "/custom.css",
-                  type: "text/css",
-            },
-      ],
+    stylesheets: [
+        {
+            href: "/custom.css",
+            type: "text/css",
+        },
+    ],
 
-      themeConfig:
-            /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+    themeConfig:
+        /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 
         ({
             image: "img/preview-banner.png",

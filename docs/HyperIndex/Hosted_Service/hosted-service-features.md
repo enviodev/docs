@@ -13,8 +13,11 @@ Our hosted service includes several production-ready features to help you manage
 Most features listed on this page are available for **paid production plans only**. The free development tier has limited features and is designed for testing and development purposes. [View our pricing tiers](./hosted-service-billing.mdx) to see what's included in each plan.
 :::
 
-## IP/Domain Whitelisting
 
+## IP/Domain Whitelisting
+:::info Coming Soon!
+Full support for whitelisting is in active development
+:::
 Control access to your indexer by restricting requests to specific IP addresses or domains. This security feature helps protect your data and ensures only authorized clients can query your indexer.
 
 **Benefits:**
@@ -57,7 +60,6 @@ Configure one or multiple notification channels to receive alerts:
 - **Indexer Stopped Processing** - Triggered when the indexer is not processing blocks for more than 10 minutes
 
 **Info Alerts:**
-- **Indexer Restart** - Triggered when an indexer pod restarts
 - **Indexer Error Logs** - Triggered when indexer generates error logs indicating potential issues
 
 ### Notification Types
@@ -88,6 +90,10 @@ Update your indexer without any service interruption using our seamless deployme
 
 
 ## Deployment Location Choice
+
+:::info Coming Soon!
+Full support for cross region deployments is in active development. If you require a deployment to be based in the USA please contact us through our support channel on discord.
+:::
 
 **Available on: Dedicated plans only**
 
