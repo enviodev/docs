@@ -200,7 +200,7 @@ Full details available in our **[Monitoring Guide](./hosted-service-monitoring.m
 
 ## Related Documentation
 
-- **[Features](./hosted-service-features.mdx)** - Learn about all available hosted service features
+- **[Features](./hosted-service-features.md)** - Learn about all available hosted service features
 - **[Pricing & Billing](./hosted-service-billing.mdx)** - Compare tiers and see feature availability
 - **[Overview](./hosted-service.md)** - Introduction to the hosted service
 - **[Self-Hosting](./self-hosting.md)** - Run your indexer on your own infrastructure
