@@ -329,6 +329,11 @@ const config = {
             position: "left",
           },
           {
+            to: "docs/HyperIndex/overview",
+            label: "HyperIndex Docs",
+            position: "left",
+          },
+          {
             to: "showcase",
             label: "Showcase",
             position: "left",
@@ -485,6 +490,18 @@ const config = {
         path: "docs/HyperRPC-LLM",
         routeBasePath: "docs/HyperRPC-LLM",
         sidebarPath: require.resolve("./sidebarsHyperRPCLLM.js"),
+        editUrl: "https://github.com/enviodev/docs/edit/main/",
+        showLastUpdateAuthor: false,
+        showLastUpdateTime: false,
+      },
+    ],
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "HyperIndex-Hosted-Service-LLM",
+        path: "docs/HyperIndex-Hosted-LLM",
+        routeBasePath: "docs/HyperIndex-Hosted-LLM",
+        sidebarPath: require.resolve("./sidebarsHyperIndexHostedLLM.js"),
         editUrl: "https://github.com/enviodev/docs/edit/main/",
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,

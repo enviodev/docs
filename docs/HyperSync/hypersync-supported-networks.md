@@ -63,7 +63,6 @@ If you are a network operator or user and would like improved service support or
 | Flare                | 14         | https://flare.hypersync.xyz or https://14.hypersync.xyz                             | 🪨   |                 |
 | Fraxtal              | 252        | https://fraxtal.hypersync.xyz or https://252.hypersync.xyz                          | 🪨   |                 |
 | Fuji                 | 43113      | https://fuji.hypersync.xyz or https://43113.hypersync.xyz                           | 🎒   |                 |
-| Galadriel Devnet     | 696969     | https://galadriel-devnet.hypersync.xyz or https://696969.hypersync.xyz              | 🎒   |                 |
 | Gnosis               | 100        | https://gnosis.hypersync.xyz or https://100.hypersync.xyz                           | 🏅   |                 |
 | Gnosis Chiado        | 10200      | https://gnosis-chiado.hypersync.xyz or https://10200.hypersync.xyz                  | 🎒   |                 |
 | Gnosis Traces        | 100        | https://gnosis-traces.hypersync.xyz or https://100-traces.hypersync.xyz             | 🥉   |                 |
@@ -109,7 +108,6 @@ If you are a network operator or user and would like improved service support or
 | Tangle               | 5845       | https://tangle.hypersync.xyz or https://5845.hypersync.xyz                          | 🪨   |                 |
 | Taraxa               | 841        | https://taraxa.hypersync.xyz or https://841.hypersync.xyz                           | 🥉   |                 |
 | Unichain             | 130        | https://unichain.hypersync.xyz or https://130.hypersync.xyz                         | 🪨   |                 |
-| Unichain Sepolia     | 1301       | https://unichain-sepolia.hypersync.xyz or https://1301.hypersync.xyz                | 🎒   |                 |
 | Worldchain           | 480        | https://worldchain.hypersync.xyz or https://480.hypersync.xyz                       | 🪨   |                 |
 | Xdc                  | 50         | https://xdc.hypersync.xyz or https://50.hypersync.xyz                               | 🥈   |                 |
 | Xdc Testnet          | 51         | https://xdc-testnet.hypersync.xyz or https://51.hypersync.xyz                       | 🎒   |                 |

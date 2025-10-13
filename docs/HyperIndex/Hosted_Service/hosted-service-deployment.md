@@ -11,13 +11,21 @@ The Envio Hosted Service provides a seamless git-based deployment workflow, simi
 
 ## Prerequisites & Important Information
 
+### Requirements
+
+- **Version Support**: Deployment on the Hosted Service requires at least version `2.6.0`. 
+Additionally the following versions are not supported: 
+  - `2.29.x`
+- **PNPM Support**: deployment must be compatible with pnpm version `9.10.0`
+- **Package.json**: the `package.json` file must be present and include the above two requirements.
+- **Configuration file**: a HyperIndex configuration file must be present (the name can be set in the [indexer settings](#configure-your-indexer))
+- **Github Repository**: The repository must be no larger than `100MB`
+
 Before deploying your indexer, please be aware of the following limits and policies:
 
 ### Deployment Limits
 - **3 development tier indexers** per organization
-- **Deployments per indexer**:
-  - **Development tier (free)**: 3 deployments per indexer
-  - **Production tiers (paid)**: 5 deployments per indexer
+- **Deployments per indexer**:  3 deployments per indexer
 - Deployments can be deleted in the hosted service to make space for more deployments
 
 ### Development Tier Fair Usage Policy
@@ -27,12 +35,16 @@ The free development tier includes automatic deletion policies to ensure fair re
 - **Hard Limits**: 
   - Deployments that exceed 20GB of storage will be automatically deleted
   - Deployments older than 30 days will be automatically deleted
-- **Soft Limits**: 
-  - 100,000 events processed OR 5GB storage used OR no requests for 7 days (whichever comes first)
-  - When soft limits are breached, the two-stage deletion process begins
+- **Soft Limits** (whichever comes first): 
+  - 100,000 events processed
+  - 5GB storage used 
+  - no requests for 7 days 
+
+**When soft limits are breached, the two-stage deletion process begins**
 
 **Two-Stage Deletion Process:**
-When your indexer breaches the soft limits:
+
+_Applies to development deployments that breach the soft limits_
 
 1. **Grace Period (7 days)** - Your indexer continues to function normally, you receive notification about the upcoming deletion
 2. **Read-Only Access (3 days)** - Indexer stops processing new data, existing data remains accessible for queries  
@@ -84,13 +96,74 @@ If you're working in a monorepo, ensure all your imports are contained within yo
     - Switch between different deployed versions
     - Rollback to previous versions if needed
 
-## Continuous Deployment Best Practices
+
+## Monitoring
+
+Once your indexer is deployed, you can monitor its health, performance, and progress using several built-in tools including the dashboard, logs, and alerts.
+
+For detailed information about monitoring your deployments, see our **[Monitoring Guide](./hosted-service-monitoring.md)**.
+
+## Continuous Deployment Best Practices and Configuration
 
 For a robust deployment workflow, we recommend:
 
 1. **Protected Branches**: Set up branch protection rules for your deployment branch
 2. **Pull Request Workflow**: Instead of pushing directly to the deployment branch, use pull requests from feature branches
 3. **CI Integration**: Add tests to your CI pipeline to validate indexer functionality before merging to the deployment branch
+
+
+### Continous Configuration 
+
+After deploying your indexer, you can manage its configuration through several tabs in the Envio dashboard:
+
+#### General Tab
+
+The General tab provides core configuration options:
+
+- **Config File Path**: Update the location of your indexer's configuration file
+- **Deployment Branch**: Change which Git branch triggers deployments
+- **Root Directory**: Modify the root directory for your indexer (useful for monorepos)
+- **Delete Indexer**: Permanently remove the indexer and all its deployments
+
+:::warning Deleting an Indexer
+Deleting an indexer is permanent and will remove all associated deployments and data. This action cannot be undone.
+:::
+
+#### Environment Variables Tab
+
+Configure environment-specific variables for your indexer:
+
+- Add custom environment variables with the `ENVIO_` prefix
+- Environment variables are securely stored and injected into your indexer at runtime
+- Useful for API keys, configuration values, and other deployment-specific settings
+
+:::tip Environment Variable Best Practices
+Use environment variables for sensitive data rather than hardcoding values in your repository. Remember to prefix all variables with `ENVIO_`.
+:::
+
+#### Plans & Billing Tab
+
+Manage your indexer's pricing tier and billing:
+
+- Select from available pricing plans
+- Upgrade your plan to suit your needs
+- View current plan features and limits
+
+For detailed pricing information, see our [Pricing & Billing page](./hosted-service-billing.mdx).
+
+#### Alerts Tab
+
+Configure monitoring and notification preferences:
+
+- Set up notification channels (Discord, Slack, Telegram, Email)
+- Choose which alert types to receive (Production Endpoint Down, Indexer Stopped Processing, etc.)
+- Configure deployment notifications (Historical Sync Complete)
+
+For complete alert configuration details, see our [Features page](./hosted-service-features.md#built-in-alerts).
+
+:::info Alert Availability
+Alert configuration is available for indexers deployed with version 2.24.0 or higher on paid production plans.
+:::
 
 ## Visual Reference Guide
 
@@ -117,6 +190,12 @@ The following screenshots show each step of the deployment process:
 
 ### Step 8: Deploy via Git
 ![Push code](/img/hosted-service/push.webp)
+
+### Step 9: Monitoring
+Full details available in our **[Monitoring Guide](./hosted-service-monitoring.md)**.
+
+### Step 10: Continuous Configuration
+![Configure indexer](/img/hosted-service/config-tabs.webp)
 
 
 ## Related Documentation

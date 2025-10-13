@@ -9,9 +9,18 @@ slug: /hosted-service
 
 Envio offers a fully managed hosting solution for your indexers, providing all the infrastructure, scaling, and monitoring needed to run production-grade indexers without operational overhead.
 
-Our hosted service offers multiple tiers to suit different needs, from free development environments to enterprise-grade dedicated hosting. Each tier includes powerful features like static production endpoints, built-in alerts, and production-ready infrastructure.
+Our hosted service offers multiple tiers to suit different needs, from free development environments to enterprise-grade dedicated hosting. Each tier includes powerful features like static production endpoints, built-in alerts, and production-ready infrastructure. 
 
-## Key Features
+
+## Deployment Options
+
+Envio provides flexibility in how you deploy and host your indexers:
+
+- **Fully Managed Hosted Service**: Let Envio handle everything. The following sections of this page outline the Fully Managed Hosted Service in more detail. This is the recommend deployment method for most users and removes the hosting overhead for your team. See below for the all the awesome features we provide and see the [Pricing & Billing](./hosted-service-billing.mdx) page for more information on which Hosting tier suits your indexing needs.
+
+- **Self-Hosting**: Run your indexer on your own infrastructure. This requires advanced setup and infrastructure knowledged not unique to Envio. See the following [repository](https://github.com/enviodev/local-docker-example) for a simple docker example to get you started. Please note this example does not cover all infrastructure related needs. It is recommended that at least a separate Postgres management tool is used for self hosting in production. See further instructions [here](self-hosting)
+
+## Hosted Service Key Features
 
 - **Git-based Deployments**: Similar to Vercel, deploy your indexer by simply pushing to a designated deployment branch
 - **Zero Infrastructure Management**: We handle all the servers, databases, and scaling for you
@@ -22,7 +31,8 @@ Our hosted service offers multiple tiers to suit different needs, from free deve
 - **GraphQL API**: Access your indexed data through a performant, production-ready GraphQL endpoint
 - **Multi-chain Support**: Deploy indexers that track multiple networks from a single codebase
 
-## Deployment Model
+
+## Hosted Service Deployment Model
 
 The Envio Hosted Service provides a seamless GitHub-integrated deployment workflow:
 
@@ -36,12 +46,7 @@ The Envio Hosted Service provides a seamless GitHub-integrated deployment workfl
 
 You can view and manage your hosted indexers in the [Envio Explorer](https://envio.dev/explorer).
 
-## Deployment Options
 
-Envio provides flexibility in how you deploy and host your indexers:
-
-- **Fully Managed Hosted Service**: Let Envio handle everything (recommended for most users)
-- **Self-Hosting**: Run your indexer on your own infrastructure with our Docker container
 
 ## Getting Started
 
@@ -51,5 +56,6 @@ Envio provides flexibility in how you deploy and host your indexers:
 - **[Self-Hosting](./self-hosting.md)** - Run your indexer on your own infrastructure
 
 :::info
-For a complete list of CLI commands to control your indexer, see the [CLI Commands documentation](../Guides/cli-commands.md).
+It is recommended that before deploying to the Hosted Service, the indexer is built and tested locally to ensure it runs smoothly on the Hosted Service.
+For a complete list of local CLI commands to develop your indexer, see the [CLI Commands documentation](../Guides/cli-commands.md).
 :::
