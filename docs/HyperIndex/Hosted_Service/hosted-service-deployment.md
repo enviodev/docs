@@ -114,7 +114,7 @@ For a robust deployment workflow, we recommend:
 
 ### Continuous Configuration
 
-After deploying your indexer, you can manage its configuration through several tabs in the Envio dashboard:
+After deploying your indexer, you can manage its configuration through the `Settings` tab in the Envio dashboard:
 
 #### General Tab
 
