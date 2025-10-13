@@ -31,7 +31,7 @@ Before deploying your indexer, please be aware of the following limits and polic
 ### Development Tier Fair Usage Policy
 The free development tier includes automatic deletion policies to ensure fair resource allocation:
 
-**Automatic Deletion Rules:**
+#### Automatic Deletion Rules:**
 - **Hard Limits**: 
   - Deployments that exceed 20GB of storage will be automatically deleted
   - Deployments older than 30 days will be automatically deleted
@@ -42,7 +42,7 @@ The free development tier includes automatic deletion policies to ensure fair re
 
 **When soft limits are breached, the two-stage deletion process begins**
 
-**Two-Stage Deletion Process:**
+####Two-Stage Deletion Process:**
 
 _Applies to development deployments that breach the soft limits_
 
