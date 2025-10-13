@@ -172,7 +172,7 @@ The following screenshots show each step of the deployment process:
 ### Step 1: Select Organization
 ![Select organisation](/img/hosted-service/select-org.webp)
 
-### Step 2: Install GitHub App
+### Step 2: Install Github App
 ![Install GitHub App](/img/hosted-service/install-github-app.webp)
 
 ### Step 3: Add a New Indexer
