@@ -19,7 +19,7 @@ Additionally the following versions are not supported:
 - **PNPM Support**: deployment must be compatible with pnpm version `9.10.0`
 - **Package.json**: the `package.json` file must be present and include the above two requirements.
 - **Configuration file**: a HyperIndex configuration file must be present (the name can be set in the [indexer settings](#configure-your-indexer))
-- **Github Repository**: The repository must be no larger than `100MB`
+- **GitHub Repository**: The repository must be no larger than `100MB`
 
 Before deploying your indexer, please be aware of the following limits and policies:
 
