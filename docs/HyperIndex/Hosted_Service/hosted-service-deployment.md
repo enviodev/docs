@@ -13,7 +13,7 @@ The Envio Hosted Service provides a seamless git-based deployment workflow, simi
 
 ### Requirements
 
-- **Version Support**: Deployment on the Hosted Service requires at least version `2.6.0`. 
+- **Version Support**: Deployment on the Hosted Service requires at least version `2.21.5`. 
 Additionally the following versions are not supported: 
   - `2.29.x`
 - **PNPM Support**: deployment must be compatible with pnpm version `9.10.0`
