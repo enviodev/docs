@@ -169,32 +169,32 @@ Alert configuration is available for indexers deployed with version 2.24.0 or hi
 
 The following screenshots show each step of the deployment process:
 
-### Step 2: Select Organization
+### Step 1: Select Organization
 ![Select organisation](/img/hosted-service/select-org.webp)
 
-### Step 3: Install GitHub App
+### Step 2: Install GitHub App
 ![Install GitHub App](/img/hosted-service/install-github-app.webp)
 
-### Step 4: Add New Indexer
+### Step 3: Add a New Indexer
 ![Add indexer](/img/hosted-service/add-indexer.webp)
 
-### Step 5: Connect to Repository
+### Step 4: Connect to Repository
 ![Connect indexer](/img/hosted-service/connect-indexer.webp)
 
-### Step 6: Configure Deployment Settings
+### Step 5: Configure Deployment Settings
 ![Configure indexer](/img/hosted-service/configure-indexer.webp)
 ![Deploy indexer](/img/hosted-service/deploy-indexer.webp)
 
-### Step 7: Create Deployment Branch
+### Step 6: Create a Deployment Branch
 ![Create branch](/img/hosted-service/checkout.webp)
 
-### Step 8: Deploy via Git
+### Step 7: Deploy via Git
 ![Push code](/img/hosted-service/push.webp)
 
-### Step 9: Monitoring
-Full details available in our **[Monitoring Guide](./hosted-service-monitoring.md)**.
+### Step 8: Monitoring
+Full details are available in our **[Monitoring Guide](./hosted-service-monitoring.md)**.
 
-### Step 10: Continuous Configuration
+### Step 9: Continuous Configuration
 ![Configure indexer](/img/hosted-service/config-tabs.webp)
 
 

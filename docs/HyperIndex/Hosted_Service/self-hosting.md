@@ -25,7 +25,7 @@ Self-hosting gives you:
 - **Data Sovereignty**: Keep all indexed data within your own systems
 
 :::warning Disclaimer
-Self Hosting can be done on with a variety of different infrastructures, tools and methods. The outline below is merely a starting point and does not offer a full production level solution. In some cases advanced knowledege of infrastructure, database management and networking may be required for a full production level solution.
+Self Hosting can be done with a variety of different infrastructure, tools and methods. The outline below is merely a starting point and does not offer a full production level solution. In some cases advanced knowledge of infrastructure, database management and networking may be required for a full production level solution.
 :::
 ## Prerequisites
 

@@ -51,25 +51,6 @@ Configure one or multiple notification channels to receive alerts:
 - **Slack**
 - **Telegram** 
 - **Email** 
-### Alert Types
-
-**Critical Alerts:**
-- **Production Endpoint Down** - Triggered when your production endpoint stops responding to GraphQL requests
-
-**Warning Alerts:**
-- **Indexer Stopped Processing** - Triggered when the indexer is not processing blocks for more than 10 minutes
-
-**Info Alerts:**
-- **Indexer Error Logs** - Triggered when indexer generates error logs indicating potential issues
-
-### Notification Types
-
-**Deployment Notifications:**
-- **Historical Sync Complete** - Get notified when any deployment has completed its historical sync
-
-:::tip Future Updates
-More alert types and notification types will be added in future updates. You can request specific alert types in the Envio Discord community.
-:::
 
 ## Zero-Downtime Deployments
 
