@@ -112,7 +112,7 @@ For a robust deployment workflow, we recommend:
 3. **CI Integration**: Add tests to your CI pipeline to validate indexer functionality before merging to the deployment branch
 
 
-### Continous Configuration 
+### Continuous Configuration
 
 After deploying your indexer, you can manage its configuration through several tabs in the Envio dashboard:
 
