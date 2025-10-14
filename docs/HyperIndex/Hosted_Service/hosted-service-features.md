@@ -65,10 +65,10 @@ Update your indexer without any service interruption using our seamless deployme
 ## Deployment Location Choice
 
 :::info Coming Soon!
-Full support for cross region deployments is in active development. If you require a deployment to be based in the USA please contact us through our support channel on discord.
+Full support for cross-region deployments is in active development. If you require a deployment to be based in the USA please contact us through our support channel on discord.
 :::
 
-**Available on: Dedicated plans only**
+*Availability: Dedicated plans only*
 
 Choose your primary deployment region to optimize performance and meet compliance requirements.
 
@@ -84,7 +84,7 @@ Choose your primary deployment region to optimize performance and meet complianc
 
 ## Direct Database Access
 
-**Available on: Dedicated plans only**
+*Availability: Dedicated plans only*
 
 Access your indexed data directly through SQL queries, providing flexibility beyond the standard GraphQL endpoint.
 
@@ -96,13 +96,13 @@ Access your indexed data directly through SQL queries, providing flexibility bey
 
 ## Powerful Analytics Solution
 
-**Available on: Dedicated plans only (additional cost)**
+*Availability: Dedicated plans only (additional cost)*
 
 A comprehensive analytics platform that automatically pipes your indexed data from PostgreSQL into ClickHouse (approximately 2 minutes behind real-time) and provides access through a hosted Metabase instance.
 
 **Technical Architecture:**
 - **Data Pipeline**: Automatic replication from PostgreSQL to ClickHouse
-- **Near Real-time**: Data available in analytics platform within ~2 minutes
+- **Near Real-time**: Data available in an analytics platform within ~2 minutes
 - **Frontend**: Hosted Metabase instance for visualization and analysis
 - **Performance**: ClickHouse optimized for analytical queries on large datasets
 

@@ -42,7 +42,7 @@ The free development plan includes automatic deletion policies to ensure fair re
 
 **When soft limits are breached, the two-stage deletion process begins**
 
-**Two-Stage Deletion Process:**
+#### Two-Stage Deletion Process
 
 _Applies to development deployments that breach the soft limits_
 
