@@ -31,7 +31,7 @@ Before deploying your indexer, please be aware of the following limits and polic
 ### Development Plan Fair Usage Policy
 The free development plan includes automatic deletion policies to ensure fair resource allocation:
 
-#### Automatic Deletion Rules:**
+#### Automatic Deletion Rules:
 - **Hard Limits**: 
   - Deployments that exceed 20GB of storage will be automatically deleted
   - Deployments older than 30 days will be automatically deleted

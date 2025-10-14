@@ -16,7 +16,8 @@ Most features listed on this page are available for **paid production plans only
 
 ## IP/Domain Whitelisting
 :::info Coming Soon!
-Full support for whitelisting is in active development::
+Full support for whitelisting is in active development.
+:::
 Control access to your indexer by restricting requests to specific IP addresses or domains. This security feature helps protect your data and ensures only authorized clients can query your indexer.
 
 **Benefits:**
