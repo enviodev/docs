@@ -14,11 +14,11 @@ Most features listed on this page are available for **paid production plans only
 :::
 
 
-## IP/Domain Whitelisting
+## IP Whitelisting
 :::info Coming Soon!
 Full support for whitelisting is in active development.
 :::
-Control access to your indexer by restricting requests to specific IP addresses or domains. This security feature helps protect your data and ensures only authorized clients can query your indexer.
+Control access to your indexer by restricting requests to specific IP addresses. This security feature helps protect your data and ensures only authorized clients can query your indexer.
 
 **Benefits:**
 - Enhanced security for sensitive data
@@ -26,14 +26,6 @@ Control access to your indexer by restricting requests to specific IP addresses 
 - Control API usage from specific sources
 - Ideal for production environments with strict access requirements
 
-**Technical Implementation:**
-- **IP Whitelisting**: Full IP address validation and blocking
-- **Domain Whitelisting**: Best-effort domain validation using SNI (Server Name Indication) checking
-- Domain filtering does not involve mutual TLS (mTLS) or client certificate validation
-
-:::info Domain Whitelisting Limitations
-Domain whitelisting relies on SNI checking and may not provide the same level of security as IP whitelisting. For maximum security, consider using IP whitelisting when possible.
-:::
 
 ## Built-in Alerts
 
