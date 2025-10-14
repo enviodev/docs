@@ -26,7 +26,7 @@ The main dashboard provides real-time visibility into your indexer's status:
 
 Each deployment shows clear status information:
 - **Syncing**: Indexer is actively processing blocks and events
-- **Syncing Stopped**: Indexer has stopped processing (may indicate an error or a breach of [tier limits](./hosted-service-deployment.md#development-tier-fair-usage-policy))
+- **Syncing Stopped**: Indexer has stopped processing (may indicate an error or a breach of [plan limits](./hosted-service-deployment.md#development-plan-fair-usage-policy))
 - **Historical Sync Complete**: Initial sync finished, indexer is processing new blocks in real-time
 
 ## Error Detection and Troubleshooting
@@ -64,7 +64,7 @@ Configure proactive monitoring through the Alerts tab to receive notifications b
 For detailed alert configuration, see the [Deployment Guide](./hosted-service-deployment.md#alerts-tab) and our [Features page](./hosted-service-features.md#built-in-alerts).
 
 :::tip Proactive Monitoring
-Set up multiple notification channels (**Paid Tiers Only**) to ensure you never miss critical alerts about your indexer's health.
+Set up multiple notification channels (**Paid Plans Only**) to ensure you never miss critical alerts about your indexer's health.
 :::
 
 ## Visual Reference
@@ -83,5 +83,5 @@ Set up multiple notification channels (**Paid Tiers Only**) to ensure you never 
 
 - **[Deploying Your Indexer](./hosted-service-deployment.md)** - Complete deployment guide
 - **[Features](./hosted-service-features.md)** - Learn about all available hosted service features
-- **[Pricing & Billing](./hosted-service-billing.mdx)** - Compare tiers and see feature availability
+- **[Pricing & Billing](./hosted-service-billing.mdx)** - Compare plans and see feature availability
 

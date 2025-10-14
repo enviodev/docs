@@ -10,14 +10,13 @@ slug: /hosted-service-features
 Our hosted service includes several production-ready features to help you manage and secure your indexer deployments.
 
 :::info Plan Availability
-Most features listed on this page are available for **paid production plans only**. The free development tier has limited features and is designed for testing and development purposes. [View our pricing tiers](./hosted-service-billing.mdx) to see what's included in each plan.
+Most features listed on this page are available for **paid production plans only**. The free development plan has limited features and is designed for testing and development purposes. [View our pricing plans](./hosted-service-billing.mdx) to see what's included in each plan.
 :::
 
 
 ## IP/Domain Whitelisting
 :::info Coming Soon!
-Full support for whitelisting is in active development
-:::
+Full support for whitelisting is in active development::
 Control access to your indexer by restricting requests to specific IP addresses or domains. This security feature helps protect your data and ensures only authorized clients can query your indexer.
 
 **Benefits:**
@@ -124,6 +123,6 @@ A comprehensive analytics platform that automatically pipes your indexed data fr
 - Export capabilities for further analysis
 
 :::tip
-For deployment instructions and limits, see our [Deployment Guide](./hosted-service-deployment.md). For pricing and feature availability by tier, see our [Billing & Pricing page](./hosted-service-billing.mdx).
+For deployment instructions and limits, see our [Deployment Guide](./hosted-service-deployment.md). For pricing and feature availability by plan, see our [Billing & Pricing page](./hosted-service-billing.mdx).
 :::
 

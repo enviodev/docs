@@ -14,7 +14,7 @@ The Envio Hosted Service provides a seamless git-based deployment workflow, simi
 ### Requirements
 
 - **Version Support**: Deployment on the Hosted Service requires at least version `2.21.5`. 
-Additionally the following versions are not supported: 
+Additionally, the following versions are not supported: 
   - `2.29.x`
 - **PNPM Support**: deployment must be compatible with pnpm version `9.10.0`
 - **Package.json**: the `package.json` file must be present and include the above two requirements.
@@ -24,12 +24,12 @@ Additionally the following versions are not supported:
 Before deploying your indexer, please be aware of the following limits and policies:
 
 ### Deployment Limits
-- **3 development tier indexers** per organization
+- **3 development plan indexers** per organization
 - **Deployments per indexer**:  3 deployments per indexer
 - Deployments can be deleted in the hosted service to make space for more deployments
 
-### Development Tier Fair Usage Policy
-The free development tier includes automatic deletion policies to ensure fair resource allocation:
+### Development Plan Fair Usage Policy
+The free development plan includes automatic deletion policies to ensure fair resource allocation:
 
 #### Automatic Deletion Rules:**
 - **Hard Limits**: 
@@ -42,7 +42,7 @@ The free development tier includes automatic deletion policies to ensure fair re
 
 **When soft limits are breached, the two-stage deletion process begins**
 
-####Two-Stage Deletion Process:**
+**Two-Stage Deletion Process:**
 
 _Applies to development deployments that breach the soft limits_
 
@@ -143,7 +143,7 @@ Use environment variables for sensitive data rather than hardcoding values in yo
 
 #### Plans & Billing Tab
 
-Manage your indexer's pricing tier and billing:
+Manage your indexer's pricing plan and billing:
 
 - Select from available pricing plans
 - Upgrade your plan to suit your needs
@@ -201,7 +201,7 @@ Full details are available in our **[Monitoring Guide](./hosted-service-monitori
 ## Related Documentation
 
 - **[Features](./hosted-service-features.md)** - Learn about all available hosted service features
-- **[Pricing & Billing](./hosted-service-billing.mdx)** - Compare tiers and see feature availability
+- **[Pricing & Billing](./hosted-service-billing.mdx)** - Compare plans and see feature availability
 - **[Overview](./hosted-service.md)** - Introduction to the hosted service
 - **[Self-Hosting](./self-hosting.md)** - Run your indexer on your own infrastructure
 
