@@ -101,7 +101,7 @@ Initialize by pulling the contract ABI from a block explorer.
 
 ###### **Options:**
 
-- `-b`, `--blockchain <BLOCKCHAIN>` — Network to import the contract from (Options include `ethereum-mainnet`, `polygon`, `arbitrum-one`, etc.)
+- `-b`, `--blockchain <BLOCKCHAIN>` — Network to import the contract from (Options include `ethereum-mainnet`, `polygon`, `arbitrum-one`, etc. For complete list, run: `envio init contract-import explorer --help`)
 
 ### `envio init contract-import local`
 
@@ -298,19 +298,58 @@ Prints a summary of the benchmark data after running the indexer with envio star
 | `envio local docker up`        | Start Docker containers | Setting up environment            |
 | `envio local db-migrate setup` | Initialize database     | Before first run                  |
 
-## Advanced Usage Examples
+## Complete One-Line Examples
 
-### Creating a New Indexer from an Existing Contract
+These examples show the full command with all options to initialize and start an indexer in one line.
 
-```bash
-envio init contract-import explorer -b ethereum-mainnet -c 0x1234...
-```
+### Contract Import from Block Explorer
 
-### Starting the Indexer in Development Mode
+Create and start a USDC indexer on Ethereum:
 
 ```bash
-envio dev
+pnpx envio init contract-import explorer -n usdc-indexer -c 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48 -b ethereum-mainnet --single-contract --all-events -l typescript -d usdc-indexer --api-token "your-api-token" && cd usdc-indexer && pnpm dev
 ```
+
+**What each part does:**
+- `pnpx envio init contract-import explorer` - Initialize from block explorer
+- `-n usdc-indexer` - Project name
+- `-c 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48` - USDC contract address
+- `-b ethereum-mainnet` - Network
+- `--single-contract` - Don't prompt for more contracts
+- `--all-events` - Index all events
+- `-l typescript` - Use TypeScript
+- `-d usdc-indexer` - Output directory
+- `--api-token "your-api-token"` - API token
+- `&& cd usdc-indexer` - Navigate to project
+- `&& pnpm dev` - Start the indexer
+
+### Contract Import from Local ABI
+
+For unverified contracts or custom networks:
+
+```bash
+pnpx envio init contract-import local -n my-indexer -a ./abis/MyContract.json -c 0xYourContractAddress -b ethereum-mainnet --contract-name MyContract --single-contract --all-events -l typescript -d my-indexer --api-token "your-api-token" && cd my-indexer && pnpm dev
+```
+
+**What each part does:**
+- `pnpx envio init contract-import local` - Initialize from local ABI file
+- `-a ./abis/MyContract.json` - Path to ABI file
+- `--contract-name MyContract` - Name for the contract
+- `-b ethereum-mainnet` - Network name (or use chain ID for local import)
+- All other flags same as above
+
+### Template Initialization
+
+Quick start with an ERC20 template:
+
+```bash
+pnpx envio init template -n erc20-example -t erc20 -l typescript -d erc20-indexer --api-token "your-api-token" && cd erc20-indexer && pnpm dev
+```
+
+**What each part does:**
+- `pnpx envio init template` - Initialize from template
+- `-t erc20` - Use ERC20 template
+- Other flags same as above
 
 ### Running Benchmarks
 
