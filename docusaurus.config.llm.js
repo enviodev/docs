@@ -74,6 +74,7 @@ const config = {
             label: "HyperRPC Docs",
             position: "left",
           },
+
           {
             to: "showcase",
             label: "Showcase",
