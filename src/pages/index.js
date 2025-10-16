@@ -63,12 +63,7 @@ export default function Home() {
                 >
                   HyperRPC LLM Docs
                 </Link>
-                <Link
-                  className={styles.docLink}
-                  to="/docs/HyperIndex-Hosted-LLM/hosted-service-complete"
-                >
-                  HyperIndex Hosted Service LLM Docs
-                </Link>
+
               </div>
             </div>
           </div>
