@@ -35,6 +35,14 @@ const sites = [
         tags: [tags.hyperindex],
     },
     {
+        title: "Safe Stats",
+        description:
+            "Real-time analytics dashboard for monitoring Safe multisig activity across all chains.",
+        image: "/img/showcase/safe-stats.vercel.app_-min.png",
+        source: "https://safe-stats.vercel.app/",
+        tags: [tags.hyperindex],
+    },
+    {
         title: "Oracle Wars",
         description:
             "Visualize and compare real-time oracle price data across multiple oracles.",
