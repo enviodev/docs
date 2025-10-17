@@ -1902,26 +1902,15 @@ curl --request POST \
 
 ## Overview
 
-API tokens provide authenticated access to HyperSync services, enabling enhanced capabilities and usage tracking. While currently optional, they will become mandatory in the future and offer significant advantages for serious usage.
+API tokens provide authenticated access to HyperSync services, enabling enhanced capabilities and usage tracking.
 
-**Starting from 21 May 2025**, you will still be able to use HyperSync without API tokens, but **rate limits will be applied**. The service will remain **free to use until mid-June**. From **mid-June onwards**, we will introduce a set of **tiered packages based on usage**. Indexers deployed to our hosted service will have special access to HyperSync that does not require a custom API token.
+HyperSync implements **rate limits for requests without API tokens**. API tokens will be required from **3 November 2025**. Indexers deployed to our hosted service will have special access to HyperSync that does not require a custom API token.
 
 ## Table of Contents
 
-- Benefits of Using API Tokens
 - Generating API Tokens
 - Implementation Guide
 - Security Best Practices
-
-## Benefits of Using API Tokens
-
-Using API tokens with HyperSync provides several advantages:
-
-- **Dedicated Resources**: Access to reserved capacity and bandwidth
-- **Performance Guarantees**: Higher quality of service with better reliability
-- **Usage Analytics**: Track and monitor your consumption patterns
-- **Future-Proofing**: Early adoption before tokens become mandatory
-- **Enhanced Support**: Better visibility for troubleshooting assistance
 
 ## Generating API Tokens
 
@@ -2035,7 +2024,6 @@ If you are a network operator or user and would like improved service support or
 | Base                 | 8453       | https://base.hypersync.xyz or https://8453.hypersync.xyz                            | 🏅   |                 |
 | Base Sepolia         | 84532      | https://base-sepolia.hypersync.xyz or https://84532.hypersync.xyz                   | 🎒   |                 |
 | Berachain            | 80094      | https://berachain.hypersync.xyz or https://80094.hypersync.xyz                      | 🥉   |                 |
-| Berachain Bartio     | 80084      | https://berachain-bartio.hypersync.xyz or https://80084.hypersync.xyz               | 🎒   |                 |
 | Blast                | 81457      | https://blast.hypersync.xyz or https://81457.hypersync.xyz                          | 🥉   |                 |
 | Blast Sepolia        | 168587773  | https://blast-sepolia.hypersync.xyz or https://168587773.hypersync.xyz              | 🎒   |                 |
 | Boba                 | 288        | https://boba.hypersync.xyz or https://288.hypersync.xyz                             | 🪨   |                 |
@@ -2084,7 +2072,7 @@ If you are a network operator or user and would like improved service support or
 | Opbnb                | 204        | https://opbnb.hypersync.xyz or https://204.hypersync.xyz                            | 🪨   |                 |
 | Optimism             | 10         | https://optimism.hypersync.xyz or https://10.hypersync.xyz                          | 🏅   |                 |
 | Optimism Sepolia     | 11155420   | https://optimism-sepolia.hypersync.xyz or https://11155420.hypersync.xyz            | 🎒   |                 |
-| Plasma               | 9745       | https://plasma.hypersync.xyz or https://9745.hypersync.xyz                          | 🪨   |                 |
+| Plasma               | 9745       | https://plasma.hypersync.xyz or https://9745.hypersync.xyz                          | 🥉   |                 |
 | Plume                | 98866      | https://plume.hypersync.xyz or https://98866.hypersync.xyz                          | 🪨   |                 |
 | Polygon              | 137        | https://polygon.hypersync.xyz or https://137.hypersync.xyz                          | 🥈   |                 |
 | Polygon Amoy         | 80002      | https://polygon-amoy.hypersync.xyz or https://80002.hypersync.xyz                   | 🥉   |                 |

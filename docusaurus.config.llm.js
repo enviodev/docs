@@ -46,6 +46,14 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       image: "img/preview-banner.png",
+      announcementBar: {
+        id: "hypersync-api-tokens-nov-2025",
+        content:
+          'HyperSync API tokens required from <strong>3 November 2025</strong>. Ensure you are using one to keep uninterrupted HyperSync access. <a href="/docs/HyperSync/api-tokens" rel="noopener noreferrer">Learn more →</a>',
+        backgroundColor: "#fff7e6",
+        textColor: "#663c00",
+        isCloseable: true,
+      },
       navbar: {
         title: "Envio LLM Docs",
         logo: {
