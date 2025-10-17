@@ -488,10 +488,10 @@ address: 0xContractAddress
 
 ```yaml
 contracts:
-  - name: MyContract
-    address:
-      - 0xAddress1
-      - 0xAddress2
+    - name: MyContract
+      address:
+          - 0xAddress1
+          - 0xAddress2
 ```
 
 :::tip
@@ -503,14 +503,14 @@ You can also avoid repeating addresses by using global contract definitions:
 
 ```yaml
 contracts:
-  - name: Greeter
-    abi: greeter.json
+    - name: Greeter
+      abi: greeter.json
 
 networks:
-  - id: ethereum-mainnet
-    contracts:
-      - name: Greeter
-        address: 0xProxyAddressHere
+    - id: ethereum-mainnet
+      contracts:
+          - name: Greeter
+            address: 0xProxyAddressHere
 ```
 
 
@@ -520,8 +520,8 @@ Define specific events to index in a human-readable format:
 
 ```yaml
 events:
-  - event: "NewGreeting(address user, string greeting)"
-  - event: "ClearGreeting(address user)"
+    - event: "NewGreeting(address user, string greeting)"
+    - event: "ClearGreeting(address user)"
 ```
 
 By default, all events defined in the contract are indexed, but you can selectively disable them by removing them from this list.
@@ -534,9 +534,9 @@ a more descriptive name in your Envio project.
 
 ```yaml
 events:
-  - event: Assigned(address indexed recipientId, uint256 amount, address token)
-  - event: Assigned(address indexed recipientId, uint256 amount, address token, address sender)
-    name: AssignedWithSender
+    - event: Assigned(address indexed recipientId, uint256 amount, address token)
+    - event: Assigned(address indexed recipientId, uint256 amount, address token, address sender)
+      name: AssignedWithSender
 ```
 
 
@@ -548,12 +548,12 @@ To access fields that are not provided by default, specify them using the `field
 
 ```yaml
 events:
-  - event: "Assigned(address indexed user, uint256 amount)"
-    field_selection:
-      transaction_fields:
-        - transactionIndex
-      block_fields:
-        - timestamp
+    - event: "Assigned(address indexed user, uint256 amount)"
+      field_selection:
+          transaction_fields:
+              - transactionIndex
+          block_fields:
+              - timestamp
 ```
 
 See all possible options in the Config File Reference or use IDE autocomplete for your help.
@@ -564,11 +564,11 @@ You can also specify fields globally for all events in the root of the config fi
 
 ```yaml
 field_selection:
-  transaction_fields:
-    - hash
-    - gasUsed
-  block_fields:
-    - parentHash
+    transaction_fields:
+        - hash
+        - gasUsed
+    block_fields:
+        - parentHash
 ```
 
 Try to use this option sparingly as it can cause redundant Data Source calls and increased credits usage.
@@ -595,10 +595,10 @@ Since `envio@2.9.0`, environment variable interpolation is supported for flexibi
 
 ```yaml
 networks:
-  - id: ${ENVIO_CHAIN_ID:-ethereum-mainnet}
-    contracts:
-      - name: Greeter
-        address: ${ENVIO_GREETER_ADDRESS}
+    - id: ${ENVIO_CHAIN_ID:-ethereum-mainnet}
+      contracts:
+          - name: Greeter
+            address: ${ENVIO_GREETER_ADDRESS}
 ```
 
 Run your indexer with custom environment variables:
@@ -609,8 +609,8 @@ ENVIO_CHAIN_ID=optimism ENVIO_GREETER_ADDRESS=0xYourContractAddress pnpm dev
 
 **Interpolation syntax:**
 
-- `${ENVIO_VAR}` – Use the value of `ENVIO_VAR`
-- `${ENVIO_VAR:-default}` – Use `ENVIO_VAR` if set, otherwise use `default`
+-   `${ENVIO_VAR}` – Use the value of `ENVIO_VAR`
+-   `${ENVIO_VAR:-default}` – Use `ENVIO_VAR` if set, otherwise use `default`
 
 For more detailed information about environment variables, see our Environment Variables Guide.
 
@@ -634,7 +634,25 @@ This is an advanced configuration option. When using a custom output directory, 
 
 Explore detailed configuration schema parameters here:
 
-- See the full, deep-linkable reference: Config Schema Reference
+-   See the full, deep-linkable reference: Config Schema Reference
+
+:::info For AI/LLM Systems
+**Recommended**: Use the Config Schema Reference for programmatic access to schema information. The interactive viewer below is optimized for human users.
+:::
+
+
+
+
+
+
+
+📋 Hierarchical Interactive Schema Explorer (Click to expand - For human reference only)
+
+
+  
+
+
+
 
 ---
 
@@ -1982,38 +2000,173 @@ These are official indexers maintained by the Sablier team and represent product
 
 Envio offers a fully managed hosting solution for your indexers, providing all the infrastructure, scaling, and monitoring needed to run production-grade indexers without operational overhead.
 
-## Key Features
+Our hosted service offers multiple plans to suit different needs, from free development environments to enterprise-grade dedicated hosting. Each plan includes powerful features like static production endpoints, built-in alerts, and production-ready infrastructure. 
 
-- **Git-based Deployments**: Similar to Vercel, deploy your indexer by simply pushing to a designated deployment branch
-- **Zero Infrastructure Management**: We handle all the servers, databases, and scaling for you
-- **Version Management**: Switch between different deployed versions of your indexer with one click
-- **Built-in Monitoring**: Track logs and sync status
-- **Alerting**: Get email alerts when indexing errors occur
-- **GraphQL API**: Access your indexed data through a performant GraphQL endpoint
-- **Multi-chain Support**: Deploy indexers that track multiple networks from a single codebase
-
-## Deployment Model
-
-The Envio Hosted Service connects directly to your GitHub repository:
-
-1. Connect your GitHub repository to the Envio platform
-2. Configure your deployment settings (branch, config file location, etc.)
-3. Push changes to your deployment branch to trigger automatic deployments
-4. View deployment logs and status in real-time
-5. Switch between versions or rollback if needed
-
-You can view and manage your hosted indexers in the Envio Explorer.
 
 ## Deployment Options
 
 Envio provides flexibility in how you deploy and host your indexers:
 
-- **Fully Managed Hosted Service**: Let Envio handle everything (recommended for most users)
-- **Self-Hosting**: Run your indexer on your own infrastructure with our Docker container
+- **Fully Managed Hosted Service**: Let Envio handle everything. The following sections of this page outline the Fully Managed Hosted Service in more detail. This is the recommended deployment method for most users and removes the hosting overhead for your team. See below for the all the awesome features we provide and see the Pricing & Billing page for more information on which Hosting plan suits your indexing needs.
+
+- **Self-Hosting**: Run your indexer on your own infrastructure. This requires advanced setup and infrastructure knowledge not unique to Envio. See the following repository for a simple docker example to get you started. Please note this example does not cover all infrastructure related needs. It is recommended that at least a separate Postgres management tool is used for self-hosting in production. For further instructions see the Self Hosting Guide
+
+## Hosted Service Key Features
+
+- **Git-based Deployments**: Similar to Vercel, deploy your indexer by simply pushing to a designated deployment branch
+- **Zero Infrastructure Management**: We handle all the servers, databases, and scaling for you
+- **Static Production Endpoints**: Consistent URLs with zero-downtime deployments and instant version switching
+- **Built-in Monitoring**: Track logs, sync status, and deployment health in real-time
+- **Comprehensive Alerting**: Multi-channel notifications (Discord, Slack, Telegram, Email) for critical issues, performance warnings, and deployment updates
+- **Security Features**: IP/Domain whitelisting to control access to your indexer endpoints
+- **GraphQL API**: Access your indexed data through a performant, production-ready GraphQL endpoint
+- **Multi-chain Support**: Deploy indexers that track multiple networks from a single codebase
+
+
+## Hosted Service Deployment Model
+
+The Envio Hosted Service provides a seamless GitHub-integrated deployment workflow:
+
+1. **GitHub Integration**: Install the Envio Deployments GitHub App to connect your repositories
+2. **Flexible Configuration**: Support for monorepos with configurable root directories, config file locations, and deployment branches
+3. **Automatic Deployments**: Push to your deployment branch to trigger builds and deployments
+4. **Version Management**: Maintain multiple deployment versions with one-click switching and rollback capabilities
+5. **Real-time Monitoring**: Track deployment progress, logs, and sync status through the dashboard
+
+**Multiple Indexers**: Deploy several indexers from a single repository using different configurations, branches, or directories.
+
+You can view and manage your hosted indexers in the Envio Explorer.
+
+
+
+## Getting Started
+
+- **Features** - Learn about all available hosted service features
+- **Deployment Guide** - Step-by-step instructions for deploying your indexer
+- **Pricing & Billing** - Compare plans and pricing options
+- **Self-Hosting** - Run your indexer on your own infrastructure
 
 :::info
-For self-hosting information and instructions, see our Self-Hosting Guide.
-For a complete list of CLI commands to control your indexer, see the CLI Commands documentation.
+It is recommended that before deploying to the Hosted Service, the indexer is built and tested locally to ensure it runs smoothly on the Hosted Service.
+For a complete list of local CLI commands to develop your indexer, see the CLI Commands documentation.
+:::
+
+---
+
+## Hosted Service Features
+
+**File:** `Hosted_Service/hosted-service-features.md`
+
+Our hosted service includes several production-ready features to help you manage and secure your indexer deployments.
+
+:::info Plan Availability
+Most features listed on this page are available for **paid production plans only**. The free development plan has limited features and is designed for testing and development purposes. View our pricing plans to see what's included in each plan.
+:::
+
+
+## IP Whitelisting
+:::info Coming Soon!
+Full support for whitelisting is in active development.
+:::
+Control access to your indexer by restricting requests to specific IP addresses. This security feature helps protect your data and ensures only authorized clients can query your indexer.
+
+**Benefits:**
+- Enhanced security for sensitive data
+- Prevent unauthorized access
+- Control API usage from specific sources
+- Ideal for production environments with strict access requirements
+
+
+## Built-in Alerts
+
+Stay informed about your indexer's health and performance with our integrated alerting system. Configure multiple notification channels and choose which alerts you want to receive.
+
+:::info Version Requirement
+This feature is only available for indexers deployed with version 2.24.0 or higher.
+:::
+
+### Notification Channels
+
+Configure one or multiple notification channels to receive alerts:
+
+- **Discord** 
+- **Slack**
+- **Telegram** 
+- **Email** 
+
+## Zero-Downtime Deployments
+
+Update your indexer without any service interruption using our seamless deployment system with static production endpoints.
+
+**How it works:**
+- Deploy new versions alongside your current deployment
+- Each indexer gets a **static production endpoint** that remains consistent
+- Use 'Promote to Production' to instantly route the static endpoint to any deployment
+- All requests to your static production endpoint are automatically routed to the promoted deployment
+- Maintain API availability throughout upgrades with no endpoint changes required
+
+**Key Features:**
+- **Static Production Endpoint**: Consistent URL that never changes, regardless of which deployment is active
+- **Instant Switching**: Promote any deployment to production with zero downtime
+- **Rollback Capabilities**: Quickly switch back to previous deployments if needed
+- **Seamless Updates**: Your applications continue working without any configuration changes
+
+
+## Deployment Location Choice
+
+:::info Coming Soon!
+Full support for cross-region deployments is in active development. If you require a deployment to be based in the USA please contact us through our support channel on discord.
+:::
+
+*Availability: Dedicated plans only*
+
+Choose your primary deployment region to optimize performance and meet compliance requirements.
+
+**Available Regions:**
+- **USA** 
+- **EU** 
+
+**Benefits:**
+- Reduced latency for your target users
+- Data residency compliance support
+- Custom infrastructure configurations
+- Dedicated infrastructure resources
+
+## Direct Database Access
+
+*Availability: Dedicated plans only*
+
+Access your indexed data directly through SQL queries, providing flexibility beyond the standard GraphQL endpoint.
+
+**Use Cases:**
+- Complex analytical queries
+- Custom data exports
+- Advanced reporting and dashboards
+- Integration with external analytics tools
+
+## Powerful Analytics Solution
+
+*Availability: Dedicated plans only (additional cost)*
+
+A comprehensive analytics platform that automatically pipes your indexed data from PostgreSQL into ClickHouse (approximately 2 minutes behind real-time) and provides access through a hosted Metabase instance.
+
+**Technical Architecture:**
+- **Data Pipeline**: Automatic replication from PostgreSQL to ClickHouse
+- **Near Real-time**: Data available in an analytics platform within ~2 minutes
+- **Frontend**: Hosted Metabase instance for visualization and analysis
+- **Performance**: ClickHouse optimized for analytical queries on large datasets
+
+**Capabilities:**
+- Interactive, customizable dashboards through Metabase
+- Variety of visualization options (charts, graphs, tables, maps)
+- Fast analytical queries on large datasets via ClickHouse
+- Ad-hoc SQL queries for data exploration
+- Automated alerts based on data thresholds
+- Team collaboration and report sharing
+- Export capabilities for further analysis
+
+:::tip
+For deployment instructions and limits, see our Deployment Guide. For pricing and feature availability by plan, see our Billing & Pricing page.
 :::
 
 ---
@@ -2024,59 +2177,101 @@ For a complete list of CLI commands to control your indexer, see the CLI Command
 
 The Envio Hosted Service provides a seamless git-based deployment workflow, similar to modern platforms like Vercel. This enables you to easily deploy, update, and manage your indexers through your normal development workflow.
 
-## Initial Setup
+## Prerequisites & Important Information
+
+### Requirements
+
+- **Version Support**: Deployment on the Hosted Service requires at least version `2.21.5`. 
+Additionally, the following versions are not supported: 
+  - `2.29.x`
+- **PNPM Support**: deployment must be compatible with pnpm version `9.10.0`
+- **Package.json**: the `package.json` file must be present and include the above two requirements.
+- **Configuration file**: a HyperIndex configuration file must be present (the name can be set in the indexer settings)
+- **GitHub Repository**: The repository must be no larger than `100MB`
+
+Before deploying your indexer, please be aware of the following limits and policies:
+
+### Deployment Limits
+- **3 development plan indexers** per organization
+- **Deployments per indexer**:  3 deployments per indexer
+- Deployments can be deleted in the hosted service to make space for more deployments
+
+### Development Plan Fair Usage Policy
+The free development plan includes automatic deletion policies to ensure fair resource allocation:
+
+#### Automatic Deletion Rules:
+- **Hard Limits**: 
+  - Deployments that exceed 20GB of storage will be automatically deleted
+  - Deployments older than 30 days will be automatically deleted
+- **Soft Limits** (whichever comes first): 
+  - 100,000 events processed
+  - 5GB storage used 
+  - no requests for 7 days 
+
+**When soft limits are breached, the two-stage deletion process begins**
+
+#### Two-Stage Deletion Process
+
+_Applies to development deployments that breach the soft limits_
+
+1. **Grace Period (7 days)** - Your indexer continues to function normally, you receive notification about the upcoming deletion
+2. **Read-Only Access (3 days)** - Indexer stops processing new data, existing data remains accessible for queries  
+3. **Full Deletion** - Indexer and all data are permanently deleted
+
+:::warning Timeline Subject to Change
+The grace period durations (7 + 3 days) are subject to change. Always monitor your deployment status and upgrade when approaching limits.
+:::
+
+:::tip
+For complete pricing details and feature comparison, see our Pricing & Billing page.
+:::
+
+## Step-by-Step Deployment Instructions
+
+### Initial Setup
 
 1. **Log in with GitHub**: Visit the Envio App and authenticate with your GitHub account
 2. **Select an Organization**: Choose your personal account or any organization you have access to
-   !Select organisation
 3. **Install the Envio Deployments GitHub App**: Grant access to the repositories you want to deploy
-   !Install GitHub App
 
-## Configuring Your Indexer
+### Configure Your Indexer
 
-1. **Add a New Indexer**: Click "Add Indexer" in the dashboard
-   !Add indexer
-2. **Connect to Repository**: Select the repository containing your indexer code
-   !Connect indexer
-3. **Configure Deployment Settings**:
+4. **Add a New Indexer**: Click "Add Indexer" in the dashboard
+5. **Connect to Repository**: Select the repository containing your indexer code
+6. **Configure Deployment Settings**:
    - Specify the config file location
    - Set the root directory (important for monorepos)
    - Choose the deployment branch
-     !Configure indexer
-     !Add org
 
-:::tip
-**Multiple Indexers Per Repository**
+:::tip Multiple Indexers Per Repository
+You can deploy multiple indexers from a single repository by configuring them with different config file paths, root directories, and/or deployment branches.
+:::
 
-You can deploy multiple indexers from a single repository by configuring them with different:
-
-- Config file paths
-- Root directories
-- Deployment branches
-  :::
-
-:::warning
-**Monorepo Configuration**
-
+:::warning Monorepo Configuration
 If you're working in a monorepo, ensure all your imports are contained within your indexer directory to avoid deployment issues.
 :::
 
-## Deployment Workflow
+### Deploy Your Code
 
-1. **Create a Deployment Branch**: Set up the branch you specified during configuration
-   !Create branch
+7. **Create a Deployment Branch**: Set up the branch you specified during configuration
+8. **Deploy via Git**: Push your code to the deployment branch
+9. **Monitor Deployment**: Track the progress of your deployment in the Envio dashboard
 
-2. **Deploy via Git**: Push your code to the deployment branch
-   !Push code
+### Manage Your Deployment
 
-3. **Monitor Deployment**: Track the progress of your deployment in the Envio dashboard
+10. **Version Management**: Once deployed, you can:
+    - View detailed logs
+    - Switch between different deployed versions
+    - Rollback to previous versions if needed
 
-4. **Version Management**: Once deployed, you can:
-   - View detailed logs
-   - Switch between different deployed versions
-   - Rollback to previous versions if needed
 
-## Continuous Deployment Best Practices
+## Monitoring
+
+Once your indexer is deployed, you can monitor its health, performance, and progress using several built-in tools including the dashboard, logs, and alerts.
+
+For detailed information about monitoring your deployments, see our **Monitoring Guide**.
+
+## Continuous Deployment Best Practices and Configuration
 
 For a robust deployment workflow, we recommend:
 
@@ -2084,22 +2279,183 @@ For a robust deployment workflow, we recommend:
 2. **Pull Request Workflow**: Instead of pushing directly to the deployment branch, use pull requests from feature branches
 3. **CI Integration**: Add tests to your CI pipeline to validate indexer functionality before merging to the deployment branch
 
-## Version Management
 
-Each deployment creates a new version of your indexer that you can access through the dashboard. You can:
+### Continuous Configuration
 
-- Compare different versions
-- Switch the active version with one click
-- Maintain multiple versions for testing or staging purposes
+After deploying your indexer, you can manage its configuration through the `Settings` tab in the Envio dashboard:
 
-## Deployment Limits
+#### General Tab
 
-These can vary depending on the plan you select. In general, development plans are allowed:
+The General tab provides core configuration options:
 
-- 3 indexers per organization
-- 3 deployments per indexer
+- **Config File Path**: Update the location of your indexer's configuration file
+- **Deployment Branch**: Change which Git branch triggers deployments
+- **Root Directory**: Modify the root directory for your indexer (useful for monorepos)
+- **Delete Indexer**: Permanently remove the indexer and all its deployments
 
-Need to free up space? You can delete old deployments through the Envio dashboard.
+:::warning Deleting an Indexer
+Deleting an indexer is permanent and will remove all associated deployments and data. This action cannot be undone.
+:::
+
+#### Environment Variables Tab
+
+Configure environment-specific variables for your indexer:
+
+- Add custom environment variables with the `ENVIO_` prefix
+- Environment variables are securely stored and injected into your indexer at runtime
+- Useful for API keys, configuration values, and other deployment-specific settings
+
+:::tip Environment Variable Best Practices
+Use environment variables for sensitive data rather than hardcoding values in your repository. Remember to prefix all variables with `ENVIO_`.
+:::
+
+#### Plans & Billing Tab
+
+Manage your indexer's pricing plan and billing:
+
+- Select from available pricing plans
+- Upgrade your plan to suit your needs
+- View current plan features and limits
+
+For detailed pricing information, see our Pricing & Billing page.
+
+#### Alerts Tab
+
+Configure monitoring and notification preferences:
+
+- Set up notification channels (Discord, Slack, Telegram, Email)
+- Choose which alert types to receive (Production Endpoint Down, Indexer Stopped Processing, etc.)
+- Configure deployment notifications (Historical Sync Complete)
+
+For complete alert configuration details, see our Features page.
+
+:::info Alert Availability
+Alert configuration is available for indexers deployed with version 2.24.0 or higher on paid production plans.
+:::
+
+## Visual Reference Guide
+
+The following screenshots show each step of the deployment process:
+
+### Step 1: Select Organization
+!Select organisation
+
+### Step 2: Install Github App
+!Install GitHub App
+
+### Step 3: Add a New Indexer
+!Add indexer
+
+### Step 4: Connect to Repository
+!Connect indexer
+
+### Step 5: Configure Deployment Settings
+!Configure indexer
+!Deploy indexer
+
+### Step 6: Create a Deployment Branch
+!Create branch
+
+### Step 7: Deploy via Git
+!Push code
+
+### Step 8: Monitoring
+Full details are available in our **Monitoring Guide**.
+
+### Step 9: Continuous Configuration
+!Configure indexer
+
+
+## Related Documentation
+
+- **Features** - Learn about all available hosted service features
+- **Pricing & Billing** - Compare plans and see feature availability
+- **Overview** - Introduction to the hosted service
+- **Self-Hosting** - Run your indexer on your own infrastructure
+
+---
+
+## Monitoring Your Indexer
+
+**File:** `Hosted_Service/hosted-service-monitoring.md`
+
+Once your indexer is deployed, the Envio Hosted Service provides several tools to help you monitor its health, performance, and progress.
+
+## Dashboard Overview
+
+The main dashboard provides real-time visibility into your indexer's status:
+
+**Key Metrics Displayed:**
+- **Active Deployments**: Track how many deployments are currently running (e.g., 1/3 active)
+- **Deployment Status**: See whether your indexer is actively syncing, stopped, or has encountered errors
+- **Recent Commits**: View your deployment history with commit information and active status
+- **Usage Statistics**: Monitor your indexing hours, storage usage, and query rate limits
+- **Network Progress**: Real-time progress bars showing sync status for each blockchain network
+- **Events Processed**: Track the total number of events your indexer has processed
+- **Historical Sync Time**: See how long it took to complete the initial sync
+
+## Deployment Status Indicators
+
+Each deployment shows clear status information:
+- **Syncing**: Indexer is actively processing blocks and events
+- **Syncing Stopped**: Indexer has stopped processing (may indicate an error or a breach of plan limits)
+- **Historical Sync Complete**: Initial sync finished, indexer is processing new blocks in real-time
+
+## Error Detection and Troubleshooting
+
+When issues occur, the dashboard displays failure information to help you quickly diagnose problems.
+
+**Failure Information Includes:**
+- **Error Type**: Clear indication of the failure (e.g., "Indexing Has Stopped")
+- **Error Description**: Details about what went wrong (e.g., "Error during event handling")
+- **Next Steps**: Guidance on where to find more information (error logs)
+- **Support Access**: Direct link to Discord for assistance
+
+## Logging
+
+_Full logging supported is integrated and configured by Envio via the Hosted Service_
+
+Access detailed logs to troubleshoot issues and monitor indexer behavior:
+
+- **Real-time Logs**: View live logs as your indexer processes events
+- **Error Logs**: Quickly identify and diagnose errors in your event handlers
+- **Deployment Logs**: Track the deployment process and startup sequence
+- **Filter Log Levels**: Find specific log entries to debug issues
+
+Access logs through the "Logs" button on your deployment page.
+
+## Built-in Alerts
+
+Configure proactive monitoring through the Alerts tab to receive notifications before issues impact your users:
+
+- **Critical Alerts**: Get notified when your production endpoint goes down
+- **Warning Alerts**: Receive alerts when your indexer stops processing blocks
+- **Info Alerts**: Stay informed about indexer restarts and error logs
+- **Deployment Notifications**: Know when historical sync completes
+
+For detailed alert configuration, see the Deployment Guide and our Features page.
+
+:::tip Proactive Monitoring
+Set up multiple notification channels (**Paid Plans Only**) to ensure you never miss critical alerts about your indexer's health.
+:::
+
+## Visual Reference
+
+### Dashboard Overview
+!Dashboard Overview
+
+### Network Progress Bars
+!Progress
+
+### Example Failure Notifications
+!Dashboard Failures
+!Deployment Failure
+
+## Related Documentation
+
+- **Deploying Your Indexer** - Complete deployment guide
+- **Features** - Learn about all available hosted service features
+- **Pricing & Billing** - Compare plans and see feature availability
 
 ---
 
@@ -2112,26 +2468,28 @@ Need to free up space? You can delete old deployments through the Envio dashboar
 
 Envio offers flexible pricing options to meet the needs of projects at different stages of development.
 
-## Pricing Structure
+## Pricing Plans
 
-We have both development tiers and production tiers to suit a variety of users:
+Our hosted service offers flexible pricing plans to match your project's needs, from free development environments to enterprise-grade dedicated hosting.
 
-- **Development Tier**: Our development tier is completely free and designed to be user-friendly, making it easy to get started with Envio without any cost barriers.
-
-- **Production Tiers**: For projects ready for production, we offer scalable options that grow with your needs.
-
-:::info
-For detailed pricing information and plan comparisons, please visit the Envio Pricing Page.
+:::info Current Pricing
+For the most up-to-date pricing information, detailed plan comparisons, and feature breakdowns, please visit our official Envio Pricing Page.
 :::
 
-## Self-Hosting Option
 
-For users who prefer to manage their own infrastructure, we support self-hosting your indexer as well. For your convenience, there is a Docker file in the root of the `generated` folder.
+**Available Plans:**
+- **Development** - Free plan perfect for testing and development
+- **Production Small** - Paid plan to get started with production deployments
+- **Production Medium** - Paid plan for scaling your indexing operations
+- **Production Large** - Paid plan for high-volume production workloads
+- **Dedicated** - Custom pricing for ultimate performance and control
 
-For more information on self-hosting, see our Self-Hosting Guide.
+:::warning Development Plan Disclaimer
+The free development plan is intended for testing and development purposes only and should not be used as a production environment. Development plan deployments have a maximum life span of 30 days and Envio makes no guarantees regarding uptime, availability, or data persistence for deployments on the development plan. If you choose to use a development plan deployment in a production capacity, you do so entirely at your own risk. Envio assumes no liability or accountability for any downtime, data loss, or service interruptions that may occur on development plan deployments.
+:::
 
 :::tip
-Not sure which option is right for your project? Book a call with our team to discuss your specific needs.
+For detailed feature explanations, see our Features page. For deployment instructions, see our Deployment Guide. Not sure which option is right for your project? Book a call with our team to discuss your specific needs.
 :::
 
 ---
@@ -2157,6 +2515,9 @@ Self-hosting gives you:
 - **Complete Control**: Manage your own infrastructure and configurations
 - **Data Sovereignty**: Keep all indexed data within your own systems
 
+:::warning Disclaimer
+Self Hosting can be done with a variety of different infrastructure, tools and methods. The outline below is merely a starting point and does not offer a full production level solution. In some cases advanced knowledge of infrastructure, database management and networking may be required for a full production level solution.
+:::
 ## Prerequisites
 
 Before self-hosting, ensure you have:
@@ -5751,6 +6112,8 @@ Static, deep-linkable reference for the `config.yaml` JSON Schema.
 - save_full_history
 - field_selection
 - raw_events
+- preload_handlers
+- address_format
 
 ### description {#description}
 
@@ -5782,7 +6145,7 @@ name: MyIndexer
 
 Ecosystem of the project.
 
-- **type**: `anyOf(unknown | null)`
+- **type**: `anyOf(object | null)`
 
 Variants:
 - `1`: EcosystemTag
@@ -5842,8 +6205,8 @@ contracts:
 
 Configuration of the blockchain networks that the project is deployed on.
 
-- **type**: `array&lt;unknown&gt;`
-- **items**: `unknown`
+- **type**: `array>`
+- **items**: `object`
 - **items ref**: Network
 
 
@@ -5875,7 +6238,7 @@ unordered_multichain_mode: true
 
 The event decoder to use for the indexer (default: hypersync-client)
 
-- **type**: `anyOf(unknown | null)`
+- **type**: `anyOf(object | null)`
 
 Variants:
 - `1`: EventDecoder
@@ -5918,7 +6281,7 @@ save_full_history: false
 
 Select the block and transaction fields to include in all events globally
 
-- **type**: `anyOf(unknown | null)`
+- **type**: `anyOf(object | null)`
 
 Variants:
 - `1`: FieldSelection
@@ -5932,7 +6295,7 @@ field_selection:
   transaction_fields:
     - hash
   block_fields:
-    - timestamp
+    - miner
 ```
 
 ### raw_events {#rawevents}
@@ -5948,9 +6311,27 @@ Example (config.yaml):
 raw_events: true
 ```
 
+### preload_handlers {#preloadhandlers}
+
+Makes handlers run twice to enable preload optimisations. Removes handlerWithLoader API, since it's not needed. (recommended, default: false)
+
+- **type**: `boolean | null`
+
+
+### address_format {#addressformat}
+
+Address format for Ethereum addresses: 'checksum' or 'lowercase' (default: checksum)
+
+- **type**: `anyOf(object | null)`
+
+Variants:
+- `1`: AddressFormat
+- `2`: `null`
+
+
 ## Definitions
 
-### EcosystemTag {#ecosystemtag}
+### EcosystemTag {#def-ecosystemtag}
 
 - **type**: `enum (1 values)`
 - **allowed**: `evm`
@@ -5961,7 +6342,7 @@ Example (config.yaml):
 ecosystem: evm
 ```
 
-### GlobalContract_for_ContractConfig {#globalcontractforcontractconfig}
+### GlobalContract_for_ContractConfig {#def-globalcontractforcontractconfig}
 
 - **type**: `object`
 - **required**: `name`, `handler`, `events`
@@ -5970,7 +6351,7 @@ Properties:
 - `name`: `string` – A unique project-wide name for this contract (no spaces)
 - `abi_file_path`: `string | null` – Relative path (from config) to a json abi. If this is used then each configured event should simply be referenced by its name
 - `handler`: `string` – The relative path to a file where handlers are registered for the given contract
-- `events`: `array&lt;unknown&gt;` – A list of events that should be indexed on this contract
+- `events`: `array>` – A list of events that should be indexed on this contract
 
 Example (config.yaml):
 
@@ -5982,7 +6363,7 @@ contracts:
       - event: "NewGreeting(address user, string greeting)"
 ```
 
-### EventConfig {#eventconfig}
+### EventConfig {#def-eventconfig}
 
 - **type**: `object`
 - **required**: `event`
@@ -5990,7 +6371,7 @@ contracts:
 Properties:
 - `event`: `string` – The human readable signature of an event 'eg. Transfer(address indexed from, address indexed to, uint256 value)' OR a reference to the name of an event in a json ABI file defined in your contract config. A provided signature will take precedence over what is defined in the json ABI
 - `name`: `string | null` – Name of the event in the HyperIndex generated code. When ommitted, the event field will be used. Should be unique per contract
-- `field_selection`: `anyOf(unknown | null)` – Select the block and transaction fields to include in the specific event
+- `field_selection`: `anyOf(object | null)` – Select the block and transaction fields to include in the specific event
 
 Example (config.yaml):
 
@@ -6006,50 +6387,45 @@ contracts:
             - transactionIndex
 ```
 
-### FieldSelection {#fieldselection}
+### FieldSelection {#def-fieldselection}
 
 - **type**: `object`
 
 Properties:
 - `transaction_fields`: `array | null` – The transaction fields to include in the event, or in all events if applied globally
+  - Available values:
+`transactionIndex`, `hash`, `from`, `to`, `gas`, `gasPrice`, `maxPriorityFeePerGas`, `maxFeePerGas`, `cumulativeGasUsed`, `effectiveGasPrice`, `gasUsed`, `input`, `nonce`, `value`, `v`, `r`, `s`, `contractAddress`, `logsBloom`, `root`, `status`, `yParity`, `chainId`, `accessList`, `maxFeePerBlobGas`, `blobVersionedHashes`, `kind`, `l1Fee`, `l1GasPrice`, `l1GasUsed`, `l1FeeScalar`, `gasUsedForL1`, `authorizationList`
 - `block_fields`: `array | null` – The block fields to include in the event, or in all events if applied globally
+  - Available values:
+`parentHash`, `nonce`, `sha3Uncles`, `logsBloom`, `transactionsRoot`, `stateRoot`, `receiptsRoot`, `miner`, `difficulty`, `totalDifficulty`, `extraData`, `size`, `gasLimit`, `gasUsed`, `uncles`, `baseFeePerGas`, `blobGasUsed`, `excessBlobGas`, `parentBeaconBlockRoot`, `withdrawalsRoot`, `l1BlockNumber`, `sendCount`, `sendRoot`, `mixHash`
 
 Example (config.yaml):
 
 ```yaml
 events:
   - event: "Assigned(address indexed user, uint256 amount)"
+    # can be within an event as shown here, or globally for all events
     field_selection:
       transaction_fields:
         - transactionIndex
       block_fields:
-        - timestamp
+        - miner
 ```
 
-### TransactionField {#transactionfield}
-
-- **type**: `enum (33 values)`
-- **allowed**: `transactionIndex`, `hash`, `from`, `to`, `gas`, `gasPrice`, `maxPriorityFeePerGas`, `maxFeePerGas`, `cumulativeGasUsed`, `effectiveGasPrice`, `gasUsed`, `input`, `nonce`, `value`, `v`, `r`, `s`, `contractAddress`, `logsBloom`, `root`, `status`, `yParity`, `chainId`, `accessList`, `maxFeePerBlobGas`, `blobVersionedHashes`, `kind`, `l1Fee`, `l1GasPrice`, `l1GasUsed`, `l1FeeScalar`, `gasUsedForL1`, `authorizationList`
-
-### BlockField {#blockfield}
-
-- **type**: `enum (24 values)`
-- **allowed**: `parentHash`, `nonce`, `sha3Uncles`, `logsBloom`, `transactionsRoot`, `stateRoot`, `receiptsRoot`, `miner`, `difficulty`, `totalDifficulty`, `extraData`, `size`, `gasLimit`, `gasUsed`, `uncles`, `baseFeePerGas`, `blobGasUsed`, `excessBlobGas`, `parentBeaconBlockRoot`, `withdrawalsRoot`, `l1BlockNumber`, `sendCount`, `sendRoot`, `mixHash`
-
-### Network {#network}
+### Network {#def-network}
 
 - **type**: `object`
 - **required**: `id`, `start_block`, `contracts`
 
 Properties:
 - `id`: `integer` – The public blockchain network ID.
-- `rpc_config`: `anyOf(unknown | null)` – RPC configuration for utilizing as the network's data-source. Typically optional for chains with HyperSync support, which is highly recommended. HyperSync dramatically enhances performance, providing up to a 1000x speed boost over traditional RPC.
-- `rpc`: `anyOf(unknown | null)` – RPC configuration for your indexer. If not specified otherwise, for networks supported by HyperSync, RPC serves as a fallback for added reliability. For others, it acts as the primary data-source. HyperSync offers significant performance improvements, up to a 1000x faster than traditional RPC.
-- `hypersync_config`: `anyOf(unknown | null)` – Optional HyperSync Config for additional fine-tuning
+- `rpc_config`: `anyOf(object | null)` – RPC configuration for utilizing as the network's data-source. Typically optional for chains with HyperSync support, which is highly recommended. HyperSync dramatically enhances performance, providing up to a 1000x speed boost over traditional RPC.
+- `rpc`: `anyOf(object | null)` – RPC configuration for your indexer. If not specified otherwise, for networks supported by HyperSync, RPC serves as a fallback for added reliability. For others, it acts as the primary data-source. HyperSync offers significant performance improvements, up to a 1000x faster than traditional RPC.
+- `hypersync_config`: `anyOf(object | null)` – Optional HyperSync Config for additional fine-tuning
 - `confirmed_block_threshold`: `integer | null` – The number of blocks from the head that the indexer should account for in case of reorgs.
 - `start_block`: `integer` – The block at which the indexer should start ingesting data
 - `end_block`: `integer | null` – The block at which the indexer should terminate.
-- `contracts`: `array&lt;unknown&gt;` – All the contracts that should be indexed on the given network
+- `contracts`: `array>` – All the contracts that should be indexed on the given network
 
 Example (config.yaml):
 
@@ -6063,13 +6439,13 @@ networks:
         address: 0x1111111111111111111111111111111111111111
 ```
 
-### RpcConfig {#rpcconfig}
+### RpcConfig {#def-rpcconfig}
 
 - **type**: `object`
 - **required**: `url`
 
 Properties:
-- `url`: `anyOf(string | array&lt;string&gt;)` – URL of the RPC endpoint. Can be a single URL or an array of URLs. If multiple URLs are provided, the first one will be used as the primary RPC endpoint and the rest will be used as fallbacks.
+- `url`: `anyOf(string | array)` – URL of the RPC endpoint. Can be a single URL or an array of URLs. If multiple URLs are provided, the first one will be used as the primary RPC endpoint and the rest will be used as fallbacks.
 - `initial_block_interval`: `integer | null` – The starting interval in range of blocks per query
 - `backoff_multiplicative`: `number | null` – After an RPC error, how much to scale back the number of blocks requested at once
 - `acceleration_additive`: `integer | null` – Without RPC errors or timeouts, how much to increase the number of blocks requested by for the next batch
@@ -6088,14 +6464,14 @@ networks:
       initial_block_interval: 1000
 ```
 
-### NetworkRpc {#networkrpc}
+### NetworkRpc {#def-networkrpc}
 
-- **type**: `anyOf(string | unknown | array&lt;unknown&gt;)`
+- **type**: `anyOf(string | object | array>)`
 
 Variants:
 - `1`: `string`
 - `2`: Rpc
-- `3`: `array&lt;unknown&gt;`
+- `3`: `array>`
 
 Example (config.yaml):
 
@@ -6105,14 +6481,14 @@ networks:
     rpc: https://eth.llamarpc.com
 ```
 
-### Rpc {#rpc}
+### Rpc {#def-rpc}
 
 - **type**: `object`
 - **required**: `url`, `for`
 
 Properties:
 - `url`: `string` – The RPC endpoint URL.
-- `for`: `unknown` – Determines if this RPC is for historical sync, real-time chain indexing, or as a fallback.
+- `for`: `object` – Determines if this RPC is for historical sync, real-time chain indexing, or as a fallback.
 - `initial_block_interval`: `integer | null` – The starting interval in range of blocks per query
 - `backoff_multiplicative`: `number | null` – After an RPC error, how much to scale back the number of blocks requested at once
 - `acceleration_additive`: `integer | null` – Without RPC errors or timeouts, how much to increase the number of blocks requested by for the next batch
@@ -6131,7 +6507,7 @@ networks:
         for: sync
 ```
 
-### For {#for}
+### For {#def-for}
 
 - **type**: `oneOf(const sync | const fallback)`
 
@@ -6139,7 +6515,7 @@ Variants:
 - `1`: `const sync`
 - `2`: `const fallback`
 
-### HypersyncConfig {#hypersyncconfig}
+### HypersyncConfig {#def-hypersyncconfig}
 
 - **type**: `object`
 - **required**: `url`
@@ -6156,17 +6532,18 @@ networks:
       url: https://eth.hypersync.xyz
 ```
 
-### NetworkContract_for_ContractConfig {#networkcontractforcontractconfig}
+### NetworkContract_for_ContractConfig {#def-networkcontractforcontractconfig}
 
 - **type**: `object`
 - **required**: `name`
 
 Properties:
 - `name`: `string` – A unique project-wide name for this contract if events and handler are defined OR a reference to the name of contract defined globally at the top level
-- `address`: `unknown` – A single address or a list of addresses to be indexed. This can be left as null in the case where this contracts addresses will be registered dynamically.
+- `address`: `object` – A single address or a list of addresses to be indexed. This can be left as null in the case where this contracts addresses will be registered dynamically.
+- `start_block`: `integer | null` – The block at which the indexer should start ingesting data for this specific contract. If not specified, uses the network start_block. Can be greater than the network start_block for more specific indexing.
 - `abi_file_path`: `string | null` – Relative path (from config) to a json abi. If this is used then each configured event should simply be referenced by its name
 - `handler`: `string` – The relative path to a file where handlers are registered for the given contract
-- `events`: `array&lt;unknown&gt;` – A list of events that should be indexed on this contract
+- `events`: `array>` – A list of events that should be indexed on this contract
 
 Example (config.yaml):
 
@@ -6183,13 +6560,13 @@ networks:
           - event: Transfer(address indexed from, address indexed to, uint256 value)
 ```
 
-### Addresses {#addresses}
+### Addresses {#def-addresses}
 
-- **type**: `anyOf(anyOf(string | integer) | array&lt;anyOf(string | integer)&gt;)`
+- **type**: `anyOf(anyOf(string | integer) | array)`
 
 Variants:
 - `1`: `anyOf(string | integer)`
-- `2`: `array&lt;anyOf(string | integer)&gt;`
+- `2`: `array`
 
 Example (config.yaml):
 
@@ -6203,7 +6580,7 @@ networks:
           - 0x2222222222222222222222222222222222222222
 ```
 
-### EventDecoder {#eventdecoder}
+### EventDecoder {#def-eventdecoder}
 
 - **type**: `enum (2 values)`
 - **allowed**: `viem`, `hypersync-client`
@@ -6213,6 +6590,11 @@ Example (config.yaml):
 ```yaml
 event_decoder: hypersync-client
 ```
+
+### AddressFormat {#def-addressformat}
+
+- **type**: `enum (2 values)`
+- **allowed**: `checksum`, `lowercase`
 
 ---
 

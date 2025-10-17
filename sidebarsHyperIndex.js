@@ -78,9 +78,12 @@ module.exports = {
       collapsed: false,
       items: [
         "Hosted_Service/hosted-service",
+        "Hosted_Service/hosted-service-features",
         "Hosted_Service/hosted-service-deployment",
+        "Hosted_Service/hosted-service-monitoring",
         "Hosted_Service/hosted-service-billing",
         "Hosted_Service/self-hosting",
+
       ],
     },
     {

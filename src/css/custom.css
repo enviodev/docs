@@ -292,6 +292,20 @@ table td {
   border-color: #ffffff;
 }
 
+
+[data-theme="dark"] .DocSearch-Hit[aria-selected="true"] a,
+[data-theme="dark"] .DocSearch-Hit a:hover {
+  background-color: #6a6a6a !important;
+}
+
+[data-theme="dark"] .DocSearch-Hit-title,
+[data-theme="dark"] .DocSearch-Hit-path,
+[data-theme="dark"] .DocSearch-Hit-action,
+[data-theme="dark"] .DocSearch-Hit span {
+  color: #ffffff !important;
+}
+
+
 /* Clean breadcrumb styling */
 .breadcrumbs {
   padding: 1rem 0;
