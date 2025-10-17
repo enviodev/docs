@@ -51,13 +51,12 @@ While HyperIndex gives you a complete indexing solution with schema management a
 
 ## HyperSync API Token Requirements
 
-HyperSync (the data engine powering HyperIndex) implements rate limits for requests without API tokens. API tokens will be required from **1 November 2025**. Here's what you need to know:
+HyperSync (the data engine powering HyperIndex) implements rate limits for requests without API tokens. API tokens will be required from **3 November 2025**. Here's what you need to know:
 
 - **Local Development**: An API token will be required. An automatic login feature from the CLI will be available to make this smoother.
-- **Self-Hosted Deployments**: API tokens are required for unlimited HyperSync access in self-hosted deployments. The token can be set via the `ENVIO_API_TOKEN` environment variable in your indexer configuration. This can be read from the `.env` file in the root of your HyperIndex project.
+- **Self-Hosted Deployments**: API tokens are required for HyperSync access in self-hosted deployments. The token can be set via the `ENVIO_API_TOKEN` environment variable in your indexer configuration. This can be read from the `.env` file in the root of your HyperIndex project.
 - **Hosted Service**: Indexers deployed to our hosted service will have special access that doesn't require a custom API token.
-- **Free Usage**: The service remains free to use until mid-November 2025.
-- **Future Pricing**: From mid-November 2025 onwards, we will introduce tiered packages based on usage. Credits are calculated based on comprehensive metrics including data bandwidth, disk read operations, and other resource utilization factors. For preferred introductory pricing based on your specific use case, reach out to us on [Discord](https://discord.gg/Q9qt8gZ2fX).
+- **Future Pricing**: From mid-November 2025 onwards, we will introduce tiered packagesfor those self-hosting hyperindex and wishing to use hypersync. For preferred introductory pricing based on your specific use case, reach out to us on [Discord](https://discord.gg/Q9qt8gZ2fX).
 
 For more details about API tokens, including how to generate and implement them, see our [API Tokens documentation](/docs/HyperSync/api-tokens).
 
