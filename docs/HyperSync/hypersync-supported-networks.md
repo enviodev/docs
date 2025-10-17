@@ -41,7 +41,6 @@ If you are a network operator or user and would like improved service support or
 | Base                 | 8453       | https://base.hypersync.xyz or https://8453.hypersync.xyz                            | 🏅   |                 |
 | Base Sepolia         | 84532      | https://base-sepolia.hypersync.xyz or https://84532.hypersync.xyz                   | 🎒   |                 |
 | Berachain            | 80094      | https://berachain.hypersync.xyz or https://80094.hypersync.xyz                      | 🥉   |                 |
-| Berachain Bartio     | 80084      | https://berachain-bartio.hypersync.xyz or https://80084.hypersync.xyz               | 🎒   |                 |
 | Blast                | 81457      | https://blast.hypersync.xyz or https://81457.hypersync.xyz                          | 🥉   |                 |
 | Blast Sepolia        | 168587773  | https://blast-sepolia.hypersync.xyz or https://168587773.hypersync.xyz              | 🎒   |                 |
 | Boba                 | 288        | https://boba.hypersync.xyz or https://288.hypersync.xyz                             | 🪨   |                 |
@@ -64,7 +63,6 @@ If you are a network operator or user and would like improved service support or
 | Flare                | 14         | https://flare.hypersync.xyz or https://14.hypersync.xyz                             | 🪨   |                 |
 | Fraxtal              | 252        | https://fraxtal.hypersync.xyz or https://252.hypersync.xyz                          | 🪨   |                 |
 | Fuji                 | 43113      | https://fuji.hypersync.xyz or https://43113.hypersync.xyz                           | 🎒   |                 |
-| Galadriel Devnet     | 696969     | https://galadriel-devnet.hypersync.xyz or https://696969.hypersync.xyz              | 🎒   |                 |
 | Gnosis               | 100        | https://gnosis.hypersync.xyz or https://100.hypersync.xyz                           | 🏅   |                 |
 | Gnosis Chiado        | 10200      | https://gnosis-chiado.hypersync.xyz or https://10200.hypersync.xyz                  | 🎒   |                 |
 | Gnosis Traces        | 100        | https://gnosis-traces.hypersync.xyz or https://100-traces.hypersync.xyz             | 🥉   |                 |
@@ -91,6 +89,7 @@ If you are a network operator or user and would like improved service support or
 | Opbnb                | 204        | https://opbnb.hypersync.xyz or https://204.hypersync.xyz                            | 🪨   |                 |
 | Optimism             | 10         | https://optimism.hypersync.xyz or https://10.hypersync.xyz                          | 🏅   |                 |
 | Optimism Sepolia     | 11155420   | https://optimism-sepolia.hypersync.xyz or https://11155420.hypersync.xyz            | 🎒   |                 |
+| Plasma               | 9745       | https://plasma.hypersync.xyz or https://9745.hypersync.xyz                          | 🥉   |                 |
 | Plume                | 98866      | https://plume.hypersync.xyz or https://98866.hypersync.xyz                          | 🪨   |                 |
 | Polygon              | 137        | https://polygon.hypersync.xyz or https://137.hypersync.xyz                          | 🥈   |                 |
 | Polygon Amoy         | 80002      | https://polygon-amoy.hypersync.xyz or https://80002.hypersync.xyz                   | 🥉   |                 |
@@ -110,7 +109,6 @@ If you are a network operator or user and would like improved service support or
 | Tangle               | 5845       | https://tangle.hypersync.xyz or https://5845.hypersync.xyz                          | 🪨   |                 |
 | Taraxa               | 841        | https://taraxa.hypersync.xyz or https://841.hypersync.xyz                           | 🥉   |                 |
 | Unichain             | 130        | https://unichain.hypersync.xyz or https://130.hypersync.xyz                         | 🪨   |                 |
-| Unichain Sepolia     | 1301       | https://unichain-sepolia.hypersync.xyz or https://1301.hypersync.xyz                | 🎒   |                 |
 | Worldchain           | 480        | https://worldchain.hypersync.xyz or https://480.hypersync.xyz                       | 🪨   |                 |
 | Xdc                  | 50         | https://xdc.hypersync.xyz or https://50.hypersync.xyz                               | 🥈   |                 |
 | Xdc Testnet          | 51         | https://xdc-testnet.hypersync.xyz or https://51.hypersync.xyz                       | 🎒   |                 |

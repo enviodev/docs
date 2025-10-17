@@ -3,7 +3,7 @@ id: tutorial-scaffold-eth-2
 title: Scaffold-Eth-2 Envio Extension
 sidebar_label: Scaffold-Eth-2 Extension
 slug: /scaffold-eth-2-extension-tutorial
-description: Scaffold-ETH Extension: Get a boilerplate indexer for your deployed smart contracts and start tracking events instantly.
+description: "Scaffold-ETH Extension: Get a boilerplate indexer for your deployed smart contracts and start tracking events instantly."
 ---
 
 # Scaffold-Eth-2 Envio Extension

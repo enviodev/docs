@@ -33,7 +33,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Base                 | 8453       | https://base.rpc.hypersync.xyz or https://8453.rpc.hypersync.xyz                    |                 |
 | Base Sepolia         | 84532      | https://base-sepolia.rpc.hypersync.xyz or https://84532.rpc.hypersync.xyz           |                 |
 | Berachain            | 80094      | https://berachain.rpc.hypersync.xyz or https://80094.rpc.hypersync.xyz              |                 |
-| Berachain Bartio     | 80084      | https://berachain-bartio.rpc.hypersync.xyz or https://80084.rpc.hypersync.xyz       |                 |
 | Blast                | 81457      | https://blast.rpc.hypersync.xyz or https://81457.rpc.hypersync.xyz                  |                 |
 | Blast Sepolia        | 168587773  | https://blast-sepolia.rpc.hypersync.xyz or https://168587773.rpc.hypersync.xyz      |                 |
 | Boba                 | 288        | https://boba.rpc.hypersync.xyz or https://288.rpc.hypersync.xyz                     |                 |
@@ -56,7 +55,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Flare                | 14         | https://flare.rpc.hypersync.xyz or https://14.rpc.hypersync.xyz                     |                 |
 | Fraxtal              | 252        | https://fraxtal.rpc.hypersync.xyz or https://252.rpc.hypersync.xyz                  |                 |
 | Fuji                 | 43113      | https://fuji.rpc.hypersync.xyz or https://43113.rpc.hypersync.xyz                   |                 |
-| Galadriel Devnet     | 696969     | https://galadriel-devnet.rpc.hypersync.xyz or https://696969.rpc.hypersync.xyz      |                 |
 | Gnosis               | 100        | https://gnosis.rpc.hypersync.xyz or https://100.rpc.hypersync.xyz                   |                 |
 | Gnosis Chiado        | 10200      | https://gnosis-chiado.rpc.hypersync.xyz or https://10200.rpc.hypersync.xyz          |                 |
 | Gnosis Traces        | 100        | https://gnosis-traces.rpc.hypersync.xyz or https://100-traces.rpc.hypersync.xyz     |                 |
@@ -83,6 +81,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Opbnb                | 204        | https://opbnb.rpc.hypersync.xyz or https://204.rpc.hypersync.xyz                    |                 |
 | Optimism             | 10         | https://optimism.rpc.hypersync.xyz or https://10.rpc.hypersync.xyz                  |                 |
 | Optimism Sepolia     | 11155420   | https://optimism-sepolia.rpc.hypersync.xyz or https://11155420.rpc.hypersync.xyz    |                 |
+| Plasma               | 9745       | https://plasma.rpc.hypersync.xyz or https://9745.rpc.hypersync.xyz                  |                 |
 | Plume                | 98866      | https://plume.rpc.hypersync.xyz or https://98866.rpc.hypersync.xyz                  |                 |
 | Polygon              | 137        | https://polygon.rpc.hypersync.xyz or https://137.rpc.hypersync.xyz                  |                 |
 | Polygon Amoy         | 80002      | https://polygon-amoy.rpc.hypersync.xyz or https://80002.rpc.hypersync.xyz           |                 |
@@ -102,7 +101,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Tangle               | 5845       | https://tangle.rpc.hypersync.xyz or https://5845.rpc.hypersync.xyz                  |                 |
 | Taraxa               | 841        | https://taraxa.rpc.hypersync.xyz or https://841.rpc.hypersync.xyz                   |                 |
 | Unichain             | 130        | https://unichain.rpc.hypersync.xyz or https://130.rpc.hypersync.xyz                 |                 |
-| Unichain Sepolia     | 1301       | https://unichain-sepolia.rpc.hypersync.xyz or https://1301.rpc.hypersync.xyz        |                 |
 | Worldchain           | 480        | https://worldchain.rpc.hypersync.xyz or https://480.rpc.hypersync.xyz               |                 |
 | Xdc                  | 50         | https://xdc.rpc.hypersync.xyz or https://50.rpc.hypersync.xyz                       |                 |
 | Xdc Testnet          | 51         | https://xdc-testnet.rpc.hypersync.xyz or https://51.rpc.hypersync.xyz               |                 |
