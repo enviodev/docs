@@ -36,15 +36,15 @@ While HyperIndex gives you a complete indexing solution with schema management a
 :::
 
 
-## Hypersync API Token Requirements
+## HyperSync API Token Requirements
 
-Starting from **21 May 2025**, HyperSync (the data engine powering HyperIndex) will implement rate limits for requests without API tokens. Here's what you need to know:
+HyperSync (the data engine powering HyperIndex) implements rate limits for requests without API tokens. API tokens will be required from **1 November 2025**. Here's what you need to know:
 
-- **Local Development**: No API token is required for local development, though requests will be rate limited.
+- **Local Development**: An API token will be required. An automatic login feature from the CLI will be available to make this smoother.
 - **Self-Hosted Deployments**: API tokens are required for unlimited HyperSync access in self-hosted deployments. The token can be set via the `ENVIO_API_TOKEN` environment variable in your indexer configuration. This can be read from the `.env` file in the root of your HyperIndex project.
 - **Hosted Service**: Indexers deployed to our hosted service will have special access that doesn't require a custom API token.
-- **Free Usage**: The service remains free to use until mid-June 2025.
-- **Future Pricing**: From mid-June 2025 onwards, we will introduce tiered packages based on usage. Credits are calculated based on comprehensive metrics including data bandwidth, disk read operations, and other resource utilization factors. For preferred introductory pricing based on your specific use case, reach out to us on Discord.
+- **Free Usage**: The service remains free to use until mid-November 2025.
+- **Future Pricing**: From mid-November 2025 onwards, we will introduce tiered packages based on usage. Credits are calculated based on comprehensive metrics including data bandwidth, disk read operations, and other resource utilization factors. For preferred introductory pricing based on your specific use case, reach out to us on Discord.
 
 For more details about API tokens, including how to generate and implement them, see our API Tokens documentation.
 
@@ -635,6 +635,24 @@ This is an advanced configuration option. When using a custom output directory, 
 Explore detailed configuration schema parameters here:
 
 -   See the full, deep-linkable reference: Config Schema Reference
+
+:::info For AI/LLM Systems
+**Recommended**: Use the Config Schema Reference for programmatic access to schema information. The interactive viewer below is optimized for human users.
+:::
+
+
+
+
+
+
+
+📋 Hierarchical Interactive Schema Explorer (Click to expand - For human reference only)
+
+
+  
+
+
+
 
 :::info For AI/LLM Systems
 **Recommended**: Use the Config Schema Reference for programmatic access to schema information. The interactive viewer below is optimized for human users.
