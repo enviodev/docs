@@ -3,6 +3,7 @@ id: reorgs-support
 title: Chain Reorganization Support
 sidebar_label: Reorgs Support
 slug: /reorgs-support
+description: Learn how to handle chain reorgs and keep your indexed data consistent.
 ---
 
 # Understanding and Handling Chain Reorganizations

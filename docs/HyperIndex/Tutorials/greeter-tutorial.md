@@ -3,6 +3,7 @@ id: greeter-tutorial
 title: Indexing Greeter Contract Using Envio
 sidebar_label: Greeter Tutorial
 slug: /greeter-tutorial
+description: Learn how to build and run a multi-chain indexer that tracks Greeter contract events using Envio.
 ---
 
 # Indexing a Greeter Contract

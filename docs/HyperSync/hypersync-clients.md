@@ -3,6 +3,7 @@ id: hypersync-clients
 title: HyperSync Clients
 sidebar_label: Clients
 slug: /hypersync-clients
+description: Explore HyperSync clients for fast blockchain data access in Node.js, Python, Rust, and Go.
 ---
 
 # HyperSync Client Libraries

@@ -3,6 +3,7 @@ id: metadata-query
 title: Metadata Query
 sidebar_label: Metadata Query
 slug: /metadata-query
+description: See indexing progress and metadata per chain using HyperIndex _meta query.
 ---
 
 Starting from `envio@2.28` HyperIndex exposes an official `_meta` query to get indexing metadata per chain.

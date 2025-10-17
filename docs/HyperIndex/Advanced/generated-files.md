@@ -3,6 +3,7 @@ id: generated-files
 title: Generated Indexing Files
 sidebar_label: Generated Indexing Files
 slug: /generated-files
+description: Learn how generated files handle type-safe data access, event processing, and runtime indexing.
 ---
 
 # Understanding Generated Indexing Files

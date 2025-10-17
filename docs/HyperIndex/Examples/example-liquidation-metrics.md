@@ -3,6 +3,7 @@ id: example-liquidation-metrics
 title: Compound V2 Liquidation Metrics
 sidebar_label: Compound V2 Liquidation Metrics
 slug: /example-liquidation-metrics
+description: Explore Compound V2 liquidation metrics across multiple chains with Envio.
 ---
 
 # Compound V2 Liquidation Metrics

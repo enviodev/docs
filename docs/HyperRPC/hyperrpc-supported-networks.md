@@ -3,6 +3,7 @@ id: hyperrpc-supported-networks
 title: Supported Networks
 sidebar_label: Supported Networks
 slug: /hyperrpc-supported-networks
+description: Explore HyperRPC supported blockchain network.
 ---
 
 :::note
@@ -32,7 +33,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Base                 | 8453       | https://base.rpc.hypersync.xyz or https://8453.rpc.hypersync.xyz                    |                 |
 | Base Sepolia         | 84532      | https://base-sepolia.rpc.hypersync.xyz or https://84532.rpc.hypersync.xyz           |                 |
 | Berachain            | 80094      | https://berachain.rpc.hypersync.xyz or https://80094.rpc.hypersync.xyz              |                 |
-| Berachain Bartio     | 80084      | https://berachain-bartio.rpc.hypersync.xyz or https://80084.rpc.hypersync.xyz       |                 |
 | Blast                | 81457      | https://blast.rpc.hypersync.xyz or https://81457.rpc.hypersync.xyz                  |                 |
 | Blast Sepolia        | 168587773  | https://blast-sepolia.rpc.hypersync.xyz or https://168587773.rpc.hypersync.xyz      |                 |
 | Boba                 | 288        | https://boba.rpc.hypersync.xyz or https://288.rpc.hypersync.xyz                     |                 |

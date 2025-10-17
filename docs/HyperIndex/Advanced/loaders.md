@@ -3,6 +3,7 @@ id: loaders
 title: Loaders
 sidebar_label: Loaders (Deprecated)
 slug: /loaders
+description: Learn how Loaders improved database access performance for event handlers.
 ---
 
 # Loaders Optimization (Deprecated)

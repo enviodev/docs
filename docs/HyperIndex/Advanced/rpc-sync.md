@@ -3,6 +3,7 @@ id: rpc-sync
 title: RPC as Data Source
 sidebar_label: RPC Data Source
 slug: /rpc-sync
+description: Learn how to index any EVM blockchain using RPC and optimize performance with HyperIndex
 ---
 
 # Using RPC as Your Indexing Data Source

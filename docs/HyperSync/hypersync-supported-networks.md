@@ -3,6 +3,7 @@ id: hypersync-supported-networks
 title: Supported Networks
 sidebar_label: Supported Networks
 slug: /hypersync-supported-networks
+description: Discover all networks currently supported by HyperSync
 ---
 
 :::note
@@ -40,7 +41,6 @@ If you are a network operator or user and would like improved service support or
 | Base                 | 8453       | https://base.hypersync.xyz or https://8453.hypersync.xyz                            | 🏅   |                 |
 | Base Sepolia         | 84532      | https://base-sepolia.hypersync.xyz or https://84532.hypersync.xyz                   | 🎒   |                 |
 | Berachain            | 80094      | https://berachain.hypersync.xyz or https://80094.hypersync.xyz                      | 🥉   |                 |
-| Berachain Bartio     | 80084      | https://berachain-bartio.hypersync.xyz or https://80084.hypersync.xyz               | 🎒   |                 |
 | Blast                | 81457      | https://blast.hypersync.xyz or https://81457.hypersync.xyz                          | 🥉   |                 |
 | Blast Sepolia        | 168587773  | https://blast-sepolia.hypersync.xyz or https://168587773.hypersync.xyz              | 🎒   |                 |
 | Boba                 | 288        | https://boba.hypersync.xyz or https://288.hypersync.xyz                             | 🪨   |                 |

@@ -3,6 +3,7 @@ id: terminology
 title: Terminology & Key Concepts
 sidebar_label: Terminology
 slug: /terminology
+description: Explore key terms for fast reference and indexer development.
 ---
 
 # HyperIndex Terminology & Key Concepts

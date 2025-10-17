@@ -3,6 +3,7 @@ id: environment-variables
 title: Environment Variables
 sidebar_label: Environment Variables
 slug: /environment-variables
+description: Learn how to configure and manage Envio environment variables for your indexer.
 ---
 
 # Environment Variables

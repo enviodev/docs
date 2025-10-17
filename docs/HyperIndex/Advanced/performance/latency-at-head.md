@@ -3,6 +3,7 @@ id: latency-at-head
 title: Understanding Chain Head Latency
 sidebar_label: Latency at the Head (Performance)
 slug: /latency-at-head
+description: Learn how Envio keeps blockchain indexers updated with low latency and reliable multi-chain sync.
 ---
 
 # Understanding Chain Head Latency

@@ -3,6 +3,7 @@ id: hosted-service-deployment
 title: Deploying Your Indexer
 sidebar_label: Deploying
 slug: /hosted-service-deployment
+description: Learn how to deploy, manage, and version your indexers effortlessly using git workflow
 ---
 
 # Deploying Your Indexer

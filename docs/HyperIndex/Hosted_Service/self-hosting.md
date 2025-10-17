@@ -3,6 +3,7 @@ id: self-hosting
 title: Self-Hosting Guide
 sidebar_label: Self-Hosting
 slug: /self-hosting
+description: Learn how to self-host Envio indexers with Docker, PostgreSQL, and Hasura for full control.
 ---
 
 # Self-Hosting Your Envio Indexer

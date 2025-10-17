@@ -3,6 +3,7 @@ id: tutorial-indexing-fuel
 title: Indexing Sway Farm on the Fuel Network
 sidebar_label: Indexing Fuel Network
 slug: /tutorial-indexing-fuel
+description: Learn how to index Sway Farm on Fuel and track player events with Envio.
 ---
 
 # Indexing Sway Farm on the Fuel Network

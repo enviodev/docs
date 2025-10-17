@@ -3,6 +3,7 @@ id: database-performance-optimization
 title: Database Performance Optimization
 sidebar_label: Database / Queries (Performance)
 slug: /database-performance-optimization
+description: Learn how to optimize HyperIndex databases with indices and schema design for faster queries.
 ---
 
 # Optimizing Database Performance in HyperIndex

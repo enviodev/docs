@@ -3,6 +3,7 @@ id: example-ens
 title: ENS Indexer
 sidebar_label: ENS Indexer
 slug: /example-ens
+description: Explore the ENS indexer built with Envio.
 ---
 
 # ENS Indexer

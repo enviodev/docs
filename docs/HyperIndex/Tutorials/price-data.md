@@ -3,6 +3,7 @@ id: price-data
 title: Getting Price Data in Your Indexer
 sidebar_label: Working with Price Data
 slug: /price-data
+description: Learn how to fetch and integrate token price data in your indexer using oracles, DEX pools, and APIs.
 ---
 
 # Getting Price Data in Your Indexer

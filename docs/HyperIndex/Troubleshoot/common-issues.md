@@ -3,6 +3,7 @@ id: common-issues
 title: Common Issues
 sidebar_label: Common Issues
 slug: /common-issues
+description: Discover quick fixes and proven solutions for setup, runtime, and configuration issues in Envio.
 ---
 
 # Common Issues and Troubleshooting

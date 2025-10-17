@@ -3,6 +3,7 @@ id: hosted-service
 title: Overview
 sidebar_label: Overview
 slug: /hosted-service
+description: Explore Envio's fully managed hosting for indexers with easy Git deployments, monitoring, and multi-chain support.
 ---
 
 # Envio Hosted Service

@@ -3,6 +3,7 @@ id: example-cross-chain-messaging
 title: Cross-Chain Messaging
 sidebar_label: Cross-Chain Messaging
 slug: /example-cross-chain-messaging
+description: Explore cross-chain messaging and track events across multiple chains efficiently.
 ---
 
 # Cross-Chain Messaging Indexer

@@ -3,6 +3,7 @@ id: benchmarking
 title: Benchmarking Your Indexer
 sidebar_label: Benchmarking (Performance)
 slug: /benchmarking
+description: Learn how to benchmark your indexer to identify bottlenecks and optimize performance.
 ---
 
 # Benchmarking Your Indexer Performance

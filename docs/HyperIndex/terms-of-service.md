@@ -3,6 +3,7 @@ id: terms-of-service
 title: Terms of service
 sidebar_label: Terms of service
 slug: /terms-of-service
+description: Read the Terms and Conditions for using Envio services.
 ---
 
 # Terms of Service

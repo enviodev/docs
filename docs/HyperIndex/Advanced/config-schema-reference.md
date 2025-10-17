@@ -3,9 +3,10 @@ id: config-schema-reference
 title: Configuration Schema Reference
 sidebar_label: Config Schema Reference
 slug: /config-schema-reference
+description: Explore the `config.yaml` schema.
 ---
 
-Static, deep-linkable reference for the `config.yaml` JSON Schema.
+Static, deep-linkable reference for the `config.yaml` Schema.
 
 > Tip: Use the Table of Contents to jump to a field or definition.
 
