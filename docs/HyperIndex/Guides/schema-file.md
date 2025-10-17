@@ -3,6 +3,7 @@ id: schema-file
 title: Entities Schema (schema.graphql)
 sidebar_label: Entities Schema (schema.graphql)
 slug: /schema
+description: Learn how to define GraphQL schemas, manage entities, and handle different types in HyperIndex.
 ---
 
 The **`schema.graphql`** file defines the data model for your HyperIndex indexer. Each entity type defined in this schema corresponds directly to a database table, with your event handlers responsible for creating and updating the records. HyperIndex automatically generates a GraphQL API based on these entity types, allowing easy access to the indexed data.

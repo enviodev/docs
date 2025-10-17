@@ -3,6 +3,7 @@ id: block-handlers
 title: Block Handlers
 sidebar_label: Block Handlers 🆕
 slug: /block-handlers
+description: Learn how to run custom logic on every blockchain block or at set intervals using onBlock.
 ---
 
 # Block Handlers (new in v2.29)

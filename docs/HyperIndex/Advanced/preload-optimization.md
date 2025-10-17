@@ -3,6 +3,7 @@ id: preload-optimization
 title: Preload Optimization
 sidebar_label: Preload Optimization
 slug: /preload-optimization
+description: Learn how preload optimization improves event handlers with batched reads and parallel external calls.
 ---
 
 # Preload Optimization

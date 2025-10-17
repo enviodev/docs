@@ -3,6 +3,7 @@ id: contract-state
 title: Accessing Contract State in Event Handlers
 sidebar_label: Accessing Contract State
 slug: /contract-state
+description: Learn how to efficiently fetch and store token contract data from events using RPC, multicall, and caching.
 ---
 
 # Accessing Contract State in Event Handlers

@@ -3,6 +3,7 @@ id: effect-api
 title: Effect API
 sidebar_label: Effect API
 slug: /effect-api
+description: Learn how to use the Effect API for external calls in handlers.
 ---
 
 The Effect API provides a powerful and convenient way to perform external calls from your handlers. It's especially effective when used with [Preload Optimization](/docs/HyperIndex/preload-optimization):

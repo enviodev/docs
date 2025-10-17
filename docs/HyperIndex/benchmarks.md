@@ -3,6 +3,7 @@ id: benchmarks
 title: HyperIndex Benchmarks
 sidebar_label: Benchmarks
 slug: /benchmarks
+description: Discover HyperIndex benchmarks and see why it's the fastest blockchain data indexer.
 ---
 
 # HyperIndex Performance Benchmarks

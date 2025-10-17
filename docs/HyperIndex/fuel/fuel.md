@@ -3,6 +3,7 @@ id: fuel
 title: Fuel
 sidebar_label: Fuel
 slug: /fuel
+description: Explore how to index and query real-time and historical data on Fuel Network with HyperIndex.
 ---
 
 # Indexing on Fuel Network

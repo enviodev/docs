@@ -3,6 +3,7 @@ id: index
 title: Performance Optimization
 sidebar_label: Performance
 slug: /performance
+description: Learn how to optimize HyperIndex performance for syncing, indexing, and querying data.
 ---
 
 ## Quick Navigation

@@ -3,6 +3,7 @@ id: historical-sync
 title: Historical Sync
 sidebar_label: Historical Sync
 slug: /historical-sync
+description: Learn how to optimize historical sync with HyperIndex for fast and efficient data retrieval.
 ---
 
 # Historical Sync

@@ -3,6 +3,7 @@ id: hyperfuel-query
 title: HyperFuel Query
 sidebar_label: Query Structure
 slug: /hyperfuel-query
+description: Explore all fields and parameters for HyperFuel queries.
 ---
 # Query Structure
 

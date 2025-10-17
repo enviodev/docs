@@ -3,6 +3,7 @@ id: licensing
 title: Licensing
 sidebar_label: Licensing
 slug: /licensing
+description: Learn how Envio's licensing lets developers self-host, use generated code, and stay open while protecting hosted services.
 ---
 
 ## TL;DR

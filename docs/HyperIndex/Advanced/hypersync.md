@@ -3,6 +3,7 @@ id: hypersync
 title: HyperSync as Data Source
 sidebar_label: HyperSync Data Source
 slug: /hypersync
+description: Learn how HyperSync is used in HyperIndex to fetch raw blockchain data.
 ---
 
 # Using HyperSync as Your Indexing Data Source

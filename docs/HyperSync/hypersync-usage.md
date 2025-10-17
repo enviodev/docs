@@ -3,6 +3,7 @@ id: hypersync-usage
 title: Using HyperSync
 sidebar_label: Getting Started
 slug: /hypersync-usage
+description: Learn how to fetch, filter, and decode blockchain data using HyperSync.
 ---
 
 # Getting Started with HyperSync

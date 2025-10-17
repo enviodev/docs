@@ -3,6 +3,7 @@ id: quickstart
 title: HyperSync Quickstart
 sidebar_label: Quickstart ⭐ Recommended
 slug: /hypersync-quickstart
+description: Get started quickly with HyperSync to stream and filter blockchain events.
 ---
 
 # HyperSync Quickstart

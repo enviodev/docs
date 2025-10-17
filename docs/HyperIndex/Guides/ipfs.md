@@ -3,6 +3,7 @@ id: ipfs
 title: Using IPFS with Envio Indexers
 sidebar_label: IPFS Integration
 slug: /ipfs
+description: Learn how to fetch and index NFT metadata from IPFS using Envio for complete on-chain and off-chain data.
 ---
 
 # Indexing IPFS Data with Envio

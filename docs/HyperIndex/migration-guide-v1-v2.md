@@ -3,6 +3,7 @@ id: migration-guide-v1-v2
 title: Migration Guide v1 to v2
 sidebar_label: Migration Guide v1 to v2
 slug: /migration-guide-v1-v2
+description: Learn how to migrate HyperIndex v1 indexers to v2 with async handlers, loaders, and updated configs.
 ---
 
 # Migration Guide: HyperIndex v1 to v2

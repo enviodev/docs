@@ -3,6 +3,7 @@ id: navigating-hasura
 title: Navigating Hasura
 sidebar_label: Navigating Hasura
 slug: /navigating-hasura
+description: Explore and interact with your locally indexed blockchain data using Hasura GraphQL.
 ---
 
 > This page is only relevant when testing on a local machine or using a self-hosted version of Envio that uses Hasura.

@@ -3,6 +3,7 @@ id: contract-import
 title: Quickstart
 sidebar_label: Quickstart
 slug: /contract-import
+description: Learn to quickly autogenerate and configure a HyperIndex indexer for any smart contract.
 ---
 
 The **Quickstart** enables you to instantly autogenerate a powerful indexer and start querying blockchain data in minutes. This is the fastest and easiest way to begin using HyperIndex.

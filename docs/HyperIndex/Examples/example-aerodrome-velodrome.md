@@ -3,6 +3,7 @@ id: example-velodrome-aerodrome
 title: Velodrome & Aerodrome Indexer
 sidebar_label: Aerodrome Indexer (DEX)
 slug: /example-aerodrome-dex-indexer
+description: Explore multi-chain Velodrome & Aerodrome DEX data with real-time tracking of pools, swaps, and liquidity.
 ---
 
 # Velodrome & Aerodrome DEX Indexer

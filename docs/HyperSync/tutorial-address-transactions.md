@@ -3,6 +3,7 @@ id: tutorial-address-transactions
 title: Analyzing All Transactions To and From an Address
 sidebar_label: Analyzing Address Transactions
 slug: /tutorial-address-transactions
+description: Explore all transactions, token balances, and approvals for any EVM address with HyperSync.
 ---
 
 # Analyzing All Transactions To and From an Address

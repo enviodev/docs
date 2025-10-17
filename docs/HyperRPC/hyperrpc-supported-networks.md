@@ -3,6 +3,7 @@ id: hyperrpc-supported-networks
 title: Supported Networks
 sidebar_label: Supported Networks
 slug: /hyperrpc-supported-networks
+description: Explore HyperRPC supported blockchain network.
 ---
 
 :::note

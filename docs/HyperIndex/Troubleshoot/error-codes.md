@@ -3,6 +3,7 @@ id: error-codes
 title: Error Codes
 sidebar_label: Error Codes
 slug: /error-codes
+description: Explore Envio HyperIndex error codes with clear explanations and quick fixes for common issues.
 ---
 
 # Envio Error Codes

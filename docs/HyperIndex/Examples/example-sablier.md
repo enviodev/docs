@@ -3,6 +3,7 @@ id: example-sablier
 title: Sablier Protocol Indexers
 sidebar_label: Sablier (Token streaming) ⭐ Recommended
 slug: /example-sablier
+description: Explore Sablier protocol indexers to track token streams and distributions across multiple chains.
 ---
 
 # Sablier Protocol Indexers

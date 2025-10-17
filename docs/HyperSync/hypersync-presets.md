@@ -3,6 +3,7 @@ id: hypersync-presets
 title: Preset Queries
 sidebar_label: Preset Queries
 slug: /hypersync-presets
+description: Explore ready-to-use HyperSync query presets to fetch blocks, transactions, and logs efficiently.
 ---
 
 # HyperSync Preset Queries

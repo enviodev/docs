@@ -3,6 +3,7 @@ id: running-locally
 title: Running The Indexer Locally
 sidebar_label: Running The Indexer Locally
 slug: /running-locally
+description: Learn how to start, run, and manage the Envio indexer locally with Docker and Hasura.
 ---
 
 ## Starting the Indexer

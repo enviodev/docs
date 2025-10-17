@@ -3,6 +3,7 @@ id: migration-guide
 title: Migrate from a Subgraph to HyperIndex
 sidebar_label: Migrate from TheGraph
 slug: /migration-guide
+description: Learn how to migrate subgraphs to HyperIndex for faster indexing and easier integration.
 ---
 
 # Migrate from TheGraph to HyperIndex

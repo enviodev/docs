@@ -3,6 +3,7 @@ id: overview
 title: Overview
 sidebar_label: Overview
 slug: /overview
+description: Explore HyperIndex, a blazing-fast multichain indexer for real-time blockchain data.
 ---
 
 <Head>

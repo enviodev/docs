@@ -3,6 +3,7 @@ id: hyperfuel
 title: HyperFuel
 sidebar_label: Overview
 slug: /hyperfuel
+description: Explore HyperFuel to query and sync Fuel network data.
 ---
 
 [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) is a high-performance data node and accelerated data query layer that powers Envio’s Indexing framework, [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview), for up to 1000x faster data retrieval than standard RPC methods.

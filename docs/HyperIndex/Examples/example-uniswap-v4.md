@@ -3,6 +3,7 @@ id: example-uniswap-v4
 title: Uniswap V4 Multi-chain indexer
 sidebar_label: UniswapV4 (DEX) ⭐ Recommended
 slug: /example-uniswap-v4-multi-chain-indexer
+description: Explore real-time Uniswap V4 data across multiple chains with Envio.
 ---
 
 # Uniswap V4 Multi-chain Indexer

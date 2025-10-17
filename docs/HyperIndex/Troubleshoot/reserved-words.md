@@ -3,6 +3,7 @@ id: reserved-words
 title: Reserved Words
 sidebar_label: Reserved Words
 slug: /reserved-words
+description: Learn which reserved words in Envio cause validation errors and how to rename them safely.
 ---
 
 # Reserved Words in Envio

@@ -3,6 +3,7 @@ id: hypersync-query
 title: HyperSync Query
 sidebar_label: Query & Response Structure
 slug: /hypersync-query
+description: Explore HyperSync queries to efficiently retrieve, filter, and join blockchain data.
 ---
 
 # HyperSync Query

@@ -3,6 +3,7 @@ id: hypersync-supported-networks
 title: Supported Networks
 sidebar_label: Supported Networks
 slug: /hypersync-supported-networks
+description: Discover all networks currently supported by HyperSync
 ---
 
 :::note

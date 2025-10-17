@@ -3,6 +3,7 @@ id: persisted-files
 title: Persisted File Changes
 sidebar_label: Persisted File Changes
 slug: /persisted_files
+description: Learn how Envio manages file changes to optimize indexing and re-sync sequences efficiently.
 ---
 
 # Persisted File Changes

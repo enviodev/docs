@@ -3,6 +3,7 @@ id: tutorial-op-bridge-deposits
 title: Indexing Optimism Bridge Deposits
 sidebar_label: Indexing OP Bridge Deposits
 slug: /tutorial-op-bridge-deposits
+description: Learn to quickly index Optimism Bridge deposits and explore OP Bridge event data.
 ---
 
 # Indexing Optimism Bridge Deposits
