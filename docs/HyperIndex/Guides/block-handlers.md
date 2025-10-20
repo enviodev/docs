@@ -189,3 +189,41 @@ onBlock(
 - Only EVM chains are supported. Currently no support for [Fuel](/docs/HyperIndex/fuel/fuel.md) chains.
 - No [test framework](/docs/HyperIndex/testing) support.
 - Only block number is provided in the block object. We'll definitely add more fields in the future.
+- **Block handlers must be in or imported by a handler file referenced in `config.yaml`**. Standalone block handler files won't execute. See recommended approach below.
+
+### Recommended Approach
+
+To ensure your block handlers run properly, create an index handler file (e.g., `EventHandlers.ts`) and have all contracts point to this file in your `config.yaml`. Then import your other handler files, including block handler files, in this index file.
+
+**Before**
+```yaml
+# config.yaml
+contracts:
+  - name: Contract1
+    handler: ./src/handlerFile1.ts
+    # ...
+  - name: Contract2
+    handler: ./src/handlerFile2.ts
+    # ...
+```
+
+**After**
+```yaml
+# config.yaml
+contracts:
+  - name: Contract1
+    handler: ./src/EventHandlers.ts
+    # ...
+  - name: Contract2
+    handler: ./src/EventHandlers.ts
+    # ...
+```
+
+```typescript
+// EventHandlers.ts
+import "./handlerFile1";
+import "./handlerFile2";
+import "./blockHandlerFile";
+```
+
+This ensures that all your handlers, including block handlers, are properly registered and will execute.
