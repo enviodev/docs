@@ -18,17 +18,17 @@ The following indexers serve as exceptional reference implementations for the Sa
 
 Sablier maintains three specialized indexers, each targeting a specific part of their protocol:
 
-### 1. [Lockup Indexer](https://github.com/sablier-labs/subgraphs/tree/main/apps/lockup-envio)
+### 1. [Lockup Indexer](https://github.com/sablier-labs/indexers/tree/main/envio/lockup)
 
 Tracks the core Sablier lockup contracts, which handle the streaming of tokens with fixed durations and amounts. This indexer provides data about stream creation, cancellation, and withdrawal events. Used primarily for the vesting functionality of Sablier.
 
-### 2. [Flow Indexer](https://github.com/sablier-labs/subgraphs/tree/main/apps/flow-envio)
+### 2. [Flow Indexer](https://github.com/sablier-labs/indexers/tree/main/envio/flow)
 
 Monitors Sablier's advanced streaming functionality, allowing for dynamic flow rates and more complex streaming scenarios. This indexer captures stream modifications, batch operations, and other flow-specific events. Powers the payments side of the Sablier application.
 
-### 3. [Merkle Indexer](https://github.com/sablier-labs/subgraphs/tree/main/apps/merkle-envio)
+### 3. [Airdrops Indexer](https://github.com/sablier-labs/indexers/tree/main/envio/airdrops)
 
-Tracks Sablier's Merkle distribution system, which enables efficient batch stream creation using cryptographic proofs. This indexer provides data about batch creations, claims, and related activities. Used for both Airstreams and Instant Airdrops functionality.
+Tracks Sablier's Merkle Airdrops, which enables efficient batch stream creation using cryptographic proofs. This indexer captures data about batch creations, claims, and related activities. Used for both Airstreams and Instant Airdrops functionality.
 
 ## Key Features
 
