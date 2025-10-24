@@ -211,7 +211,7 @@ async def collect_usdc_transfers():
     # Initialize client
     client = hypersync.HypersyncClient(
         hypersync.ClientConfig(
-            url="https://ethereum.hypersync.xyz",
+            url="https://eth.hypersync.xyz",
             bearer_token="your-token-here",  # Get from https://docs.envio.dev/docs/HyperSync/api-tokens
         )
     )

@@ -93,6 +93,47 @@ To get the best performance when using RPC:
 3. **Use a paid service** for better reliability and higher rate limits
 4. **Consider multiple fallback RPCs** for redundancy
 
+### Improving resilience with RPC fallback
+
+HyperIndex allows you to configure additional RPC providers as fallback data sources. This redundancy is **recommended** for production deployments to ensure continuous operation of your indexer. If HyperSync experiences any interruption, your indexer will automatically switch to the fallback RPC provider.
+
+Adding an RPC fallback provides these benefits:
+
+- **High availability**: Your indexer continues to function even during temporary HyperSync outages
+- **Automatic failover**: The system detects issues and switches to fallback RPC without manual intervention
+- **Operational control**: You can specify which RPC providers to use as fallbacks based on your requirements
+
+Configure a fallback RPC by adding the `rpc` field to your network configuration:
+
+```diff
+name: Greeter
+description: Greeter indexer
+networks:
+  - id: 137 # Polygon
++   # Short and simple
++   rpc: https://eth-mainnet.your-rpc-provider.com?API_KEY={ENVIO_MAINNET_API_KEY}
++   # Or provide multiple RPC endpoints with more flexibility
++   rpc:
++     - url: https://eth-mainnet.your-rpc-provider.com?API_KEY={ENVIO_MAINNET_API_KEY}
++       for: fallback
++     - url: https://eth-mainnet.your-free-rpc-provider.com
++       for: fallback
++       initial_block_interval: 1000
+    start_block: 0 # With HyperSync, you can use 0 regardless of contract deployment time
+    contracts:
+      - name: PolygonGreeter
+        abi_file_path: abis/greeter-abi.json
+        address: 0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c
+        handler: ./src/EventHandlers.bs.js
+        events:
+          - event: NewGreeting
+          - event: ClearGreeting
+```
+
+:::info
+This feature is available starting from version `2.14.0`. The fallback RPC is activated only when a primary data source doesn't receive a new block for more than 20 seconds.
+:::
+
 ## Enhanced RPC with eRPC
 
 For more robust RPC usage, you can implement [eRPC](https://github.com/erpc/erpc) - a fault-tolerant EVM RPC proxy with advanced features like caching and failover.
