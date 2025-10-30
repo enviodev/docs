@@ -1,6 +1,16 @@
 {
   "rpcNetworks": [
     {
+      "chainId": 5042002,
+      "name": "Arc Testnet",
+      "rpcEndpoints": [
+        "https://rpc.testnet.arc.network",
+        "https://rpc.blockdaemon.testnet.arc.network",
+        "https://rpc.drpc.testnet.arc.network",
+        "https://rpc.quicknode.testnet.arc.network"
+      ]
+    },
+    {
       "chainId": 9997,
       "name": "Altlayer OP Demo Testnet",
       "rpcEndpoints": [
