@@ -19,7 +19,7 @@ slug: /sonic
 
 ### Tier
 
-STONE 🪨
+SILVER 🥈
 
 ### Overview
 

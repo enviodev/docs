@@ -69,6 +69,7 @@ If you are a network operator or user and would like improved service support or
 | Harmony Shard 0      | 1666600000 | https://harmony-shard-0.hypersync.xyz or https://1666600000.hypersync.xyz           | 🪨   |                 |
 | Holesky              | 17000      | https://holesky.hypersync.xyz or https://17000.hypersync.xyz                        | 🎒   |                 |
 | Hyperliquid          | 999        | https://hyperliquid.hypersync.xyz or https://999.hypersync.xyz                      | 🪨   |                 |
+| Incentiv             | 24101      | https://incentiv.hypersync.xyz or https://24101.hypersync.xyz                       | 🪨   |                 |
 | Ink                  | 57073      | https://ink.hypersync.xyz or https://57073.hypersync.xyz                            | 🪨   |                 |
 | Kroma                | 255        | https://kroma.hypersync.xyz or https://255.hypersync.xyz                            | 🪨   |                 |
 | Linea                | 59144      | https://linea.hypersync.xyz or https://59144.hypersync.xyz                          | 🥉   |                 |
@@ -78,6 +79,7 @@ If you are a network operator or user and would like improved service support or
 | Manta                | 169        | https://manta.hypersync.xyz or https://169.hypersync.xyz                            | 🪨   |                 |
 | Mantle               | 5000       | https://mantle.hypersync.xyz or https://5000.hypersync.xyz                          | 🪨   |                 |
 | Megaeth Testnet      | 6342       | https://megaeth-testnet.hypersync.xyz or https://6342.hypersync.xyz                 | 🥈   |                 |
+| Megaeth Testnet2     | 6343       | https://megaeth-testnet2.hypersync.xyz or https://6343.hypersync.xyz                | 🥈   |                 |
 | Merlin               | 4200       | https://merlin.hypersync.xyz or https://4200.hypersync.xyz                          | 🪨   |                 |
 | Metall2              | 1750       | https://metall2.hypersync.xyz or https://1750.hypersync.xyz                         | 🪨   |                 |
 | Mev Commit           | 17864      | https://mev-commit.hypersync.xyz or https://17864.hypersync.xyz                     | 🪨   |                 |
@@ -101,7 +103,7 @@ If you are a network operator or user and would like improved service support or
 | Sepolia              | 11155111   | https://sepolia.hypersync.xyz or https://11155111.hypersync.xyz                     | 🎒   |                 |
 | Shimmer Evm          | 148        | https://shimmer-evm.hypersync.xyz or https://148.hypersync.xyz                      | 🪨   |                 |
 | Soneium              | 1868       | https://soneium.hypersync.xyz or https://1868.hypersync.xyz                         | 🪨   |                 |
-| Sonic                | 146        | https://sonic.hypersync.xyz or https://146.hypersync.xyz                            | 🪨   |                 |
+| Sonic                | 146        | https://sonic.hypersync.xyz or https://146.hypersync.xyz                            | 🥈   |                 |
 | Sophon               | 50104      | https://sophon.hypersync.xyz or https://50104.hypersync.xyz                         | 🪨   |                 |
 | Sophon Testnet       | 531050104  | https://sophon-testnet.hypersync.xyz or https://531050104.hypersync.xyz             | 🎒   |                 |
 | Superseed            | 5330       | https://superseed.hypersync.xyz or https://5330.hypersync.xyz                       | 🪨   |                 |
