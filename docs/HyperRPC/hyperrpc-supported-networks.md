@@ -61,6 +61,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Harmony Shard 0      | 1666600000 | https://harmony-shard-0.rpc.hypersync.xyz or https://1666600000.rpc.hypersync.xyz   |                 |
 | Holesky              | 17000      | https://holesky.rpc.hypersync.xyz or https://17000.rpc.hypersync.xyz                |                 |
 | Hyperliquid          | 999        | https://hyperliquid.rpc.hypersync.xyz or https://999.rpc.hypersync.xyz              |                 |
+| Incentiv             | 24101      | https://incentiv.rpc.hypersync.xyz or https://24101.rpc.hypersync.xyz               |                 |
 | Ink                  | 57073      | https://ink.rpc.hypersync.xyz or https://57073.rpc.hypersync.xyz                    |                 |
 | Kroma                | 255        | https://kroma.rpc.hypersync.xyz or https://255.rpc.hypersync.xyz                    |                 |
 | Linea                | 59144      | https://linea.rpc.hypersync.xyz or https://59144.rpc.hypersync.xyz                  |                 |
@@ -70,6 +71,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Manta                | 169        | https://manta.rpc.hypersync.xyz or https://169.rpc.hypersync.xyz                    |                 |
 | Mantle               | 5000       | https://mantle.rpc.hypersync.xyz or https://5000.rpc.hypersync.xyz                  |                 |
 | Megaeth Testnet      | 6342       | https://megaeth-testnet.rpc.hypersync.xyz or https://6342.rpc.hypersync.xyz         |                 |
+| Megaeth Testnet2     | 6343       | https://megaeth-testnet2.rpc.hypersync.xyz or https://6343.rpc.hypersync.xyz        |                 |
 | Merlin               | 4200       | https://merlin.rpc.hypersync.xyz or https://4200.rpc.hypersync.xyz                  |                 |
 | Metall2              | 1750       | https://metall2.rpc.hypersync.xyz or https://1750.rpc.hypersync.xyz                 |                 |
 | Mev Commit           | 17864      | https://mev-commit.rpc.hypersync.xyz or https://17864.rpc.hypersync.xyz             |                 |
