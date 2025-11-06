@@ -71,6 +71,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Manta                | 169        | https://manta.rpc.hypersync.xyz or https://169.rpc.hypersync.xyz                    |                 |
 | Mantle               | 5000       | https://mantle.rpc.hypersync.xyz or https://5000.rpc.hypersync.xyz                  |                 |
 | Megaeth Testnet      | 6342       | https://megaeth-testnet.rpc.hypersync.xyz or https://6342.rpc.hypersync.xyz         |                 |
+| Megaeth Testnet2     | 6343       | https://megaeth-testnet2.rpc.hypersync.xyz or https://6343.rpc.hypersync.xyz        |                 |
 | Merlin               | 4200       | https://merlin.rpc.hypersync.xyz or https://4200.rpc.hypersync.xyz                  |                 |
 | Metall2              | 1750       | https://metall2.rpc.hypersync.xyz or https://1750.rpc.hypersync.xyz                 |                 |
 | Mev Commit           | 17864      | https://mev-commit.rpc.hypersync.xyz or https://17864.rpc.hypersync.xyz             |                 |

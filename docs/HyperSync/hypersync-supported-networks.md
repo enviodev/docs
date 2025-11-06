@@ -79,6 +79,7 @@ If you are a network operator or user and would like improved service support or
 | Manta                | 169        | https://manta.hypersync.xyz or https://169.hypersync.xyz                            | 🪨   |                 |
 | Mantle               | 5000       | https://mantle.hypersync.xyz or https://5000.hypersync.xyz                          | 🪨   |                 |
 | Megaeth Testnet      | 6342       | https://megaeth-testnet.hypersync.xyz or https://6342.hypersync.xyz                 | 🥈   |                 |
+| Megaeth Testnet2     | 6343       | https://megaeth-testnet2.hypersync.xyz or https://6343.hypersync.xyz                | 🥈   |                 |
 | Merlin               | 4200       | https://merlin.hypersync.xyz or https://4200.hypersync.xyz                          | 🪨   |                 |
 | Metall2              | 1750       | https://metall2.hypersync.xyz or https://1750.hypersync.xyz                         | 🪨   |                 |
 | Mev Commit           | 17864      | https://mev-commit.hypersync.xyz or https://17864.hypersync.xyz                     | 🪨   |                 |
