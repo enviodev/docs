@@ -195,7 +195,7 @@ onBlock(
 
 To ensure your block handlers run properly, create an index handler file (e.g., `EventHandlers.ts`) and have all contracts point to this file in your `config.yaml`. Then import your other handler files, including block handler files, in this index file.
 
-**Before**
+#### Before
 ```yaml
 # config.yaml
 contracts:
@@ -207,7 +207,7 @@ contracts:
     # ...
 ```
 
-**After**
+#### After
 ```yaml
 # config.yaml
 contracts:
