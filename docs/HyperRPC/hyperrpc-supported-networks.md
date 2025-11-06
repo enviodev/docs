@@ -61,6 +61,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Harmony Shard 0      | 1666600000 | https://harmony-shard-0.rpc.hypersync.xyz or https://1666600000.rpc.hypersync.xyz   |                 |
 | Holesky              | 17000      | https://holesky.rpc.hypersync.xyz or https://17000.rpc.hypersync.xyz                |                 |
 | Hyperliquid          | 999        | https://hyperliquid.rpc.hypersync.xyz or https://999.rpc.hypersync.xyz              |                 |
+| Incentiv             | 24101      | https://incentiv.rpc.hypersync.xyz or https://24101.rpc.hypersync.xyz               |                 |
 | Ink                  | 57073      | https://ink.rpc.hypersync.xyz or https://57073.rpc.hypersync.xyz                    |                 |
 | Kroma                | 255        | https://kroma.rpc.hypersync.xyz or https://255.rpc.hypersync.xyz                    |                 |
 | Linea                | 59144      | https://linea.rpc.hypersync.xyz or https://59144.rpc.hypersync.xyz                  |                 |
