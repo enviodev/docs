@@ -32,10 +32,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Avalanche            | 43114      | https://avalanche.rpc.hypersync.xyz or https://43114.rpc.hypersync.xyz              |                 |
 | Base                 | 8453       | https://base.rpc.hypersync.xyz or https://8453.rpc.hypersync.xyz                    |                 |
 | Base Sepolia         | 84532      | https://base-sepolia.rpc.hypersync.xyz or https://84532.rpc.hypersync.xyz           |                 |
-| Berachain            | 80094      | https://berachain.rpc.hypersync.xyz or https://80094.rpc.hypersync.xyz              |                 |
-| Blast                | 81457      | https://blast.rpc.hypersync.xyz or https://81457.rpc.hypersync.xyz                  |                 |
-| Blast Sepolia        | 168587773  | https://blast-sepolia.rpc.hypersync.xyz or https://168587773.rpc.hypersync.xyz      |                 |
-| Boba                 | 288        | https://boba.rpc.hypersync.xyz or https://288.rpc.hypersync.xyz                     |                 |
 | Bsc                  | 56         | https://bsc.rpc.hypersync.xyz or https://56.rpc.hypersync.xyz                       |                 |
 | Bsc Testnet          | 97         | https://bsc-testnet.rpc.hypersync.xyz or https://97.rpc.hypersync.xyz               |                 |
 | Celo                 | 42220      | https://celo.rpc.hypersync.xyz or https://42220.rpc.hypersync.xyz                   |                 |
@@ -96,6 +92,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Shimmer Evm          | 148        | https://shimmer-evm.rpc.hypersync.xyz or https://148.rpc.hypersync.xyz              |                 |
 | Soneium              | 1868       | https://soneium.rpc.hypersync.xyz or https://1868.rpc.hypersync.xyz                 |                 |
 | Sonic                | 146        | https://sonic.rpc.hypersync.xyz or https://146.rpc.hypersync.xyz                    |                 |
+| Sonic Testnet        | 14601      | https://sonic-testnet.rpc.hypersync.xyz or https://14601.rpc.hypersync.xyz          |                 |
 | Sophon               | 50104      | https://sophon.rpc.hypersync.xyz or https://50104.rpc.hypersync.xyz                 |                 |
 | Sophon Testnet       | 531050104  | https://sophon-testnet.rpc.hypersync.xyz or https://531050104.rpc.hypersync.xyz     |                 |
 | Superseed            | 5330       | https://superseed.rpc.hypersync.xyz or https://5330.rpc.hypersync.xyz               |                 |
