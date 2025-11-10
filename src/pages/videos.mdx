@@ -1,0 +1,101 @@
+---
+title: Shipper's Logs
+description: Release recap videos highlighting new features and improvements. Latest first.
+---
+
+import Video from "@site/src/components/Video";
+
+# Shipper's Logs
+
+Concise video recaps of every Envio release. Newest at the top. Skim the highlights, then dive into the full release video.
+
+---
+
+## v2.32.0 — Effect API Graduation, Console Insights, New Query
+
+<Video id="yvUVzV1ifig" title="Envio v2.32.0" />
+
+Links: [GitHub release notes](https://github.com/enviodev/hyperindex/releases/tag/v2.32.0) · [YouTube](https://www.youtube.com/watch?v=yvUVzV1ifig)
+
+**Highlights**
+
+- Effect API leaves experimental: `createEffect` without prefix
+- Required `rateLimit` option and per-call cache override via `context.cache = false`
+- Development Console shows detailed performance metrics (works with TUI disabled)
+- New `getWhere.lt` query helper
+- Internal cleanups: librarified config and in-memory table
+
+---
+
+## v2.31.0 — Big Reliability Release 🏛️
+
+<Video id="Lc41YopFU-Y" title="Envio v2.31.0" />
+
+Links: [GitHub release notes](https://github.com/enviodev/hyperindex/releases/tag/v2.31.0) · [YouTube](https://youtu.be/Lc41YopFU-Y)
+
+**Highlights**
+
+- Rollback reorg refactor → resolves known indexing issues
+- Faster DB writes and reorg‑resistant event counter
+- Entity name length up to 63 chars
+- Multiple indexers with different schemas on one database
+
+---
+
+## v2.30.0 — Address Format Configuration & Performance 🆕
+
+<Video id="ZSOD5RWaA_s" title="Envio v2.30.0" />
+
+Links: [GitHub release notes](https://github.com/enviodev/hyperindex/releases/tag/v2.30.0) · [YouTube](https://youtu.be/ZSOD5RWaA_s)
+
+**Highlights**
+
+- Choose address format: checksum (default) or lowercase
+- Faster RPC event decoding via HyperSync event decoder
+- Fixes for indexing-at-the-head metric and GraphQL read permissions
+- Internal improvements to batching and persistence
+
+---
+
+## v2.29.0 — Block Handlers 🆕
+
+<Video id="q2CNXIxtVjQ" title="Envio v2.29.0" />
+
+Links: [GitHub release notes](https://github.com/enviodev/hyperindex/releases/tag/v2.29.0) · [YouTube](https://youtu.be/q2CNXIxtVjQ)
+
+**Highlights**
+
+- Run logic every block or at intervals with `onBlock()`
+- Great for time-series and aggregations
+- New patterns: preset handlers and multichain mode
+
+---
+
+## v2.28.0 — Speed & Scale
+
+<Video id="qnYX59jWx_k" title="Envio v2.28.0" />
+
+Links: [GitHub release notes](https://github.com/enviodev/hyperindex/releases/tag/v2.28.0) · [YouTube](https://youtu.be/qnYX59jWx_k)
+
+**Highlights**
+
+- 2× faster RPC historical sync (fewer requests)
+- Big factory indexing 2× faster (e.g., 2M addresses: 4 days → 2 days)
+- New official `_meta` query for per‑chain indexer progress
+
+---
+
+## v2.27.0 — Preload Optimization ⚡
+
+<Video id="QqbH78CEid8" title="Envio v2.27.0" />
+
+Links: [GitHub release notes](https://github.com/enviodev/hyperindex/releases/tag/v2.27.0) · [YouTube](https://youtu.be/QqbH78CEid8)
+
+**Highlights**
+
+- Auto‑batched entity loading via `preload_handlers: true`
+- Contract‑specific start blocks for optimized indexing
+
+---
+
+Want something added? Open an [issue](https://github.com/enviodev/hyperindex/issues) or [PR](https://github.com/enviodev/hyperindex/pulls) on our [GitHub](https://github.com/enviodev/hyperindex).

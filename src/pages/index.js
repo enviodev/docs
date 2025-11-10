@@ -29,10 +29,16 @@ export default function Home() {
                 <Link className={styles.docLink} to="/docs/HyperSync/overview">
                   HyperSync Docs
                 </Link>
-                <Link className={styles.docLink} to="/docs/HyperRPC/overview-hyperrpc">
+                <Link
+                  className={styles.docLink}
+                  to="/docs/HyperRPC/overview-hyperrpc"
+                >
                   HyperRPC Docs
                 </Link>
-                <Link className={styles.docLink} to="/docs/HyperIndex/hosted-service">
+                <Link
+                  className={styles.docLink}
+                  to="/docs/HyperIndex/hosted-service"
+                >
                   HyperIndex Hosted Service Docs
                 </Link>
               </div>
@@ -63,7 +69,20 @@ export default function Home() {
                 >
                   HyperRPC LLM Docs
                 </Link>
-
+              </div>
+            </div>
+            <div className={styles.docSection}>
+              <h2>News & Media</h2>
+              <div className={styles.docLinks}>
+                <Link className={styles.docLink} to="/videos">
+                  Shipper's Logs (Videos)
+                </Link>
+                <Link className={styles.docLink} to="/showcase">
+                  Showcase
+                </Link>
+                <Link className={styles.docLink} to="/blog">
+                  Blog
+                </Link>
               </div>
             </div>
           </div>

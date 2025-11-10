@@ -40,10 +40,6 @@ If you are a network operator or user and would like improved service support or
 | Avalanche            | 43114      | https://avalanche.hypersync.xyz or https://43114.hypersync.xyz                      | 🥉   |                 |
 | Base                 | 8453       | https://base.hypersync.xyz or https://8453.hypersync.xyz                            | 🏅   |                 |
 | Base Sepolia         | 84532      | https://base-sepolia.hypersync.xyz or https://84532.hypersync.xyz                   | 🎒   |                 |
-| Berachain            | 80094      | https://berachain.hypersync.xyz or https://80094.hypersync.xyz                      | 🥉   |                 |
-| Blast                | 81457      | https://blast.hypersync.xyz or https://81457.hypersync.xyz                          | 🥉   |                 |
-| Blast Sepolia        | 168587773  | https://blast-sepolia.hypersync.xyz or https://168587773.hypersync.xyz              | 🎒   |                 |
-| Boba                 | 288        | https://boba.hypersync.xyz or https://288.hypersync.xyz                             | 🪨   |                 |
 | Bsc                  | 56         | https://bsc.hypersync.xyz or https://56.hypersync.xyz                               | 🥉   |                 |
 | Bsc Testnet          | 97         | https://bsc-testnet.hypersync.xyz or https://97.hypersync.xyz                       | 🎒   |                 |
 | Celo                 | 42220      | https://celo.hypersync.xyz or https://42220.hypersync.xyz                           | 🪨   |                 |
@@ -104,6 +100,7 @@ If you are a network operator or user and would like improved service support or
 | Shimmer Evm          | 148        | https://shimmer-evm.hypersync.xyz or https://148.hypersync.xyz                      | 🪨   |                 |
 | Soneium              | 1868       | https://soneium.hypersync.xyz or https://1868.hypersync.xyz                         | 🪨   |                 |
 | Sonic                | 146        | https://sonic.hypersync.xyz or https://146.hypersync.xyz                            | 🥈   |                 |
+| Sonic Testnet        | 14601      | https://sonic-testnet.hypersync.xyz or https://14601.hypersync.xyz                  | 🎒   |                 |
 | Sophon               | 50104      | https://sophon.hypersync.xyz or https://50104.hypersync.xyz                         | 🪨   |                 |
 | Sophon Testnet       | 531050104  | https://sophon-testnet.hypersync.xyz or https://531050104.hypersync.xyz             | 🎒   |                 |
 | Superseed            | 5330       | https://superseed.hypersync.xyz or https://5330.hypersync.xyz                       | 🪨   |                 |

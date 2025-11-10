@@ -329,6 +329,11 @@ const config = {
             position: "left",
           },
           {
+            to: "videos",
+            label: "Shipper's Logs",
+            position: "left",
+          },
+          {
             to: "showcase",
             label: "Showcase",
             position: "left",
