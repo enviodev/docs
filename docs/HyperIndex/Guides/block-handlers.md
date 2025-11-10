@@ -12,7 +12,7 @@ Run logic on every block or an interval.
 
 ---
 
-Starting from `envio@2.29` we introduced `onBlock` API to be able to run logic on every block or an interval. This is useful for aggregations, time-series logic, and bulk updates using raw SQL.
+Starting from `envio@2.29` we introduced `onBlock` API to be able to run logic on every block or an interval. This is useful for aggregations and time-series logic.
 
 To get started, import the `onBlock` function from `generated` module and call it in one of your handler files.
 
