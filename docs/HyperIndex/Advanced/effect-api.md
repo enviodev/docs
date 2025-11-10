@@ -14,12 +14,12 @@ The Effect API provides a powerful and convenient way to perform external calls 
 - **Persistence**: Built-in support for result persistence for indexer reruns (opt-in via `cache: true`)
 - **Future enhancements**: We're working on automatic retry logic and enhanced caching workflows 🏗️
 
-To use the Effect API, you first need to define an effect using `experimental_createEffect` function from the `envio` package:
+To use the Effect API, you first need to define an effect using `createEffect` function from the `envio` package:
 
 ```typescript
-import { experimental_createEffect, S } from "envio";
+import { createEffect, S } from "envio";
 
-export const getMetadata = experimental_createEffect(
+export const getMetadata = createEffect(
   {
     name: "getMetadata",
     input: S.string,
@@ -27,6 +27,7 @@ export const getMetadata = experimental_createEffect(
       description: S.string,
       value: S.bigint,
     },
+    rateLimit: false
     cache: true,
   },
   async ({ input, context }) => {
@@ -46,6 +47,7 @@ The first argument is an options object that describes the effect:
 - `name` (required) - the name of the effect used for debugging and logging
 - `input` (required) - the input type of the effect
 - `output` (required) - the output type of the effect
+- `rateLimit` (required) - the maxmimum calls allowed per timeframe, or false to disable
 - `cache` (optional) - save effect results in the database to prevent duplicate calls (Starting from `envio@2.26.0`)
 
 The second argument is a function that will be called with the effect's input.
@@ -83,7 +85,7 @@ const lbtcContract = getContract({
 });
 
 // Effect to get the balance of a specific address at a specific block
-export const getBalance = experimental_createEffect(
+export const getBalance = createEffect(
   {
     name: "getBalance",
     input: {
@@ -91,6 +93,7 @@ export const getBalance = experimental_createEffect(
       blockNumber: S.optional(S.bigint),
     },
     output: S.bigint,
+    rateLimt: false
     cache: true,
   },
   async ({ input, context }) => {
@@ -134,6 +137,12 @@ When the indexer is rerun by using `envio dev` or `envio start -r` call, the ini
 
 > **Note:** This feature is available starting from `envio@2.26.0`. It also doesn't support rollbacks on reorgs. The support for reorgs will be added in the future.
 
+### Rate Limit for the Effect
+
+Starting from [`v2.32.0`](https://github.com/enviodev/hyperindex/releases/tag/v2.32.0), the `rateLimit` option is required. It controls how often an effect can run within a given timeframe. You can set it to `false` to disable rate limiting or define a custom limit such as calls per second, minute, or a duration in milliseconds.
+
+You can also override caching for a specific call by setting `context.cache = false`, which prevents storing results for that execution, especially useful when handling failed responses.
+
 ### Cache on Hosted Service
 
 The same `.envio/cache` can be also used to populate the initial cache on the hosted service.
@@ -145,7 +154,3 @@ Although this solution is very limited, and we're actively working on a better i
 - There might be issues with pulling big caches from the GitHub repository
 
 Join our [Discord](https://discord.gg/envio) to get updates on the progress of the hosted service integration.
-
-### Why Experimental?
-
-The Effect API is currently marked as experimental, but we don't expect major breaking changes in the future. This designation simply means we're actively iterating on the feature and may add new capabilities that could subtly change indexer behavior. We plan to remove the `experimental` tag soon, and your feedback is invaluable in this process!
