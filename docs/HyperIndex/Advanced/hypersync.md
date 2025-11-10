@@ -84,6 +84,10 @@ HyperSync supports numerous EVM networks including Ethereum, Unichain, Arbitrum,
 
 HyperSync data source is vendorlock-free. While HyperSync is **recommended for optimal performance**, you can always switch to RPCs without the need to change your indexer code. For information on configuring RPC-based indexing, visit the [RPC Data Source](/docs/HyperIndex/Advanced/rpc-sync.md) documentation.
 
+### Improving Resilience with RPC fallback
+
+For production deployments, it’s recommended to use HyperSync as the primary data source and have RPCs as fallback to improve reliability.You can read more about it in the [RPC Fallback](/docs/HyperIndex/rpc-sync#improving-resilience-with-rpc-fallback) section.
+
 ## Performance Comparison
 
 | Metric             | Traditional RPC       | HyperSync                    |
