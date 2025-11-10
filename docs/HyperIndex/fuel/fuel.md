@@ -218,8 +218,6 @@ SwayContract.NewGreeting.handler(async ({ event, context }) => {
 });
 ```
 
-> **Note**: If you use loaders, also follow the [v1 to v2 migration guide](../migration-guide-v1-v2.md) for loader-specific changes.
-
 ## HyperFuel
 
 [HyperFuel](/docs/HyperSync/hyperfuel) is Envio's low-level data API for the Fuel Network (equivalent to [HyperSync](/docs/HyperSync/overview) for EVM chains).

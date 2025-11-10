@@ -92,10 +92,6 @@ const redirectsList = [
     to: "/docs/HyperIndex/overview",
   },
   {
-    from: "/docs/HyperIndex/v2/migration-guide-v1-v2",
-    to: "/docs/HyperIndex/migration-guide-v1-v2",
-  },
-  {
     from: "/docs/HyperIndex/linked-entity-loaders",
     to: "/docs/HyperIndex/overview",
   },

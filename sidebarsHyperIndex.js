@@ -42,7 +42,6 @@ module.exports = {
     "contract-import",
     "benchmarks",
     "migration-guide",
-    // "migration-guide-v1-v2",
     {
       type: "category",
       label: "Guides",
@@ -112,7 +111,6 @@ module.exports = {
         "Advanced/rpc-sync",
         "Advanced/config-schema-reference",
         "Guides/cli-commands",
-        // "migration-guide-v1-v2",
         "Advanced/reorgs-support",
         // "Advanced/persisted-files",
         "Advanced/generated-files",
