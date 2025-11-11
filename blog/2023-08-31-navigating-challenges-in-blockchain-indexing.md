@@ -2,7 +2,7 @@
 title: Common Challenges in Blockchain Indexing
 sidebar_label: Common Challenges in Blockchain Indexing
 slug: /common-challenges-in-blockchain-indexing
-description: "Learn how to tackle real-world blcokchain indexing hurdles—like reorgs, multi-chain complexity and scale—with smarter strategies and tools powered by Envio."
+description: "Learn how to tackle real-world blockchain indexing hurdles—like reorgs, multi-chain complexity and scale—with smarter strategies and tools powered by Envio."
 ---
 
 <img src="/blog-assets/envio-navigating-common-blockchain-indexing-challenges.png" alt="Cover Image Navigating Blockchain Indexing Challenges" width="100%"/>
