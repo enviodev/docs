@@ -1,7 +1,8 @@
 ---
-title: Envio's HyperSync Supports 70+ Blockchain Networks—Emerging as Web3's Fastest Blockchain Indexer
-sidebar_label: Envio's HyperSync Supports 70+ Blockchain Networks—Emerging as Web3's Fastest Blockchain Indexer
+title: Envio Supports 70+ Blockchains Emerging as Web3’s Fastest Blockchain Indexer
+sidebar_label: Envio Supports 70+ Blockchains Emerging as Web3’s Fastest Blockchain Indexer
 slug: /envio-hypersync-supports-70-networks
+description: "Learn how Envio’s HyperSync supports over 70+ blockchain networks delivering real-time and historical on-chain data with unmatched speed and reliability."
 ---
 
 <img src="/blog-assets/envio-supports-70-networks.png" alt="Cover Image Envio Developer Community Update February 2025" width="100%"/>

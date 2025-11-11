@@ -1,8 +1,10 @@
 ---
-title: Envio Community Update No. 03
-sidebar_label: Envio Community Update No.03
+title: Envio Developer Update October 2023
+sidebar_label: Envio Developer Update October 2023
 slug: /envio-developer-community-update-no-3
+description: "Catch up on what Envio shipped in October including record breaking sync benchmarks, builder bounties, new hackathon partnerships and developer milestones."
 ---
+
 
 <img src="/blog-assets/envio-developer-community-update-3.png" alt="Cover Image Envio Developer Community Update No.3" width="100%"/>
 

@@ -2,6 +2,7 @@
 title: Envio Developer Update February 2025
 sidebar_label: Envio Developer Update February 2025
 slug: /envio-developer-update-february-2025
+description: "Catch up on Envio’s February 2025 developer update featuring new HyperSync network additions, product improvements, community highlights and upcoming builder initiatives."
 ---
 
 <img src="/blog-assets/envio-dev-update-feb-2025.png" alt="Cover Image Envio Developer Community Update February 2025" width="100%"/>

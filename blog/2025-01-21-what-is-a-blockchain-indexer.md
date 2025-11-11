@@ -1,7 +1,8 @@
 ---
-title: What is a Blockchain Indexer
+title: What is a Blockchain Indexer?
 sidebar_label: What is a Blockchain Indexer?
 slug: /what-is-a-blockchain-indexer
+description: "Learn how efficient blockchain indexers like Envio simplify data access for developers by organising and querying on-chain data in real-time."
 ---
 
 <img src="/blog-assets/blockchain-indexer.png" alt="future of blockchain indexing" width="100%"/>

@@ -1,7 +1,8 @@
 ---
-title: "Building ChainDensity: Unveiling Blockchain Activity Patterns with HyperSync"
-sidebar_label: Unveiling Blockchain Activity Patterns with HyperSync
-slug: /building-chaindensity
+title: Building ChainDensity: Unveiling Blockchain Activity Patterns with HyperSync  
+sidebar_label: Unveiling Blockchain Activity Patterns with HyperSync  
+slug: /building-chaindensity  
+description: "Learn how Envio’s HyperSync powers ChainDensity to visualise blockchain event and transaction density across 70+ chains enabling data analysts and developers to spot patterns in seconds."  
 ---
 
 <img src="/blog-assets/density1.png" alt="Cover Image for Building ChainDensity" width="100%"/>

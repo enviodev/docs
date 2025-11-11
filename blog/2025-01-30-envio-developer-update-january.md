@@ -2,6 +2,7 @@
 title: Envio Developer Update January 2025
 sidebar_label: Envio Developer Update January 2025
 slug: /envio-developer-update-january-2025
+description: "See what Envio shipped in January 2025 including new network integrations, feature releases, and our support for builders tackling multichain indexing challenges."
 ---
 
 <img src="/blog-assets/envio-developer-community-january-2025.png" alt="Cover Image Envio Developer Community Update January 2025" width="100%"/>

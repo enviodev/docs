@@ -40,6 +40,10 @@ If you are a network operator or user and would like improved service support or
 | Avalanche            | 43114      | https://avalanche.hypersync.xyz or https://43114.hypersync.xyz                      | 🥉   |                 |
 | Base                 | 8453       | https://base.hypersync.xyz or https://8453.hypersync.xyz                            | 🏅   |                 |
 | Base Sepolia         | 84532      | https://base-sepolia.hypersync.xyz or https://84532.hypersync.xyz                   | 🎒   |                 |
+| Berachain            | 80094      | https://berachain.hypersync.xyz or https://80094.hypersync.xyz                      | 🥉   |                 |
+| Blast                | 81457      | https://blast.hypersync.xyz or https://81457.hypersync.xyz                          | 🥉   |                 |
+| Blast Sepolia        | 168587773  | https://blast-sepolia.hypersync.xyz or https://168587773.hypersync.xyz              | 🎒   |                 |
+| Boba                 | 288        | https://boba.hypersync.xyz or https://288.hypersync.xyz                             | 🪨   |                 |
 | Bsc                  | 56         | https://bsc.hypersync.xyz or https://56.hypersync.xyz                               | 🥉   |                 |
 | Bsc Testnet          | 97         | https://bsc-testnet.hypersync.xyz or https://97.hypersync.xyz                       | 🎒   |                 |
 | Celo                 | 42220      | https://celo.hypersync.xyz or https://42220.hypersync.xyz                           | 🪨   |                 |
@@ -95,6 +99,7 @@ If you are a network operator or user and would like improved service support or
 | Rootstock            | 30         | https://rootstock.hypersync.xyz or https://30.hypersync.xyz                         | 🪨   |                 |
 | Saakuru              | 7225878    | https://saakuru.hypersync.xyz or https://7225878.hypersync.xyz                      | 🪨   |                 |
 | Scroll               | 534352     | https://scroll.hypersync.xyz or https://534352.hypersync.xyz                        | 🪨   |                 |
+| Sentient             | 6767       | https://sentient.hypersync.xyz or https://6767.hypersync.xyz                        | 🪨   |                 |
 | Sentient Testnet     | 1184075182 | https://sentient-testnet.hypersync.xyz or https://1184075182.hypersync.xyz          | 🪨   |                 |
 | Sepolia              | 11155111   | https://sepolia.hypersync.xyz or https://11155111.hypersync.xyz                     | 🎒   |                 |
 | Shimmer Evm          | 148        | https://shimmer-evm.hypersync.xyz or https://148.hypersync.xyz                      | 🪨   |                 |

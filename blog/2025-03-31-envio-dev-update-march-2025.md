@@ -2,7 +2,9 @@
 title: Envio Developer Update March 2025
 sidebar_label: Envio Developer Update March 2025
 slug: /envio-developer-update-march-2025
+description: "See what Envio delivered in March 2025 including HyperIndex version 2.15 with RPC failover, new LogTui chain scan tool, and integrations with V12, XDC Network, Monad and Chiliz."
 ---
+
 
 <img src="/blog-assets/envio-dev-update-march-2025.png" alt="Cover Image Envio Developer Community Update March 2025" width="100%"/>
 

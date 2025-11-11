@@ -1,14 +1,13 @@
 ---
-title: What is a blockchain indexer, and how does it simplify data retrieval for Web3 developers?
-sidebar_label: Existing methods to query blockchain data and their trade-offs
+title: What is a blockchain indexing?
+sidebar_label: What is blockchain indexing?
 slug: /what-is-a-blockchain-indexer-for-dapp-development
+description: "Learn how blockchain indexers like Envio simplify data retrieval for your dApp, speed up queries across contracts and chains, and free you from raw node logic."
 ---
 
 <img src="/blog-assets/envio-what-is-an-indexer.png" alt="Envio Cover Photo" width="100%"/>
 
 <!--truncate-->
-
-## What is a blockchain indexer, and how does it simplify data retrieval for Web3 developers?
 
 It’s no secret that blockchain indexing solutions can free up development resources, reduce time to market, and improve the overall end-user experience. Imagine you're a developer building a decentralized application (dApp) that requires real-time access to on-chain data, user interactions, and smart contract events. Navigating this ocean is a complex task and can be like searching for a needle in a haystack.
 

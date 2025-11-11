@@ -2,7 +2,9 @@
 title: Envio Developer Update July 2025
 sidebar_label: Envio Developer Update July 2025
 slug: /envio-developer-update-july-2025
+description: "Discover what Envio released in July 2025 including built in cache for effect calls, a one-click indexer generator, internal hackathon highlights, and our Base and Ethereum ecosystem integrations."
 ---
+
 
 <img src="/blog-assets/dev-update-july-2025.png" alt="Cover Image Envio Developer Community Update July 2025" width="100%"/>
 

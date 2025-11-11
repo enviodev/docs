@@ -2,7 +2,9 @@
 title: "Envio Bounty Graduate: ERC4626 Indexer for Tokenized Vault Contracts"
 sidebar_label: "Envio Bounty Graduate: ERC4626 Indexer for Tokenized Vault Contracts"
 slug: /envio-bounty-erc4626-tokenized-vault-indexer
+description: "Learn how to build an ERC4626 vault indexer using Envio to index token vault deposits withdrawals and smart contract events making data access easier for DeFi developers."
 ---
+
 
 <img src="/blog-assets/envio-erc4626-indexer-cover.png" alt="Cover Image for Envio Bounty Graduate: ERC4626 Tokenized Vault Indexer" width="100%"/>
 

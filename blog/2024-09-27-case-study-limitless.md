@@ -1,8 +1,9 @@
 ---
-title: Can the Future be predicted? How Prediction Markets are Becoming a New Source of Media
+title: Can the Future be Predicted? How Prediction Markets are Becoming a New Source of Media
 sidebar_label: How Prediction Markets are Becoming a New Source of Media
 slug: /case-study-limitless-prediction-market
-tags: ["case-studies"]
+tags: ["case‐studies"]
+description: "Explore how Limitless Exchange uses Envio to power a daily prediction market built on Base with real-time on-chain data analytics that transform how users interact with markets and media."
 ---
 
 <img src="/blog-assets/case-study-limitless.png" alt="Cover Image Limitless Prediction Markets Case Study" width="100%"/>

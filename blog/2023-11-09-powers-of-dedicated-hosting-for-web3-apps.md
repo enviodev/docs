@@ -1,8 +1,10 @@
 ---
-title: The Powers of a Dedicated Hosting Service for Web3 DApps
-sidebar_label: The Powers of a Dedicated Hosting Service for Web3 DApps
+title: How Dedicated Hosting Improves Performance and Reliability for Web3 dApps
+sidebar_label: How Dedicated Hosting Improves Performance and Reliability for Web3 dApps
 slug: /powers-of-dedicated-hosting-for-web3-dapps
+description: "Learn how Envio's dedicated hosting enhances the performance and reliability of your Web3 dApp by simplifying infrastructure management and delivering a smoother developer experience."
 ---
+
 
 <img src="/blog-assets/envio-dedicated-hosting.png" alt="Cover Image for Powers of Dedicated Hosting for Web3 Apps" width="100%"/>
 

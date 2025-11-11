@@ -1,14 +1,14 @@
 ---
-title: Envio Community Update No. 07
-sidebar_label: Envio Community Update No. 07
+title: Envio Developer Update March 2024
+sidebar_label: Envio Developer Update March 2024
 slug: /envio-community-update-no-7
+description: "See what the Envio team shipped March 2024 including major version upgrades, new network integrations, ChainDensity, and Envio being featured on Primodata as proud sponsors."
 ---
+
 
 <img src="/blog-assets/envio-developer-community-update-7.jpg" alt="Cover Image Envio Developer Community Update No.7" width="100%"/>
 
 <!--truncate-->
-
-# Envio Community Update No. 07
 
 Greetings developers! We’re excited to be back with our seventh community update and our second one of 2024! As usual, we’ll run through some of the latest activities the Envio team has been up to over the past month, including a detailed look into some features and tech updates.
 

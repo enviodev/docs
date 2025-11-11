@@ -2,6 +2,7 @@
 title: Envio Developer Update September 2025
 sidebar_label: Envio Developer Update September 2025
 slug: /envio-developer-update-september-2025
+description: "Catch the highlights from Envio’s September 2025 developer update including product improvements, new network integrations, and community builder milestones."
 ---
 
 <img src="/blog-assets/sep-update-2025-0.png" alt="Cover Image Envio Developer Community Update September 2025" width="100%"/>

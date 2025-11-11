@@ -2,6 +2,7 @@
 title: Envio Developer Update July 2024
 sidebar_label: Envio Developer Update July 2024
 slug: /envio-developer-update-july-2024
+description: "Welcome to our July 2024 update covering Envio release v1.3.1, our presence at EthCC Modular Summit, and the panel we hosted at Modular DeFi Day Brussels."
 ---
 
 <img src="/blog-assets/envio-developer-community-july-2024.png" alt="Cover Image Envio Developer Community Update July 2024" width="100%"/>

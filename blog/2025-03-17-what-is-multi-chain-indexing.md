@@ -1,7 +1,8 @@
 ---
-title: What is Multi-chain Indexing?
-sidebar_label: What is Multi-chain Indexing?
+title: What is Multichain Indexing?
+sidebar_label: What is Multichain Indexing?
 slug: /what-is-multi-chain-indexing
+description: "Learn how Envio enables multichain indexing to unify data from multiple blockchains letting developers query assets events and contracts across multiple networks with ease."
 ---
 
 <img src="/blog-assets/what-is-multi-chain-indexing.png" alt="Cover Image What is Multi-chain Indexing?" width="100%"/>

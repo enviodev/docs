@@ -1,8 +1,9 @@
 ---
-title: "Bridgg: The Unified Gateway for the OP Superchain, A New Paradigm of Interop Infra"
-sidebar_label: "Bridgg: The Unified Gateway for the OP Superchain, A New Paradigm of Interop Infra"
-slug: /case-study-bridgg-op-superchain
-tags: ["case-studies"]
+title: Bridgg: The Unified Gateway for the OP Superchain A New Paradigm of Interop Infra  
+sidebar_label: Bridgg: The Unified Gateway for the OP Superchain A New Paradigm of Interop Infra  
+slug: /case-study-bridgg-op-superchain  
+tags: ["case-studies"]  
+description: "See how Bridgg uses Envio's blockchain indexing solution to build a unified data indexing platform across the OP Superchain enabling seamless cross-chain insights asset tracking and developer efficiency."  
 ---
 
 <img src="/blog-assets/case-study-bridgg-op-superchain.png" alt="Cover Image Bridgg OP Superchain Case Study" width="100%"/>

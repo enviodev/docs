@@ -1,14 +1,13 @@
 ---
-title: "Race to the Blocks: Benchmarking Blockchain Indexer Sync Speeds"
-sidebar_label: "Race to the Blocks: Benchmarking Blockchain Indexer Sync Speeds"
+title: "Benchmarking Blockchain Indexer Sync Speeds"
+sidebar_label: "Benchmarking Blockchain Indexer Sync Speeds"
 slug: /indexer-benchmarking-results
+description: "Dive into Envio’s benchmarking of indexer sync speeds—see how different solutions stack up, understand key methods and caveats, and learn what this means for real-world dApp performance."
 ---
 
 <img src="/blog-assets/envio-benchmarking-blockchain-indexing-sync-speeds.png" alt="benchmarking sync speeds" width="100%"/>
 
 <!--truncate-->
-
-## Introduction
 
 This blog article presents the findings from benchmarking tests conducted at Envio to assess the syncing performance of various web3 indexing solutions. At Envio, our goal is to develop a high-performance blockchain indexing solution, and we believe that validating this goal through a rigorous data-driven approach is essential.
 Sync speed simply put, is how long it takes for an indexer to catch up to the head of the blockchain using a historical block as a starting point.

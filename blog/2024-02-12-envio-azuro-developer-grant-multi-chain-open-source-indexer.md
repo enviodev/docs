@@ -1,8 +1,10 @@
 ---
-title: Envio & Azuro launch Developer Grant for “Multi-chain Indexer” to power Accelerated Decentralized Betting
-sidebar_label: Envio & Azuro launch Developer Grant for “Multi-chain Indexer” to power Accelerated Decentralized Betting
+title: Envio & Azuro Grant: How to build a “Multichain Indexer” to power Accelerated Decentralized Betting
+sidebar_label: Envio & Azuro Grant: How to build a “Multichain Indexer” to power Accelerated Decentralized Betting
 slug: /envio-azuro-developer-grant-multi-chain-indexer
+description: "Find out how the Envio and Azuro grant invites blockchain developers to build a multichain indexer for the Azuro protocol using Envio's indexing SDK to unlock streamlined cross-chain data access."
 ---
+
 
 <img src="/blog-assets/envio-azuro-developer-grant.png" alt="Azuro Envio Developer Grant Cover Image" width="100%"/>
 

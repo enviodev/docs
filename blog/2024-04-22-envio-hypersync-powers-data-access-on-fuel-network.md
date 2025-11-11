@@ -1,7 +1,8 @@
 ---
-title: "Fast, Flexible & Fiercely Efficient Data Access: Envio HyperSync Now Supports Fuel Network"
-sidebar_label: "Fast, Flexible & Fiercly Efficient Data Access: Envio HyperSync Now Supports Fuel Network"
+title: Envio's Blockchain Indexing Solution Supports Developers on the Fuel Network
+sidebar_label: Envio's Blockchain Indexing Solution Supports Developers on the Fuel Network
 slug: /envio-hypersync-powers-data-access-on-fuel-network
+description: "Learn how Envio’s HyperSync supports developers building on the Fuel Network enabling access real-time and historical blockchain data with speed reliability and zero infrastructure overhead."
 ---
 
 <img src="/blog-assets/envio-partner-fuel.png" alt="Envio Fuel Partnership Cover Image" width="100%"/>

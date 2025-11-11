@@ -32,6 +32,10 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Avalanche            | 43114      | https://avalanche.rpc.hypersync.xyz or https://43114.rpc.hypersync.xyz              |                 |
 | Base                 | 8453       | https://base.rpc.hypersync.xyz or https://8453.rpc.hypersync.xyz                    |                 |
 | Base Sepolia         | 84532      | https://base-sepolia.rpc.hypersync.xyz or https://84532.rpc.hypersync.xyz           |                 |
+| Berachain            | 80094      | https://berachain.rpc.hypersync.xyz or https://80094.rpc.hypersync.xyz              |                 |
+| Blast                | 81457      | https://blast.rpc.hypersync.xyz or https://81457.rpc.hypersync.xyz                  |                 |
+| Blast Sepolia        | 168587773  | https://blast-sepolia.rpc.hypersync.xyz or https://168587773.rpc.hypersync.xyz      |                 |
+| Boba                 | 288        | https://boba.rpc.hypersync.xyz or https://288.rpc.hypersync.xyz                     |                 |
 | Bsc                  | 56         | https://bsc.rpc.hypersync.xyz or https://56.rpc.hypersync.xyz                       |                 |
 | Bsc Testnet          | 97         | https://bsc-testnet.rpc.hypersync.xyz or https://97.rpc.hypersync.xyz               |                 |
 | Celo                 | 42220      | https://celo.rpc.hypersync.xyz or https://42220.rpc.hypersync.xyz                   |                 |
@@ -87,6 +91,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Rootstock            | 30         | https://rootstock.rpc.hypersync.xyz or https://30.rpc.hypersync.xyz                 |                 |
 | Saakuru              | 7225878    | https://saakuru.rpc.hypersync.xyz or https://7225878.rpc.hypersync.xyz              |                 |
 | Scroll               | 534352     | https://scroll.rpc.hypersync.xyz or https://534352.rpc.hypersync.xyz                |                 |
+| Sentient             | 6767       | https://sentient.rpc.hypersync.xyz or https://6767.rpc.hypersync.xyz                |                 |
 | Sentient Testnet     | 1184075182 | https://sentient-testnet.rpc.hypersync.xyz or https://1184075182.rpc.hypersync.xyz  |                 |
 | Sepolia              | 11155111   | https://sepolia.rpc.hypersync.xyz or https://11155111.rpc.hypersync.xyz             |                 |
 | Shimmer Evm          | 148        | https://shimmer-evm.rpc.hypersync.xyz or https://148.rpc.hypersync.xyz              |                 |

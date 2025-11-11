@@ -1,7 +1,8 @@
 ---
-title: How to Become a Blockchain dApp Developer | Envio's Ultimate Guide
-sidebar_label: How to Become a Blockchain dApp Developer
+title: How to Become a Blockchain Developer
+sidebar_label: How to Become a Blockchain Developer
 slug: /how-to-become-a-blockchain-dapp-developer
+description: "Learn how to build blockchain dApps from scratch from setting up your dev environment and writing smart contracts to deploying secure apps and indexing blockhain data with Envio."
 ---
 
 <img src="/blog-assets/envio-how-to-become-a-blockchain-dapp-developer.png" alt="Cover Image How to Become a Blockchain DApp Developer" width="100%"/>
