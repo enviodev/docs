@@ -6,6 +6,8 @@ slug: /effect-api
 description: Learn how to use the Effect API for external calls in handlers.
 ---
 
+import Video from "@site/src/components/Video";
+
 The Effect API provides a powerful and convenient way to perform external calls from your handlers. It's especially effective when used with [Preload Optimization](/docs/HyperIndex/preload-optimization):
 
 - **Automatic batching**: Calls of the same kind are automatically batched together
@@ -202,6 +204,9 @@ export const getBalance = createEffect(
   }
 );
 ```
+
+Watch the following video to learn more about createEffect and other updates introduced in [v2.32.0](https://github.com/enviodev/hyperindex/releases/tag/v2.32.0).
+<Video id="yvUVzV1ifig" title="Envio v2.32.0" />
 
 ### Migrate from Experimental
 
