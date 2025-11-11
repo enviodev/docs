@@ -210,7 +210,7 @@ Watch the following video to learn more about createEffect and other updates int
 
 ### Migrate from Experimental
 
-If you're using `experimental_createEffect` to migrate to `createEffect`, you need to remove `experimental_` prefix and add `rateLimit` option which now required.
+If you're migrating from `experimental_createEffect` to `createEffect`, remove the `experimental_` prefix and add the `rateLimit` option, which is now required. In `experimental_createEffect`, the `rateLimit` option was optional and defaulted to `false`.
 
 ```diff typescript
 - export const getBalance = experimental_createEffect(
