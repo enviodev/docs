@@ -6,6 +6,8 @@ slug: /effect-api
 description: Learn how to use the Effect API for external calls in handlers.
 ---
 
+import Video from "@site/src/components/Video";
+
 The Effect API provides a powerful and convenient way to perform external calls from your handlers. It's especially effective when used with [Preload Optimization](/docs/HyperIndex/preload-optimization):
 
 - **Automatic batching**: Calls of the same kind are automatically batched together
@@ -14,18 +16,22 @@ The Effect API provides a powerful and convenient way to perform external calls 
 - **Persistence**: Built-in support for result persistence for indexer reruns (opt-in via `cache: true`)
 - **Future enhancements**: We're working on automatic retry logic and enhanced caching workflows 🏗️
 
-To use the Effect API, you first need to define an effect using `experimental_createEffect` function from the `envio` package:
+To use the Effect API, you first need to define an effect using `createEffect` function from the `envio` package:
 
 ```typescript
-import { experimental_createEffect, S } from "envio";
+import { createEffect, S } from "envio";
 
-export const getMetadata = experimental_createEffect(
+export const getMetadata = createEffect(
   {
     name: "getMetadata",
     input: S.string,
     output: {
       description: S.string,
       value: S.bigint,
+    },
+    rateLimit: {
+      calls: 5,
+      per: "second",
     },
     cache: true,
   },
@@ -46,6 +52,7 @@ The first argument is an options object that describes the effect:
 - `name` (required) - the name of the effect used for debugging and logging
 - `input` (required) - the input type of the effect
 - `output` (required) - the output type of the effect
+- `rateLimit` (required) - the maximum calls allowed per timeframe, or `false` to disable
 - `cache` (optional) - save effect results in the database to prevent duplicate calls (Starting from `envio@2.26.0`)
 
 The second argument is a function that will be called with the effect's input.
@@ -83,7 +90,7 @@ const lbtcContract = getContract({
 });
 
 // Effect to get the balance of a specific address at a specific block
-export const getBalance = experimental_createEffect(
+export const getBalance = createEffect(
   {
     name: "getBalance",
     input: {
@@ -91,6 +98,10 @@ export const getBalance = experimental_createEffect(
       blockNumber: S.optional(S.bigint),
     },
     output: S.bigint,
+    rateLimit: {
+      calls: 5,
+      per: "second",
+    },
     cache: true,
   },
   async ({ input, context }) => {
@@ -118,7 +129,27 @@ export const getBalance = experimental_createEffect(
 
 By default, effect results are not persisted in the database. This means if the effect with the same input is called again, the function will be executed the second time.
 
-To persist effect results, you can set the `cache` option to `true` when creating the effect. This will save the effect results in the database and reuse them in future indexer runs.
+To persist effect results, you can set the `cache` option to `true` when creating the effect. This will save the effect results in the database and reuse them in future indexer runs. You can also override caching for a specific call by setting `context.cache = false`, which prevents storing results for that execution, especially useful when handling failed responses.
+
+Example setting cache to false with context.cache:
+
+```typescript
+export const getBalance = createEffect(
+  {
+    // effect options
+    cache: true,
+  },
+  async ({ input, context }) => {
+    try {
+      // your effect logic
+    } catch (_) {
+      // Don't cache failed response
+      context.cache = false;
+      return undefined;
+    }
+  }
+);
+```
 
 Every effect cache creates a new table in the database `envio_effect_${effectName}`. You can see it and query in Hasura console with admin secret.
 
@@ -134,9 +165,10 @@ When the indexer is rerun by using `envio dev` or `envio start -r` call, the ini
 
 > **Note:** This feature is available starting from `envio@2.26.0`. It also doesn't support rollbacks on reorgs. The support for reorgs will be added in the future.
 
+
 ### Cache on Hosted Service
 
-The same `.envio/cache` can be also used to populate the initial cache on the hosted service.
+The same `.envio/cache` can also be used to populate the initial cache on the hosted service.
 
 Although this solution is very limited, and we're actively working on a better integration:
 
@@ -146,6 +178,58 @@ Although this solution is very limited, and we're actively working on a better i
 
 Join our [Discord](https://discord.gg/envio) to get updates on the progress of the hosted service integration.
 
-### Why Experimental?
+### Rate Limit
 
-The Effect API is currently marked as experimental, but we don't expect major breaking changes in the future. This designation simply means we're actively iterating on the feature and may add new capabilities that could subtly change indexer behavior. We plan to remove the `experimental` tag soon, and your feedback is invaluable in this process!
+Starting from [`v2.32.0`](https://github.com/enviodev/hyperindex/releases/tag/v2.32.0), the `rateLimit` option was added. It controls how frequently an effect can run within a given timeframe. You can set it to `false` to disable rate limiting or define a custom limit such as calls per second, minute, or a duration in milliseconds.
+
+```typescript
+// Effect to get the balance of a specific address at a specific block
+export const getBalance = createEffect(
+  {
+    name: "getBalance",
+    input: {
+      address: S.string,
+      blockNumber: S.optional(S.bigint),
+    },
+    output: S.bigint,
+    // rateLimit: false, // you can set rateLimit to false if needed
+    rateLimit: {
+      calls: 5,
+      per: "second",  // also supports "minute" or a duration in milliseconds
+    },
+    cache: true,
+  },
+  async ({ input, context }) => {
+      // your effect logic 
+  }
+);
+```
+
+Watch the following video to learn more about createEffect and other updates introduced in [v2.32.0](https://github.com/enviodev/hyperindex/releases/tag/v2.32.0).
+<Video id="yvUVzV1ifig" title="Envio v2.32.0" />
+
+### Migrate from Experimental
+
+If you're migrating from `experimental_createEffect` to `createEffect`, remove the `experimental_` prefix and add the `rateLimit` option, which is now required. In `experimental_createEffect`, the `rateLimit` option was optional and defaulted to `false`.
+
+```diff typescript
+- export const getBalance = experimental_createEffect(
++ export const getBalance = createEffect(
+  {
+    name: "getBalance",
+    input: {
+      address: S.string,
+      blockNumber: S.optional(S.bigint),
+    },
+    output: S.bigint,
++   rateLimit: {
++     calls: 5,
++     per: "second",
++   },
+    cache: true,
+  },
+  async ({ input, context }) => {
+    // your effect logic
+  }
+);
+```
