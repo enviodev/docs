@@ -52,7 +52,7 @@ The first argument is an options object that describes the effect:
 - `name` (required) - the name of the effect used for debugging and logging
 - `input` (required) - the input type of the effect
 - `output` (required) - the output type of the effect
-- `rateLimit` (required) - the maximum calls allowed per timeframe, or false to disable
+- `rateLimit` (required) - the maximum calls allowed per timeframe, or `false` to disable
 - `cache` (optional) - save effect results in the database to prevent duplicate calls (Starting from `envio@2.26.0`)
 
 The second argument is a function that will be called with the effect's input.
