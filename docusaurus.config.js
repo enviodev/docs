@@ -282,9 +282,9 @@ const config = {
         respectPrefersColorScheme: true,
       },
       announcementBar: {
-        id: "hypersync-api-tokens-nov-2025",
+        id: "alchemy-subgraphs-shutdown",
         content:
-          'HyperSync API tokens required from <strong>3 November 2025</strong>. Ensure you are using one to keep uninterrupted HyperSync access. <a href="/docs/HyperSync/api-tokens" rel="noopener noreferrer">Learn more →</a>',
+          'Alchemy Subgraphs are shutting down. Migrate to Envio for 143x faster indexing and get 2 months free of hosted service. <a href="https://envio.dev/alchemy-migration" rel="noopener noreferrer">Learn more →</a>',
         backgroundColor: "#fff7e6",
         textColor: "#663c00",
         isCloseable: true,
