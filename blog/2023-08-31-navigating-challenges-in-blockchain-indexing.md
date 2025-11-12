@@ -1,14 +1,13 @@
 ---
-title: Navigating common challenges in blockchain indexing
-sidebar_label: Navigating Common Challenges in Blockchain Indexing
-slug: /navigating-common-challenges-in-blockchain-indexing
+title: Common Challenges in Blockchain Indexing
+sidebar_label: Common Challenges in Blockchain Indexing
+slug: /common-challenges-in-blockchain-indexing
+description: "Learn how to tackle real-world blockchain indexing hurdles—like reorgs, multi-chain complexity and scale—with smarter strategies and tools powered by Envio."
 ---
 
 <img src="/blog-assets/envio-navigating-common-blockchain-indexing-challenges.png" alt="Cover Image Navigating Blockchain Indexing Challenges" width="100%"/>
 
 <!--truncate-->
-
-# Navigating common challenges in blockchain indexing
 
 The rise of blockchain technology has empowered a new era of possibilities, promising a decentralized, secure, and transparent future. But it's not without its challenges. In this blog article, we'll cover the common hurdles faced in blockchain indexing and shed light on how innovative solutions are changing the game.
 

@@ -1,14 +1,13 @@
 ---
-title: Envio Community Update No. 08
-sidebar_label: Envio Community Update No. 08
+title: Envio Developer Update March 2024
+sidebar_label: Envio Developer Update March 2024
 slug: /envio-community-update-no-8
+description: "Catch up on what Envio shipped in March including new HyperSync network support updates across Blast and Polygon, and faster indexing for multichain developers."
 ---
 
 <img src="/blog-assets/envio-developer-community-update-8.png" alt="Cover Image Envio Developer Community Update No.8" width="100%"/>
 
 <!--truncate-->
-
-# Envio Community Update No. 08
 
 Welcome back to another juicy community update where we’ll run through some of the latest and greatest activities, features and technical updates that the Envio team has been shipping over March. 🚢
 

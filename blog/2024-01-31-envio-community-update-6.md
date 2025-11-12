@@ -1,7 +1,8 @@
 ---
-title: Envio Community Update No. 06
-sidebar_label: Envio Community Update No.06
+title: Envio Developer Update January 2024
+sidebar_label: Envio Developer Update January 2024
 slug: /envio-developer-community-update-no-6
+description: "Dive into Envio’s first update of 2024 including new Async-Mode features, 11 new HyperSync networks, the Jarvis integration and our latest developer release milestones."
 ---
 
 <img src="/blog-assets/envio-developer-community-update-6.png" alt="Cover Image Envio Developer Community Update No.6" width="100%"/>

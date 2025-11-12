@@ -1,8 +1,9 @@
 ---
-title: "Tokenizing RWAs: How Blockchain is Redefining Real Estate Investment"
-sidebar_label: "Tokenizing RWAs: How Blockchain is Redefining Real Estate Investment"
-slug: /tokenizing-real-world-assets
-tags: ["case-studies"]
+title: Tokenizing RWAs How Blockchain is Redefining Real Estate Investment  
+sidebar_label: Tokenizing RWAs How Blockchain is Redefining Real Estate Investment  
+slug: /tokenizing-real-world-assets  
+tags: ["case-studies"]  
+description: "Discover how tokenized real world assets let you invest in real estate with lower barriers, global accessibility and transparent on chain ownership powered by Envio’s indexing infrastructure."  
 ---
 
 <img src="/blog-assets/tokenizing-rwa.png" alt="Cover Image Tokenizing RWAs: How Blockchain is Redefining Real Estate Investment" width="100%"/>

@@ -2,7 +2,9 @@
 title: Envio Developer Update August 2025
 sidebar_label: Envio Developer Update August 2025
 slug: /envio-developer-update-august-2025
+description: "See what Envio shipped in August 2025 including key product updates, internal hackathon projects, new integrations, and expanded network support for builders."
 ---
+
 
 <img src="/blog-assets/dev-update-august-2025.png" alt="Cover Image Envio Developer Community Update August 2025" width="100%"/>
 

@@ -1,8 +1,10 @@
 ---
-title: Oracle Wars - Exploring Real-Time Oracle Behavior and Push-Based Feeds
-sidebar_label: Oracle Wars - Exploring Real-Time Oracle Behavior and Push-Based Feeds
+title: Exploring Real-time Oracle Behavior and Push Based Feeds
+sidebar_label: Exploring Real-time Oracle Behavior and Push Based Feeds
 slug: /oracle-wars
+description: "Learn how Oracle Wars uses Envio’s HyperIndex to visualise how different oracle providers behave in real-time so you can design more reliable on-chain systems."
 ---
+
 
 <img src="/blog-assets/oracle-wars-1.png" alt="Cover Image Oracle Wars" width="100%"/>
 

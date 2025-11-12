@@ -1,8 +1,10 @@
 ---
-title: Envio Community Update No. 01
-sidebar_label: Envio Community Update No.01
+title: Envio Developer Update September 2023
+sidebar_label: Envio Developer Update September 2023
 slug: /envio-developer-community-update-no-1
+description: "Catch the highlights from the first Envio monthly update including what we shipped, our alpha release, and the launch of the Build Bigger Ship Faster Grant Program."
 ---
+
 
 <img src="/blog-assets/envio-developer-community-update-1.png" alt="Cover Image Envio Developer Community Update No.1" width="100%"/>
 

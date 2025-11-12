@@ -2,6 +2,7 @@
 title: Envio Developer Update December 2024
 sidebar_label: Envio Developer Update December 2024
 slug: /envio-developer-update-december-2024
+description: "Catch up on what Envio delivered in December 2024 including the HyperSync milestone release DeFi integration with Blocksquare, new tutorials and our community highlights."
 ---
 
 <img src="/blog-assets/envio-developer-community-december-2024.png" alt="Cover Image Envio Developer Community Update December 2024" width="100%"/>

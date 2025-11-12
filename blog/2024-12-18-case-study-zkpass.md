@@ -1,8 +1,9 @@
 ---
-title: "Can ZKPs Redefine User Privacy? How zkPass is Shaping the Future of Data Security"
-sidebar_label: "Can ZKPs Redefine User Privacy? How zkPass is Shaping the Future of Data Security"
+title: How zkPass Uses Zero Knowledge Proofs to Redefine Data Privacy
+sidebar_label: How zkPass Uses Zero Knowledge Proofs to Redefine Data Privacy
 slug: /zkpass-shaping-future-of-data-privacy
 tags: ["case-studies"]
+description: "Learn how zkPass uses zero knowledge proofs with Envio’s indexing solution to verify identity and transactions while keeping user data private."
 ---
 
 <img src="/blog-assets/zkpass-casestudy.png" alt="Cover Image How ZKPs help User Privacy" width="100%"/>

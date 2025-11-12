@@ -2,6 +2,7 @@
 title: Envio Developer Update June 2024
 sidebar_label: Envio Developer Update June 2024
 slug: /envio-developer-update-june-2024
+description: "Check out what Envio shipped in June 2024 including release v1.3.0, new no-code quickstart for Fuel Network, support for contract import on Avalanche and community events at EthCC Brussels."
 ---
 
 <img src="/blog-assets/envio-dev-community-update-june-2024.png" alt="Cover Image Envio Developer Community Update June 2024" width="100%"/>

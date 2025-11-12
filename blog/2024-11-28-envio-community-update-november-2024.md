@@ -2,6 +2,7 @@
 title: Envio Developer Update November 2024
 sidebar_label: Envio Developer Update November 2024
 slug: /envio-developer-update-november-2024
+description: "Catch the latest from Envio in November 2024 including platform enhancements, key releases, and community milestones advancing our blockchain indexing solution."
 ---
 
 <img src="/blog-assets/envio-developer-community-november-2024.png" alt="Cover Image Envio Developer Community Update November 2024" width="100%"/>

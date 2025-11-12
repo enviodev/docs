@@ -1,8 +1,10 @@
 ---
-title: Envio Community Update No. 05
-sidebar_label: Envio Community Update No.05
+title: Envio Developer Update December 2023
+sidebar_label: Envio Developer Update December 2023
 slug: /envio-developer-community-update-no-5
+description: "Here’s what we shipped in December at Envio including new builder tools community highlights more network support and the progress driving our blockchain indexing solution forward."
 ---
+
 
 <img src="/blog-assets/envio-developer-community-update-5.png" alt="Cover Image Envio Developer Community Update No.5" width="100%"/>
 

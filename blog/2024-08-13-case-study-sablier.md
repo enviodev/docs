@@ -1,8 +1,9 @@
 ---
-title: How Sablier uses Envio to Power its Next-Gen Multi-Chain Token Distribution Platform
-sidebar_label: How Sablier uses Envio to Power its Next-Gen Multi-Chain Token Distribution Platform
+title: How Sablier uses Envio to Power its Next Gen Multichain Token Distribution Platform
+sidebar_label: How Sablier uses Envio to Power its Next Gen Multichain Token Distribution Platform
 slug: /case-study-sablier
 tags: ["case-studies"]
+description: "Discover how Sablier streamlined token streaming across 11+ chains using Envio's multichain indexing solution to reduce costs and accelerate development and deliver best-in-class UX."
 ---
 
 <img src="/blog-assets/case-study-sablier.png" alt="Cover Image for Case Study Sablier" width="100%"/>

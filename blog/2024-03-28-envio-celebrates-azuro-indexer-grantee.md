@@ -2,7 +2,9 @@
 title: Envio Celebrates Azuro Indexer Grantee
 sidebar_label: Envio Celebrates Azuro Indexer Grantee
 slug: /envio-celebrates-azuro-indexer-grantee
+description: "See how Envio’s grant program empowered a builder to deliver a multichain indexer for Azuro protocols using the Envio's blockchain indexing solution and unlocking seamless cross-chain data access."
 ---
+
 
 <img src="/blog-assets/azuro-multichain-grantee-1.png" alt="Envio Cover Photo" width="100%"/>
 

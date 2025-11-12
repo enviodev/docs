@@ -2,12 +2,12 @@
 title: Envio Developer Update September 2024
 sidebar_label: Envio Developer Update September 2024
 slug: /envio-developer-update-september-2024
+description: "Explore Envio’s September 2024 developer update covering version 2.3.0 release with Wildcard Indexing and IPFS integration, major event appearances at TOKEN2049 and EthCapeTown, and new HyperSync network support."
 ---
 
 <img src="/blog-assets/envio-developer-community-sep-2024.png" alt="Cover Image Envio Developer Community Update September 2024" width="100%"/>
 
 <!--truncate-->
-
 
 Welcome to our September 2024 developer update!
 
