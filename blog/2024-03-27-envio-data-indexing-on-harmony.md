@@ -26,7 +26,7 @@ For more information on how to get started and set up a basic indexer on Harmony
 
 HyperSync is also available as a standalone API for data analytic use cases. Data analysts can interact with the HyperSync API using JavaScript, Python, or Rust clients and extract data in JSON, Arrow, or Parquet formats. For more information, visit the HyperSync documentation [here](https://docs.envio.dev/docs/HyperIndex/overview-hypersync).
 
-**Envio [HyperRPC](https://docs.envio.dev/docs/HyperIndex/overview-hyperrpc)** is a hyper-speed Ethereum RPC (RPC formatted endpoint based on HyperSync’s accelerated API), designed for data-heavy use cases, such as syncing a lot of historical data. HyperRPC is perfectly suited as a drop-in replacement for projects with existing indexers looking to improve their indexing speeds.
+**Envio [HyperRPC](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc)** is a hyper-speed Ethereum RPC (RPC formatted endpoint based on HyperSync’s accelerated API), designed for data-heavy use cases, such as syncing a lot of historical data. HyperRPC is perfectly suited as a drop-in replacement for projects with existing indexers looking to improve their indexing speeds.
 
 ## Resources
 
