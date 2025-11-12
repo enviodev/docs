@@ -23,10 +23,12 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 
 | Network Name         | Network ID | URL                                                                                 | Supports Traces |
 | -------------------- | ---------- | ----------------------------------------------------------------------------------- | --------------- |
+| Ab                   | 36888      | https://ab.rpc.hypersync.xyz or https://36888.rpc.hypersync.xyz                     |                 |
 | Abstract             | 2741       | https://abstract.rpc.hypersync.xyz or https://2741.rpc.hypersync.xyz                |                 |
 | Arbitrum             | 42161      | https://arbitrum.rpc.hypersync.xyz or https://42161.rpc.hypersync.xyz               |                 |
 | Arbitrum Nova        | 42170      | https://arbitrum-nova.rpc.hypersync.xyz or https://42170.rpc.hypersync.xyz          |                 |
 | Arbitrum Sepolia     | 421614     | https://arbitrum-sepolia.rpc.hypersync.xyz or https://421614.rpc.hypersync.xyz      |                 |
+| Arc Testnet          | 5042002    | https://arc-testnet.rpc.hypersync.xyz or https://5042002.rpc.hypersync.xyz          |                 |
 | Aurora               | 1313161554 | https://aurora.rpc.hypersync.xyz or https://1313161554.rpc.hypersync.xyz            |                 |
 | Aurora Turbo         | 1313161567 | https://aurora-turbo.rpc.hypersync.xyz or https://1313161567.rpc.hypersync.xyz      |                 |
 | Avalanche            | 43114      | https://avalanche.rpc.hypersync.xyz or https://43114.rpc.hypersync.xyz              |                 |

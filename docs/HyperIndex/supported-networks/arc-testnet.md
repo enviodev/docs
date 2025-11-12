@@ -7,48 +7,57 @@ slug: /arc-testnet
 
 # Arc Testnet
 
-## Indexing Arc Testnet Data with Envio via RPC
+## Indexing Arc Testnet Data with Envio
 
-:::warning
-RPC as a source is not as fast as HyperSync. It is important in production to source RPC data from reliable sources. We recommend our partners at [drpc.org](https://drpc.org). Below, we have provided a set of free endpoints sourced from chainlist.org. **We don't recommend using these in production** as they may be rate limited. We recommend [tweaking the RPC config](./rpc-sync) to accommodate potential rate limiting.
-:::
+| **Field**                     | **Value**                                                                                          |
+|-------------------------------|----------------------------------------------------------------------------------------------------|
+| **Arc Testnet Chain ID**     | 5042002                                                                                            |
+| **HyperSync URL Endpoint**    | [https://arc-testnet.hypersync.xyz](https://arc-testnet.hypersync.xyz) or [https://5042002.hypersync.xyz](https://5042002.hypersync.xyz) |
+| **HyperRPC URL Endpoint**     | [https://arc-testnet.rpc.hypersync.xyz](https://arc-testnet.rpc.hypersync.xyz) or [https://5042002.rpc.hypersync.xyz](https://5042002.rpc.hypersync.xyz) |
 
-We suggest getting the latest from [chainlist.org](https://chainlist.org).
+---
+
+### Tier
+
+STONE 🪨
 
 ### Overview
 
-Envio supports Arc Testnet through an RPC-based indexing approach. This method allows you to ingest blockchain data via an RPC endpoint by setting the RPC configuration.
+Envio is a modular hyper-performant data indexing solution for Arc Testnet, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
+
+HyperSync accelerates the synchronization of historical data on Arc Testnet, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
+
+Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted service.
+
+To get started, see our documentation or follow our quickstart [guide](/docs/HyperIndex/contract-import).
 
 ---
 
 ### Defining Network Configurations
 
-To use Arc Testnet, define the RPC configuration in your network configuration file as follows:
-
-:::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
-:::
-
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
 networks:
-  - id: 5042002 # Arc Testnet
-    rpc_config:
-      url: https://rpc.testnet.arc.network 
-    # url: https://rpc.blockdaemon.testnet.arc.network # alternative,
-    # url: https://rpc.drpc.testnet.arc.network # alternative,
-    # url: https://rpc.quicknode.testnet.arc.network # alternative
-    start_block: START_BLOCK_NUMBER # Specify the starting block
+  - id: 5042002 # Arc Testnet  
+    start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
       - name: ContractName
         address:
-          - "0xYourContractAddress1"
-          - "0xYourContractAddress2"
+         - "0xYourContractAddress1"
+         - "0xYourContractAddress2"
         handler: ./src/EventHandlers.ts
         events:
           - event: Event # Specify event
           - event: Event
 ```
 
-Want HyperSync for Arc Testnet? Request network support here [Discord](https://discord.gg/fztEvj79m3)!
+With these steps completed, your application will be set to efficiently index Arc Testnet data using Envio’s blockchain indexer.
+
+For more information on how to set up your config, define a schema, and write event handlers, refer to the guides section in our [documentation](/docs/HyperIndex/configuration-file).
+
+### Support
+
+Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.com/invite/Q9qt8gZ2fX); we’re always happy to help!
+
+---

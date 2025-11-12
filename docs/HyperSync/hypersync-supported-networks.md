@@ -31,10 +31,12 @@ If you are a network operator or user and would like improved service support or
 
 | Network Name         | Network ID | URL                                                                                 | Tier | Supports Traces |
 | -------------------- | ---------- | ----------------------------------------------------------------------------------- | ---- | --------------- |
+| Ab                   | 36888      | https://ab.hypersync.xyz or https://36888.hypersync.xyz                             | 🪨   |                 |
 | Abstract             | 2741       | https://abstract.hypersync.xyz or https://2741.hypersync.xyz                        | 🪨   |                 |
 | Arbitrum             | 42161      | https://arbitrum.hypersync.xyz or https://42161.hypersync.xyz                       | 🥈   |                 |
 | Arbitrum Nova        | 42170      | https://arbitrum-nova.hypersync.xyz or https://42170.hypersync.xyz                  | 🥉   |                 |
 | Arbitrum Sepolia     | 421614     | https://arbitrum-sepolia.hypersync.xyz or https://421614.hypersync.xyz              | 🎒   |                 |
+| Arc Testnet          | 5042002    | https://arc-testnet.hypersync.xyz or https://5042002.hypersync.xyz                  | 🪨   |                 |
 | Aurora               | 1313161554 | https://aurora.hypersync.xyz or https://1313161554.hypersync.xyz                    | 🪨   |                 |
 | Aurora Turbo         | 1313161567 | https://aurora-turbo.hypersync.xyz or https://1313161567.hypersync.xyz              | 🪨   |                 |
 | Avalanche            | 43114      | https://avalanche.hypersync.xyz or https://43114.hypersync.xyz                      | 🥉   |                 |
