@@ -38,7 +38,7 @@ With HyperFuel, developers can sync large datasets in minutes, eliminating the n
 
 ### HyperIndex
 
-Envio’s [HyperIndex](https://docs.envio.dev/docs/HyperIndex/v2/overview), is a developer-first, real-time data indexing framework for rapidly building a custom GraphQL APIs for smart contract data.
+Envio’s [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview), is a developer-first, real-time data indexing framework for rapidly building a custom GraphQL APIs for smart contract data.
 
 Envio’s [Contract Import](https://docs.envio.dev/docs/HyperIndex/contract-import) serves as a starting point for most developers building a backend for their decentralized application - a quickstart to effortlessly build and automatically generate a basic Fuel indexer in less than a minute. Developers achieve this by supplying the contract ABI, selecting the events they’re interested in, and following CLI command prompts to create their first indexer.
 
@@ -46,7 +46,7 @@ For a detailed tutorial demonstrating how to leverage this quickstart, explore o
 
 *⚠️Note: Before diving into this tutorial, ensure you have the necessary [prerequisites](https://docs.envio.dev/docs/HyperIndex/getting-started) installed.*
 
-Fuel application teams also have the option of hosting their indexer and custom application API on Envio’s reliable [Hosted Service](https://docs.envio.dev/docs/HyperIndex/v2/hosted-service), making infrastructure deployment and management a painless and seamless experience, so that teams can focus on the core of their application, and other business functions such as providing seamless user experience, exceptional user support and spending more time on growth strategies for adoption.
+Fuel application teams also have the option of hosting their indexer and custom application API on Envio’s reliable [Hosted Service](https://docs.envio.dev/docs/HyperIndex/hosted-service), making infrastructure deployment and management a painless and seamless experience, so that teams can focus on the core of their application, and other business functions such as providing seamless user experience, exceptional user support and spending more time on growth strategies for adoption.
 
 ## Relevant Resources
 

@@ -18,7 +18,7 @@ The indexer has been built using 0.0.20 of Envio.
 ## Steps to run the indexer
 
 1. Clone the [repo](https://github.com/enviodev/onchain-governance-indexer)
-1. Install any other pre-requisite packages for Envio listed [here](https://docs.envio.dev/docs/installation#prerequisites)
+1. Install any other pre-requisite packages for Envio listed [here](https://docs.envio.dev/docs/HyperIndex/getting-started#prerequisites)
 1. Install Envio via `npm i -g envio@v0.0.20`
 1. Generate indexing code via `pnpm codegen`
 1. Run the indexer via `pnpm dev` (make sure you have Docker running)

@@ -20,6 +20,10 @@ const redirectsList = [
     to: "/docs/HyperIndex/getting-started",
   },
   {
+    from: "/docs/hyperindex-basics",
+    to: "/docs/HyperIndex/getting-started",
+  },
+  {
     from: "/docs/contract-import",
     to: "/docs/HyperIndex/contract-import",
   },

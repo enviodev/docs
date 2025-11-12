@@ -24,7 +24,7 @@ For more information on how to get started and set up a basic indexer on Harmony
 
 **Envio [HyperSync](https://docs.envio.dev/docs/hypersync)** is an accelerated data query layer for the Harmony blockchain, that allows RPC bypass for 100x faster syncing of historical data. HyperSync is used by default in Envio's indexing framework, with the use of RPC for data retrieval being optional. Users do not need to worry about RPC URLs, rate-limiting, or managing their own infrastructure, and can easily sync large datasets in a few minutes, something that would usually take hours or days.
 
-HyperSync is also available as a standalone API for data analytic use cases. Data analysts can interact with the HyperSync API using JavaScript, Python, or Rust clients and extract data in JSON, Arrow, or Parquet formats. For more information, visit the HyperSync documentation [here](https://docs.envio.dev/docs/HyperIndex/overview-hypersync).
+HyperSync is also available as a standalone API for data analytic use cases. Data analysts can interact with the HyperSync API using JavaScript, Python, or Rust clients and extract data in JSON, Arrow, or Parquet formats. For more information, visit the HyperSync documentation [here](https://docs.envio.dev/docs/HyperSync/overview).
 
 **Envio [HyperRPC](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc)** is a hyper-speed Ethereum RPC (RPC formatted endpoint based on HyperSync’s accelerated API), designed for data-heavy use cases, such as syncing a lot of historical data. HyperRPC is perfectly suited as a drop-in replacement for projects with existing indexers looking to improve their indexing speeds.
 
@@ -32,7 +32,7 @@ HyperSync is also available as a standalone API for data analytic use cases. Dat
 
 - [Envio Installation](https://docs.envio.dev/docs/getting-started)
 - [No-code Quickstart](https://docs.envio.dev/docs/HyperIndex/contract-import)
-- [Envio HyperSync](https://docs.envio.dev/docs/HyperIndex/overview-hypersync)
+- [Envio HyperSync](https://docs.envio.dev/docs/HyperSync/overview)
 - [Envio Hosted Service](https://docs.envio.dev/docs/hosted-service)
 - [Harmony Documentation](https://docs.harmony.one/home)
 

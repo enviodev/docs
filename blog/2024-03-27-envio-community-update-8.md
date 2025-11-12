@@ -16,7 +16,7 @@ The team has released not one but six new version updates that will certainly tu
 
 ## New HyperSync Network Support ⚡
 
-Excited to announce that Envio [HyperSync](https://docs.envio.dev/docs/HyperIndex/overview-hypersync) has added enhanced indexing and contract import support for developers building on [Blast](https://blast.io/en) Mainnet and Blast Sepolia ⚡
+Excited to announce that Envio [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) has added enhanced indexing and contract import support for developers building on [Blast](https://blast.io/en) Mainnet and Blast Sepolia ⚡
 
 To see the full list of currently supported chains on HyperSync visit our [docs](https://docs.envio.dev/docs/hypersync). Please note, that this list is for HyperSync-supported networks only. Envio’s HyperIndex, as the indexing framework, supports any EVM network using RPC. If you would like HyperSync added to a network we don’t support, just let us know!
 
