@@ -39,7 +39,7 @@ Powered by Envio, MonFundMe tracks donations in real time, offering complete tra
 Big ups and congrats to the team for an outstanding submission!
 
 
-## Start Indexing Data on Monad
+## How to Index Data on Monad
 
 These projects highlight what’s possible when you combine a high-performance chain like Monad with high-performance infrastructure like Envio.
 
@@ -61,15 +61,12 @@ We’re looking forward to seeing these projects grow and to the next hackathon.
 [Monad](https://www.monad.xyz/) is a high-performance L1 built to bring scalability to the EVM without compromising composability. With Monad’s parallel execution engine and focus on low-latency performance, it enables devs to build next-gen applications with higher throughput and lower fees, without rewriting existing EVM code.
 
 
-
 ## About Envio
 
-[Envio](https://envio.dev/) is an open blockchain indexing framework built for developers who need fast, reliable access to on-chain data. It's the go-to indexing solution for teams building on Monad.
+[Envio](https://envio.dev) is a fast, developer friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
 
-Envio makes it easy to index data on Monad with low latency, high performance, and zero infrastructure overhead.
+With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
 
-Whether you're building real-time analytics, dashboards, or AI agents, Envio gives you full control over how you query and consume on-chain data. Our flexible framework simplifies data indexing on Monad, helping teams ship faster and scale smarter.
+If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
 
-Join the growing community of developers using Envio to index Monad data and unlock the full potential of the network.
-
-[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [GitHub](https://github.com/enviodev) | [Farcaster](https://warpcast.com/envio) | [Medium](https://medium.com/@Envio_Indexer) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)

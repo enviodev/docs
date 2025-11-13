@@ -21,7 +21,7 @@ In this blog, we will explore why Envio is the best blockchain indexer on Monad 
 [Monad](https://www.monad.xyz/) is a high-performance Layer 1 blockchain built to bring scalability to the EVM without compromising composability. With Monad’s parallel execution engine and focus on low-latency performance, developers can build highly efficient applications that offer higher throughput and lower fees without needing to rewrite existing EVM code.
 
 
-#### At its core, Monad features:
+#### Monad features:
 
 
 
@@ -35,7 +35,7 @@ In this blog, we will explore why Envio is the best blockchain indexer on Monad 
 These features make Monad an ideal foundation for data-rich decentralized applications that demand speed, reliability, and seamless composability.
 
 
-## Start Indexing Data on Monad
+## How to Index Data on Monad
 
 
 #### HyperIndex
@@ -108,6 +108,6 @@ Data indexing can be challenging, especially for complex use cases. Our engineer
 
 ## About Envio
 
-[Envio](https://envio.dev/) is a modern, multi-chain EVM blockchain indexer designed for real-time and historical data access. If you’re building on Monad or any other EVM-compatible network, Envio is here to make your development process faster and more efficient. Explore our [documentation](https://docs.envio.dev/docs/HyperIndex/overview), join the community, and let’s connect about your data needs.
+[Envio](https://envio.dev/) is a modern, multichain EVM blockchain indexer designed for real-time and historical data access. If you’re building on Monad or any other EVM-compatible network, Envio is here to make your development process faster and more efficient. Explore our [documentation](https://docs.envio.dev/docs/HyperIndex/overview), join the community, and let’s connect about your data needs.
 
 [Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)

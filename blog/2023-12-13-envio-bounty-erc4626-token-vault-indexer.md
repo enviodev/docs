@@ -12,7 +12,7 @@ description: "Learn how to build an ERC4626 vault indexer using Envio to index t
 
 We’re excited to announce another significant milestone in Phase 1 of the Envio Bounty Program. We take huge pride in highlighting the latest achievement in our bounty program, where our very talented graduate “en0c” successfully tackled a significant challenge.
 
-In this blog article, we’ll explore their recent accomplishment in building an Envio indexer for [OpenZeppelin’s](https://www.openzeppelin.com/) ERC4626 tokenized vault contracts, showcasing the true power of Envio's hyper-indexing capabilities. ⚡⚡⚡
+In this blog article, we’ll explore their recent accomplishment in building an Envio indexer for [OpenZeppelin’s](https://www.openzeppelin.com/) ERC4626 tokenized vault contracts, showcasing the true power of Envio's blockchain indexing solution.
 
 ### User Story
 
@@ -45,7 +45,7 @@ _Query Example: Get the latest deposits_
 _Query Example: Get the latest withdrawals_
 <img src="/blog-assets/envio-erc4626-latestwithdrawals.png" alt="Screenshot of Example Query" width="100%"/>
 
-Envio stands out by providing a hassle-free solution for deploying and hosting your indexer. We take care of the entire infrastructure, eliminating the complexities associated with setup and management. This user-centric approach allows developers to channel their focus into refining their application's core functionality, ensuring an unparalleled user experience. For a comprehensive guide on deploying your indexer to Envio's hosted service, explore our [documentation](https://docs.envio.dev/docs/hosted-service).
+Envio stands out by providing a hassle-free blockchain indexing solution for deploying and hosting your indexer. We take care of the entire infrastructure, eliminating the complexities associated with setup and management. This user-centric approach allows developers to channel their focus into refining their application's core functionality, ensuring an unparalleled user experience. For a comprehensive guide on deploying your indexer to Envio's hosted service, explore our [documentation](https://docs.envio.dev/docs/hosted-service).
 
 ### Bounty Reward
 
@@ -63,8 +63,12 @@ For more information on how to claim a bounty click [here](https://twitter.com/e
 
 [OpenZeppelin](https://www.openzeppelin.com/) is a leading force in blockchain and smart contract development, offering a robust framework for secure and scalable dApps within the Ethereum ecosystem. Renowned for battle-tested smart contract libraries, OpenZeppelin provides developers with secure patterns and auditing services, ensuring the integrity of blockchain applications. With a commitment to security best practices, OpenZeppelin fosters a collaborative community and provides open-source resources for developers, making it a go-to platform for reliable blockchain development.
 
-### About Envio
+## About Envio
 
-[Envio](https://envio.dev/) is a dev-friendly, speed-optimized, modern blockchain indexing solution that addresses the limitations of traditional blockchain indexing approaches and gives developers peace of mind. By harnessing the power of Envio, developers can overcome the challenges posed by latency, reliability, and costs across various sources. Envio is the front door for any application’s need to access, transform, and save real-time or historical data, from any EVM-compatible smart contracts. If you're a blockchain developer looking to enhance your development process and unlock the true potential of Web3 infrastructure, look no further.
+[Envio](https://envio.dev) is a fast, developer friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
 
-Follow Envio on [X](https://twitter.com/envio_indexer) (Formerly Twitter) and/or [Hey](https://hey.xyz/u/envio) (Formerly Lenster) for updates on new features, or jump into our [Discord](https://discord.com/invite/gt7yEUZKeB) for any questions.
+With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
+
+If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
+
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)

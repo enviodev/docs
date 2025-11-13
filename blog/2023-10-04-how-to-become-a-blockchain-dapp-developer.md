@@ -9,9 +9,9 @@ description: "Learn how to build blockchain dApps from scratch from setting up y
 
 <!--truncate-->
 
-Are you intrigued by the world of blockchain and eager to dive into the exciting realm of decentralized applications (dApps) and smart contracts? This introductory guide will walk you through the key concepts and technologies required to start your journey as a blockchain developer. We'll also introduce you to Envio, a game-changing blockchain indexing toolkit designed to streamline your developer experience and optimize your dApp and smart contract design.
+Welcome to this introductory guide where we'll walk you through the key concepts and stack required to start your journey as a blockchain developer. We'll also introduce you to Envio, a game-changing blockchain indexing solution designed to streamline your development experience and optimize your dApp and smart contract design.
 
-## What are Decentralized Applications (dApps)?
+## What is a Decentralized Application (dApp)?
 
 A decentralized application, often referred to as “dApp”, is an application built on a decentralized network and combines a frontend user interface (e.g. web application) and smart contract.
 
@@ -19,17 +19,17 @@ Some popular dApps include [Uniswap](https://uniswap.org/), the most popular dec
 
 ### What is a Frontend?
 
-The frontend is the part of the DApp end-users can see and interact with such as the graphical user interface (GUI), much like traditional web applications. In Web3 or blockchain, the frontend additionally communicates with the application logic defined in smart contracts.
+The frontend is the part of the dApp end-users can see and interact with such as the graphical user interface (GUI), much like traditional web applications. In Web3 or blockchain, the frontend additionally communicates with the application logic defined in smart contracts.
 
 ### What is a Smart Contract?
 
-Smart contracts are the building blocks of dApps and are self-executing, code-based agreements that run on a blockchain. They are designed to operate without an intermediary, meaning they can run self-sufficiently on a decentralized network (i.e. the blockchain) instead of a single computer or server controlled by a central authority - a fundamental innovation in the world of blockchain technology.
+Smart contracts are the building blocks of dApps and are self-executing, code-based agreements that run on a blockchain. They are designed to operate without an intermediary, meaning they can run self-sufficiently on a decentralized network (i.e. the blockchain) instead of a single computer or server controlled by a central authority, a fundamental innovation in the world of blockchain technology.
 
 Smart contracts automatically enforce predefined rules and conditions, executing actions when specific criteria are met. These contracts eliminate the need for intermediaries, enhancing trust, security, and efficiency in digital transactions. Smart contracts find applications in various industries beyond finance, offering tamper-proof automation and transparency.
 
 ### Communication between the Frontend and Smart Contract
 
-Frontend applications (e.g. web applications) communicate with a smart contract on the blockchain via a node. This is because the blockchain is a decentralized network composed of nodes that all run the same software and keep a copy of all states of the blockchain - including the data and code associated with every smart contract. On Ethereum, this is known as the EVM (Ethereum Virtual Machine).
+Frontend applications (e.g. web applications) communicate with a smart contract on the blockchain via a node. This is because the blockchain is a decentralized network composed of nodes that all run the same software and keep a copy of all states of the blockchain, including the data and code associated with every smart contract. On Ethereum, this is known as the EVM (Ethereum Virtual Machine).
 
 The nodes one connects with are often called “node providers'' or “RPC providers”. These node providers implement a JSON-RPC specification, ensuring a uniform set of methods when frontend applications interact with the smart contracts deployed onto the runtime environment of the blockchain.
 
@@ -96,14 +96,18 @@ Security is hugely important when developing your blockchain applications. Be su
 
 Blockchain applications often deal with enormous amounts of data. This data management is essential for creating functional and responsive dApps. Backend development in Web3 applications can be quite challenging and time-consuming for a developer, often leading to a slower development process. This is where Envio comes into the picture, simplifying the developer process and experience, and making developers way more efficient.
 
-## Exploring Envio as an Indexing Solution
+## Exploring Envio as a Blockchain Indexing Solution
 
 Envio is your gateway to frictionless and rapid blockchain development. Say goodbye to the challenges of latency, reliability, and costs that often plague developers. By leveraging Envio, you'll have the [tools](https://docs.envio.dev/blog/what-is-a-blockchain-indexer-for-dapp-development) you need to access, transform, and store real-time or historical data from any EVM-compatible smart contract.
 
 By understanding these concepts behind decentralized applications, you'll be well on your way to becoming a proficient blockchain developer. These concepts form the foundation of blockchain development and open up exciting possibilities in the world of Web3 and decentralized technologies.
 
-## Ship with us. 🚢
+## About Envio
 
-By builders, for builders. Envio is a dev-friendly, speed-optimized, modern blockchain indexing solution that addresses the limitations of traditional blockchain indexing approaches and gives developers peace of mind. By harnessing the power of Envio, developers can overcome the challenges posed by latency, reliability, and costs across various sources. Envio serves as the front door for any application’s need to access, transform, and save real-time or historical data, from any EVM-compatible smart contracts. If you're a blockchain developer looking to enhance your development process and unlock the true potential of Web3 infrastructure, look no further.
+[Envio](https://envio.dev) is a fast, developer friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
 
-Follow Envio on [Twitter](https://twitter.com/envio_indexer) and/or [Lenster](https://lenster.xyz/u/envio) for updates on new features, or jump into our [Discord](http://discord.gg/gt7yEUZKeB) for any questions.
+With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
+
+If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
+
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)

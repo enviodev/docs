@@ -10,7 +10,7 @@ description: "See what Envio delivered in March 2025 including HyperIndex versio
 
 <!--truncate-->
 
-March was madness! We’re excited to roll out HyperIndex v2.15.0 with RPC failover support, LogTui for fast chain scans, and integrations with V12, XDC Network, Monad, and Chiliz. With new tools, powerful partnerships, tutorials, and more, we’re empowering developers to build smarter and faster than ever. Let’s dive into the latest updates!
+We’re excited to roll out HyperIndex v2.15.0 with RPC failover support, LogTui for fast chain scans, and integrations with V12, XDC Network, Monad, and Chiliz. With new tools, powerful partnerships, tutorials, and more, we’re empowering developers to build smarter and faster than ever. Let’s dive into the latest updates!
 
 
 ## 🚀 HyperIndex Versions 2.14.0 & 2.15.0 is now available 🚀
@@ -162,7 +162,7 @@ Trade moves fast—your data should, too.
 We’re excited to announce that Envio’s open indexing framework supports developers building on the [XDC Network](https://xdc.org/)—an EVM-compatible L1 for secure, scalable global trade with efficient and reliable access to real-time & historical data
 
 
-## Envio Continues to Power a Growing Ecosystem on Monad
+## Envio Powers a Growing Ecosystem on Monad
 
 
 <img src="/blog-assets/envio-dev-update-march-5-2025.png" alt="monad ecosystem" width="100%"/>
@@ -255,14 +255,13 @@ A huge thanks to the Encode Club team for hosting the Modular DeFi Hackathon in 
 For more details about our winners and prizes, check out this [thread](https://x.com/envio_indexer/status/1900163549105664042).
 
 
-## What is Multi-chain Indexing?
+## What is Multichain Indexing?
 
 <img src="/blog-assets/envio-dev-update-march-12-2025.png" alt="what is multi-chain" width="100%"/>
 
+Multichain indexing is the ability to read, organise, and query data from many chains through one unified system so developers can work with on chain activity without managing separate setups for each network.
 
-Multi-chain or multi-pain?
-
-Web3 is inherently multi-chain, but navigating networks can be challenging. Learn how to simplify multi-chain data access & query your data without managing multiple infras using Envio in our latest [blog](https://docs.envio.dev/blog/what-is-multi-chain-indexing).
+Web3 is inherently multichain, but navigating networks can be challenging. Learn how to simplify multichain data access & query your data without managing multiple infras using Envio in our latest [blog](https://docs.envio.dev/blog/what-is-multi-chain-indexing).
 
 
 ## Upcoming Events 🗓️

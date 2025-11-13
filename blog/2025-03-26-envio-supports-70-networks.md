@@ -19,9 +19,9 @@ Envio's HyperSync supports over 70 EVM-compatible networks, along with  Fuel, pr
 Perfect for performance-heavy applications like block explorers, data analytics platforms, and blockchain bridges, HyperSync blends speed with flexibility. Traditional syncing methods can be slow and resource-intensive, especially across multiple networks. HyperSync optimizes these processes with intelligent caching and efficient data retrieval, giving you faster access to both real-time and historical blockchain data.
 
 
-## Multi-chain Indexing Support
+## Multichain Indexing Support
 
-Envio's HyperIndex also provides multi-chain indexing support enabling you to efficiently index and query multiple blockchains with a single indexer. This eliminates redundant tools, streamlines workflows, and ensures high performance at scale. By simplifying cross-chain data access, Envio allows you to focus on building instead of managing complex infrastructure while maintaining seamless compatibility across networks.
+Envio's HyperIndex also provides multichain indexing support enabling you to efficiently index and query multiple blockchains with a single indexer. This eliminates redundant tools, streamlines workflows, and ensures high performance at scale. By simplifying cross-chain data access, Envio allows you to focus on building instead of managing complex infrastructure while maintaining seamless compatibility across networks.
 
 
 ## Supported Networks
@@ -33,7 +33,7 @@ See our full list of supported networks in our [documentation](https://docs.envi
 We are rapidly adding new supported networks. If you don't see your network listed or would like us to add HyperSync support for a network, pop us a message in our [Discord](https://discord.gg/gfZv3v3FsM).
 
 
-## Why Envio?
+## Why use Envio?
 
 Besides being the fastest blockchain indexer on the market (by miles), Envio's HyperIndex offers a developer-centric blockchain data indexing solution, empowering you to efficiently access and process both real-time and historical smart contract data served via query-rich GraphQL API supporting you with:
 
@@ -45,7 +45,7 @@ Besides being the fastest blockchain indexer on the market (by miles), Envio's H
 
 * **No-code Quickstart**: Autogenerate the key boilerplate for an entire Indexer project off single or multiple smart contracts. Deploy within minutes.
 
-* **Multi-chain Support**: Aggregate data across multiple networks into a single database. Query all your data with a unified GraphQL API.
+* **Multichain Support**: Aggregate data across multiple networks into a single database. Query all your data with a unified GraphQL API.
 
 * **Factory Contracts**: Automatically register and process events emitted by all child contracts that are created by the specified factory / dynamic contract.
 
@@ -70,10 +70,10 @@ Envio stands out as a powerful alternative to traditional blockchain indexing me
 
 ## About Envio
 
-[Envio](https://envio.dev/) is a modern, dev-friendly, speed-optimized blockchain indexing solution that addresses the limitations of traditional blockchain indexing approaches and gives developers peace of mind. Blockchain developers and data analysts can harness the power of Envio to overcome the challenges posed by latency, reliability, infrastructure management, and costs across various sources. 
+[Envio](https://envio.dev) is a fast, developer friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
 
-If you're a blockchain developer looking to enhance your development process and unlock the true potential of Web3 infrastructure, look no further. 
+With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
 
-Join our growing community of Web3 developers, check out our docs, and let's work together to revolutionize the blockchain world and propel your project to the next level.
+If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
 
-[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)

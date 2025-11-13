@@ -75,8 +75,8 @@ The cost of running an indexer boils down to three key areas and their related c
     To optimize costs, you can use different EC2 instance types for each stage. Start with a larger, more powerful instance to breeze through historical indexing as quickly as possible, then switch to a smaller, cheaper instance once you’re caught up and only need to handle real-time data. Since AWS charges by the hour, your goal is to strike the perfect balance—find the smallest instance that can sync historical data quickly enough, then downsize for real-time indexing to keep costs low.
 
 
-    **Spot Instances** \
- \
+    **Spot Instances**
+
 Of course, no AWS cost-savings discussion would be complete without mentioning [spot instances](https://aws.amazon.com/ec2/spot/?gclid=CjwKCAjwgfm3BhBeEiwAFfxrGxxemjOOxB1bkGIRt57ZntuZl60_feeehNVGNYPZtc-Go_3ytbK0PhoCaygQAvD_BwE&cards.sort-by=item.additionalFields.startDateTime&cards.sort-order=asc&trk=f38fa353-0155-4fcc-8e3d-7d3737b38226&sc_channel=ps&ef_id=CjwKCAjwgfm3BhBeEiwAFfxrGxxemjOOxB1bkGIRt57ZntuZl60_feeehNVGNYPZtc-Go_3ytbK0PhoCaygQAvD_BwE:G:s&s_kwcid=AL!4422!3!517649434519!p!!g!!ec2%20spot!12876304542!122013844952)! Spot instances can save you up to 90% on EC2 costs, which sounds fantastic—until you realize they’re available one minute and gone the next. Spot instances are essentially unused EC2 capacity that AWS offers at a discount, but they can be terminated if another customer needs that capacity and is willing to pay for it. In other words, if someone wants an on-demand ***t3.large*** and there aren’t any left, AWS will kindly shut down your spot instance to accommodate them.
 
 
@@ -94,7 +94,7 @@ Of course, no AWS cost-savings discussion would be complete without mentioning [
 3. Storage
 
     Ah, storage—the one thing that keeps infrastructure engineers up at night.Since we’re focusing on AWS, we’ll stick to AWS storage solutions rather than running your own Postgres on an EC2 instance or inside Kubernetes.
- \
+
 When hosting indexers on AWS, your primary options for PostgreSQL are AWS RDS and Aurora. On the surface, RDS might seem like the cheaper choice, but the devil is in the details and the decision isn’t so straightforward. To help you out, We’ve added some tips below on things to consider when deciding which AWS storage solution is best for you.
 
 
@@ -137,10 +137,10 @@ AWS (Amazon Web Services) is a cloud computing platform that provides a broad ra
 
 ## About Envio
 
-[Envio](https://envio.dev/) is a modern, dev-friendly, speed-optimized blockchain indexing solution that addresses the limitations of traditional blockchain indexing approaches and gives developers peace of mind. Blockchain developers and data analysts can harness the power of Envio to overcome the challenges posed by latency, reliability, infrastructure management, and costs across various sources. 
+[Envio](https://envio.dev) is a fast, developer friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
 
-If you're a blockchain developer looking to enhance your development process and unlock the true potential of Web3 infrastructure, look no further. 
+With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
 
-Join our growing community of Web3 developers, check out our docs, and let's work together to revolutionize the blockchain world and propel your project to the next level.
+If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
 
-[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [Hey](https://hey.xyz/u/envio) | [Medium](https://medium.com/@Envio_Indexer) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)
