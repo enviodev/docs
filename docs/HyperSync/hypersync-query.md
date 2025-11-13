@@ -443,7 +443,7 @@ class TraceField(StrEnum):
     ERROR = 'error'                         # Error message if failed
 ```
 
-For a complete list of all available fields, refer to the [HyperSync API Reference](https://docs.envio.dev/docs/api).
+For a complete list of all available fields, refer to the [HyperSync API Reference](https://docs.envio.dev/docs/HyperSync/hypersync-query).
 
 ## Response Structure
 

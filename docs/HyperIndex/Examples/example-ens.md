@@ -15,7 +15,7 @@ The indexer has been built using v0.0.37 of Envio.
 ## Steps to run the indexer
 
 1. Clone the [repo](https://github.com/JasoonS/Envio-ENS-Indexer)
-2. Install any other pre-requisite packages for Envio listed [here](https://docs.envio.dev/docs/installation#prerequisites)
+2. Install any other pre-requisite packages for Envio listed [here](https://docs.envio.dev/docs/HyperIndex/getting-started#prerequisites)
 3. Install with `pnpm i`
 4. Generate indexing code via `pnpm codegen`
 5. Run the indexer via `pnpm dev` (make sure you have Docker running)

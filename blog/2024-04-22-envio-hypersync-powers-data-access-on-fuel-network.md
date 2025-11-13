@@ -17,7 +17,7 @@ We’re thrilled to announce that Envio has recently fully integrated its Hypers
 
 ## What Envio Supports on Fuel?
 
-[Envio HyperSync’s](https://docs.envio.dev/docs/HyperIndex/overview-hypersync) hyper-performant data infrastructure serves as an accelerated data query layer on top of the Fuel Network that allows application developers and data analysts to easily parse, query, and analyse Fuel data.
+[Envio HyperSync’s](https://docs.envio.dev/docs/HyperSync/overview) hyper-performant data infrastructure serves as an accelerated data query layer on top of the Fuel Network that allows application developers and data analysts to easily parse, query, and analyse Fuel data.
 
 With its flexible API, developers and data analysts can interact with the Hypersync API using either [JavaScript](https://www.javascript.com/), [Python](https://www.python.org/) or [Rust](https://www.rust-lang.org/) clients and can choose to query their data in JSON, Arrow, and Parquet data formats.
 
@@ -134,7 +134,7 @@ Here are some HyperIndex features Fuel developers can expect:
 
 ## Relevant Links
 
-- [Envio HyperSync](https://docs.envio.dev/docs/HyperIndex/overview-hypersync)
+- [Envio HyperSync](https://docs.envio.dev/docs/HyperSync/overview)
 - [Fuel’s HyperSync Documentation](https://github.com/enviodev/hypersync-fuel-docs)
 
 ## About Fuel

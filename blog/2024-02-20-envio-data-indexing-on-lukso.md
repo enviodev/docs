@@ -34,7 +34,7 @@ Envio is purpose-built for modern EVM blockchain indexing and extends its suppor
 ## Relevant Links
 
 - [Envio Quickstart](https://docs.envio.dev/docs/quickstart)
-- [Envio HyperSync](https://docs.envio.dev/docs/HyperIndex/overview-hypersync)
+- [Envio HyperSync](https://docs.envio.dev/docs/HyperSync/overview)
 - [Contract Import](https://docs.envio.dev/docs/HyperIndex/contract-import)
 - [Envio Hosted Service](https://docs.envio.dev/docs/hosted-service)
 - [LUKSO Docs](https://docs.lukso.tech/tools/partners/)

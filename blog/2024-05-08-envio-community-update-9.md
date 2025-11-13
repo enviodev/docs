@@ -30,7 +30,7 @@ Learn more [here](https://x.com/Sprkfi/status/1777730945853907128).
 
 ## New HyperSync Network Support ⚡
 
-We’re excited to announce that Envio [HyperSync](https://docs.envio.dev/docs/HyperIndex/overview-hypersync) has expanded enhanced indexing support for developers building on [Polygon’s](https://polygon.technology/) [Amoy](https://polygon.technology/blog/introducing-the-amoy-testnet-for-polygon-pos) Testnet. ⚡
+We’re excited to announce that Envio [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) has expanded enhanced indexing support for developers building on [Polygon’s](https://polygon.technology/) [Amoy](https://polygon.technology/blog/introducing-the-amoy-testnet-for-polygon-pos) Testnet. ⚡
 
 To see the full list of currently supported chains on HyperSync visit our [docs](https://docs.envio.dev/docs/hypersync).
 

@@ -55,7 +55,7 @@ When indexing multi-chain, Envio’s SDK offers two options:
 
 <img src="/blog-assets/case-study-sablier-3.png" alt="Multi-chain Indexing Sync Status Progress bars" width="100%"/>
 
-For more information on Envio’s multi-chain indexing capabilities, view our dev docs [here](https://docs.envio.dev/docs/HyperIndex/v2/multichain-indexing).
+For more information on Envio’s multi-chain indexing capabilities, view our dev docs [here](https://docs.envio.dev/docs/HyperIndex/multichain-indexing).
 
 ### Simplified Infrastructure Management
 
@@ -126,7 +126,7 @@ Envio is a developer-first, modern blockchain data indexing solution that lets d
 Envio supports the [Fuel Network](https://fuel.network/) and any EVM-compatible blockchain network with:
 
 - **Flexible language support:** Configure your event handling in familiar and widely supported languages, such as [JavaScript](https://www.javascript.com/), [TypeScript](https://www.typescriptlang.org/), or [ReScript](https://rescript-lang.org/).
-- [**HyperSync**](https://docs.envio.dev/docs/overview-hypersync): To ensure blazing-fast retrieval of historical on-chain data and a seamless developer experience, Envio’s HyperSync endpoint allows up to 1000x faster indexing than standard RPC (use of RPC is optional).
+- [**HyperSync**](https://docs.envio.dev/docs/HyperSync/overview): To ensure blazing-fast retrieval of historical on-chain data and a seamless developer experience, Envio’s HyperSync endpoint allows up to 1000x faster indexing than standard RPC (use of RPC is optional).
 - [**No-code Quickstart**](https://docs.envio.dev/docs/contract-import): Autogenerate the key boilerplate for an entire Indexer project off single or multiple smart contracts. Deploy within minutes.
 - [**Multi-chain Support**](https://docs.envio.dev/docs/multichain-indexing): Aggregate data across multiple networks into a single database. Query all your data with a unified GraphQL API.
 - [**Join on-chain and off-chain data**](https://docs.envio.dev/docs/async-mode): Connect indexed blockchain data as well as ingest off-chain data to create flexible API for rich data beyond just what is emitted simply from events on-chain. e.g. modules that efficiently index off-chain NFT metadata.

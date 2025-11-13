@@ -83,7 +83,7 @@ Azuro’s Smart Contract Overview:
 
 Envio’s Developer Docs:
 
-- Envio Installation: https://docs.envio.dev/docs/installation
+- Indexer Initialization: https://docs.envio.dev/docs/HyperIndex/getting-started
 - Envio Multi-chain indexing: https://docs.envio.dev/docs/multichain-indexing
 - Envio Factory Contracts: https://docs.envio.dev/docs/dynamic-contracts
 - Envio’s Hosted Service: https://docs.envio.dev/docs/hosted-service

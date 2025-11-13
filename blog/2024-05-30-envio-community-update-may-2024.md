@@ -25,7 +25,7 @@ Stay up-to-date with our latest version releases by following the “🚨release
 
 ## Python Package for Envio’s HyperFuel Client is live! 🐍
 
-Now developers and analysts building on the [Fuel Network](https://fuel.network/) can interact with our flexible [HyperSync](https://docs.envio.dev/docs/HyperIndex/overview-hypersync) API using either [JavaScript](https://www.javascript.com/), [Python](https://www.python.org/) or [Rust](https://www.rust-lang.org/) clients, and choose to query their data in JSON, Arrow, and Parquet data formats.
+Now developers and analysts building on the [Fuel Network](https://fuel.network/) can interact with our flexible [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) API using either [JavaScript](https://www.javascript.com/), [Python](https://www.python.org/) or [Rust](https://www.rust-lang.org/) clients, and choose to query their data in JSON, Arrow, and Parquet data formats.
 
 To install, run the $ pip install hyperfuel command.
 
