@@ -13,12 +13,13 @@ description: "Discover how our first grant recipient built a multi chain multi p
 We are thrilled to announce a significant milestone in our Envio "[Build Bigger. Ship Faster" Grant Program](https://docs.envio.dev/blog/envio-grant-program-now-live). One of our incredible community members has successfully completed an outstanding project that showcases the true potential of Envio's indexing capabilities.
 
 Joss applied for a grant with Envio to build a blockchain indexer that would assist him with his ambitious personal project of building a CompoundV2 liquidation bot. The indexer would serve the purpose of collecting real-time information on liquidation events occurring across CompoundV2 forks, which in turn would help him to identify potential target protocols to deploy his liquidation bot onto.
+Joss applied for a grant with Envio to build a blockchain indexer that would assist him with his ambitious personal project of building a CompoundV2 liquidation bot. The indexer would serve the purpose of collecting real-time information on liquidation events occurring across CompoundV2 forks, which in turn would help him to identify potential target protocols to deploy his liquidation bot onto.
 
 When asked what motivated him to build the indexer, Joss provided an insightful response:
 
 > _Liquidation bots are a crucial component of CompoundV2 and you can think of liquidations in DeFi as a “high-stakes race”, where bots compete to execute smart contract functions before anyone else. This function comes into play when a user's position becomes under-collateralized, i.e. they are borrowing more value than they've supplied as collateral. The first bot triggers this function and receives a reward proportionate to the severity of the under-collateralized account's status […] This competitive environment demands hyper-performance and ingenuity, pushing bot developers to efficiently program and optimize to keep ahead […]. I humbly knew I wasn’t going to be able to build a bot in my free time that competes with bots funded by fully staffed LLCs, but I did notice an opportunity.  Compound V2 is one of the most forked lending protocols and many of the smaller protocols that forked Compound V2 don’t have the community, market cap, or presence to catch the attention of the maintainers of the leviathan liquidation bots […]. The problem I needed to solve was identifying potential target protocols to deploy my liquidation bot onto.  A good target would be one without much liquidator bot activity but large liquidations occurring_ - Joss
 
-With that context all cleared up, let's dive into how Joss approached building his blockchain indexer using Envio 👇
+With that context all cleared up, let’s dive into how Joss approached building his blcockhain indexer using Envio 👇
 
 For milestone A of the project, our grantee created an indexer for a single Compound V2 fork. To do this, Joss first decided on what data he wanted to collect. He was interested in the `LiquidateBorrow` event that is emitted by the Compound V2 fork’s smart contract each time a liquidation bot succeeded. The signature of LiquidateBorrow event is as follows:
 
@@ -166,6 +167,7 @@ Output:
 ```
 
 After submitting the grant, we asked Joss what his experience was like using Envio to support his use case and what he enjoyed about Envio blockchain indexing capabilities:
+After submitting the grant, we asked Joss what his experience was like using Envio to support his use case and what he enjoyed about Envio blockchain indexing capabilities:
 
 > _As a next step I intend to run this data through a price oracle so I can know the USD amounts being liquidated and generate some cool data graphics. […] I’ve made a number of theGraph indexers in the past but this was my first time using Envio. The transition was smooth and intuitive. The most noticeable difference between theGraph and Envio is indexing speed. Anyone who has used theGraph is familiar with the feeling of a cortisol spike when their subgraph abruptly fails after syncing for 26 hours. Since Envio is so ridiculously fast these errors were caught in minutes instead of days. I felt spoiled. I found myself frequently and nonchalantly running `envio dev` to deploy the indexer and check for errors. The iterative developer experience was so much easier thanks to Envio. -_ Joss
 
@@ -176,9 +178,15 @@ Compound is an EVM-compatible protocol that enables the supply of crypto assets 
 ## About Envio
 
 [Envio](https://envio.dev) is a fast, developer friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
+## About Envio
 
+[Envio](https://envio.dev) is a fast, developer friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
+
+With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
 With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
 
 If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
+If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
 
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)
 [Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)

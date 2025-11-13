@@ -10,6 +10,7 @@ description: "Dive into Envio’s benchmarking of indexer sync speeds—see how 
 <!--truncate-->
 
 This blog article presents the findings from benchmarking tests conducted at Envio to assess the syncing performance of various blockchain indexing solutions. At Envio, our goal is to develop a high-performance blockchain indexing solution, and we believe that validating this goal through a rigorous data-driven approach is essential.
+This blog article presents the findings from benchmarking tests conducted at Envio to assess the syncing performance of various blockchain indexing solutions. At Envio, our goal is to develop a high-performance blockchain indexing solution, and we believe that validating this goal through a rigorous data-driven approach is essential.
 Sync speed simply put, is how long it takes for an indexer to catch up to the head of the blockchain using a historical block as a starting point.
 
 **Why is indexing speed important?**
@@ -22,6 +23,7 @@ You can review the smart contract on [Etherscan](https://etherscan.io/address/0x
 
 ## Methodology
 
+To ensure that the sync speeds from different blockchain indexers were as comparable as possible, we ensured that the configurations of all indexers for different solutions were identical. This included:
 To ensure that the sync speeds from different blockchain indexers were as comparable as possible, we ensured that the configurations of all indexers for different solutions were identical. This included:
 
 - Indexing from the same start block for all indexers (12,376,729 - the deployment block for the contract) until the end block at the time of experimentation (18,342,024), with an approximate total of 5,395,050 raw events indexed (0.9044 events per block).
@@ -53,7 +55,9 @@ type Swap {
 For this initial iteration, the event handling logic was kept straightforward and lightweight. Indexers would listen to the `Swap` event emitted by the smart contract and append the details of each swap to the `Swap` entity table defined in the schema.
 
 ## Blockchain Indexers Used
+## Blockchain Indexers Used
 
+We employed 6 separate blockchain indexing solutions for this benchmarking test:
 We employed 6 separate blockchain indexing solutions for this benchmarking test:
 
 - [Envio](https://envio.dev/)
@@ -95,6 +99,7 @@ Total sync times (minutes) per indexer are outlined in the table below, sorted f
 **Key takeaways:**
 
 - Envio v0.0.20 ranked the fastest at indexing out of all the blockchain indexing solutions used
+- Envio v0.0.20 ranked the fastest at indexing out of all the blockchain indexing solutions used
   - 2.12 times faster than Subsquid
   - 2.17 times faster than Envio v0.0.19
   - 80.6 times faster than Ponder
@@ -114,6 +119,7 @@ It is essential to consider certain caveats while interpreting these results:
 ## What Next?
 
 The logical progression from this benchmarking exercise is to measure the relative syncing times of different blockchain indexers across various scenarios.
+The logical progression from this benchmarking exercise is to measure the relative syncing times of different blockchain indexers across various scenarios.
 
 Variations including but not limited to:
 
@@ -123,16 +129,18 @@ Variations including but not limited to:
 - Complexity of logic in the event handlers, including loading and updating of existing entities
 
 Different blockchain indexers may excel under different scenarios, making them more suitable for specific use cases. We encourage our users to suggest new ideas and build out scenarios for future benchmarking.
+Different blockchain indexers may excel under different scenarios, making them more suitable for specific use cases. We encourage our users to suggest new ideas and build out scenarios for future benchmarking.
 
 ## Conclusion
 
+In conclusion, this blog article provides a data-driven analysis of the comparative performance of various blockchain indexing solutions. The results clearly demonstrate Envio's competitive edge in terms of syncing speed over the alternative indexing solutions. As we continue our journey in the web3 space, we remain committed to delivering the best possible solutions for blockchain developers.
 In conclusion, this blog article provides a data-driven analysis of the comparative performance of various blockchain indexing solutions. The results clearly demonstrate Envio's competitive edge in terms of syncing speed over the alternative indexing solutions. As we continue our journey in the web3 space, we remain committed to delivering the best possible solutions for blockchain developers.
 
 We remain devoted to finding data-driven results and comparisons at Envio, and encourage others to benchmark Envio's performance going forward.
 
 ## About Envio
 
-[Envio](https://envio.dev) is a fast, developer-friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
+[Envio](https://envio.dev) is a fast, developer friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
 
 With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
 

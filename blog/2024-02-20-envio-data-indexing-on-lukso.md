@@ -12,7 +12,9 @@ description: "Learn how Envio’s blockchain indexer helps developers on LUKSO a
 LUKSO is bringing blockchain technology to its next frontier and Envio is providing the speed. Envio’s HyperIndex now fully supports developers and analysts building on LUKSO with its hyper-performant query speeds, providing a robust solution to efficiently organise and query real-time and historical on-chain data for their dapps and use cases.
 
 ## How to index data on LUKSO using Envio
+## How to index data on LUKSO using Envio
 
+[Envio](https://envio.dev/) stands out as a dev-friendly EVM-compatible blockchain indexing solution empowering developers to reliably read and process real-time and historical smart contract events through a robust [GraphQL](https://graphql.org/) API.
 [Envio](https://envio.dev/) stands out as a dev-friendly EVM-compatible blockchain indexing solution empowering developers to reliably read and process real-time and historical smart contract events through a robust [GraphQL](https://graphql.org/) API.
 
 Envio supports indexing on LUKSO and **any EVM-compatible blockchain**, enabling developers to:
@@ -47,10 +49,12 @@ LUKSO is dedicated to existing and coming digital lifestyles and creative use ca
 
 ## About Envio
 
-[Envio](https://envio.dev) is a fast, developer-friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
+[Envio](https://envio.dev) is a fast, developer friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
 
 With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
 
 If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
+If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
 
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)
 [Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)

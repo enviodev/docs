@@ -13,6 +13,7 @@ description: "Learn how zkPass uses zero knowledge proofs with Envio’s indexin
 We live in a world where every click, swipe, and post leaves a trail, protecting your data has never been more urgent. With privacy breaches becoming all too common, the question isn’t if your data is exposed, it’s when. Can we create a system where personal information stays private while still verifying crucial details? Enter Zero-Knowledge Proofs (ZKPs), a breakthrough technology that could change how we think about privacy and security in the digital age.
 
 ## What are Zero-Knowledge Proofs (ZKPs)?
+## What are Zero-Knowledge Proofs (ZKPs)?
 
 ZKPs allow one party (the prover) to prove to another party (the verifier) that they know a specific piece of information without revealing the actual data. It’s a system based on trust but with privacy baked in. For example, you could prove your age without sharing your birthdate, or prove you have enough funds for a transaction without showing your full balance.
 
@@ -63,6 +64,7 @@ By offering a versatile solution for proving identity and qualifications, ZkPass
 <img src="/blog-assets/zkpass-casestudy-2.png" alt="Screenshot of zkPass App" width="100%"/>
 
 ## How Envio powers zkPass’s Privacy Solutions
+## How Envio powers zkPass’s Privacy Solutions
 
 At the heart of implementing ZKP technology, zkPass recognized the critical need to optimize the data infrastructure necessary for deploying effective ZKP solutions. To achieve this, zkPass chose [Envio](https://envio.dev/) as its blockchain indexer and accelerated data infrastructure partner.
 
@@ -96,10 +98,12 @@ As Envio continues to support decentralized applications like zkPass, we’re ex
 
 ## About Envio
 
-[Envio](https://envio.dev) is a fast, developer-friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
+[Envio](https://envio.dev) is a fast, developer friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
 
 With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
 
 If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
+If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
 
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)
 [Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)

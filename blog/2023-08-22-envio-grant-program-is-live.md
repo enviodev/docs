@@ -13,8 +13,9 @@ To commemorate the launch of our Alpha release, Envio invites all blockchain dev
 
 As any seasoned blockchain developer knows, dealing with copious amounts of  disorganized, slow-to-retrieve data stored on the  blockchain can daunting. These difficulties pose significant obstacles for developers, diverting their attention towards infrastructure and maintenance tasks instead of focusing on the core objective of building brilliant dApps. 
 
-This is where blockchain indexing solutions like Envio come in. With its developer-friendly indexing solution, Envio makes receiving, transforming, loading on-chain data a breeze. Whether you're launching a multichain NFT marketplace, starting a DAO, diving into GameFi, or pioneering the next big P2E project, blockchain indexers like Envio serve as an essential building block tailored to your application's unique data needs.
+This is where blcockhain indexing solutions like Envio come in. With its developer-friendly indexing solution, Envio makes receiving, transforming, loading on-chain data a breeze. Whether you're launching a multichain NFT marketplace, starting a DAO, diving into GameFi, or pioneering the next big P2E project, blockchain indexers like Envio serve as an essential building block tailored to your application’s unique data needs.
 
+The challenge is to demonstrate how you can build something brilliant using Envio’s customizable, developer-friendly blockchain indexing solution.
 The challenge is to demonstrate how you can build something brilliant using Envio’s customizable, developer-friendly blockchain indexing solution.
 
 ## Wondering what to build? 👀
@@ -64,6 +65,7 @@ Successful program applicants will be notified upon application acceptance and t
 ## Why Envio?
 
 Envio is a dev-friendly, 3-command init-develop-deploy EVM blockchain indexing solution that lets you reliably read and process any real-time and historic smart contract events served via rich GraphQL API.
+Envio is a dev-friendly, 3-command init-develop-deploy EVM blockchain indexing solution that lets you reliably read and process any real-time and historic smart contract events served via rich GraphQL API.
 
 Envio supports indexing any EVM blockchain and allows you to:
 
@@ -74,6 +76,15 @@ Envio supports indexing any EVM blockchain and allows you to:
 
 Envio is a purpose-built, modern EVM blockchain indexing solution. Envio supports indexing any on-chain event for any EVM blockchain, such as Polygon, Avalanche, Linea, Arbitrum, Base, ZkSync, etc.
 
+## About Envio
+
+[Envio](https://envio.dev) is a fast, developer friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
+
+With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
+
+If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
+
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)
 ## About Envio
 
 [Envio](https://envio.dev) is a fast, developer friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.

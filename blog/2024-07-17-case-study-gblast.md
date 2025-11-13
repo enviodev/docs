@@ -10,6 +10,7 @@ description: "See how GBlast integrated Envio’s blockchain indexer to boost pl
 <!--truncate-->
 
 Just as every blockchain developer chases the thrill of the code, we're excited to announce that [GBlast](https://gblast.gg/), known for its exhilarating real-time luck-based games, has seamlessly integrated Envio’s high-performance blockchain indexer to power its GambleFi platform.
+Just as every blockchain developer chases the thrill of the code, we're excited to announce that [GBlast](https://gblast.gg/), known for its exhilarating real-time luck-based games, has seamlessly integrated Envio’s high-performance blockchain indexer to power its GambleFi platform.
 
 This integration marks a significant leap forward in optimizing GBlast’s application infrastructure, serving real-time data in their front-end and ensuring a responsive gaming experience for end users.
 
@@ -82,10 +83,15 @@ Envio supports the Blast Mainnet, Blast Sepolia and 45+ other EVM blockchain net
 - [GBlast Hosted Indexer](https://envio.dev/app/gblastgg/boss-indexer123)
 - [Envio HyperIndex Quickstart](https://docs.envio.dev/docs/contract-import)
 - [Envio HyperSync](https://docs.envio.dev/docs/hypersync)
-[Envio](https://envio.dev) is a fast, developer-friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
+- [Envio Hosted Service](https://docs.envio.dev/docs/HyperIndex/hosted-service)
 
-With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio's blockchain indexing tools support any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
+## About Envio
 
-If you're a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
+[Envio](https://envio.dev) is a fast, developer friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
 
+With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
+
+If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
+
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)
 [Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)
