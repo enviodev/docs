@@ -34,7 +34,7 @@ Without a blockchain indexer, you must handle data processing logic within your 
 
 ##### **3. Responsive Apps**
 
-Blockchain ndexers are optimized for low-latency queries, enabling access to real-time access and historical data. Whether your app requires real-time updates or rapid insights from past data, indexers are built to handle these demands efficiently.
+Blockchain indexers are optimized for low-latency queries, enabling access to real-time access and historical data. Whether your app requires real-time updates or rapid insights from past data, indexers are built to handle these demands efficiently.
 
 **4. Multichain Support**
 
