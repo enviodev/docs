@@ -82,7 +82,7 @@ Most blockchain-powered applications are making use of some kind of indexing sol
 
 Imagine your backend is also pre-built, RPC requests are optimized to your specific requirements (e.g. real-time web3 events, NFT events, etc.), and you’ve got a tool to present information within your application in just a few commands. This is where another form of querying and storing blockchain data is emerging: Blockchain data indexing solutions.
 
-A blockchain indexer is a hosted backend that indexes and organizes blockchain data, and typically makes this data readily available for your application in an instant query-able API, such as GraphQL. Blockchain indexing solutions liek Envio abstract away a lot of the complexity away from the developer by prioritizing the developer experience and offering full-stack Web3 SDKs with all the materials and tools required to help developers focus on building brilliant dApps. 
+A blockchain indexer is a hosted backend that indexes and organizes blockchain data, and typically makes this data readily available for your application in an instant query-able API, such as GraphQL. Blockchain indexing solutions like Envio abstract away a lot of the complexity away from the developer by prioritizing the developer experience and offering full-stack Web3 SDKs with all the materials and tools required to help developers focus on building brilliant dApps.
 
 It is important to note, that some blockchain indexers also allow developers to aggregate event data from multiple data sources, into a unified database, which eradicates the need to deploy and maintain multiple API instances for each blockchain for their multi-chain dApp.
 
