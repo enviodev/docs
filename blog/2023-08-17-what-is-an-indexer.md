@@ -15,7 +15,7 @@ Since a blockchain acts as a distributed database and a smart contract is a dApp
 
 Blockchain data is designed to be written in a sequence, one block after another, as the chain is made, leaving data scattered, unorganized, and under-utilized. It can be a slow process to retrieve (or commonly referred to as “sync”) larger datasets, some taking up to a few days or weeks. More advanced dApps require more data processing logic (e.g. SUM, AVG, multi-chain, etc.) this immediately adds additional code to your dApp, and slows down responsiveness.
 
-This is where blockchain indexers like Enviocome into play as specialized infrastructure tools that streamline the process of categorizing and indexing blockchain data. In this article, we'll dive into the concept of blockchain indexers, their core components, and how they improve the developer experience.
+This is where blockchain indexers like Envio come into play as specialized infrastructure tools that streamline the process of categorizing and indexing blockchain data. In this article, we'll dive into the concept of blockchain indexers, their core components, and how they improve the developer experience.
 
 ## What is a blockchain indexer?
 
