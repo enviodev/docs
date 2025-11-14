@@ -15,17 +15,17 @@ Since a blockchain acts as a distributed database and a smart contract is a dApp
 
 Blockchain data is designed to be written in a sequence, one block after another, as the chain is made, leaving data scattered, unorganized, and under-utilized. It can be a slow process to retrieve (or commonly referred to as “sync”) larger datasets, some taking up to a few days or weeks. More advanced dApps require more data processing logic (e.g. SUM, AVG, multi-chain, etc.) this immediately adds additional code to your dApp, and slows down responsiveness.
 
-This is where blockchain indexers come into play as specialized infrastructure tools that streamline the process of categorizing and indexing blockchain data. In this article, we'll dive into the concept of blockchain indexers, their core components, and how they improve the developer experience.
+This is where blockchain indexers like Envio come into play as specialized infrastructure tools that streamline the process of categorizing and indexing blockchain data. In this article, we'll dive into the concept of blockchain indexers, their core components, and how they improve the developer experience.
 
 ## What is a blockchain indexer?
 
-A blockchain indexer is a specialized tool that plays a vital role in simplifying the development process and overall development experience for building dApps. Similar to an index of a book, it takes complex information or in this case, blockchain data that is stored on-chain and organizes it, making it easier for developers to efficiently query, retrieve, and utilize on-chain data.
+A blockchain indexer is a tool that pulls raw data from a node, organises it into structured tables, and gives developers a clear and fast way to view and work with on chain activity. Similar to the index of a book, it takes complex on chain data and organises it so developers can query, retrieve, and use that data without digging through a full node.
 
 Developers only need to define data types and the relationships between them according to the smart contract, and how this data should be stored. The indexing solution then provides a custom GraphQL endpoint to easily present this data for your dApp, while taking care of the rest. By doing so, indexers enable developers to retrieve and process advanced data efficiently, ultimately boosting productivity and allowing more time to focus on the application.
 
-A key advantage of a blockchain indexing solution is its ability to abstract away the complexities of managing hosted infrastructure and can do so more cost-effectively. Blockchain indexing solutions are optimized for latency (real-time data) and fast retrieval of historic data. Retrieving filtered data with a reliable indexer can reduce sync times to just a few seconds or minutes, a task or job that would otherwise require several days or weeks using RPC-JSON API requests.
+A key advantage of using a powerful blockchain indexing solution like Envio is its ability to abstract the complexity of managing your own infrastructure while keeping costs lower. Indexing solutions are built for low latency and fast access to historic data. With a reliable indexer, you can retrieve filtered data in seconds or minutes, work that would take days or even weeks if you relied only on RPC JSON requests.
 
-## What are the typical fundamental components of a blockchain indexer?
+## What are the fundamental components of a blockchain indexer?
 
 As a developer, you can define which blockchain data is being indexed and how it is stored. It is important to note, that some indexing solutions differ in their configuration, but a typical Indexer definition consists of three files:
 
@@ -101,22 +101,26 @@ These Indexer files are referred to as the “ user inputs” files in the diagr
 
 For testing purposes, the developer flow usually allows developers to host an indexer locally, before deploying to a hosted service. Some indexing solutions, like Envio, have an integrated testing framework, which increases confidence and reliability by allowing developers to test whether the defined data is being handled as expected using mockable events and expected outcomes.
 
-## Why do blockchain indexers play a key part in dApp development?
+## Why blockchain indexers play a crucial part in dApp development?
 
-Blockchain indexing solutions offer a myriad of benefits, from speeding up the dApp development lifecycle to increasing the responsiveness and reliability of your dApp for a smooth user experience. Here are a few reasons why blockchain indexing solutions play a critical role in the dApp development process:
+Blockchain indexing solutions like Envio offer a myriad of benefits, from speeding up the dApp development lifecycle to increasing the responsiveness and reliability of your dApp for a smooth user experience. Here are a few reasons why blockchain indexing solutions play a critical role in the dApp development process:
 
 - Developer friendly: Blockchain indexing solutions make a dApp development easier by abstracting away a lot of the complexities that come with coding data logic and hosting your infrastructure, saving developers a lot of time to focus their efforts on the application. The developer flow of indexing solutions is mostly interactive and automated, with templates and helpful developer quickstart guides to start. In addition, some indexing solutions support familiar development languages such as JavaScript/ TypeScript for data handling, allowing quick onboarding, and testing frameworks for increased confidence.
 
 - **Customizability**: Indexing solutions allow developers to index application-specific data, such as custom events from contract functions. Standard template blockchain data APIs do not support the rich indexing capabilities that indexing solutions can offer. Whether you're launching a multi-chain NFT marketplace, starting a DAO, diving into GameFi, or pioneering the next big P2E project, Indexers serve as an essential building block tailored to your application’s unique data needs.
 
-- **Multi-chain support**: Some indexing solutions have multi-chain support, which aggregates data from multiple sources into a unified database table, making it super easy to present aggregated information in your front end for your multi-chain blockchain application. Developers do not need to worry about building multiple APIs or subgraphs and managing multiple databases.
+- **Multichain support**: Some indexing solutions have multi-chain support, which aggregates data from multiple sources into a unified database table, making it super easy to present aggregated information in your front end for your multi-chain blockchain application. Developers do not need to worry about building multiple APIs or subgraphs and managing multiple databases.
 
 - **Managed service**: Indexing solutions offer free and paid production-grade hosted service options with guaranteed uptimes, ensuring that data access is always available and complete. Depending on the provider, the system architecture of the hosted service ensures performance is always consistent, providing a trustworthy and reliable solution to access real-time or historic blockchain data. Developers can focus on their front-end applications while indexing solutions guarantee performance and production-grade infrastructure.
 
 - **Expert Support**: It’s in the indexing provider’s best interest to provide a reliable service, with most solutions offering direct support channels with technical engineers and subject matter experts to help you with any issues or indexing-related needs.
 
-### Ship with us.
+## About Envio
 
-Envio is a dev-friendly, speed-optimized, modern blockchain indexing solution that addresses the limitations of traditional blockchain indexing approaches and gives developers peace of mind. By harnessing the power of Envio, developers can overcome the challenges posed by latency, reliability, and costs across various sources. Envio serves as the front door for any application’s need to access, transform, and save real-time or historical data, from any EVM smart contract.
+[Envio](https://envio.dev) is a fast, developer-friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
 
-If you're a blockchain developer looking to enhance your development process and unlock the true potential of Web3 infrastructure, look no further. Join our growing community of elite developers, check out our [docs](https://docs.envio.dev/docs/HyperIndex/overview), and let's work together to revolutionize the blockchain world and propel your project to the next level. Follow Envio on [Twitter](https://twitter.com/envio_indexer) and/or [Lenster](https://lenster.xyz/u/envio) for updates on new features, or jump into our [Discord](https://discord.gg/mZHNWgNCAc) for any questions.
+With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
+
+If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
+
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)

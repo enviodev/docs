@@ -15,7 +15,7 @@ Blockchain technology has transformed the data storage landscape by offering dec
 
 Developers building blockchain-powered applications often encounter challenges related to the retrieval and reading of data stored on the blockchain, leaving data mostly under-utilized. The data retrieval process is inherently complex, computationally expensive, and hampers efficient querying, particularly in terms of speed, reliability, scalability, customizability, and for some protocols, multi-chain data aggregation.
 
-These difficulties pose significant obstacles for developers, diverting their attention towards infrastructure and maintenance tasks instead of focusing on the core objective of building brilliant dApps. Moreover, optimal performance and reliability are essential for providing users with a frictionless experience when interacting with their favourite dApp.
+These difficulties pose significant obstacles for blockchain developers, diverting their attention towards infrastructure and maintenance tasks instead of focusing on the core objective of building brilliant dApps. Moreover, optimal performance and reliability are essential for providing users with a frictionless experience when interacting with their favourite dApp.
 
 Whether it's GameFi, where real-time game state updates are crucial as players submit their moves; NFTs, which require immediate drop status updates; DeFi, which demands real-time price and liquidity information; or Web3 Social, which strives to create a smooth user experience with instant updates, the need for efficient data querying directly impacts user satisfaction and overall UX.
 
@@ -81,7 +81,7 @@ Most blockchain-powered applications are making use of some kind of indexing sol
 
 Imagine your backend is also pre-built, RPC requests are optimized to your specific requirements (e.g. real-time web3 events, NFT events, etc.), and you’ve got a tool to present information within your application in just a few commands. This is where another form of querying and storing blockchain data is emerging: Blockchain data indexing solutions.
 
-A blockchain indexer is a hosted backend that indexes and organizes blockchain data, and typically makes this data readily available for your application in an instant query-able API, such as GraphQL. Blockchain indexing solutions abstract away a lot of the complexity away from the developer by prioritizing the developer experience and offering full-stack Web3 SDKs with all the materials and tools required to help developers focus on building brilliant dApps. 
+A blockchain indexer is a hosted backend that indexes and organizes blockchain data, and typically makes this data readily available for your application in an instant query-able API, such as GraphQL. Blockchain indexing solutions like Envio abstract away a lot of the complexity away from the developer by prioritizing the developer experience and offering full-stack Web3 SDKs with all the materials and tools required to help developers focus on building brilliant dApps.
 
 It is important to note, that some blockchain indexers also allow developers to aggregate event data from multiple data sources, into a unified database, which eradicates the need to deploy and maintain multiple API instances for each blockchain for their multi-chain dApp.
 
@@ -94,7 +94,13 @@ In conclusion, effectively and efficiently querying blockchain data is crucial f
 
 A new paradigm is emerging with blockchain indexing solution providers, which offer full-stack Web3 SDKs and abstract the complexity of backend development. These solutions prioritize developer experience, performance, and customizability, allowing for the creation of innovative applications in a shorter period of time. However, it's important to consider the trade-offs, such as potential centralization risks. Overall, leveraging blockchain indexing solutions can greatly improve the efficiency and effectiveness of querying blockchain data, enabling developers to focus on building user-friendly and impactful applications in the fast-paced Web3 environment.
 
-### Ship with us.
+## About Envio
 
-If you're a blockchain developer looking to enhance your development process and unlock the true potential of Web3 infrastructure, look no further. Build with Envio, and sail into the future of Web3 applications and dApps. Join our [community](https://discord.gg/mZHNWgNCAc) of elite shippers today and [ship with us](https://lteyv6e0ojf.typeform.com/to/XaGtyQpC)!
+[Envio](https://envio.dev) is a fast, developer-friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
+
+With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
+
+If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
+
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)
 

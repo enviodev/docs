@@ -9,9 +9,7 @@ description: "Catch up on what Envio delivered in June 2025 including new indexe
 
 <!--truncate-->
 
-June, you beauty.
-
-From refining core DX with new helpers and project structure improvements to smarter multi-chain batching and smoother loader behavior, we shipped updates that made indexing with Envio faster, cleaner, and easier to work with.
+From refining core DX with new helpers and project structure improvements to smarter multichain batching and smoother loader behavior, we shipped updates that made indexing with Envio faster, cleaner, and easier to work with.
 
 We also wrapped up Mission 4 with the Monad community, ran another internal hackathon, hit DappCon Berlin, and plenty more. Let’s jump in.
 
@@ -191,7 +189,7 @@ Be sure to follow Thalles on [X](https://x.com/thallescomumh) and check out his 
 
 ## Ship With Us 🚢 
 
-Envio is a multi-chain EVM blockchain indexing solution for querying real-time and historical data. If you’re working on a Web3 project and want a smoother development process, Envio’s got your back(end). Check out our docs, join the community, and let’s talk about your data needs.
+Envio is a multichain EVM blockchain indexing solution for querying real-time and historical data. If you’re working on a Web3 project and want a smoother development process, Envio’s got your back(end). Check out our docs, join the community, and let’s talk about your data needs.
 
 Stay tuned for more monthly updates by subscribing to our newsletter, following us on X, or hopping into our Discord for more up-to-date information.
 

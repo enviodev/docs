@@ -10,8 +10,6 @@ description: "Catch the highlights from the first Envio monthly update including
 
 <!--truncate-->
 
-Ahoy Envio Shipooors!
-
 Welcome to our first-ever monthly community update that will be happening on a monthly cadence so you can get a first-hand snapshot of what the team has been focusing on in the previous month.
 
 So what's been happening behind the scenes at [Envio](https://envio.dev/)? Lots! In this update, we’ll cover technical features, release updates, upcoming events, and milestones we've reached. This month's update also provides a sneak peek into Envio’s upcoming Hypersync feature 👀. This month has been an epic display of #BigDevEnergy with our first release going live! 🚀
@@ -67,12 +65,12 @@ Stay tuned for more monthly updates and hop in our Discord for more up-to-date i
 
 Exciting times are ahead, and we’re thrilled to have you along for the ride. Until next time, stay curious and keep up the good shipping! 🚢
 
-LFG.
+## About Envio
 
-## **Ship with us. 🚢**
+[Envio](https://envio.dev) is a fast, developer-friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
 
-By builders, for builders. Envio is a dev-friendly, speed-optimized, modern blockchain indexing solution that addresses the limitations of traditional blockchain indexing approaches and gives developers peace of mind. By harnessing the power of Envio, developers can overcome the challenges posed by latency, reliability, and costs across various sources. Envio serves as the front door for any application’s need to access, transform, and save real-time or historical data, from any EVM-compatible smart contracts.
+With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
 
-If you're a blockchain developer looking to enhance your development process and unlock the true potential of Web3 infrastructure, look no further. Join our growing community of elite developers, check out our [docs](https://docs.envio.dev/docs/HyperIndex/overview), and let's work together to revolutionize the blockchain world and propel your project to the next level.
+If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
 
-Follow Envio on [Twitter](https://twitter.com/envio_indexer) and/or [Lenster](https://lenster.xyz/u/envio) for updates on new features, or jump into our [Discord](http://discord.gg/gt7yEUZKeB) for any questions.
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)

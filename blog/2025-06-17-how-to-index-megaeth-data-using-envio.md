@@ -41,7 +41,7 @@ Unlike other chains that trade off EVM compatibility for speed, MegaEth keeps yo
 These core building blocks make MegaEth a robust environment for building everything from real-time DeFi and high-frequency trading bots to streaming on-chain gaming and on-demand NFT mints, all at warp speed.
 
 
-## Start Indexing Data on MegaEth
+## How to Index Data on MegaEth
 
 
 ### HyperIndex
@@ -114,6 +114,6 @@ Data indexing can be challenging, especially for complex use cases. Our engineer
 
 ## About Envio
 
-[Envio](https://envio.dev/) is a modern, multi-chain EVM blockchain indexing toolkit designed for real-time and historical data access. If you’re building on MegaEth or any other EVM-compatible network, Envio is here to make your development process faster and more efficient. Explore our [documentation](https://docs.envio.dev/docs/HyperIndex/overview), join the community, and let’s connect about your data needs.
+[Envio](https://envio.dev/) is a modern, multichain EVM blockchain indexing toolkit designed for real-time and historical data access. If you’re building on MegaEth or any other EVM-compatible network, Envio is here to make your development process faster and more efficient. Explore our [documentation](https://docs.envio.dev/docs/HyperIndex/overview), join the community, and let’s connect about your data needs.
 
 [Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)

@@ -65,10 +65,6 @@ Examples of amazing applications on the OP Superchain using Envio for their data
 
 These indexers & a lot more can be viewed in the Envio [Explorer](https://envio.dev/explorer).
 
-## About Brid.gg
-
-Brid.gg is a user-friendly interface, designed to connect Ethereum with next-generation superchains and efficient Layer 2 solutions. This platform simplifies the transfer of assets and data across networks, providing you with a seamless, secure, and fast transaction experience.
-
 ## About Envio
 
 [Envio](https://envio.dev/) is a modern, dev-friendly, speed-optimized blockchain indexing solution that addresses the limitations of traditional blockchain indexing approaches and gives developers peace of mind. Blockchain developers and data analysts can harness the power of Envio to overcome the challenges posed by latency, reliability, infrastructure management, and costs across various sources.

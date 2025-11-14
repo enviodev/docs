@@ -9,13 +9,11 @@ description: "Learn how Envio’s blockchain indexer helps developers on LUKSO a
 
 <!--truncate-->
 
-We’re back with some more exciting news!
-
 LUKSO is bringing blockchain technology to its next frontier and Envio is providing the speed. Envio’s HyperIndex now fully supports developers and analysts building on LUKSO with its hyper-performant query speeds, providing a robust solution to efficiently organise and query real-time and historical on-chain data for their dapps and use cases.
 
-## Why Choose Envio on LUKSO?
+## How to index data on LUKSO using Envio
 
-[Envio](https://envio.dev/) stands out as a dev-friendly EVM-compatible blockchain data indexing solution empowering developers to reliably read and process real-time and historical smart contract events through a robust [GraphQL](https://graphql.org/) API.
+[Envio](https://envio.dev/) stands out as a dev-friendly EVM-compatible blockchain indexing solution empowering developers to reliably read and process real-time and historical smart contract events through a robust [GraphQL](https://graphql.org/) API.
 
 Envio supports indexing on LUKSO and **any EVM-compatible blockchain**, enabling developers to:
 
@@ -49,8 +47,10 @@ LUKSO is dedicated to existing and coming digital lifestyles and creative use ca
 
 ## About Envio
 
-[Envio](https://envio.dev/) is a dev-friendly, speed-optimized, modern blockchain indexing solution that addresses the limitations of traditional blockchain indexing approaches and gives developers peace of mind. By harnessing the power of Envio, developers can overcome the challenges posed by latency, reliability, and costs across various sources. Envio is the front door for any application’s need to access, transform, and save real-time or historical data, from any EVM-compatible smart contracts. If you're a blockchain developer looking to enhance your development process and unlock the true potential of Web3 infrastructure, look no further.
+[Envio](https://envio.dev) is a fast, developer-friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
 
-Join our growing community of elite developers, check out our docs, and let's work together to revolutionize the blockchain world and propel your project to the next level.
+With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
 
-[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Hey](https://hey.xyz/u/envio) | [Medium](https://medium.com/@Envio_Indexer) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
+If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
+
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)

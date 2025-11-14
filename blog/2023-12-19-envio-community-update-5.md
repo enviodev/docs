@@ -10,8 +10,6 @@ description: "Here’s what we shipped in December at Envio including new builde
 
 <!--truncate-->
 
-Ahoy Buidlers!
-
 Welcome to our fifth and final monthly update of 2023, where we're eager to share the latest from the Envio team over the past month and offer a sneak peek into what's on the horizon for the coming year. As always, we'll be diving into the tech updates, toasting a year of exciting progress, and setting the stage for the developments that lie ahead. 🥂
 
 Since our initial launch in July 2023, Envio has been on a transformative journey, solidifying its position as the fastest blockchain indexer for EVM. This year has been a whirlwind of development, noteworthy releases, engaging grant and bounty programs, strategic partnerships, and networking events.
@@ -110,10 +108,12 @@ Sincerely,
 
 The Envio team.💙
 
-### Ship with us. 🚢
+## About Envio
 
-By builders, for builders. [Envio](https://envio.dev/) is a dev-friendly, speed-optimized, modern blockchain indexing solution that addresses the limitations of traditional blockchain indexing approaches and gives developers peace of mind. By harnessing the power of Envio, developers can overcome the challenges posed by latency, reliability, and costs across various sources. Envio serves as the front door for any application’s need to access, transform, and save real-time or historical data, from any EVM-compatible smart contracts.
+[Envio](https://envio.dev) is a fast, developer friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
 
-If you're a blockchain developer looking to enhance your development process and unlock the true potential of Web3 infrastructure, look no further. Join our growing community of elite developers, check out our docs, and let's work together to revolutionize the blockchain world and propel your project to the next level.
+With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
 
-Follow Envio on [X](https://twitter.com/envio_indexer) (formerly Twitter) and [Hey](https://hey.xyz/u/envio) (formerly known as Lenster) for updates on new features, or jump into our [Discord](https://discord.gg/2eKRvCRqQw) for any questions.
+If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
+
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)
