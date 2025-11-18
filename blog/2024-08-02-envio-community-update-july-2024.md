@@ -23,7 +23,7 @@ We’re excited to announce that we’re in the process of refining our pricing 
 
 To ensure our pricing model aligns with your needs and expectations, we’d love to hear your feedback. Your insights will help us create a balanced and effective pricing structure.
 
-Please take a moment to review our current pricing model [here](https://docs.envio.dev/docs/HyperIndex/v2/hosted-service-billing).
+Please take a moment to review our current pricing model [here](https://docs.envio.dev/docs/HyperIndex/hosted-service-billing).
 
 Additionally, we’d greatly appreciate it if you could fill out our [Pricing Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSeoy9QSvysji-4r20YGDXMbQjVJJDxc7nIki1QaGxB3lNdh_g/viewform)—a quick 3-min survey with 7 multiple-choice questions. Don’t forget to include your GitHub handle or organisation to receive proper credit. 😉
 
