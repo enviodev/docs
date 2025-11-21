@@ -44,6 +44,13 @@ module.exports = {
     "migration-guide",
     {
       type: "category",
+      label: "Migration",
+      collapsed: false,
+      items: ["migration-guide", "migrate-from-alchemy"],
+    },
+
+    {
+      type: "category",
       label: "Guides",
       collapsed: false,
       items: [
@@ -82,7 +89,6 @@ module.exports = {
         "Hosted_Service/hosted-service-monitoring",
         "Hosted_Service/hosted-service-billing",
         "Hosted_Service/self-hosting",
-
       ],
     },
     {
