@@ -3,11 +3,11 @@ id: migrate-from-alchemy
 title: How to Migrate from Alchemy Subgraphs to Envio
 sidebar_label: Migrate from Alchemy
 slug: /migrate-from-alchemy
-description: Learn how to move your Alchemy Subgraphs to Envio for faster indexing, multichain support, and a better developer experience.
+description: Learn how to migrate your Alchemy Subgraphs to Envio for faster indexing, multichain support, and a better developer experience.
 ---
 
 :::note
-Note: Alchemy Subgraphs are sunsetting on Dec 8th, 2025.Envio is offering affected Alchemy users 2 months of free hosting on Envio, along with full migration support to help projects move over smoothly.
+Note: Alchemy Subgraphs are sunsetting on Dec 8th, 2025. Envio is offering affected Alchemy users 2 months of free hosting on Envio, along with full white-glove migration support to help projects move over smoothly.
 
 For more info on how you can start your free trial or book migration support, visit this [page](https://envio.dev/alchemy-migration) to learn more.
 :::
