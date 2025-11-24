@@ -41,10 +41,9 @@ module.exports = {
     "getting-started",
     "contract-import",
     "benchmarks",
-    "migration-guide",
     {
       type: "category",
-      label: "Migration",
+      label: "Migrate to Envio",
       collapsed: false,
       items: ["migration-guide", "migrate-from-alchemy"],
     },

@@ -41,16 +41,10 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Bsc                  | 56         | https://bsc.rpc.hypersync.xyz or https://56.rpc.hypersync.xyz                       |                 |
 | Bsc Testnet          | 97         | https://bsc-testnet.rpc.hypersync.xyz or https://97.rpc.hypersync.xyz               |                 |
 | Celo                 | 42220      | https://celo.rpc.hypersync.xyz or https://42220.rpc.hypersync.xyz                   |                 |
-| Chainweb Testnet 20  | 5920       | https://chainweb-testnet-20.rpc.hypersync.xyz or https://5920.rpc.hypersync.xyz     |                 |
-| Chainweb Testnet 21  | 5921       | https://chainweb-testnet-21.rpc.hypersync.xyz or https://5921.rpc.hypersync.xyz     |                 |
-| Chainweb Testnet 22  | 5922       | https://chainweb-testnet-22.rpc.hypersync.xyz or https://5922.rpc.hypersync.xyz     |                 |
-| Chainweb Testnet 23  | 5923       | https://chainweb-testnet-23.rpc.hypersync.xyz or https://5923.rpc.hypersync.xyz     |                 |
-| Chainweb Testnet 24  | 5924       | https://chainweb-testnet-24.rpc.hypersync.xyz or https://5924.rpc.hypersync.xyz     |                 |
 | Chiliz               | 88888      | https://chiliz.rpc.hypersync.xyz or https://88888.rpc.hypersync.xyz                 |                 |
 | Citrea Testnet       | 5115       | https://citrea-testnet.rpc.hypersync.xyz or https://5115.rpc.hypersync.xyz          |                 |
 | Curtis               | 33111      | https://curtis.rpc.hypersync.xyz or https://33111.rpc.hypersync.xyz                 |                 |
 | Cyber                | 7560       | https://cyber.rpc.hypersync.xyz or https://7560.rpc.hypersync.xyz                   |                 |
-| Damon                | 341        | https://damon.rpc.hypersync.xyz or https://341.rpc.hypersync.xyz                    |                 |
 | Eth Traces           | 1          | https://eth-traces.rpc.hypersync.xyz or https://1-traces.rpc.hypersync.xyz          |                 |
 | Ethereum Mainnet     | 1          | https://eth.rpc.hypersync.xyz or https://1.rpc.hypersync.xyz                        |                 |
 | Fantom               | 250        | https://fantom.rpc.hypersync.xyz or https://250.rpc.hypersync.xyz                   |                 |
@@ -63,7 +57,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Harmony Shard 0      | 1666600000 | https://harmony-shard-0.rpc.hypersync.xyz or https://1666600000.rpc.hypersync.xyz   |                 |
 | Holesky              | 17000      | https://holesky.rpc.hypersync.xyz or https://17000.rpc.hypersync.xyz                |                 |
 | Hyperliquid          | 999        | https://hyperliquid.rpc.hypersync.xyz or https://999.rpc.hypersync.xyz              |                 |
-| Incentiv             | 24101      | https://incentiv.rpc.hypersync.xyz or https://24101.rpc.hypersync.xyz               |                 |
 | Ink                  | 57073      | https://ink.rpc.hypersync.xyz or https://57073.rpc.hypersync.xyz                    |                 |
 | Kroma                | 255        | https://kroma.rpc.hypersync.xyz or https://255.rpc.hypersync.xyz                    |                 |
 | Linea                | 59144      | https://linea.rpc.hypersync.xyz or https://59144.rpc.hypersync.xyz                  |                 |
@@ -104,7 +97,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Sophon Testnet       | 531050104  | https://sophon-testnet.rpc.hypersync.xyz or https://531050104.rpc.hypersync.xyz     |                 |
 | Superseed            | 5330       | https://superseed.rpc.hypersync.xyz or https://5330.rpc.hypersync.xyz               |                 |
 | Swell                | 1923       | https://swell.rpc.hypersync.xyz or https://1923.rpc.hypersync.xyz                   |                 |
-| Tangle               | 5845       | https://tangle.rpc.hypersync.xyz or https://5845.rpc.hypersync.xyz                  |                 |
 | Taraxa               | 841        | https://taraxa.rpc.hypersync.xyz or https://841.rpc.hypersync.xyz                   |                 |
 | Unichain             | 130        | https://unichain.rpc.hypersync.xyz or https://130.rpc.hypersync.xyz                 |                 |
 | Worldchain           | 480        | https://worldchain.rpc.hypersync.xyz or https://480.rpc.hypersync.xyz               |                 |
