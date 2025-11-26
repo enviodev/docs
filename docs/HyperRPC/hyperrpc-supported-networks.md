@@ -71,6 +71,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Metall2              | 1750       | https://metall2.rpc.hypersync.xyz or https://1750.rpc.hypersync.xyz                 |                 |
 | Mev Commit           | 17864      | https://mev-commit.rpc.hypersync.xyz or https://17864.rpc.hypersync.xyz             |                 |
 | Mode                 | 34443      | https://mode.rpc.hypersync.xyz or https://34443.rpc.hypersync.xyz                   |                 |
+| Monad                | 143        | https://monad.rpc.hypersync.xyz or https://143.rpc.hypersync.xyz                    |                 |
 | Monad Testnet        | 10143      | https://monad-testnet.rpc.hypersync.xyz or https://10143.rpc.hypersync.xyz          |                 |
 | Moonbase Alpha       | 1287       | https://moonbase-alpha.rpc.hypersync.xyz or https://1287.rpc.hypersync.xyz          |                 |
 | Moonbeam             | 1284       | https://moonbeam.rpc.hypersync.xyz or https://1284.rpc.hypersync.xyz                |                 |
