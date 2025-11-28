@@ -6,8 +6,6 @@ slug: /greeter-tutorial
 description: Learn how to build and run a multi-chain indexer that tracks Greeter contract events using Envio.
 ---
 
-# Indexing a Greeter Contract
-
 ## Introduction
 
 This tutorial provides a step-by-step guide to indexing a simple Greeter smart contract deployed on multiple blockchains. You'll learn how to set up and run a multi-chain indexer using Envio's template system.

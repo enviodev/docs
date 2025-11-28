@@ -6,8 +6,6 @@ slug: /hypersync-quickstart
 description: Get started quickly with HyperSync to stream and filter blockchain events.
 ---
 
-# HyperSync Quickstart
-
 Get up and running with HyperSync in minutes. This guide will help you start accessing blockchain data at unprecedented speeds with minimal setup.
 
 ## Quickest Start: Try LogTUI

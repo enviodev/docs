@@ -6,8 +6,6 @@ slug: /example-liquidation-metrics
 description: Explore Compound V2 liquidation metrics across multiple chains with Envio.
 ---
 
-# Compound V2 Liquidation Metrics
-
 Note: This example is built on version 0.0.21 (current version is >= 0.0.36).
 
 This [repo](https://github.com/enviodev/liquidation-metrics) contains an example Envio indexer built using TypeScript for the Compound V2 forks across multiple chains.

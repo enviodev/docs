@@ -6,8 +6,6 @@ slug: /tutorial-op-bridge-deposits
 description: Learn to quickly index Optimism Bridge deposits and explore OP Bridge event data.
 ---
 
-# Indexing Optimism Bridge Deposits
-
 ## Introduction
 
 This tutorial will guide you through indexing Optimism Standard Bridge deposits in under 5 minutes using Envio HyperIndex's no-code [contract import](https://docs.envio.dev/docs/HyperIndex/contract-import) feature.

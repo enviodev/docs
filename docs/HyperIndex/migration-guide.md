@@ -3,10 +3,11 @@ id: migration-guide
 title: Migrate from a Subgraph to HyperIndex
 sidebar_label: Migrate from TheGraph
 slug: /migration-guide
-description: Learn how to migrate subgraphs to HyperIndex for faster indexing and easier integration.
+description: Learn how to migrate your Subgraphs to Envio for faster indexing, multichain support, and a better developer experience.
 ---
 
-# Migrate from TheGraph to HyperIndex
+
+# How to Migrate from TheGraph to Envio
 
 :::info
 Please reach out to our team on [Discord](https://discord.gg/envio) for personalized migration assistance.
