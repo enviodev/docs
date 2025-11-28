@@ -1,6 +1,6 @@
 ---
 id: overview
-title: Overview
+title: "HyperIndex: Fast Multichain Indexer"
 sidebar_label: Overview
 slug: /overview
 description: Explore HyperIndex, a blazing-fast multichain indexer for real-time blockchain data.
@@ -11,7 +11,6 @@ description: Explore HyperIndex, a blazing-fast multichain indexer for real-time
   <meta name="twitter:image" content="/img/preview-banner.png" />
 </Head>
 
-# HyperIndex: Fast Multichain Indexer
 
 **HyperIndex** is a blazing-fast, developer-friendly multichain indexer, optimized for both local development and reliable hosted deployment. It empowers developers to effortlessly build robust backends for blockchain applications.
 

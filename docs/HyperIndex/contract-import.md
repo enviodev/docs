@@ -1,6 +1,6 @@
 ---
 id: contract-import
-title: Quickstart
+title: HyperIndex Quickstart
 sidebar_label: Quickstart
 slug: /contract-import
 description: Learn to quickly autogenerate and configure a HyperIndex indexer for any smart contract.

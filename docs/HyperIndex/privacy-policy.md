@@ -3,7 +3,7 @@ id: privacy-policy
 title: Privacy policy
 sidebar_label: Privacy policy
 slug: /privacy-policy
-description: Learn about privacy policy of Envio.
+description: Read Envio’s Privacy Policy covering how we collect, use, store, and protect your personal data when you use our website and services.
 ---
 
 # Privacy Policy

@@ -3,7 +3,7 @@ id: hyperrpc-supported-networks
 title: Supported Networks
 sidebar_label: Supported Networks
 slug: /hyperrpc-supported-networks
-description: Explore HyperRPC supported blockchain network.
+description: See all networks currently supported by HyperRPC, including their endpoints, network IDs, and trace support. Updated regularly as we add new chains.
 ---
 
 :::note
@@ -77,7 +77,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Moonbeam             | 1284       | https://moonbeam.rpc.hypersync.xyz or https://1284.rpc.hypersync.xyz                |                 |
 | Morph                | 2818       | https://morph.rpc.hypersync.xyz or https://2818.rpc.hypersync.xyz                   |                 |
 | Opbnb                | 204        | https://opbnb.rpc.hypersync.xyz or https://204.rpc.hypersync.xyz                    |                 |
-| Optimism             | 10         | https://optimism.rpc.hypersync.xyz or https://10.rpc.hypersync.xyz                  |                 |
 | Optimism Sepolia     | 11155420   | https://optimism-sepolia.rpc.hypersync.xyz or https://11155420.rpc.hypersync.xyz    |                 |
 | Plasma               | 9745       | https://plasma.rpc.hypersync.xyz or https://9745.rpc.hypersync.xyz                  |                 |
 | Plume                | 98866      | https://plume.rpc.hypersync.xyz or https://98866.rpc.hypersync.xyz                  |                 |

@@ -1,12 +1,10 @@
 ---
 id: hosted-service
-title: Overview
+title: Envio Hosted Service
 sidebar_label: Overview
 slug: /hosted-service
 description: Explore Envio's fully managed hosting for indexers with easy Git deployments, monitoring, and multi-chain support.
 ---
-
-# Envio Hosted Service
 
 Envio offers a fully managed hosting solution for your indexers, providing all the infrastructure, scaling, and monitoring needed to run production-grade indexers without operational overhead.
 

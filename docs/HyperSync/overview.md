@@ -1,6 +1,6 @@
 ---
 id: overview
-title: HyperSync Overview
+title: HyperSync
 sidebar_label: Overview
 slug: /overview
 description: Explore HyperSync for ultra-fast blockchain data access and flexible queries across 70+ networks.

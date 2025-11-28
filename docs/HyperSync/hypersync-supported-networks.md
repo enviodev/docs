@@ -3,7 +3,7 @@ id: hypersync-supported-networks
 title: Supported Networks
 sidebar_label: Supported Networks
 slug: /hypersync-supported-networks
-description: Discover all networks currently supported by HyperSync
+description: See all networks currently supported by HyperSync, including coverage tiers, reliability notes and the criteria we use when adding new chains.
 ---
 
 :::note
@@ -85,7 +85,6 @@ If you are a network operator or user and would like improved service support or
 | Moonbeam             | 1284       | https://moonbeam.hypersync.xyz or https://1284.hypersync.xyz                        | 🪨   |                 |
 | Morph                | 2818       | https://morph.hypersync.xyz or https://2818.hypersync.xyz                           | 🪨   |                 |
 | Opbnb                | 204        | https://opbnb.hypersync.xyz or https://204.hypersync.xyz                            | 🪨   |                 |
-| Optimism             | 10         | https://optimism.hypersync.xyz or https://10.hypersync.xyz                          | 🏅   |                 |
 | Optimism Sepolia     | 11155420   | https://optimism-sepolia.hypersync.xyz or https://11155420.hypersync.xyz            | 🎒   |                 |
 | Plasma               | 9745       | https://plasma.hypersync.xyz or https://9745.hypersync.xyz                          | 🥉   |                 |
 | Plume                | 98866      | https://plume.hypersync.xyz or https://98866.hypersync.xyz                          | 🪨   |                 |

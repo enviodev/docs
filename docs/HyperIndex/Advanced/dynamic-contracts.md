@@ -1,12 +1,10 @@
 ---
 id: dynamic-contracts
-title: Loading Dynamic Contracts
+title: Loading Dynamic Contracts / Factories 
 sidebar_label: Dynamic Contracts / Factories
 slug: /dynamic-contracts
 description: Learn how to track and index dynamically created contracts from factory contracts.
 ---
-
-# Dynamic Contracts / Factories
 
 ## Introduction
 
