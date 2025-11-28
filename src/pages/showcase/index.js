@@ -23,7 +23,7 @@ const sites = [
     description: "A real-time dashboard for USDC transaction monitoring across multiple chains.",
     video: "/img/showcase/stable-radar.webm",
     source: "https://stable-radar.com",
-    tags: [tags.hyperindex],
+    tags: [tags.hypersync],
   },
   {
     title: "Stable Volume",
