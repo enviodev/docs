@@ -106,7 +106,7 @@ Your application code stays untouched. Queries stay close to what you already us
 
 ## Conclusion
 
-Migrate faster, not harder. Alchemy stepping away from Subgraphs does not mean your project has to stop. Migrating to Envio is fast, stable and gives you a more reliable long term foundation for your data.
+Migrate faster, not harder. Alchemy stepping away from Subgraphs does not mean your project has to stop. Migrating to Envio is fast, stable and gives you a more reliable long-term foundation for your data.
 
 Book a [migration call](https://envio.dev/alchemy-migration), move your Subgraphs and keep shipping without interruption.
 
