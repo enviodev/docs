@@ -1,8 +1,6 @@
 ---
 title: How Envio Simplifies Data Retrieval for Multichain DApps
 sidebar_label: How Envio Simplifies Data Retrieval for Multichain DApps
-title: How Envio Simplifies Data Retrieval for Multichain DApps
-sidebar_label: How Envio Simplifies Data Retrieval for Multichain DApps
 slug: /how-envio-simplifies-data-retrieval-for-multi-chain-dapps
 description: "Learn how blockchain indexers like Envio streamline data retrieval for multichain dApps by indexing smart contracts across networks and providing real-time access through a unified query layer."
 ---
