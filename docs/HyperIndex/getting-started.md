@@ -1,10 +1,12 @@
 ---
 id: getting-started
-title: Getting Started
+title: Getting Started with Envio
 sidebar_label: Getting Started
 slug: /getting-started
 description: Get started with Envio indexer setup, templates, and local or hosted deployment quickly.
 ---
+
+Learn how to create and run an indexer with Envio’s HyperIndex, from initialization to local testing and deployment.
 
 ## Indexer Initialization
 

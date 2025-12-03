@@ -6,8 +6,6 @@ slug: /tutorial-indexing-fuel
 description: Learn how to index Sway Farm on Fuel and track player events with Envio.
 ---
 
-# Indexing Sway Farm on the Fuel Network
-
 Until recently, HyperIndex was only available on EVM-compatible blockchains, and now we have extended support to the [Fuel](https://fuel.network/) Network.
 
 Indexers are vital to the success of any dApp. In this tutorial, we will create an Envio indexer for the Fuel dApp [Sway Farm](https://swayfarm.xyz/) step by step.
