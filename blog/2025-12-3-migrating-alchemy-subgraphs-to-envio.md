@@ -99,7 +99,7 @@ Most of your stack stays the same. Here is what changes:
 
 • You get an active team supporting your indexers
 
-• You get a future proof path that consistently scales with you
+• You get a future-proof path that consistently scales with you
 
 Your application code stays untouched. Queries stay close to what you already use. And you get more reliability as soon as you deploy.
 
