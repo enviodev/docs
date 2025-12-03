@@ -61,18 +61,12 @@ Envio supports both HyperIndex and HyperSync. For migrations, you will be using 
 Here is the exact workflow to migrate an Alchemy Subgraph to Envio:
 
 
-#### 1. Generate a new HyperIndex project
+### 1. Generate a new HyperIndex project
 
 
 Run:
 
 
-```
-pnpx envio init
-```
-
-
-Select Quickstart and point it at the contract address you are indexing on Alchemy. Envio will auto generate a working indexer setup for you.
 
 
 #### 2. Bring over your schema
