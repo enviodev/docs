@@ -100,6 +100,7 @@ module.exports = {
         "Tutorials/greeter-tutorial",
         "Tutorials/price-data",
         "Tutorials/tutorial-scaffold-eth-2",
+        "Tutorials/websockets"
       ],
     },
     {
