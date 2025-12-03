@@ -19,11 +19,7 @@ By default, HyperIndex provides GraphQL endpoints over HTTP/HTTPS. However, you 
 WebSocket connections are available with different levels of support depending on your hosting plan:
 
 - **Dedicated**: WebSockets are fully supported. The dedicated package includes additional infrastructure such as connection pooling which enables proper WebSocket support.
-- **Other Plans**: WebSocket support is available but should be used at your own risk. These plans do not have the same infrastructure support for websockets as dedicated. Depending on your plan and use case, non-dedicated plans may only support a limited number of concurrent subscriptions (for example, up to 2 connections on dev tier, or up to 20 on production medium tier) before the server begins to struggle.
-
-:::note
-These connection limits are rough estimates, not known figures. Actual capacity may vary depending on your specific use case and plan.
-:::
+- **Other Plans**: WebSocket support is available but should be used at your own risk. These plans do not have the same infrastructure support for WebSockets as dedicated. We don't recommend relying on WebSockets for more than 10 concurrent connections.
 
 ## How to Use WebSockets
 
