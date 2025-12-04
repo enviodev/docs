@@ -124,6 +124,37 @@
   animation: slideIn 0.3s ease-out;
 }
 
+.panelInputContainer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-background-color);
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .panelInputContainer {
+  border-top-color: var(--ifm-color-emphasis-200);
+}
+
+.panelInputContainer .input {
+  border: 1px solid var(--ifm-color-emphasis-400) !important;
+  border-radius: 999px;
+  padding: 0.625rem 1rem;
+  background: var(--ifm-background-color);
+}
+
+.panelInputContainer .input:focus {
+  border-color: var(--ifm-color-primary) !important;
+  outline: none;
+}
+
+[data-theme="dark"] .panelInputContainer .input {
+  border-color: var(--ifm-color-emphasis-500) !important;
+}
+
+[data-theme="dark"] .panelInputContainer .input:focus {
+  border-color: var(--ifm-color-primary) !important;
+}
+
 [data-theme="dark"] .sidePanel {
   box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
 }
