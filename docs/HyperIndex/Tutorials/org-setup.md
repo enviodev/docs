@@ -18,7 +18,7 @@ This tutorial guides you through creating an organization in the Envio hosted se
 
 ## Step 2: Log In with GitHub
 
-2.1. Click the **"Login with Github"** button in the top right corner
+2.1. Click the **"Login with GitHub"** button in the top right corner
 
 2.2. After logging in, you'll be redirected to your hosted service page at `https://envio.dev/app/<your-github-username>`
 
