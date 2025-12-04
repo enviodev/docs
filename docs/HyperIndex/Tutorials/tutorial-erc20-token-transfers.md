@@ -12,7 +12,7 @@ In this tutorial, you'll learn how to index ERC20 token transfers on the Base ne
 
 We'll create an indexer that tracks all USDC token transfers on Base by extracting the `Transfer` events emitted by the USDC contract. The entire process takes less than 5 minutes to set up and start querying data.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/e1xznmKBLa8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/e1xznmKBLa8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
 
 ## Prerequisites
 

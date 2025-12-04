@@ -57,7 +57,7 @@ Use existing example indexers as a starting point. You can find these examples i
 
 > **Important:** Always verify the Envio version used by the example indexer matches the [latest npm version](https://www.npmjs.com/package/envio). You may need minor adjustments to ensure compatibility.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/LNhaN-Cikis" title="Envio - Getting Started Guide" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/LNhaN-Cikis" title="Envio - Getting Started Guide" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
 
 ---
 
