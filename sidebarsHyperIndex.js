@@ -88,6 +88,7 @@ module.exports = {
         "Hosted_Service/hosted-service-monitoring",
         "Hosted_Service/hosted-service-billing",
         "Hosted_Service/self-hosting",
+        "Hosted_Service/organisation-setup",
       ],
     },
     {
@@ -100,7 +101,7 @@ module.exports = {
         "Tutorials/greeter-tutorial",
         "Tutorials/price-data",
         "Tutorials/tutorial-scaffold-eth-2",
-        "Tutorials/websockets"
+        "Tutorials/websockets",
       ],
     },
     {
