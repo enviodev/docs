@@ -1,6 +1,6 @@
 ---
 id: organisation-setup
-title: Organization Setup
+title: Organisation Setup
 sidebar_label: Organisation Setup
 slug: /organisation-setup
 description: Learn how to create an organisation in the Envio hosted service and manage team members
@@ -12,13 +12,13 @@ Use this guide to set up an organisation in the Envio hosted service and grant a
 
 ---
 
-## Creating an Organization
+## Creating an Organisation
 
 To create a new organisation, navigate to **https://envio.dev** and click the **Hosted Service** button in the top right corner. Log in with GitHub, then in the top-left menu, select **Install App**. This action redirects you to GitHub, where you can install the **Envio Deployments** app for the relevant GitHub organisation.
 
 <div style={{textAlign: 'center'}}>
 
-![Add New Organization Popup](/img/org-setup/add-new-organisation-popup.png)
+![Add New Organisation Popup](/img/org-setup/add-new-organisation-popup.png)
 
 </div>
 
