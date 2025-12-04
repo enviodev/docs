@@ -3,26 +3,26 @@ id: organisation-setup
 title: Organization Setup
 sidebar_label: Organisation Setup
 slug: /organisation-setup
-description: Learn how to create an organization in the Envio hosted service and manage team members
+description: Learn how to create an organisation in the Envio hosted service and manage team members
 ---
 
 # Organisation Setup
 
-Use this guide to set up an organization in the Envio hosted service and grant access to your team.
+Use this guide to set up an organisation in the Envio hosted service and grant access to your team.
 
 ---
 
 ## Creating an Organization
 
-To create a new organization, navigate to **https://envio.dev** and click the **Hosted Service** button in the top right corner. Log in with GitHub, then in the top-left menu, select **Install App**. This action redirects you to GitHub, where you can install the **Envio Deployments** app for the relevant GitHub organization.
+To create a new organisation, navigate to **https://envio.dev** and click the **Hosted Service** button in the top right corner. Log in with GitHub, then in the top-left menu, select **Install App**. This action redirects you to GitHub, where you can install the **Envio Deployments** app for the relevant GitHub organisation.
 
 <div style={{textAlign: 'center'}}>
 
-![Add New Organization Popup](/img/org-setup/add-new-organization-popup.png)
+![Add New Organization Popup](/img/org-setup/add-new-organisation-popup.png)
 
 </div>
 
-On GitHub, choose the organization you want to enable and complete the installation. Once approved, GitHub returns you to the new organization's page in the hosted service UI.
+On GitHub, choose the organisation you want to enable and complete the installation. Once approved, GitHub returns you to the new organisation's page in the hosted service UI.
 
 <div style={{display: 'flex', gap: '1rem', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap'}}>
   <div style={{flex: '1', minWidth: '300px', maxWidth: '500px'}}>
@@ -37,7 +37,7 @@ On GitHub, choose the organization you want to enable and complete the installat
 
 ## Access Control
 
-Being a member of the GitHub organization **does not** automatically grant access to the organization in the Envio hosted service UI. Each member must be explicitly added by the organization admin. If someone attempts to visit the organization URL (e.g., `https://envio.dev/app/<org-name>`) without being added, they'll see a "You are not a member of the project" message.
+Being a member of the GitHub organisation **does not** automatically grant access to the organisation in the Envio hosted service UI. Each member must be explicitly added by the organisation admin. If someone attempts to visit the organisation URL (e.g., `https://envio.dev/app/<org-name>`) without being added, they'll see a "You are not a member of the project" message.
 
 <div style={{textAlign: 'center'}}>
 
@@ -49,7 +49,7 @@ Being a member of the GitHub organization **does not** automatically grant acces
 
 ## Adding Members
 
-The organization admin must add members from the organization page in Envio. Open the **Add Members** view to see all users associated with your GitHub organization, then grant access by selecting **Add member** next to each person.
+The organisation admin must add members from the organisation page in Envio. Open the **Add Members** view to see all users associated with your GitHub organisation, then grant access by selecting **Add member** next to each person.
 
 <div style={{textAlign: 'center'}}>
 
@@ -63,6 +63,6 @@ The organization admin must add members from the organization page in Envio. Ope
 
 </div>
 
-Once added, members should be able to access the organization's page in the hosted service UI and start creating projects!
+Once added, members should be able to access the organisation's page in the hosted service UI and start creating projects!
 
 ---
