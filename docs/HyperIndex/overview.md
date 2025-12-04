@@ -66,7 +66,7 @@ For more details about API tokens, including how to generate and implement them,
 
 Upcoming features on our development roadmap:
 
-- **Clickhouse Integration**
+- **ClickHouse Sink**
 - **Solana Slot Handler**
 - **New Testing Framework**
 - **Isolated Multichain Mode**
