@@ -14,7 +14,7 @@ HyperSync is Envio's high-performance blockchain data engine that provides up to
 
 Watch this quick tutorial to see HyperSync in action:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/S9Z6XkY3aP8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/S9Z6XkY3aP8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
 
 ## Core Concepts
 
