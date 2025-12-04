@@ -66,7 +66,11 @@ For more details about API tokens, including how to generate and implement them,
 
 Upcoming features on our development roadmap:
 
-- **⬜ RPC client with caching** – Improved indexing performance through cached RPC calls.
+- **Clickhouse Integration**
+- **Solana Slot Handler**
+- **New Testing Framework**
+- **Isolated Multichain Mode**
+- **Top Level Await Support**
 
 ---
 
