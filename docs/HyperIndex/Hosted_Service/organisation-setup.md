@@ -14,7 +14,7 @@ Use this guide to set up an organization in the Envio hosted service and grant a
 
 ## Creating an Organization
 
-To create a new organization, open the Envio hosted service at **https://envio.dev** and log in with GitHub. In the top-left menu, select **+ Add new organisation**. This action redirects you to GitHub, where you can install the **Envio Deployments** app for the relevant GitHub organization.
+To create a new organization, navigate to **https://envio.dev** and click the **Hosted Service** button in the top right corner. Log in with GitHub, then in the top-left menu, select **Install App**. This action redirects you to GitHub, where you can install the **Envio Deployments** app for the relevant GitHub organization.
 
 <div style={{textAlign: 'center'}}>
 
