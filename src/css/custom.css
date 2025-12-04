@@ -430,12 +430,6 @@ table td {
   line-height: 1.7;
 }
 
-/* Center images in documentation */
-.theme-doc-markdown img {
-  display: block;
-  margin: 1.5rem auto;
-}
-
 .theme-doc-markdown h1,
 .theme-doc-markdown h2,
 .theme-doc-markdown h3,

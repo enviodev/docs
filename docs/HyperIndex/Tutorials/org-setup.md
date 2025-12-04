@@ -8,7 +8,7 @@ description: Learn how to create an organization in the Envio hosted service and
 
 # Organization Setup
 
-This tutorial guides you through creating an organization in the Envio hosted service and adding team members to collaborate on your .projects
+This tutorial guides you through creating an organization in the Envio hosted service and adding team members to collaborate on your projects.
 
 ## Step 1: Access the Hosted Service
 
@@ -28,7 +28,11 @@ This tutorial guides you through creating an organization in the Envio hosted se
 
 3.2. In the popup menu, click the **"Install App"** button next to **"+ Add new organisation"**
 
+<div style={{textAlign: 'center'}}>
+
 ![Add New Organization Popup](/img/org-setup/add-new-organization-popup.png)
+
+</div>
 
 ## Step 4: Install Envio Deployments App
 
@@ -36,21 +40,37 @@ This tutorial guides you through creating an organization in the Envio hosted se
 
 4.2. Select your organization from the list
 
+<div style={{textAlign: 'center'}}>
+
 ![Install Envio Deployments Page](/img/org-setup/install-envio-deployments-page.png)
+
+</div>
 
 4.3. On the next page, click **Install** to authorize the app
 
+<div style={{textAlign: 'center'}}>
+
 ![Select Org and Install](/img/org-setup/select-org-install-page.png)
+
+</div>
 
 4.4. After installation, you'll be redirected to your organization's page in Envio
 
+<div style={{textAlign: 'center'}}>
+
 ![Organization Page After Install](/img/org-setup/org-page-after-install.png)
+
+</div>
 
 ## Step 5: Understanding Member Access
 
 5.1. When other GitHub organization members try to access the organization page in Envio (by navigating to `https://envio.dev/app/<your-org-name>`), they'll see an error: **"You are not a member of the project"**
 
+<div style={{textAlign: 'center'}}>
+
 ![Not a Member Error](/img/org-setup/not-a-member-error.png)
+
+</div>
 
 5.2. This occurs because the organization admin must explicitly add members through the Envio UI, even if they're already members of the GitHub organization
 
@@ -60,11 +80,19 @@ This tutorial guides you through creating an organization in the Envio hosted se
 
 6.2. Click the **"Add Members"** button
 
+<div style={{textAlign: 'center'}}>
+
 ![Add Members Button](/img/org-setup/add-members-button.png)
+
+</div>
 
 6.3. You'll see a list of all members in your GitHub organization
 
+<div style={{textAlign: 'center'}}>
+
 ![Members List Page](/img/org-setup/members-list-page.png)
+
+</div>
 
 6.4. Click **"Add member"** next to each user you want to grant access to
 
