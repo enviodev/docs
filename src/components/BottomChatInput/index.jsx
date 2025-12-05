@@ -5,9 +5,11 @@ import styles from './styles.module.css';
 function BottomChatInput() {
   const [isOpen, setIsOpen] = useState(false);
   const [question, setQuestion] = useState('');
+  const [messages, setMessages] = useState([]);
   const [isVisible, setIsVisible] = useState(true);
   const inputRef = useRef(null);
   const observerRef = useRef(null);
+  const messagesEndRef = useRef(null);
   
   const location = useLocation();
   
@@ -62,25 +64,39 @@ function BottomChatInput() {
     };
   }, [isDocPage, location.pathname, isOpen]);
 
-  if (!isDocPage) {
-    return null;
-  }
+  // Auto-scroll to bottom when messages change
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
 
-  const handleSubmit = async (e) => {
+  const COOKBOOK_PUBLIC_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NmY0NjNmNmJkODc1Y2E3NmUwMjAzMTciLCJpYXQiOjE3MjcyOTI0MDYsImV4cCI6MjA0Mjg2ODQwNn0.ruDwarOVwJ68IihIdMcqeKM7C0E_JaV-f0JIgqNwsdo";
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!question.trim()) return;
     
     const userQuestion = question.trim();
-    // Don't clear question - keep it in the sidebar input
+    
+    // Add the question as a user message
+    setMessages(prev => [...prev, { type: 'user', text: userQuestion }]);
+    
+    // Clear the input
+    setQuestion('');
+    
+    // Open the sidebar
     setIsOpen(true);
     
-    // TODO: Connect to LLM API here
-    // You can use the same API key from docsbot or integrate with your own LLM service
-    // Example: const response = await fetch('YOUR_LLM_API_ENDPOINT', { ... });
-    console.log('Question submitted:', userQuestion);
-    
-    // For now, just show placeholder - will connect to LLM later
+    // Scroll to bottom of messages
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   };
+
+  if (!isDocPage) {
+    return null;
+  }
 
   const handleClose = () => {
     setIsOpen(false);
@@ -149,9 +165,25 @@ function BottomChatInput() {
               </button>
             </div>
             <div className={styles.panelContent}>
-              <p className={styles.placeholderText}>
-                AI response will appear here. This will be connected to the LLM API soon.
-              </p>
+              {messages.length === 0 ? (
+                <p className={styles.placeholderText}>
+                  Ask a question about Envio and get an AI-powered answer based on our documentation.
+                </p>
+              ) : (
+                <div className={styles.messagesContainer}>
+                  {messages.map((message, index) => (
+                    <div
+                      key={index}
+                      className={`${styles.messageBubble} ${
+                        message.type === 'user' ? styles.userMessage : styles.aiMessage
+                      }`}
+                    >
+                      <div className={styles.messageText}>{message.text}</div>
+                    </div>
+                  ))}
+                  <div ref={messagesEndRef} />
+                </div>
+              )}
             </div>
             {/* Input at bottom of side panel */}
             <div className={styles.panelInputContainer}>
