@@ -29,8 +29,6 @@ If you are a network operator or user and would like improved service support or
 :::
 
 
-<div className="supported-networks-table-wrapper">
-
 | Network Name              | Network ID      | URL                                                                                      | Tier
 | ------------------------- | --------------- | ---------------------------------------------------------------------------------------- | ----
 | Ab                        | 36888           | https://ab.hypersync.xyz or https://36888.hypersync.xyz                                  | 🪨  
@@ -118,7 +116,5 @@ If you are a network operator or user and would like improved service support or
 | Zircuit                   | 48900           | https://zircuit.hypersync.xyz or https://48900.hypersync.xyz                             | 🪨  
 | ZKsync                    | 324             | https://zksync.hypersync.xyz or https://324.hypersync.xyz                                | 🥉  
 | Zora                      | 7777777         | https://zora.hypersync.xyz or https://7777777.hypersync.xyz                              | 🪨  
-
-</div>
 
 ---

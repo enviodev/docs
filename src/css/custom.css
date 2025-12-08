@@ -220,46 +220,18 @@ article a {
 
 /* Clean table styling */
 table {
+  display: table;
+  width: 100%;
   border-radius: 6px;
   overflow: hidden;
   border: 1px solid #e5e5e5;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
 [data-theme="dark"] table {
   border: 1px solid #262626;
 }
-
-/* Specific styling for supported networks tables - minimal CSS */
-.supported-networks-table-wrapper table {
-  table-layout: fixed;
-}
-
-.supported-networks-table-wrapper table thead,
-.supported-networks-table-wrapper table tbody {
-  width: 100% !important;
-}
-
-/* Set column widths to ensure table fills width */
-.supported-networks-table-wrapper table th:nth-child(1),
-.supported-networks-table-wrapper table td:nth-child(1) {
-  width: 15% !important;
-}
-
-.supported-networks-table-wrapper table th:nth-child(2),
-.supported-networks-table-wrapper table td:nth-child(2) {
-  width: 10% !important;
-}
-
-.supported-networks-table-wrapper table th:nth-child(3),
-.supported-networks-table-wrapper table td:nth-child(3) {
-  width: 65% !important;
-}
-
-.supported-networks-table-wrapper table th:nth-child(4),
-.supported-networks-table-wrapper table td:nth-child(4) {
-  width: 10% !important;
-}
-
 
 table th {
   background: #fafafa;

@@ -136,7 +136,7 @@ const updateMarkdownFiles = async () => {
     let hyperSyncContent = fs.readFileSync(HYPERSYNC_FILE_PATH, "utf8");
 
     const hyperSyncRegex =
-      /([\s\S]*?<div className="supported-networks-table-wrapper">\n\n)\| Network Name[\s\S]*?\n\n(<\/div>\n[\s\S]*|$)/;
+      /([\s\S]*?\n\n)\| Network Name[\s\S]*?\n\n([\s\S]*|$)/;
     const hyperSyncMatch = hyperSyncContent.match(hyperSyncRegex);
 
     if (hyperSyncMatch) {
@@ -159,7 +159,7 @@ const updateMarkdownFiles = async () => {
     let hyperRPCContent = fs.readFileSync(HYPERRPC_FILE_PATH, "utf8");
 
     const hyperRPCRegex =
-      /([\s\S]*?<div className="supported-networks-table-wrapper">\n\n)\| Network Name[\s\S]*?\n\n(<\/div>\n[\s\S]*|$)/;
+      /([\s\S]*?\n\n)\| Network Name[\s\S]*?\n\n([\s\S]*|$)/;
     const hyperRPCMatch = hyperRPCContent.match(hyperRPCRegex);
 
     if (hyperRPCMatch) {
