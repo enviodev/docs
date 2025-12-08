@@ -21,6 +21,8 @@ https://100.rpc.hypersync.xyz/<api-token>
 Here is a table of the currently supported networks on HyperRPC and their respective URL endpoints.
 
 
+
+
 | Network Name              | Network ID      | URL                                                                                      |
 | ------------------------- | --------------- | ---------------------------------------------------------------------------------------- |
 | Ab                        | 36888           | https://ab.rpc.hypersync.xyz or https://36888.rpc.hypersync.xyz                          |

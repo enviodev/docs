@@ -141,7 +141,7 @@ const updateMarkdownFiles = async () => {
 
     if (hyperSyncMatch) {
       const updatedHyperSyncContent =
-        hyperSyncMatch[1] + hyperSyncTable + "\n" + hyperSyncMatch[2];
+        hyperSyncMatch[1] + "\n" + hyperSyncTable + "\n" + hyperSyncMatch[2];
       hyperSyncContent = hyperSyncContent.replace(
         hyperSyncRegex,
         updatedHyperSyncContent
@@ -164,7 +164,7 @@ const updateMarkdownFiles = async () => {
 
     if (hyperRPCMatch) {
       const updatedHyperRPCContent =
-        hyperRPCMatch[1] + hyperRPCTable + "\n" + hyperRPCMatch[2];
+        hyperRPCMatch[1] + "\n" + hyperRPCTable + "\n" + hyperRPCMatch[2];
       hyperRPCContent = hyperRPCContent.replace(
         hyperRPCRegex,
         updatedHyperRPCContent
