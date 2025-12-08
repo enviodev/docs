@@ -21,6 +21,8 @@ https://100.rpc.hypersync.xyz/<api-token>
 Here is a table of the currently supported networks on HyperRPC and their respective URL endpoints.
 
 
+<div className="supported-networks-table-wrapper">
+
 | Network Name              | Network ID      | URL                                                                                     
 | ------------------------- | --------------- | ----------------------------------------------------------------------------------------
 | Ab                        | 36888           | https://ab.rpc.hypersync.xyz or https://36888.rpc.hypersync.xyz                         
@@ -108,4 +110,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Zircuit                   | 48900           | https://zircuit.rpc.hypersync.xyz or https://48900.rpc.hypersync.xyz                    
 | ZKsync                    | 324             | https://zksync.rpc.hypersync.xyz or https://324.rpc.hypersync.xyz                       
 | Zora                      | 7777777         | https://zora.rpc.hypersync.xyz or https://7777777.rpc.hypersync.xyz                     
+
+</div>
 

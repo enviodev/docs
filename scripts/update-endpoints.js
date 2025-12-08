@@ -136,12 +136,12 @@ const updateMarkdownFiles = async () => {
     let hyperSyncContent = fs.readFileSync(HYPERSYNC_FILE_PATH, "utf8");
 
     const hyperSyncRegex =
-      /([\s\S]*?\n\n)\n*\| Network Name[\s\S]*?\n\n([\s\S]*|$)/;
+      /([\s\S]*?<div className="supported-networks-table-wrapper">\n\n)\| Network Name[\s\S]*?\n\n(<\/div>\n[\s\S]*|$)/;
     const hyperSyncMatch = hyperSyncContent.match(hyperSyncRegex);
 
     if (hyperSyncMatch) {
       const updatedHyperSyncContent =
-        hyperSyncMatch[1] + "\n" + hyperSyncTable + "\n" + hyperSyncMatch[2];
+        hyperSyncMatch[1] + hyperSyncTable + "\n" + hyperSyncMatch[2];
       hyperSyncContent = hyperSyncContent.replace(
         hyperSyncRegex,
         updatedHyperSyncContent
@@ -159,12 +159,12 @@ const updateMarkdownFiles = async () => {
     let hyperRPCContent = fs.readFileSync(HYPERRPC_FILE_PATH, "utf8");
 
     const hyperRPCRegex =
-      /([\s\S]*?\n\n)\n*\| Network Name[\s\S]*?\n\n([\s\S]*|$)/;
+      /([\s\S]*?<div className="supported-networks-table-wrapper">\n\n)\| Network Name[\s\S]*?\n\n(<\/div>\n[\s\S]*|$)/;
     const hyperRPCMatch = hyperRPCContent.match(hyperRPCRegex);
 
     if (hyperRPCMatch) {
       const updatedHyperRPCContent =
-        hyperRPCMatch[1] + "\n" + hyperRPCTable + "\n" + hyperRPCMatch[2];
+        hyperRPCMatch[1] + hyperRPCTable + "\n" + hyperRPCMatch[2];
       hyperRPCContent = hyperRPCContent.replace(
         hyperRPCRegex,
         updatedHyperRPCContent
