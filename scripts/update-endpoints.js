@@ -35,9 +35,9 @@ const generateCommonTableHeader = (columns) => {
   let header =
     "| " +
     columns.map((col) => col.name.padEnd(col.width)).join(" | ") +
-    "\n";
+    " |\n";
   header +=
-    "| " + columns.map((col) => "-".repeat(col.width)).join(" | ") + "\n";
+    "| " + columns.map((col) => "-".repeat(col.width)).join(" | ") + " |\n";
   return header;
 };
 
@@ -62,7 +62,7 @@ const generateTableRow = (columns, values) => {
   return (
     "| " +
     columns.map((col, index) => values[index].padEnd(col.width)).join(" | ") +
-    "\n"
+    " |\n"
   );
 };
 
