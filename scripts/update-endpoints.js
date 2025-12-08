@@ -15,18 +15,16 @@ const RENAME_CONFIG = {
 const FILTER_ENDPOINTS = [/^staging-/, /fuel/, /temporary/, /delete/];
 
 const HYPERSYNC_COLUMNS = [
-  { name: "Network Name", width: 20 },
-  { name: "Network ID", width: 10 },
-  { name: "URL", width: 83 },
+  { name: "Network Name", width: 25 },
+  { name: "Network ID", width: 15 },
+  { name: "URL", width: 88 },
   { name: "Tier", width: 4 },
-  { name: "Supports Traces", width: 15 },
 ];
 
 const HYPERRPC_COLUMNS = [
-  { name: "Network Name", width: 20 },
-  { name: "Network ID", width: 10 },
-  { name: "URL", width: 83 },
-  { name: "Supports Traces", width: 15 },
+  { name: "Network Name", width: 25 },
+  { name: "Network ID", width: 15 },
+  { name: "URL", width: 88 },
 ];
 
 const capitalizeAndSplit = (name) => {
@@ -89,11 +87,6 @@ const generateHyperSyncTable = (data) => {
 
     const tier = emojiTier(chain);
 
-    const supportsTraces =
-      chain.additional_features && chain.additional_features.includes("TRACES")
-        ? TICK
-        : " ";
-
     // Check if this is a traces network and modify the URL accordingly
     const isTracesNetwork = chain.name.toLowerCase().includes("traces");
     const chainIdSuffix = isTracesNetwork ? `-traces` : "";
@@ -104,7 +97,6 @@ const generateHyperSyncTable = (data) => {
       chain.chain_id.toString(),
       url,
       tier,
-      supportsTraces,
     ]);
   });
 
@@ -122,16 +114,10 @@ const generateHyperRPCTable = (data) => {
     const chainIdSuffix = isTracesNetwork ? `-traces` : "";
     const url = `https://${chain.name}.rpc.hypersync.xyz or https://${chain.chain_id}${chainIdSuffix}.rpc.hypersync.xyz`;
 
-    const supportsTraces =
-      chain.additional_features && chain.additional_features.includes("TRACES")
-        ? TICK
-        : " ";
-
     table += generateTableRow(HYPERRPC_COLUMNS, [
       networkName,
       chain.chain_id.toString(),
       url,
-      supportsTraces,
     ]);
   });
 
@@ -150,7 +136,7 @@ const updateMarkdownFiles = async () => {
     let hyperSyncContent = fs.readFileSync(HYPERSYNC_FILE_PATH, "utf8");
 
     const hyperSyncRegex =
-      /([\s\S]*?\n\n)\n*\| Network Name.*\| Supports Traces \|\n\| -+.*\| -+ \|\n[\s\S]*?\n*(\n\n[\s\S]*|$)/;
+      /([\s\S]*?\n\n)\| Network Name[\s\S]*?\n\n([\s\S]*|$)/;
     const hyperSyncMatch = hyperSyncContent.match(hyperSyncRegex);
 
     if (hyperSyncMatch) {
@@ -173,7 +159,7 @@ const updateMarkdownFiles = async () => {
     let hyperRPCContent = fs.readFileSync(HYPERRPC_FILE_PATH, "utf8");
 
     const hyperRPCRegex =
-      /([\s\S]*?\n\n)\n*\| Network Name.*\| Supports Traces \|\n\| -+.*\| -+ \|\n[\s\S]*?\n*(\n\n[\s\S]*|$)/;
+      /([\s\S]*?\n\n)\| Network Name[\s\S]*?\n\n([\s\S]*|$)/;
     const hyperRPCMatch = hyperRPCContent.match(hyperRPCRegex);
 
     if (hyperRPCMatch) {
