@@ -15,16 +15,16 @@ const RENAME_CONFIG = {
 const FILTER_ENDPOINTS = [/^staging-/, /fuel/, /temporary/, /delete/];
 
 const HYPERSYNC_COLUMNS = [
-  { name: "Network Name", width: 20 },
-  { name: "Network ID", width: 10 },
-  { name: "URL", width: 83 },
+  { name: "Network Name", width: 25 },
+  { name: "Network ID", width: 15 },
+  { name: "URL", width: 88 },
   { name: "Tier", width: 4 },
 ];
 
 const HYPERRPC_COLUMNS = [
-  { name: "Network Name", width: 20 },
-  { name: "Network ID", width: 10 },
-  { name: "URL", width: 83 },
+  { name: "Network Name", width: 25 },
+  { name: "Network ID", width: 15 },
+  { name: "URL", width: 88 },
 ];
 
 const capitalizeAndSplit = (name) => {
