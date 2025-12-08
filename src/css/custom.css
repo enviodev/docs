@@ -220,13 +220,8 @@ article a {
 
 /* Clean table styling */
 table {
-  display: table;
-  width: 100%;
   border-radius: 6px;
   overflow: hidden;
-  border: 1px solid #e5e5e5;
-  border-collapse: separate;
-  border-spacing: 0;
 }
 
 [data-theme="dark"] table {
@@ -296,7 +291,6 @@ table td {
   border-color: #ffffff;
 }
 
-
 [data-theme="dark"] .DocSearch-Hit[aria-selected="true"] a,
 [data-theme="dark"] .DocSearch-Hit a:hover {
   background-color: #6a6a6a !important;
@@ -308,7 +302,6 @@ table td {
 [data-theme="dark"] .DocSearch-Hit span {
   color: #ffffff !important;
 }
-
 
 /* Clean breadcrumb styling */
 .breadcrumbs {
