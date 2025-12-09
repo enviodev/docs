@@ -3,7 +3,7 @@ id: solana
 title: Solana
 sidebar_label: Solana
 slug: /solana
-description: Experimental Solana support in HyperIndex (v3.alpha.3). RPC-only source. Supports Block Handler, Effect API, and Hosted Service.
+description: Experimental Solana support in HyperIndex. Supports Block Handler, Effect API, and Hosted Service.
 ---
 
 > Experimental. Available since v3-alpha.3.  
@@ -11,9 +11,9 @@ description: Experimental Solana support in HyperIndex (v3.alpha.3). RPC-only so
 
 ## What’s supported
 
-- [Block Handler](/docs/HyperIndex/Guides/block-handlers)
-- [Effect API](/docs/HyperIndex/Guides/effect-api)
-- [Hosted Service](/docs/HyperIndex/Guides/hosted-service)
+- [Block Handler](/docs/HyperIndex/block-handlers)
+- [Effect API](/docs/HyperIndex/effect-api)
+- [Hosted Service](/docs/HyperIndex/hosted-service)
 
 ## Quickstart
 
