@@ -10,7 +10,7 @@ description: Explore how to index and query real-time and historical data on Fue
 
 ## Introduction
 
-Envio has expanded its indexing capabilities beyond EVM-compatible blockchains to now fully support the [Fuel Network](https://fuel.network/) (both mainnet and testnet). This documentation covers how to use Envio's products with Fuel's unique architecture and features. ⛽⚡
+Envio supports the [Fuel Network](https://fuel.network/) on mainnet and testnet. This page shows how to use HyperIndex with Fuel’s architecture and features.
 
 Fuel offers several advantages as a modular execution layer including:
 
@@ -156,64 +156,6 @@ SwayContract.NewGreeting.handler(async ({ event, context }) => {
     id: event.transaction.id,
     message: message,
     timestamp: blockTime,
-  });
-});
-```
-
-## Migration Guide from v2.x.x-fuel
-
-Starting with V2.3, the Fuel indexer has been integrated into the main `envio` package. If you were using the Fuel-specific version (`envio@2.x.x-fuel`), follow these steps to migrate:
-
-### 1. Update Package Version
-
-```bash
-# Update local dependency
-pnpm i envio@latest
-
-# If installed globally
-pnpm i -g envio@latest
-```
-
-### 2. Update Configuration
-
-Add the `ecosystem: fuel` field to your `config.yaml`:
-
-```yaml
-ecosystem: fuel # Required for Fuel indexers
-network:
-  name: "fuel_testnet"
-  # other network config...
-```
-
-### 3. Update Event Handler Code
-
-Several field names have changed in the event object:
-
-| Old Field             | New Field              |
-| --------------------- | ---------------------- |
-| `event.data.x`        | `event.params.x`       |
-| `event.time`          | `event.block.time`     |
-| `event.blockHeight`   | `event.block.height`   |
-| (none)                | `event.block.id`       |
-| `event.transactionId` | `event.transaction.id` |
-| `event.contractId`    | `event.srcAddress`     |
-| `event.receiptIndex`  | `event.logIndex`       |
-| `event.receiptType`   | (removed)              |
-
-Example migration:
-
-```diff
-SwayContract.NewGreeting.handler(async ({ event, context }) => {
-  context.Greeting.set({
--   id: event.data.id,
--   message: event.data.message,
--   createdAt: event.time,
--   blockHeight: event.blockHeight,
-+   id: event.params.id,
-+   message: event.params.message,
-+   createdAt: event.block.time,
-+   blockHeight: event.block.height,
-    transaction: event.transaction.id,
   });
 });
 ```

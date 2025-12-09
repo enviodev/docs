@@ -31,6 +31,8 @@ If you are a network operator or user and would like improved service support or
 
 
 
+
+
 | Network Name              | Network ID      | URL                                                                                      | Tier |
 | ------------------------- | --------------- | ---------------------------------------------------------------------------------------- | ---- |
 | Ab                        | 36888           | https://ab.hypersync.xyz or https://36888.hypersync.xyz                                  | 🪨   |
@@ -80,7 +82,6 @@ If you are a network operator or user and would like improved service support or
 | Megaeth Testnet2          | 6343            | https://megaeth-testnet2.hypersync.xyz or https://6343.hypersync.xyz                     | 🥈   |
 | Merlin                    | 4200            | https://merlin.hypersync.xyz or https://4200.hypersync.xyz                               | 🪨   |
 | Metall2                   | 1750            | https://metall2.hypersync.xyz or https://1750.hypersync.xyz                              | 🪨   |
-| Mev Commit                | 17864           | https://mev-commit.hypersync.xyz or https://17864.hypersync.xyz                          | 🪨   |
 | Mode                      | 34443           | https://mode.hypersync.xyz or https://34443.hypersync.xyz                                | 🪨   |
 | Monad                     | 143             | https://monad.hypersync.xyz or https://143.hypersync.xyz                                 | 🏅   |
 | Monad Testnet             | 10143           | https://monad-testnet.hypersync.xyz or https://10143.hypersync.xyz                       | 🏅   |
