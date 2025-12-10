@@ -30,6 +30,8 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 
 
 
+
+
 | Network Name              | Network ID      | URL                                                                                      |
 | ------------------------- | --------------- | ---------------------------------------------------------------------------------------- |
 | Ab                        | 36888           | https://ab.rpc.hypersync.xyz or https://36888.rpc.hypersync.xyz                          |
