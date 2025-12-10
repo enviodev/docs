@@ -154,6 +154,7 @@ module.exports = {
       ],
     },
     networksSection,
+    "solana/solana",
     "fuel/fuel",
     {
       type: "link",
