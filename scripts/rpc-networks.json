@@ -2,7 +2,7 @@
   "rpcNetworks": [
     {
       "chainId": 42429,
-      "name": "Tempo Testnet (Andantino)",
+      "name": "Tempo Testnet",
       "rpcEndpoints": [
         "https://rpc.testnet.tempo.xyz"
       ]
