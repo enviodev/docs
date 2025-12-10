@@ -383,11 +383,12 @@ const generateMarkdownFiles = async () => {
     // Update supported-networks.json
     fs.writeFileSync(
       path.join(rootDir, "supported-networks.json"),
-      `{ "supportedNetworks": [
-        "supported-networks/any-evm-with-rpc",
-        "supported-networks/local-anvil",
-        "supported-networks/local-hardhat",
- ${supportedNetworks.sort().join(",")}]}`,
+  `{ 
+    "supportedNetworks": [
+      "supported-networks/any-evm-with-rpc",
+      "supported-networks/local-anvil",
+      "supported-networks/local-hardhat",
+      ${supportedNetworks.sort().join(",\n      ")}]}`,
       "utf8"
     );
 
