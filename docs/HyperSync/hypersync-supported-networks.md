@@ -40,6 +40,7 @@ If you are a network operator or user and would like improved service support or
 
 
 
+
 | Network Name              | Network ID      | URL                                                                                      | Tier |
 | ------------------------- | --------------- | ---------------------------------------------------------------------------------------- | ---- |
 | Ab                        | 36888           | https://ab.hypersync.xyz or https://36888.hypersync.xyz                                  | 🪨   |
@@ -53,7 +54,7 @@ If you are a network operator or user and would like improved service support or
 | Avalanche                 | 43114           | https://avalanche.hypersync.xyz or https://43114.hypersync.xyz                           | 🥉   |
 | Base                      | 8453            | https://base.hypersync.xyz or https://8453.hypersync.xyz                                 | 🏅   |
 | Base Sepolia              | 84532           | https://base-sepolia.hypersync.xyz or https://84532.hypersync.xyz                        | 🎒   |
-| Base Traces               | 8453            | https://base-traces.hypersync.xyz or https://8453-traces.hypersync.xyz                   | 🏅   |
+| Base Traces               | 8453            | https://base-traces.hypersync.xyz or https://8453-traces.hypersync.xyz                   | 🪨   |
 | Berachain                 | 80094           | https://berachain.hypersync.xyz or https://80094.hypersync.xyz                           | 🥉   |
 | Blast                     | 81457           | https://blast.hypersync.xyz or https://81457.hypersync.xyz                               | 🥉   |
 | Blast Sepolia             | 168587773       | https://blast-sepolia.hypersync.xyz or https://168587773.hypersync.xyz                   | 🎒   |
@@ -62,6 +63,7 @@ If you are a network operator or user and would like improved service support or
 | Bsc Testnet               | 97              | https://bsc-testnet.hypersync.xyz or https://97.hypersync.xyz                            | 🎒   |
 | Celo                      | 42220           | https://celo.hypersync.xyz or https://42220.hypersync.xyz                                | 🪨   |
 | Chiliz                    | 88888           | https://chiliz.hypersync.xyz or https://88888.hypersync.xyz                              | 🪨   |
+| Citrea                    | 4114            | https://citrea.hypersync.xyz or https://4114.hypersync.xyz                               | 🥉   |
 | Citrea Testnet            | 5115            | https://citrea-testnet.hypersync.xyz or https://5115.hypersync.xyz                       | 🥉   |
 | Curtis                    | 33111           | https://curtis.hypersync.xyz or https://33111.hypersync.xyz                              | 🪨   |
 | Cyber                     | 7560            | https://cyber.hypersync.xyz or https://7560.hypersync.xyz                                | 🪨   |

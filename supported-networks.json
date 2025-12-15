@@ -50,6 +50,7 @@
       "supported-networks/celo-alfajores-testnet",
       "supported-networks/chiliz",
       "supported-networks/chiliz-testnet-spicy",
+      "supported-networks/citrea",
       "supported-networks/citrea-devnet",
       "supported-networks/citrea-testnet",
       "supported-networks/core",
