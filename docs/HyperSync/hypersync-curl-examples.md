@@ -18,14 +18,18 @@ While curl requests are technically slower than our client libraries (since they
 
 ## Table of Contents
 
-1. [Curl vs. Client Libraries](#curl-vs-client-libraries)
-2. [Common Use Cases](#common-use-cases)
-   - [ERC-20 Transfers for an Address](#get-all-erc-20-transfers-for-an-address)
-   - [Contract Event Logs](#get-all-logs-for-a-smart-contract)
-   - [Blob Transactions](#get-blob-data-for-the-optimism-chain)
-   - [Token Mint Events](#get-mint-usdc-events)
-   - [Address Transactions](#get-all-transactions-for-an-address)
-   - [Transaction Status Filtering](#get-successful-or-failed-transactions)
+- [Using curl with HyperSync](#using-curl-with-hypersync)
+  - [Table of Contents](#table-of-contents)
+  - [Curl vs. Client Libraries](#curl-vs-client-libraries)
+    - [When to Use curl (JSON API)](#when-to-use-curl-json-api)
+    - [When to Use Client Libraries](#when-to-use-client-libraries)
+  - [Common Use Cases](#common-use-cases)
+    - [Get All ERC-20 Transfers for an Address](#get-all-erc-20-transfers-for-an-address)
+    - [Get All Logs for a Smart Contract](#get-all-logs-for-a-smart-contract)
+    - [Get Blob Data for the Optimism Chain](#get-blob-data-for-the-optimism-chain)
+    - [Get Mint USDC Events](#get-mint-usdc-events)
+    - [Get All Transactions for an Address](#get-all-transactions-for-an-address)
+    - [Get Successful or Failed Transactions](#get-successful-or-failed-transactions)
 
 ## Curl vs. Client Libraries
 
@@ -62,6 +66,7 @@ This example filters for all ERC-20 transfer events involving a specific address
 curl --request POST \
   --url https://eth.hypersync.xyz/query \
   --header 'Content-Type: application/json' \
+  --header 'Authorization: Bearer YOUR_API_KEY' \
   --data '{
     "from_block": 0,
     "logs": [
@@ -144,6 +149,7 @@ This example retrieves all event logs emitted by a specific contract (USDC in th
 curl --request POST \
   --url https://eth.hypersync.xyz/query \
   --header 'Content-Type: application/json' \
+  --header 'Authorization: Bearer YOUR_API_KEY' \
   --data '{
     "from_block": 0,
     "logs": [
@@ -196,6 +202,7 @@ This example finds blob transactions used by the Optimism chain for data availab
 curl --request POST \
   --url https://eth.hypersync.xyz/query \
   --header 'Content-Type: application/json' \
+  --header 'Authorization: Bearer YOUR_API_KEY' \
   --data '{
     "from_block": 20000000,
     "transactions": [
@@ -238,6 +245,7 @@ This example identifies USDC token minting events.
 curl --request POST \
   --url https://eth.hypersync.xyz/query \
   --header 'Content-Type: application/json' \
+  --header 'Authorization: Bearer YOUR_API_KEY' \
   --data '{
     "from_block": 0,
     "logs": [
@@ -299,6 +307,7 @@ This example retrieves all transactions where a specific address is either the s
 curl --request POST \
   --url https://eth.hypersync.xyz/query \
   --header 'Content-Type: application/json' \
+  --header 'Authorization: Bearer YOUR_API_KEY' \
   --data '{
     "from_block": 15362000,
     "transactions": [
@@ -344,6 +353,7 @@ height=$((`curl https://eth.hypersync.xyz/height | jq .height` - 10))
 curl --request POST \
   --url https://eth.hypersync.xyz/query \
   --header 'Content-Type: application/json' \
+  --header 'Authorization: Bearer YOUR_API_KEY' \
   --data "{
     \"from_block\": ${height},
     \"transactions\": [
