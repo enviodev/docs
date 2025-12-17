@@ -40,6 +40,9 @@ If you are a network operator or user and would like improved service support or
 
 
 
+
+
+
 | Network Name              | Network ID      | URL                                                                                      | Tier |
 | ------------------------- | --------------- | ---------------------------------------------------------------------------------------- | ---- |
 | Ab                        | 36888           | https://ab.hypersync.xyz or https://36888.hypersync.xyz                                  | 🪨   |
@@ -53,7 +56,7 @@ If you are a network operator or user and would like improved service support or
 | Avalanche                 | 43114           | https://avalanche.hypersync.xyz or https://43114.hypersync.xyz                           | 🥉   |
 | Base                      | 8453            | https://base.hypersync.xyz or https://8453.hypersync.xyz                                 | 🏅   |
 | Base Sepolia              | 84532           | https://base-sepolia.hypersync.xyz or https://84532.hypersync.xyz                        | 🎒   |
-| Base Traces               | 8453            | https://base-traces.hypersync.xyz or https://8453-traces.hypersync.xyz                   | 🏅   |
+| Base Traces               | 8453            | https://base-traces.hypersync.xyz or https://8453-traces.hypersync.xyz                   | 🪨   |
 | Berachain                 | 80094           | https://berachain.hypersync.xyz or https://80094.hypersync.xyz                           | 🥉   |
 | Blast                     | 81457           | https://blast.hypersync.xyz or https://81457.hypersync.xyz                               | 🥉   |
 | Blast Sepolia             | 168587773       | https://blast-sepolia.hypersync.xyz or https://168587773.hypersync.xyz                   | 🎒   |

@@ -287,14 +287,6 @@ const config = {
         disableSwitch: false,
         respectPrefersColorScheme: true,
       },
-      announcementBar: {
-        id: "alchemy-subgraphs-shutdown",
-        content:
-          'Alchemy Subgraphs are shutting down. Migrate to Envio for 143x faster indexing and get 2 months free of hosted service. <a href="https://envio.dev/alchemy-migration" rel="noopener noreferrer">Learn more →</a>',
-        backgroundColor: "#fff7e6",
-        textColor: "#663c00",
-        isCloseable: true,
-      },
       // Add custom CSS for smaller sidebar text
       stylesheets: [
         {
