@@ -23,5 +23,7 @@ pnpx envio@3.0.0-alpha.3 init solana
 
 ## Notes
 
-- Uses RPC as the data source (no HyperSync for Solana yet).
-- The Solana Block Handler does not fetch block data automatically; fetch blocks by slot as needed, using RPC or any other source.
+- RPC-only data source (no HyperSync for Solana yet).
+- Only `onBlock` handler is supported; log/instruction-level handlers are not available yet.
+- Block data is not fetched automatically; fetch by slot as needed using RPC or any other source.
+- Tracks finalized blocks only (no reorg support yet), resulting in **~20s latency**.
