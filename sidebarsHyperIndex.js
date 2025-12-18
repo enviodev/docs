@@ -45,7 +45,7 @@ module.exports = {
       type: "category",
       label: "Migrate to Envio",
       collapsed: false,
-      items: ["migration-guide", "migrate-from-alchemy"],
+      items: ["migration-guide", "migrate-from-alchemy", "migrate-to-v3"],
     },
 
     {
