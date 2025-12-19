@@ -11,7 +11,6 @@ description: Explore HyperIndex, a blazing-fast multichain indexer for real-time
   <meta name="twitter:image" content="/img/preview-banner.png" />
 </Head>
 
-
 **HyperIndex** is a blazing-fast, developer-friendly multichain indexer, optimized for both local development and reliable hosted deployment. It empowers developers to effortlessly build robust backends for blockchain applications.
 
 ![Sync Process](../../static/img/sync.gif)
@@ -31,21 +30,21 @@ While HyperIndex gives you a complete indexing solution with schema management a
 
 - **[Quickstart templates](/docs/HyperIndex/greeter-tutorial)** – Rapidly bootstrap your indexer.
 - **[Real-time indexing](/docs/HyperIndex/latency-at-head)** – Instantly track blockchain events.
-- **[Multichain indexing](/docs/HyperIndex/multichain-indexing)** – Supports multiple blockchains simultaneously.
-- **[Local development](/docs/HyperIndex/running-locally)** – Full-featured local environment with Docker.
-- **[Reorg support](/docs/HyperIndex/reorgs-support)** – Gracefully handles blockchain reorganizations.
-- **[GraphQL API](/docs/HyperIndex/navigating-hasura)** – Easy-to-query indexed data.
-- **[Cross-platform support](/docs/HyperIndex/supported-networks)** – Index any EVM-compatible blockchain and Fuel.
-- **[High performance](/docs/HyperIndex/benchmarking)** – Historical backfills at over 5,000+ events per second.
+- **[Multichain indexing](/docs/HyperIndex/multichain-indexing)** – Support multiple blockchains simultaneously.
+- **[Local development](/docs/HyperIndex/running-locally)** – A full-featured local environment with Docker.
+- **[Reorg support](/docs/HyperIndex/reorgs-support)** – Gracefully handle blockchain reorganizations without sacrificing latency.
+- **[GraphQL API](/docs/HyperIndex/navigating-hasura)** – Easily query indexed data.
+- **[Cross-platform support](/docs/HyperIndex/supported-networks)** – Index any EVM-, SVM-, or Fuel-compatible blockchain.
+- **[High performance](/docs/HyperIndex/benchmarking)** – Perform historical backfills at over 10,000 events per second.
 - **[Indexer auto-generation](/docs/HyperIndex/contract-import)** – Generate indexers directly from smart contract addresses.
-- **[Flexible language support](/docs/HyperIndex/terminology#programming-languages)** – JavaScript, TypeScript, and ReScript.
-- **[Factory contract support](/docs/HyperIndex/dynamic-contracts)** – Index data from 100,000+ factory contracts seamlessly.
-- **[On-chain & off-chain data integration](/docs/HyperIndex/contract-state)** – Easily combine multiple data sources.
-- **[Self-hosted & managed options](/docs/HyperIndex/hosted-service)** – Run your own setup or use HyperIndex hosted services.
-- **[Detailed logging & error reporting](/docs/HyperIndex/logging)** – Debug and optimize with clarity.
+- **[Flexible language support](/docs/HyperIndex/terminology#programming-languages)** – TypeScript, JavaScript, and ReScript.
+- **[Factory contract support](/docs/HyperIndex/dynamic-contracts)** – Index data from over 1M dynamically registered contracts seamlessly.
+- **[On-chain and off-chain data integration](/docs/HyperIndex/contract-state)** – Easily combine multiple data sources.
+- **[Self-hosted and managed options](/docs/HyperIndex/hosted-service)** – Run your own setup or use HyperIndex hosted services.
+- **[Detailed logging and error reporting](/docs/HyperIndex/logging)** – Debug and optimize with clarity.
 - **[External API actions](/docs/HyperIndex/ipfs)** – Trigger external services based on blockchain events.
-- **[Wildcard topic indexing](/docs/HyperIndex/wildcard-indexing)** – Flexible indexing based on event topics.
-- **[Fallback RPC data sources](/docs/HyperIndex/rpc-sync#improving-resilience-with-rpc-fallback)** – Enhanced reliability with RPC connections.
+- **[Wildcard topic indexing](/docs/HyperIndex/wildcard-indexing)** – Flexibly index based on event topics.
+- **[Fallback RPC data sources](/docs/HyperIndex/rpc-sync#improving-resilience-with-rpc-fallback)** – Enhance reliability with RPC connections.
 
 ---
 

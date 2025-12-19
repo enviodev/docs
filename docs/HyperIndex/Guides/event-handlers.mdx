@@ -470,17 +470,21 @@ Check out our [IPFS Integration](/docs/HyperIndex/ipfs), [Accessing Contract Sta
 Define an effect and use it in your handler with `context.effect`:
 
 ```typescript
-import { experimental_createEffect, S } from "envio";
+import { createEffect, S } from "envio";
 import { ERC20 } from "generated";
 
 // Define an effect that will be called from the handler.
-const getMetadata = experimental_createEffect(
+const getMetadata = createEffect(
   {
     name: "getMetadata",
     input: S.string,
     output: {
       description: S.string,
       value: S.bigint,
+    },
+    rateLimit: {
+      calls: 5,
+      per: "second",
     },
     cache: true, // Optionally persist the results in the database
   },
