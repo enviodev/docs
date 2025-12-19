@@ -190,7 +190,7 @@ This is where the magic happens. We need to:
 // src/tokenDetails.ts
 import { createPublicClient, http, hexToString } from "viem";
 import { mainnet } from "viem/chains";
-import { experimental_createEffect, S } from "envio";
+import { createEffect, S } from "envio";
 
 import { getERC20BytesContract, getERC20Contract } from "./utils";
 
@@ -212,7 +212,7 @@ const tokenMetadataSchema = S.schema({
 // Infer the type from the schema
 type TokenMetadata = S.Infer<typeof tokenMetadataSchema>;
 
-export const getTokenMetadata = experimental_createEffect(
+export const getTokenMetadata = createEffect(
   {
     name: "getTokenMetadata",
     input: {
@@ -220,6 +220,10 @@ export const getTokenMetadata = experimental_createEffect(
       chainId: S.number,
     },
     output: tokenMetadataSchema,
+    rateLimit: {
+      calls: 5,
+      per: "second",
+    },
     // Enable caching to avoid duplicated calls
     cache: true,
   },
