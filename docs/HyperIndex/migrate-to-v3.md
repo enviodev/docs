@@ -117,7 +117,7 @@ HyperIndex now supports Solana with RPC as a source. This feature is experimenta
 To initialize a Solana project:
 
 ```bash
-pnpx envio@3.0.0-alpha.3 init solana
+pnpx envio@3.0.0-alpha.4 init svm
 ```
 
 See the [Solana documentation](/docs/HyperIndex/solana) for more details.
@@ -156,6 +156,8 @@ Preload optimization is now enabled by default, replacing the previous `loaders`
 - Removed `experimental_createEffect` in favor of `createEffect`
 - Renamed transaction field `kind` to `type`
 - For block handlers: `block.chainId` is removed in favor of `context.chain.id`
+- `Address` type changed from `string` to `` `0x${string}` ``
+- Removed `transaction.chainId` from field selection — use `context.chain.id` or `event.chainId` instead
 
 ### config.yaml Changes
 
@@ -218,7 +220,7 @@ Update your `package.json` with the following changes:
     "node": ">=22.0.0"
   },
   "dependencies": {
-    "envio": "3.0.0-alpha.3"
+    "envio": "3.0.0-alpha.4"
   },
   "devDependencies": {
     "typescript": "^5.7.3"
@@ -376,12 +378,13 @@ Remove these deprecated environment variables if present:
 
 **Rename deprecated APIs:**
 
-| V2 (Deprecated)                     | V3                 |
-| ----------------------------------- | ------------------ |
-| `experimental_createEffect`         | `createEffect`     |
-| `block.chainId` (in block handlers) | `context.chain.id` |
-| `transaction.kind`                  | `transaction.type` |
-| `chain` type                        | `ChainId`          |
+| V2 (Deprecated)                     | V3                                    |
+| ----------------------------------- | ------------------------------------- |
+| `experimental_createEffect`         | `createEffect`                        |
+| `block.chainId` (in block handlers) | `context.chain.id`                    |
+| `transaction.kind`                  | `transaction.type`                    |
+| `chain` type                        | `ChainId`                             |
+| `transaction.chainId`               | `context.chain.id` or `event.chainId` |
 
 **Removed APIs:**
 
@@ -409,7 +412,7 @@ pnpm dev
 
 - [ ] Update Node.js to >=22
 - [ ] **Add `"type": "module"` to `package.json`** ← Required for V3!
-- [ ] Update `envio` dependency to `3.0.0-alpha.3`
+- [ ] Update `envio` dependency to `3.0.0-alpha.4`
 - [ ] Update `engines.node` to `>=22.0.0` in `package.json`
 - [ ] Update `tsconfig.json` for ESM support
 - [ ] Replace `ts-mocha`/`ts-node` with `tsx` if using tests
@@ -435,6 +438,8 @@ pnpm dev
 - [ ] Replace `transaction.kind` with `transaction.type`
 - [ ] Update usage of `chain` type to `ChainId`
 - [ ] Remove usage of `getGeneratedByChainId` (replacement coming soon)
+- [ ] Update code expecting `Address` type to be `string` (now `` `0x${string}` ``)
+- [ ] Replace `transaction.chainId` with `context.chain.id` or `event.chainId`
 
 **Verify:**
 
@@ -452,3 +457,4 @@ For detailed release notes, see:
 - [v3.0.0-alpha.1](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.1)
 - [v3.0.0-alpha.2](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.2)
 - [v3.0.0-alpha.3](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.3)
+- [v3.0.0-alpha.4](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.4)
