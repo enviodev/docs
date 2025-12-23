@@ -47,6 +47,8 @@ If you are a network operator or user and would like improved service support or
 
 
 
+
+
 | Network Name              | Network ID      | URL                                                                                      | Tier |
 | ------------------------- | --------------- | ---------------------------------------------------------------------------------------- | ---- |
 | Ab                        | 36888           | https://ab.hypersync.xyz or https://36888.hypersync.xyz                                  | 🪨   |
@@ -76,7 +78,6 @@ If you are a network operator or user and would like improved service support or
 | Ethereum Mainnet          | 1               | https://eth.hypersync.xyz or https://1.hypersync.xyz                                     | 🏅   |
 | Fantom                    | 250             | https://fantom.hypersync.xyz or https://250.hypersync.xyz                                | 🪨   |
 | Flare                     | 14              | https://flare.hypersync.xyz or https://14.hypersync.xyz                                  | 🪨   |
-| Fraxtal                   | 252             | https://fraxtal.hypersync.xyz or https://252.hypersync.xyz                               | 🪨   |
 | Fuji                      | 43113           | https://fuji.hypersync.xyz or https://43113.hypersync.xyz                                | 🎒   |
 | Gnosis                    | 100             | https://gnosis.hypersync.xyz or https://100.hypersync.xyz                                | 🏅   |
 | Gnosis Chiado             | 10200           | https://gnosis-chiado.hypersync.xyz or https://10200.hypersync.xyz                       | 🎒   |
