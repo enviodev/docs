@@ -39,6 +39,8 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 
 
 
+
+
 | Network Name              | Network ID      | URL                                                                                      |
 | ------------------------- | --------------- | ---------------------------------------------------------------------------------------- |
 | Ab                        | 36888           | https://ab.rpc.hypersync.xyz or https://36888.rpc.hypersync.xyz                          |
@@ -68,7 +70,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Ethereum Mainnet          | 1               | https://eth.rpc.hypersync.xyz or https://1.rpc.hypersync.xyz                             |
 | Fantom                    | 250             | https://fantom.rpc.hypersync.xyz or https://250.rpc.hypersync.xyz                        |
 | Flare                     | 14              | https://flare.rpc.hypersync.xyz or https://14.rpc.hypersync.xyz                          |
-| Fraxtal                   | 252             | https://fraxtal.rpc.hypersync.xyz or https://252.rpc.hypersync.xyz                       |
 | Fuji                      | 43113           | https://fuji.rpc.hypersync.xyz or https://43113.rpc.hypersync.xyz                        |
 | Gnosis                    | 100             | https://gnosis.rpc.hypersync.xyz or https://100.rpc.hypersync.xyz                        |
 | Gnosis Chiado             | 10200           | https://gnosis-chiado.rpc.hypersync.xyz or https://10200.rpc.hypersync.xyz               |

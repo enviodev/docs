@@ -58,6 +58,14 @@ const sites = [
     tags: [tags.hyperindex],
   },
   {
+    title: "Solana Stables",
+    description:
+      "A real-time dashboard for tracking stablecoin transfers on Solana.",
+    video: "/img/showcase/solana-stables.webm",
+    source: "https://solanastables.com/",
+    tags: [tags.hyperindex],
+  },
+  {
     title: "The List",
     description:
       "Track addresses banned from using major stablecoins across chains.",
