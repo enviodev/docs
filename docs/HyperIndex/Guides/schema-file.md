@@ -221,12 +221,12 @@ const fee = calculateFee(tradeAmount, feeRate); // 3.13
 
    ```typescript
    // Correct
-   if (value.eq(BigDecimal(0))) {
+   if (value.eq(new BigDecimal(0))) {
      /* ... */
    }
 
    // Incorrect - compares object references
-   if (value === BigDecimal(0)) {
+   if (value === new BigDecimal(0)) {
      /* ... */
    }
    ```
