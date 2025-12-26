@@ -61,7 +61,7 @@ The `BigDecimal` scalar type in HyperIndex is based on the [bignumber.js](https:
 
 ```typescript
 // JavaScript/TypeScript
-import { BigDecimal } from "../generated/src/BigDecimal.js";
+import { BigDecimal } from "generated";
 
 // ReScript
 open BigDecimal;
@@ -78,10 +78,6 @@ const amount = new BigDecimal(123.45);
 
 // From other BigDecimal
 const copy = new BigDecimal(price);
-
-// Special values
-const zero = BigDecimal.ZERO;
-const one = BigDecimal.ONE;
 ```
 
 ### Arithmetic Operations
@@ -225,12 +221,12 @@ const fee = calculateFee(tradeAmount, feeRate); // 3.13
 
    ```typescript
    // Correct
-   if (value.eq(BigDecimal.ZERO)) {
+   if (value.eq(new BigDecimal(0))) {
      /* ... */
    }
 
    // Incorrect - compares object references
-   if (value === BigDecimal.ZERO) {
+   if (value === new BigDecimal(0)) {
      /* ... */
    }
    ```
