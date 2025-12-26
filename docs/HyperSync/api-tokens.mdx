@@ -42,7 +42,7 @@ To use an API token, pass it as a `bearer_token` when creating a HyperSync clien
 ```typescript
 const client = HypersyncClient.new({
   url: "https://eth.hypersync.xyz",
-  bearerToken: process.env.HYPERSYNC_BEARER_TOKEN,
+  apiToken: process.env.ENVIO_API_TOKEN!,
 });
 ```
 
@@ -52,7 +52,7 @@ const client = HypersyncClient.new({
 ```python
 client = hypersync.HypersyncClient(hypersync.ClientConfig(
     url="https://eth.hypersync.xyz",
-    bearer_token=os.environ.get("HYPERSYNC_BEARER_TOKEN")
+    bearer_token=os.environ.get("ENVIO_API_TOKEN")
 ))
 ```
 
@@ -61,10 +61,9 @@ client = hypersync.HypersyncClient(hypersync.ClientConfig(
 
 ```rust
 let client = Client::new(ClientConfig {
-    bearer_token: Some(std::env::var("HYPERSYNC_BEARER_TOKEN").unwrap_or_default()),
+    api_token: std::env::var("ENVIO_API_TOKEN").expect("ENVIO_API_TOKEN must be set"),
     ..Default::default()
-})
-.unwrap();
+}).unwrap()
 ```
 
   </TabItem>
@@ -89,7 +88,7 @@ When working with API tokens:
 
 ```bash
 # Example .env file
-HYPERSYNC_BEARER_TOKEN=your_secret_token_here
+ENVIO_API_TOKEN=your_secret_token_here
 ```
 
 This approach keeps your tokens secure while making them available to your application at runtime.
