@@ -15,6 +15,9 @@ Most features listed on this page are available for **paid production plans only
 
 
 ## IP Whitelisting
+
+*Availability: Paid plans only*
+
 Control access to your indexer by restricting requests to specific IP addresses. This security feature helps protect your data and ensures only authorized clients can query your indexer.
 
 **Benefits:**
@@ -24,7 +27,40 @@ Control access to your indexer by restricting requests to specific IP addresses.
 - Ideal for production environments with strict access requirements
 
 
+## Effect API Cache
+
+*Availability: Paid plans only*
+
+Speed up your indexer deployments by caching [Effect API](/docs/HyperIndex/effect-api) results. When enabled, new deployments will start with preloaded effect data, eliminating the need to re-fetch external data and significantly reducing sync time.
+
+**How it works:**
+1. **Save a Cache**: From any deployment's Quick Actions, click "Save Cache" to capture the current effect data
+2. **Configure Settings**: Navigate to Settings > Cache to manage your caches
+3. **Enable Caching**: Toggle caching on and select which cache to use for new deployments
+4. **Deploy**: New deployments will automatically restore from the selected cache
+
+**Key Features:**
+- **Quick Save**: Save cache directly from the deployment page with one click
+- **Cache Management**: View, select, and delete caches from the Cache settings page
+- **Automatic Restore**: New deployments preload effect data from the active cache
+
+
+**Benefits:**
+- Dramatically faster deployment sync times
+- Reduced external API calls during indexing
+- Seamless deployment updates with preserved effect state
+
+:::tip
+Learn more about the Effect API and how caching works in our [Effect API documentation](/docs/HyperIndex/effect-api).
+:::
+
+:::info Version Requirement
+This feature is only available for indexers deployed with version 2.26.0 or higher.
+:::
+
 ## Built-in Alerts
+
+*Availability: Paid plans only*
 
 Stay informed about your indexer's health and performance with our integrated alerting system. Configure multiple notification channels and choose which alerts you want to receive.
 
@@ -115,4 +151,3 @@ A comprehensive analytics platform that automatically pipes your indexed data fr
 :::tip
 For deployment instructions and limits, see our [Deployment Guide](./hosted-service-deployment.md). For pricing and feature availability by plan, see our [Billing & Pricing page](./hosted-service-billing.mdx).
 :::
-
