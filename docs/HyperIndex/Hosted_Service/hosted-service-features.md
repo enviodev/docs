@@ -43,6 +43,7 @@ Speed up your indexer deployments by caching [Effect API](/docs/HyperIndex/effec
 - **Quick Save**: Save cache directly from the deployment page with one click
 - **Cache Management**: View, select, and delete caches from the Cache settings page
 - **Automatic Restore**: New deployments preload effect data from the active cache
+- **Download Cache**: Download caches for local development, enabling faster iteration without re-fetching external data
 
 
 **Benefits:**
