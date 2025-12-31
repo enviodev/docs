@@ -1,7 +1,7 @@
 ---
 title: Envio Developer Update December 2025
 Sidebar_label: Envio Developer Update December 2025
-slug: /blog/dev-update-december-2025
+slug: /blog/envio-developer-update-december-2025
 description: "Envio Developer Update December 2025 covering an early look at HyperIndex v3.0.0, early Solana experimentation, Sonic support, Decypted Bytes streams, a USDT0 indexing example, and community updates."
 ---
 

@@ -49,6 +49,8 @@ If you are a network operator or user and would like improved service support or
 
 
 
+
+
 | Network Name              | Network ID      | URL                                                                                      | Tier |
 | ------------------------- | --------------- | ---------------------------------------------------------------------------------------- | ---- |
 | Ab                        | 36888           | https://ab.hypersync.xyz or https://36888.hypersync.xyz                                  | 🪨   |
@@ -84,7 +86,9 @@ If you are a network operator or user and would like improved service support or
 | Gnosis Traces             | 100             | https://gnosis-traces.hypersync.xyz or https://100-traces.hypersync.xyz                  | 🥉   |
 | Harmony Shard 0           | 1666600000      | https://harmony-shard-0.hypersync.xyz or https://1666600000.hypersync.xyz                | 🪨   |
 | Holesky                   | 17000           | https://holesky.hypersync.xyz or https://17000.hypersync.xyz                             | 🎒   |
+| Hoodi                     | 560048          | https://hoodi.hypersync.xyz or https://560048.hypersync.xyz                              | 🎒   |
 | Hyperliquid               | 999             | https://hyperliquid.hypersync.xyz or https://999.hypersync.xyz                           | 🪨   |
+| Injective                 | 1776            | https://injective.hypersync.xyz or https://1776.hypersync.xyz                            | 🥉   |
 | Ink                       | 57073           | https://ink.hypersync.xyz or https://57073.hypersync.xyz                                 | 🪨   |
 | Kroma                     | 255             | https://kroma.hypersync.xyz or https://255.hypersync.xyz                                 | 🪨   |
 | Linea                     | 59144           | https://linea.hypersync.xyz or https://59144.hypersync.xyz                               | 🥉   |
