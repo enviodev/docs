@@ -14,6 +14,32 @@ Most features listed on this page are available for **paid production plans only
 :::
 
 
+## Deployment Tags
+
+Organize and identify your deployments with custom key/value tags. Tags help you categorize deployments by environment, project, team, or any custom attribute that fits your workflow.
+
+**How it works:**
+- Add up to **5 custom tags** per deployment via the deployment overview page
+- Each tag consists of a **key** (max 20 characters) and a **value** (max 20 characters, automatically lowercased)
+- Click "+ Add Tag" to create new tags, or click existing tags to edit or delete them
+
+**Special `name` Tag:**
+
+The `name` tag has special behavior—when set, its value is displayed directly on the deployment list, making it easy to identify deployments at a glance without navigating into each one.
+
+**Example Use Cases:**
+- `name: staging` or `name: production` — quickly identify deployment purpose
+- `env: staging` / `env: production` — categorize by environment
+- `team: frontend` — organize by team ownership
+- `version: v2` — track deployment versions
+
+**Benefits:**
+- Quickly identify deployments in the list view
+- Organize deployments across multiple projects or environments
+- Add context and metadata to your deployments
+- Filter and locate deployments more efficiently
+
+
 ## IP Whitelisting
 
 *Availability: Paid plans only*
