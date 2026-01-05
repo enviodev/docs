@@ -60,7 +60,7 @@ Control access to your indexer by restricting requests to specific IP addresses.
 Speed up your indexer deployments by caching [Effect API](/docs/HyperIndex/effect-api) results. When enabled, new deployments will start with preloaded effect data, eliminating the need to re-fetch external data and significantly reducing sync time.
 
 **How it works:**
-1. **Save a Cache**: From any deployment's Quick Actions, click "Save Cache" to capture the current effect data
+1. **Save a Cache**: From any deployment, click "Save Cache" to capture the current effect data
 2. **Configure Settings**: Navigate to Settings > Cache to manage your caches
 3. **Enable Caching**: Toggle caching on and select which cache to use for new deployments
 4. **Deploy**: New deployments will automatically restore from the selected cache
