@@ -55,7 +55,7 @@ Control access to your indexer by restricting requests to specific IP addresses.
 
 ## Effect API Cache
 
-*Availability: Paid plans only*
+*Availability: Medium plans and up*
 
 Speed up your indexer deployments by caching [Effect API](/docs/HyperIndex/effect-api) results. When enabled, new deployments will start with preloaded effect data, eliminating the need to re-fetch external data and significantly reducing sync time.
 
