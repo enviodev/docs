@@ -168,15 +168,16 @@ When the indexer is rerun by using `envio dev` or `envio start -r` call, the ini
 
 ### Cache on Hosted Service
 
-The same `.envio/cache` can also be used to populate the initial cache on the hosted service.
+The hosted service provides built-in cache management for Effect API results, allowing you to save and restore caches directly from the dashboard without committing files to your repository.
 
-Although this solution is very limited, and we're actively working on a better integration:
+**Key Features:**
+- **Save Cache**: Capture effect data from any deployment with one click via Quick Actions
+- **Cache Settings**: Manage caches in Settings > Cache - enable/disable caching and select which cache to use
+- **Automatic Restore**: New deployments automatically preload effect data from your selected cache
 
-- It requires to commit `.envio/cache` to the GitHub repository, increasing the repository and git history size
-- The file size is limited to 100MB, which is not enough for some use cases
-- There might be issues with pulling big caches from the GitHub repository
+This eliminates the need to commit `.envio/cache` to your repository and removes file size limitations.
 
-Join our [Discord](https://discord.gg/envio) to get updates on the progress of the hosted service integration.
+For detailed instructions, see the [Effect API Cache documentation](/docs/HyperIndex/hosted-service-features#effect-api-cache).
 
 ### Rate Limit
 
