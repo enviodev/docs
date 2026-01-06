@@ -18,7 +18,7 @@ description: Experimental Solana support in HyperIndex. Supports Block Handler, 
 ## Quickstart
 
 ```bash
-pnpx envio@3.0.0-alpha.4 init svm
+pnpx envio@3.0.0-alpha.5 init svm
 ```
 
 ## Notes
