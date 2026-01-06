@@ -75,17 +75,93 @@ rpc:
 
 In this case, the RPC won't be used for historical sync but will join the source selection logic when entering live indexing.
 
-### Chain Info on Context
+### Chain State on Context
 
-The Handler Context object provides a nice way to get chain info via `chains` and `chain` properties:
+The Handler Context object provides chain state via the `chain` property:
 
 ```typescript
 ERC20.Approval.handler(async ({ context }) => {
   console.log(context.chain.id); // 1 - The chain id of the event
   console.log(context.chain.isLive); // true - Whether the event chain is indexing at the head
-
-  console.log(context.chains); // { 1: {id: 1, isLive: true}, 8453: {id: 8453, isLive: false} }
 });
+```
+
+### Indexer State & Config
+
+As a replacement for the deprecated and removed `getGeneratedByChainId`, we introduce the `indexer` value. It provides nicely typed chains and contract data from your config, as well as the current indexing state, such as `isLive` and `addresses`. Use `indexer` either at the top level of the file or directly from handlers. It returns the latest indexer state.
+
+With this change, we also introduce new official types: `Indexer`, `EvmChainId`, `FuelChainId`, and `SvmChainId`.
+
+```typescript
+import { indexer } from "generated";
+
+indexer.name; // "uniswap-v4-indexer"
+indexer.description; // "Uniswap v4 indexer"
+indexer.chainIds; // [1, 42161, 10, 8453, 137, 56]
+indexer.chains[1].id; // 1
+indexer.chains[1].startBlock; // 0
+indexer.chains[1].endBlock; // undefined
+indexer.chains[1].isLive; // false
+indexer.chains[1].PoolManager.name; // "PoolManager"
+indexer.chains[1].PoolManager.abi; // unknown[]
+indexer.chains[1].PoolManager.addresses; // ["0x000000000004444c5dc75cB358380D2e3dE08A90"]
+```
+
+### Conditional Event Handlers
+
+Now it's possible to return a boolean value from the `eventFilters` function to disable or enable the handler conditionally.
+
+```typescript
+ERC20.Transfer.handler(
+  async ({ event, context }) => {
+    // ... your handler logic
+  },
+  {
+    wildcard: true,
+    eventFilters: ({ chainId }) => {
+      // Skip all ERC20 on Polygon
+      if (chainId === 137) {
+        return false;
+      }
+
+      // Track all ERC20 on Ethereum Mainnet
+      if (chainId === 1) {
+        return true;
+      }
+
+      // Track only whitelisted addresses on other chains
+      return [
+        { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chainId] },
+        { from: WHITELISTED_ADDRESSES[chainId], to: ZERO_ADDRESS },
+      ];
+    },
+  }
+);
+```
+
+### Automatic Contract Configuration
+
+Started automatically configuring all globally defined contracts. This fixes an issue where `addContract` crashed because the contract was defined globally but not linked for a specific chain. Now it's done automatically:
+
+```yaml
+contracts:
+  - name: UniswapV3Factory
+    events: # ...
+  - name: UniswapV3Pool
+    events: # ...
+chains:
+  - id: 1
+    start_block: 0
+    contracts:
+      - name: UniswapV3Factory
+        address: 0x1F98431c8aD98523631AE4a59f267346ea31F984
+      # UniswapV3Pool no longer needed here - auto-configured from global contracts
+  - id: 10
+    start_block: 0
+    contracts:
+      - name: UniswapV3Factory
+        address: 0x1F98431c8aD98523631AE4a59f267346ea31F984
+      # UniswapV3Pool no longer needed here - auto-configured from global contracts
 ```
 
 ### ClickHouse Sink (Experimental)
@@ -117,7 +193,7 @@ HyperIndex now supports Solana with RPC as a source. This feature is experimenta
 To initialize a Solana project:
 
 ```bash
-pnpx envio@3.0.0-alpha.4 init svm
+pnpx envio@3.0.0-alpha.5 init svm
 ```
 
 See the [Solana documentation](/docs/HyperIndex/solana) for more details.
@@ -144,11 +220,17 @@ Unordered multichain mode is now the default behavior. This provides better perf
 
 Preload optimization is now enabled by default, replacing the previous `loaders` and `preload_handlers` options. This improves historical sync performance automatically.
 
+### TUI Improvements
+
+We gave our TUI some love, making it look more beautiful and compact. It also consumes fewer resources, shares a link to the Hasura playground, and dynamically adjusts to the terminal width.
+
+![TUI](/img/sync.gif)
+
 ## Breaking Changes
 
 ### Node.js & Runtime
 
-- **Node.js 22** is now the minimum required version
+- **Node.js 22** is now the minimum required version, while 24 is the recommended version
 - Changes in handler files don't trigger codegen on `pnpm dev`
 
 ### Handler API Changes
@@ -178,7 +260,7 @@ Preload optimization is now enabled by default, replacing the previous `loaders`
 
 - Removed `chain` type in favor of `ChainId` (now a union type instead of a number)
 - Removed internal `ContractType` enum (allows longer contract names)
-- Removed `getGeneratedByChainId` (replacement coming in a future alpha version)
+- Removed `getGeneratedByChainId` (use `indexer` value instead)
 
 ### Metrics Changes
 
@@ -220,7 +302,7 @@ Update your `package.json` with the following changes:
     "node": ">=22.0.0"
   },
   "dependencies": {
-    "envio": "3.0.0-alpha.4"
+    "envio": "3.0.0-alpha.5"
   },
   "devDependencies": {
     "typescript": "^5.7.3"
@@ -356,16 +438,6 @@ full_batch_size: 5000
 
 Optionally move your handler files to `src/handlers/` and remove the explicit `handler` paths from `config.yaml`.
 
-**RPC for Live Indexing (optional):**
-
-If you want to use a dedicated RPC for live indexing:
-
-```yaml
-rpc:
-  - url: https://eth-mainnet.your-rpc-provider.com
-    for: live
-```
-
 ### Step 4: Update Environment Variables
 
 Remove these deprecated environment variables if present:
@@ -388,7 +460,7 @@ Remove these deprecated environment variables if present:
 
 **Removed APIs:**
 
-- `getGeneratedByChainId` — replacement coming in a future alpha version
+- `getGeneratedByChainId` — use the `indexer.chains[chainId]` instead (see [Indexer State & Config](#indexer-state--config))
 
 ### Step 6: Test Your Migration
 
@@ -412,7 +484,7 @@ pnpm dev
 
 - [ ] Update Node.js to >=22
 - [ ] **Add `"type": "module"` to `package.json`** ← Required for V3!
-- [ ] Update `envio` dependency to `3.0.0-alpha.4`
+- [ ] Update `envio` dependency to `3.0.0-alpha.5`
 - [ ] Update `engines.node` to `>=22.0.0` in `package.json`
 - [ ] Update `tsconfig.json` for ESM support
 - [ ] Replace `ts-mocha`/`ts-node` with `tsx` if using tests
@@ -437,7 +509,7 @@ pnpm dev
 - [ ] Replace `block.chainId` with `context.chain.id` in block handlers
 - [ ] Replace `transaction.kind` with `transaction.type`
 - [ ] Update usage of `chain` type to `ChainId`
-- [ ] Remove usage of `getGeneratedByChainId` (replacement coming soon)
+- [ ] Replace `getGeneratedByChainId` with `indexer.chains[chainId]`
 - [ ] Update code expecting `Address` type to be `string` (now `` `0x${string}` ``)
 - [ ] Replace `transaction.chainId` with `context.chain.id` or `event.chainId`
 
@@ -453,8 +525,9 @@ If you encounter any issues during migration, join our [Discord community](https
 
 For detailed release notes, see:
 
-- [v3.0.0-alpha.0](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.0)
-- [v3.0.0-alpha.1](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.1)
-- [v3.0.0-alpha.2](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.2)
-- [v3.0.0-alpha.3](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.3)
+- [v3.0.0-alpha.5](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.5)
 - [v3.0.0-alpha.4](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.4)
+- [v3.0.0-alpha.3](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.3)
+- [v3.0.0-alpha.2](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.2)
+- [v3.0.0-alpha.1](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.1)
+- [v3.0.0-alpha.0](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.0)

@@ -43,6 +43,10 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 
 
 
+
+
+
+
 | Network Name              | Network ID      | URL                                                                                      |
 | ------------------------- | --------------- | ---------------------------------------------------------------------------------------- |
 | Ab                        | 36888           | https://ab.rpc.hypersync.xyz or https://36888.rpc.hypersync.xyz                          |
@@ -56,7 +60,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Avalanche                 | 43114           | https://avalanche.rpc.hypersync.xyz or https://43114.rpc.hypersync.xyz                   |
 | Base                      | 8453            | https://base.rpc.hypersync.xyz or https://8453.rpc.hypersync.xyz                         |
 | Base Sepolia              | 84532           | https://base-sepolia.rpc.hypersync.xyz or https://84532.rpc.hypersync.xyz                |
-| Base Traces               | 8453            | https://base-traces.rpc.hypersync.xyz or https://8453-traces.rpc.hypersync.xyz           |
 | Berachain                 | 80094           | https://berachain.rpc.hypersync.xyz or https://80094.rpc.hypersync.xyz                   |
 | Blast                     | 81457           | https://blast.rpc.hypersync.xyz or https://81457.rpc.hypersync.xyz                       |
 | Blast Sepolia             | 168587773       | https://blast-sepolia.rpc.hypersync.xyz or https://168587773.rpc.hypersync.xyz           |
@@ -72,6 +75,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Ethereum Mainnet          | 1               | https://eth.rpc.hypersync.xyz or https://1.rpc.hypersync.xyz                             |
 | Fantom                    | 250             | https://fantom.rpc.hypersync.xyz or https://250.rpc.hypersync.xyz                        |
 | Flare                     | 14              | https://flare.rpc.hypersync.xyz or https://14.rpc.hypersync.xyz                          |
+| Fraxtal                   | 252             | https://fraxtal.rpc.hypersync.xyz or https://252.rpc.hypersync.xyz                       |
 | Fuji                      | 43113           | https://fuji.rpc.hypersync.xyz or https://43113.rpc.hypersync.xyz                        |
 | Gnosis                    | 100             | https://gnosis.rpc.hypersync.xyz or https://100.rpc.hypersync.xyz                        |
 | Gnosis Chiado             | 10200           | https://gnosis-chiado.rpc.hypersync.xyz or https://10200.rpc.hypersync.xyz               |
@@ -110,6 +114,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Rootstock                 | 30              | https://rootstock.rpc.hypersync.xyz or https://30.rpc.hypersync.xyz                      |
 | Saakuru                   | 7225878         | https://saakuru.rpc.hypersync.xyz or https://7225878.rpc.hypersync.xyz                   |
 | Scroll                    | 534352          | https://scroll.rpc.hypersync.xyz or https://534352.rpc.hypersync.xyz                     |
+| Sei                       | 1329            | https://sei.rpc.hypersync.xyz or https://1329.rpc.hypersync.xyz                          |
 | Sentient                  | 6767            | https://sentient.rpc.hypersync.xyz or https://6767.rpc.hypersync.xyz                     |
 | Sentient Testnet          | 1184075182      | https://sentient-testnet.rpc.hypersync.xyz or https://1184075182.rpc.hypersync.xyz       |
 | Sepolia                   | 11155111        | https://sepolia.rpc.hypersync.xyz or https://11155111.rpc.hypersync.xyz                  |
