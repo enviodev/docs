@@ -1,31 +1,31 @@
 ---
-id: lukso
-title: Lukso
-sidebar_label: Lukso
-slug: /lukso
+id: hoodi
+title: Hoodi
+sidebar_label: Hoodi
+slug: /hoodi
 ---
 
-# Lukso
+# Hoodi
 
-## Indexing Lukso Data with Envio
+## Indexing Hoodi Data with Envio
 
 | **Field**                     | **Value**                                                                                          |
 |-------------------------------|----------------------------------------------------------------------------------------------------|
-| **Lukso Chain ID**     | 42                                                                                            |
-| **HyperSync URL Endpoint**    | [https://lukso.hypersync.xyz](https://lukso.hypersync.xyz) or [https://42.hypersync.xyz](https://42.hypersync.xyz) |
-| **HyperRPC URL Endpoint**     | [https://lukso.rpc.hypersync.xyz](https://lukso.rpc.hypersync.xyz) or [https://42.rpc.hypersync.xyz](https://42.rpc.hypersync.xyz) |
+| **Hoodi Chain ID**     | 560048                                                                                            |
+| **HyperSync URL Endpoint**    | [https://hoodi.hypersync.xyz](https://hoodi.hypersync.xyz) or [https://560048.hypersync.xyz](https://560048.hypersync.xyz) |
+| **HyperRPC URL Endpoint**     | [https://hoodi.rpc.hypersync.xyz](https://hoodi.rpc.hypersync.xyz) or [https://560048.rpc.hypersync.xyz](https://560048.rpc.hypersync.xyz) |
 
 ---
 
 ### Tier
 
-BRONZE 🥉
+TESTNET 🎒
 
 ### Overview
 
-Envio is a modular hyper-performant data indexing solution for Lukso, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
+Envio is a modular hyper-performant data indexing solution for Hoodi, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
 
-HyperSync accelerates the synchronization of historical data on Lukso, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
+HyperSync accelerates the synchronization of historical data on Hoodi, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted service.
 
@@ -39,7 +39,7 @@ To get started, see our documentation or follow our quickstart [guide](/docs/Hyp
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
 networks:
-  - id: 42 # Lukso  
+  - id: 560048 # Hoodi  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
       - name: ContractName
@@ -52,7 +52,7 @@ networks:
           - event: Event
 ```
 
-With these steps completed, your application will be set to efficiently index Lukso data using Envio’s blockchain indexer.
+With these steps completed, your application will be set to efficiently index Hoodi data using Envio’s blockchain indexer.
 
 For more information on how to set up your config, define a schema, and write event handlers, refer to the guides section in our [documentation](/docs/HyperIndex/configuration-file).
 
