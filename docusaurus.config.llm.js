@@ -46,14 +46,6 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       image: "img/preview-banner.png",
-      announcementBar: {
-        id: "alchemy-subgraphs-shutdown",
-        content:
-          'Alchemy Subgraphs are shutting down. Migrate to Envio for 143x faster indexing and get 2 months free of hosted service. <a href="https://envio.dev/alchemy-migration" rel="noopener noreferrer">Learn more →</a>',
-        backgroundColor: "#fff7e6",
-        textColor: "#663c00",
-        isCloseable: true,
-      },
       navbar: {
         title: "Envio LLM Docs",
         logo: {

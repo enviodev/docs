@@ -100,9 +100,9 @@ ERC20.Transfer.handler(async ({ event, context }) => {
 **With Preload Optimization:** Since handlers run **twice** for each event, making direct external calls can be problematic. The [Effect API](/docs/HyperIndex/effect-api) provides a solution. During the Preload Phase, it batches all external calls and runs them in parallel. Then during the Processing Phase, it runs the handlers sequentially, retrieving the already requested data from the in-memory store.
 
 ```typescript
-import { S, experimental_createEffect } from "envio";
+import { S, createEffect } from "envio";
 
-const fetchMetadata = experimental_createEffect(
+const fetchMetadata = createEffect(
   {
     name: "fetchMetadata",
     input: {
@@ -111,6 +111,10 @@ const fetchMetadata = experimental_createEffect(
     output: {
       decimals: S.number,
       symbol: S.string,
+    },
+    rateLimit: {
+      calls: 5,
+      per: "second",
     },
   },
   async ({ input }) => {

@@ -151,6 +151,7 @@
       "supported-networks/satoshivm",
       "supported-networks/scroll",
       "supported-networks/scroll-sepolia",
+      "supported-networks/sei",
       "supported-networks/sentient",
       "supported-networks/sentient-testnet",
       "supported-networks/sepolia",

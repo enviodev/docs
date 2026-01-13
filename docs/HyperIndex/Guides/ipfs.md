@@ -128,7 +128,7 @@ Learn how Preload Optimization works in a [dedicated guide](/docs/HyperIndex/pre
 Let's create the `getIpfsMetadata` effect in the `src/utils/ipfs.ts` file:
 
 ```typescript
-import { experimental_createEffect, S, type EffectContext } from "envio";
+import { createEffect, S, type EffectContext } from "envio";
 
 // Define the schema for the IPFS metadata
 // It uses Sury library to define the schema
@@ -174,11 +174,15 @@ async function fetchFromEndpoint(
   }
 }
 
-export const getIpfsMetadata = experimental_createEffect(
+export const getIpfsMetadata = createEffect(
   {
     name: "getIpfsMetadata",
     input: S.string,
     output: nftMetadataSchema,
+    rateLimit: {
+      calls: 5,
+      per: "second",
+    },
   },
   async ({ input: tokenId, context }) => {
     for (const endpoint of endpoints) {
@@ -276,11 +280,15 @@ try {
 Follow the [Effect API Persistence](/docs/HyperIndex/effect-api#persistence) guide to implement caching for local development. This should allow you to avoid repeatedly fetching the same data.
 
 ```typescript
-export const getIpfsMetadata = experimental_createEffect(
+export const getIpfsMetadata = createEffect(
   {
     name: "getIpfsMetadata",
     input: S.string,
     output: nftMetadataSchema,
+    rateLimit: {
+      calls: 5,
+      per: "second",
+    },
     cache: true, // Enable caching
   },
   async ({ input: tokenId, context }) => {...}
