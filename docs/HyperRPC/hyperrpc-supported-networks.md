@@ -112,10 +112,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 **Notes:**
 
 - **Base Traces***: Start block: 39000000 (earlier blocks available on request)
-- **Injective***: from_block: 129846180 (non-evm before that)
-
-
-
+- **Injective***: Start block: 129846180 (non-evm before that)
 
 
 
