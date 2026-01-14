@@ -1,6 +1,7 @@
 ---
 id: polygon-zkevm-cardona-testnet
 title: Polygon zkEVM Cardona Testnet
+description: Start indexing Polygon zkEVM Cardona Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Polygon zkEVM Cardona Testnet
 slug: /polygon-zkevm-cardona-testnet
 ---

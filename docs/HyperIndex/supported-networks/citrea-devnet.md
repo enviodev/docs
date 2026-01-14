@@ -1,6 +1,7 @@
 ---
 id: citrea-devnet
 title: Citrea Devnet
+description: Start indexing Citrea Devnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Citrea Devnet
 slug: /citrea-devnet
 ---

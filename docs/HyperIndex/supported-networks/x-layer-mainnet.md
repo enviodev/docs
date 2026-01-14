@@ -1,6 +1,7 @@
 ---
 id: x-layer-mainnet
 title: X Layer Mainnet
+description: Start indexing X Layer Mainnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: X Layer Mainnet
 slug: /x-layer-mainnet
 ---

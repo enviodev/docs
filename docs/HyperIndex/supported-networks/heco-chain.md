@@ -1,6 +1,7 @@
 ---
 id: heco-chain
 title: Heco Chain
+description: Start indexing Heco Chain data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Heco Chain
 slug: /heco-chain
 ---

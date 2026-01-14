@@ -1,6 +1,7 @@
 ---
 id: altlayer-op-demo-testnet
 title: Altlayer OP Demo Testnet
+description: Start indexing Altlayer OP Demo Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Altlayer OP Demo Testnet
 slug: /altlayer-op-demo-testnet
 ---

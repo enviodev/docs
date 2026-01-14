@@ -1,6 +1,7 @@
 ---
 id: bob-mainnet
 title: BOB Mainnet
+description: Start indexing BOB Mainnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: BOB Mainnet
 slug: /bob-mainnet
 ---

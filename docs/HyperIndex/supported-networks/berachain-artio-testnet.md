@@ -1,6 +1,7 @@
 ---
 id: berachain-artio-testnet
 title: Berachain Artio Testnet
+description: Start indexing Berachain Artio Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Berachain Artio Testnet
 slug: /berachain-artio-testnet
 ---

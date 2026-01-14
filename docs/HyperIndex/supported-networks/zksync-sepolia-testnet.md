@@ -1,6 +1,7 @@
 ---
 id: zksync-sepolia-testnet
 title: ZkSync Sepolia Testnet
+description: Start indexing ZkSync Sepolia Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: ZkSync Sepolia Testnet
 slug: /zksync-sepolia-testnet
 ---

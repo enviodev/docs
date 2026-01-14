@@ -1,6 +1,7 @@
 ---
 id: chiliz-testnet-spicy
 title: Chiliz Testnet Spicy
+description: Start indexing Chiliz Testnet Spicy data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Chiliz Testnet Spicy
 slug: /chiliz-testnet-spicy
 ---

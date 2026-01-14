@@ -1,6 +1,7 @@
 ---
 id: crossfi-mainnet
 title: CrossFi Mainnet
+description: Start indexing CrossFi Mainnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: CrossFi Mainnet
 slug: /crossfi-mainnet
 ---

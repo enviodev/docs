@@ -1,6 +1,7 @@
 ---
 id: velas-mainnet
 title: Velas Mainnet
+description: Start indexing Velas Mainnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Velas Mainnet
 slug: /velas-mainnet
 ---

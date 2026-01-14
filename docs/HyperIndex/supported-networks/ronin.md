@@ -1,6 +1,7 @@
 ---
 id: ronin
 title: Ronin
+description: Start indexing Ronin data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Ronin
 slug: /ronin
 ---

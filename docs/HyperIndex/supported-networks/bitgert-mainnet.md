@@ -1,6 +1,7 @@
 ---
 id: bitgert-mainnet
 title: Bitgert Mainnet
+description: Start indexing Bitgert Mainnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Bitgert Mainnet
 slug: /bitgert-mainnet
 ---

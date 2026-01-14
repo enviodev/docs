@@ -1,6 +1,7 @@
 ---
 id: exosama
 title: Exosama
+description: Start indexing Exosama data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Exosama
 slug: /exosama
 ---

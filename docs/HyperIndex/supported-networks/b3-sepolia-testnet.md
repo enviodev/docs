@@ -1,6 +1,7 @@
 ---
 id: b3-sepolia-testnet
 title: B3 Sepolia Testnet
+description: Start indexing B3 Sepolia Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: B3 Sepolia Testnet
 slug: /b3-sepolia-testnet
 ---

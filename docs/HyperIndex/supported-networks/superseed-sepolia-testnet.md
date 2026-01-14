@@ -1,6 +1,7 @@
 ---
 id: superseed-sepolia-testnet
 title: Superseed Sepolia Testnet
+description: Start indexing Superseed Sepolia Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Superseed Sepolia Testnet
 slug: /superseed-sepolia-testnet
 ---

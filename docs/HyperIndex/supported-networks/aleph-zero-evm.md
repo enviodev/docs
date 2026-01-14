@@ -1,6 +1,7 @@
 ---
 id: aleph-zero-evm
 title: Aleph Zero EVM
+description: Start indexing Aleph Zero EVM data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Aleph Zero EVM
 slug: /aleph-zero-evm
 ---

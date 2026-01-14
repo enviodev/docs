@@ -1,6 +1,7 @@
 ---
 id: neo-x-testnet
 title: Neo X Testnet
+description: Start indexing Neo X Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Neo X Testnet
 slug: /neo-x-testnet
 ---

@@ -1,6 +1,7 @@
 ---
 id: torus-testnet
 title: Torus Testnet
+description: Start indexing Torus Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Torus Testnet
 slug: /torus-testnet
 ---

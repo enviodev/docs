@@ -1,6 +1,7 @@
 ---
 id: asset-chain-mainnet
 title: Asset Chain Mainnet
+description: Start indexing Asset Chain Mainnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Asset Chain Mainnet
 slug: /asset-chain-mainnet
 ---

@@ -1,6 +1,7 @@
 ---
 id: b2-hub-testnet
 title: B2 Hub Testnet
+description: Start indexing B2 Hub Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: B2 Hub Testnet
 slug: /b2-hub-testnet
 ---

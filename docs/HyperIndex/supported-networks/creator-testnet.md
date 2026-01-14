@@ -1,6 +1,7 @@
 ---
 id: creator-testnet
 title: Creator Testnet
+description: Start indexing Creator Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Creator Testnet
 slug: /creator-testnet
 ---

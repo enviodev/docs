@@ -1,6 +1,7 @@
 ---
 id: public-goods-network
 title: Public Goods Network
+description: Start indexing Public Goods Network data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Public Goods Network
 slug: /public-goods-network
 ---

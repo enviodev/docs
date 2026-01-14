@@ -1,6 +1,7 @@
 ---
 id: astar-zkevm
 title: Astar zkEVM
+description: Start indexing Astar zkEVM data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Astar zkEVM
 slug: /astar-zkevm
 ---

@@ -1,6 +1,7 @@
 ---
 id: iotex-network
 title: Iotex Network
+description: Start indexing Iotex Network data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Iotex Network
 slug: /iotex-network
 ---

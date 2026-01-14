@@ -1,6 +1,7 @@
 ---
 id: torus-mainnet
 title: Torus Mainnet
+description: Start indexing Torus Mainnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Torus Mainnet
 slug: /torus-mainnet
 ---

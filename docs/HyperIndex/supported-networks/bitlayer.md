@@ -1,6 +1,7 @@
 ---
 id: bitlayer
 title: Bitlayer
+description: Start indexing Bitlayer data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Bitlayer
 slug: /bitlayer
 ---

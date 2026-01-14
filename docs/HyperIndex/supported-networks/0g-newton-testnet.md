@@ -1,6 +1,7 @@
 ---
 id: 0g-newton-testnet
 title: 0G Newton Testnet
+description: Start indexing 0G Newton Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: 0G Newton Testnet
 slug: /0g-newton-testnet
 ---

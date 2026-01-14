@@ -1,6 +1,7 @@
 ---
 id: flow
 title: Flow
+description: Start indexing Flow data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Flow
 slug: /flow
 ---

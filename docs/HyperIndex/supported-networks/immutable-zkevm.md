@@ -1,6 +1,7 @@
 ---
 id: immutable-zkevm
 title: Immutable zkEVM
+description: Start indexing Immutable zkEVM data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Immutable zkEVM
 slug: /immutable-zkevm
 ---

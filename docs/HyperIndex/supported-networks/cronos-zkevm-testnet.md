@@ -1,6 +1,7 @@
 ---
 id: cronos-zkevm-testnet
 title: Cronos ZKEVM Testnet
+description: Start indexing Cronos ZKEVM Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Cronos ZKEVM Testnet
 slug: /cronos-zkevm-testnet
 ---

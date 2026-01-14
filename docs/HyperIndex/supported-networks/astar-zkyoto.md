@@ -1,6 +1,7 @@
 ---
 id: astar-zkyoto
 title: Astar zKyoto
+description: Start indexing Astar zKyoto data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Astar zKyoto
 slug: /astar-zkyoto
 ---

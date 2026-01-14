@@ -1,6 +1,7 @@
 ---
 id: boba-bnb-mainnet
 title: Boba BNB Mainnet
+description: Start indexing Boba BNB Mainnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Boba BNB Mainnet
 slug: /boba-bnb-mainnet
 ---

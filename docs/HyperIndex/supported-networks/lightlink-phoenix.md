@@ -1,6 +1,7 @@
 ---
 id: lightlink-phoenix
 title: Lightlink Phoenix
+description: Start indexing Lightlink Phoenix data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Lightlink Phoenix
 slug: /lightlink-phoenix
 ---

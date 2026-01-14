@@ -1,6 +1,7 @@
 ---
 id: op-celestia-raspberry
 title: OP Celestia Raspberry
+description: Start indexing OP Celestia Raspberry data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: OP Celestia Raspberry
 slug: /op-celestia-raspberry
 ---

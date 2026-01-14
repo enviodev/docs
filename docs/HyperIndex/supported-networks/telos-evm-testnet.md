@@ -1,6 +1,7 @@
 ---
 id: telos-evm-testnet
 title: Telos EVM Testnet
+description: Start indexing Telos EVM Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Telos EVM Testnet
 slug: /telos-evm-testnet
 ---

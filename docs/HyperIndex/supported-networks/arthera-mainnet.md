@@ -1,6 +1,7 @@
 ---
 id: arthera-mainnet
 title: Arthera Mainnet
+description: Start indexing Arthera Mainnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Arthera Mainnet
 slug: /arthera-mainnet
 ---

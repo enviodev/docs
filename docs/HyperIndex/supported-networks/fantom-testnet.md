@@ -1,6 +1,7 @@
 ---
 id: fantom-testnet
 title: Fantom Testnet
+description: Start indexing Fantom Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Fantom Testnet
 slug: /fantom-testnet
 ---

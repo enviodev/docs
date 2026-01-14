@@ -1,6 +1,7 @@
 ---
 id: now-chaint
 title: Now Chaint
+description: Start indexing Now Chaint data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Now Chaint
 slug: /now-chaint
 ---

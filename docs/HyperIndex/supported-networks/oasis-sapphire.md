@@ -1,6 +1,7 @@
 ---
 id: oasis-sapphire
 title: Oasis Sapphire
+description: Start indexing Oasis Sapphire data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Oasis Sapphire
 slug: /oasis-sapphire
 ---

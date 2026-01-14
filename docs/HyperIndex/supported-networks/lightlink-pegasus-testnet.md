@@ -1,6 +1,7 @@
 ---
 id: lightlink-pegasus-testnet
 title: Lightlink Pegasus Testnet
+description: Start indexing Lightlink Pegasus Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Lightlink Pegasus Testnet
 slug: /lightlink-pegasus-testnet
 ---

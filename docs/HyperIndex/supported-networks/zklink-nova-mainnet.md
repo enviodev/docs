@@ -1,6 +1,7 @@
 ---
 id: zklink-nova-mainnet
 title: ZkLink Nova Mainnet
+description: Start indexing ZkLink Nova Mainnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: ZkLink Nova Mainnet
 slug: /zklink-nova-mainnet
 ---

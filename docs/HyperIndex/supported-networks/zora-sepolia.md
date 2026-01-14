@@ -1,6 +1,7 @@
 ---
 id: zora-sepolia
 title: Zora Sepolia
+description: Start indexing Zora Sepolia data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Zora Sepolia
 slug: /zora-sepolia
 ---

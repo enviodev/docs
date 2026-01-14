@@ -1,6 +1,7 @@
 ---
 id: satoshivm
 title: SatoshiVM
+description: Start indexing SatoshiVM data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: SatoshiVM
 slug: /satoshivm
 ---

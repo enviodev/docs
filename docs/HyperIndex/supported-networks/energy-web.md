@@ -1,6 +1,7 @@
 ---
 id: energy-web
 title: Energy Web
+description: Start indexing Energy Web data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Energy Web
 slug: /energy-web
 ---
