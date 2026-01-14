@@ -25,31 +25,19 @@ const RENAME_CONFIG = {
 // Filter out staging and fuel chains
 const FILTER_ENDPOINTS = [/^staging-/, /fuel/, /temporary/, /delete/];
 
-// Base column definitions
-const HYPERSYNC_BASE_COLUMNS = [
+// Column definitions (no Notes column - using asterisks instead)
+const HYPERSYNC_COLUMNS = [
   { name: "Network Name", width: 25 },
   { name: "Network ID", width: 15 },
   { name: "URL", width: 88 },
   { name: "Tier", width: 4 },
 ];
 
-const HYPERRPC_BASE_COLUMNS = [
+const HYPERRPC_COLUMNS = [
   { name: "Network Name", width: 25 },
   { name: "Network ID", width: 15 },
   { name: "URL", width: 88 },
 ];
-
-// Check if we have any annotations to show
-const hasAnnotations = Object.keys(networkAnnotations).length > 0;
-
-// Add Notes column if annotations exist
-const HYPERSYNC_COLUMNS = hasAnnotations
-  ? [...HYPERSYNC_BASE_COLUMNS, { name: "Notes", width: 60 }]
-  : HYPERSYNC_BASE_COLUMNS;
-
-const HYPERRPC_COLUMNS = hasAnnotations
-  ? [...HYPERRPC_BASE_COLUMNS, { name: "Notes", width: 60 }]
-  : HYPERRPC_BASE_COLUMNS;
 
 const capitalizeAndSplit = (name) => {
   return name.replace(/-/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
@@ -103,11 +91,35 @@ const emojiTier = (network) => {
   );
 };
 
+const generateNotesSection = (data) => {
+  const chainsWithNotes = sortAndFilterChains(data).filter(
+    (chain) => networkAnnotations[chain.name]
+  );
+
+  if (chainsWithNotes.length === 0) {
+    return "";
+  }
+
+  let notesSection = "\n\n**Notes:**\n\n";
+  chainsWithNotes.forEach((chain) => {
+    const networkName = getNetworkName(chain);
+    const annotation = networkAnnotations[chain.name];
+    notesSection += `- **${networkName}***: ${annotation.note}\n`;
+  });
+
+  return notesSection;
+};
+
 const generateHyperSyncTable = (data) => {
   let table = generateCommonTableHeader(HYPERSYNC_COLUMNS);
 
   sortAndFilterChains(data).forEach((chain) => {
-    const networkName = getNetworkName(chain);
+    let networkName = getNetworkName(chain);
+
+    // Add asterisk if this network has annotations
+    if (networkAnnotations[chain.name]) {
+      networkName += "*";
+    }
 
     const tier = emojiTier(chain);
 
@@ -116,21 +128,12 @@ const generateHyperSyncTable = (data) => {
     const chainIdSuffix = isTracesNetwork ? `-traces` : "";
     const url = `https://${chain.name}.hypersync.xyz or https://${chain.chain_id}${chainIdSuffix}.hypersync.xyz`;
 
-    // Get annotation for this network
-    const annotation = networkAnnotations[chain.name];
-    const notes = annotation?.note || "";
-
     const rowValues = [
       networkName,
       chain.chain_id.toString(),
       url,
       tier,
     ];
-
-    // Add notes column if annotations exist
-    if (hasAnnotations) {
-      rowValues.push(notes);
-    }
 
     table += generateTableRow(HYPERSYNC_COLUMNS, rowValues);
   });
@@ -142,27 +145,23 @@ const generateHyperRPCTable = (data) => {
   let table = generateCommonTableHeader(HYPERRPC_COLUMNS);
 
   sortAndFilterChains(data).forEach((chain) => {
-    const networkName = getNetworkName(chain);
+    let networkName = getNetworkName(chain);
+
+    // Add asterisk if this network has annotations
+    if (networkAnnotations[chain.name]) {
+      networkName += "*";
+    }
 
     // Check if this is a traces network and modify the URL accordingly
     const isTracesNetwork = chain.name.toLowerCase().includes("traces");
     const chainIdSuffix = isTracesNetwork ? `-traces` : "";
     const url = `https://${chain.name}.rpc.hypersync.xyz or https://${chain.chain_id}${chainIdSuffix}.rpc.hypersync.xyz`;
 
-    // Get annotation for this network
-    const annotation = networkAnnotations[chain.name];
-    const notes = annotation?.note || "";
-
     const rowValues = [
       networkName,
       chain.chain_id.toString(),
       url,
     ];
-
-    // Add notes column if annotations exist
-    if (hasAnnotations) {
-      rowValues.push(notes);
-    }
 
     table += generateTableRow(HYPERRPC_COLUMNS, rowValues);
   });
@@ -177,9 +176,13 @@ const updateMarkdownFiles = async () => {
 
     // Update HyperSync file
     const hyperSyncTable = generateHyperSyncTable(data);
+    const hyperSyncNotes = generateNotesSection(data);
     const HYPERSYNC_FILE_PATH =
       "docs/HyperSync/hypersync-supported-networks.md";
     let hyperSyncContent = fs.readFileSync(HYPERSYNC_FILE_PATH, "utf8");
+
+    // Remove existing notes section if present
+    hyperSyncContent = hyperSyncContent.replace(/\n\n\*\*Notes:\*\*[\s\S]*?(?=\n\n---|\n\n$|$)/, "");
 
     const hyperSyncRegex =
       /([\s\S]*?)\n\| Network Name[\s\S]*?\n\n([\s\S]*|$)/;
@@ -187,7 +190,7 @@ const updateMarkdownFiles = async () => {
 
     if (hyperSyncMatch) {
       const updatedHyperSyncContent =
-        hyperSyncMatch[1] + "\n" + hyperSyncTable + "\n" + hyperSyncMatch[2];
+        hyperSyncMatch[1] + "\n" + hyperSyncTable + hyperSyncNotes + "\n" + hyperSyncMatch[2];
       hyperSyncContent = hyperSyncContent.replace(
         hyperSyncRegex,
         updatedHyperSyncContent
@@ -200,9 +203,13 @@ const updateMarkdownFiles = async () => {
 
     // Update HyperRPC file
     const hyperRPCTable = generateHyperRPCTable(data);
+    const hyperRPCNotes = generateNotesSection(data);
     const HYPERRPC_FILE_PATH =
       "docs/HyperRPC/hyperrpc-supported-networks.md";
     let hyperRPCContent = fs.readFileSync(HYPERRPC_FILE_PATH, "utf8");
+
+    // Remove existing notes section if present
+    hyperRPCContent = hyperRPCContent.replace(/\n\n\*\*Notes:\*\*[\s\S]*?(?=\n\n---|\n\n$|$)/, "");
 
     const hyperRPCRegex =
       /([\s\S]*?)\n\| Network Name[\s\S]*?(\n\n[\s\S]*|$)/;
@@ -210,7 +217,7 @@ const updateMarkdownFiles = async () => {
 
     if (hyperRPCMatch) {
       const updatedHyperRPCContent =
-        hyperRPCMatch[1] + "\n" + hyperRPCTable + "\n" + hyperRPCMatch[2];
+        hyperRPCMatch[1] + "\n" + hyperRPCTable + hyperRPCNotes + "\n" + hyperRPCMatch[2];
       hyperRPCContent = hyperRPCContent.replace(
         hyperRPCRegex,
         updatedHyperRPCContent
