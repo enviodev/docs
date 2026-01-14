@@ -1,0 +1,14 @@
+{
+  "base-traces": {
+    "note": "Start block: 39000000 (earlier blocks available on request)"
+  },
+  "injective": {
+    "note": "from_block: 129846180 (non-evm before that)"
+  },
+  "sei": {
+    "note": "from_block: 79123881 (non-evm before that)"
+  },
+  "sei-testnet": {
+    "note": "from_block: 186100000 (non-evm before that)"
+  }
+}
