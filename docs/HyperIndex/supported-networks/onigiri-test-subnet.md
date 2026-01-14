@@ -1,6 +1,7 @@
 ---
 id: onigiri-test-subnet
 title: ONIGIRI Test Subnet
+description: Start indexing ONIGIRI Test Subnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: ONIGIRI Test Subnet
 slug: /onigiri-test-subnet
 ---

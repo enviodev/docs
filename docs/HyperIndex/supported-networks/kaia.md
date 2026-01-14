@@ -1,6 +1,7 @@
 ---
 id: kaia
 title: Kaia
+description: Start indexing Kaia data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Kaia
 slug: /kaia
 ---

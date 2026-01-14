@@ -1,6 +1,7 @@
 ---
 id: etherlink-testnet
 title: Etherlink Testnet
+description: Start indexing Etherlink Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Etherlink Testnet
 slug: /etherlink-testnet
 ---

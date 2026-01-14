@@ -1,6 +1,7 @@
 ---
 id: bitfinity-mainnet
 title: Bitfinity Mainnet
+description: Start indexing Bitfinity Mainnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Bitfinity Mainnet
 slug: /bitfinity-mainnet
 ---

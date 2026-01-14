@@ -1,6 +1,7 @@
 ---
 id: bevm-testnet
 title: BEVM Testnet
+description: Start indexing BEVM Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: BEVM Testnet
 slug: /bevm-testnet
 ---

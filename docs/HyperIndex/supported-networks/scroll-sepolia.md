@@ -1,6 +1,7 @@
 ---
 id: scroll-sepolia
 title: Scroll Sepolia
+description: Start indexing Scroll Sepolia data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Scroll Sepolia
 slug: /scroll-sepolia
 ---

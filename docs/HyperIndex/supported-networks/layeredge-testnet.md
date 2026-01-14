@@ -1,6 +1,7 @@
 ---
 id: layeredge-testnet
 title: LayerEdge Testnet
+description: Start indexing LayerEdge Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: LayerEdge Testnet
 slug: /layeredge-testnet
 ---

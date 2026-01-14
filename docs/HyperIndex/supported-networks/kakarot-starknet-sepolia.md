@@ -1,6 +1,7 @@
 ---
 id: kakarot-starknet-sepolia
 title: Kakarot Starknet Sepolia
+description: Start indexing Kakarot Starknet Sepolia data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Kakarot Starknet Sepolia
 slug: /kakarot-starknet-sepolia
 ---

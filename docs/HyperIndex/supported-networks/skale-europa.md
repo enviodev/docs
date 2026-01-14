@@ -1,6 +1,7 @@
 ---
 id: skale-europa
 title: Skale Europa
+description: Start indexing Skale Europa data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Skale Europa
 slug: /skale-europa
 ---

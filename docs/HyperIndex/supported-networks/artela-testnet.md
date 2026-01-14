@@ -1,6 +1,7 @@
 ---
 id: artela-testnet
 title: Artela Testnet
+description: Start indexing Artela Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Artela Testnet
 slug: /artela-testnet
 ---

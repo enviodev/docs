@@ -1,6 +1,7 @@
 ---
 id: eos
 title: EOS
+description: Start indexing EOS data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: EOS
 slug: /eos
 ---

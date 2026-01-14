@@ -1,6 +1,7 @@
 ---
 id: flare-songbird
 title: Flare Songbird
+description: Start indexing Flare Songbird data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Flare Songbird
 slug: /flare-songbird
 ---

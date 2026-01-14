@@ -1,6 +1,7 @@
 ---
 id: bitfinity-testnet
 title: Bitfinity Testnet
+description: Start indexing Bitfinity Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Bitfinity Testnet
 slug: /bitfinity-testnet
 ---

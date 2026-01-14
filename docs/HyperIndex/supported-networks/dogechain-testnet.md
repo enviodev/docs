@@ -1,6 +1,7 @@
 ---
 id: dogechain-testnet
 title: Dogechain Testnet
+description: Start indexing Dogechain Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Dogechain Testnet
 slug: /dogechain-testnet
 ---

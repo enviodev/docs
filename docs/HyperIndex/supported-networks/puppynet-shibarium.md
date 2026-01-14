@@ -1,6 +1,7 @@
 ---
 id: puppynet-shibarium
 title: Puppynet Shibarium
+description: Start indexing Puppynet Shibarium data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Puppynet Shibarium
 slug: /puppynet-shibarium
 ---

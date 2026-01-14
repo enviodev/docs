@@ -1,6 +1,7 @@
 ---
 id: x-layer-testnet
 title: X Layer Testnet
+description: Start indexing X Layer Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: X Layer Testnet
 slug: /x-layer-testnet
 ---

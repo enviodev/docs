@@ -1,6 +1,7 @@
 ---
 id: gravity-alpha-mainnet
 title: Gravity Alpha Mainnet
+description: Start indexing Gravity Alpha Mainnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Gravity Alpha Mainnet
 slug: /gravity-alpha-mainnet
 ---

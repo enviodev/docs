@@ -1,6 +1,7 @@
 ---
 id: dogechain-mainnet
 title: Dogechain Mainnet
+description: Start indexing Dogechain Mainnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Dogechain Mainnet
 slug: /dogechain-mainnet
 ---

@@ -1,6 +1,7 @@
 ---
 id: pulsechain
 title: PulseChain
+description: Start indexing PulseChain data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: PulseChain
 slug: /pulsechain
 ---

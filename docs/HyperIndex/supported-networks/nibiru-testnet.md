@@ -1,6 +1,7 @@
 ---
 id: nibiru-testnet
 title: Nibiru Testnet
+description: Start indexing Nibiru Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Nibiru Testnet
 slug: /nibiru-testnet
 ---

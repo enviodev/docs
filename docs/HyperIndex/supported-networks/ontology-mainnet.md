@@ -1,6 +1,7 @@
 ---
 id: ontology-mainnet
 title: Ontology Mainnet
+description: Start indexing Ontology Mainnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Ontology Mainnet
 slug: /ontology-mainnet
 ---

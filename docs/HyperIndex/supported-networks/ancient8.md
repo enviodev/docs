@@ -1,6 +1,7 @@
 ---
 id: ancient8
 title: Ancient8
+description: Start indexing Ancient8 data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Ancient8
 slug: /ancient8
 ---

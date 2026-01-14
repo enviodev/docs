@@ -1,6 +1,7 @@
 ---
 id: manta-pacific-sepolia
 title: Manta Pacific Sepolia
+description: Start indexing Manta Pacific Sepolia data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Manta Pacific Sepolia
 slug: /manta-pacific-sepolia
 ---

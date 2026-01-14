@@ -1,6 +1,7 @@
 ---
 id: nautilus
 title: Nautilus
+description: Start indexing Nautilus data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Nautilus
 slug: /nautilus
 ---

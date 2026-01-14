@@ -1,6 +1,7 @@
 ---
 id: zeta-testnet
 title: Zeta Testnet
+description: Start indexing Zeta Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Zeta Testnet
 slug: /zeta-testnet
 ---

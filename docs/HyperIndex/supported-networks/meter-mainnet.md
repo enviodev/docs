@@ -1,6 +1,7 @@
 ---
 id: meter-mainnet
 title: Meter Mainnet
+description: Start indexing Meter Mainnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Meter Mainnet
 slug: /meter-mainnet
 ---

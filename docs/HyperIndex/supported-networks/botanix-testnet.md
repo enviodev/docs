@@ -1,6 +1,7 @@
 ---
 id: botanix-testnet
 title: Botanix Testnet
+description: Start indexing Botanix Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Botanix Testnet
 slug: /botanix-testnet
 ---

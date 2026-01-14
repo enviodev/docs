@@ -1,6 +1,7 @@
 ---
 id: oasis-emerald
 title: Oasis Emerald
+description: Start indexing Oasis Emerald data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Oasis Emerald
 slug: /oasis-emerald
 ---

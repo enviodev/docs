@@ -1,6 +1,7 @@
 ---
 id: peaq
 title: Peaq
+description: Start indexing Peaq data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Peaq
 slug: /peaq
 ---

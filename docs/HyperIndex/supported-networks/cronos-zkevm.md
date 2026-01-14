@@ -1,6 +1,7 @@
 ---
 id: cronos-zkevm
 title: Cronos ZKEVM
+description: Start indexing Cronos ZKEVM data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Cronos ZKEVM
 slug: /cronos-zkevm
 ---

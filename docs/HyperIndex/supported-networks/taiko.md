@@ -1,6 +1,7 @@
 ---
 id: taiko
 title: Taiko
+description: Start indexing Taiko data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Taiko
 slug: /taiko
 ---

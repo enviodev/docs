@@ -1,6 +1,7 @@
 ---
 id: tanssi-demo
 title: Tanssi Demo
+description: Start indexing Tanssi Demo data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Tanssi Demo
 slug: /tanssi-demo
 ---

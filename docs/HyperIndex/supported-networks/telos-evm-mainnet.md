@@ -1,6 +1,7 @@
 ---
 id: telos-evm-mainnet
 title: Telos EVM Mainnet
+description: Start indexing Telos EVM Mainnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Telos EVM Mainnet
 slug: /telos-evm-mainnet
 ---

@@ -1,6 +1,7 @@
 ---
 id: flow-testnet
 title: Flow Testnet
+description: Start indexing Flow Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Flow Testnet
 slug: /flow-testnet
 ---

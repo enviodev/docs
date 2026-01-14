@@ -1,6 +1,7 @@
 ---
 id: immutable-zkevm-testnet
 title: Immutable zkEVM Testnet
+description: Start indexing Immutable zkEVM Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Immutable zkEVM Testnet
 slug: /immutable-zkevm-testnet
 ---

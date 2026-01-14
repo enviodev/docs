@@ -1,6 +1,7 @@
 ---
 id: shibarium
 title: Shibarium
+description: Start indexing Shibarium data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Shibarium
 slug: /shibarium
 ---

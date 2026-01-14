@@ -1,6 +1,7 @@
 ---
 id: dfk-chain
 title: DFK Chain
+description: Start indexing DFK Chain data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: DFK Chain
 slug: /dfk-chain
 ---

@@ -1,6 +1,7 @@
 ---
 id: arbitrum-blueberry
 title: Arbitrum Blueberry
+description: Start indexing Arbitrum Blueberry data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Arbitrum Blueberry
 slug: /arbitrum-blueberry
 ---

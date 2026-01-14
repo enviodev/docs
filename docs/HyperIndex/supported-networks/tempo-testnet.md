@@ -1,6 +1,7 @@
 ---
 id: tempo-testnet
 title: Tempo Testnet
+description: Start indexing Tempo Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Tempo Testnet
 slug: /tempo-testnet
 ---

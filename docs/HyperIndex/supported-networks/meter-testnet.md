@@ -1,6 +1,7 @@
 ---
 id: meter-testnet
 title: Meter Testnet
+description: Start indexing Meter Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Meter Testnet
 slug: /meter-testnet
 ---

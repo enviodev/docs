@@ -1,6 +1,7 @@
 ---
 id: crossfi-testnet
 title: CrossFi Testnet
+description: Start indexing CrossFi Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: CrossFi Testnet
 slug: /crossfi-testnet
 ---

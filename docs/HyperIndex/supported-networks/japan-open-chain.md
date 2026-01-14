@@ -1,6 +1,7 @@
 ---
 id: japan-open-chain
 title: Japan Open Chain
+description: Start indexing Japan Open Chain data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Japan Open Chain
 slug: /japan-open-chain
 ---

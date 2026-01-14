@@ -1,6 +1,7 @@
 ---
 id: celo-alfajores-testnet
 title: Celo Alfajores Testnet
+description: Start indexing Celo Alfajores Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Celo Alfajores Testnet
 slug: /celo-alfajores-testnet
 ---

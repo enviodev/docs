@@ -1,6 +1,7 @@
 ---
 id: canto
 title: Canto
+description: Start indexing Canto data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Canto
 slug: /canto
 ---

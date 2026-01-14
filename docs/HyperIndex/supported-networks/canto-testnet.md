@@ -1,6 +1,7 @@
 ---
 id: canto-testnet
 title: Canto Testnet
+description: Start indexing Canto Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Canto Testnet
 slug: /canto-testnet
 ---

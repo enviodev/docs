@@ -1,6 +1,7 @@
 ---
 id: bevm-mainnet
 title: BEVM Mainnet
+description: Start indexing BEVM Mainnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: BEVM Mainnet
 slug: /bevm-mainnet
 ---

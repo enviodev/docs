@@ -1,6 +1,7 @@
 ---
 id: viction
 title: Viction
+description: Start indexing Viction data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Viction
 slug: /viction
 ---

@@ -1,6 +1,7 @@
 ---
 id: mint-mainnet
 title: Mint Mainnet
+description: Start indexing Mint Mainnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Mint Mainnet
 slug: /mint-mainnet
 ---

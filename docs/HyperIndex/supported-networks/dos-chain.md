@@ -1,6 +1,7 @@
 ---
 id: dos-chain
 title: DOS Chain
+description: Start indexing DOS Chain data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: DOS Chain
 slug: /dos-chain
 ---

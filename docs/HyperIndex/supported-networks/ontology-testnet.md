@@ -1,6 +1,7 @@
 ---
 id: ontology-testnet
 title: Ontology Testnet
+description: Start indexing Ontology Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Ontology Testnet
 slug: /ontology-testnet
 ---

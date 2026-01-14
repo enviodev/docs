@@ -1,6 +1,7 @@
 ---
 id: optopia
 title: Optopia
+description: Start indexing Optopia data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Optopia
 slug: /optopia
 ---

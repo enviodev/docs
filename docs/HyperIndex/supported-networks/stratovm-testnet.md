@@ -1,6 +1,7 @@
 ---
 id: stratovm-testnet
 title: StratoVM Testnet
+description: Start indexing StratoVM Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: StratoVM Testnet
 slug: /stratovm-testnet
 ---

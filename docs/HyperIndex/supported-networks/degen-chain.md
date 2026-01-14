@@ -1,6 +1,7 @@
 ---
 id: degen-chain
 title: Degen Chain
+description: Start indexing Degen Chain data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Degen Chain
 slug: /degen-chain
 ---
