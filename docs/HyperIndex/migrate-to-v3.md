@@ -237,22 +237,47 @@ We introduced a new testing framework that allows you to test handlers' logic us
 The framework integrates with [Vitest](https://vitest.dev/), replacing the previous mocha/chai setup with a single package that doesn't require configuration by default and includes snapshot testing out-of-the-box.
 
 ```typescript
-import { describe, test, expect, TestHelpers } from "generated";
+import { describe, it, expect } from "vitest"
+import { createTestIndexer } from "generated"
 
-describe("Transfer handler", () => {
-  test("should create Transfer entity", async () => {
-    const { mockEventData, processEvent } = TestHelpers.ERC20.Transfer;
+describe("Indexer Testing", () => {
+  it("Should create accounts from ERC20 Transfer events", async () => {
+    const indexer = createTestIndexer();
 
-    const event = mockEventData({
-      from: "0x1234...",
-      to: "0x5678...",
-      value: 1000n,
-    });
-
-    const { entities } = await processEvent(event);
-
-    expect(entities.Transfer).toBeDefined();
-    expect(entities.Transfer?.value).toBe(1000n);
+    expect(
+      await indexer.process({
+        chains: {
+          1: {
+            startBlock: 10_861_674,
+            endBlock: 10_861_674,
+          },
+        },
+      }),
+      "Should find the first mint at block 10_861_674"
+    ).toMatchInlineSnapshot(`
+      {
+        "changes": [
+          {
+            "Account": {
+              "sets": [
+                {
+                  "balance": -1000000000000000000000000000n,
+                  "id": "0x0000000000000000000000000000000000000000",
+                },
+                {
+                  "balance": 1000000000000000000000000000n,
+                  "id": "0x41653c7d61609d856f29355e404f310ec4142cfb",
+                },
+              ],
+            },
+            "block": 10861674,
+            "blockHash": "0x32e4dd857b5b7e756551a00271e44b61dbda0a91db951cf79a3e58adb28f5c09",
+            "chainId": 1,
+            "eventsProcessed": 1,
+          },
+        ],
+      }
+    `);
   });
 });
 ```
@@ -366,15 +391,18 @@ We recommend migrating from mocha/chai to [Vitest](https://vitest.dev/), which o
 
 ```bash
 pnpm remove ts-mocha ts-node mocha chai @types/mocha @types/chai
-pnpm add -D vitest
+pnpm add -D vitest@4.0.16
 ```
 
-Update your `package.json` scripts:
+Update your `package.json`:
 
 ```json
 {
   "scripts": {
-    "test": "vitest"
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "4.0.16"
   }
 }
 ```
@@ -389,9 +417,8 @@ import { describe, it } from "mocha";
 import { expect } from "chai";
 
 // After (vitest)
-import { describe, test, expect } from "vitest";
-// Or use the generated test helpers:
-import { describe, test, expect, TestHelpers } from "generated";
+import { describe, it, expect } from "vitest";
+import { createTestIndexer } from "generated";
 ```
 
 **If you prefer to keep Mocha:**
