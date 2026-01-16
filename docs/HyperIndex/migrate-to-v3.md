@@ -290,11 +290,11 @@ Beyond Docker, HyperIndex now supports [Podman](https://podman.io/) for local de
 
 ### Nested Tuples for Contract Import
 
-Contract import now supports nested tuples in event signatures, enabling indexing of contracts with complex event parameter structures.
+The `envio init` command now supports contracts with nested tuples in event signatures, which was previously a limitation when importing contracts.
 
 ### PostgreSQL Update for Local Docker Compose
 
-The local development Docker Compose setup now uses an updated PostgreSQL version for improved performance and compatibility.
+The local development Docker Compose setup now uses PostgreSQL 18.1 (upgraded from 17.5).
 
 ## Breaking Changes
 
@@ -669,7 +669,7 @@ If you encounter any issues during migration, join our [Discord community](https
 For detailed release notes, see:
 
 - [v3.0.0-alpha.7](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.7)
-- [v3.0.0-alpha.7](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.7)
+- [v3.0.0-alpha.6](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.6)
 - [v3.0.0-alpha.5](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.5)
 - [v3.0.0-alpha.4](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.4)
 - [v3.0.0-alpha.3](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.3)
