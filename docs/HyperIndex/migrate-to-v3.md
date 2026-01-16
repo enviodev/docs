@@ -193,7 +193,7 @@ HyperIndex now supports Solana with RPC as a source. This feature is experimenta
 To initialize a Solana project:
 
 ```bash
-pnpx envio@3.0.0-alpha.6 init svm
+pnpx envio@3.0.0-alpha.7 init svm
 ```
 
 See the [Solana documentation](/docs/HyperIndex/solana) for more details.
@@ -288,6 +288,14 @@ See the [Testing documentation](/docs/HyperIndex/testing) for more details.
 
 Beyond Docker, HyperIndex now supports [Podman](https://podman.io/) for local development environments. This provides an alternative container runtime for developers who prefer Podman or have it available in their environment.
 
+### Nested Tuples for Contract Import
+
+Contract import now supports nested tuples in event signatures, enabling indexing of contracts with complex event parameter structures.
+
+### PostgreSQL Update for Local Docker Compose
+
+The local development Docker Compose setup now uses an updated PostgreSQL version for improved performance and compatibility.
+
 ## Breaking Changes
 
 ### Node.js & Runtime
@@ -373,7 +381,7 @@ Update your `package.json` with the following changes:
     "node": ">=22.0.0"
   },
   "dependencies": {
-    "envio": "3.0.0-alpha.6"
+    "envio": "3.0.0-alpha.7"
   },
   "devDependencies": {
     "typescript": "^5.7.3"
@@ -617,7 +625,7 @@ pnpm dev
 
 - [ ] Update Node.js to >=22
 - [ ] **Add `"type": "module"` to `package.json`** ← Required for V3!
-- [ ] Update `envio` dependency to `3.0.0-alpha.6`
+- [ ] Update `envio` dependency to `3.0.0-alpha.7`
 - [ ] Update `engines.node` to `>=22.0.0` in `package.json`
 - [ ] Update `tsconfig.json` for ESM support
 - [ ] Migrate from mocha/chai to vitest (recommended) or replace `ts-mocha`/`ts-node` with `tsx`
@@ -660,7 +668,8 @@ If you encounter any issues during migration, join our [Discord community](https
 
 For detailed release notes, see:
 
-- [v3.0.0-alpha.6](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.6)
+- [v3.0.0-alpha.7](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.7)
+- [v3.0.0-alpha.7](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.7)
 - [v3.0.0-alpha.5](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.5)
 - [v3.0.0-alpha.4](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.4)
 - [v3.0.0-alpha.3](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.3)
