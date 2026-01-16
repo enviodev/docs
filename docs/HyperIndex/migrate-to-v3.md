@@ -193,7 +193,7 @@ HyperIndex now supports Solana with RPC as a source. This feature is experimenta
 To initialize a Solana project:
 
 ```bash
-pnpx envio@3.0.0-alpha.5 init svm
+pnpx envio@3.0.0-alpha.7 init svm
 ```
 
 See the [Solana documentation](/docs/HyperIndex/solana) for more details.
@@ -226,6 +226,76 @@ We gave our TUI some love, making it look more beautiful and compact. It also co
 
 ![TUI](/img/sync.gif)
 
+### New Testing Framework (Experimental)
+
+We introduced a new testing framework that allows you to test handlers' logic using real blockchain data and programmatically debug code without repetitive local runs. Key capabilities include:
+
+- Testing block and event handlers together
+- Snapshot testing support
+- Parallel test execution via worker thread isolation
+
+The framework integrates with [Vitest](https://vitest.dev/), replacing the previous mocha/chai setup with a single package that doesn't require configuration by default and includes snapshot testing out-of-the-box.
+
+```typescript
+import { describe, it, expect } from "vitest"
+import { createTestIndexer } from "generated"
+
+describe("Indexer Testing", () => {
+  it("Should create accounts from ERC20 Transfer events", async () => {
+    const indexer = createTestIndexer();
+
+    expect(
+      await indexer.process({
+        chains: {
+          1: {
+            startBlock: 10_861_674,
+            endBlock: 10_861_674,
+          },
+        },
+      }),
+      "Should find the first mint at block 10_861_674"
+    ).toMatchInlineSnapshot(`
+      {
+        "changes": [
+          {
+            "Account": {
+              "sets": [
+                {
+                  "balance": -1000000000000000000000000000n,
+                  "id": "0x0000000000000000000000000000000000000000",
+                },
+                {
+                  "balance": 1000000000000000000000000000n,
+                  "id": "0x41653c7d61609d856f29355e404f310ec4142cfb",
+                },
+              ],
+            },
+            "block": 10861674,
+            "blockHash": "0x32e4dd857b5b7e756551a00271e44b61dbda0a91db951cf79a3e58adb28f5c09",
+            "chainId": 1,
+            "eventsProcessed": 1,
+          },
+        ],
+      }
+    `);
+  });
+});
+```
+
+See the [Testing documentation](/docs/HyperIndex/testing) for more details.
+
+### Podman Support
+
+Beyond Docker, HyperIndex now supports [Podman](https://podman.io/) for local development environments. This provides an alternative container runtime for developers who prefer Podman or have it available in their environment.
+
+### Nested Tuples for Contract Import
+
+The `envio init` command now supports contracts with nested tuples in event signatures, which was previously a limitation when importing contracts.
+
+### PostgreSQL Update for Local Docker Compose
+
+The local development Docker Compose setup now uses PostgreSQL 18.1 (upgraded from 17.5).
+
 ## Breaking Changes
 
 ### Node.js & Runtime
@@ -250,6 +320,14 @@ We gave our TUI some love, making it look more beautiful and compact. It also co
 - Removed `preload_handlers` option (now always enabled)
 - Removed `preRegisterDynamicContracts` option
 
+### HyperSync API Token Required
+
+Indexers using HyperSync as a data source now require an `ENVIO_API_TOKEN` environment variable. You can obtain a free API token at [envio.dev/app/api-tokens](https://envio.dev/app/api-tokens).
+
+```bash
+export ENVIO_API_TOKEN=your_token_here
+```
+
 ### Environment Variable Changes
 
 - Removed `UNSTABLE__TEMP_UNORDERED_HEAD_MODE` environment variable
@@ -261,6 +339,7 @@ We gave our TUI some love, making it look more beautiful and compact. It also co
 - Removed `chain` type in favor of `ChainId` (now a union type instead of a number)
 - Removed internal `ContractType` enum (allows longer contract names)
 - Removed `getGeneratedByChainId` (use `indexer` value instead)
+- **Lowercased entity types removed**: Generated code no longer exports lowercased entity types (e.g., `transfer`). Use capitalized names instead (e.g., `Transfer`)
 
 ### Metrics Changes
 
@@ -302,7 +381,7 @@ Update your `package.json` with the following changes:
     "node": ">=22.0.0"
   },
   "dependencies": {
-    "envio": "3.0.0-alpha.5"
+    "envio": "3.0.0-alpha.7"
   },
   "devDependencies": {
     "typescript": "^5.7.3"
@@ -314,7 +393,43 @@ Update your `package.json` with the following changes:
 Adding `"type": "module"` is **required** for V3. Without it, your project will fail to start due to ESM import errors.
 :::
 
-**If you use testing with Mocha:**
+**If you use testing with Mocha (recommended: migrate to Vitest):**
+
+We recommend migrating from mocha/chai to [Vitest](https://vitest.dev/), which offers a better testing experience with the new HyperIndex testing framework:
+
+```bash
+pnpm remove ts-mocha ts-node mocha chai @types/mocha @types/chai
+pnpm add -D vitest@4.0.16
+```
+
+Update your `package.json`:
+
+```json
+{
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "4.0.16"
+  }
+}
+```
+
+Move and refactor your test files:
+- Move `test/Test.ts` to `src/indexer.test.ts`
+- Update imports from `mocha`/`chai` to use `vitest`:
+
+```typescript
+// Before (mocha/chai)
+import { describe, it } from "mocha";
+import { expect } from "chai";
+
+// After (vitest)
+import { describe, it, expect } from "vitest";
+import { createTestIndexer } from "generated";
+```
+
+**If you prefer to keep Mocha:**
 
 Remove `ts-mocha` and `ts-node`, then install `tsx`:
 
@@ -440,7 +555,24 @@ Optionally move your handler files to `src/handlers/` and remove the explicit `h
 
 ### Step 4: Update Environment Variables
 
-Remove these deprecated environment variables if present:
+**Add required environment variables:**
+
+If your indexer uses HyperSync (the default data source), you need to set up an API token:
+
+1. Get a free API token at [envio.dev/app/api-tokens](https://envio.dev/app/api-tokens)
+2. Set the environment variable:
+
+```bash
+export ENVIO_API_TOKEN=your_token_here
+```
+
+For local development, you can add it to a `.env` file:
+
+```
+ENVIO_API_TOKEN=your_token_here
+```
+
+**Remove deprecated environment variables if present:**
 
 - `UNSTABLE__TEMP_UNORDERED_HEAD_MODE`
 - `UNORDERED_MULTICHAIN_MODE`
@@ -461,6 +593,15 @@ Remove these deprecated environment variables if present:
 **Removed APIs:**
 
 - `getGeneratedByChainId` — use the `indexer.chains[chainId]` instead (see [Indexer State & Config](#indexer-state--config))
+- Lowercased entity types — use capitalized names instead:
+
+```typescript
+// Before
+import { transfer, approval } from "generated";
+
+// After
+import { Transfer, Approval } from "generated";
+```
 
 ### Step 6: Test Your Migration
 
@@ -484,10 +625,10 @@ pnpm dev
 
 - [ ] Update Node.js to >=22
 - [ ] **Add `"type": "module"` to `package.json`** ← Required for V3!
-- [ ] Update `envio` dependency to `3.0.0-alpha.5`
+- [ ] Update `envio` dependency to `3.0.0-alpha.7`
 - [ ] Update `engines.node` to `>=22.0.0` in `package.json`
 - [ ] Update `tsconfig.json` for ESM support
-- [ ] Replace `ts-mocha`/`ts-node` with `tsx` if using tests
+- [ ] Migrate from mocha/chai to vitest (recommended) or replace `ts-mocha`/`ts-node` with `tsx`
 
 **config.yaml:**
 
@@ -499,6 +640,7 @@ pnpm dev
 
 **Environment Variables:**
 
+- [ ] **Set `ENVIO_API_TOKEN`** if using HyperSync ([get token](https://envio.dev/app/api-tokens))
 - [ ] Remove `UNSTABLE__TEMP_UNORDERED_HEAD_MODE`
 - [ ] Remove `UNORDERED_MULTICHAIN_MODE`
 - [ ] Remove `MAX_BATCH_SIZE` (use `full_batch_size` in config.yaml)
@@ -512,6 +654,7 @@ pnpm dev
 - [ ] Replace `getGeneratedByChainId` with `indexer.chains[chainId]`
 - [ ] Update code expecting `Address` type to be `string` (now `` `0x${string}` ``)
 - [ ] Replace `transaction.chainId` with `context.chain.id` or `event.chainId`
+- [ ] Replace lowercased entity type imports with capitalized versions (e.g., `transfer` → `Transfer`)
 
 **Verify:**
 
@@ -525,6 +668,8 @@ If you encounter any issues during migration, join our [Discord community](https
 
 For detailed release notes, see:
 
+- [v3.0.0-alpha.7](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.7)
+- [v3.0.0-alpha.6](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.6)
 - [v3.0.0-alpha.5](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.5)
 - [v3.0.0-alpha.4](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.4)
 - [v3.0.0-alpha.3](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.3)
