@@ -4,6 +4,17 @@ const { rpcNetworks } = require("./rpc-networks.json");
 
 const URL = "https://chains.hyperquery.xyz/active_chains";
 
+// Load network annotations
+let networkAnnotations = {};
+try {
+  const annotationsPath = path.join(__dirname, "network-annotations.json");
+  if (fs.existsSync(annotationsPath)) {
+    networkAnnotations = JSON.parse(fs.readFileSync(annotationsPath, "utf8"));
+  }
+} catch (error) {
+  console.warn("Warning: Could not load network annotations:", error.message);
+}
+
 const RENAME_CONFIG = {
   eth: "Ethereum Mainnet",
   "polygon-zkevm": "Polygon zkEVM",
@@ -14,6 +25,7 @@ const RENAME_CONFIG = {
 // Filter out staging and fuel chains
 const FILTER_ENDPOINTS = [/^staging-/, /fuel/, /temporary/, /delete/];
 
+// Column definitions (no Notes column - using asterisks instead)
 const HYPERSYNC_COLUMNS = [
   { name: "Network Name", width: 25 },
   { name: "Network ID", width: 15 },
@@ -79,11 +91,35 @@ const emojiTier = (network) => {
   );
 };
 
+const generateNotesSection = (data) => {
+  const chainsWithNotes = sortAndFilterChains(data).filter(
+    (chain) => networkAnnotations[chain.name]
+  );
+
+  if (chainsWithNotes.length === 0) {
+    return "";
+  }
+
+  let notesSection = "\n\n**Notes:**\n\n";
+  chainsWithNotes.forEach((chain) => {
+    const networkName = getNetworkName(chain);
+    const annotation = networkAnnotations[chain.name];
+    notesSection += `- **${networkName}***: ${annotation.note}\n`;
+  });
+
+  return notesSection;
+};
+
 const generateHyperSyncTable = (data) => {
   let table = generateCommonTableHeader(HYPERSYNC_COLUMNS);
 
   sortAndFilterChains(data).forEach((chain) => {
-    const networkName = getNetworkName(chain);
+    let networkName = getNetworkName(chain);
+
+    // Add asterisk if this network has annotations
+    if (networkAnnotations[chain.name]) {
+      networkName += "*";
+    }
 
     const tier = emojiTier(chain);
 
@@ -92,12 +128,14 @@ const generateHyperSyncTable = (data) => {
     const chainIdSuffix = isTracesNetwork ? `-traces` : "";
     const url = `https://${chain.name}.hypersync.xyz or https://${chain.chain_id}${chainIdSuffix}.hypersync.xyz`;
 
-    table += generateTableRow(HYPERSYNC_COLUMNS, [
+    const rowValues = [
       networkName,
       chain.chain_id.toString(),
       url,
       tier,
-    ]);
+    ];
+
+    table += generateTableRow(HYPERSYNC_COLUMNS, rowValues);
   });
 
   return table;
@@ -107,18 +145,25 @@ const generateHyperRPCTable = (data) => {
   let table = generateCommonTableHeader(HYPERRPC_COLUMNS);
 
   sortAndFilterChains(data).forEach((chain) => {
-    const networkName = getNetworkName(chain);
+    let networkName = getNetworkName(chain);
+
+    // Add asterisk if this network has annotations
+    if (networkAnnotations[chain.name]) {
+      networkName += "*";
+    }
 
     // Check if this is a traces network and modify the URL accordingly
     const isTracesNetwork = chain.name.toLowerCase().includes("traces");
     const chainIdSuffix = isTracesNetwork ? `-traces` : "";
     const url = `https://${chain.name}.rpc.hypersync.xyz or https://${chain.chain_id}${chainIdSuffix}.rpc.hypersync.xyz`;
 
-    table += generateTableRow(HYPERRPC_COLUMNS, [
+    const rowValues = [
       networkName,
       chain.chain_id.toString(),
       url,
-    ]);
+    ];
+
+    table += generateTableRow(HYPERRPC_COLUMNS, rowValues);
   });
 
   return table;
@@ -131,17 +176,21 @@ const updateMarkdownFiles = async () => {
 
     // Update HyperSync file
     const hyperSyncTable = generateHyperSyncTable(data);
+    const hyperSyncNotes = generateNotesSection(data);
     const HYPERSYNC_FILE_PATH =
       "docs/HyperSync/hypersync-supported-networks.md";
     let hyperSyncContent = fs.readFileSync(HYPERSYNC_FILE_PATH, "utf8");
 
+    // Remove existing notes section if present
+    hyperSyncContent = hyperSyncContent.replace(/\n\n\*\*Notes:\*\*[\s\S]*?(?=\n\n---|\n\n$|$)/, "");
+
     const hyperSyncRegex =
-      /([\s\S]*?\n\n)\| Network Name[\s\S]*?\n\n([\s\S]*|$)/;
+      /([\s\S]*?)\n\| Network Name[\s\S]*?\n\n([\s\S]*|$)/;
     const hyperSyncMatch = hyperSyncContent.match(hyperSyncRegex);
 
     if (hyperSyncMatch) {
       const updatedHyperSyncContent =
-        hyperSyncMatch[1] + "\n" + hyperSyncTable + "\n" + hyperSyncMatch[2];
+        hyperSyncMatch[1] + "\n" + hyperSyncTable + hyperSyncNotes + "\n" + hyperSyncMatch[2];
       hyperSyncContent = hyperSyncContent.replace(
         hyperSyncRegex,
         updatedHyperSyncContent
@@ -154,17 +203,21 @@ const updateMarkdownFiles = async () => {
 
     // Update HyperRPC file
     const hyperRPCTable = generateHyperRPCTable(data);
+    const hyperRPCNotes = generateNotesSection(data);
     const HYPERRPC_FILE_PATH =
       "docs/HyperRPC/hyperrpc-supported-networks.md";
     let hyperRPCContent = fs.readFileSync(HYPERRPC_FILE_PATH, "utf8");
 
+    // Remove existing notes section if present
+    hyperRPCContent = hyperRPCContent.replace(/\n\n\*\*Notes:\*\*[\s\S]*?(?=\n\n---|\n\n$|$)/, "");
+
     const hyperRPCRegex =
-      /([\s\S]*?\n\n)\| Network Name[\s\S]*?\n\n([\s\S]*|$)/;
+      /([\s\S]*?)\n\| Network Name[\s\S]*?(\n\n[\s\S]*|$)/;
     const hyperRPCMatch = hyperRPCContent.match(hyperRPCRegex);
 
     if (hyperRPCMatch) {
       const updatedHyperRPCContent =
-        hyperRPCMatch[1] + "\n" + hyperRPCTable + "\n" + hyperRPCMatch[2];
+        hyperRPCMatch[1] + "\n" + hyperRPCTable + hyperRPCNotes + "\n" + hyperRPCMatch[2];
       hyperRPCContent = hyperRPCContent.replace(
         hyperRPCRegex,
         updatedHyperRPCContent
@@ -286,17 +339,15 @@ We suggest getting the latest from [chainlist.org](https://chainlist.org).
 
 ### Overview
 
-Envio supports ${
-    network.name
-  } through an RPC-based indexing approach. This method allows you to ingest blockchain data via an RPC endpoint by setting the RPC configuration.
+Envio supports ${network.name
+    } through an RPC-based indexing approach. This method allows you to ingest blockchain data via an RPC endpoint by setting the RPC configuration.
 
 ---
 
 ### Defining Network Configurations
 
-To use ${
-    network.name
-  }, define the RPC configuration in your network configuration file as follows:
+To use ${network.name
+    }, define the RPC configuration in your network configuration file as follows:
 
 :::info
 You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
@@ -308,13 +359,12 @@ description: Indexer Description # Include indexer description
 networks:
   - id: ${network.chainId} # ${network.name}
     rpc_config:
-      url: ${network.rpcEndpoints[0]} ${
-    network.rpcEndpoints.length <= 1
+      url: ${network.rpcEndpoints[0]} ${network.rpcEndpoints.length <= 1
       ? ""
       : network.rpcEndpoints
-          .slice(1)
-          .map((url) => `\n    # url: ${url} # alternative`)
-  }
+        .slice(1)
+        .map((url) => `\n    # url: ${url} # alternative`)
+    }
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName
@@ -327,9 +377,8 @@ networks:
           - event: Event
 \`\`\`
 
-Want HyperSync for ${
-    network.name
-  }? Request network support here [Discord](https://discord.gg/fztEvj79m3)!
+Want HyperSync for ${network.name
+    }? Request network support here [Discord](https://discord.gg/fztEvj79m3)!
 `;
 };
 
@@ -385,7 +434,7 @@ const generateMarkdownFiles = async () => {
     // Update supported-networks.json
     fs.writeFileSync(
       path.join(rootDir, "supported-networks.json"),
-  `{ 
+      `{ 
     "supportedNetworks": [
       "supported-networks/any-evm-with-rpc",
       "supported-networks/local-anvil",
