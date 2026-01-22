@@ -19,6 +19,10 @@ https://100.rpc.hypersync.xyz/<api-token>
 
 :::
 
+:::note
+*These are HyperRPC endpoints. For HyperSync endpoints, see [HyperSync Supported Networks](/docs/HyperSync/hypersync-supported-networks).*
+:::
+
 Here is a table of the currently supported networks on HyperRPC and their respective URL endpoints.
 
 | Network Name              | Network ID      | URL                                                                                      |

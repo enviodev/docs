@@ -25,7 +25,11 @@ Currently, tiers relate to various service quality aspects including:
 
 While detailed tier specifications are still being finalized, we're committed to providing transparent service level information in the near future.
 
+
 If you are a network operator or user and would like improved service support or to discuss upgrading a chain's level of support, please reach out to us in [Discord](https://discord.gg/Q9qt8gZ2fX).
+:::
+:::note
+*These are HyperSync endpoints. For HyperRPC endpoints, see [HyperRPC Supported Networks](/docs/HyperRPC/hyperrpc-supported-networks).*
 :::
 | Network Name              | Network ID      | URL                                                                                      | Tier |
 | ------------------------- | --------------- | ---------------------------------------------------------------------------------------- | ---- |
