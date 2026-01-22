@@ -101,7 +101,6 @@ module.exports = {
         "Tutorials/greeter-tutorial",
         "Tutorials/price-data",
         "Tutorials/tutorial-scaffold-eth-2",
-        "Tutorials/websockets",
       ],
     },
     {
@@ -127,6 +126,7 @@ module.exports = {
         "Advanced/performance/latency-at-head",
         "Advanced/performance/benchmarking",
         "Advanced/loaders",
+        "Advanced/websockets",
         // {
         //   type: "category",
         //   label: "Performance",
