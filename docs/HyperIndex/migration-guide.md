@@ -200,9 +200,13 @@ HyperIndex is a powerful tool that can be used to index any contract. There are 
 - Loaders are a powerful feature to optimize historical sync performance. You can read more about them [here](../HyperIndex/loaders).
 - HyperIndex is very flexible and can be used to index offchain data too or send messages to a queue etc for fetching external data, you can further optimise the fetching by using the [effects api](/docs/HyperIndex/effect-api)
 
+## Validating Your Migration
+
+After completing your migration, it's important to verify that your HyperIndex indexer produces the same data as your original subgraph. Use the [Indexer Migration Validator](https://github.com/enviodev/indexer-migration-validator) CLI tool to compare results between both endpoints and identify any discrepancies. The tool automatically generates entity configs from your GraphQL schema and provides detailed field-level analysis of differences.
+
 ## Share Your Learnings
 
-If you discover helpful tips during your migration, we’d love contributions! Open a [PR](https://github.com/enviodev/docs) to this guide and help future developers.
+If you discover helpful tips during your migration, we'd love contributions! Open a [PR](https://github.com/enviodev/docs) to this guide and help future developers.
 
 ## Getting Help
 
