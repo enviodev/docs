@@ -19,6 +19,10 @@ https://100.rpc.hypersync.xyz/<api-token>
 
 :::
 
+:::note
+*These are HyperRPC endpoints. For HyperSync endpoints, see [HyperSync Supported Networks](/docs/HyperSync/hypersync-supported-networks).*
+:::
+
 Here is a table of the currently supported networks on HyperRPC and their respective URL endpoints.
 
 | Network Name              | Network ID      | URL                                                                                      |
@@ -66,6 +70,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Lukso Testnet             | 4201            | https://lukso-testnet.rpc.hypersync.xyz or https://4201.rpc.hypersync.xyz                |
 | Manta                     | 169             | https://manta.rpc.hypersync.xyz or https://169.rpc.hypersync.xyz                         |
 | Mantle                    | 5000            | https://mantle.rpc.hypersync.xyz or https://5000.rpc.hypersync.xyz                       |
+| Megaeth                   | 4326            | https://megaeth.rpc.hypersync.xyz or https://4326.rpc.hypersync.xyz                      |
 | Megaeth Testnet           | 6342            | https://megaeth-testnet.rpc.hypersync.xyz or https://6342.rpc.hypersync.xyz              |
 | Megaeth Testnet2          | 6343            | https://megaeth-testnet2.rpc.hypersync.xyz or https://6343.rpc.hypersync.xyz             |
 | Merlin                    | 4200            | https://merlin.rpc.hypersync.xyz or https://4200.rpc.hypersync.xyz                       |
@@ -87,6 +92,8 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Rootstock                 | 30              | https://rootstock.rpc.hypersync.xyz or https://30.rpc.hypersync.xyz                      |
 | Saakuru                   | 7225878         | https://saakuru.rpc.hypersync.xyz or https://7225878.rpc.hypersync.xyz                   |
 | Scroll                    | 534352          | https://scroll.rpc.hypersync.xyz or https://534352.rpc.hypersync.xyz                     |
+| Sei*                      | 1329            | https://sei.rpc.hypersync.xyz or https://1329.rpc.hypersync.xyz                          |
+| Sei Testnet*              | 1328            | https://sei-testnet.rpc.hypersync.xyz or https://1328.rpc.hypersync.xyz                  |
 | Sentient                  | 6767            | https://sentient.rpc.hypersync.xyz or https://6767.rpc.hypersync.xyz                     |
 | Sentient Testnet          | 1184075182      | https://sentient-testnet.rpc.hypersync.xyz or https://1184075182.rpc.hypersync.xyz       |
 | Sepolia                   | 11155111        | https://sepolia.rpc.hypersync.xyz or https://11155111.rpc.hypersync.xyz                  |
@@ -113,6 +120,8 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 
 - **Base Traces***: Start block: 39000000 (earlier blocks available on request)
 - **Injective***: Start block: 129846180 (non-evm before that)
+- **Sei***: Start block: 79123881 (non-evm before that)
+- **Sei Testnet***: Start block: 186100000 (non-evm before that)
 
 
 

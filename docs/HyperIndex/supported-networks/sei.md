@@ -1,6 +1,7 @@
 ---
 id: sei
 title: Sei
+description: Start indexing Sei data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Sei
 slug: /sei
 ---
@@ -19,13 +20,13 @@ slug: /sei
 
 ### Tier
 
-STONE 🪨
+GOLD 🏅
 
 ### Overview
 
 Envio is a modular hyper-performant data indexing solution for Sei, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
 
-HyperSync accelerates the synchronization of historical data on Sei, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
+HyperSync accelerates the synchronization of historical data on Sei, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 2000x faster than traditional RPC methods.
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted service.
 
