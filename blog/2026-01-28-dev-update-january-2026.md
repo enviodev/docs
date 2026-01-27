@@ -222,7 +222,7 @@ See this post on [X](https://x.com/funnel_markets/status/2009670839940329711) fo
 * [EthConf - New York](https://ethconf.com/): June 8th → 10th 
 
 
-## 🧑‍💻 Featured Developer: Port
+## 🧑‍💻 Featured Developer: Zod
 
 <img src="/blog-assets/dev-update-jan-26-10.png" alt="DOTM Jan 2026" width="100%"/>
 

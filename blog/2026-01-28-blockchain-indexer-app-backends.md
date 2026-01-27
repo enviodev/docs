@@ -2,7 +2,7 @@
 title: Blockchain Indexer For Application Backends
 sidebar_label: Blockchain Indexer For Application Backends
 slug: /blog/blockchain-indexer-application-backends
-description: “How blockchain indexers are used in practice to build reliable application backends and how Envio fits into that workflow.”
+description: "How blockchain indexers are used in practice to build reliable application backends and how Envio fits into that workflow."
 ---
 
 <img src="/blog-assets/blockchain-indexer-backends.png" alt="Cover Image for Blockchain Indexer For Application Backends blog" width="100%"/>
@@ -100,7 +100,7 @@ As projects scale, Envio provides a set of optional capabilities that support mo
 
 * **Flexible language support:** Write event handling logic in supported languages such as JavaScript and TypeScript.
 
-* **[HyperSync](https://docs.envio.dev/docs/HyperSync/overview):** A high-performance data retrieval layer designed to dramatically speed up access to historical blockchain data and reduce reliance on standard RPC based syncing. HyperSync’s endpoint allows up to 2000x faster indexing than standard RPC (use of RPC is optional).
+* **[HyperSync](https://docs.envio.dev/docs/HyperSync/overview):** A high-performance data retrieval layer designed to dramatically speed up access to historical blockchain data and reduce reliance on standard RPC based syncing. HyperSync's endpoint allows up to 2000x faster indexing than standard RPC (use of RPC is optional).
 
 * **No-code Quickstart**: Autogenerate the key boilerplate for an entire Indexer project off single or multiple smart contracts. Deploy within minutes.
 
@@ -144,8 +144,8 @@ Envio provides a consistent way to build and run that layer, from local developm
 
 [Envio](https://envio.dev) is a fast, developer friendly multichain blockchain indexer that makes real-time data accessible for builders across Web3.
 
-With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing solution natively supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
+With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio's blockchain indexing solution natively supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
 
-If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
+If you're a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
 
 [Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev)
