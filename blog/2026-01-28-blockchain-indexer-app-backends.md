@@ -100,8 +100,7 @@ As projects scale, Envio provides a set of optional capabilities that support mo
 
 * **Flexible language support:** Write event handling logic in supported languages such as JavaScript and TypeScript.
 
-* **[HyperSync](https://docs.envio.dev/docs/HyperSync/overview):** A high-performance data retrieval layer designed to dramatically speed up access to historical blockchain data and reduce reliance on standard RPC based syncing. HyperSync's endpoint allows up to 2000x faster indexing than standard RPC (use of RPC is optional).
-
+* **[HyperSync](https://docs.envio.dev/docs/HyperSync/overview):** A high-performance data retrieval layer designed to dramatically speed up access to historical blockchain data and reduce reliance on standard RPC-based syncing. HyperSync's endpoint allows up to 2000x faster indexing than standard RPC (use of RPC is optional).
 * **No-code Quickstart**: Autogenerate the key boilerplate for an entire Indexer project off single or multiple smart contracts. Deploy within minutes.
 
 * **Multichain indexing:** Aggregate data across multiple networks into a single database. Query all your data with a unified GraphQL API.
