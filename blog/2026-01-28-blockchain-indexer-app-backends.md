@@ -142,7 +142,7 @@ Envio provides a consistent way to build and run that layer, from local developm
 
 ## About Envio
 
-[Envio](https://envio.dev) is a fast, developer friendly multichain blockchain indexer that makes real-time data accessible for builders across Web3.
+[Envio](https://envio.dev) is a fast, developer-friendly multichain blockchain indexer that makes real-time data accessible for builders across Web3.
 
 With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing solution natively supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
 
