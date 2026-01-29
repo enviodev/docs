@@ -174,7 +174,7 @@ import { HypersyncClient } from "@envio-dev/hypersync-client";
 // Initialize Hypersync client
 const client = new HypersyncClient({
   url: "https://eth.hypersync.xyz", // Change this URL for different networks
-  apiToken: process.env.ENVIO_API_TOKEN,
+  apiToken: process.env.ENVIO_API_TOKEN!,
 });
 ```
 
@@ -293,7 +293,7 @@ const topic0_list = event_signatures.map((sig) => keccak256(toHex(sig)));
 // Initialize Hypersync client
 const client = new HypersyncClient({
   url: "https://eth.hypersync.xyz",
-  apiToken: process.env.ENVIO_API_TOKEN,
+  apiToken: process.env.ENVIO_API_TOKEN!,
 });
 
 // Define query for Uniswap V3 events
@@ -334,19 +334,19 @@ HyperSync supports 70+ EVM-compatible networks. You can change networks by simpl
 // Ethereum Mainnet
 const client = new HypersyncClient({
   url: "https://eth.hypersync.xyz",
-  apiToken: process.env.ENVIO_API_TOKEN,
+  apiToken: process.env.ENVIO_API_TOKEN!,
 });
 
 // Arbitrum
 const client = new HypersyncClient({
   url: "https://arbitrum.hypersync.xyz",
-  apiToken: process.env.ENVIO_API_TOKEN,
+  apiToken: process.env.ENVIO_API_TOKEN!,
 });
 
 // Base
 const client = new HypersyncClient({
   url: "https://base.hypersync.xyz",
-  apiToken: process.env.ENVIO_API_TOKEN,
+  apiToken: process.env.ENVIO_API_TOKEN!,
 });
 ```
 
