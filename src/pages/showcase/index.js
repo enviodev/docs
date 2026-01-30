@@ -20,7 +20,8 @@ const sites = [
   },
   {
     title: "Stable Radar",
-    description: "A real-time dashboard for USDC transaction monitoring across multiple chains.",
+    description:
+      "A real-time dashboard for USDC transaction monitoring across multiple chains.",
     video: "/img/showcase/stable-radar.webm",
     source: "https://stable-radar.com",
     tags: [tags.hypersync],
@@ -42,11 +43,11 @@ const sites = [
     tags: [tags.hyperindex],
   },
   {
-    title: "Safe Stats",
+    title: "Safescan",
     description:
-      "Real-time analytics dashboard for monitoring Safe multisig activity across all chains.",
-    image: "/img/showcase/safe-stats.vercel.app_-min.png",
-    source: "https://safe-stats.vercel.app/",
+      "Real-time explorer of Safe multi-signature wallets across multiple chains. Search by safe address, owner address, or transaction hash.",
+    image: "/img/showcase/safe-scan.xyz_.jpg",
+    source: "https://safe-scan.xyz",
     tags: [tags.hyperindex],
   },
   {
