@@ -40,7 +40,7 @@ To use an API token, pass it as a `bearer_token` when creating a HyperSync clien
   <TabItem value="typescript" label="TypeScript/JavaScript">
 
 ```typescript
-const client = HypersyncClient.new({
+const client = new HypersyncClient({
   url: "https://eth.hypersync.xyz",
   apiToken: process.env.ENVIO_API_TOKEN!,
 });

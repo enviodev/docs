@@ -64,8 +64,9 @@ Let's look at the core concepts in the example code:
 import { HypersyncClient } from "@envio-dev/hypersync-client";
 
 // Initialize Hypersync client
-const client = HypersyncClient.new({
-  url: "http://eth.hypersync.xyz", // Change this URL for different networks
+const client = new HypersyncClient({
+  url: "https://eth.hypersync.xyz", // Change this URL for different networks
+  apiToken: process.env.ENVIO_API_TOKEN!,
 });
 ```
 
@@ -87,15 +88,14 @@ let query = {
   fieldSelection: {
     // Only return fields we need
     log: [
-      LogField.Data,
-      LogField.Address,
-      LogField.Topic0,
-      LogField.Topic1,
-      LogField.Topic2,
-      LogField.Topic3,
+      "Data",
+      "Address",
+      "Topic0",
+      "Topic1",
+      "Topic2",
+      "Topic3",
     ],
   },
-  joinMode: JoinMode.JoinTransactions, // How to join related data
 };
 ```
 
@@ -139,13 +139,13 @@ One of HyperSync's most powerful features is the ability to retrieve only the fi
 ```javascript
 fieldSelection: {
   // Block fields
-  block: [BlockField.Number, BlockField.Timestamp],
+  block: ["Number", "Timestamp"],
 
   // Log fields
-  log: [LogField.Address, LogField.Topic0, LogField.Data],
+  log: ["Address", "Topic0", "Data"],
 
   // Transaction fields
-  transaction: [TransactionField.From, TransactionField.To, TransactionField.Value],
+  transaction: ["From", "To", "Value"],
 }
 ```
 
@@ -168,11 +168,7 @@ This example (from the quickstart repo) streams all Uniswap V3 events from the b
 
 ```javascript
 import { keccak256, toHex } from "viem";
-import {
-  HypersyncClient,
-  LogField,
-  JoinMode,
-} from "@envio-dev/hypersync-client";
+import { HypersyncClient } from "@envio-dev/hypersync-client";
 
 // Define Uniswap V3 event signatures
 const event_signatures = [
@@ -187,8 +183,9 @@ const event_signatures = [
 const topic0_list = event_signatures.map((sig) => keccak256(toHex(sig)));
 
 // Initialize Hypersync client
-const client = HypersyncClient.new({
-  url: "http://eth.hypersync.xyz",
+const client = new HypersyncClient({
+  url: "https://eth.hypersync.xyz",
+  apiToken: process.env.ENVIO_API_TOKEN!,
 });
 
 // Define query for Uniswap V3 events
@@ -201,15 +198,14 @@ let query = {
   ],
   fieldSelection: {
     log: [
-      LogField.Data,
-      LogField.Address,
-      LogField.Topic0,
-      LogField.Topic1,
-      LogField.Topic2,
-      LogField.Topic3,
+      "Data",
+      "Address",
+      "Topic0",
+      "Topic1",
+      "Topic2",
+      "Topic3",
     ],
   },
-  joinMode: JoinMode.JoinTransactions,
 };
 
 const main = async () => {
@@ -228,13 +224,22 @@ HyperSync supports 70+ EVM-compatible networks. You can change networks by simpl
 
 ```javascript
 // Ethereum Mainnet
-const client = HypersyncClient.new({ url: "http://eth.hypersync.xyz" });
+const client = new HypersyncClient({
+  url: "https://eth.hypersync.xyz",
+  apiToken: process.env.ENVIO_API_TOKEN!,
+});
 
 // Arbitrum
-const client = HypersyncClient.new({ url: "http://arbitrum.hypersync.xyz" });
+const client = new HypersyncClient({
+  url: "https://arbitrum.hypersync.xyz",
+  apiToken: process.env.ENVIO_API_TOKEN!,
+});
 
 // Base
-const client = HypersyncClient.new({ url: "http://base.hypersync.xyz" });
+const client = new HypersyncClient({
+  url: "https://base.hypersync.xyz",
+  apiToken: process.env.ENVIO_API_TOKEN!,
+});
 ```
 
 See the [Supported Networks](/docs/HyperSync/hypersync-supported-networks) page for a complete list.
@@ -268,15 +273,12 @@ You're now ready to build with HyperSync! Here are some resources for diving dee
 - [curl Examples](/docs/HyperSync/hypersync-curl-examples) - Test queries directly in your terminal
 - [Complete Getting Started Guide](/docs/HyperSync/hypersync-usage) - More comprehensive guidance
 
-## API Token for Production Use
+## API Token
 
-For development, you can use HyperSync without an API token. For production applications, you'll need to [get an API token](/docs/HyperSync/api-tokens) and update your client initialization:
+An API token is required to use HyperSync. [Get an API token](/docs/HyperSync/api-tokens) and set it as an environment variable:
 
-```javascript
-const client = HypersyncClient.new({
-  url: "http://eth.hypersync.xyz",
-  bearerToken: "your-api-token-here",
-});
+```bash
+export ENVIO_API_TOKEN="your-api-token-here"
 ```
 
 Congratulations! You've taken your first steps with HyperSync, bringing ultra-fast blockchain data access to your applications. Happy building!
