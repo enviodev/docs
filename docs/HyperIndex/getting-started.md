@@ -6,7 +6,7 @@ slug: /getting-started
 description: Get started with Envio indexer setup, templates, and local or hosted deployment quickly.
 ---
 
-Learn how to create and run an indexer with Envio’s HyperIndex, from initialization to local testing and deployment.
+Learn how to create and run a blockchain indexer with Envio’s HyperIndex, from initialization to local testing and deployment.
 
 ## Indexer Initialization
 
@@ -16,7 +16,7 @@ Learn how to create and run an indexer with Envio’s HyperIndex, from initializ
 - **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
-> **Note:** Docker is required only if you plan to run your indexer locally. You can skip installing Docker if you'll only be using Envio's hosted service.
+> **Note:** Docker is required only if you plan to run your indexer locally. You can skip installing Docker if you'll only be using Envio's Hosted Service.
 
 #### Additionally for Windows Users:
 
@@ -117,9 +117,9 @@ For more detailed instructions, refer to our [guide to running the indexer local
 
 ### Deploy to Hosted Service
 
-Once you're ready, effortlessly deploy your configured indexer to Envio's hosted service and begin querying your endpoint immediately.
+Once you're ready, effortlessly deploy your configured indexer to Envio's Hosted Service and begin querying your endpoint immediately.
 
-Check out our [hosted service documentation](./hosted-service) for details on deployment and usage.
+Check out our [Hosted Service documentation](./hosted-service) for details on deployment and usage.
 
 ---
 

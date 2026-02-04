@@ -22,7 +22,7 @@ Before starting, ensure you have the following installed:
 - **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
-> **Note:** Docker is specifically required to run your indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
+> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
 
 ## Step 1: Initialize Your Indexer
 

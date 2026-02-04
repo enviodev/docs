@@ -28,7 +28,7 @@ Addresses of all the pool contracts are stored in the `config.yaml` file.
 8. Iron Bank on Avalanche C-chain
 9. Venus on BSC
 
-The indexer has been built using v0.0.21 of Envio.
+This blockchain indexer has been built using v0.0.21 of Envio.
 
 ## Steps to run the indexer
 

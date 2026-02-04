@@ -10,7 +10,7 @@ description: "Scaffold-ETH Extension: Get a boilerplate indexer for your deploye
 
 ## Introduction
 
-The Scaffold-ETH 2 Envio extension makes indexing your deployed smart contracts as simple as possible. Generate a boilerplate indexer for your deployed contracts with a single click and start indexing their events immediately.
+The [Scaffold-ETH 2](https://scaffoldeth.io/extensions) Envio extension makes indexing your deployed smart contracts as simple as possible. Generate a boilerplate indexer for your deployed contracts with a single click and start indexing their events immediately.
 
 With this extension, you get:
 - 🔍 **Automatic indexer generation** from your deployed contracts

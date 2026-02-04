@@ -8,7 +8,7 @@ description: Learn how to build and run a multi-chain indexer that tracks Greete
 
 ## Introduction
 
-This tutorial provides a step-by-step guide to indexing a simple Greeter smart contract deployed on multiple blockchains. You'll learn how to set up and run a multi-chain indexer using Envio's template system.
+This tutorial provides a step-by-step guide to indexing a simple Greeter smart contract deployed on multiple blockchains. You'll learn how to set up and run a multichain indexer using Envio's template system.
 
 ### What is the Greeter Contract?
 
@@ -18,7 +18,7 @@ The [Greeter contract](https://github.com/Float-Capital/hardhat-template) is a s
 
 By the end of this tutorial, you'll have:
 
-- A functioning multi-chain indexer that tracks greeting events
+- A functioning multichain indexer that tracks greeting events
 - The ability to query these events through a GraphQL endpoint
 - Experience with Envio's core indexing functionality
 
@@ -30,7 +30,7 @@ Before starting, ensure you have the following installed:
 - **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
-> **Note:** Docker is specifically required to run your indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
+> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
 
 ## Step 1: Initialize Your Project
 
@@ -164,7 +164,7 @@ To see your indexer in action, you can write new greetings to the blockchain:
 3. Use the `setGreeting` function to write a new greeting
 4. Submit the transaction
 
-Since this is a multi-chain example, you can interact with both contracts to see how Envio handles data from different blockchains simultaneously.
+Since this is a multichain example, you can interact with both contracts to see how Envio handles data from different blockchains simultaneously.
 
 ## Step 5: Query the Indexed Data
 

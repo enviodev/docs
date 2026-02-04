@@ -8,7 +8,7 @@ description: Learn how to create an organisation in the Envio hosted service and
 
 # Organisation Setup
 
-Use this guide to set up an organisation in the Envio hosted service and grant access to your team.
+Use this guide to set up an organisation in the Envio Hosted Service and grant access to your team.
 
 ---
 
@@ -22,7 +22,7 @@ To create a new organisation, navigate to [https://envio.dev](https://envio.dev)
 
 </div>
 
-On GitHub, choose the organisation you want to enable and complete the installation. Once approved, GitHub returns you to the new organisation's page in the hosted service UI.
+On GitHub, choose the organisation you want to enable and complete the installation. Once approved, GitHub returns you to the new organisation's page in the Hosted Service UI.
 
 <div style={{display: 'flex', gap: '1rem', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap'}}>
   <div style={{flex: '1', minWidth: '300px', maxWidth: '500px'}}>
@@ -37,7 +37,7 @@ On GitHub, choose the organisation you want to enable and complete the installat
 
 ## Access Control
 
-Being a member of the GitHub organisation **does not** automatically grant access to the organisation in the Envio hosted service UI. Each member must be explicitly added by the organisation admin. If someone attempts to visit the organisation URL (e.g., `https://envio.dev/app/<org-name>`) without being added, they'll see a "You are not a member of the project" message.
+Being a member of the GitHub organisation **does not** automatically grant access to the organisation in the Envio Hosted Service UI. Each member must be explicitly added by the organisation admin. If someone attempts to visit the organisation URL (e.g., `https://envio.dev/app/<org-name>`) without being added, they'll see a "You are not a member of the project" message.
 
 <div style={{textAlign: 'center'}}>
 
@@ -63,6 +63,6 @@ The organisation admin must add members from the organisation page in Envio. Ope
 
 </div>
 
-Once added, members should be able to access the organisation's page in the hosted service UI and start creating projects!
+Once added, members should be able to access the organisation's page in the Hosted Service UI and start creating projects!
 
 ---

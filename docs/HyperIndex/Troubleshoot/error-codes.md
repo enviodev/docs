@@ -392,7 +392,7 @@ contracts:
 **Solution**:
 
 - Check your event handler logic for errors
-- Review recent changes to your indexer
+- Review recent changes to your blockchain indexer
 - If unable to resolve, contact support through [Discord](https://discord.gg/Q9qt8gZ2fX) with error details
 
 ## Database-Related Errors

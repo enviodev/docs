@@ -7,7 +7,7 @@ slug: /hosted-service-features
 
 # Hosted Service Features
 
-Our hosted service includes several production-ready features to help you manage and secure your indexer deployments.
+Our hosted service includes several production-ready features to help you manage and secure your blockchain indexer deployments.
 
 :::info Plan Availability
 Most features listed on this page are available for **paid production plans only**. The free development plan has limited features and is designed for testing and development purposes. [View our pricing plans](./hosted-service-billing.mdx) to see what's included in each plan.
@@ -82,7 +82,7 @@ Learn more about the Effect API and how caching works in our [Effect API documen
 :::
 
 :::info Version Requirement
-This feature is only available for indexers deployed with version 2.26.0 or higher.
+This feature is only available for blockchain indexers deployed with version 2.26.0 or higher.
 :::
 
 ## Built-in Alerts
@@ -92,7 +92,7 @@ This feature is only available for indexers deployed with version 2.26.0 or high
 Stay informed about your indexer's health and performance with our integrated alerting system. Configure multiple notification channels and choose which alerts you want to receive.
 
 :::info Version Requirement
-This feature is only available for indexers deployed with version 2.24.0 or higher.
+This feature is only available for blockchain indexers deployed with version 2.24.0 or higher.
 :::
 
 ### Notification Channels
@@ -106,7 +106,7 @@ Configure one or multiple notification channels to receive alerts:
 
 ## Zero-Downtime Deployments
 
-Update your indexer without any service interruption using our seamless deployment system with static production endpoints.
+Update your blockchain indexer without any service interruption using our seamless deployment system with static production endpoints.
 
 **How it works:**
 - Deploy new versions alongside your current deployment

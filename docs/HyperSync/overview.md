@@ -52,7 +52,7 @@ HyperSync powers a wide range of blockchain applications, enabling developers to
 
 ### General Applications
 
-- **Indexers**: Build high-performance data indexers with minimal infrastructure
+- **Blockchain Indexers**: Build high-performance data indexers with minimal infrastructure
 - **Data Analytics**: Perform complex on-chain analysis in seconds instead of days
 - **Block Explorers**: Create responsive explorers with comprehensive data access
 - **Monitoring Tools**: Track blockchain activity with near real-time updates
@@ -63,7 +63,7 @@ HyperSync powers a wide range of blockchain applications, enabling developers to
 
 #### [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview)
 
-- **100x faster blockchain indexing** across 70+ EVM chains and Fuel
+- **100x faster blockchain indexing** across 80+ EVM chains and Fuel
 - **Powers 100 plus applications** like v4.xyz analytics
 
 #### [ChainDensity.xyz](https://chaindensity.xyz)

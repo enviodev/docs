@@ -454,6 +454,6 @@ To further enhance your price data indexing:
 1. **Implement caching** for off-chain API calls
 2. **Cross-reference multiple DEX pools** for better accuracy
 3. **Consider time-weighted average prices (TWAP)** instead of spot prices
-4. **Use multi-chain indexing** to access higher-liquidity pools on major networks
+4. **Use multichain indexing** to access higher-liquidity pools on major networks
 
 By carefully choosing and implementing the right price data strategy, you can build robust indexers that provide accurate financial data for your blockchain applications.

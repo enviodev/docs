@@ -8,7 +8,7 @@ description: Explore Sablier protocol indexers to track token streams and distri
 
 # Sablier Protocol Indexers
 
-The following indexers serve as exceptional reference implementations for the Sablier protocol, showcasing professional development practices and efficient multi-chain data processing.
+The following blockchain indexers serve as exceptional reference implementations for the Sablier protocol, showcasing professional development practices and efficient multichain data processing.
 
 ## Overview
 
@@ -32,7 +32,7 @@ Tracks Sablier's Merkle Airdrops, which enables efficient batch stream creation 
 
 ## Key Features
 
-- **Comprehensive Multi-chain Support**: Indexes data across 18 different EVM chains
+- **Comprehensive Multichain Support**: Indexes data across 18 different EVM chains
 - **Professionally Maintained**: Used in production by the Sablier team and their partners
 - **Extensive Test Coverage**: Includes comprehensive testing to ensure data accuracy
 - **Optimized Performance**: Implements efficient data processing techniques
@@ -42,7 +42,7 @@ Tracks Sablier's Merkle Airdrops, which enables efficient batch stream creation 
 
 ## Best Practices Showcase
 
-These indexers demonstrate several development best practices:
+These blockchain indexers demonstrate several development best practices:
 
 - **Modular Code Structure**: Well-organized code with clear separation of concerns
 - **Consistent Naming Conventions**: Professional and consistent naming throughout
@@ -70,5 +70,5 @@ For complete API documentation and usage examples, see:
 - [Implementation Caveats](https://docs.sablier.com/api/caveats)
 
 :::note
-These are official indexers maintained by the Sablier team and represent production-quality implementations. They serve as excellent examples of professional indexer development and are regularly updated to support the latest protocol features.
+These are official indexers maintained by the Sablier team and represent production-quality implementations. They serve as an excellent example of professional blockchain indexer development and are regularly updated to support the latest protocol features.
 :::

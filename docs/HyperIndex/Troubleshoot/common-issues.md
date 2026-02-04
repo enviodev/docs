@@ -28,7 +28,7 @@ This guide helps you identify and resolve common issues you might encounter when
 
 ### Cannot find module errors on `pnpm start`
 
-**Problem:** Errors like `Cannot find module` when starting your indexer indicate missing generated files.
+**Problem:** Errors like `Cannot find module` when starting your blockchain indexer indicate missing generated files.
 
 **Cause:** The indexer cannot find necessary files, typically because the code generation step was skipped after cloning the repository.
 
@@ -45,7 +45,7 @@ pnpm codegen
 
 ### Smart contract updated after the initial codegen
 
-**Problem:** Changes to smart contracts aren't reflected in your indexer.
+**Problem:** Changes to smart contracts aren't reflected in your blockchain indexer.
 
 **Cause:** When smart contracts are modified after initial setup, the ABIs need to be regenerated and the indexer needs to be updated.
 

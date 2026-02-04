@@ -1,25 +1,25 @@
 ---
 id: example-uniswap-v4
-title: Uniswap V4 Multi-chain indexer
+title: Uniswap V4 Multichain indexer
 sidebar_label: UniswapV4 (DEX) ⭐ Recommended
 slug: /example-uniswap-v4-multi-chain-indexer
 description: Explore real-time Uniswap V4 data across multiple chains with Envio.
 ---
 
-# Uniswap V4 Multi-chain Indexer
+# Uniswap V4 Multichain Indexer
 
-The following indexer example is a reference implementation and can serve as a starting point for applications with similar logic.
+The following blockchain indexer example is a reference implementation and can serve as a starting point for applications with similar logic.
 
 This [official Uniswap V4 indexer](https://github.com/enviodev/uniswap-v4-indexer) is a comprehensive implementation for the Uniswap V4 protocol using Envio HyperIndex. This is the same indexer that powers the [v4.xyz](https://v4.xyz) website, providing real-time data for the Uniswap V4 interface.
 
 ## Key Features
 
-- **Multi-chain Support**: Indexes Uniswap V4 deployments across 10 different blockchain networks in real-time
+- **Multichain Support**: Indexes Uniswap V4 deployments across 10 different blockchain networks in real-time
 - **Complete Pool Metrics**: Tracks pool statistics including volume, TVL, fees, and other critical metrics
 - **Swap Analysis**: Monitors swap events and liquidity changes with high precision
 - **Hook Integration**: In-progress support for Uniswap V4 hooks and their events
 - **Production Ready**: Powers the official v4.xyz interface with production-grade reliability
-- **Ultra-Fast Syncing**: Processes massive amounts of blockchain data significantly faster than alternative indexing solutions, reducing sync times from days to minutes
+- **Ultra-Fast Syncing**: Processes massive amounts of blockchain data significantly faster than alternative blockchain indexing solutions, reducing sync times from days to minutes
 
 ![V4 gif](/img/v4.gif)
 

@@ -6,7 +6,7 @@ slug: /hosted-service
 description: Explore Envio's fully managed hosting for indexers with easy Git deployments, monitoring, and multi-chain support.
 ---
 
-Envio offers a fully managed hosting solution for your indexers, providing all the infrastructure, scaling, and monitoring needed to run production-grade indexers without operational overhead.
+Envio offers a fully managed hosting solution for your blockchain indexers, providing all the infrastructure, scaling, and monitoring needed to run production-grade indexers without operational overhead.
 
 Our hosted service offers multiple plans to suit different needs, from free development environments to enterprise-grade dedicated hosting. Each plan includes powerful features like static production endpoints, built-in alerts, and production-ready infrastructure. 
 
@@ -28,7 +28,7 @@ Envio provides flexibility in how you deploy and host your indexers:
 - **Comprehensive Alerting**: Multi-channel notifications (Discord, Slack, Telegram, Email) for critical issues, performance warnings, and deployment updates
 - **Security Features**: IP/Domain whitelisting to control access to your indexer endpoints
 - **GraphQL API**: Access your indexed data through a performant, production-ready GraphQL endpoint
-- **Multi-chain Support**: Deploy indexers that track multiple networks from a single codebase
+- **Multichain Support**: Deploy indexers that track multiple networks from a single codebase
 
 
 ## Hosted Service Deployment Model

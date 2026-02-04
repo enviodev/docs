@@ -59,7 +59,7 @@ By default, you'll see:
 
 #### Example Query
 
-Try a simple query to test your indexer:
+Try a simple query to test your blockchain indexer:
 
 ```graphql
 query MyQuery {
@@ -96,7 +96,7 @@ The Data tab provides direct access to your database tables and relationships, a
 
 #### Verifying Indexed Data
 
-To confirm your indexer is working correctly:
+To confirm your blockchain indexer is working correctly:
 
 1. Check entity tables to ensure they contain the expected data
 2. Look at the `db_write_timestamp` column values to confirm when data was last updated
@@ -106,7 +106,7 @@ To confirm your indexer is working correctly:
 
 ### Checking Indexing Status
 
-To verify your indexer is actively processing new blocks:
+To verify your blockchain indexer is actively processing new blocks:
 
 1. Go to the Data tab
 2. Select any entity table
@@ -134,7 +134,7 @@ When testing, you may need to reset your database:
 
 ## Best Practices
 
-- **Regular Verification**: Periodically check both the API and Data tabs to ensure your indexer is functioning correctly
+- **Regular Verification**: Periodically check both the API and Data tabs to ensure your blockchain indexer is functioning correctly
 - **Query Testing**: Test complex queries in the API tab before implementing them in your application
 - **Schema Validation**: Use the Data tab to verify that relationships between entities are correctly established
 - **Performance Monitoring**: Watch for tables that grow unusually large, which might indicate inefficient indexing
@@ -195,9 +195,9 @@ This pattern scales: you can keep per-entity counters, rolling windows (daily/ho
 
 If runtime aggregate queries are a hard requirement for your use case, please reach out and we can evaluate options for your project on the hosted service. Contact us on [Discord](https://discord.gg/envio).
 
-## Disable Hasura for Self-Hosted Indexers
+## Disable Hasura for Self-Hosted Blockchain Indexers
 
-Starting from `envio@2.26.0` it's possible to disable Hasura integration for self-hosted indexers. To do so, set the `ENVIO_HASURA` environment variable to `false`.
+Starting from `envio@2.26.0` it's possible to disable Hasura integration for self-hosted blockchain indexers. To do so, set the `ENVIO_HASURA` environment variable to `false`.
 
 ---
 

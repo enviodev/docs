@@ -3,7 +3,7 @@ id: terminology
 title: Terminology & Key Concepts
 sidebar_label: Terminology
 slug: /terminology
-description: Explore key terms for fast reference and indexer development.
+description: Explore key terms for fast reference and blockchain indexer development.
 ---
 
 # HyperIndex Terminology & Key Concepts
@@ -102,11 +102,11 @@ A query language for interacting with APIs, commonly used in blockchain systems 
 
 The data presentation part of an Envio indexer. Typically, it's a GraphQL API auto-generated from the schema file, allowing flexible and efficient data queries.
 
-### Indexer
+### Blockchain Indexer
 
 A specialized database management system (DBMS) that indexes and organizes blockchain data, making it easier for developers to efficiently query, retrieve, and utilize on-chain data.
 
-Web2 apps usually rely on indexers like Google to pre-sort information into indices for data retrieval and filtering. In blockchain and Web3, applications need indexers to achieve similar data retrieval capabilities.
+Web2 apps usually rely on indexers like Google to pre-sort information into indices for data retrieval and filtering. In blockchain and Web3, applications need blockchain indexers to achieve similar data retrieval capabilities.
 
 ### Query
 
@@ -148,7 +148,7 @@ A superset of JavaScript that adds static typing and other advanced features to 
 
 ### Hosted Service
 
-A managed service platform for building, hosting, and querying Envio's Indexers with guaranteed uptime and performance service level agreements. The Hosted Service removes the operational burden of running indexers.
+A managed service platform for building, hosting, and querying Envio's Indexers with guaranteed uptime and performance service level agreements. The Hosted Service removes the operational burden of running blockchain indexers.
 
 ### Ploffen
 
