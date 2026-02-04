@@ -103,6 +103,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Sonic Testnet             | 14601           | https://sonic-testnet.rpc.hypersync.xyz or https://14601.rpc.hypersync.xyz               |
 | Sophon                    | 50104           | https://sophon.rpc.hypersync.xyz or https://50104.rpc.hypersync.xyz                      |
 | Sophon Testnet            | 531050104       | https://sophon-testnet.rpc.hypersync.xyz or https://531050104.rpc.hypersync.xyz          |
+| Status Sepolia            | 1660990954      | https://status-sepolia.rpc.hypersync.xyz or https://1660990954.rpc.hypersync.xyz         |
 | Superseed                 | 5330            | https://superseed.rpc.hypersync.xyz or https://5330.rpc.hypersync.xyz                    |
 | Swell                     | 1923            | https://swell.rpc.hypersync.xyz or https://1923.rpc.hypersync.xyz                        |
 | Taraxa                    | 841             | https://taraxa.rpc.hypersync.xyz or https://841.rpc.hypersync.xyz                        |
