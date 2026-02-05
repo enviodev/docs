@@ -127,6 +127,7 @@ module.exports = {
         "Advanced/performance/benchmarking",
         "Advanced/loaders",
         "Advanced/websockets",
+        "Advanced/query-conversion",
         // {
         //   type: "category",
         //   label: "Performance",
