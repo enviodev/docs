@@ -196,7 +196,7 @@ HyperIndex is a powerful tool that can be used to index any contract. There are 
 - Use the `field_selection` option to add additional fields to your index. Doc here: [field selection](../HyperIndex/configuration-file#field-selection)
 - Use the `unordered_multichain_mode` option to enable unordered multichain mode, this is the most common need for multichain indexing. However comes with tradeoffs worth understanding. Doc here: [unordered multichain mode](../HyperIndex/configuration-file#unordered-multichain-mode)
 - Use wildcard indexing to index by event signatures rather than by contract address.
-- HyperIndex uses the standard graphql query language, where as the subgraph uses a custom query language. You can read about the slight nuances [here](https://docs.sablier.com/api/caveats). (We are working on a basic tool to help with backwards compatibility, please check in with us on discord for it's current status).
+- HyperIndex uses the standard GraphQL query language, whereas TheGraph uses a custom GraphQL syntax. You can read about the differences and how to convert queries in our [Query Conversion Guide](/docs/HyperIndex/query-conversion). We also provide a query converter tool for backwards compatibility with existing TheGraph queries.
 - Loaders are a powerful feature to optimize historical sync performance. You can read more about them [here](../HyperIndex/loaders).
 - HyperIndex is very flexible and can be used to index offchain data too or send messages to a queue etc for fetching external data, you can further optimise the fetching by using the [effects api](/docs/HyperIndex/effect-api)
 
