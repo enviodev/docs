@@ -29,7 +29,8 @@ const FILTER_ENDPOINTS = [/^staging-/, /fuel/, /temporary/, /delete/];
 const HYPERSYNC_COLUMNS = [
   { name: "Network Name", width: 25 },
   { name: "Network ID", width: 15 },
-  { name: "URL", width: 88 },
+  { name: "HyperSync URL", width: 88 },
+  { name: "HyperRPC URL", width: 88 },
   { name: "Tier", width: 4 },
 ];
 
@@ -126,12 +127,14 @@ const generateHyperSyncTable = (data) => {
     // Check if this is a traces network and modify the URL accordingly
     const isTracesNetwork = chain.name.toLowerCase().includes("traces");
     const chainIdSuffix = isTracesNetwork ? `-traces` : "";
-    const url = `https://${chain.name}.hypersync.xyz or https://${chain.chain_id}${chainIdSuffix}.hypersync.xyz`;
+    const hypersyncUrl = `https://${chain.name}.hypersync.xyz or https://${chain.chain_id}${chainIdSuffix}.hypersync.xyz`;
+    const hyperrpcUrl = `https://${chain.name}.rpc.hypersync.xyz or https://${chain.chain_id}${chainIdSuffix}.rpc.hypersync.xyz`;
 
     const rowValues = [
       networkName,
       chain.chain_id.toString(),
-      url,
+      hypersyncUrl,
+      hyperrpcUrl,
       tier,
     ];
 

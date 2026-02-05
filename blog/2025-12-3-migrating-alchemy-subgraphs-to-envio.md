@@ -63,11 +63,11 @@ Here is the exact workflow to migrate an Alchemy Subgraph to Envio:
 
 ### 1. Generate a new HyperIndex project
 
-
 Run:
 
-
-
+```bash
+pnpx envio init template --name alchemy-migration --directory alchemy-migration --template greeter --api-token "YOUR_ENVIO_API_KEY"
+```
 
 #### 2. Bring over your schema
 

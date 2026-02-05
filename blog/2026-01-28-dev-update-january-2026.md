@@ -1,6 +1,6 @@
 ---
-title: Envio Developer Update Jannuary 2026
-Sidebar_label: Envio Developer Jannuary 2026
+title: Envio Developer Update January 2026
+Sidebar_label: Envio Developer January 2026
 slug: /blog/envio-developer-update-january-2026
 description: "Envio Developer Update January 2026 covers HyperIndex V3 alpha progress, including a new testing framework, Vitest support, init improvements, and recent ecosystem updates."
 ---
