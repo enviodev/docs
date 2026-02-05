@@ -1,6 +1,6 @@
 ---
 id: overview
-title: "HyperIndex: Fast Multichain Indexer"
+title: "HyperIndex: Fast Multichain Blockchain Indexer"
 sidebar_label: Overview
 slug: /overview
 description: Explore HyperIndex, a blazing-fast multichain indexer for real-time blockchain data.
@@ -55,7 +55,7 @@ HyperSync (the data engine powering HyperIndex) implements rate limits for reque
 - **Local Development**: An API token will be required. An automatic login feature from the CLI will be available to make this smoother.
 - **Self-Hosted Deployments**: API tokens are required for HyperSync access in self-hosted deployments. The token can be set via the `ENVIO_API_TOKEN` environment variable in your indexer configuration. This can be read from the `.env` file in the root of your HyperIndex project.
 - **Hosted Service**: Indexers deployed to our hosted service will have special access that doesn't require a custom API token.
-- **Future Pricing**: From mid-November 2025 onwards, we will introduce tiered packages for those self-hosting hyperindex and wishing to use hypersync. For preferred introductory pricing based on your specific use case, reach out to us on [Discord](https://discord.gg/Q9qt8gZ2fX).
+- **Future Pricing**: From mid-November 2025 onwards, we will introduce tiered packages for those self-hosting HyperIndex and wishing to use HyperSync. For preferred introductory pricing based on your specific use case, reach out to us on [Discord](https://discord.gg/Q9qt8gZ2fX).
 
 For more details about API tokens, including how to generate and implement them, see our [API Tokens documentation](/docs/HyperSync/api-tokens).
 

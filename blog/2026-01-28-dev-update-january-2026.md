@@ -152,7 +152,7 @@ It uses fewer resources, shares a link to the Hasura playground, and adjusts dyn
 
 ### Envio API Token Required
 
-For indexers using HyperSync as a data source, setting an `ENVIO_API_TOKEN` is now required.
+For indexers using HyperSync as a data source, setting an `ENVI0_API_TOKEN` is now required.
 
 You can learn more about API tokens or create one for free at:
 

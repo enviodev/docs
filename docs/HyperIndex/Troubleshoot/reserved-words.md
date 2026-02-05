@@ -12,7 +12,7 @@ description: Learn which reserved words in Envio cause validation errors and how
 
 When creating your Envio indexer, certain words cannot be used in entity names, field names, contract names, or event names because they are reserved by the underlying programming languages or by Envio itself. Using these reserved words will trigger validation errors (such as `EE102` for configuration files or `EE210` for schema files).
 
-Reserved words in Envio are taken from JavaScript, TypeScript, and ReScript because Envio generates code in these languages to power your indexer. Using these reserved words would create syntax conflicts in the generated code.
+Reserved words in Envio are taken from JavaScript, TypeScript, and ReScript because Envio generates code in these languages to power your blockchain indexer. Using these reserved words would create syntax conflicts in the generated code.
 
 ## Why This Matters
 

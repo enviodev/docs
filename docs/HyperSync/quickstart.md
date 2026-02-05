@@ -220,7 +220,7 @@ main();
 
 ## Supported Networks
 
-HyperSync supports 70+ EVM-compatible networks. You can change networks by simply changing the client URL:
+HyperSync supports 80+ EVM-compatible networks. You can change networks by simply changing the client URL:
 
 ```javascript
 // Ethereum Mainnet

@@ -1,13 +1,13 @@
 ---
 id: migration-guide
-title: Migrate from a Subgraph to HyperIndex
-sidebar_label: Migrate from TheGraph
+title: Migrate from The Graph to Envio
+sidebar_label: Migrate from The Graph
 slug: /migration-guide
-description: Learn how to migrate your Subgraphs to Envio for faster indexing, multichain support, and a better developer experience.
+description: Easily migrate your existing subgraph to HyperIndex for up to 100x faster indexing speeds, multichain support, and a better developer experience.
 ---
 
 
-# How to Migrate from TheGraph to Envio
+# Migrate from The Graph to Envio
 
 :::info
 Please reach out to our team on [Discord](https://discord.gg/envio) for personalized migration assistance.
@@ -15,7 +15,7 @@ Please reach out to our team on [Discord](https://discord.gg/envio) for personal
 
 ## Introduction
 
-Migrating from a subgraph to HyperIndex is designed to be a developer-friendly process. HyperIndex draws strong inspiration from TheGraph’s subgraph architecture, which makes the migration simple, especially with the help of coding assistants like Cursor and AI tools (don't forget to use our [ai friendly docs](/docs/HyperIndex-LLM/hyperindex-complete)).
+Migrating your existing subgraph to Envio's HyperIndex is designed to be a developer-friendly process. HyperIndex draws strong inspiration from The Graph’s subgraph architecture, which makes the migration simple, especially with the help of coding assistants like Cursor and AI tools (don't forget to use our [ai friendly docs](/docs/HyperIndex-LLM/hyperindex-complete)).
 
 The process is simple but requires a good understanding of the underlying concepts. If you are new to HyperIndex, we recommend starting with the [Getting Started](../HyperIndex/getting-started) guide.
 
@@ -59,7 +59,7 @@ Take the following conversion as an example, where the `subgraph.yaml` file is c
 
 <div className="row">
 <div className="col col--6">
-theGraph - `subgraph.yaml`
+The Graph - `subgraph.yaml`
 ```yaml
 specVersion: 0.0.4
 description: Uniswap is a decentralized protocol for automated token exchange on Ethereum.
@@ -151,7 +151,7 @@ The below code snippets can give you a basic idea of what this difference might 
 
 <div className="row">
 <div className="col col--6">
-theGraph - `eventHandler.ts`
+The Graph - `eventHandler.ts`
 
 ```typescript
 export function handleSubscription(event: SubscriptionEvent): void {

@@ -6,9 +6,9 @@ slug: /tutorial-indexing-fuel
 description: Learn how to index Sway Farm on Fuel and track player events with Envio.
 ---
 
-Until recently, HyperIndex was only available on EVM-compatible blockchains, and now we have extended support to the [Fuel](https://fuel.network/) Network.
+HyperIndex supports any EVM-compatible blockchain and the [Fuel](https://fuel.network/) Network.
 
-Indexers are vital to the success of any dApp. In this tutorial, we will create an Envio indexer for the Fuel dApp [Sway Farm](https://swayfarm.xyz/) step by step.
+Blockchain indexers are vital to the success of any dApp. In this tutorial, we will create an Envio indexer for the Fuel dApp [Sway Farm](https://swayfarm.xyz/) step by step.
 
 Sway Farm is a simple farming game and for the sake of a real-world example, let's create the indexer for a leaderboard of all farmers 🧑‍🌾
 
@@ -28,7 +28,7 @@ Sway Farm is a simple farming game and for the sake of a real-world example, let
 - **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
-> **Note:** Docker is specifically required to run your indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
+> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
 
 ## Initialize the project
 

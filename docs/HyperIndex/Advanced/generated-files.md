@@ -10,7 +10,7 @@ description: Learn how generated files handle type-safe data access, event proce
 
 ## Overview
 
-The `/generated` directory contains files automatically created by Envio's code generation system. These files form the backbone of your indexer's runtime operations, translating your configuration, schema, and event handlers into executable code that processes blockchain data.
+The `/generated` directory contains files automatically created by Envio's code generation system. These files form the backbone of your blockchain indexer's runtime operations, translating your configuration, schema, and event handlers into executable code that processes blockchain data.
 
 > **Important:** Generated files should never be manually edited. Any changes will be overwritten the next time code generation runs.
 

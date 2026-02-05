@@ -6,13 +6,13 @@ slug: /self-hosting
 description: Learn how to self-host Envio indexers with Docker, PostgreSQL, and Hasura for full control.
 ---
 
-# Self-Hosting Your Envio Indexer
+# Self-Hosting Your Blockchain Indexer
 
 :::info
 This documentation page is actively being improved. Check back regularly for updates and additional information.
 :::
 
-While Envio offers a fully managed [Hosted Service](./hosted-service.md), you may prefer to run your indexer on your own infrastructure. This guide covers everything you need to know about self-hosting Envio indexers.
+While Envio offers a fully managed [Hosted Service](./hosted-service.md), you may prefer to run your blockchain indexer on your own infrastructure. This guide covers everything you need to know about self-hosting Envio indexers.
 
 :::note
 We deeply appreciate users who choose our hosted service, as it directly supports our team and helps us continue developing and improving Envio's technology. If your use case allows for it, please consider the hosted option.

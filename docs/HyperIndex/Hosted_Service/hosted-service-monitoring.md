@@ -5,9 +5,9 @@ sidebar_label: Monitoring
 slug: /hosted-service-monitoring
 ---
 
-# Monitoring Your Indexer
+# Monitoring Your Blockchain Indexer
 
-Once your indexer is deployed, the Envio Hosted Service provides several tools to help you monitor its health, performance, and progress.
+Once your blockchain indexer is deployed, the Envio Hosted Service provides several tools to help you monitor its health, performance, and progress.
 
 ## Dashboard Overview
 

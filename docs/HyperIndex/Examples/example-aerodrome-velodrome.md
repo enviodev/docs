@@ -8,13 +8,13 @@ description: Explore multi-chain Velodrome & Aerodrome DEX data with real-time t
 
 # Velodrome & Aerodrome DEX Indexer
 
-This indexer provides a comprehensive implementation for tracking data from the popular Velodrome and Aerodrome decentralized exchanges across multiple chains.
+This blockchain indexer provides a comprehensive implementation for tracking data from the popular Velodrome and Aerodrome decentralized exchanges across multiple chains.
 
 ## Overview
 
 The [Velodrome & Aerodrome Indexer](https://github.com/enviodev/velodrome-indexer) demonstrates how to:
 
-- Create a **multi-chain indexer** that works across Superchain networks
+- Create a **multichain indexer** that works across Superchain networks
 - Index core DEX functionality including pools, swaps, and liquidity positions
 - Unify data access through a single GraphQL API
 - Build efficient handlers using TypeScript

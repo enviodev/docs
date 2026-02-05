@@ -8,7 +8,7 @@ description: Learn how to deploy, manage, and version your indexers effortlessly
 
 # Deploying Your Indexer
 
-The Envio Hosted Service provides a seamless git-based deployment workflow, similar to modern platforms like Vercel. This enables you to easily deploy, update, and manage your indexers through your normal development workflow.
+The Envio Hosted Service provides a seamless git-based deployment workflow, similar to modern platforms like Vercel. This enables you to easily deploy, update, and manage your blockchain indexers through your normal development workflow.
 
 ## Prerequisites & Important Information
 

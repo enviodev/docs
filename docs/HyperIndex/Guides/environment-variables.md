@@ -3,12 +3,12 @@ id: environment-variables
 title: Environment Variables
 sidebar_label: Environment Variables
 slug: /environment-variables
-description: Learn how to configure and manage Envio environment variables for your indexer.
+description: Learn how to configure and manage Envio environment variables for your blockchain indexer.
 ---
 
 # Environment Variables
 
-Environment variables are a crucial part of configuring your Envio indexer. They allow you to manage sensitive information and configuration settings without hardcoding them in your codebase.
+Environment variables are a crucial part of configuring your Envio blockchain indexer. They allow you to manage sensitive information and configuration settings without hardcoding them in your codebase.
 
 ## Naming Convention
 
@@ -30,7 +30,7 @@ To ensure continued access to HyperSync, set an Envio API token in your environm
 The following variables are used by HyperIndex:
 
 - `ENVIO_API_TOKEN`: API token for HyperSync access (required for continued access in self-hosted deployments)
-- `ENVIO_HASURA`: Set to `false` to disable Hasura integration for self-hosted indexers
+- `ENVIO_HASURA`: Set to `false` to disable Hasura integration for self-hosted blockchain indexers
 
 - `MAX_BATCH_SIZE`: Size of the in-memory batch before writing to the database. Default: `5000`. Set to `1` to help isolate which event or data save is causing Postgres write errors.
 
@@ -100,7 +100,7 @@ For use of environment variables in your configuration file, read the docs here:
 1. **Use descriptive names**: Make your environment variable names clear and descriptive
 1. **Document your variables**: Keep a list of required environment variables in your project's README
 1. **Use different values**: Use different environment variables for development, staging, and production environments
-1. **Validate required variables**: Check that all required environment variables are set before starting your indexer
+1. **Validate required variables**: Check that all required environment variables are set before starting your blockchain indexer
 
 ## Troubleshooting
 

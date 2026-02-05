@@ -8,11 +8,11 @@ description: Explore and manage indexer projects with Envio CLI, from setup to d
 
 # Envio Command Line Interface
 
-This comprehensive reference guide covers all available commands and options in the Envio CLI tool. Use this documentation to explore the full capabilities of the `envio` command and its subcommands for managing your indexing projects.
+This comprehensive reference guide covers all available commands and options in the Envio CLI tool. Use this documentation to explore the full capabilities of the `envio` command and its subcommands for managing your blockchain indexing projects.
 
 ## Getting Started
 
-The Envio CLI provides a powerful set of tools for creating, developing, and managing your indexers. Whether you're starting a new project, running a development server, or deploying to production, the CLI offers commands to simplify and automate your workflow.
+The Envio CLI provides a powerful set of tools for creating, developing, and managing your blockchain indexers. Whether you're starting a new project, running a development server, or deploying to production, the CLI offers commands to simplify and automate your workflow.
 
 ## Command Overview
 
