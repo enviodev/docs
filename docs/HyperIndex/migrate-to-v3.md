@@ -207,7 +207,7 @@ See the [Solana documentation](/docs/HyperIndex/solana) for more details.
 - Removed language selection to prefer TypeScript by default
 - Cleaned up templates to follow the latest good practices
 - Added new templates to highlight HyperIndex features, starting with: `Feature: Factory Contract`
-- Pre-configured GitHub Actions workflow for running tests and `.gitignore`
+- Pre-configured GitHub Actions workflow for running tests and initialized git repository
 
 ### Block Handler Only Indexers
 
