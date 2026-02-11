@@ -1,5 +1,5 @@
 ---
-title: Azuro Grant: Building a Multichain Web3 Indexer
+title: "Azuro Grant: Building a Multichain Web3 Indexer"
 sidebar_label: "Envio & Azuro Grant: How to build a Multichain Indexer to power Accelerated Decentralized Betting"
 slug: /envio-azuro-developer-grant-multi-chain-indexer
 description: "Find out how the Envio and Azuro grant invites blockchain developers to build a multichain indexer for the Azuro protocol using Envio's indexing SDK to unlock streamlined cross-chain data access."
