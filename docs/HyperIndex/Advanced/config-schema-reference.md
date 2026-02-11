@@ -3,7 +3,7 @@ id: config-schema-reference
 title: Configuration Schema Reference
 sidebar_label: Config Schema Reference
 slug: /config-schema-reference
-description: Explore the `config.yaml` schema.
+description: Detailed reference for every field and option in the Envio `config.yaml` configuration file used to configure HyperIndex indexers.
 ---
 
 Static, deep-linkable reference for the `config.yaml` Schema.
