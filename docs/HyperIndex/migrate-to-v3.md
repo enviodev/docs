@@ -193,7 +193,7 @@ HyperIndex now supports Solana with RPC as a source. This feature is experimenta
 To initialize a Solana project:
 
 ```bash
-pnpx envio@3.0.0-alpha.7 init svm
+pnpx envio@3.0.0-alpha.13 init svm
 ```
 
 See the [Solana documentation](/docs/HyperIndex/solana) for more details.
@@ -203,6 +203,7 @@ See the [Solana documentation](/docs/HyperIndex/solana) for more details.
 - Removed language selection to prefer TypeScript by default
 - Cleaned up templates to follow the latest good practices
 - Added new templates to highlight HyperIndex features, starting with: `Feature: Factory Contract`
+- New projects created with `envio init` now include a pre-configured GitHub Actions workflow for running tests
 
 ### Block Handler Only Indexers
 
@@ -234,7 +235,7 @@ We introduced a new testing framework that allows you to test handlers' logic us
 - Snapshot testing support
 - Parallel test execution via worker thread isolation
 
-The framework integrates with [Vitest](https://vitest.dev/), replacing the previous mocha/chai setup with a single package that doesn't require configuration by default and includes snapshot testing out-of-the-box.
+The framework integrates with [Vitest](https://vitest.dev/), replacing the previous mocha/chai setup with a single package that doesn't require configuration by default and includes snapshot testing out-of-the-box. It also provides the `TestIndexerChange` TypeScript type for typed test assertions and utilities to read/write entities in-between processing runs.
 
 ```typescript
 import { describe, it, expect } from "vitest"
@@ -296,6 +297,48 @@ The `envio init` command now supports contracts with nested tuples in event sign
 
 The local development Docker Compose setup now uses PostgreSQL 18.1 (upgraded from 17.5).
 
+### 3x Historical Backfill Performance
+
+Achieved by adding chunking logic to request events across multiple ranges at once. This also fixed overfetching for contracts with a much later `start_block` in the config, as well as speeding up dynamic contract registration. If you had data fetching as a bottleneck, 25k events per second is now a standard.
+
+### Support for DESC Indices
+
+A way to improve your query performance:
+
+```graphql
+type PoolDayData
+  @index(fields: ["poolId" ["date", "DESC"]]) {
+  id: ID!
+  poolId: String!
+  date: Timestamp!
+}
+```
+
+### RPC Source Improvements
+
+Added `polling_interval` option for RPC source configuration. Also added missing support for receipt-only fields (`gasUsed`, `cumulativeGasUsed`, `effectiveGasPrice`) that are not available via `eth_getTransactionByHash`. HyperIndex will additionally perform the `eth_getTransactionReceipt` request when one of the fields is added in `field_selection`.
+
+### WebSocket Support (Experimental)
+
+Experimental WebSocket support for RPC source to improve head latency. Please create a GitHub issue if you come across any problems.
+
+```yaml
+chains:
+  - id: 1
+    rpc:
+      url: ${ENVIO_RPC_ENDPOINT}
+      ws: ${ENVIO_WS_ENDPOINT}
+      for: live
+```
+
+### Prometheus Metrics for Data Providers
+
+Added a Prometheus metric to track requests to data providers, providing better observability into your indexer's data fetching patterns.
+
+### Database Connection Configuration
+
+Added an environment variable to configure database connections, giving more flexibility for production deployments.
+
 ## Breaking Changes
 
 ### Node.js & Runtime
@@ -319,6 +362,8 @@ The local development Docker Compose setup now uses PostgreSQL 18.1 (upgraded fr
 - Removed `loaders` option (now always enabled via Preload Optimization)
 - Removed `preload_handlers` option (now always enabled)
 - Removed `preRegisterDynamicContracts` option
+- Removed `event_decoder` option (the Rust-based decoder is now the only implementation)
+- Renamed `rpc_config` to `rpc` (see [RPC for Live Indexing](#rpc-for-live-indexing) for the new format)
 
 ### HyperSync API Token Required
 
@@ -340,10 +385,22 @@ export ENVIO_API_TOKEN=your_token_here
 - Removed internal `ContractType` enum (allows longer contract names)
 - Removed `getGeneratedByChainId` (use `indexer` value instead)
 - **Lowercased entity types removed**: Generated code no longer exports lowercased entity types (e.g., `transfer`). Use capitalized names instead (e.g., `Transfer`)
+- Entity array field values are now typed as `readonly` — update any code that directly mutates array fields
+- Test indexer changes use the `TestIndexerChange` type instead of exposing internal contract registration format
 
 ### Metrics Changes
 
 - Renamed `chain_block_height` Prometheus metric to `envio_indexing_known_height`
+
+## Fixes
+
+- Fixed an issue where the indexer stops progressing without any error (PostgreSQL client update)
+- Fixed contract registrations not being preserved between `indexer.process` runs in the test framework
+- Fixed the v3 build on Hosted Service by not requiring the `ENVIO_API_TOKEN` for database configuration
+- Fixed a critical regression of incorrect reorg threshold entry on indexer start
+- Fixed checksum for addresses returned by RPC in lowercase
+- Fixed incorrect validation of transactions `to` field returned by RPC
+- Fixed OOM error on RPC request crashing loop
 
 ## Migration Guide
 
@@ -381,7 +438,7 @@ Update your `package.json` with the following changes:
     "node": ">=22.0.0"
   },
   "dependencies": {
-    "envio": "3.0.0-alpha.7"
+    "envio": "3.0.0-alpha.13"
   },
   "devDependencies": {
     "typescript": "^5.7.3"
@@ -531,6 +588,7 @@ multichain: ordered
 **Rename config options:**
 
 - `confirmed_block_threshold` → `max_reorg_depth`
+- `rpc_config` → `rpc`
 
 **Remove deprecated options:**
 
@@ -540,6 +598,7 @@ Remove the following options from your config if present:
 - `preload_handlers` — now always enabled
 - `preRegisterDynamicContracts` — no longer needed
 - `unordered_multichain_mode` — replaced with `multichain` option
+- `event_decoder` — the Rust-based decoder is now the only implementation
 
 **New option for batch size:**
 
@@ -625,7 +684,7 @@ pnpm dev
 
 - [ ] Update Node.js to >=22
 - [ ] **Add `"type": "module"` to `package.json`** ← Required for V3!
-- [ ] Update `envio` dependency to `3.0.0-alpha.7`
+- [ ] Update `envio` dependency to latest `3.0.0-alpha.x`
 - [ ] Update `engines.node` to `>=22.0.0` in `package.json`
 - [ ] Update `tsconfig.json` for ESM support
 - [ ] Migrate from mocha/chai to vitest (recommended) or replace `ts-mocha`/`ts-node` with `tsx`
@@ -634,9 +693,11 @@ pnpm dev
 
 - [ ] Rename `networks` to `chains`
 - [ ] Rename `confirmed_block_threshold` to `max_reorg_depth`
+- [ ] Rename `rpc_config` to `rpc`
 - [ ] Remove `unordered_multichain_mode` (now default)
 - [ ] Remove `loaders` and `preload_handlers` options
 - [ ] Remove `preRegisterDynamicContracts` option
+- [ ] Remove `event_decoder` option
 
 **Environment Variables:**
 
@@ -668,6 +729,12 @@ If you encounter any issues during migration, join our [Discord community](https
 
 For detailed release notes, see:
 
+- [v3.0.0-alpha.13](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.13)
+- [v3.0.0-alpha.12](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.12)
+- [v3.0.0-alpha.11](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.11)
+- [v3.0.0-alpha.10](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.10)
+- [v3.0.0-alpha.9](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.9)
+- [v3.0.0-alpha.8](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.8)
 - [v3.0.0-alpha.7](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.7)
 - [v3.0.0-alpha.6](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.6)
 - [v3.0.0-alpha.5](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.5)
