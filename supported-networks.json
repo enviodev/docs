@@ -91,7 +91,6 @@
       "supported-networks/hyperliquid",
       "supported-networks/immutable-zkevm",
       "supported-networks/immutable-zkevm-testnet",
-      "supported-networks/injective",
       "supported-networks/ink",
       "supported-networks/iotex-network",
       "supported-networks/japan-open-chain",

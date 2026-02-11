@@ -1,5 +1,5 @@
 ---
-title: How zkPass Uses Zero Knowledge Proofs to Redefine Data Privacy
+title: zkPass Case Study: Zero Knowledge Privacy
 sidebar_label: How zkPass Uses Zero Knowledge Proofs to Redefine Data Privacy
 slug: /zkpass-shaping-future-of-data-privacy
 tags: ["case-studies"]

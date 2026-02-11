@@ -1,5 +1,5 @@
 ---
-title: Can the Future be Predicted? How Prediction Markets are Becoming a New Source of Media
+title: Limitless Case Study: Prediction Markets
 sidebar_label: How Prediction Markets are Becoming a New Source of Media
 slug: /case-study-limitless-prediction-market
 tags: ["case‐studies"]
