@@ -235,7 +235,7 @@ We introduced a new testing framework that allows you to test handlers' logic us
 - Snapshot testing support
 - Parallel test execution via worker thread isolation
 
-The framework integrates with [Vitest](https://vitest.dev/), replacing the previous mocha/chai setup with a single package that doesn't require configuration by default and includes snapshot testing out-of-the-box. It also provides the `TestIndexerChange` TypeScript type for typed test assertions and utilities to read/write entities in-between processing runs.
+The framework integrates with [Vitest](https://vitest.dev/), replacing the previous mocha/chai setup with a single package that doesn't require configuration by default and includes snapshot testing out-of-the-box. It also provides typed test assertions and utilities to read/write entities in-between processing runs.
 
 ```typescript
 import { describe, it, expect } from "vitest"
@@ -303,7 +303,7 @@ Achieved by adding chunking logic to request events across multiple ranges at on
 
 ### Support for DESC Indices
 
-A way to improve your query performance:
+A nice way to improve your query performance as well:
 
 ```graphql
 type PoolDayData
@@ -335,10 +335,6 @@ chains:
 
 Added a Prometheus metric to track requests to data providers, providing better observability into your indexer's data fetching patterns.
 
-### Database Connection Configuration
-
-Added an environment variable to configure database connections, giving more flexibility for production deployments.
-
 ## Breaking Changes
 
 ### Node.js & Runtime
@@ -363,7 +359,7 @@ Added an environment variable to configure database connections, giving more fle
 - Removed `preload_handlers` option (now always enabled)
 - Removed `preRegisterDynamicContracts` option
 - Removed `event_decoder` option (the Rust-based decoder is now the only implementation)
-- Renamed `rpc_config` to `rpc` (see [RPC for Live Indexing](#rpc-for-live-indexing) for the new format)
+- Removed `rpc_config` in favor of `rpc`, which now supports multiple URLs, `for` mode (`sync`, `live`, `fallback`), and WebSocket configuration (see [RPC for Live Indexing](#rpc-for-live-indexing))
 
 ### HyperSync API Token Required
 
@@ -386,7 +382,6 @@ export ENVIO_API_TOKEN=your_token_here
 - Removed `getGeneratedByChainId` (use `indexer` value instead)
 - **Lowercased entity types removed**: Generated code no longer exports lowercased entity types (e.g., `transfer`). Use capitalized names instead (e.g., `Transfer`)
 - Entity array field values are now typed as `readonly` — update any code that directly mutates array fields
-- Test indexer changes use the `TestIndexerChange` type instead of exposing internal contract registration format
 
 ### Metrics Changes
 
@@ -395,9 +390,6 @@ export ENVIO_API_TOKEN=your_token_here
 ## Fixes
 
 - Fixed an issue where the indexer stops progressing without any error (PostgreSQL client update)
-- Fixed contract registrations not being preserved between `indexer.process` runs in the test framework
-- Fixed the v3 build on Hosted Service by not requiring the `ENVIO_API_TOKEN` for database configuration
-- Fixed a critical regression of incorrect reorg threshold entry on indexer start
 - Fixed checksum for addresses returned by RPC in lowercase
 - Fixed incorrect validation of transactions `to` field returned by RPC
 - Fixed OOM error on RPC request crashing loop
@@ -588,7 +580,6 @@ multichain: ordered
 **Rename config options:**
 
 - `confirmed_block_threshold` → `max_reorg_depth`
-- `rpc_config` → `rpc`
 
 **Remove deprecated options:**
 
@@ -599,6 +590,7 @@ Remove the following options from your config if present:
 - `preRegisterDynamicContracts` — no longer needed
 - `unordered_multichain_mode` — replaced with `multichain` option
 - `event_decoder` — the Rust-based decoder is now the only implementation
+- `rpc_config` — replaced with `rpc` (see [Breaking Changes](#config-yaml-changes))
 
 **New option for batch size:**
 
@@ -693,7 +685,7 @@ pnpm dev
 
 - [ ] Rename `networks` to `chains`
 - [ ] Rename `confirmed_block_threshold` to `max_reorg_depth`
-- [ ] Rename `rpc_config` to `rpc`
+- [ ] Replace `rpc_config` with `rpc`
 - [ ] Remove `unordered_multichain_mode` (now default)
 - [ ] Remove `loaders` and `preload_handlers` options
 - [ ] Remove `preRegisterDynamicContracts` option
