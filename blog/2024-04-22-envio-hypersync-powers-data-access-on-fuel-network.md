@@ -1,5 +1,5 @@
 ---
-title: Envio's Blockchain Indexing Solution Supports Developers on the Fuel Network
+title: Indexing on Fuel Network with Envio
 sidebar_label: Envio's Blockchain Indexing Solution Supports Developers on the Fuel Network
 slug: /envio-hypersync-powers-data-access-on-fuel-network
 description: "Learn how Envio’s HyperSync supports developers building on the Fuel Network enabling access real-time and historical blockchain data with speed reliability and zero infrastructure overhead."

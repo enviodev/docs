@@ -1,5 +1,5 @@
 ---
-title: Envio’s Blockchain Indexer Supports Developers Building on LUKSO
+title: Indexing Data on LUKSO using Envio
 sidebar_label: Envio’s Blockchain Indexer Supports Developers Building on LUKSO
 slug: /envio-data-indexing-supports-developers-building-on-lukso
 description: "Learn how Envio’s blockchain indexer helps developers on LUKSO access real-time and historical data with faster queries and deeper insights for their dApps."

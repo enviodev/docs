@@ -1,5 +1,5 @@
 ---
-title: Envio’s Blockchain Indexer Supports Developers Building on Harmony
+title: Indexing on Harmony using Envio
 sidebar_label: Envio’s Blockchain Indexer Supports Developers Building on Harmony
 slug: /envio-data-indexing-supports-developers-building-on-harmony
 description: "See how Envio brings high performance data indexing to Harmony so developers can query real-time and historical blockchain data with speed and simplicity."
