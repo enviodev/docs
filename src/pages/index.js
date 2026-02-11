@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <Layout
       title={`${siteConfig.title} - Documentation`}
-      description="The fastest most flexible way to get on-chain data."
+      description="Envio documentation for HyperIndex, HyperSync, and HyperRPC—learn how to build, deploy, and scale fast blockchain indexers and data APIs."
     >
       <main className={styles.main}>
         <div className={styles.container}>
