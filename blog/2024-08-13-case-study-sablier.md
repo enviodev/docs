@@ -1,5 +1,5 @@
 ---
-title: Sablier Case Study: Multichain Token Distribution
+title: "Sablier Case Study: Multichain Token Distribution"
 sidebar_label: How Sablier uses Envio to Power its Next Gen Multichain Token Distribution Platform
 slug: /case-study-sablier
 tags: ["case-studies"]

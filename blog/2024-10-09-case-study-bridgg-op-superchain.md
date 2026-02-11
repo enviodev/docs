@@ -1,5 +1,5 @@
 ---
-title: Bridgg Case Study: OP Superchain Infrastructure
+title: "Bridgg Case Study: OP Superchain Infrastructure"
 sidebar_label: "Bridgg: The Unified Gateway for the OP Superchain - A New Paradigm of Interop Infra"
 slug: /case-study-bridgg-op-superchain  
 tags: ["case-studies"]  

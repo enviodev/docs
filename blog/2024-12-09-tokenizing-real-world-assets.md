@@ -1,5 +1,5 @@
 ---
-title: Tokenizing Real World Assets: Real Estate on the Blockchain
+title: "Tokenizing Real World Assets: Real Estate on the Blockchain"
 sidebar_label: Tokenizing RWAs How Blockchain is Redefining Real Estate Investment  
 slug: /tokenizing-real-world-assets  
 tags: ["case-studies"]  
