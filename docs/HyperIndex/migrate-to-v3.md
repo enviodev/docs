@@ -307,7 +307,7 @@ A nice way to improve your query performance as well:
 
 ```graphql
 type PoolDayData
-  @index(fields: ["poolId" ["date", "DESC"]]) {
+  @index(fields: ["poolId", ["date", "DESC"]]) {
   id: ID!
   poolId: String!
   date: Timestamp!
