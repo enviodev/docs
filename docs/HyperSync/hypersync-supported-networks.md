@@ -55,7 +55,6 @@ If you are a network operator or user and would like improved service support or
 | Cyber                     | 7560            | https://cyber.hypersync.xyz or https://7560.hypersync.xyz                                | https://cyber.rpc.hypersync.xyz or https://7560.rpc.hypersync.xyz                        | 🪨   |
 | Eth Traces                | 1               | https://eth-traces.hypersync.xyz or https://1-traces.hypersync.xyz                       | https://eth-traces.rpc.hypersync.xyz or https://1-traces.rpc.hypersync.xyz               | 🏅   |
 | Ethereum Mainnet          | 1               | https://eth.hypersync.xyz or https://1.hypersync.xyz                                     | https://eth.rpc.hypersync.xyz or https://1.rpc.hypersync.xyz                             | 🏅   |
-| Fantom                    | 250             | https://fantom.hypersync.xyz or https://250.hypersync.xyz                                | https://fantom.rpc.hypersync.xyz or https://250.rpc.hypersync.xyz                        | 🪨   |
 | Flare                     | 14              | https://flare.hypersync.xyz or https://14.hypersync.xyz                                  | https://flare.rpc.hypersync.xyz or https://14.rpc.hypersync.xyz                          | 🪨   |
 | Fraxtal                   | 252             | https://fraxtal.hypersync.xyz or https://252.hypersync.xyz                               | https://fraxtal.rpc.hypersync.xyz or https://252.rpc.hypersync.xyz                       | 🪨   |
 | Fuji                      | 43113           | https://fuji.hypersync.xyz or https://43113.hypersync.xyz                                | https://fuji.rpc.hypersync.xyz or https://43113.rpc.hypersync.xyz                        | 🎒   |
@@ -65,6 +64,7 @@ If you are a network operator or user and would like improved service support or
 | Holesky                   | 17000           | https://holesky.hypersync.xyz or https://17000.hypersync.xyz                             | https://holesky.rpc.hypersync.xyz or https://17000.rpc.hypersync.xyz                     | 🎒   |
 | Hoodi                     | 560048          | https://hoodi.hypersync.xyz or https://560048.hypersync.xyz                              | https://hoodi.rpc.hypersync.xyz or https://560048.rpc.hypersync.xyz                      | 🎒   |
 | Hyperliquid               | 999             | https://hyperliquid.hypersync.xyz or https://999.hypersync.xyz                           | https://hyperliquid.rpc.hypersync.xyz or https://999.rpc.hypersync.xyz                   | 🪨   |
+| Injective*                | 1776            | https://injective.hypersync.xyz or https://1776.hypersync.xyz                            | https://injective.rpc.hypersync.xyz or https://1776.rpc.hypersync.xyz                    | 🥉   |
 | Ink                       | 57073           | https://ink.hypersync.xyz or https://57073.hypersync.xyz                                 | https://ink.rpc.hypersync.xyz or https://57073.rpc.hypersync.xyz                         | 🪨   |
 | Kroma                     | 255             | https://kroma.hypersync.xyz or https://255.hypersync.xyz                                 | https://kroma.rpc.hypersync.xyz or https://255.rpc.hypersync.xyz                         | 🪨   |
 | Linea                     | 59144           | https://linea.hypersync.xyz or https://59144.hypersync.xyz                               | https://linea.rpc.hypersync.xyz or https://59144.rpc.hypersync.xyz                       | 🥉   |
@@ -122,6 +122,7 @@ If you are a network operator or user and would like improved service support or
 **Notes:**
 
 - **Base Traces***: Start block: 39000000 (earlier blocks available on request)
+- **Injective***: Start block: 129846180 (non-evm before that)
 - **Sei***: Start block: 79123881 (non-evm before that)
 - **Sei Testnet***: Start block: 186100000 (non-evm before that)
 
