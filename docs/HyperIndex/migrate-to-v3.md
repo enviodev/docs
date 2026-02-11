@@ -51,6 +51,10 @@ ERC20.Transfer.handler(
 );
 ```
 
+### 3x Historical Backfill Performance
+
+Achieved by adding chunking logic to request events across multiple ranges at once. This also fixed overfetching for contracts with a much later `start_block` in the config, as well as speeding up dynamic contract registration. If you had data fetching as a bottleneck, 25k events per second is now a standard.
+
 ### Automatic Handler Registration (`src/handlers`)
 
 We introduced automatic registration of handler files located in `src/handlers`.
@@ -203,7 +207,7 @@ See the [Solana documentation](/docs/HyperIndex/solana) for more details.
 - Removed language selection to prefer TypeScript by default
 - Cleaned up templates to follow the latest good practices
 - Added new templates to highlight HyperIndex features, starting with: `Feature: Factory Contract`
-- New projects created with `envio init` now include a pre-configured GitHub Actions workflow for running tests
+- Pre-configured GitHub Actions workflow for running tests and `.gitignore`
 
 ### Block Handler Only Indexers
 
@@ -296,10 +300,6 @@ The `envio init` command now supports contracts with nested tuples in event sign
 ### PostgreSQL Update for Local Docker Compose
 
 The local development Docker Compose setup now uses PostgreSQL 18.1 (upgraded from 17.5).
-
-### 3x Historical Backfill Performance
-
-Achieved by adding chunking logic to request events across multiple ranges at once. This also fixed overfetching for contracts with a much later `start_block` in the config, as well as speeding up dynamic contract registration. If you had data fetching as a bottleneck, 25k events per second is now a standard.
 
 ### Support for DESC Indices
 
