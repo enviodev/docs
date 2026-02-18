@@ -9,12 +9,54 @@ description: "Envio Developer Update February 2026: HyperIndex v3 alpha.13 with 
 
 <!--truncate-->
 
-February brings a new HyperIndex V3 alpha release along with expanded network support and feature updates. We shipped HyperIndex v3.0.0 alpha.13 with 3x faster historical backfills, support for DESC indices, improved RPC source support, experimental WebSocket support, and a breaking configuration change with `rpc_config` removed in favour of `rpc`.
+February brings a couple new HyperIndex V3 alpha release along with expanded network support and feature updates. We shipped HyperIndex v3.0.0 alpha.13 & alpha.14 with 3x faster historical backfills, support for DESC indices, improved RPC source support, experimental WebSocket support, and a breaking configuration change with `rpc_config` removed in favour of `rpc`, new getWhere API, removed ordered multichain mode support, big Cursor/Claude update and much more!
 
-We expanded our indexing support to MegaETH mainnet and Sei. This month also includes a new multi part YouTube series on building with HyperIndex and updates to our Uniswap v4 alert bots. Let’s dive in! 
+We expanded our indexing support to MegaETH mainnet and Sei. This month also includes a new multi-part YouTube series on building with HyperIndex and updates to our Uniswap v4 alert bots. Let’s dive in! 
 
 
-## ⚡ New release: HyperIndex v3.0.0 - alpha.13
+## ⚡ New release: HyperIndex v3.0.0 - alpha.13 & alpha.14
+
+### Alpha.14
+
+### 🚨 Breaking: New getWhere API
+
+We updated our getWhere API to enable support for multiple filters at a time in future HyperIndex versions. Instead of chaining, it now uses a single function call with filters that match GraphQL style for familiarity.
+
+```
+Old: context.Entity.getWhere.fieldName.eq(value)
+New: context.Entity.getWhere({ fieldName: { _eq: value } })
+```
+### 🔄 Breaking: Removed Ordered Multichain Mode Support
+
+Ordered Multichain Mode forced events across all processed chains into global onchain order, causing significant latency and allowing one bad chain to freeze the entire indexing process.
+
+Events are still processed in on-chain order per chain.
+For cross-chain interactions, create a partial entity on one chain and finalize it when the related event arrives on another chain. This provides lower latency and a more reliable system.
+
+### 🤖 Big Cursor/Claude Skills Update
+
+We updated `envio init` to create projects with multiple skills to support agentic driven development.
+
+The LLM landscape changes quickly, so we welcome feedback to improve the skills and the development experience with them.
+
+### ⛓️ Chain Info for Test Indexer
+
+```
+const indexer = createTestIndexer();
+
+indexer.chainIds
+indexer.chains
+
+indexer.chains[1].id
+indexer.chains[1].name
+indexer.chains[1].startBlock
+indexer.chains[1].endBlock
+
+indexer.chains[1].ERC20.abi
+indexer.chains[1].ERC20.addresses // Useful to test dynamic registrations
+```
+
+### Alpha.13
 
 This alpha release focused on performance improvements, expanded indexing capabilities, and RPC configuration changes as we continue iterating on V3.
 
