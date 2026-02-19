@@ -197,7 +197,7 @@ HyperIndex now supports Solana with RPC as a source. This feature is experimenta
 To initialize a Solana project:
 
 ```bash
-pnpx envio@3.0.0-alpha.13 init svm
+pnpx envio@3.0.0-alpha.14 init svm
 ```
 
 See the [Solana documentation](/docs/HyperIndex/solana) for more details.
@@ -217,9 +217,9 @@ Now it's possible to create indexers with only block handlers. Previously, it wa
 
 We no longer have restrictions on entity field names, such as `type` and others. Shape your entities any way you want. There are also improvements in generating database columns in the same order as they are defined in the `schema.graphql`.
 
-### Unordered Multichain Mode by Default
+### Unordered Multichain Mode Only
 
-Unordered multichain mode is now the default behavior. This provides better performance for most use cases. If you need ordered multichain behavior, you can explicitly set `multichain: ordered` in your config.
+Unordered multichain mode is now the only behavior. The previously available `multichain: ordered` option has been removed entirely, as it caused significant latency and system freezes due to cross-chain event ordering. Events now process in on-chain order per individual chain only. For cross-chain interactions, we recommend creating partial entities on one chain and finalizing them upon receiving related events on another.
 
 ### Preload Optimization by Default
 
@@ -335,6 +335,50 @@ chains:
 
 Added a Prometheus metric to track requests to data providers, providing better observability into your indexer's data fetching patterns.
 
+### GraphQL-Style `getWhere` API
+
+The `getWhere` query API has been redesigned to support multiple filters simultaneously using GraphQL-style syntax:
+
+```typescript
+// Before
+const transfers = await context.Transfer.getWhere.from.eq("0x123...");
+
+// After
+const transfers = await context.Transfer.getWhere({ from: { _eq: "0x123..." } });
+```
+
+This allows combining multiple filters in a single query:
+
+```typescript
+const transfers = await context.Transfer.getWhere({
+  from: { _eq: "0x123..." },
+  value: { _gt: 1000n },
+});
+```
+
+### Test Indexer Chain Information
+
+The test indexer now exposes chain metadata for more comprehensive testing:
+
+```typescript
+const indexer = createTestIndexer();
+indexer.chainIds; // [1, 42161]
+indexer.chains[1].id; // 1
+indexer.chains[1].name; // "ethereum"
+indexer.chains[1].startBlock; // 0
+indexer.chains[1].endBlock; // undefined
+indexer.chains[1].ERC20.abi; // unknown[]
+indexer.chains[1].ERC20.addresses; // ["0x..."]
+```
+
+### Cursor/Claude Skills for `envio init`
+
+`envio init` now generates projects with multiple skills to support agent-driven development.
+
+### Direct RPC Client
+
+Replaced Ethers.js with a direct RPC client implementation, reducing dependencies and improving performance.
+
 ## Breaking Changes
 
 ### Node.js & Runtime
@@ -349,17 +393,19 @@ Added a Prometheus metric to track requests to data providers, providing better 
 - For block handlers: `block.chainId` is removed in favor of `context.chain.id`
 - `Address` type changed from `string` to `` `0x${string}` ``
 - Removed `transaction.chainId` from field selection — use `context.chain.id` or `event.chainId` instead
+- **`getWhere` API redesigned** — changed from `context.Entity.getWhere.fieldName.eq(value)` to `context.Entity.getWhere({ fieldName: { _eq: value } })` using GraphQL-style filter syntax
 
 ### config.yaml Changes
 
 - Renamed `networks` to `chains`
 - Renamed `confirmed_block_threshold` to `max_reorg_depth`
-- Removed `unordered_multichain_mode` flag, replaced with `multichain: ordered | unordered` (default: `unordered`)
+- Removed `unordered_multichain_mode` flag — unordered multichain is now the only behavior (the `multichain: ordered` option has been removed)
 - Removed `loaders` option (now always enabled via Preload Optimization)
 - Removed `preload_handlers` option (now always enabled)
 - Removed `preRegisterDynamicContracts` option
 - Removed `event_decoder` option (the Rust-based decoder is now the only implementation)
 - Removed `rpc_config` in favor of `rpc`, which now supports multiple URLs, `for` mode (`sync`, `live`, `fallback`), and WebSocket configuration (see [RPC for Live Indexing](#rpc-for-live-indexing))
+- Removed default `address_format: lowercase` preset
 
 ### HyperSync API Token Required
 
@@ -393,6 +439,7 @@ export ENVIO_API_TOKEN=your_token_here
 - Fixed checksum for addresses returned by RPC in lowercase
 - Fixed incorrect validation of transactions `to` field returned by RPC
 - Fixed OOM error on RPC request crashing loop
+- Fixed chain processing prioritization regression
 
 ## Migration Guide
 
@@ -430,7 +477,7 @@ Update your `package.json` with the following changes:
     "node": ">=22.0.0"
   },
   "dependencies": {
-    "envio": "3.0.0-alpha.13"
+    "envio": "3.0.0-alpha.14"
   },
   "devDependencies": {
     "typescript": "^5.7.3"
@@ -571,11 +618,7 @@ chains:
 
 **Update multichain mode (if applicable):**
 
-If you had `unordered_multichain_mode: true`, remove it — this is now the default. If you need ordered multichain behavior, explicitly set:
-
-```yaml
-multichain: ordered
-```
+If you had `unordered_multichain_mode: true`, remove it — unordered is now the only behavior. The `multichain: ordered` option has been removed entirely.
 
 **Rename config options:**
 
@@ -588,7 +631,8 @@ Remove the following options from your config if present:
 - `loaders` — now always enabled via Preload Optimization
 - `preload_handlers` — now always enabled
 - `preRegisterDynamicContracts` — no longer needed
-- `unordered_multichain_mode` — replaced with `multichain` option
+- `unordered_multichain_mode` — unordered is now the only behavior
+- `multichain: ordered` — ordered multichain mode has been removed
 - `event_decoder` — the Rust-based decoder is now the only implementation
 - `rpc_config` — replaced with `rpc` (see [Breaking Changes](#config-yaml-changes))
 
@@ -640,10 +684,21 @@ ENVIO_API_TOKEN=your_token_here
 | `transaction.kind`                  | `transaction.type`                    |
 | `chain` type                        | `ChainId`                             |
 | `transaction.chainId`               | `context.chain.id` or `event.chainId` |
+| `Entity.getWhere.field.eq(value)`   | `Entity.getWhere({ field: { _eq: value } })` |
 
 **Removed APIs:**
 
 - `getGeneratedByChainId` — use the `indexer.chains[chainId]` instead (see [Indexer State & Config](#indexer-state--config))
+- **`getWhere` API** — update to the new GraphQL-style filter syntax:
+
+```typescript
+// Before
+const transfers = await context.Transfer.getWhere.from.eq("0x123...");
+
+// After
+const transfers = await context.Transfer.getWhere({ from: { _eq: "0x123..." } });
+```
+
 - Lowercased entity types — use capitalized names instead:
 
 ```typescript
@@ -686,7 +741,7 @@ pnpm dev
 - [ ] Rename `networks` to `chains`
 - [ ] Rename `confirmed_block_threshold` to `max_reorg_depth`
 - [ ] Replace `rpc_config` with `rpc`
-- [ ] Remove `unordered_multichain_mode` (now default)
+- [ ] Remove `unordered_multichain_mode` and `multichain: ordered` (ordered mode has been removed)
 - [ ] Remove `loaders` and `preload_handlers` options
 - [ ] Remove `preRegisterDynamicContracts` option
 - [ ] Remove `event_decoder` option
@@ -708,6 +763,7 @@ pnpm dev
 - [ ] Update code expecting `Address` type to be `string` (now `` `0x${string}` ``)
 - [ ] Replace `transaction.chainId` with `context.chain.id` or `event.chainId`
 - [ ] Replace lowercased entity type imports with capitalized versions (e.g., `transfer` → `Transfer`)
+- [ ] Update `getWhere` calls to new GraphQL-style filter syntax (e.g., `getWhere({ field: { _eq: value } })`)
 
 **Verify:**
 
@@ -721,6 +777,7 @@ If you encounter any issues during migration, join our [Discord community](https
 
 For detailed release notes, see:
 
+- [v3.0.0-alpha.14](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.14)
 - [v3.0.0-alpha.13](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.13)
 - [v3.0.0-alpha.12](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.12)
 - [v3.0.0-alpha.11](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.11)
