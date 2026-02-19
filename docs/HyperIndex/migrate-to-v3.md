@@ -208,6 +208,7 @@ See the [Solana documentation](/docs/HyperIndex/solana) for more details.
 - Cleaned up templates to follow the latest good practices
 - Added new templates to highlight HyperIndex features, starting with: `Feature: Factory Contract`
 - Pre-configured GitHub Actions workflow for running tests and initialized git repository
+- Generated projects include Cursor/Claude skills to support agent-driven development
 
 ### Block Handler Only Indexers
 
@@ -217,9 +218,9 @@ Now it's possible to create indexers with only block handlers. Previously, it wa
 
 We no longer have restrictions on entity field names, such as `type` and others. Shape your entities any way you want. There are also improvements in generating database columns in the same order as they are defined in the `schema.graphql`.
 
-### Unordered Multichain Mode Only
+### Unordered Multichain Mode by Default
 
-Unordered multichain mode is now the only behavior. The previously available `multichain: ordered` option has been removed entirely, as it caused significant latency and system freezes due to cross-chain event ordering. Events now process in on-chain order per individual chain only. For cross-chain interactions, we recommend creating partial entities on one chain and finalizing them upon receiving related events on another.
+Unordered multichain mode is now available and the default behavior. This provides better performance for most use cases. If you need ordered multichain behavior, you can explicitly set `multichain: ordered` in your config.
 
 ### Preload Optimization by Default
 
@@ -287,6 +288,20 @@ describe("Indexer Testing", () => {
 });
 ```
 
+The test indexer also exposes chain information and provides `Entity.get`/`Entity.set` for reading and writing entities in-between processing runs:
+
+```typescript
+const indexer = createTestIndexer();
+indexer.chainIds; // [1, 42161]
+indexer.chains[1].id; // 1
+indexer.chains[1].startBlock; // 0
+indexer.chains[1].ERC20.addresses; // ["0x..."]
+
+// Read/write entities between processing runs
+await indexer.Account.set({ id: "0x123...", balance: 100n });
+const account = await indexer.Account.get("0x123...");
+```
+
 See the [Testing documentation](/docs/HyperIndex/testing) for more details.
 
 ### Podman Support
@@ -337,7 +352,7 @@ Added a Prometheus metric to track requests to data providers, providing better 
 
 ### GraphQL-Style `getWhere` API
 
-The `getWhere` query API has been redesigned to support multiple filters simultaneously using GraphQL-style syntax:
+The `getWhere` query API has been redesigned using GraphQL-style syntax:
 
 ```typescript
 // Before
@@ -346,34 +361,6 @@ const transfers = await context.Transfer.getWhere.from.eq("0x123...");
 // After
 const transfers = await context.Transfer.getWhere({ from: { _eq: "0x123..." } });
 ```
-
-This allows combining multiple filters in a single query:
-
-```typescript
-const transfers = await context.Transfer.getWhere({
-  from: { _eq: "0x123..." },
-  value: { _gt: 1000n },
-});
-```
-
-### Test Indexer Chain Information
-
-The test indexer now exposes chain metadata for more comprehensive testing:
-
-```typescript
-const indexer = createTestIndexer();
-indexer.chainIds; // [1, 42161]
-indexer.chains[1].id; // 1
-indexer.chains[1].name; // "ethereum"
-indexer.chains[1].startBlock; // 0
-indexer.chains[1].endBlock; // undefined
-indexer.chains[1].ERC20.abi; // unknown[]
-indexer.chains[1].ERC20.addresses; // ["0x..."]
-```
-
-### Cursor/Claude Skills for `envio init`
-
-`envio init` now generates projects with multiple skills to support agent-driven development.
 
 ### Direct RPC Client
 
@@ -399,13 +386,12 @@ Replaced Ethers.js with a direct RPC client implementation, reducing dependencie
 
 - Renamed `networks` to `chains`
 - Renamed `confirmed_block_threshold` to `max_reorg_depth`
-- Removed `unordered_multichain_mode` flag — unordered multichain is now the only behavior (the `multichain: ordered` option has been removed)
+- Removed `unordered_multichain_mode` flag, replaced with `multichain: ordered | unordered` (default: `unordered`)
 - Removed `loaders` option (now always enabled via Preload Optimization)
 - Removed `preload_handlers` option (now always enabled)
 - Removed `preRegisterDynamicContracts` option
 - Removed `event_decoder` option (the Rust-based decoder is now the only implementation)
 - Removed `rpc_config` in favor of `rpc`, which now supports multiple URLs, `for` mode (`sync`, `live`, `fallback`), and WebSocket configuration (see [RPC for Live Indexing](#rpc-for-live-indexing))
-- Removed default `address_format: lowercase` preset
 
 ### HyperSync API Token Required
 
@@ -439,7 +425,6 @@ export ENVIO_API_TOKEN=your_token_here
 - Fixed checksum for addresses returned by RPC in lowercase
 - Fixed incorrect validation of transactions `to` field returned by RPC
 - Fixed OOM error on RPC request crashing loop
-- Fixed chain processing prioritization regression
 
 ## Migration Guide
 
@@ -618,7 +603,11 @@ chains:
 
 **Update multichain mode (if applicable):**
 
-If you had `unordered_multichain_mode: true`, remove it — unordered is now the only behavior. The `multichain: ordered` option has been removed entirely.
+If you had `unordered_multichain_mode: true`, remove it — this is now the default. If you need ordered multichain behavior, explicitly set:
+
+```yaml
+multichain: ordered
+```
 
 **Rename config options:**
 
@@ -631,8 +620,7 @@ Remove the following options from your config if present:
 - `loaders` — now always enabled via Preload Optimization
 - `preload_handlers` — now always enabled
 - `preRegisterDynamicContracts` — no longer needed
-- `unordered_multichain_mode` — unordered is now the only behavior
-- `multichain: ordered` — ordered multichain mode has been removed
+- `unordered_multichain_mode` — replaced with `multichain` option
 - `event_decoder` — the Rust-based decoder is now the only implementation
 - `rpc_config` — replaced with `rpc` (see [Breaking Changes](#config-yaml-changes))
 
@@ -685,6 +673,8 @@ ENVIO_API_TOKEN=your_token_here
 | `chain` type                        | `ChainId`                             |
 | `transaction.chainId`               | `context.chain.id` or `event.chainId` |
 | `Entity.getWhere.field.eq(value)`   | `Entity.getWhere({ field: { _eq: value } })` |
+| `Entity.getWhere.field.gt(value)`   | `Entity.getWhere({ field: { _gt: value } })` |
+| `Entity.getWhere.field.lt(value)`   | `Entity.getWhere({ field: { _lt: value } })` |
 
 **Removed APIs:**
 
@@ -694,9 +684,11 @@ ENVIO_API_TOKEN=your_token_here
 ```typescript
 // Before
 const transfers = await context.Transfer.getWhere.from.eq("0x123...");
+const bigTransfers = await context.Transfer.getWhere.value.gt(1000n);
 
 // After
 const transfers = await context.Transfer.getWhere({ from: { _eq: "0x123..." } });
+const bigTransfers = await context.Transfer.getWhere({ value: { _gt: 1000n } });
 ```
 
 - Lowercased entity types — use capitalized names instead:
@@ -741,7 +733,7 @@ pnpm dev
 - [ ] Rename `networks` to `chains`
 - [ ] Rename `confirmed_block_threshold` to `max_reorg_depth`
 - [ ] Replace `rpc_config` with `rpc`
-- [ ] Remove `unordered_multichain_mode` and `multichain: ordered` (ordered mode has been removed)
+- [ ] Remove `unordered_multichain_mode` (now default)
 - [ ] Remove `loaders` and `preload_handlers` options
 - [ ] Remove `preRegisterDynamicContracts` option
 - [ ] Remove `event_decoder` option
