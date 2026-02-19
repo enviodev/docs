@@ -197,7 +197,7 @@ HyperIndex now supports Solana with RPC as a source. This feature is experimenta
 To initialize a Solana project:
 
 ```bash
-pnpx envio@3.0.0-alpha.13 init svm
+pnpx envio@3.0.0-alpha.14 init svm
 ```
 
 See the [Solana documentation](/docs/HyperIndex/solana) for more details.
@@ -208,6 +208,7 @@ See the [Solana documentation](/docs/HyperIndex/solana) for more details.
 - Cleaned up templates to follow the latest good practices
 - Added new templates to highlight HyperIndex features, starting with: `Feature: Factory Contract`
 - Pre-configured GitHub Actions workflow for running tests and initialized git repository
+- Generated projects include Cursor/Claude skills to support agent-driven development
 
 ### Block Handler Only Indexers
 
@@ -219,7 +220,7 @@ We no longer have restrictions on entity field names, such as `type` and others.
 
 ### Unordered Multichain Mode by Default
 
-Unordered multichain mode is now the default behavior. This provides better performance for most use cases. If you need ordered multichain behavior, you can explicitly set `multichain: ordered` in your config.
+Unordered multichain mode is now available and the default behavior. This provides better performance for most use cases. If you need ordered multichain behavior, you can explicitly set `multichain: ordered` in your config.
 
 ### Preload Optimization by Default
 
@@ -287,6 +288,20 @@ describe("Indexer Testing", () => {
 });
 ```
 
+The test indexer also exposes chain information and provides `Entity.get`/`Entity.set` for reading and writing entities in-between processing runs:
+
+```typescript
+const indexer = createTestIndexer();
+indexer.chainIds; // [1, 42161]
+indexer.chains[1].id; // 1
+indexer.chains[1].startBlock; // 0
+indexer.chains[1].ERC20.addresses; // ["0x..."]
+
+// Read/write entities between processing runs
+await indexer.Account.set({ id: "0x123...", balance: 100n });
+const account = await indexer.Account.get("0x123...");
+```
+
 See the [Testing documentation](/docs/HyperIndex/testing) for more details.
 
 ### Podman Support
@@ -335,6 +350,22 @@ chains:
 
 Added a Prometheus metric to track requests to data providers, providing better observability into your indexer's data fetching patterns.
 
+### GraphQL-Style `getWhere` API
+
+The `getWhere` query API has been redesigned using GraphQL-style syntax:
+
+```typescript
+// Before
+const transfers = await context.Transfer.getWhere.from.eq("0x123...");
+
+// After
+const transfers = await context.Transfer.getWhere({ from: { _eq: "0x123..." } });
+```
+
+### Direct RPC Client
+
+Replaced Ethers.js with a direct RPC client implementation, reducing dependencies and improving performance.
+
 ## Breaking Changes
 
 ### Node.js & Runtime
@@ -349,6 +380,7 @@ Added a Prometheus metric to track requests to data providers, providing better 
 - For block handlers: `block.chainId` is removed in favor of `context.chain.id`
 - `Address` type changed from `string` to `` `0x${string}` ``
 - Removed `transaction.chainId` from field selection — use `context.chain.id` or `event.chainId` instead
+- **`getWhere` API redesigned** — changed from `context.Entity.getWhere.fieldName.eq(value)` to `context.Entity.getWhere({ fieldName: { _eq: value } })` using GraphQL-style filter syntax
 
 ### config.yaml Changes
 
@@ -430,7 +462,7 @@ Update your `package.json` with the following changes:
     "node": ">=22.0.0"
   },
   "dependencies": {
-    "envio": "3.0.0-alpha.13"
+    "envio": "3.0.0-alpha.14"
   },
   "devDependencies": {
     "typescript": "^5.7.3"
@@ -640,10 +672,25 @@ ENVIO_API_TOKEN=your_token_here
 | `transaction.kind`                  | `transaction.type`                    |
 | `chain` type                        | `ChainId`                             |
 | `transaction.chainId`               | `context.chain.id` or `event.chainId` |
+| `Entity.getWhere.field.eq(value)`   | `Entity.getWhere({ field: { _eq: value } })` |
+| `Entity.getWhere.field.gt(value)`   | `Entity.getWhere({ field: { _gt: value } })` |
+| `Entity.getWhere.field.lt(value)`   | `Entity.getWhere({ field: { _lt: value } })` |
 
 **Removed APIs:**
 
 - `getGeneratedByChainId` — use the `indexer.chains[chainId]` instead (see [Indexer State & Config](#indexer-state--config))
+- **`getWhere` API** — update to the new GraphQL-style filter syntax:
+
+```typescript
+// Before
+const transfers = await context.Transfer.getWhere.from.eq("0x123...");
+const bigTransfers = await context.Transfer.getWhere.value.gt(1000n);
+
+// After
+const transfers = await context.Transfer.getWhere({ from: { _eq: "0x123..." } });
+const bigTransfers = await context.Transfer.getWhere({ value: { _gt: 1000n } });
+```
+
 - Lowercased entity types — use capitalized names instead:
 
 ```typescript
@@ -708,6 +755,7 @@ pnpm dev
 - [ ] Update code expecting `Address` type to be `string` (now `` `0x${string}` ``)
 - [ ] Replace `transaction.chainId` with `context.chain.id` or `event.chainId`
 - [ ] Replace lowercased entity type imports with capitalized versions (e.g., `transfer` → `Transfer`)
+- [ ] Update `getWhere` calls to new GraphQL-style filter syntax (e.g., `getWhere({ field: { _eq: value } })`)
 
 **Verify:**
 
@@ -721,6 +769,7 @@ If you encounter any issues during migration, join our [Discord community](https
 
 For detailed release notes, see:
 
+- [v3.0.0-alpha.14](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.14)
 - [v3.0.0-alpha.13](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.13)
 - [v3.0.0-alpha.12](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.12)
 - [v3.0.0-alpha.11](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.11)
