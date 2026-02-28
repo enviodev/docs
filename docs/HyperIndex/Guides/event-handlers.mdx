@@ -179,7 +179,7 @@ HyperIndex provides many features to help you build more powerful and efficient 
 - Use [Topic Filtering](/docs/HyperIndex/wildcard-indexing) to ignore irrelevant events
   - With [multiple filters for single event](/docs/HyperIndex/wildcard-indexing#multiple-filters)
   - With [different filters per network](/docs/HyperIndex/wildcard-indexing#different-filters-per-network)
-  - With [filter by dynamicly registered contract addresses](/docs/HyperIndex/wildcard-indexing#index-all-erc20-transfers-to-your-contract) (eg Index all ERC20 transfers to/from your Contract)
+  - With [filter by dynamically registered contract addresses](/docs/HyperIndex/wildcard-indexing#index-all-erc20-transfers-to-your-contract) (e.g. index all ERC20 transfers to/from your contract)
 - [Access Contract State](/docs/HyperIndex/contract-state) directly from handlers
 - Perform external calls from handlers by following the [IPFS Integration guide](/docs/HyperIndex/ipfs)
 
@@ -303,20 +303,18 @@ ERC20.Approval.handler(async ({ event, context }) => {
 
 You can also use `context.<Entity>.getWhere.<FieldName>.gt` to get all entities where the field value is greater than the given value.
 
-**Important:**
+:::info Requirements
+- [Preload Optimization](/docs/HyperIndex/preload-optimization) must be enabled (`preload_handlers: true` in `config.yaml`)
+- The field must have an [`@index`](database-performance-optimization/#creating-custom-indices-in-your-schema) directive or be used in a [`@derivedFrom`](schema/#relationships-one-to-many-derivedfrom) relationship
+:::
 
-- This feature requires [Preload Optimization](/docs/HyperIndex/preload-optimization) to be enabled.
+:::tip
+Place `getWhere` calls at the top of your handler so they benefit from [Preload Optimization](/docs/HyperIndex/preload-optimization).
+:::
 
-  - Either by `preload_handlers: true` in your `config.yaml` file
-  - Or by using [Loaders](/docs/HyperIndex/loaders) (Deprecated)
-
-- Works with any field that:
-
-  - Is used in a relationship with the [`@derivedFrom`](schema/#relationships-one-to-many-derivedfrom) directive
-  - Has an [`@index`](database-performance-optimization/#creating-custom-indices-in-your-schema) directive
-
-- Potential Memory Issues: Very large `getWhere` queries might cause memory overflows.
-- Tip: Try to put the `getWhere` query to the top of the handler, to make sure it's being preloaded. Read more about how [Preload Optimization](/docs/HyperIndex/preload-optimization) works.
+:::warning
+Very large `getWhere` result sets may cause memory issues. Filter as narrowly as possible.
+:::
 
 ### Modifying Entities
 

@@ -176,7 +176,7 @@ async for result in client.stream(query, config):
   export RUST_LOG=trace
   ```
 
-- **Paginate Large Queries**: HyperSync requests have a 5-second time limit. For large data sets, paginate results:
+- **Paginate Large Queries**: HyperSync requests have a 5-second time limit. For large datasets, paginate by advancing `from_block` after each response:
   ```python
   current_block = start_block
   while current_block < end_block:
@@ -259,7 +259,7 @@ asyncio.run(collect_usdc_transfers())
 
 ## Decoding Event Logs
 
-When working with blockchain data, event logs contain encoded data that needs to be properly decoded to extract meaningful information. HyperSync provides powerful decoding capabilities to simplify this process.
+Event logs contain encoded data that you need to decode to extract meaningful information. HyperSync provides built-in decoding capabilities to simplify this.
 
 ### Understanding Log Structure
 

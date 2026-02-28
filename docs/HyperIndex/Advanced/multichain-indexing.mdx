@@ -37,7 +37,7 @@ For a comprehensive, production-ready example of multichain indexing, we recomme
 
 ![V4 indexer](/img/v4.gif)
 
-The Uniswap V4 indexer showcases how to effectively structure a multichain indexer for a complex DeFi protocol, handling high volumes of data across multiple networks while maintaining performance and reliability.
+The Uniswap V4 indexer showcases how to effectively structure a multichain indexer for a complex DeFi protocol. It handles high volumes of data across multiple networks while maintaining performance and reliability.
 
 ## Config File Structure for Multichain Indexing
 
@@ -97,7 +97,7 @@ The indexer processes events as soon as they're available from each chain, witho
 
 This mode is ideal for most applications, especially when:
 
-- Operations on your entities are [commutative](./terminology#commutative-property) (order doesn't matter)
+- Operations on your entities are [commutative](./terminology#commutative-property) — meaning the final result is the same regardless of which chain's events are processed first (e.g. incrementing a counter)
 - Entities from different networks never interact with each other
 - Processing speed is more important than guaranteed cross-chain ordering
 
@@ -149,9 +149,11 @@ Ordered mode ensures that the temporal relationship between events on different 
 1. **Global timestamp ordering**: Events are ordered based on their block timestamps across all chains
 2. **Deterministic processing**: The same sequence of events will be processed in the same order every time
 
-The primary trade-off is increased latency at the head of the chain. Since the indexer must wait for blocks from all chains to determine the correct ordering, the processing of recent events is delayed by the slowest chain's block time. For example, if Chain A has 2-second blocks and Chain B has 15-second blocks, the indexer will process events at the slower 15-second rate to maintain proper ordering.
+The primary trade-off is increased latency at the head of the chain. The indexer must wait for blocks from all chains to determine the correct ordering, so processing of recent events is delayed by the slowest chain's block time.
 
-This latency is acceptable for applications where correct cross-chain ordering is more important than real-time updates. For bridge applications in particular, this ordering preservation can be critical for security and correctness, as it ensures that deposit events on one chain are always processed before the corresponding withdrawal events on another chain.
+**Example:** If Chain A has 2-second blocks and Chain B has 15-second blocks, the indexer will process events at the slower 15-second rate to maintain proper ordering.
+
+This latency is acceptable for applications where correct cross-chain ordering is more important than real-time updates. For bridge applications in particular, this ordering preservation can be critical for security and correctness — it ensures that deposit events on one chain are always processed before the corresponding withdrawal events on another chain.
 
 ## Best Practices for Multichain Indexing
 

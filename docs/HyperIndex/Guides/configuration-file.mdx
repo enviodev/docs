@@ -6,7 +6,7 @@ slug: /configuration-file
 description: Learn how to configure HyperIndex with contracts, events, networks, and advanced indexing options.
 ---
 
-The `config.yaml` file defines your indexer's behavior, including which blockchain events to index, contract addresses, which networks to index, and various advanced indexing options. It is a crucial step in configuring your HyperIndex setup.
+The `config.yaml` file defines your indexer's behavior: which blockchain events to index, contract addresses, networks, and advanced indexing options.
 
 After any changes to your `config.yaml` and the [schema](./schema-file.md), run:
 
@@ -156,13 +156,15 @@ To enable storage of raw events, add the following to your `config.yaml`:
 raw_events: true
 ```
 
-When enabled, all indexed events will be stored in the `raw_events` table in the database, which you can view through the Hasura interface. This is particularly useful for:
+When enabled, all indexed events will be stored in the `raw_events` table in the database, which you can view through the Hasura interface. This is useful for:
 
 -   Debugging event processing issues
 -   Verifying that events are being captured correctly
 -   Creating custom queries against raw blockchain data
 
-Note that enabling this option will increase database storage requirements and may slightly impact indexing performance.
+:::warning
+Enabling raw events will increase database storage requirements and may slightly impact indexing performance.
+:::
 
 ---
 

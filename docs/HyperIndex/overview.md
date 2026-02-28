@@ -50,12 +50,13 @@ While HyperIndex gives you a complete indexing solution with schema management a
 
 ## HyperSync API Token Requirements
 
-HyperSync (the data engine powering HyperIndex) implements rate limits for requests without API tokens. API tokens will be required from **3 November 2025**. Here's what you need to know:
+HyperSync (the data engine powering HyperIndex) requires API tokens as of **3 November 2025**.
 
-- **Local Development**: An API token will be required. An automatic login feature from the CLI will be available to make this smoother.
-- **Self-Hosted Deployments**: API tokens are required for HyperSync access in self-hosted deployments. The token can be set via the `ENVIO_API_TOKEN` environment variable in your indexer configuration. This can be read from the `.env` file in the root of your HyperIndex project.
-- **Hosted Service**: Indexers deployed to our hosted service will have special access that doesn't require a custom API token.
-- **Future Pricing**: From mid-November 2025 onwards, we will introduce tiered packages for those self-hosting HyperIndex and wishing to use HyperSync. For preferred introductory pricing based on your specific use case, reach out to us on [Discord](https://discord.gg/Q9qt8gZ2fX).
+| Deployment Type | Token Required? | Details |
+|---|---|---|
+| **Local Development** | Yes | The CLI provides automatic login to simplify setup. |
+| **Self-Hosted** | Yes | Set via `ENVIO_API_TOKEN` env var (supports `.env` files). |
+| **Hosted Service** | No | Managed automatically — no token needed. |
 
 For more details about API tokens, including how to generate and implement them, see our [API Tokens documentation](/docs/HyperSync/api-tokens).
 

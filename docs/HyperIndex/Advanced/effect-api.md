@@ -127,11 +127,11 @@ export const getBalance = createEffect(
 
 ### Persistence
 
-By default, effect results are not persisted in the database. This means if the effect with the same input is called again, the function will be executed the second time.
+By default, effect results are **not** persisted in the database. If an effect with the same input is called again, the function will re-execute.
 
-To persist effect results, you can set the `cache` option to `true` when creating the effect. This will save the effect results in the database and reuse them in future indexer runs. You can also override caching for a specific call by setting `context.cache = false`, which prevents storing results for that execution, especially useful when handling failed responses.
+To persist results, set `cache: true` when creating the effect. This saves results in the database and reuses them in future indexer runs.
 
-Example setting cache to false with context.cache:
+You can also override caching for a specific call by setting `context.cache = false`, which prevents storing results for that execution. This is useful when handling failed responses:
 
 ```typescript
 export const getBalance = createEffect(
@@ -157,11 +157,11 @@ Also, use our [Development Console](https://envio.dev/console) to track the cach
 
 ### Reuse Effect Cache on Indexer Reruns
 
-To prevent invalid data we don't keep the effect cache on indexer reruns. But you can explicitly configure cache, which should be preloaded when the indexer is rerun.
+By default, the effect cache is cleared on indexer reruns to prevent stale data. To preserve the cache across reruns:
 
-Open [Development Console](https://envio.dev/console) of the running indexer which accumulated the cache. You'll be able to see the `Sync Cache` button right at the `Effects` section. Clicking the button will load the cache from the indexer database to the `.envio/cache` directory in your indexer project.
-
-When the indexer is rerun by using `envio dev` or `envio start -r` call, the initial cache will be loaded from the `.envio/cache` directory and used for the indexer run.
+1. Open the [Development Console](https://envio.dev/console) for your running indexer.
+2. Navigate to the **Effects** section and click the **Sync Cache** button. This downloads the cache from the indexer database to the `.envio/cache` directory in your project.
+3. Rerun the indexer with `envio dev` or `envio start -r`. It will automatically preload the cache from `.envio/cache`.
 
 > **Note:** This feature is available starting from `envio@2.26.0`. It also doesn't support rollbacks on reorgs. The support for reorgs will be added in the future.
 

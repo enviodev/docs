@@ -57,11 +57,15 @@ ERC20.Transfer.handler(async ({ event, context }) => {
 });
 ```
 
-**Without Preload Optimization:** If you're processing 5,000 transfer events, each with unique `from` and `to` addresses, this results in **10,000 total database roundtrips**—one for each sender and receiver lookup (2 per event × 5,000 events). This creates a significant bottleneck that slows down your entire indexing process.
+**Without Preload Optimization:** If you're processing 5,000 transfer events, each with unique `from` and `to` addresses, this results in **10,000 total database roundtrips** (2 per event × 5,000 events). This creates a significant bottleneck that slows down your entire indexing process.
 
-**With Preload Optimization:** During the Preload Phase, all 5,000 events are processed in parallel. HyperIndex batches database reads that occur simultaneously into single database queries - one query for sender lookups and one for receiver lookups. The loaded accounts are cached in memory. After the Preload Phase completes, the second processing phase begins. This phase runs handlers sequentially in on-chain order, but instead of making database calls, it retrieves the data from the in-memory cache.
+**With Preload Optimization:**
 
-For our example of 5,000 transfer events, this optimization reduces database roundtrips from 10,000 calls to just 2!
+1. During the **Preload Phase**, all 5,000 events are processed in parallel. HyperIndex batches database reads into single queries — one for sender lookups, one for receiver lookups.
+2. The loaded accounts are cached in memory.
+3. During the **Processing Phase**, handlers run sequentially in on-chain order but retrieve data from the in-memory cache instead of hitting the database.
+
+**Result:** Database roundtrips drop from 10,000 to just 2.
 
 #### Optimizing for Concurrency
 
@@ -95,9 +99,12 @@ ERC20.Transfer.handler(async ({ event, context }) => {
 });
 ```
 
-**Without Preload Optimization:** If you're processing 5,000 transfer events, each with an external call, this results in **5,000 sequential external calls**—each waiting for the previous one to complete. This can turn a fast indexing process into a slow, sequential crawl.
+**Without Preload Optimization:** Processing 5,000 transfer events means **5,000 sequential external calls**, each waiting for the previous one to complete. This turns a fast indexing process into a slow, sequential crawl.
 
-**With Preload Optimization:** Since handlers run **twice** for each event, making direct external calls can be problematic. The [Effect API](/docs/HyperIndex/effect-api) provides a solution. During the Preload Phase, it batches all external calls and runs them in parallel. Then during the Processing Phase, it runs the handlers sequentially, retrieving the already requested data from the in-memory store.
+**With Preload Optimization:** Since handlers run **twice**, making direct external calls can be problematic. The [Effect API](/docs/HyperIndex/effect-api) solves this:
+
+1. During the **Preload Phase**, it batches all external calls and runs them in parallel.
+2. During the **Processing Phase**, handlers run sequentially and retrieve the already-fetched data from the in-memory store.
 
 ```typescript
 import { S, createEffect } from "envio";
@@ -162,7 +169,7 @@ If you're using an earlier version of `envio`, we strongly recommend upgrading t
 
 ## Double-Run Footgun
 
-As mentioned above, the Preload Phase gives a lot of benefits for the event processing, but also it means that you must be aware of its table run nature:
+As mentioned above, the Preload Phase gives a lot of benefits for the event processing, but also it means that you must be aware of its double-run nature:
 
 - Never call `fetch` or other external calls directly in the handler.
   - Use the [Effect API](/docs/HyperIndex/effect-api) instead.
