@@ -40,4 +40,4 @@ You can read the full details in our [Indexer Benchmarking Results blog post](/b
 
 ## Verify For Yourself
 
-We encourage developers to run their own benchmarks. You can use the templates provided in the [Sentio benchmark repository](https://github.com/sentioxyz/indexer-benchmark) or our sample indexer implementations for various scenarios.
+We encourage developers to run their own benchmarks. You can also use the templates provided in the [Open Indexer Benchmark repository](https://github.com/enviodev/open-indexer-benchmark).
