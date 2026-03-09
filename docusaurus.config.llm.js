@@ -101,7 +101,6 @@ const config = {
             items: [
               { label: "Discord", href: "https://discord.gg/Q9qt8gZ2fX" },
               { label: "Twitter", href: "https://twitter.com/envio_indexer" },
-              { label: "Lens", href: "https://lenster.xyz/u/envio.lens" },
             ],
           },
           {
