@@ -364,10 +364,6 @@ const config = {
                 label: "Twitter",
                 href: "https://twitter.com/envio_indexer",
               },
-              {
-                label: "Lens",
-                href: "https://lenster.xyz/u/envio.lens",
-              },
             ],
           },
           {
