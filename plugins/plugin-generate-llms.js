@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const matter = require("gray-matter");
 const glob = require("glob");
-const { minimatch } = require("minimatch");
+const minimatch = require("minimatch");
 
 // Docusaurus Plugin: Generate LLMS files
 // --------------------------------------

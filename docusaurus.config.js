@@ -330,7 +330,7 @@ const config = {
             className: "navbar__item--showcase",
           },
           {
-            to: "blog",
+            to: "/blog",
             label: "Blog",
             position: "left",
           },
@@ -368,7 +368,7 @@ const config = {
             items: [
               {
                 label: "Blog",
-                to: "blog",
+                to: "/blog",
               },
               {
                 label: "GitHub",
