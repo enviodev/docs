@@ -19,12 +19,12 @@ const sites = [
     tags: [tags.hyperindex],
   },
   {
-    title: "Stable Radar",
+    title: "Safescan",
     description:
-      "A real-time dashboard for USDC transaction monitoring across multiple chains.",
-    video: "/img/showcase/stable-radar.webm",
-    source: "https://stable-radar.com",
-    tags: [tags.hypersync],
+      "Real-time explorer of Safe multi-signature wallets across multiple chains. Search by safe address, owner address, or transaction hash.",
+    image: "/img/showcase/safe-scan.xyz_.jpg",
+    source: "https://safe-scan.xyz",
+    tags: [tags.hyperindex],
   },
   {
     title: "Stable Volume",
@@ -43,12 +43,12 @@ const sites = [
     tags: [tags.hyperindex],
   },
   {
-    title: "Safescan",
+    title: "Stable Radar",
     description:
-      "Real-time explorer of Safe multi-signature wallets across multiple chains. Search by safe address, owner address, or transaction hash.",
-    image: "/img/showcase/safe-scan.xyz_.jpg",
-    source: "https://safe-scan.xyz",
-    tags: [tags.hyperindex],
+      "A real-time dashboard for USDC transaction monitoring across multiple chains.",
+    video: "/img/showcase/stable-radar.webm",
+    source: "https://stable-radar.com",
+    tags: [tags.hypersync],
   },
   {
     title: "Oracle Wars",
@@ -125,9 +125,18 @@ const sites = [
 
 function ShowcaseCard({ site }) {
   return (
-    <div
-      className="card margin--md shadow--md"
-      style={{ height: "100%", display: "flex", flexDirection: "column" }}
+    <Link
+      to={site.source}
+      className="card shadow--md showcase-card"
+      style={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        textDecoration: "none",
+        color: "inherit",
+        cursor: "pointer",
+        transition: "transform 0.2s ease",
+      }}
     >
       <div className="card__image">
         {site.video ? (
@@ -154,13 +163,7 @@ function ShowcaseCard({ site }) {
       </div>
 
       <div className="card__footer">
-        <div className="button-group button-group--block">
-          <Link className="button button--primary" to={site.source}>
-            Check Demo
-          </Link>
-        </div>
-
-        <div className="margin-top--sm">
+        <div>
           {site.tags.map((tag, i) => (
             <span key={i} className="badge badge--secondary margin-right--sm">
               {tag}
@@ -168,19 +171,18 @@ function ShowcaseCard({ site }) {
           ))}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
 function ShowcaseCards() {
   return (
     <div className="container">
-      <div className="row">
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
         {sites.map((site, idx) => (
           <div
             key={idx}
-            className="col col--6 margin-bottom--lg"
-            style={{ display: "flex" }}
+            style={{ display: "flex", flex: "0 0 calc((100% - 2rem) / 3)" }}
           >
             <ShowcaseCard site={site} />
           </div>
@@ -204,6 +206,11 @@ function ShowcaseHeader() {
 export default function Showcase() {
   return (
     <Layout title={TITLE} description={DESCRIPTION}>
+      <style>{`
+        .showcase-card:hover {
+          transform: scale(1.03);
+        }
+      `}</style>
       <main className="margin-vert--lg">
         <ShowcaseHeader />
 
