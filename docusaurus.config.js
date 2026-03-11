@@ -295,16 +295,12 @@ const config = {
         },
       ],
       navbar: {
-        title: "",
+        title: "ENVIO",
         logo: {
-          alt: "Envio Logo",
+          alt: "Envio",
           src: "img/envio-logo.png",
-          srcDark: "img/envio-logo.png",
-          style: {
-            maxWidth: 200,
-            maxHeight: 40,
-          },
           href: "https://envio.dev",
+          style: { display: "none" },
         },
         items: [
           {

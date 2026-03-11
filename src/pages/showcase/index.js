@@ -127,7 +127,7 @@ function ShowcaseCard({ site }) {
   return (
     <Link
       to={site.source}
-      className="card shadow--md showcase-card"
+      className="showcase-card"
       style={{
         height: "100%",
         display: "flex",
@@ -135,10 +135,13 @@ function ShowcaseCard({ site }) {
         textDecoration: "none",
         color: "inherit",
         cursor: "pointer",
-        transition: "transform 0.2s ease",
+        border: "1px solid #242424",
+        borderRadius: "8px",
+        overflow: "hidden",
+        transition: "border-color 0.2s ease, transform 0.2s ease",
       }}
     >
-      <div className="card__image">
+      <div>
         {site.video ? (
           <video
             src={site.video}
@@ -146,30 +149,44 @@ function ShowcaseCard({ site }) {
             loop
             muted
             playsInline
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            style={{ width: "100%", display: "block", objectFit: "cover" }}
           />
         ) : site.image ? (
           <img
             src={site.image}
             alt={site.title}
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            style={{ width: "100%", display: "block", objectFit: "cover" }}
           />
         ) : null}
       </div>
 
-      <div className="card__body" style={{ flexGrow: 1 }}>
-        <h3>{site.title}</h3>
-        <p>{site.description}</p>
+      <div style={{ padding: "16px 20px", flexGrow: 1 }}>
+        <h3 style={{ margin: "0 0 8px", fontSize: "1.1rem", fontWeight: 600 }}>
+          {site.title}
+        </h3>
+        <p style={{ margin: 0, fontSize: "0.875rem", color: "#a1a1a1", lineHeight: 1.5 }}>
+          {site.description}
+        </p>
       </div>
 
-      <div className="card__footer">
-        <div>
-          {site.tags.map((tag, i) => (
-            <span key={i} className="badge badge--secondary margin-right--sm">
-              {tag}
-            </span>
-          ))}
-        </div>
+      <div style={{ padding: "0 20px 16px" }}>
+        {site.tags.map((tag, i) => (
+          <span
+            key={i}
+            style={{
+              display: "inline-block",
+              fontSize: "0.75rem",
+              fontWeight: 500,
+              padding: "2px 8px",
+              borderRadius: "4px",
+              border: "1px solid #242424",
+              color: "#a1a1a1",
+              marginRight: "6px",
+            }}
+          >
+            {tag}
+          </span>
+        ))}
       </div>
     </Link>
   );
@@ -195,10 +212,10 @@ function ShowcaseCards() {
 function ShowcaseHeader() {
   return (
     <section className="margin-top--lg margin-bottom--lg text--center">
-      <Heading as="h1" style={{ fontSize: "2.5rem" }}>
+      <Heading as="h1" style={{ fontSize: "2.5rem", fontWeight: 700 }}>
         {TITLE}
       </Heading>
-      <p>{DESCRIPTION}</p>
+      <p style={{ color: "#a1a1a1", fontSize: "1.1rem" }}>{DESCRIPTION}</p>
     </section>
   );
 }
@@ -208,7 +225,8 @@ export default function Showcase() {
     <Layout title={TITLE} description={DESCRIPTION}>
       <style>{`
         .showcase-card:hover {
-          transform: scale(1.03);
+          border-color: #454545 !important;
+          transform: scale(1.02);
         }
       `}</style>
       <main className="margin-vert--lg">
