@@ -18,9 +18,7 @@ While curl requests are technically slower than our client libraries (since they
 
 ## Table of Contents
 
-- [Using curl with HyperSync](#using-curl-with-hypersync)
-  - [Table of Contents](#table-of-contents)
-  - [Curl vs. Client Libraries](#curl-vs-client-libraries)
+- [Curl vs. Client Libraries](#curl-vs-client-libraries)
     - [When to Use curl (JSON API)](#when-to-use-curl-json-api)
     - [When to Use Client Libraries](#when-to-use-client-libraries)
   - [Common Use Cases](#common-use-cases)

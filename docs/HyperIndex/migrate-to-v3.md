@@ -622,7 +622,7 @@ Remove the following options from your config if present:
 - `preRegisterDynamicContracts` — no longer needed
 - `unordered_multichain_mode` — replaced with `multichain` option
 - `event_decoder` — the Rust-based decoder is now the only implementation
-- `rpc_config` — replaced with `rpc` (see [Breaking Changes](#config-yaml-changes))
+- `rpc_config` — replaced with `rpc` (see [Breaking Changes](#configyaml-changes))
 
 **New option for batch size:**
 
