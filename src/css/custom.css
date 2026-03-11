@@ -39,10 +39,10 @@
   --ifm-border-radius: 6px;
 
   /* Font */
-  --ifm-font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
-  --ifm-font-family-monospace: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono",
-    Consolas, "Courier New", monospace;
+  --ifm-font-family-base: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+    Arial, sans-serif;
+  --ifm-font-family-monospace: Menlo, Monaco, Consolas, "Roboto Mono",
+    "SFMono-Regular", "Segoe UI", "Courier New", monospace;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -89,9 +89,30 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.navbar__brand {
-  font-weight: 600;
-  font-size: 1.125rem;
+.navbar__logo img {
+  display: none;
+}
+
+.navbar__title {
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1;
+  text-transform: uppercase;
+  background: linear-gradient(to right, #FF8267, #FDD700);
+  background-size: 150%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: envioGradient 4s ease infinite;
+}
+
+@keyframes envioGradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .navbar__item {
@@ -102,6 +123,16 @@
 
 .navbar__item:hover {
   color: var(--ifm-color-primary);
+}
+
+.navbar__item--showcase {
+  background: linear-gradient(to right, #FF8267, #FDD700);
+  background-size: 150%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+  animation: envioGradient 4s ease infinite;
 }
 
 /* Clean sidebar styling */
@@ -164,25 +195,26 @@
 /* Clean footer styling */
 .footer {
   border-top: 1px solid #e5e5e5;
-  background: #fafafa;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 0;
 }
 
 [data-theme="dark"] .footer {
   border-top: 1px solid #262626;
-  background: #111111;
+  background: rgba(0, 0, 0, 0.95);
 }
 
-.footer__title {
-  font-weight: 600;
-  font-size: 0.875rem;
-  color: #000000;
+.footer__copyright {
+  color: #525252;
 }
 
-[data-theme="dark"] .footer__title {
-  color: #ffffff;
+[data-theme="dark"] .footer__copyright {
+  color: #a3a3a3;
 }
 
 .footer__link-item {
+  display: inline;
   font-size: 0.875rem;
   color: #525252;
   transition: color 0.2s ease;
@@ -323,6 +355,8 @@ table td {
   color: #000000;
   text-decoration: none;
   transition: color 0.2s ease;
+  border-radius: 8px;
+  padding: 4px 8px;
 }
 
 .breadcrumbs__link:hover {
@@ -449,7 +483,7 @@ table td {
 }
 
 .theme-doc-markdown h3 {
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 .theme-doc-markdown p {
@@ -504,7 +538,7 @@ table td {
   }
 
   .theme-doc-markdown h2 {
-    font-size: 1.75rem;
+    font-size: 2rem;
   }
 
   .theme-doc-markdown h3 {
