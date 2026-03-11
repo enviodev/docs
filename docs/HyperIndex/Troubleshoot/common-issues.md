@@ -43,6 +43,22 @@ pnpm codegen
 
 > **Important:** Always run `pnpm codegen` immediately after cloning an indexer repository using Envio.
 
+### Using Envio inside a monorepo
+
+**Problem:** Your indexer lives inside a larger monorepo and you see `Cannot find module` or missing-generated-code errors even after running `pnpm codegen`.
+
+**Cause:** `pnpm-workspace.yaml` doesn't include both your indexer root and its generated output directory.
+
+**Solution:** Add both `<envio-indexer>` and `<envio-indexer>/generated` to the `packages` list in `pnpm-workspace.yaml`, for example:
+
+```yaml
+packages:
+  - "apps/*"
+  - "packages/*"
+  - "envio-indexer"
+  - "envio-indexer/generated"
+```
+
 ### Smart contract updated after the initial codegen
 
 **Problem:** Changes to smart contracts aren't reflected in your blockchain indexer.

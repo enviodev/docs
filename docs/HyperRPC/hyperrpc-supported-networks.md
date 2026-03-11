@@ -62,7 +62,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Holesky                   | 17000           | https://holesky.rpc.hypersync.xyz or https://17000.rpc.hypersync.xyz                     |
 | Hoodi                     | 560048          | https://hoodi.rpc.hypersync.xyz or https://560048.rpc.hypersync.xyz                      |
 | Hyperliquid               | 999             | https://hyperliquid.rpc.hypersync.xyz or https://999.rpc.hypersync.xyz                   |
-| Injective*                | 1776            | https://injective.rpc.hypersync.xyz or https://1776.rpc.hypersync.xyz                    |
 | Ink                       | 57073           | https://ink.rpc.hypersync.xyz or https://57073.rpc.hypersync.xyz                         |
 | Kroma                     | 255             | https://kroma.rpc.hypersync.xyz or https://255.rpc.hypersync.xyz                         |
 | Linea                     | 59144           | https://linea.rpc.hypersync.xyz or https://59144.rpc.hypersync.xyz                       |
@@ -120,7 +119,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 **Notes:**
 
 - **Base Traces***: Start block: 39000000 (earlier blocks available on request)
-- **Injective***: Start block: 129846180 (non-evm before that)
 - **Sei***: Start block: 79123881 (non-evm before that)
 - **Sei Testnet***: Start block: 186100000 (non-evm before that)
 
