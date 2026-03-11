@@ -105,6 +105,23 @@ HyperSync uses a time-based pagination model that differs from traditional RPC c
 - Each response includes a `next_block` value indicating where to resume for the next query
 - This differs from RPC calls where you typically specify fixed block ranges (e.g., 0-1000)
 
+#### Understanding nextBlock
+
+`nextBlock` is the block number immediately after the last block included in the response. Use it as the `fromBlock` of your next query if you want to continue scanning. Resuming from `nextBlock` gives you a continuous, non-overlapping scan—no gaps, no duplicates.
+
+**Usage pattern:** Call `get` or `getEvents`, process the page, then if `nextBlock` is less than your desired end (`toBlock` or `archiveHeight`), set `fromBlock = nextBlock` and repeat:
+
+```javascript
+let query = { fromBlock: 0, logs: [...], fieldSelection: {...} };
+while (true) {
+  const res = await client.get(query);
+  // Process res.data...
+  const targetEnd = query.toBlock ?? res.archiveHeight;
+  if (res.nextBlock >= targetEnd) break;
+  query = { ...query, fromBlock: res.nextBlock };
+}
+```
+
 For most use cases, the `stream` function handles pagination automatically, making it the recommended approach for processing large ranges of blocks.
 
 ### Reverse Search
@@ -454,7 +471,8 @@ struct QueryResponse {
     /// Current height of the blockchain in HyperSync
     archive_height: Optional<u64>,
 
-    /// Block number to use as from_block in your next query for pagination
+    /// Block number immediately after the last block included in this response.
+    /// Use as from_block in your next query for pagination.
     next_block: u64,
 
     /// Query execution time in milliseconds
@@ -467,6 +485,8 @@ struct QueryResponse {
     rollback_guard: Optional<RollbackGuard>,
 }
 ```
+
+The `next_block` value tells you where to resume scanning. See [Understanding nextBlock](#understanding-nextblock) for a clear definition and usage pattern.
 
 ### Rollback Guard
 
