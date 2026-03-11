@@ -130,6 +130,7 @@ function ShowcaseCard({ site }) {
       className="showcase-card"
       style={{
         height: "100%",
+        width: "100%",
         display: "flex",
         flexDirection: "column",
         textDecoration: "none",
@@ -141,7 +142,13 @@ function ShowcaseCard({ site }) {
         transition: "border-color 0.2s ease, transform 0.2s ease",
       }}
     >
-      <div>
+      <div
+        style={{
+          height: "200px",
+          overflow: "hidden",
+          borderBottom: "1px solid #242424",
+        }}
+      >
         {site.video ? (
           <video
             src={site.video}
@@ -149,13 +156,13 @@ function ShowcaseCard({ site }) {
             loop
             muted
             playsInline
-            style={{ width: "100%", display: "block", objectFit: "cover" }}
+            style={{ width: "100%", height: "100%", display: "block", objectFit: "cover" }}
           />
         ) : site.image ? (
           <img
             src={site.image}
             alt={site.title}
-            style={{ width: "100%", display: "block", objectFit: "cover" }}
+            style={{ width: "100%", height: "100%", display: "block", objectFit: "cover" }}
           />
         ) : null}
       </div>
@@ -175,13 +182,14 @@ function ShowcaseCard({ site }) {
             key={i}
             style={{
               display: "inline-block",
-              fontSize: "0.75rem",
-              fontWeight: 500,
-              padding: "2px 8px",
-              borderRadius: "4px",
-              border: "1px solid #242424",
-              color: "#a1a1a1",
+              fontSize: "0.7rem",
+              fontWeight: 400,
+              padding: "1px 6px",
+              borderRadius: "9999px",
+              background: "rgba(255, 255, 255, 0.06)",
+              color: "#737373",
               marginRight: "6px",
+              letterSpacing: "0.02em",
             }}
           >
             {tag}

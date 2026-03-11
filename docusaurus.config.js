@@ -327,6 +327,7 @@ const config = {
             to: "showcase",
             label: "Showcase",
             position: "left",
+            className: "navbar__item--showcase",
           },
           {
             to: "blog",

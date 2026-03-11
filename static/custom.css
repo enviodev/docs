@@ -163,18 +163,8 @@
 }
 
 /* Clean footer improvements */
-.footer__title {
-  font-weight: 600 !important;
-  font-size: 0.875rem !important;
-  color: #000000 !important;
-  margin-bottom: 1rem !important;
-}
-
-[data-theme="dark"] .footer__title {
-  color: #ffffff !important;
-}
-
 .footer__link-item {
+  display: inline !important;
   font-size: 0.875rem !important;
   color: #525252 !important;
   transition: color 0.2s ease !important;
