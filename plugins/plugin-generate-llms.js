@@ -2,8 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const matter = require("gray-matter");
 const glob = require("glob");
-const _minimatch = require("minimatch");
-const minimatch = typeof _minimatch === "function" ? _minimatch : _minimatch.minimatch;
+const minimatch = require("minimatch");
 
 // Docusaurus Plugin: Generate LLMS files
 // --------------------------------------
