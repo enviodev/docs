@@ -232,7 +232,7 @@ const redirectsList = [
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Envio",
-  tagline: "Envio’s documentation for HyperIndex, HyperSync and HyperRPC. Learn how to index blockchain data, query real-time data and build production-ready applications.",
+  tagline: "Envio's documentation for HyperIndex, HyperSync and HyperRPC. Learn how to index blockchain data, query real-time data and build production-ready applications.",
   favicon: "img/favicon.ico",
   url: "https://docs.envio.dev",
   baseUrl: "/",
@@ -258,7 +258,7 @@ const config = {
           blogSidebarTitle: "All posts",
           blogSidebarCount: "ALL",
         },
-        
+
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
@@ -345,7 +345,7 @@ const config = {
         apiKey: "0f966036bca0e26d512dc59f023d64c5",
         indexName: "envio",
         appId: "584MK2OMPZ",
-        contextualSearch: true, // algolia prioritizes results that are more related to the current section of the docs.
+        contextualSearch: true,
       },
       footer: {
         style: "dark",
@@ -417,7 +417,7 @@ This file contains links to documentation sections following the llmstxt.org sta
 
 ### Core
 
-- [Configuration Schema Reference](https://docs.envio.dev/docs/HyperIndex/config-schema-reference.md): Detailed reference for every field and option in the Envio `config.yaml` configuration file used to configure HyperIndex indexers.
+- [Configuration Schema Reference](https://docs.envio.dev/docs/HyperIndex/config-schema-reference.md): Detailed reference for every field and option in the Envio \`config.yaml\` configuration file used to configure HyperIndex indexers.
 - [Loading Dynamic Contracts / Factories](https://docs.envio.dev/docs/HyperIndex/dynamic-contracts.md): Learn how to track and index dynamically created contracts from factory contracts.
 - [Effect API](https://docs.envio.dev/docs/HyperIndex/effect-api.md): Learn how to use the Effect API for external calls in handlers.
 - [Generated Indexing Files](https://docs.envio.dev/docs/HyperIndex/generated-files.md): Learn how generated files handle type-safe data access, event processing, and runtime indexing.
@@ -449,25 +449,6 @@ This file contains links to documentation sections following the llmstxt.org sta
 - [Running The Indexer Locally](https://docs.envio.dev/docs/HyperIndex/running-locally.md): Learn how to start, run, and manage the Envio indexer locally with Docker and Hasura.
 - [Entities Schema (schema.graphql)](https://docs.envio.dev/docs/HyperIndex/schema.md): Learn how to define GraphQL schemas, manage entities, and handle different types in HyperIndex.
 - [Testing](https://docs.envio.dev/docs/HyperIndex/testing.md): Learn to test HyperIndex indexers with mock databases, simulated events, and full workflow validation.
-
-## HyperSync
-
-- [HyperSync](https://docs.envio.dev/docs/HyperSync/overview.md): Explore HyperSync for ultra-fast blockchain data access and flexible queries across 70+ networks.
-- [HyperSync Quickstart](https://docs.envio.dev/docs/HyperSync/hypersync-quickstart.md): Get started quickly with HyperSync to stream and filter blockchain events.
-- [Using HyperSync](https://docs.envio.dev/docs/HyperSync/hypersync-usage.md): Learn how to fetch, filter, and decode blockchain data using HyperSync.
-- [HyperSync Clients](https://docs.envio.dev/docs/HyperSync/hypersync-clients.md): Explore HyperSync clients for fast blockchain data access in Node.js, Python, Rust, and Go.
-- [HyperSync Query](https://docs.envio.dev/docs/HyperSync/hypersync-query.md): Explore HyperSync queries to efficiently retrieve, filter, and join blockchain data.
-- [Preset Queries](https://docs.envio.dev/docs/HyperSync/hypersync-presets.md): Explore ready-to-use HyperSync query presets to fetch blocks, transactions, and logs efficiently.
-- [Using curl with HyperSync](https://docs.envio.dev/docs/HyperSync/hypersync-curl-examples.md): Explore how to quickly fetch blockchain data using curl commands with HyperSync.
-- [API Tokens](https://docs.envio.dev/docs/HyperSync/api-tokens.md): Learn how to generate and use HyperSync API tokens for secure access.
-- [Supported Networks](https://docs.envio.dev/docs/HyperSync/hypersync-supported-networks.md): See all networks currently supported by HyperSync, including coverage tiers, reliability notes and the criteria we use when adding new chains.
-- [Analyzing All Transactions To and From an Address](https://docs.envio.dev/docs/HyperSync/tutorial-address-transactions.md): Explore all transactions, token balances, and approvals for any EVM address with HyperSync.
-- [HyperFuel](https://docs.envio.dev/docs/HyperSync/hyperfuel.md): HyperFuel gives you a high performance way to query and sync Fuel network data using HyperSync. Access real-time and historical data with flexible queries across contracts, events and state.
-- [HyperFuel Query](https://docs.envio.dev/docs/HyperSync/hyperfuel-query.md): Explore all fields and parameters for HyperFuel queries.
-
-## HyperRPC
- 
-- [HyperRPC](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc.md): Ultra-fast read-only RPC built on top of HyperSync, offering up to 5x faster performance than traditional nodes for data-intensive operations like eth_getLogs, block queries, and transaction lookups. Use as a drop-in replacement for existing JSON-RPC tooling — no code changes needed. Covers supported methods, API tokens, performance benchmarks, and getting started.
 
 ### Hosted Service
 
@@ -511,15 +492,30 @@ This file contains links to documentation sections following the llmstxt.org sta
 - [HyperIndex: Fast Multichain Blockchain Indexer](https://docs.envio.dev/docs/HyperIndex/overview.md): Explore HyperIndex, a blazing-fast multichain indexer for real-time blockchain data.
 - [Solana](https://docs.envio.dev/docs/HyperIndex/solana.md): Experimental Solana support in HyperIndex. Supports Block Handler, Effect API, and Hosted Service.
 
+## HyperSync
+
+- [HyperSync](https://docs.envio.dev/docs/HyperSync/overview.md): Explore HyperSync for ultra-fast blockchain data access and flexible queries across 70+ networks.
+- [HyperSync Quickstart](https://docs.envio.dev/docs/HyperSync/hypersync-quickstart.md): Get started quickly with HyperSync to stream and filter blockchain events.
+- [Using HyperSync](https://docs.envio.dev/docs/HyperSync/hypersync-usage.md): Learn how to fetch, filter, and decode blockchain data using HyperSync.
+- [HyperSync Clients](https://docs.envio.dev/docs/HyperSync/hypersync-clients.md): Explore HyperSync clients for fast blockchain data access in Node.js, Python, Rust, and Go.
+- [HyperSync Query](https://docs.envio.dev/docs/HyperSync/hypersync-query.md): Explore HyperSync queries to efficiently retrieve, filter, and join blockchain data.
+- [Preset Queries](https://docs.envio.dev/docs/HyperSync/hypersync-presets.md): Explore ready-to-use HyperSync query presets to fetch blocks, transactions, and logs efficiently.
+- [Using curl with HyperSync](https://docs.envio.dev/docs/HyperSync/hypersync-curl-examples.md): Explore how to quickly fetch blockchain data using curl commands with HyperSync.
+- [API Tokens](https://docs.envio.dev/docs/HyperSync/api-tokens.md): Learn how to generate and use HyperSync API tokens for secure access.
+- [Supported Networks](https://docs.envio.dev/docs/HyperSync/hypersync-supported-networks.md): See all networks currently supported by HyperSync, including coverage tiers, reliability notes and the criteria we use when adding new chains.
+- [Analyzing All Transactions To and From an Address](https://docs.envio.dev/docs/HyperSync/tutorial-address-transactions.md): Explore all transactions, token balances, and approvals for any EVM address with HyperSync.
+- [HyperFuel](https://docs.envio.dev/docs/HyperSync/hyperfuel.md): HyperFuel gives you a high performance way to query and sync Fuel network data using HyperSync. Access real-time and historical data with flexible queries across contracts, events and state.
+- [HyperFuel Query](https://docs.envio.dev/docs/HyperSync/hyperfuel-query.md): Explore all fields and parameters for HyperFuel queries.
+
+## HyperRPC
+
+- [HyperRPC](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc.md): Ultra-fast read-only RPC built on top of HyperSync, offering up to 5x faster performance than traditional nodes for data-intensive operations like eth_getLogs, block queries, and transaction lookups. Use as a drop-in replacement for existing JSON-RPC tooling — no code changes needed. Covers supported methods, API tokens, performance benchmarks, and getting started.
+
 ## Supported Networks
 
 - [HyperIndex Supported Networks](https://docs.envio.dev/docs/HyperIndex/supported-networks.md): Full list of networks supported by HyperIndex, including EVM chains, L2s, and testnets. Also covers using any EVM chain via RPC and local development networks.
 - [HyperSync Supported Networks](https://docs.envio.dev/docs/HyperSync/hypersync-supported-networks.md): Full list of networks supported by HyperSync, including coverage tiers, reliability notes, and the criteria used when adding new chains.
 - [HyperRPC Supported Networks](https://docs.envio.dev/docs/HyperRPC/hyperrpc-supported-networks.md): Full list of networks supported by HyperRPC, including endpoints, network IDs, and trace support.
-
-## HyperRPC
-
-- [Overview](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc.md): Explore HyperRPC, fast read-only RPC for data-heavy blockchain queries and analytics.
 
 ## Legal
 
@@ -544,12 +540,6 @@ This file contains links to documentation sections following the llmstxt.org sta
         editUrl: "https://github.com/enviodev/docs/edit/main/",
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,
-        // versions: {
-        //   current: {
-        //     label: 'latest(4.0.0)',
-        //     path: '4.0.0',
-        //   },
-        // },
       },
     ],
     [
@@ -563,12 +553,6 @@ This file contains links to documentation sections following the llmstxt.org sta
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,
         disableVersioning: true,
-        // versions: {
-        //   current: {
-        //     label: "v2",
-        //     path: "",
-        //   },
-        // },
       },
     ],
     [
@@ -581,13 +565,6 @@ This file contains links to documentation sections following the llmstxt.org sta
         editUrl: "https://github.com/enviodev/docs/edit/main/",
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,
-        //disableVersioning: true,
-        // versions: {
-        //   current: {
-        //     label: "v2",
-        //     path: "",
-        //   },
-        // },
       },
     ],
     [
