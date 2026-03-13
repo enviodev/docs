@@ -196,7 +196,7 @@ function GenerateLLMSPlugin(context, options) {
                 const orderedDocs = orderDocs(includeOrder);
 
                 // Inject "## Table of Contents" after root text
-                const tocRoot = root.trim() + "\n\n## Table of Contents\n";
+                const tocRoot = root.trim() + "";
 
                 const output = renderLLMS(tocRoot, orderedDocs);
 

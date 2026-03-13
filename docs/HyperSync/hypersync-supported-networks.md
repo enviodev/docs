@@ -65,6 +65,7 @@ If you are a network operator or user and would like improved service support or
 | Holesky                   | 17000           | https://holesky.hypersync.xyz or https://17000.hypersync.xyz                             | https://holesky.rpc.hypersync.xyz or https://17000.rpc.hypersync.xyz                     | 🎒   |
 | Hoodi                     | 560048          | https://hoodi.hypersync.xyz or https://560048.hypersync.xyz                              | https://hoodi.rpc.hypersync.xyz or https://560048.rpc.hypersync.xyz                      | 🎒   |
 | Hyperliquid               | 999             | https://hyperliquid.hypersync.xyz or https://999.hypersync.xyz                           | https://hyperliquid.rpc.hypersync.xyz or https://999.rpc.hypersync.xyz                   | 🪨   |
+| Injective*                | 1776            | https://injective.hypersync.xyz or https://1776.hypersync.xyz                            | https://injective.rpc.hypersync.xyz or https://1776.rpc.hypersync.xyz                    | 🥉   |
 | Ink                       | 57073           | https://ink.hypersync.xyz or https://57073.hypersync.xyz                                 | https://ink.rpc.hypersync.xyz or https://57073.rpc.hypersync.xyz                         | 🪨   |
 | Kroma                     | 255             | https://kroma.hypersync.xyz or https://255.hypersync.xyz                                 | https://kroma.rpc.hypersync.xyz or https://255.rpc.hypersync.xyz                         | 🪨   |
 | Linea                     | 59144           | https://linea.hypersync.xyz or https://59144.hypersync.xyz                               | https://linea.rpc.hypersync.xyz or https://59144.rpc.hypersync.xyz                       | 🥉   |
@@ -122,6 +123,7 @@ If you are a network operator or user and would like improved service support or
 **Notes:**
 
 - **Base Traces***: Start block: 39000000 (earlier blocks available on request)
+- **Injective***: Start block: 129846180 (non-evm before that)
 - **Sei***: Start block: 79123881 (non-evm before that)
 - **Sei Testnet***: Start block: 186100000 (non-evm before that)
 
