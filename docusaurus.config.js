@@ -417,7 +417,7 @@ This file contains links to documentation sections following the llmstxt.org sta
 
 ### Core
 
-- [Configuration Schema Reference](https://docs.envio.dev/docs/HyperIndex/config-schema-reference.md): Detailed reference for every field and option in the Envio `config.yaml` configuration file used to configure HyperIndex indexers.
+- [Configuration Schema Reference](https://docs.envio.dev/docs/HyperIndex/config-schema-reference.md): Detailed reference for every field and option in the Envio \`config.yaml\` configuration file used to configure HyperIndex indexers.
 - [Loading Dynamic Contracts / Factories](https://docs.envio.dev/docs/HyperIndex/dynamic-contracts.md): Learn how to track and index dynamically created contracts from factory contracts.
 - [Effect API](https://docs.envio.dev/docs/HyperIndex/effect-api.md): Learn how to use the Effect API for external calls in handlers.
 - [Generated Indexing Files](https://docs.envio.dev/docs/HyperIndex/generated-files.md): Learn how generated files handle type-safe data access, event processing, and runtime indexing.
@@ -526,10 +526,6 @@ This file contains links to documentation sections following the llmstxt.org sta
 - [Privacy Policy](https://docs.envio.dev/docs/HyperIndex/privacy-policy.md): Read Envio's Privacy Policy covering how we collect, use, store, and protect your personal data when you use our website and services.
 - [Terms of Service](https://docs.envio.dev/docs/HyperIndex/terms-of-service.md): Read the Terms and Conditions for using Envio services.
 `,
-            includeOrder: [
-              "docs/HyperRPC/overview-hyperrpc.md",
-              "docs/HyperRPC/hyperrpc-supported-networks.md",
-            ],
           },
         ],
       },
