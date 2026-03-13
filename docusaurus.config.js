@@ -232,7 +232,7 @@ const redirectsList = [
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Envio",
-  tagline: "Envio’s documentation for HyperIndex, HyperSync and HyperRPC. Learn how to index blockchain data, query real-time data and build production-ready applications.",
+  tagline: "Envio's documentation for HyperIndex, HyperSync and HyperRPC. Learn how to index blockchain data, query real-time data and build production-ready applications.",
   favicon: "img/favicon.ico",
   url: "https://docs.envio.dev",
   baseUrl: "/",
@@ -258,7 +258,7 @@ const config = {
           blogSidebarTitle: "All posts",
           blogSidebarCount: "ALL",
         },
-        
+
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
@@ -345,7 +345,7 @@ const config = {
         apiKey: "0f966036bca0e26d512dc59f023d64c5",
         indexName: "envio",
         appId: "584MK2OMPZ",
-        contextualSearch: true, // algolia prioritizes results that are more related to the current section of the docs.
+        contextualSearch: true,
       },
       footer: {
         style: "dark",
@@ -540,12 +540,6 @@ This file contains links to documentation sections following the llmstxt.org sta
         editUrl: "https://github.com/enviodev/docs/edit/main/",
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,
-        // versions: {
-        //   current: {
-        //     label: 'latest(4.0.0)',
-        //     path: '4.0.0',
-        //   },
-        // },
       },
     ],
     [
@@ -559,12 +553,6 @@ This file contains links to documentation sections following the llmstxt.org sta
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,
         disableVersioning: true,
-        // versions: {
-        //   current: {
-        //     label: "v2",
-        //     path: "",
-        //   },
-        // },
       },
     ],
     [
@@ -577,13 +565,6 @@ This file contains links to documentation sections following the llmstxt.org sta
         editUrl: "https://github.com/enviodev/docs/edit/main/",
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,
-        //disableVersioning: true,
-        // versions: {
-        //   current: {
-        //     label: "v2",
-        //     path: "",
-        //   },
-        // },
       },
     ],
     [
