@@ -311,34 +311,37 @@ When specifying fields in your query, always use snake_case names (e.g., `block_
 
 ```python
 class BlockField(StrEnum):
+    # Fields present on all EVM chains
     NUMBER = 'number'                                   # Block number
     HASH = 'hash'                                       # Block hash
     PARENT_HASH = 'parent_hash'                         # Parent block hash
-    NONCE = 'nonce'                                     # Block nonce
     SHA3_UNCLES = 'sha3_uncles'                         # SHA3 of uncles data
     LOGS_BLOOM = 'logs_bloom'                           # Bloom filter for logs
     TRANSACTIONS_ROOT = 'transactions_root'             # Root of transaction trie
     STATE_ROOT = 'state_root'                           # Root of state trie
     RECEIPTS_ROOT = 'receipts_root'                     # Root of receipts trie
     MINER = 'miner'                                     # Miner/validator address
-    DIFFICULTY = 'difficulty'                            # Block difficulty
-    TOTAL_DIFFICULTY = 'total_difficulty'                # Total chain difficulty
     EXTRA_DATA = 'extra_data'                           # Extra data field
     SIZE = 'size'                                       # Block size in bytes
     GAS_LIMIT = 'gas_limit'                             # Block gas limit
     GAS_USED = 'gas_used'                               # Total gas used in block
     TIMESTAMP = 'timestamp'                             # Block timestamp (Unix time)
-    UNCLES = 'uncles'                                   # Uncle block hashes
-    BASE_FEE_PER_GAS = 'base_fee_per_gas'              # EIP-1559 base fee
-    BLOB_GAS_USED = 'blob_gas_used'                     # Total blob gas used (EIP-4844)
-    EXCESS_BLOB_GAS = 'excess_blob_gas'                 # Excess blob gas (EIP-4844)
-    PARENT_BEACON_BLOCK_ROOT = 'parent_beacon_block_root' # Parent beacon block root
-    WITHDRAWALS_ROOT = 'withdrawals_root'               # Root of withdrawals trie
-    WITHDRAWALS = 'withdrawals'                         # Validator withdrawals
-    L1_BLOCK_NUMBER = 'l1_block_number'                 # L1 block number (L2 chains)
-    SEND_COUNT = 'send_count'                           # Send count
-    SEND_ROOT = 'send_root'                             # Send root
-    MIX_HASH = 'mix_hash'                               # Mix hash
+
+    # Optional fields — not present on all EVM chains (may be null)
+    NONCE = 'nonce'                                     # Block nonce (absent on some L2s)
+    DIFFICULTY = 'difficulty'                           # Block difficulty (PoW chains only)
+    TOTAL_DIFFICULTY = 'total_difficulty'               # Total chain difficulty (PoW chains only)
+    UNCLES = 'uncles'                                   # Uncle block hashes (absent on some L2s)
+    MIX_HASH = 'mix_hash'                               # Mix hash (absent on some L2s)
+    BASE_FEE_PER_GAS = 'base_fee_per_gas'              # EIP-1559 base fee (post-London chains only)
+    BLOB_GAS_USED = 'blob_gas_used'                     # Total blob gas used (EIP-4844 chains only)
+    EXCESS_BLOB_GAS = 'excess_blob_gas'                 # Excess blob gas (EIP-4844 chains only)
+    PARENT_BEACON_BLOCK_ROOT = 'parent_beacon_block_root' # Parent beacon block root (EIP-4844 chains only)
+    WITHDRAWALS_ROOT = 'withdrawals_root'               # Root of withdrawals trie (post-Shanghai chains only)
+    WITHDRAWALS = 'withdrawals'                         # Validator withdrawals (post-Shanghai chains only)
+    L1_BLOCK_NUMBER = 'l1_block_number'                 # L1 block number (Arbitrum only)
+    SEND_COUNT = 'send_count'                           # Send count (Arbitrum only)
+    SEND_ROOT = 'send_root'                             # Send root (Arbitrum only)
 ```
 
 ### Transaction Fields
