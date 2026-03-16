@@ -37,7 +37,7 @@ On GitHub, choose the organisation you want to enable and complete the installat
 
 ## Access Control
 
-Being a member of the GitHub organisation **does not** automatically grant access to the organisation in the Envio Hosted Service UI. Each member must be explicitly added by the organisation admin. If someone attempts to visit the organisation URL (e.g., `https://envio.dev/app/<org-name>`) without being added, they'll see a "You are not a member of the project" message.
+Being a member of the GitHub organisation **does not** automatically grant access to the organisation in the Envio Hosted Service UI. Each member must be explicitly added by the organisation admin. If someone attempts to visit the organisation URL (e.g., `https://envio.dev/app/<org-name>`) without being added, they'll see a "You are not a member of this team" message.
 
 <div style={{textAlign: 'center'}}>
 
@@ -49,11 +49,11 @@ Being a member of the GitHub organisation **does not** automatically grant acces
 
 ## Adding Members
 
-The organisation admin must add members from the organisation page in Envio. Open the **Add Members** view to see all users associated with your GitHub organisation, then grant access by selecting **Add member** next to each person.
+The organisation admin must add members from the organisation page in Envio. Navigate to the **Members** page to see all users associated with your GitHub organisation, then grant access by selecting **Add** next to each person.
 
 <div style={{textAlign: 'center'}}>
 
-![Add Members Button](/img/org-setup/add-members-button.png)
+![Members Page Button](/img/org-setup/members-page-button.png)
 
 </div>
 

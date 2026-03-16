@@ -70,14 +70,15 @@ Set up multiple notification channels (**Paid Plans Only**) to ensure you never 
 ## Visual Reference
 
 ### Dashboard Overview
-![Dashboard Overview](/img/hosted-service/dashboard-overview.webp)
+![Dashboard overview](/img/monitoring/dashboard-overview.png)
 
-### Network Progress Bars
-![Progress](/img/hosted-service/progress-bars.webp)
+### Network Progress by Chain
+![Network progress bars](/img/monitoring/network-progress-bars.webp)
 
-### Example Failure Notifications
-![Dashboard Failures](/img/hosted-service/dashboard-failure.webp)
-![Deployment Failure](/img/hosted-service/failure-image.webp)
+### Example Failure Notification
+When indexing stops, the dashboard clearly surfaces the issue so you can investigate and resolve it quickly.
+
+![Indexing has stopped](/img/monitoring/indexing-has-stopped.png)
 
 ## Related Documentation
 

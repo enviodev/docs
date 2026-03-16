@@ -69,8 +69,8 @@ For complete pricing details and feature comparison, see our [Pricing & Billing 
 
 ### Configure Your Indexer
 
-4. **Add a New Indexer**: Click "Add Indexer" in the dashboard
-5. **Connect to Repository**: Select the repository containing your indexer code
+4. **Connect a Repo**: Select the repository containing your indexer code
+5. **Add the Indexer**: Click "Add Indexer" and configure your indexer
 6. **Configure Deployment Settings**:
    - Specify the config file location
    - Set the root directory (important for monorepos)
@@ -171,32 +171,35 @@ Alert configuration is available for indexers deployed with version 2.24.0 or hi
 The following screenshots show each step of the deployment process:
 
 ### Step 1: Select Organization
-![Select organisation](/img/hosted-service/select-org.webp)
+![Select organisation](/img/deploying/select-org.png)
 
-### Step 2: Install Github App
-![Install GitHub App](/img/hosted-service/install-github-app.webp)
+### Step 2: Install GitHub App
+![Install GitHub App](/img/deploying/install-github-app.png)
 
-### Step 3: Add a New Indexer
-![Add indexer](/img/hosted-service/add-indexer.webp)
+### Step 3: Connect a Repo
+![Connect a repo](/img/deploying/connect-repo.png)
 
-### Step 4: Connect to Repository
-![Connect indexer](/img/hosted-service/connect-indexer.webp)
+### Step 4: Add the Indexer
+![Add the indexer](/img/deploying/add-indexer.png)
 
 ### Step 5: Configure Deployment Settings
-![Configure indexer](/img/hosted-service/configure-indexer.webp)
-![Deploy indexer](/img/hosted-service/deploy-indexer.webp)
+![Configure indexer](/img/deploying/configure-indexer.png)
 
 ### Step 6: Create a Deployment Branch
-![Create branch](/img/hosted-service/checkout.webp)
+![Create deployment branch](/img/deploying/create-deployment-branch.webp)
 
 ### Step 7: Deploy via Git
-![Push code](/img/hosted-service/push.webp)
+![Deploy via Git](/img/deploying/deploy-via-git.webp)
 
-### Step 8: Monitoring
-Full details are available in our **[Monitoring Guide](./hosted-service-monitoring.md)**.
+### Step 8: Indexer Deployed
+Once deployment completes, your indexer should be live and you should see the overview dashboard below. Full monitoring details are available in our **[Monitoring Guide](./hosted-service-monitoring.md)**.
 
-### Step 9: Continuous Configuration
-![Configure indexer](/img/hosted-service/config-tabs.webp)
+![Indexer overview](/img/deploying/indexer-overview.png)
+
+### Step 9: Manage Indexer Configuration
+Manage indexer configurations and deployments using the sidebar navigation on the left.
+
+![Manage indexer configuration](/img/deploying/manage-indexer-nav.png)
 
 
 ## Related Documentation
