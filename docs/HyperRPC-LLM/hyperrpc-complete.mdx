@@ -3,7 +3,35 @@ id: hyperrpc-complete
 title: HyperRPC Complete Documentation
 sidebar_label: HyperRPC Complete Documentation
 slug: /hyperrpc-complete
+description: Complete reference documentation for HyperRPC — Envio's ultra-fast read-only JSON-RPC endpoint. A drop-in replacement for traditional RPC nodes, powered by HyperSync, supporting 85+ EVM-compatible networks with up to 5x faster performance for data-intensive blockchain operations.
+keywords: [HyperRPC, JSON-RPC, fast RPC, blockchain RPC, Envio, EVM RPC, eth_getLogs, read-only RPC, HyperSync, blockchain data, RPC alternative, drop-in RPC]
+robots: noindex, nofollow
 ---
+
+# HyperRPC Complete Documentation
+
+This document contains all HyperRPC documentation consolidated into a single file for LLM consumption.
+
+---
+
+:::info Key Facts — HyperRPC
+
+| | |
+|---|---|
+| **What it is** | An extremely fast read-only JSON-RPC endpoint — a drop-in replacement for traditional RPC nodes, built on top of HyperSync |
+| **Performance** | Up to 5x faster than traditional nodes (geth, erigon, reth) for data-intensive operations |
+| **Read-only** | Optimised for data retrieval only — cannot send transactions |
+| **Supported networks** | 85 EVM-compatible networks, with new networks being added regularly |
+| **Endpoint format** | `https://[network].rpc.hypersync.xyz` or `https://[chainid].rpc.hypersync.xyz` |
+| **Supported methods** | `eth_chainId`, `eth_blockNumber`, `eth_getBlockByNumber`, `eth_getBlockByHash`, `eth_getBlockReceipts`, `eth_getTransactionByHash`, `eth_getTransactionByBlockHashAndIndex`, `eth_getTransactionByBlockNumberAndIndex`, `eth_getTransactionReceipt`, `eth_getLogs`, `trace_block` (select chains only) |
+| **API token** | Recommended — rate limiting starts June 2025 |
+| **When to use** | Drop-in replacement for existing RPC-based code; when tools expect standard JSON-RPC interfaces; when you don't have time for a deeper integration |
+| **When to use HyperSync instead** | When performance is critical; for new projects; when you need advanced filtering and field selection |
+| **Development status** | Under active development; not yet formally security audited; read-only only |
+| **Support** | [Discord](https://discord.gg/envio) · [GitHub](https://github.com/enviodev) |
+
+:::
+
 
 # HyperRPC Complete Documentation
 
@@ -248,3 +276,63 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 
 ---
 
+
+---
+
+## Frequently Asked Questions (FAQ)
+
+### What is HyperRPC?
+
+HyperRPC is an ultra-fast, read-only JSON-RPC endpoint built by Envio. It is designed as a drop-in replacement for traditional JSON-RPC nodes, optimised specifically for data-intensive blockchain operations like historical queries, log filtering, and block/transaction retrieval. Behind the scenes, HyperRPC is powered by HyperSync.
+
+### How does HyperRPC differ from HyperSync?
+
+HyperRPC uses the standard JSON-RPC interface, making it compatible with existing tools and code that expect standard RPC methods. HyperSync is Envio's more powerful data engine with a custom query interface that offers significantly faster performance and much greater flexibility in how you filter and retrieve blockchain data. HyperRPC actually uses HyperSync under the hood to fulfil requests.
+
+### When should I use HyperRPC instead of HyperSync?
+
+Use HyperRPC when you need a simple drop-in replacement for existing RPC-based code, when you don't have time for a deeper integration, or when you're working with tools that expect standard JSON-RPC interfaces. Use HyperSync when performance is critical, when you need advanced filtering capabilities, when you want more control over data formatting and field selection, or for new projects where you're designing the data access layer from scratch.
+
+### How fast is HyperRPC?
+
+Early benchmarks show HyperRPC delivers up to 5x performance improvement for data-intensive operations compared to traditional nodes such as geth, erigon, and reth. This improvement is most noticeable for historical data queries, log event filtering, block and transaction retrievals, and analytics applications.
+
+### What JSON-RPC methods does HyperRPC support?
+
+HyperRPC supports the following methods: `eth_chainId`, `eth_blockNumber`, `eth_getBlockByNumber`, `eth_getBlockByHash`, `eth_getBlockReceipts`, `eth_getTransactionByHash`, `eth_getTransactionByBlockHashAndIndex`, `eth_getTransactionByBlockNumberAndIndex`, `eth_getTransactionReceipt`, `eth_getLogs`, and `trace_block` (on select chains only). It does not support all standard RPC methods.
+
+### What networks does HyperRPC support?
+
+HyperRPC supports 85 EVM-compatible networks including Ethereum Mainnet, Arbitrum, Base, Optimism, Polygon, Avalanche, BSC, and many more. New networks are being added rapidly. See the Supported Networks table in this document for the full list of endpoints.
+
+### Do I need an API token?
+
+An API token is recommended. Requests without an API token will be rate limited starting June 2025 (following the same schedule as HyperSync). Append your token to the endpoint URL. You can generate a token through the Envio Dashboard.
+
+### How do I get started?
+
+Find the endpoint for your network in the Supported Networks table (format: `https://[network].rpc.hypersync.xyz`), then use it like any standard JSON-RPC endpoint:
+
+```javascript
+const response = await fetch("https://100.rpc.hypersync.xyz/", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    jsonrpc: "2.0",
+    id: 1,
+    method: "eth_getLogs",
+    params: [{ fromBlock: "0x1000000", toBlock: "0x1000100", address: "0xYourContractAddress" }],
+  }),
+});
+```
+
+### Is HyperRPC production-ready?
+
+HyperRPC is under active development to further improve performance and stability. It has not yet undergone formal security audits and does not support all standard RPC methods. It is designed for read-only operations only. Envio welcomes feedback and questions via [Discord](https://discord.gg/envio).
+
+### Where can I get help?
+
+- **Discord**: [discord.gg/envio](https://discord.gg/envio) — the fastest way to get help from the team and community
+- **Telegram**: [Envio Telegram](https://t.me/+kAIGElzPjApiMjI0) - the official Envio Telegram to get support from the team and community
+- **GitHub**: [github.com/enviodev](https://github.com/enviodev)
+- **Email**: hello@envio.dev
