@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
+Disallow: /hyperindex-complete
+Disallow: /hypersync-complete
+Disallow: /hyperrpc-complete
+
 Sitemap: https://docs.envio.dev/sitemap.xml
