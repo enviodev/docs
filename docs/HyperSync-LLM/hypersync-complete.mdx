@@ -14,21 +14,29 @@ This document contains all HyperSync documentation consolidated into a single fi
 
 ---
 
-:::info Key Facts — HyperSync
+:::info Key Facts
 
-| | |
-|---|---|
-| **What it is** | A purpose-built, high-performance blockchain data retrieval layer built in Rust — a direct alternative to traditional JSON-RPC endpoints |
-| **Performance** | Up to 2000x faster than traditional RPC (e.g. scan Arbitrum for sparse log data in 2 seconds vs. hours/days); ~500x faster for event queries |
-| **Supported networks** | 70+ EVM chains and Fuel, with new networks added regularly |
-| **Client libraries** | Python, Rust, Node.js, Go |
-| **API token** | Required — set via `ENVIO_API_TOKEN` environment variable |
-| **Data types** | Logs, transactions, traces, blocks — with fine-grained field selection |
-| **Query features** | Log filters, transaction filters, trace filters, block filters, field selection, join modes, streaming |
-| **Quickstart** | `pnpx logtui aave arbitrum` — zero setup required |
-| **Powers** | HyperIndex, ChainDensity.xyz, Scope.sh, LogTUI, and more |
-| **Relationship to HyperIndex** | HyperSync is the data engine; HyperIndex is the full indexing framework built on top of it |
-| **Support** | [Discord](https://discord.gg/envio) · [GitHub](https://github.com/enviodev) |
+- **What it is:** A purpose built, high performance blockchain data retrieval layer built in Rust and a direct alternative to traditional JSON RPC endpoints
+
+- **Performance:** Up to 2000x faster than traditional RPC. For example, scanning Arbitrum for sparse log data can take 2 seconds instead of hours or days, and event queries can be around 500x faster
+
+- **Supported networks:** 70+ EVM chains and Fuel, with new networks added regularly
+
+- **Client libraries:** Python, Rust, Node.js, Go
+
+- **API token:** Required via `ENVIO_API_TOKEN` environment variable
+
+- **Data types:** Logs, transactions, traces, blocks, with fine grained field selection
+
+- **Query features:** Log filters, transaction filters, trace filters, block filters, field selection, join modes, and streaming
+
+- **Quickstart:** `pnpx @envio-dev/hypersync-standalone`
+
+- **Powers:** HyperIndex, ChainDensity.xyz, Scope.sh, LogTUI, and more
+
+- **Relationship to HyperIndex:** HyperSync is the data engine. HyperIndex is the full indexing framework built on top of it
+
+- **Support:** Discord https://discord.gg/envio and GitHub https://github.com/enviodev
 
 :::
 
@@ -2750,11 +2758,6 @@ All fields are optional.  Below is an exhaustive list of all fields in a FieldSe
     ]
 }
 ```
-
----
-
-
----
 
 ## Frequently Asked Questions (FAQ)
 
