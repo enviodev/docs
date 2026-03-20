@@ -3,7 +3,7 @@ id: hyperindex-complete
 title: HyperIndex Complete Documentation
 sidebar_label: HyperIndex Complete Documentation
 slug: /hyperindex-complete
-description: Complete reference documentation for HyperIndex - Envio's blazing-fast multichain blockchain indexer. Covers setup, configuration, event handlers, multichain indexing, GraphQL APIs, and migration from TheGraph, Ponder, SQD, SubQuery, and more.
+description: Complete reference documentation for HyperIndex — Envio's blazing-fast multichain blockchain indexer. Covers setup, configuration, event handlers, multichain indexing, GraphQL APIs, and migration from TheGraph, Ponder, SQD, SubQuery, and more.
 keywords: [HyperIndex, blockchain indexer, multichain indexing, HyperSync, Envio, GraphQL, TheGraph alternative, EVM indexer, smart contract events, Ponder alternative, SQD alternative, SubQuery alternative]
 robots: noindex, nofollow
 ---
@@ -14,35 +14,44 @@ This document contains all HyperIndex documentation consolidated into a single f
 
 ---
 
-::::info Key Facts - HyperIndex
+:::info Key Facts
 
-| | |
-|---|---|
-| **What it is** | A blazing-fast, developer-friendly multichain blockchain indexer that transforms on-chain events into structured, queryable databases with GraphQL APIs |
-| **Data engine** | Powered by HyperSync - up to 2000x faster than traditional RPC endpoints |
-| **Performance** | Ranked #1 fastest indexer in independent Sentio benchmarks (April 2025) - up to 6x faster than the nearest competitor, 63x faster than TheGraph |
-| **Supported chains** | 70+ EVM chains and Fuel, with new networks added regularly; all EVM-compatible chains supported via RPC |
-| **Languages** | TypeScript, JavaScript, ReScript |
-| **Key files** | `config.yaml` (indexer settings), `schema.graphql` (data schema), `src/EventHandlers.*` (event logic) |
-| **Prerequisites** | Node.js v22+, pnpm v8+, Docker Desktop (local dev only) |
-| **Deployment** | Hosted service (managed, no API token needed) or self-hosted |
-| **API token** | Required for local dev and self-hosted deployments from 3 November 2025 via `ENVIO_API_TOKEN` env variable |
-| **Query interface** | GraphQL API auto-generated from your schema |
-| **Multichain** | Native multichain indexing with `unordered_multichain_mode` support |
-| **Wildcard indexing** | Index by event signature rather than contract address |
-| **Migration** | Straightforward migration path from TheGraph subgraphs |
-| **Get started** | `pnpx envio init` |
-| **Support** | [Discord](https://discord.gg/envio) · [GitHub](https://github.com/enviodev) |
+- **What it is:** A blazing fast, developer friendly multichain blockchain indexer that transforms onchain events into structured, queryable data via GraphQL
 
-::::
+- **Data engine:** Powered by HyperSync with up to 2000x faster performance than traditional RPC endpoints
+
+- **Performance:** Ranked #1 fastest indexer in independent Sentio benchmarks (April 2025), up to 6x faster than the nearest competitor and 63x faster than The Graph
+
+- **Supported chains:** 70+ EVM chains and Fuel, with new networks added regularly. All EVM compatible chains supported via RPC
+
+- **Languages:** TypeScript, JavaScript, ReScript
+
+- **Key files:** config.yaml (indexer config), schema.graphql (data schema), src/EventHandlers.* (event logic)
+
+- **Prerequisites:** Node.js v22+, pnpm v8+, Docker Desktop (local dev only)
+
+- **Deployment:** Hosted service (managed, no API token needed) or self hosted
+
+- **API token:** Required for local dev and self hosted deployments via ENVIO_API_TOKEN env variable (from 3 November 2025)
+
+- **Query interface:** Auto generated GraphQL API from your schema
+
+- **Multichain:** Native multichain indexing with unordered_multichain_mode support
+
+- **Wildcard indexing:** Index by event signature instead of contract address
+
+- **Migration:** Straightforward migration path from The Graph subgraphs
+
+- **Get started:** npx envio init
+
+- **Support:** [Discord](https://discord.gg/envio) and [GitHub](https://github.com/enviodev)
+
+:::
+
 
 ## Overview
 
 **File:** `overview.md`
-
-
-  
-  
 
 
 **HyperIndex** is a blazing-fast, developer-friendly multichain indexer, optimized for both local development and reliable hosted deployment. It empowers developers to effortlessly build robust backends for blockchain applications.
@@ -73,8 +82,8 @@ For more details about API tokens, including how to generate and implement them,
 
 ## 🔗 Quick Links
 
-- GitHub Repository ⭐
-- Join our Discord Community
+- [GitHub Repository](https://github.com/enviodev/hyperindex) ⭐
+- Join our [Discord Community](https://discord.com/invite/envio)
 
 ---
 
@@ -11508,6 +11517,19 @@ HyperIndex is the fastest blockchain indexer available. In independent benchmark
 
 ### What blockchains does HyperIndex support?
 
+
+## Frequently Asked Questions (FAQ)
+
+### What is HyperIndex?
+
+HyperIndex is Envio's multichain blockchain indexing framework. It lets developers define which smart contract events to track, automatically transforms those on-chain events into structured data, and exposes them via a GraphQL API — giving you a complete, queryable backend for any blockchain application. It is powered by HyperSync, Envio's high-performance data engine.
+
+### How fast is HyperIndex compared to other indexers?
+
+HyperIndex is the fastest blockchain indexer available. In independent benchmarks conducted by Sentio in April 2025, HyperIndex was up to 6x faster than the nearest competitor and over 63x faster than TheGraph in real-world scenarios. For example, indexing LBTC token transfers took 3 minutes with HyperIndex versus 3 hours and 9 minutes with TheGraph.
+
+### What blockchains does HyperIndex support?
+
 HyperIndex supports all EVM-compatible chains. Over 70 networks have native HyperSync support for maximum performance. For chains without HyperSync, indexing is available via RPC endpoints.
 
 ### What programming languages can I use?
@@ -11516,7 +11538,7 @@ HyperIndex supports TypeScript, JavaScript, and ReScript for writing event handl
 
 ### What are the prerequisites to run HyperIndex locally?
 
-You need Node.js v22 or newer, pnpm v8 or newer, and Docker Desktop. Docker is only required for local development - if you use Envio's hosted service, you can skip it. Windows users also need WSL (Windows Subsystem for Linux).
+You need Node.js v22 or newer, pnpm v8 or newer, and Docker Desktop. Docker is only required for local development — if you use Envio's hosted service, you can skip it. Windows users also need WSL (Windows Subsystem for Linux).
 
 ### Do I need an API token?
 
@@ -11524,7 +11546,7 @@ API tokens are required for local development and self-hosted deployments as of 
 
 ### How do I get started?
 
-Run the following command and follow the prompts - you can have a working indexer in under 5 minutes:
+Run the following command and follow the prompts — you can have a working indexer in under 5 minutes:
 
 ```bash
 pnpx envio init
@@ -11542,17 +11564,17 @@ Yes. HyperIndex automatically handles blockchain reorganisations by default. Thi
 
 ### Does HyperIndex support multichain indexing?
 
-Yes. HyperIndex natively supports indexing across multiple chains in a single indexer. For the best multichain performance, you can enable `unordered_multichain_mode` in your configuration - this is the most common setup for multichain indexing, though it comes with tradeoffs worth understanding (see the docs).
+Yes. HyperIndex natively supports indexing across multiple chains in a single indexer. For the best multichain performance, you can enable `unordered_multichain_mode` in your configuration — this is the most common setup for multichain indexing, though it comes with tradeoffs worth understanding (see the docs).
 
 ### Can I do wildcard indexing (without a specific contract address)?
 
-Yes. HyperIndex supports wildcard indexing, which lets you index all events matching a given event signature across any contract on the chain - no contract address required.
+Yes. HyperIndex supports wildcard indexing, which lets you index all events matching a given event signature across any contract on the chain — no contract address required.
 
 ### How do I migrate from TheGraph and other indexing solutions?
 
 HyperIndex has a dedicated migration guide for TheGraph subgraphs. The three main steps are: (1) convert your `subgraph.yaml` to `config.yaml`, (2) migrate your schema (near copy-paste), and (3) migrate your event handlers. Run `pnpx envio init` to generate a boilerplate, then follow the Migration Guide.
 
-For developers migrating from other indexing solutions such as Ponder, Ormi, SQD (Subsquid), SubQuery, and others, the core concepts map similarly - define your contracts and events in `config.yaml`, write event handlers, and let HyperIndex generate the GraphQL API. Envio also offers full white glove migration support for teams moving from any indexing stack. Reach out via [Discord](https://discord.gg/envio) to get personalised assistance.
+For developers migrating from other indexing solutions such as Ponder, Ormi, SQD (Subsquid), SubQuery, and others, the core concepts map similarly — define your contracts and events in `config.yaml`, write event handlers, and let HyperIndex generate the GraphQL API. Envio also offers full white glove migration support for teams moving from any indexing stack. Reach out via [Discord](https://discord.gg/envio) to get personalised assistance.
 
 ### What does the hosted service offer?
 
@@ -11560,7 +11582,7 @@ Envio's hosted service manages deployment and infrastructure for you. Indexers o
 
 ### Where can I get help?
 
-- **Discord**: [discord.gg/envio](https://discord.gg/envio) - the fastest way to get help from the team and community
-- **Telegram**: [Envio Telegram](https://t.me/+kAIGElzPjApiMjI0) - the offcial Envio Telegram to get support from the team and community
+- **Discord**: [discord.gg/envio](https://discord.gg/envio) — the fastest way to get help from the team and community
+- **Telegram**: [Envio Telegram](https://t.me/+kAIGElzPjApiMjI0) - the official Envio Telegram to get support from the team and community
 - **GitHub**: [github.com/enviodev](https://github.com/enviodev)
 - **Email**: hello@envio.dev

@@ -3,7 +3,7 @@ id: hypersync-complete
 title: HyperSync Complete Documentation
 sidebar_label: HyperSync Complete Documentation
 slug: /hypersync-complete
-description: Complete reference documentation for HyperSync - Envio's ultra-fast blockchain data engine. Covers performance benchmarks, query system, field selection, client libraries (Python, Rust, Node.js, Go), API tokens, supported networks, and advanced data access patterns for EVM chains and Fuel.
+description: Complete reference documentation for HyperSync — Envio's ultra-fast blockchain data engine. Covers performance benchmarks, query system, field selection, client libraries (Python, Rust, Node.js, Go), API tokens, supported networks, and advanced data access patterns for EVM chains and Fuel.
 keywords: [HyperSync, blockchain data API, fast blockchain indexing, EVM data, Envio, RPC alternative, blockchain analytics, on-chain data, Python blockchain, Rust blockchain, Node.js blockchain, Go blockchain, HyperIndex, real-time blockchain data]
 robots: noindex, nofollow
 ---
@@ -14,23 +14,32 @@ This document contains all HyperSync documentation consolidated into a single fi
 
 ---
 
-::::info Key Facts - HyperSync
+:::info Key Facts
 
-| | |
-|---|---|
-| **What it is** | A purpose-built, high-performance blockchain data retrieval layer built in Rust - a direct alternative to traditional JSON-RPC endpoints |
-| **Performance** | Up to 2000x faster than traditional RPC (e.g. scan Arbitrum for sparse log data in 2 seconds vs. hours/days); ~500x faster for event queries |
-| **Supported networks** | 70+ EVM chains and Fuel, with new networks added regularly |
-| **Client libraries** | Python, Rust, Node.js, Go |
-| **API token** | Required - set via `ENVIO_API_TOKEN` environment variable |
-| **Data types** | Logs, transactions, traces, blocks - with fine-grained field selection |
-| **Query features** | Log filters, transaction filters, trace filters, block filters, field selection, join modes, streaming |
-| **Quickstart** | `pnpx logtui aave arbitrum` - zero setup required |
-| **Powers** | HyperIndex, ChainDensity.xyz, Scope.sh, LogTUI, and more |
-| **Relationship to HyperIndex** | HyperSync is the data engine; HyperIndex is the full indexing framework built on top of it |
-| **Support** | [Discord](https://discord.gg/envio) · [GitHub](https://github.com/enviodev) |
+- **What it is:** A purpose built, high performance blockchain data retrieval layer built in Rust and a direct alternative to traditional JSON RPC endpoints
 
-::::
+- **Performance:** Up to 2000x faster than traditional RPC. For example, scanning Arbitrum for sparse log data can take 2 seconds instead of hours or days, and event queries can be around 500x faster
+
+- **Supported networks:** 70+ EVM chains and Fuel, with new networks added regularly
+
+- **Client libraries:** Python, Rust, Node.js, Go
+
+- **API token:** Required via `ENVIO_API_TOKEN` environment variable
+
+- **Data types:** Logs, transactions, traces, blocks, with fine grained field selection
+
+- **Query features:** Log filters, transaction filters, trace filters, block filters, field selection, join modes, and streaming
+
+- **Quickstart:** `pnpx @envio-dev/hypersync-standalone`
+
+- **Powers:** HyperIndex, ChainDensity.xyz, Scope.sh, LogTUI, and more
+
+- **Relationship to HyperIndex:** HyperSync is the data engine. HyperIndex is the full indexing framework built on top of it
+
+- **Support:** Discord https://discord.gg/envio and GitHub https://github.com/enviodev
+
+:::
+
 
 ## HyperSync: Ultra-Fast & Flexible Data API
 
@@ -2808,8 +2817,6 @@ All fields are optional.  Below is an exhaustive list of all fields in a FieldSe
 }
 ```
 
----
-
 ## Frequently Asked Questions (FAQ)
 
 ### What is HyperSync?
@@ -2818,7 +2825,7 @@ HyperSync is Envio's purpose-built, high-performance blockchain data retrieval l
 
 ### How much faster is HyperSync than traditional RPC?
 
-HyperSync is up to 2000x faster than traditional RPC methods. For example, scanning the Arbitrum blockchain for sparse log data takes 2 seconds with HyperSync versus hours or days with traditional RPC. Fetching all Uniswap V3 PoolCreated events on Ethereum takes seconds versus hours - approximately 500x faster.
+HyperSync is up to 2000x faster than traditional RPC methods. For example, scanning the Arbitrum blockchain for sparse log data takes 2 seconds with HyperSync versus hours or days with traditional RPC. Fetching all Uniswap V3 PoolCreated events on Ethereum takes seconds versus hours — approximately 500x faster.
 
 ### What blockchains does HyperSync support?
 
@@ -2855,11 +2862,11 @@ node run-simple.js
 
 ### What types of data can I query with HyperSync?
 
-HyperSync supports querying four types of blockchain data: logs (events), transactions, traces (internal transactions and state changes - supported on select networks like Ethereum Mainnet), and blocks. Each type supports fine-grained filtering and field selection.
+HyperSync supports querying four types of blockchain data: logs (events), transactions, traces (internal transactions and state changes — supported on select networks like Ethereum Mainnet), and blocks. Each type supports fine-grained filtering and field selection.
 
 ### What is field selection and why does it matter?
 
-Field selection lets you specify exactly which fields you want returned in a query (e.g. only `Address`, `Topic0`, and `Data` from logs). This dramatically reduces unnecessary data transfer and improves query performance - you only pay for the data you actually need.
+Field selection lets you specify exactly which fields you want returned in a query (e.g. only `Address`, `Topic0`, and `Data` from logs). This dramatically reduces unnecessary data transfer and improves query performance — you only pay for the data you actually need.
 
 ### What are join modes?
 
@@ -2867,7 +2874,7 @@ Join modes control how related data is returned alongside your query results. Op
 
 ### What is the relationship between HyperSync and HyperIndex?
 
-HyperSync is the data engine - it provides raw, high-speed access to blockchain data. HyperIndex is the full-featured indexing framework built on top of HyperSync, adding schema management, event handling, and GraphQL APIs. Use HyperSync directly when you need raw blockchain data at maximum speed, or use HyperIndex when you need a complete indexing solution.
+HyperSync is the data engine — it provides raw, high-speed access to blockchain data. HyperIndex is the full-featured indexing framework built on top of HyperSync, adding schema management, event handling, and GraphQL APIs. Use HyperSync directly when you need raw blockchain data at maximum speed, or use HyperIndex when you need a complete indexing solution.
 
 ### What is LogTUI?
 
@@ -2875,7 +2882,7 @@ LogTUI is a terminal-based blockchain event viewer built on HyperSync. It lets y
 
 ### Where can I get help?
 
-- **Discord**: [discord.gg/envio](https://discord.gg/envio) - the fastest way to get help from the team and community
-- **Telegram**: [Envio Telegram](https://t.me/+kAIGElzPjApiMjI0) - the offcial Envio Telegram to get support from the team and community
+- **Discord**: [discord.gg/envio](https://discord.gg/envio) — the fastest way to get help from the team and community
+- **Telegram**: [Envio Telegram](https://t.me/+kAIGElzPjApiMjI0) - the official Envio Telegram to get support from the team and community
 - **GitHub**: [github.com/enviodev](https://github.com/enviodev)
 - **Email**: hello@envio.dev

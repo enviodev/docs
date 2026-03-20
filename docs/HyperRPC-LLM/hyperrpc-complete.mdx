@@ -3,7 +3,7 @@ id: hyperrpc-complete
 title: HyperRPC Complete Documentation
 sidebar_label: HyperRPC Complete Documentation
 slug: /hyperrpc-complete
-description: Complete reference documentation for HyperRPC - Envio's ultra-fast read-only JSON-RPC endpoint. A drop-in replacement for traditional RPC nodes, powered by HyperSync, supporting 85+ EVM-compatible networks with up to 5x faster performance for data-intensive blockchain operations.
+description: Complete reference documentation for HyperRPC — Envio's ultra-fast read-only JSON-RPC endpoint. A drop-in replacement for traditional RPC nodes, powered by HyperSync, supporting 85+ EVM-compatible networks with up to 5x faster performance for data-intensive blockchain operations.
 keywords: [HyperRPC, JSON-RPC, fast RPC, blockchain RPC, Envio, EVM RPC, eth_getLogs, read-only RPC, HyperSync, blockchain data, RPC alternative, drop-in RPC]
 robots: noindex, nofollow
 ---
@@ -14,23 +14,38 @@ This document contains all HyperRPC documentation consolidated into a single fil
 
 ---
 
-::::info Key Facts - HyperRPC
+:::info Key Facts
 
-| | |
-|---|---|
-| **What it is** | An extremely fast read-only JSON-RPC endpoint - a drop-in replacement for traditional RPC nodes, built on top of HyperSync |
-| **Performance** | Up to 5x faster than traditional nodes (geth, erigon, reth) for data-intensive operations |
-| **Read-only** | Optimised for data retrieval only - cannot send transactions |
-| **Supported networks** | 85 EVM-compatible networks, with new networks being added regularly |
-| **Endpoint format** | `https://[network].rpc.hypersync.xyz` or `https://[chainid].rpc.hypersync.xyz` |
-| **Supported methods** | `eth_chainId`, `eth_blockNumber`, `eth_getBlockByNumber`, `eth_getBlockByHash`, `eth_getBlockReceipts`, `eth_getTransactionByHash`, `eth_getTransactionByBlockHashAndIndex`, `eth_getTransactionByBlockNumberAndIndex`, `eth_getTransactionReceipt`, `eth_getLogs`, `trace_block` (select chains only) |
-| **API token** | Recommended - rate limiting starts June 2025 |
-| **When to use** | Drop-in replacement for existing RPC-based code; when tools expect standard JSON-RPC interfaces; when you don't have time for a deeper integration |
-| **When to use HyperSync instead** | When performance is critical; for new projects; when you need advanced filtering and field selection |
-| **Development status** | Under active development; not yet formally security audited; read-only only |
-| **Support** | [Discord](https://discord.gg/envio) · [GitHub](https://github.com/enviodev) |
+- **What it is:** An extremely fast read only JSON RPC endpoint built on HyperSync and a drop in replacement for traditional RPC nodes
 
-::::
+- **Performance:** Up to 5x faster than traditional nodes such as geth, erigon, and reth for data intensive operations
+
+- **Read only:** Optimised for data retrieval only and cannot send transactions
+
+- **Supported networks:** 85+ EVM compatible networks with new networks added regularly
+
+- **Endpoint format:** https://{network}.rpc.hypersync.xyz or https://{chainid}.rpc.hypersync.xyz
+
+- **Supported methods:** eth_chainId, eth_blockNumber, eth_getBlockByNumber, eth_getBlockByHash, eth_getBlockReceipts, eth_getTransactionByHash and more
+
+- **API token:** Recommended, rate limiting starts June 2025
+
+- **When to use:** Drop in replacement for existing RPC based code when tools expect standard JSON RPC interfaces
+
+- **When to use HyperSync instead:** When performance is critical or when you need advanced filtering and field selection
+
+- **Development status:** Under active development and read only
+
+- **Support:** Discord https://discord.gg/envio and GitHub https://github.com/enviodev
+
+:::
+
+
+# HyperRPC Complete Documentation
+
+This document contains all HyperRPC documentation consolidated into a single file for LLM consumption.
+
+---
 
 ## HyperRPC: Ultra-Fast Read-Only RPC
 
@@ -283,7 +298,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 - **Sei***: Start block: 79123881 (non-evm before that)
 - **Sei Testnet***: Start block: 186100000 (non-evm before that)
 
----
+
 
 ## Frequently Asked Questions (FAQ)
 
@@ -338,7 +353,7 @@ HyperRPC is under active development to further improve performance and stabilit
 
 ### Where can I get help?
 
-- **Discord**: [discord.gg/envio](https://discord.gg/envio) - the fastest way to get help from the team and community
-- **Telegram**: [Envio Telegram](https://t.me/+kAIGElzPjApiMjI0) - the offcial Envio Telegram to get support from the team and community
+- **Discord**: [discord.gg/envio](https://discord.gg/envio) — the fastest way to get help from the team and community
+- **Telegram**: [Envio Telegram](https://t.me/+kAIGElzPjApiMjI0) - the official Envio Telegram to get support from the team and community
 - **GitHub**: [github.com/enviodev](https://github.com/enviodev)
 - **Email**: hello@envio.dev
