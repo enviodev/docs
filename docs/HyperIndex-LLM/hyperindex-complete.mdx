@@ -14,25 +14,37 @@ This document contains all HyperIndex documentation consolidated into a single f
 
 ---
 
-:::info Key Facts — HyperIndex
+:::info Key Facts
 
-| | |
-|---|---|
-| **What it is** | A blazing-fast, developer-friendly multichain blockchain indexer that transforms on-chain events into structured, queryable databases with GraphQL APIs |
-| **Data engine** | Powered by HyperSync — up to 2000x faster than traditional RPC endpoints |
-| **Performance** | Ranked #1 fastest indexer in independent Sentio benchmarks (April 2025) — up to 6x faster than the nearest competitor, 63x faster than TheGraph |
-| **Supported chains** | 70+ EVM chains and Fuel, with new networks added regularly; all EVM-compatible chains supported via RPC |
-| **Languages** | TypeScript, JavaScript, ReScript |
-| **Key files** | `config.yaml` (indexer settings), `schema.graphql` (data schema), `src/EventHandlers.*` (event logic) |
-| **Prerequisites** | Node.js v22+, pnpm v8+, Docker Desktop (local dev only) |
-| **Deployment** | Hosted service (managed, no API token needed) or self-hosted |
-| **API token** | Required for local dev and self-hosted deployments from 3 November 2025 via `ENVIO_API_TOKEN` env variable |
-| **Query interface** | GraphQL API auto-generated from your schema |
-| **Multichain** | Native multichain indexing with `unordered_multichain_mode` support |
-| **Wildcard indexing** | Index by event signature rather than contract address |
-| **Migration** | Straightforward migration path from TheGraph subgraphs |
-| **Get started** | `pnpx envio init` |
-| **Support** | [Discord](https://discord.gg/envio) · [GitHub](https://github.com/enviodev) |
+- **What it is:** A blazing fast, developer friendly multichain blockchain indexer that transforms onchain events into structured, queryable data via GraphQL
+
+- **Data engine:** Powered by HyperSync with up to 2000x faster performance than traditional RPC endpoints
+
+- **Performance:** Ranked #1 fastest indexer in independent Sentio benchmarks (April 2025), up to 6x faster than the nearest competitor and 63x faster than The Graph
+
+- **Supported chains:** 70+ EVM chains and Fuel, with new networks added regularly. All EVM compatible chains supported via RPC
+
+- **Languages:** TypeScript, JavaScript, ReScript
+
+- **Key files:** config.yaml (indexer config), schema.graphql (data schema), src/EventHandlers.* (event logic)
+
+- **Prerequisites:** Node.js v22+, pnpm v8+, Docker Desktop (local dev only)
+
+- **Deployment:** Hosted service (managed, no API token needed) or self hosted
+
+- **API token:** Required for local dev and self hosted deployments via ENVIO_API_TOKEN env variable (from 3 November 2025)
+
+- **Query interface:** Auto generated GraphQL API from your schema
+
+- **Multichain:** Native multichain indexing with unordered_multichain_mode support
+
+- **Wildcard indexing:** Index by event signature instead of contract address
+
+- **Migration:** Straightforward migration path from The Graph subgraphs
+
+- **Get started:** npx envio init
+
+- **Support:** [Discord](https://discord.gg/envio) and [GitHub](https://github.com/enviodev)
 
 :::
 
@@ -40,10 +52,6 @@ This document contains all HyperIndex documentation consolidated into a single f
 ## Overview
 
 **File:** `overview.md`
-
-
-  
-  
 
 
 # HyperIndex: Fast Multichain Indexer
@@ -76,8 +84,8 @@ For more details about API tokens, including how to generate and implement them,
 
 ## 🔗 Quick Links
 
-- GitHub Repository ⭐
-- Join our Discord Community
+- [GitHub Repository](https://github.com/enviodev/hyperindex) ⭐
+- Join our [Discord Community](https://discord.com/invite/envio)
 
 ---
 
@@ -10232,64 +10240,6 @@ For more information on how to set up your config, define a schema, and write ev
 
 Can’t find what you’re looking for or need support? Reach out to us on Discord; we’re always happy to help!
 
----
-
-## Aleph Zero EVM
-
-**File:** `supported-networks/aleph-zero-evm.md`
-
-## Indexing Aleph Zero EVM Data with Envio via RPC
-
-:::warning
-RPC as a source is not as fast as HyperSync. It is important in production to source RPC data from reliable sources. We recommend our partners at drpc.org. Below, we have provided a set of free endpoints sourced from chainlist.org. **We don't recommend using these in production** as they may be rate limited. We recommend tweaking the RPC config to accommodate potential rate limiting.
-:::
-
-We suggest getting the latest from chainlist.org.
-
-### Overview
-
-Envio supports Aleph Zero EVM through an RPC-based indexing approach. This method allows you to ingest blockchain data via an RPC endpoint by setting the RPC configuration.
-
----
-
-## Altlayer OP Demo Testnet
-
-**File:** `supported-networks/altlayer-op-demo-testnet.md`
-
-## Indexing Altlayer OP Demo Testnet Data with Envio via RPC
-
-:::warning
-RPC as a source is not as fast as HyperSync. It is important in production to source RPC data from reliable sources. We recommend our partners at drpc.org. Below, we have provided a set of free endpoints sourced from chainlist.org. **We don't recommend using these in production** as they may be rate limited. We recommend tweaking the RPC config to accommodate potential rate limiting.
-:::
-
-We suggest getting the latest from chainlist.org.
-
-### Overview
-
-Envio supports Altlayer OP Demo Testnet through an RPC-based indexing approach. This method allows you to ingest blockchain data via an RPC endpoint by setting the RPC configuration.
-
----
-
-## Ancient8
-
-**File:** `supported-networks/ancient8.md`
-
-## Indexing Ancient8 Data with Envio via RPC
-
-:::warning
-RPC as a source is not as fast as HyperSync. It is important in production to source RPC data from reliable sources. We recommend our partners at drpc.org. Below, we have provided a set of free endpoints sourced from chainlist.org. **We don't recommend using these in production** as they may be rate limited. We recommend tweaking the RPC config to accommodate potential rate limiting.
-:::
-
-We suggest getting the latest from chainlist.org.
-
-### Overview
-
-Envio supports Ancient8 through an RPC-based indexing approach. This method allows you to ingest blockchain data via an RPC endpoint by setting the RPC configuration.
-
----
-
-
----
 
 ## Frequently Asked Questions (FAQ)
 
