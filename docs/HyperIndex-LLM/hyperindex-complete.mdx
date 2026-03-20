@@ -3,7 +3,7 @@ id: hyperindex-complete
 title: HyperIndex Complete Documentation
 sidebar_label: HyperIndex Complete Documentation
 slug: /hyperindex-complete
-description: Complete reference documentation for HyperIndex — Envio's blazing-fast multichain blockchain indexer. Covers setup, configuration, event handlers, multichain indexing, GraphQL APIs, and migration from TheGraph, Ponder, SQD, SubQuery, and more.
+description: Complete reference documentation for HyperIndex - Envio's blazing-fast multichain blockchain indexer. Covers setup, configuration, event handlers, multichain indexing, GraphQL APIs, and migration from TheGraph, Ponder, SQD, SubQuery, and more.
 keywords: [HyperIndex, blockchain indexer, multichain indexing, HyperSync, Envio, GraphQL, TheGraph alternative, EVM indexer, smart contract events, Ponder alternative, SQD alternative, SubQuery alternative]
 robots: noindex, nofollow
 ---
@@ -14,13 +14,13 @@ This document contains all HyperIndex documentation consolidated into a single f
 
 ---
 
-:::info Key Facts — HyperIndex
+::::info Key Facts - HyperIndex
 
 | | |
 |---|---|
 | **What it is** | A blazing-fast, developer-friendly multichain blockchain indexer that transforms on-chain events into structured, queryable databases with GraphQL APIs |
-| **Data engine** | Powered by HyperSync — up to 2000x faster than traditional RPC endpoints |
-| **Performance** | Ranked #1 fastest indexer in independent Sentio benchmarks (April 2025) — up to 6x faster than the nearest competitor, 63x faster than TheGraph |
+| **Data engine** | Powered by HyperSync - up to 2000x faster than traditional RPC endpoints |
+| **Performance** | Ranked #1 fastest indexer in independent Sentio benchmarks (April 2025) - up to 6x faster than the nearest competitor, 63x faster than TheGraph |
 | **Supported chains** | 70+ EVM chains and Fuel, with new networks added regularly; all EVM-compatible chains supported via RPC |
 | **Languages** | TypeScript, JavaScript, ReScript |
 | **Key files** | `config.yaml` (indexer settings), `schema.graphql` (data schema), `src/EventHandlers.*` (event logic) |
@@ -34,8 +34,7 @@ This document contains all HyperIndex documentation consolidated into a single f
 | **Get started** | `pnpx envio init` |
 | **Support** | [Discord](https://discord.gg/envio) · [GitHub](https://github.com/enviodev) |
 
-:::
-
+::::
 
 ## Overview
 
@@ -46,11 +45,9 @@ This document contains all HyperIndex documentation consolidated into a single f
   
 
 
-# HyperIndex: Fast Multichain Indexer
-
 **HyperIndex** is a blazing-fast, developer-friendly multichain indexer, optimized for both local development and reliable hosted deployment. It empowers developers to effortlessly build robust backends for blockchain applications.
 
-!Sync Process
+
 
 :::info HyperIndex & HyperSync
 
@@ -69,7 +66,7 @@ HyperSync (the data engine powering HyperIndex) implements rate limits for reque
 - **Local Development**: An API token will be required. An automatic login feature from the CLI will be available to make this smoother.
 - **Self-Hosted Deployments**: API tokens are required for HyperSync access in self-hosted deployments. The token can be set via the `ENVIO_API_TOKEN` environment variable in your indexer configuration. This can be read from the `.env` file in the root of your HyperIndex project.
 - **Hosted Service**: Indexers deployed to our hosted service will have special access that doesn't require a custom API token.
-- **Future Pricing**: From mid-November 2025 onwards, we will introduce tiered packages for those self-hosting hyperindex and wishing to use hypersync. For preferred introductory pricing based on your specific use case, reach out to us on Discord.
+- **Future Pricing**: From mid-November 2025 onwards, we will introduce tiered packages for those self-hosting HyperIndex and wishing to use HyperSync. For preferred introductory pricing based on your specific use case, reach out to us on Discord.
 
 For more details about API tokens, including how to generate and implement them, see our API Tokens documentation.
 
@@ -85,6 +82,8 @@ For more details about API tokens, including how to generate and implement them,
 
 **File:** `getting-started.md`
 
+Learn how to create and run a blockchain indexer with Envio’s HyperIndex, from initialization to local testing and deployment.
+
 ## Indexer Initialization
 
 ### Prerequisites
@@ -93,7 +92,7 @@ For more details about API tokens, including how to generate and implement them,
 - **pnpm** _(v8 or newer)_
 - **Docker Desktop** _(required to run the Envio indexer locally)_
 
-> **Note:** Docker is required only if you plan to run your indexer locally. You can skip installing Docker if you'll only be using Envio's hosted service.
+> **Note:** Docker is required only if you plan to run your indexer locally. You can skip installing Docker if you'll only be using Envio's Hosted Service.
 
 #### Additionally for Windows Users:
 
@@ -121,7 +120,7 @@ For a complete walkthrough of the process, refer to the Quickstart guide.
 
 **File:** `contract-import.md`
 
-The **Quickstart** enables you to instantly autogenerate a powerful indexer and start querying blockchain data in minutes. This is the fastest and easiest way to begin using HyperIndex.
+The **Quickstart** enables you to instantly autogenerate a powerful blockchain indexer and start querying blockchain data in minutes. This is the fastest and easiest way to begin using HyperIndex.
 
 **Example:** Autogenerate an indexer for the Eigenlayer contract and index its entire history in less than 5 minutes by simply running `pnpx envio init` and providing the contract address from Etherscan.
 
@@ -237,15 +236,15 @@ Learn more in the event handlers guide.
 
 ## Overview
 
-HyperIndex delivers industry-leading performance for blockchain data indexing. Independent benchmarks have consistently shown Envio's HyperIndex to be the fastest indexing solution available, with dramatic performance advantages over competitive offerings.
+HyperIndex delivers industry-leading performance for blockchain data indexing. Independent benchmarks have consistently shown Envio's HyperIndex to be the fastest blockchain indexing solution available, with dramatic performance advantages over competitive offerings.
 
 ## Recent Independent Benchmarks
 
-The most comprehensive and up-to-date benchmarks were conducted by Sentio in April 2025 and are available in the sentio-benchmark repository. These benchmarks compare Envio's HyperIndex against other popular indexers across multiple real-world scenarios:
+The most comprehensive and up-to-date benchmarks were conducted by Sentio in April 2025 and are available in the sentio-benchmark repository. These benchmarks compare Envio's HyperIndex against other popular blockchain indexers across multiple real-world scenarios:
 
 ### Key Performance Highlights
 
-| Case                           | Description                                 | Envio  | Nearest Competitor          | TheGraph            | Ponder               |
+| Case                           | Description                                 | Envio  | Nearest Competitor          | The Graph            | Ponder               |
 | ------------------------------ | ------------------------------------------- | ------ | --------------------------- | ------------------- | -------------------- |
 | LBTC Token Transfers           | Event handling, No RPC calls, Write-only    | 3m     | 8m - 2.6x slower (Sentio)   | 3h9m - 3780x slower | 1h40m - 2000x slower |
 | LBTC Token with RPC calls      | Event handling, RPC calls, Read-after-write | 1m     | 6m - 6x slower (Sentio)     | 1h3m - 63x slower   | 45m - 45x slower     |
@@ -254,7 +253,7 @@ The most comprehensive and up-to-date benchmarks were conducted by Sentio in Apr
 | Uniswap V2 Swap Trace Analysis | Transaction trace handling, Swap decoding   | 41s    | 2m - 3x slower (Subsquid)   | 8m - 11x slower     | N/A                  |
 | Uniswap V2 Factory             | Event handling, Pair and swap analysis      | 8s     | 2m - 15x slower (Subsquid)  | 19m - 142x slower   | 21m - 157x slower    |
 
-The independent benchmark results demonstrate that HyperIndex consistently outperforms all competitors across every tested scenario. This includes the most realistic real-world indexing scenario LBTC Token with RPC calls - where HyperIndex was up to 6x faster than the nearest competitor and over 63x faster than TheGraph.
+The independent benchmark results demonstrate that HyperIndex consistently outperforms all competitors across every tested scenario. This includes the most realistic real-world indexing scenario LBTC Token with RPC calls - where HyperIndex was up to 6x faster than the nearest competitor and over 63x faster than The Graph.
 
 ## Historical Benchmarking Results
 
@@ -267,11 +266,11 @@ You can read the full details in our Indexer Benchmarking Results blog post.
 
 ## Verify For Yourself
 
-We encourage developers to run their own benchmarks. You can use the templates provided in the Sentio benchmark repository or our sample indexer implementations for various scenarios.
+We encourage developers to run their own benchmarks. You can also use the templates provided in the Open Indexer Benchmark repository.
 
 ---
 
-## Migrate from TheGraph to HyperIndex
+## Migrate from The Graph to Envio
 
 **File:** `migration-guide.md`
 
@@ -281,7 +280,7 @@ Please reach out to our team on Discord for personalized migration assistance.
 
 ## Introduction
 
-Migrating from a subgraph to HyperIndex is designed to be a developer-friendly process. HyperIndex draws strong inspiration from TheGraph’s subgraph architecture, which makes the migration simple, especially with the help of coding assistants like Cursor and AI tools (don't forget to use our ai friendly docs).
+Migrating your existing subgraph to Envio's HyperIndex is designed to be a developer-friendly process. HyperIndex draws strong inspiration from The Graph’s subgraph architecture, which makes the migration simple, especially with the help of coding assistants like Cursor and AI tools (don't forget to use our ai friendly docs).
 
 The process is simple but requires a good understanding of the underlying concepts. If you are new to HyperIndex, we recommend starting with the Getting Started guide.
 
@@ -325,7 +324,7 @@ Take the following conversion as an example, where the `subgraph.yaml` file is c
 
 
 
-theGraph - `subgraph.yaml`
+The Graph - `subgraph.yaml`
 ```yaml
 specVersion: 0.0.4
 description: Uniswap is a decentralized protocol for automated token exchange on Ethereum.
@@ -417,7 +416,7 @@ The below code snippets can give you a basic idea of what this difference might 
 
 
 
-theGraph - `eventHandler.ts`
+The Graph - `eventHandler.ts`
 
 ```typescript
 export function handleSubscription(event: SubscriptionEvent): void {
@@ -462,18 +461,990 @@ HyperIndex is a powerful tool that can be used to index any contract. There are 
 - Use the `field_selection` option to add additional fields to your index. Doc here: field selection
 - Use the `unordered_multichain_mode` option to enable unordered multichain mode, this is the most common need for multichain indexing. However comes with tradeoffs worth understanding. Doc here: unordered multichain mode
 - Use wildcard indexing to index by event signatures rather than by contract address.
-- HyperIndex uses the standard graphql query language, where as the subgraph uses a custom query language. You can read about the slight nuances here. (We are working on a basic tool to help with backwards compatibility, please check in with us on discord for it's current status).
+- HyperIndex uses the standard GraphQL query language, whereas TheGraph uses a custom GraphQL syntax. You can read about the differences and how to convert queries in our Query Conversion Guide. We also provide a query converter tool for backwards compatibility with existing TheGraph queries.
 - Loaders are a powerful feature to optimize historical sync performance. You can read more about them here.
 - HyperIndex is very flexible and can be used to index offchain data too or send messages to a queue etc for fetching external data, you can further optimise the fetching by using the effects api
 
+## Validating Your Migration
+
+After completing your migration, it's important to verify that your HyperIndex indexer produces the same data as your original subgraph. Use the Indexer Migration Validator CLI tool to compare results between both endpoints and identify any discrepancies. The tool automatically generates entity configs from your GraphQL schema and provides detailed field-level analysis of differences.
+
 ## Share Your Learnings
 
-If you discover helpful tips during your migration, we’d love contributions! Open a PR to this guide and help future developers.
+If you discover helpful tips during your migration, we'd love contributions! Open a PR to this guide and help future developers.
 
 ## Getting Help
 
 **Join Our Discord**: The fastest way to get personalized help is through our Discord community.
 ```
+
+---
+
+## Migrate From Alchemy
+
+**File:** `migrate-from-alchemy.md`
+
+:::note
+Note: Alchemy subgraphs sunset on Dec 8th, 2025. Envio is offering affected Alchemy users 2 months of free hosting on Envio, along with full white-glove migration support to help projects move over smoothly.
+
+For more info on how you can start your free trial or book migration support, visit this page to learn more.
+:::
+
+Migrating Alchemy subgraphs to Envio’s HyperIndex is a simple and developer-friendly process. Alchemy subgraphs follow The Graph’s model and HyperIndex uses a very similar structure, so most of your existing setup can carry over cleanly.
+
+If you're familiar with The Graph’s libraries, the migration process should be straightforward. You can also utilize tools like Cursor to speed things up. If you are new to HyperIndex, we strongly recommend starting with our Getting Started guide before you begin your migration from Alchemy.
+
+## Why Migrate to Envio’s HyperIndex?
+- **High Speed Performance**: 143x faster than subgraphs
+- **Lower Costs**: Reduced infrastructure requirements and operational expenses
+- **Better Developer Experience**: Simplified configuration and deployment
+- **Multichain Native**: Index data across multiple EVM chains through a single HyperIndex project
+- **Local Development**: Run your indexers locally for fast iteration and easier debugging
+- **White Glove Migration Support**: Get direct support from the Envio team for a smoother migration. 
+- **GitOps Ready Deployments**: Link your GitHub repo and manage multiple deployments in a clean unified workflow
+- **Advanced Features**: Access to features like external calls and block handlers
+- **Seamless Integration**: Easily integrate existing GraphQL APIs and applications 
+
+
+## How to Migrate from Alchemy to Envio in 4 easy steps
+
+This Migration consists of 4 major steps:
+
+1. Create a HyperIndex Project
+2. subgraph.yaml Migration to config.yaml
+3. schema.graphql Migration
+4. Event Handler Migration
+
+
+### Create a HyperIndex Project
+Start by spinning up a basic HyperIndex project with this command:
+
+```bash
+pnpx envio init template --name alchemy-migration --directory alchemy-migration --template  greeter --api-token "YOUR_ENVIO_API_KEY"
+```
+
+Once the project is created, drop your API key into the .env file and you’re good to go.
+
+### subgraph.yaml Migration to config.yaml
+
+In HyperIndex, all project configuration lives in `config.yaml`. This is where you define contract addresses, the networks you want to index, and the specific events you want to track from those contracts.
+
+Below is an example showing how a Uniswap V4 subgraph.yaml maps to a HyperIndex `config.yaml` in a real migration.
+
+
+
+The Graph - `subgraph.yaml`
+```yaml
+specVersion: 0.0.4
+description: Uniswap is a decentralized protocol for automated token exchange on Ethereum.
+repository: https://github.com/Uniswap/v4-subgraph
+schema:
+  file: ./schema.graphql
+features:
+  - nonFatalErrors
+  - grafting
+  - kind: ethereum/contract
+    name: PositionManager
+    network: mainnet
+    source:
+      abi: PositionManager
+      address: "0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e"
+      startBlock: 21689089
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/index.ts
+      entities:
+        - Position
+      abis:
+        - name: PositionManager
+          file: ./abis/PositionManager.json
+      eventHandlers:
+        - event: Subscription(indexed uint256,indexed address)
+          handler: handleSubscription
+        - event: Unsubscription(indexed uint256,indexed address)
+          handler: handleUnsubscription
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer  
+          ```
+
+
+HyperIndex - `config.yaml`
+```yaml
+# yaml-language-server: $schema=./node_modules/envio/evm.schema.json
+name: uni-v4-indexer
+networks:
+  - id: 1
+    start_block: 21689089
+    contracts:      
+      - name: PositionManager
+        address: 0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e
+        handler: src/EventHandlers.ts
+        events:        
+        - event: Subscription(uint256 indexed tokenId, address indexed subscriber)
+        - event: Unsubscription(uint256 indexed tokenId, address indexed subscriber)          
+        - event: Transfer(address indexed from, address indexed to, uint256 indexed id)
+          ```
+
+
+
+If you hit any issues, check the Configuration File docs or reach out to our team in Discord.
+
+### schema.graphql Migration
+
+This step is simple. You keep the entire file as is, with one small change: remove all `@entity` directives from your entities. Everything else stays the same.
+
+### Event Handler Migration
+
+This is the final step of the migration which consists of two parts:
+
+- Moving from AssemblyScript to TypeScript
+- Updating Subgraph syntax to HyperIndex syntax
+
+
+#### AssemblyScript to TypeScript
+HyperIndex uses TypeScript instead of AssemblyScript. Since AssemblyScript is a subset of TypeScript, you can simply copy most of your code over without worrying about major syntax changes.
+
+#### Subgraph to HyperIndex
+The HyperIndex workflow is very similar to Subgraphs, but there are a few important differences to keep in mind:
+
+- Replace `ENTITY.save()` with `context.ENTITY.set(VALUES)`
+- Handlers need to be async
+- Use `await` when loading entities
+
+As you start using HyperIndex, you’ll pick up the differences quickly.
+
+Here is a code snippet to give you a sense of what these changes look like in practice.
+
+
+    
+    The Graph - `eventHandler.ts`
+
+    ```typescript
+    export function handleSubscription(event: SubscriptionEvent): void {
+    const subscription = new Subscribe(event.transaction.hash + event.logIndex);
+
+    subscription.tokenId = event.params.tokenId;
+    subscription.address = event.params.subscriber.toHexString();
+    subscription.logIndex = event.logIndex;
+    subscription.blockNumber = event.block.number;
+    subscription.position = event.params.tokenId;
+
+    subscription.save();
+    }
+    ```
+    
+
+    
+    HyperIndex - `eventHandler.ts`
+    ```typescript
+    PoolManager.Subscription.handler( async (event, context) => {
+    const entity = {
+        id: event.transaction.hash + event.logIndex,
+        tokenId: event.params.tokenId,
+        address: event.params.subscriber,
+        blockNumber: event.block.number,
+        logIndex: event.logIndex,
+        position: event.params.tokenId
+    }
+
+    context.Subscription.set(entity);
+    })
+
+    ```
+    
+
+
+For a few extra tips on migrating from Alchemy to Envio, check out our other migration guide in our docs.
+
+## Share Your Learnings
+
+If you come across anything useful during your migration, please feel free to contribute. Simply open a PR to this guide and help future developers.
+
+## Getting Help
+
+Join our Discord if you need support. It is the fastest way to get direct help from the team and the community.
+
+---
+
+## Migrate To V3
+
+**File:** `migrate-to-v3.md`
+
+:::warning
+HyperIndex V3 is currently in **alpha**. While we don't plan major API changes, some features may still undergo minor breaking changes and developer experience improvements.
+:::
+
+# Migrate to HyperIndex V3 Alpha
+
+15 full months have passed since the official HyperIndex v2.0.0. Since then, we have shipped 32 minor releases and multiple patches with **zero breaking changes** to the documented API. We also received PRs from 6 external contributors, grew from 1 GitHub star to over 470, and saw many big projects rely on HyperIndex.
+
+HyperIndex V3 Alpha focuses on modernizing the codebase and laying the foundation for many more months of development. This guide walks you through upgrading from V2 to V3.
+
+## New Features
+
+### CommonJS → ESM
+
+We migrated HyperIndex from CommonJS-only to ESM-only. This enables:
+
+- Using the latest versions of libraries that have long since abandoned CommonJS support
+- **Top-level await** in handler files
+
+### Top-Level Await
+
+Thanks to the migration to ESM, you can now use `await` directly in handler and other files:
+
+```typescript
+
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+
+// Load data before registering handlers
+const addressesFromServer = await loadWhitelistedAddresses();
+
+ERC20.Transfer.handler(
+  async ({ event, context }) => {
+    // ... your handler logic
+  },
+  {
+    wildcard: true,
+    eventFilters: [
+      { from: ZERO_ADDRESS, to: addressesFromServer },
+      { from: addressesFromServer, to: ZERO_ADDRESS },
+    ],
+  }
+);
+```
+
+### 3x Historical Backfill Performance
+
+Achieved by adding chunking logic to request events across multiple ranges at once. This also fixed overfetching for contracts with a much later `start_block` in the config, as well as speeding up dynamic contract registration. If you had data fetching as a bottleneck, 25k events per second is now a standard.
+
+### Automatic Handler Registration (`src/handlers`)
+
+We introduced automatic registration of handler files located in `src/handlers`.
+
+Previously, you needed to specify an explicit path to a handler file for every contract in `config.yaml`. Now you can remove all of the paths from `config.yaml` and simply move the files to `src/handlers`. You can name the files however you want, but we suggest using contract names and having a file per contract.
+
+If you don't like `src/handlers`, use the `handlers` option in `config.yaml` to customize it.
+
+:::note
+The explicit `handler` field in `config.yaml` still works, so you don't need to change anything immediately.
+:::
+
+### RPC for Live Indexing
+
+Built by an external contributor @cairoeth to allow specifying `live` mode for an RPC data source to embrace low-latency head tracking:
+
+```yaml
+rpc:
+  - url: https://eth-mainnet.your-rpc-provider.com
+    for: live
+```
+
+In this case, the RPC won't be used for historical sync but will join the source selection logic when entering live indexing.
+
+### Chain State on Context
+
+The Handler Context object provides chain state via the `chain` property:
+
+```typescript
+ERC20.Approval.handler(async ({ context }) => {
+  console.log(context.chain.id); // 1 - The chain id of the event
+  console.log(context.chain.isLive); // true - Whether the event chain is indexing at the head
+});
+```
+
+### Indexer State & Config
+
+As a replacement for the deprecated and removed `getGeneratedByChainId`, we introduce the `indexer` value. It provides nicely typed chains and contract data from your config, as well as the current indexing state, such as `isLive` and `addresses`. Use `indexer` either at the top level of the file or directly from handlers. It returns the latest indexer state.
+
+With this change, we also introduce new official types: `Indexer`, `EvmChainId`, `FuelChainId`, and `SvmChainId`.
+
+```typescript
+
+indexer.name; // "uniswap-v4-indexer"
+indexer.description; // "Uniswap v4 indexer"
+indexer.chainIds; // [1, 42161, 10, 8453, 137, 56]
+indexer.chains[1].id; // 1
+indexer.chains[1].startBlock; // 0
+indexer.chains[1].endBlock; // undefined
+indexer.chains[1].isLive; // false
+indexer.chains[1].PoolManager.name; // "PoolManager"
+indexer.chains[1].PoolManager.abi; // unknown[]
+indexer.chains[1].PoolManager.addresses; // ["0x000000000004444c5dc75cB358380D2e3dE08A90"]
+```
+
+### Conditional Event Handlers
+
+Now it's possible to return a boolean value from the `eventFilters` function to disable or enable the handler conditionally.
+
+```typescript
+ERC20.Transfer.handler(
+  async ({ event, context }) => {
+    // ... your handler logic
+  },
+  {
+    wildcard: true,
+    eventFilters: ({ chainId }) => {
+      // Skip all ERC20 on Polygon
+      if (chainId === 137) {
+        return false;
+      }
+
+      // Track all ERC20 on Ethereum Mainnet
+      if (chainId === 1) {
+        return true;
+      }
+
+      // Track only whitelisted addresses on other chains
+      return [
+        { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chainId] },
+        { from: WHITELISTED_ADDRESSES[chainId], to: ZERO_ADDRESS },
+      ];
+    },
+  }
+);
+```
+
+### Automatic Contract Configuration
+
+Started automatically configuring all globally defined contracts. This fixes an issue where `addContract` crashed because the contract was defined globally but not linked for a specific chain. Now it's done automatically:
+
+```yaml
+contracts:
+  - name: UniswapV3Factory
+    events: # ...
+  - name: UniswapV3Pool
+    events: # ...
+chains:
+  - id: 1
+    start_block: 0
+    contracts:
+      - name: UniswapV3Factory
+        address: 0x1F98431c8aD98523631AE4a59f267346ea31F984
+      # UniswapV3Pool no longer needed here - auto-configured from global contracts
+  - id: 10
+    start_block: 0
+    contracts:
+      - name: UniswapV3Factory
+        address: 0x1F98431c8aD98523631AE4a59f267346ea31F984
+      # UniswapV3Pool no longer needed here - auto-configured from global contracts
+```
+
+### ClickHouse Sink (Experimental)
+
+We added experimental support for a ClickHouse Sink. Postgres still serves as the primary database, and you can additionally sink the entities to a ClickHouse database that is restart- and reorg-resistant.
+
+Configure with environment variables: `ENVIO_CLICKHOUSE_SINK_HOST`, `ENVIO_CLICKHOUSE_SINK_DATABASE`, `ENVIO_CLICKHOUSE_SINK_USERNAME`, `ENVIO_CLICKHOUSE_SINK_PASSWORD`. Currently supported only on Dedicated Plan.
+
+:::warning
+Do not run multiple Sinks to the same database at the same time.
+:::
+
+### HyperSync Source Improvements
+
+Multiple updates on the HyperSync side to achieve smaller latency and less traffic:
+
+- Server-Sent Events instead of polling to get updates about new blocks
+- CapnProto instead of JSON for query serialization
+- Cache for queries with repetitive filters - huge egress saving when indexing thousands of addresses
+
+### Fuel Block Handler Support
+
+Block handlers are now supported for Fuel indexing.
+
+### Solana Support (Experimental)
+
+HyperIndex now supports Solana with RPC as a source. This feature is experimental and may undergo minor breaking changes.
+
+To initialize a Solana project:
+
+```bash
+pnpx envio@3.0.0-alpha.14 init svm
+```
+
+See the Solana documentation for more details.
+
+### `pnpx envio init` Improvements
+
+- Removed language selection to prefer TypeScript by default
+- Cleaned up templates to follow the latest good practices
+- Added new templates to highlight HyperIndex features, starting with: `Feature: Factory Contract`
+- Pre-configured GitHub Actions workflow for running tests and initialized git repository
+- Generated projects include Cursor/Claude skills to support agent-driven development
+
+### Block Handler Only Indexers
+
+Now it's possible to create indexers with only block handlers. Previously, it was required to have at least one event handler for it to work. The `contracts` field became optional in `config.yaml`.
+
+### Flexible Entity Fields
+
+We no longer have restrictions on entity field names, such as `type` and others. Shape your entities any way you want. There are also improvements in generating database columns in the same order as they are defined in the `schema.graphql`.
+
+### Unordered Multichain Mode by Default
+
+Unordered multichain mode is now available and the default behavior. This provides better performance for most use cases. If you need ordered multichain behavior, you can explicitly set `multichain: ordered` in your config.
+
+### Preload Optimization by Default
+
+Preload optimization is now enabled by default, replacing the previous `loaders` and `preload_handlers` options. This improves historical sync performance automatically.
+
+### TUI Improvements
+
+We gave our TUI some love, making it look more beautiful and compact. It also consumes fewer resources, shares a link to the Hasura playground, and dynamically adjusts to the terminal width.
+
+!TUI
+
+### New Testing Framework (Experimental)
+
+We introduced a new testing framework that allows you to test handlers' logic using real blockchain data and programmatically debug code without repetitive local runs. Key capabilities include:
+
+- Testing block and event handlers together
+- Snapshot testing support
+- Parallel test execution via worker thread isolation
+
+The framework integrates with Vitest, replacing the previous mocha/chai setup with a single package that doesn't require configuration by default and includes snapshot testing out-of-the-box. It also provides typed test assertions and utilities to read/write entities in-between processing runs.
+
+```typescript
+
+
+describe("Indexer Testing", () => {
+  it("Should create accounts from ERC20 Transfer events", async () => {
+    const indexer = createTestIndexer();
+
+    expect(
+      await indexer.process({
+        chains: {
+          1: {
+            startBlock: 10_861_674,
+            endBlock: 10_861_674,
+          },
+        },
+      }),
+      "Should find the first mint at block 10_861_674"
+    ).toMatchInlineSnapshot(`
+      {
+        "changes": [
+          {
+            "Account": {
+              "sets": [
+                {
+                  "balance": -1000000000000000000000000000n,
+                  "id": "0x0000000000000000000000000000000000000000",
+                },
+                {
+                  "balance": 1000000000000000000000000000n,
+                  "id": "0x41653c7d61609d856f29355e404f310ec4142cfb",
+                },
+              ],
+            },
+            "block": 10861674,
+            "blockHash": "0x32e4dd857b5b7e756551a00271e44b61dbda0a91db951cf79a3e58adb28f5c09",
+            "chainId": 1,
+            "eventsProcessed": 1,
+          },
+        ],
+      }
+    `);
+  });
+});
+```
+
+The test indexer also exposes chain information and provides `Entity.get`/`Entity.set` for reading and writing entities in-between processing runs:
+
+```typescript
+const indexer = createTestIndexer();
+indexer.chainIds; // [1, 42161]
+indexer.chains[1].id; // 1
+indexer.chains[1].startBlock; // 0
+indexer.chains[1].ERC20.addresses; // ["0x..."]
+
+// Read/write entities between processing runs
+await indexer.Account.set({ id: "0x123...", balance: 100n });
+const account = await indexer.Account.get("0x123...");
+```
+
+See the Testing documentation for more details.
+
+### Podman Support
+
+Beyond Docker, HyperIndex now supports Podman for local development environments. This provides an alternative container runtime for developers who prefer Podman or have it available in their environment.
+
+### Nested Tuples for Contract Import
+
+The `envio init` command now supports contracts with nested tuples in event signatures, which was previously a limitation when importing contracts.
+
+### PostgreSQL Update for Local Docker Compose
+
+The local development Docker Compose setup now uses PostgreSQL 18.1 (upgraded from 17.5).
+
+### Support for DESC Indices
+
+A nice way to improve your query performance as well:
+
+```graphql
+type PoolDayData
+  @index(fields: ["poolId", ["date", "DESC"]]) {
+  id: ID!
+  poolId: String!
+  date: Timestamp!
+}
+```
+
+### RPC Source Improvements
+
+Added `polling_interval` option for RPC source configuration. Also added missing support for receipt-only fields (`gasUsed`, `cumulativeGasUsed`, `effectiveGasPrice`) that are not available via `eth_getTransactionByHash`. HyperIndex will additionally perform the `eth_getTransactionReceipt` request when one of the fields is added in `field_selection`.
+
+### WebSocket Support (Experimental)
+
+Experimental WebSocket support for RPC source to improve head latency. Please create a GitHub issue if you come across any problems.
+
+```yaml
+chains:
+  - id: 1
+    rpc:
+      url: ${ENVIO_RPC_ENDPOINT}
+      ws: ${ENVIO_WS_ENDPOINT}
+      for: live
+```
+
+### Prometheus Metrics for Data Providers
+
+Added a Prometheus metric to track requests to data providers, providing better observability into your indexer's data fetching patterns.
+
+### GraphQL-Style `getWhere` API
+
+The `getWhere` query API has been redesigned using GraphQL-style syntax:
+
+```typescript
+// Before
+const transfers = await context.Transfer.getWhere.from.eq("0x123...");
+
+// After
+const transfers = await context.Transfer.getWhere({ from: { _eq: "0x123..." } });
+```
+
+### Direct RPC Client
+
+Replaced Ethers.js with a direct RPC client implementation, reducing dependencies and improving performance.
+
+## Breaking Changes
+
+### Node.js & Runtime
+
+- **Node.js 22** is now the minimum required version, while 24 is the recommended version
+- Changes in handler files don't trigger codegen on `pnpm dev`
+
+### Handler API Changes
+
+- Removed `experimental_createEffect` in favor of `createEffect`
+- Renamed transaction field `kind` to `type`
+- For block handlers: `block.chainId` is removed in favor of `context.chain.id`
+- `Address` type changed from `string` to `` `0x${string}` ``
+- Removed `transaction.chainId` from field selection - use `context.chain.id` or `event.chainId` instead
+- **`getWhere` API redesigned** - changed from `context.Entity.getWhere.fieldName.eq(value)` to `context.Entity.getWhere({ fieldName: { _eq: value } })` using GraphQL-style filter syntax
+
+### config.yaml Changes
+
+- Renamed `networks` to `chains`
+- Renamed `confirmed_block_threshold` to `max_reorg_depth`
+- Removed `unordered_multichain_mode` flag, replaced with `multichain: ordered | unordered` (default: `unordered`)
+- Removed `loaders` option (now always enabled via Preload Optimization)
+- Removed `preload_handlers` option (now always enabled)
+- Removed `preRegisterDynamicContracts` option
+- Removed `event_decoder` option (the Rust-based decoder is now the only implementation)
+- Removed `rpc_config` in favor of `rpc`, which now supports multiple URLs, `for` mode (`sync`, `live`, `fallback`), and WebSocket configuration (see RPC for Live Indexing)
+
+### HyperSync API Token Required
+
+Indexers using HyperSync as a data source now require an `ENVIO_API_TOKEN` environment variable. You can obtain a free API token at envio.dev/app/api-tokens.
+
+```bash
+export ENVIO_API_TOKEN=your_token_here
+```
+
+### Environment Variable Changes
+
+- Removed `UNSTABLE__TEMP_UNORDERED_HEAD_MODE` environment variable
+- Removed `UNORDERED_MULTICHAIN_MODE` environment variable
+- Removed `MAX_BATCH_SIZE` environment variable (use `full_batch_size` in config.yaml instead)
+
+### Generated Code Changes
+
+- Removed `chain` type in favor of `ChainId` (now a union type instead of a number)
+- Removed internal `ContractType` enum (allows longer contract names)
+- Removed `getGeneratedByChainId` (use `indexer` value instead)
+- **Lowercased entity types removed**: Generated code no longer exports lowercased entity types (e.g., `transfer`). Use capitalized names instead (e.g., `Transfer`)
+- Entity array field values are now typed as `readonly` - update any code that directly mutates array fields
+
+### Metrics Changes
+
+- Renamed `chain_block_height` Prometheus metric to `envio_indexing_known_height`
+
+## Fixes
+
+- Fixed an issue where the indexer stops progressing without any error (PostgreSQL client update)
+- Fixed checksum for addresses returned by RPC in lowercase
+- Fixed incorrect validation of transactions `to` field returned by RPC
+- Fixed OOM error on RPC request crashing loop
+
+## Migration Guide
+
+### Step 0: Prepare on V2 (Recommended)
+
+Before upgrading to V3, we recommend preparing your project while still on V2:
+
+1. **Upgrade to v2.32.6** and enable Preload Optimization:
+
+```yaml
+# config.yaml
+preload_handlers: true
+```
+
+2. **If you were using loaders**, migrate them to Preload Optimization following the Migrating from Loaders guide.
+
+3. **Verify your indexer works correctly** with `pnpm dev` before proceeding to V3.
+
+This step ensures a smoother migration by validating Preload Optimization works with your handlers before the V3 upgrade.
+
+### Step 1: Update Dependencies
+
+#### Node.js
+
+Update Node.js to version 22 or higher.
+
+#### package.json
+
+Update your `package.json` with the following changes:
+
+```json
+{
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "dependencies": {
+    "envio": "3.0.0-alpha.14"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}
+```
+
+:::warning
+Adding `"type": "module"` is **required** for V3. Without it, your project will fail to start due to ESM import errors.
+:::
+
+**If you use testing with Mocha (recommended: migrate to Vitest):**
+
+We recommend migrating from mocha/chai to Vitest, which offers a better testing experience with the new HyperIndex testing framework:
+
+```bash
+pnpm remove ts-mocha ts-node mocha chai @types/mocha @types/chai
+pnpm add -D vitest@4.0.16
+```
+
+Update your `package.json`:
+
+```json
+{
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "4.0.16"
+  }
+}
+```
+
+Move and refactor your test files:
+- Move `test/Test.ts` to `src/indexer.test.ts`
+- Update imports from `mocha`/`chai` to use `vitest`:
+
+```typescript
+// Before (mocha/chai)
+
+
+// After (vitest)
+
+
+```
+
+**If you prefer to keep Mocha:**
+
+Remove `ts-mocha` and `ts-node`, then install `tsx`:
+
+```bash
+pnpm remove ts-mocha ts-node
+pnpm add -D tsx@4.21.0
+```
+
+Update your test script in `package.json`:
+
+```json
+{
+  "scripts": {
+    "mocha": "tsc --noEmit && NODE_OPTIONS='--no-warnings --import tsx' mocha --exit test/**/*.ts"
+  }
+}
+```
+
+**If you use `ts-node` for start script:**
+
+Replace with:
+
+```json
+{
+  "scripts": {
+    "start": "envio start"
+  }
+}
+```
+
+### Step 2: Update tsconfig.json
+
+Update your `tsconfig.json` to support ESM:
+
+```json
+{
+  /* For details: https://www.totaltypescript.com/tsconfig-cheat-sheet */
+  "compilerOptions": {
+    /* Base Options: */
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "es2022",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+
+    /* For running Envio: */
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+
+    /* Code doesn't run in the DOM: */
+    "lib": ["es2022"]
+  }
+}
+```
+
+:::tip
+This includes additional strictness options like `verbatimModuleSyntax` and `noUncheckedIndexedAccess`. You can disable them to simplify the migration.
+:::
+
+### Step 3: Update config.yaml
+
+**Rename `networks` to `chains`:**
+
+```yaml
+# Before
+networks:
+  - id: 1
+    contracts:
+      - name: MyContract
+        events:
+          - event: Transfer(address indexed from, address indexed to, uint256 value)
+
+# After
+chains:
+  - id: 1
+    contracts:
+      - name: MyContract
+        events:
+          - event: Transfer(address indexed from, address indexed to, uint256 value)
+```
+
+**Update multichain mode (if applicable):**
+
+If you had `unordered_multichain_mode: true`, remove it - this is now the default. If you need ordered multichain behavior, explicitly set:
+
+```yaml
+multichain: ordered
+```
+
+**Rename config options:**
+
+- `confirmed_block_threshold` → `max_reorg_depth`
+
+**Remove deprecated options:**
+
+Remove the following options from your config if present:
+
+- `loaders` - now always enabled via Preload Optimization
+- `preload_handlers` - now always enabled
+- `preRegisterDynamicContracts` - no longer needed
+- `unordered_multichain_mode` - replaced with `multichain` option
+- `event_decoder` - the Rust-based decoder is now the only implementation
+- `rpc_config` - replaced with `rpc` (see Breaking Changes)
+
+**New option for batch size:**
+
+If you were using `MAX_BATCH_SIZE` environment variable, use the new config option instead:
+
+```yaml
+full_batch_size: 5000
+```
+
+**Automatic Handler Registration (optional):**
+
+Optionally move your handler files to `src/handlers/` and remove the explicit `handler` paths from `config.yaml`.
+
+### Step 4: Update Environment Variables
+
+**Add required environment variables:**
+
+If your indexer uses HyperSync (the default data source), you need to set up an API token:
+
+1. Get a free API token at envio.dev/app/api-tokens
+2. Set the environment variable:
+
+```bash
+export ENVIO_API_TOKEN=your_token_here
+```
+
+For local development, you can add it to a `.env` file:
+
+```
+ENVIO_API_TOKEN=your_token_here
+```
+
+**Remove deprecated environment variables if present:**
+
+- `UNSTABLE__TEMP_UNORDERED_HEAD_MODE`
+- `UNORDERED_MULTICHAIN_MODE`
+- `MAX_BATCH_SIZE` - use `full_batch_size` in config.yaml instead
+
+### Step 5: Update Handler Code
+
+**Rename deprecated APIs:**
+
+| V2 (Deprecated)                     | V3                                    |
+| ----------------------------------- | ------------------------------------- |
+| `experimental_createEffect`         | `createEffect`                        |
+| `block.chainId` (in block handlers) | `context.chain.id`                    |
+| `transaction.kind`                  | `transaction.type`                    |
+| `chain` type                        | `ChainId`                             |
+| `transaction.chainId`               | `context.chain.id` or `event.chainId` |
+| `Entity.getWhere.field.eq(value)`   | `Entity.getWhere({ field: { _eq: value } })` |
+| `Entity.getWhere.field.gt(value)`   | `Entity.getWhere({ field: { _gt: value } })` |
+| `Entity.getWhere.field.lt(value)`   | `Entity.getWhere({ field: { _lt: value } })` |
+
+**Removed APIs:**
+
+- `getGeneratedByChainId` - use the `indexer.chains[chainId]` instead (see Indexer State & Config)
+- **`getWhere` API** - update to the new GraphQL-style filter syntax:
+
+```typescript
+// Before
+const transfers = await context.Transfer.getWhere.from.eq("0x123...");
+const bigTransfers = await context.Transfer.getWhere.value.gt(1000n);
+
+// After
+const transfers = await context.Transfer.getWhere({ from: { _eq: "0x123..." } });
+const bigTransfers = await context.Transfer.getWhere({ value: { _gt: 1000n } });
+```
+
+- Lowercased entity types - use capitalized names instead:
+
+```typescript
+// Before
+
+// After
+
+```
+
+### Step 6: Test Your Migration
+
+After making all changes, run codegen and start your indexer:
+
+```bash
+pnpm envio codegen
+pnpm dev
+```
+
+## Quick Migration Checklist
+
+**Prepare (on V2):**
+
+- [ ] Upgrade to `envio@2.32.6`
+- [ ] Enable `preload_handlers: true` in config.yaml
+- [ ] Migrate from loaders if applicable (guide)
+- [ ] Verify indexer works with `pnpm dev`
+
+**Dependencies:**
+
+- [ ] Update Node.js to >=22
+- [ ] **Add `"type": "module"` to `package.json`** ← Required for V3!
+- [ ] Update `envio` dependency to latest `3.0.0-alpha.x`
+- [ ] Update `engines.node` to `>=22.0.0` in `package.json`
+- [ ] Update `tsconfig.json` for ESM support
+- [ ] Migrate from mocha/chai to vitest (recommended) or replace `ts-mocha`/`ts-node` with `tsx`
+
+**config.yaml:**
+
+- [ ] Rename `networks` to `chains`
+- [ ] Rename `confirmed_block_threshold` to `max_reorg_depth`
+- [ ] Replace `rpc_config` with `rpc`
+- [ ] Remove `unordered_multichain_mode` (now default)
+- [ ] Remove `loaders` and `preload_handlers` options
+- [ ] Remove `preRegisterDynamicContracts` option
+- [ ] Remove `event_decoder` option
+
+**Environment Variables:**
+
+- [ ] **Set `ENVIO_API_TOKEN`** if using HyperSync (get token)
+- [ ] Remove `UNSTABLE__TEMP_UNORDERED_HEAD_MODE`
+- [ ] Remove `UNORDERED_MULTICHAIN_MODE`
+- [ ] Remove `MAX_BATCH_SIZE` (use `full_batch_size` in config.yaml)
+
+**Handler Code:**
+
+- [ ] Replace `experimental_createEffect` with `createEffect`
+- [ ] Replace `block.chainId` with `context.chain.id` in block handlers
+- [ ] Replace `transaction.kind` with `transaction.type`
+- [ ] Update usage of `chain` type to `ChainId`
+- [ ] Replace `getGeneratedByChainId` with `indexer.chains[chainId]`
+- [ ] Update code expecting `Address` type to be `string` (now `` `0x${string}` ``)
+- [ ] Replace `transaction.chainId` with `context.chain.id` or `event.chainId`
+- [ ] Replace lowercased entity type imports with capitalized versions (e.g., `transfer` → `Transfer`)
+- [ ] Update `getWhere` calls to new GraphQL-style filter syntax (e.g., `getWhere({ field: { _eq: value } })`)
+
+**Verify:**
+
+- [ ] Run `pnpm envio codegen` and `pnpm dev` to verify
+
+## Getting Help
+
+If you encounter any issues during migration, join our Discord community for support.
+
+## Release Notes
+
+For detailed release notes, see:
+
+- v3.0.0-alpha.14
+- v3.0.0-alpha.13
+- v3.0.0-alpha.12
+- v3.0.0-alpha.11
+- v3.0.0-alpha.10
+- v3.0.0-alpha.9
+- v3.0.0-alpha.8
+- v3.0.0-alpha.7
+- v3.0.0-alpha.6
+- v3.0.0-alpha.5
+- v3.0.0-alpha.4
+- v3.0.0-alpha.3
+- v3.0.0-alpha.2
+- v3.0.0-alpha.1
+- v3.0.0-alpha.0
 
 ---
 
@@ -1193,13 +2164,17 @@ Define an effect and use it in your handler with `context.effect`:
 
 
 // Define an effect that will be called from the handler.
-const getMetadata = experimental_createEffect(
+const getMetadata = createEffect(
   {
     name: "getMetadata",
     input: S.string,
     output: {
       description: S.string,
       value: S.bigint,
+    },
+    rateLimit: {
+      calls: 5,
+      per: "second",
     },
     cache: true, // Optionally persist the results in the database
   },
@@ -1243,13 +2218,9 @@ Run logic on every block or an interval.
 
 ---
 
-## Multichain Indexing
+## Understanding Multichain Indexing
 
 **File:** `Advanced/multichain-indexing.mdx`
-
-
-
-# Understanding Multichain Indexing
 
 Multichain indexing allows you to monitor and process events from contracts deployed across multiple blockchain networks within a single indexer instance. This capability is essential for applications that:
 
@@ -1259,7 +2230,7 @@ Multichain indexing allows you to monitor and process events from contracts depl
 
 ## How It Works
 
-With multichain indexing, events from contracts deployed on multiple chains can be used to create and update entities defined in your schema file. Your indexer will process events from all configured networks, maintaining proper synchronization across chains.
+With multichain indexing, events from contracts deployed on multiple chains can be used to create and update entities defined in your schema file. Your blockchain indexer will process events from all configured networks, maintaining proper synchronization across chains.
 
 ## Configuration Requirements
 
@@ -1638,7 +2609,7 @@ By default, you'll see:
 
 #### Example Query
 
-Try a simple query to test your indexer:
+Try a simple query to test your blockchain indexer:
 
 ```graphql
 query MyQuery {
@@ -1675,7 +2646,7 @@ The Data tab provides direct access to your database tables and relationships, a
 
 #### Verifying Indexed Data
 
-To confirm your indexer is working correctly:
+To confirm your blockchain indexer is working correctly:
 
 1. Check entity tables to ensure they contain the expected data
 2. Look at the `db_write_timestamp` column values to confirm when data was last updated
@@ -1685,7 +2656,7 @@ To confirm your indexer is working correctly:
 
 ### Checking Indexing Status
 
-To verify your indexer is actively processing new blocks:
+To verify your blockchain indexer is actively processing new blocks:
 
 1. Go to the Data tab
 2. Select any entity table
@@ -1713,7 +2684,7 @@ When testing, you may need to reset your database:
 
 ## Best Practices
 
-- **Regular Verification**: Periodically check both the API and Data tabs to ensure your indexer is functioning correctly
+- **Regular Verification**: Periodically check both the API and Data tabs to ensure your blockchain indexer is functioning correctly
 - **Query Testing**: Test complex queries in the API tab before implementing them in your application
 - **Schema Validation**: Use the Data tab to verify that relationships between entities are correctly established
 - **Performance Monitoring**: Watch for tables that grow unusually large, which might indicate inefficient indexing
@@ -1774,9 +2745,9 @@ This pattern scales: you can keep per-entity counters, rolling windows (daily/ho
 
 If runtime aggregate queries are a hard requirement for your use case, please reach out and we can evaluate options for your project on the hosted service. Contact us on Discord.
 
-## Disable Hasura for Self-Hosted Indexers
+## Disable Hasura for Self-Hosted Blockchain Indexers
 
-Starting from `envio@2.26.0` it's possible to disable Hasura integration for self-hosted indexers. To do so, set the `ENVIO_HASURA` environment variable to `false`.
+Starting from `envio@2.26.0` it's possible to disable Hasura integration for self-hosted blockchain indexers. To do so, set the `ENVIO_HASURA` environment variable to `false`.
 
 ---
 
@@ -1784,7 +2755,7 @@ Starting from `envio@2.26.0` it's possible to disable Hasura integration for sel
 
 **File:** `Guides/environment-variables.md`
 
-Environment variables are a crucial part of configuring your Envio indexer. They allow you to manage sensitive information and configuration settings without hardcoding them in your codebase.
+Environment variables are a crucial part of configuring your Envio blockchain indexer. They allow you to manage sensitive information and configuration settings without hardcoding them in your codebase.
 
 ## Naming Convention
 
@@ -1806,7 +2777,7 @@ To ensure continued access to HyperSync, set an Envio API token in your environm
 The following variables are used by HyperIndex:
 
 - `ENVIO_API_TOKEN`: API token for HyperSync access (required for continued access in self-hosted deployments)
-- `ENVIO_HASURA`: Set to `false` to disable Hasura integration for self-hosted indexers
+- `ENVIO_HASURA`: Set to `false` to disable Hasura integration for self-hosted blockchain indexers
 
 - `MAX_BATCH_SIZE`: Size of the in-memory batch before writing to the database. Default: `5000`. Set to `1` to help isolate which event or data save is causing Postgres write errors.
 
@@ -1876,7 +2847,7 @@ For use of environment variables in your configuration file, read the docs here:
 1. **Use descriptive names**: Make your environment variable names clear and descriptive
 1. **Document your variables**: Keep a list of required environment variables in your project's README
 1. **Use different values**: Use different environment variables for development, staging, and production environments
-1. **Validate required variables**: Check that all required environment variables are set before starting your indexer
+1. **Validate required variables**: Check that all required environment variables are set before starting your blockchain indexer
 
 ## Troubleshooting
 
@@ -1891,22 +2862,22 @@ For more help, see our Troubleshooting Guide.
 
 ---
 
-## Uniswap V4 Multi-chain Indexer
+## Uniswap V4 Multichain Indexer
 
 **File:** `Examples/example-uniswap-v4.md`
 
-The following indexer example is a reference implementation and can serve as a starting point for applications with similar logic.
+The following blockchain indexer example is a reference implementation and can serve as a starting point for applications with similar logic.
 
 This official Uniswap V4 indexer is a comprehensive implementation for the Uniswap V4 protocol using Envio HyperIndex. This is the same indexer that powers the v4.xyz website, providing real-time data for the Uniswap V4 interface.
 
 ## Key Features
 
-- **Multi-chain Support**: Indexes Uniswap V4 deployments across 10 different blockchain networks in real-time
+- **Multichain Support**: Indexes Uniswap V4 deployments across 10 different blockchain networks in real-time
 - **Complete Pool Metrics**: Tracks pool statistics including volume, TVL, fees, and other critical metrics
 - **Swap Analysis**: Monitors swap events and liquidity changes with high precision
 - **Hook Integration**: In-progress support for Uniswap V4 hooks and their events
 - **Production Ready**: Powers the official v4.xyz interface with production-grade reliability
-- **Ultra-Fast Syncing**: Processes massive amounts of blockchain data significantly faster than alternative indexing solutions, reducing sync times from days to minutes
+- **Ultra-Fast Syncing**: Processes massive amounts of blockchain data significantly faster than alternative blockchain indexing solutions, reducing sync times from days to minutes
 
 !V4 gif
 
@@ -1952,7 +2923,7 @@ This is an official reference implementation that powers the v4.xyz website. Whi
 
 **File:** `Examples/example-sablier.md`
 
-The following indexers serve as exceptional reference implementations for the Sablier protocol, showcasing professional development practices and efficient multi-chain data processing.
+The following blockchain indexers serve as exceptional reference implementations for the Sablier protocol, showcasing professional development practices and efficient multichain data processing.
 
 ## Overview
 
@@ -1970,13 +2941,13 @@ Tracks the core Sablier lockup contracts, which handle the streaming of tokens w
 
 Monitors Sablier's advanced streaming functionality, allowing for dynamic flow rates and more complex streaming scenarios. This indexer captures stream modifications, batch operations, and other flow-specific events. Powers the payments side of the Sablier application.
 
-### 3. Merkle Indexer
+### 3. Airdrops Indexer
 
-Tracks Sablier's Merkle distribution system, which enables efficient batch stream creation using cryptographic proofs. This indexer provides data about batch creations, claims, and related activities. Used for both Airstreams and Instant Airdrops functionality.
+Tracks Sablier's Merkle Airdrops, which enables efficient batch stream creation using cryptographic proofs. This indexer captures data about batch creations, claims, and related activities. Used for both Airstreams and Instant Airdrops functionality.
 
 ## Key Features
 
-- **Comprehensive Multi-chain Support**: Indexes data across 18 different EVM chains
+- **Comprehensive Multichain Support**: Indexes data across 18 different EVM chains
 - **Professionally Maintained**: Used in production by the Sablier team and their partners
 - **Extensive Test Coverage**: Includes comprehensive testing to ensure data accuracy
 - **Optimized Performance**: Implements efficient data processing techniques
@@ -1986,7 +2957,7 @@ Tracks Sablier's Merkle distribution system, which enables efficient batch strea
 
 ## Best Practices Showcase
 
-These indexers demonstrate several development best practices:
+These blockchain indexers demonstrate several development best practices:
 
 - **Modular Code Structure**: Well-organized code with clear separation of concerns
 - **Consistent Naming Conventions**: Professional and consistent naming throughout
@@ -2014,16 +2985,16 @@ For complete API documentation and usage examples, see:
 - Implementation Caveats
 
 :::note
-These are official indexers maintained by the Sablier team and represent production-quality implementations. They serve as excellent examples of professional indexer development and are regularly updated to support the latest protocol features.
+These are official indexers maintained by the Sablier team and represent production-quality implementations. They serve as an excellent example of professional blockchain indexer development and are regularly updated to support the latest protocol features.
 :::
 
 ---
 
-## Envio Hosted Service
+## Hosted Service
 
 **File:** `Hosted_Service/hosted-service.md`
 
-Envio offers a fully managed hosting solution for your indexers, providing all the infrastructure, scaling, and monitoring needed to run production-grade indexers without operational overhead.
+Envio offers a fully managed hosting solution for your blockchain indexers, providing all the infrastructure, scaling, and monitoring needed to run production-grade indexers without operational overhead.
 
 Our hosted service offers multiple plans to suit different needs, from free development environments to enterprise-grade dedicated hosting. Each plan includes powerful features like static production endpoints, built-in alerts, and production-ready infrastructure. 
 
@@ -2045,7 +3016,7 @@ Envio provides flexibility in how you deploy and host your indexers:
 - **Comprehensive Alerting**: Multi-channel notifications (Discord, Slack, Telegram, Email) for critical issues, performance warnings, and deployment updates
 - **Security Features**: IP/Domain whitelisting to control access to your indexer endpoints
 - **GraphQL API**: Access your indexed data through a performant, production-ready GraphQL endpoint
-- **Multi-chain Support**: Deploy indexers that track multiple networks from a single codebase
+- **Multichain Support**: Deploy indexers that track multiple networks from a single codebase
 
 
 ## Hosted Service Deployment Model
@@ -2082,17 +3053,43 @@ For a complete list of local CLI commands to develop your indexer, see the CLI C
 
 **File:** `Hosted_Service/hosted-service-features.md`
 
-Our hosted service includes several production-ready features to help you manage and secure your indexer deployments.
+Our hosted service includes several production-ready features to help you manage and secure your blockchain indexer deployments.
 
 :::info Plan Availability
 Most features listed on this page are available for **paid production plans only**. The free development plan has limited features and is designed for testing and development purposes. View our pricing plans to see what's included in each plan.
 :::
 
 
+## Deployment Tags
+
+Organize and identify your deployments with custom key/value tags. Tags help you categorize deployments by environment, project, team, or any custom attribute that fits your workflow.
+
+**How it works:**
+- Add up to **5 custom tags** per deployment via the deployment overview page
+- Each tag consists of a **key** (max 20 characters) and a **value** (max 20 characters, automatically lowercased)
+- Click "+ Add Tag" to create new tags, or click existing tags to edit or delete them
+
+**Special `name` Tag:**
+
+The `name` tag has special behavior-when set, its value is displayed directly on the deployment list, making it easy to identify deployments at a glance without navigating into each one.
+
+**Example Use Cases:**
+- `name: staging` or `name: production` - quickly identify deployment purpose
+- `env: staging` / `env: production` - categorize by environment
+- `team: frontend` - organize by team ownership
+- `version: v2` - track deployment versions
+
+**Benefits:**
+- Quickly identify deployments in the list view
+- Organize deployments across multiple projects or environments
+- Add context and metadata to your deployments
+- Filter and locate deployments more efficiently
+
+
 ## IP Whitelisting
-:::info Coming Soon!
-Full support for whitelisting is in active development.
-:::
+
+*Availability: Paid plans only*
+
 Control access to your indexer by restricting requests to specific IP addresses. This security feature helps protect your data and ensures only authorized clients can query your indexer.
 
 **Benefits:**
@@ -2102,12 +3099,46 @@ Control access to your indexer by restricting requests to specific IP addresses.
 - Ideal for production environments with strict access requirements
 
 
+## Effect API Cache
+
+*Availability: Medium plans and up*
+
+Speed up your indexer deployments by caching Effect API results. When enabled, new deployments will start with preloaded effect data, eliminating the need to re-fetch external data and significantly reducing sync time.
+
+**How it works:**
+1. **Save a Cache**: From any deployment, click "Save Cache" to capture the current effect data
+2. **Configure Settings**: Navigate to Settings > Cache to manage your caches
+3. **Enable Caching**: Toggle caching on and select which cache to use for new deployments
+4. **Deploy**: New deployments will automatically restore from the selected cache
+
+**Key Features:**
+- **Quick Save**: Save cache directly from the deployment page with one click
+- **Cache Management**: View, select, and delete caches from the Cache settings page
+- **Automatic Restore**: New deployments preload effect data from the active cache
+- **Download Cache**: Download caches for local development, enabling faster iteration without re-fetching external data
+
+
+**Benefits:**
+- Dramatically faster deployment sync times
+- Reduced external API calls during indexing
+- Seamless deployment updates with preserved effect state
+
+:::tip
+Learn more about the Effect API and how caching works in our Effect API documentation.
+:::
+
+:::info Version Requirement
+This feature is only available for blockchain indexers deployed with version 2.26.0 or higher.
+:::
+
 ## Built-in Alerts
+
+*Availability: Paid plans only*
 
 Stay informed about your indexer's health and performance with our integrated alerting system. Configure multiple notification channels and choose which alerts you want to receive.
 
 :::info Version Requirement
-This feature is only available for indexers deployed with version 2.24.0 or higher.
+This feature is only available for blockchain indexers deployed with version 2.24.0 or higher.
 :::
 
 ### Notification Channels
@@ -2121,7 +3152,7 @@ Configure one or multiple notification channels to receive alerts:
 
 ## Zero-Downtime Deployments
 
-Update your indexer without any service interruption using our seamless deployment system with static production endpoints.
+Update your blockchain indexer without any service interruption using our seamless deployment system with static production endpoints.
 
 **How it works:**
 - Deploy new versions alongside your current deployment
@@ -2200,7 +3231,7 @@ For deployment instructions and limits, see our Deployment Guide. For pricing an
 
 **File:** `Hosted_Service/hosted-service-deployment.md`
 
-The Envio Hosted Service provides a seamless git-based deployment workflow, similar to modern platforms like Vercel. This enables you to easily deploy, update, and manage your indexers through your normal development workflow.
+The Envio Hosted Service provides a seamless git-based deployment workflow, similar to modern platforms like Vercel. This enables you to easily deploy, update, and manage your blockchain indexers through your normal development workflow.
 
 ## Prerequisites & Important Information
 
@@ -2261,8 +3292,8 @@ For complete pricing details and feature comparison, see our Pricing & Billing p
 
 ### Configure Your Indexer
 
-4. **Add a New Indexer**: Click "Add Indexer" in the dashboard
-5. **Connect to Repository**: Select the repository containing your indexer code
+4. **Connect a Repo**: Select the repository containing your indexer code
+5. **Add the Indexer**: Click "Add Indexer" and configure your indexer
 6. **Configure Deployment Settings**:
    - Specify the config file location
    - Set the root directory (important for monorepos)
@@ -2365,30 +3396,33 @@ The following screenshots show each step of the deployment process:
 ### Step 1: Select Organization
 !Select organisation
 
-### Step 2: Install Github App
+### Step 2: Install GitHub App
 !Install GitHub App
 
-### Step 3: Add a New Indexer
-!Add indexer
+### Step 3: Connect a Repo
+!Connect a repo
 
-### Step 4: Connect to Repository
-!Connect indexer
+### Step 4: Add the Indexer
+!Add the indexer
 
 ### Step 5: Configure Deployment Settings
 !Configure indexer
-!Deploy indexer
 
 ### Step 6: Create a Deployment Branch
-!Create branch
+!Create deployment branch
 
 ### Step 7: Deploy via Git
-!Push code
+!Deploy via Git
 
-### Step 8: Monitoring
-Full details are available in our **Monitoring Guide**.
+### Step 8: Indexer Deployed
+Once deployment completes, your indexer should be live and you should see the overview dashboard below. Full monitoring details are available in our **Monitoring Guide**.
 
-### Step 9: Continuous Configuration
-!Configure indexer
+!Indexer overview
+
+### Step 9: Manage Indexer Configuration
+Manage indexer configurations and deployments using the sidebar navigation on the left.
+
+!Manage indexer configuration
 
 
 ## Related Documentation
@@ -2400,11 +3434,11 @@ Full details are available in our **Monitoring Guide**.
 
 ---
 
-## Monitoring Your Indexer
+## Monitoring Your Blockchain Indexer
 
 **File:** `Hosted_Service/hosted-service-monitoring.md`
 
-Once your indexer is deployed, the Envio Hosted Service provides several tools to help you monitor its health, performance, and progress.
+Once your blockchain indexer is deployed, the Envio Hosted Service provides several tools to help you monitor its health, performance, and progress.
 
 ## Dashboard Overview
 
@@ -2467,14 +3501,15 @@ Set up multiple notification channels (**Paid Plans Only**) to ensure you never 
 ## Visual Reference
 
 ### Dashboard Overview
-!Dashboard Overview
+!Dashboard overview
 
-### Network Progress Bars
-!Progress
+### Network Progress by Chain
+!Network progress bars
 
-### Example Failure Notifications
-!Dashboard Failures
-!Deployment Failure
+### Example Failure Notification
+When indexing stops, the dashboard clearly surfaces the issue so you can investigate and resolve it quickly.
+
+!Indexing has stopped
 
 ## Related Documentation
 
@@ -2519,7 +3554,7 @@ For detailed feature explanations, see our Features page. For deployment instruc
 
 ---
 
-## Self-Hosting Your Envio Indexer
+## Self-Hosting Your Blockchain Indexer
 
 **File:** `Hosted_Service/self-hosting.md`
 
@@ -2527,7 +3562,7 @@ For detailed feature explanations, see our Features page. For deployment instruc
 This documentation page is actively being improved. Check back regularly for updates and additional information.
 :::
 
-While Envio offers a fully managed Hosted Service, you may prefer to run your indexer on your own infrastructure. This guide covers everything you need to know about self-hosting Envio indexers.
+While Envio offers a fully managed Hosted Service, you may prefer to run your blockchain indexer on your own infrastructure. This guide covers everything you need to know about self-hosting Envio indexers.
 
 :::note
 We deeply appreciate users who choose our hosted service, as it directly supports our team and helps us continue developing and improving Envio's technology. If your use case allows for it, please consider the hosted option.
@@ -2551,7 +3586,7 @@ Before self-hosting, ensure you have:
 - Sufficient storage for blockchain data and the indexer database
 - Adequate CPU and memory resources (requirements vary based on chains and indexing complexity)
 - Required HyperSync and/or RPC endpoints
-- Envio API token for HyperSync access (`ENVIO_API_TOKEN`) — required for continued access. See API Tokens.
+- Envio API token for HyperSync access (`ENVIO_API_TOKEN`) - required for continued access. See API Tokens.
 
 ## Getting Started
 
@@ -2589,7 +3624,26 @@ For most production use cases, we recommend using the Envio Hosted Service to be
 
 ---
 
-## Indexing Optimism Bridge Deposits
+## Organisation Setup
+
+**File:** `Hosted_Service/organisation-setup.md`
+
+Use this guide to set up an organisation in the Envio Hosted Service and grant access to your team.
+
+
+## Access Control
+
+Being a member of the GitHub organisation **does not** automatically grant access to the organisation in the Envio Hosted Service UI. Each member must be explicitly added by the organisation admin. If someone attempts to visit the organisation URL (e.g., `https://envio.dev/app/`) without being added, they'll see a "You are not a member of this team" message.
+
+
+
+!Not a Member Error
+
+
+
+---
+
+## Tutorial Op Bridge Deposits
 
 **File:** `Tutorials/tutorial-op-bridge-deposits.md`
 
@@ -2609,7 +3663,7 @@ Before starting, ensure you have the following installed:
 - **pnpm** _(v8 or newer)_
 - **Docker Desktop** _(required to run the Envio indexer locally)_
 
-> **Note:** Docker is specifically required to run your indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
+> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
 
 ## Step 1: Initialize Your Indexer
 
@@ -2786,7 +3840,7 @@ For more tutorials and advanced features, check out our documentation or watch o
 
 ---
 
-## Indexing ERC20 Token Transfers on Base
+## Tutorial Erc20 Token Transfers
 
 **File:** `Tutorials/tutorial-erc20-token-transfers.md`
 
@@ -2806,7 +3860,7 @@ Before starting, ensure you have the following installed:
 - **pnpm** _(v8 or newer)_
 - **Docker Desktop** _(required to run the Envio indexer locally)_
 
-> **Note:** Docker is specifically required to run your indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
+> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
 
 ## Step 1: Initialize Your Indexer
 
@@ -2970,13 +4024,13 @@ For more tutorials and advanced features, check out our documentation or watch o
 
 ---
 
-## Indexing Sway Farm on the Fuel Network
+## Tutorial Indexing Fuel
 
 **File:** `Tutorials/tutorial-indexing-fuel.md`
 
-Until recently, HyperIndex was only available on EVM-compatible blockchains, and now we have extended support to the Fuel Network.
+HyperIndex supports any EVM-compatible blockchain and the Fuel Network.
 
-Indexers are vital to the success of any dApp. In this tutorial, we will create an Envio indexer for the Fuel dApp Sway Farm step by step.
+Blockchain indexers are vital to the success of any dApp. In this tutorial, we will create an Envio indexer for the Fuel dApp Sway Farm step by step.
 
 Sway Farm is a simple farming game and for the sake of a real-world example, let's create the indexer for a leaderboard of all farmers 🧑‍🌾
 
@@ -2996,7 +4050,7 @@ Website | X | Discord
 - **pnpm** _(v8 or newer)_
 - **Docker Desktop** _(required to run the Envio indexer locally)_
 
-> **Note:** Docker is specifically required to run your indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
+> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
 
 ## Initialize the project
 
@@ -3288,13 +4342,13 @@ Join our Discord channel to make sure you catch all new releases.
 
 ---
 
-## Indexing a Greeter Contract
+## Greeter Tutorial
 
 **File:** `Tutorials/greeter-tutorial.md`
 
 ## Introduction
 
-This tutorial provides a step-by-step guide to indexing a simple Greeter smart contract deployed on multiple blockchains. You'll learn how to set up and run a multi-chain indexer using Envio's template system.
+This tutorial provides a step-by-step guide to indexing a simple Greeter smart contract deployed on multiple blockchains. You'll learn how to set up and run a multichain indexer using Envio's template system.
 
 ### What is the Greeter Contract?
 
@@ -3304,7 +4358,7 @@ The Greeter contract is a straightforward smart contract that allows users to st
 
 By the end of this tutorial, you'll have:
 
-- A functioning multi-chain indexer that tracks greeting events
+- A functioning multichain indexer that tracks greeting events
 - The ability to query these events through a GraphQL endpoint
 - Experience with Envio's core indexing functionality
 
@@ -3316,7 +4370,7 @@ Before starting, ensure you have the following installed:
 - **pnpm** _(v8 or newer)_
 - **Docker Desktop** _(required to run the Envio indexer locally)_
 
-> **Note:** Docker is specifically required to run your indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
+> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
 
 ## Step 1: Initialize Your Project
 
@@ -3450,7 +4504,7 @@ To see your indexer in action, you can write new greetings to the blockchain:
 3. Use the `setGreeting` function to write a new greeting
 4. Submit the transaction
 
-Since this is a multi-chain example, you can interact with both contracts to see how Envio handles data from different blockchains simultaneously.
+Since this is a multichain example, you can interact with both contracts to see how Envio handles data from different blockchains simultaneously.
 
 ## Step 5: Query the Indexed Data
 
@@ -3918,7 +4972,7 @@ query ComparePrices {
 
 When comparing our three price data sources, we found:
 
-!Table of indexer results
+
 
 Looking at the `offchainOracleDiff` column, we can see that oracle and off-chain prices typically align closely but can deviate by as much as 17.98% in some cases.
 
@@ -3959,7 +5013,7 @@ To further enhance your price data indexing:
 1. **Implement caching** for off-chain API calls
 2. **Cross-reference multiple DEX pools** for better accuracy
 3. **Consider time-weighted average prices (TWAP)** instead of spot prices
-4. **Use multi-chain indexing** to access higher-liquidity pools on major networks
+4. **Use multichain indexing** to access higher-liquidity pools on major networks
 
 By carefully choosing and implementing the right price data strategy, you can build robust indexers that provide accurate financial data for your blockchain applications.
 
@@ -4067,7 +5121,7 @@ pnpm codegen
 
 ---
 
-## Dynamic Contracts / Factories
+## Dynamic Contracts
 
 **File:** `Advanced/dynamic-contracts.md`
 
@@ -4535,7 +5589,7 @@ networks:
         handler: ./src/EventHandlers.ts
         events:
           - event: Transfer(address indexed from, address indexed to, uint256 value)
-        addresses:
+        address:
           - 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
           - 0x70997970C51812dc3A010C7d01b50e0d17dc79C8
           - 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC
@@ -4579,7 +5633,7 @@ networks:
         handler: ./src/EventHandlers.ts
         events:
           - event: NewSafe(address safe)
-        addresses:
+        address:
           - 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
       - name: Safe
         handler: ./src/EventHandlers.ts
@@ -4823,7 +5877,7 @@ ERC20.Transfer.handler(async ({ event, context }) => {
 });
 ```
 
-**Without Preload Optimization:** If you're processing 5,000 transfer events, each with unique `from` and `to` addresses, this results in **10,000 total database roundtrips**—one for each sender and receiver lookup (2 per event × 5,000 events). This creates a significant bottleneck that slows down your entire indexing process.
+**Without Preload Optimization:** If you're processing 5,000 transfer events, each with unique `from` and `to` addresses, this results in **10,000 total database roundtrips**-one for each sender and receiver lookup (2 per event × 5,000 events). This creates a significant bottleneck that slows down your entire indexing process.
 
 **With Preload Optimization:** During the Preload Phase, all 5,000 events are processed in parallel. HyperIndex batches database reads that occur simultaneously into single database queries - one query for sender lookups and one for receiver lookups. The loaded accounts are cached in memory. After the Preload Phase completes, the second processing phase begins. This phase runs handlers sequentially in on-chain order, but instead of making database calls, it retrieves the data from the in-memory cache.
 
@@ -4861,13 +5915,13 @@ ERC20.Transfer.handler(async ({ event, context }) => {
 });
 ```
 
-**Without Preload Optimization:** If you're processing 5,000 transfer events, each with an external call, this results in **5,000 sequential external calls**—each waiting for the previous one to complete. This can turn a fast indexing process into a slow, sequential crawl.
+**Without Preload Optimization:** If you're processing 5,000 transfer events, each with an external call, this results in **5,000 sequential external calls**-each waiting for the previous one to complete. This can turn a fast indexing process into a slow, sequential crawl.
 
 **With Preload Optimization:** Since handlers run **twice** for each event, making direct external calls can be problematic. The Effect API provides a solution. During the Preload Phase, it batches all external calls and runs them in parallel. Then during the Processing Phase, it runs the handlers sequentially, retrieving the already requested data from the in-memory store.
 
 ```typescript
 
-const fetchMetadata = experimental_createEffect(
+const fetchMetadata = createEffect(
   {
     name: "fetchMetadata",
     input: {
@@ -4876,6 +5930,10 @@ const fetchMetadata = experimental_createEffect(
     output: {
       decimals: S.number,
       symbol: S.string,
+    },
+    rateLimit: {
+      calls: 5,
+      per: "second",
     },
   },
   async ({ input }) => {
@@ -5003,6 +6061,7 @@ ERC20.Transfer.handler(async ({ event, context }) => {
 
 **File:** `Advanced/effect-api.md`
 
+
 The Effect API provides a powerful and convenient way to perform external calls from your handlers. It's especially effective when used with Preload Optimization:
 
 - **Automatic batching**: Calls of the same kind are automatically batched together
@@ -5011,17 +6070,21 @@ The Effect API provides a powerful and convenient way to perform external calls 
 - **Persistence**: Built-in support for result persistence for indexer reruns (opt-in via `cache: true`)
 - **Future enhancements**: We're working on automatic retry logic and enhanced caching workflows 🏗️
 
-To use the Effect API, you first need to define an effect using `experimental_createEffect` function from the `envio` package:
+To use the Effect API, you first need to define an effect using `createEffect` function from the `envio` package:
 
 ```typescript
 
-export const getMetadata = experimental_createEffect(
+export const getMetadata = createEffect(
   {
     name: "getMetadata",
     input: S.string,
     output: {
       description: S.string,
       value: S.bigint,
+    },
+    rateLimit: {
+      calls: 5,
+      per: "second",
     },
     cache: true,
   },
@@ -5042,6 +6105,7 @@ The first argument is an options object that describes the effect:
 - `name` (required) - the name of the effect used for debugging and logging
 - `input` (required) - the input type of the effect
 - `output` (required) - the output type of the effect
+- `rateLimit` (required) - the maximum calls allowed per timeframe, or `false` to disable
 - `cache` (optional) - save effect results in the database to prevent duplicate calls (Starting from `envio@2.26.0`)
 
 The second argument is a function that will be called with the effect's input.
@@ -5079,7 +6143,7 @@ const lbtcContract = getContract({
 });
 
 // Effect to get the balance of a specific address at a specific block
-export const getBalance = experimental_createEffect(
+export const getBalance = createEffect(
   {
     name: "getBalance",
     input: {
@@ -5087,6 +6151,10 @@ export const getBalance = experimental_createEffect(
       blockNumber: S.optional(S.bigint),
     },
     output: S.bigint,
+    rateLimit: {
+      calls: 5,
+      per: "second",
+    },
     cache: true,
   },
   async ({ input, context }) => {
@@ -5114,7 +6182,27 @@ export const getBalance = experimental_createEffect(
 
 By default, effect results are not persisted in the database. This means if the effect with the same input is called again, the function will be executed the second time.
 
-To persist effect results, you can set the `cache` option to `true` when creating the effect. This will save the effect results in the database and reuse them in future indexer runs.
+To persist effect results, you can set the `cache` option to `true` when creating the effect. This will save the effect results in the database and reuse them in future indexer runs. You can also override caching for a specific call by setting `context.cache = false`, which prevents storing results for that execution, especially useful when handling failed responses.
+
+Example setting cache to false with context.cache:
+
+```typescript
+export const getBalance = createEffect(
+  {
+    // effect options
+    cache: true,
+  },
+  async ({ input, context }) => {
+    try {
+      // your effect logic
+    } catch (_) {
+      // Don't cache failed response
+      context.cache = false;
+      return undefined;
+    }
+  }
+);
+```
 
 Every effect cache creates a new table in the database `envio_effect_${effectName}`. You can see it and query in Hasura console with admin secret.
 
@@ -5130,21 +6218,75 @@ When the indexer is rerun by using `envio dev` or `envio start -r` call, the ini
 
 > **Note:** This feature is available starting from `envio@2.26.0`. It also doesn't support rollbacks on reorgs. The support for reorgs will be added in the future.
 
+
 ### Cache on Hosted Service
 
-The same `.envio/cache` can be also used to populate the initial cache on the hosted service.
+The hosted service provides built-in cache management for Effect API results, allowing you to save and restore caches directly from the dashboard without committing files to your repository.
 
-Although this solution is very limited, and we're actively working on a better integration:
+**Key Features:**
+- **Save Cache**: Capture effect data from any deployment with one click via Quick Actions
+- **Cache Settings**: Manage caches in Settings > Cache - enable/disable caching and select which cache to use
+- **Automatic Restore**: New deployments automatically preload effect data from your selected cache
 
-- It requires to commit `.envio/cache` to the GitHub repository, increasing the repository and git history size
-- The file size is limited to 100MB, which is not enough for some use cases
-- There might be issues with pulling big caches from the GitHub repository
+This eliminates the need to commit `.envio/cache` to your repository and removes file size limitations.
 
-Join our Discord to get updates on the progress of the hosted service integration.
+For detailed instructions, see the Effect API Cache documentation.
 
-### Why Experimental?
+### Rate Limit
 
-The Effect API is currently marked as experimental, but we don't expect major breaking changes in the future. This designation simply means we're actively iterating on the feature and may add new capabilities that could subtly change indexer behavior. We plan to remove the `experimental` tag soon, and your feedback is invaluable in this process!
+Starting from `v2.32.0`, the `rateLimit` option was added. It controls how frequently an effect can run within a given timeframe. You can set it to `false` to disable rate limiting or define a custom limit such as calls per second, minute, or a duration in milliseconds.
+
+```typescript
+// Effect to get the balance of a specific address at a specific block
+export const getBalance = createEffect(
+  {
+    name: "getBalance",
+    input: {
+      address: S.string,
+      blockNumber: S.optional(S.bigint),
+    },
+    output: S.bigint,
+    // rateLimit: false, // you can set rateLimit to false if needed
+    rateLimit: {
+      calls: 5,
+      per: "second",  // also supports "minute" or a duration in milliseconds
+    },
+    cache: true,
+  },
+  async ({ input, context }) => {
+      // your effect logic 
+  }
+);
+```
+
+Watch the following video to learn more about createEffect and other updates introduced in v2.32.0.
+
+
+### Migrate from Experimental
+
+If you're migrating from `experimental_createEffect` to `createEffect`, remove the `experimental_` prefix and add the `rateLimit` option, which is now required. In `experimental_createEffect`, the `rateLimit` option was optional and defaulted to `false`.
+
+```diff typescript
+- export const getBalance = experimental_createEffect(
++ export const getBalance = createEffect(
+  {
+    name: "getBalance",
+    input: {
+      address: S.string,
+      blockNumber: S.optional(S.bigint),
+    },
+    output: S.bigint,
++   rateLimit: {
++     calls: 5,
++     per: "second",
++   },
+    cache: true,
+  },
+  async ({ input, context }) => {
+    // your effect logic
+  }
+);
+```
 
 ---
 
@@ -5353,7 +6495,7 @@ const tokenMetadataSchema = S.schema({
 // Infer the type from the schema
 type TokenMetadata = S.Infer;
 
-export const getTokenMetadata = experimental_createEffect(
+export const getTokenMetadata = createEffect(
   {
     name: "getTokenMetadata",
     input: {
@@ -5361,6 +6503,10 @@ export const getTokenMetadata = experimental_createEffect(
       chainId: S.number,
     },
     output: tokenMetadataSchema,
+    rateLimit: {
+      calls: 5,
+      per: "second",
+    },
     // Enable caching to avoid duplicated calls
     cache: true,
   },
@@ -5633,11 +6779,15 @@ async function fetchFromEndpoint(
   }
 }
 
-export const getIpfsMetadata = experimental_createEffect(
+export const getIpfsMetadata = createEffect(
   {
     name: "getIpfsMetadata",
     input: S.string,
     output: nftMetadataSchema,
+    rateLimit: {
+      calls: 5,
+      per: "second",
+    },
   },
   async ({ input: tokenId, context }) => {
     for (const endpoint of endpoints) {
@@ -5734,11 +6884,15 @@ try {
 Follow the Effect API Persistence guide to implement caching for local development. This should allow you to avoid repeatedly fetching the same data.
 
 ```typescript
-export const getIpfsMetadata = experimental_createEffect(
+export const getIpfsMetadata = createEffect(
   {
     name: "getIpfsMetadata",
     input: S.string,
     output: nftMetadataSchema,
+    rateLimit: {
+      calls: 5,
+      per: "second",
+    },
     cache: true, // Enable caching
   },
   async ({ input: tokenId, context }) => {...}
@@ -5793,13 +6947,13 @@ To mitigate these issues:
 
 **File:** `Advanced/hypersync.md`
 
-> **"Beam me up, Scotty!"** 🖖 — Just like the Star Trek transporter, HyperSync delivers your blockchain data at warp speed.
+> **"Beam me up, Scotty!"** 🖖 - Just like the Star Trek transporter, HyperSync delivers your blockchain data at warp speed.
 
 ## What is HyperSync?
 
 HyperSync is a purpose built data-node that helps powers the exceptional performance of HyperIndex. It's a specialized data source optimized for indexing that provides:
 
-- **100x faster sync speeds** compared to traditional RPC methods
+- **2000x faster sync speeds** compared to traditional RPC methods
 - **Cost-effective data retrieval** with optimized resource usage
 - **Flexibility** with the ability to fetch multiple data points in a single round trip with more complex filtering
 
@@ -5857,58 +7011,21 @@ When using HyperSync, you can specify `start_block: 0` in your configuration. Hy
 
 This feature eliminates the need to manually determine the deployment block of your contract, saving setup time and reducing configuration errors.
 
-## Availability and Support
+## Hosting and Support
 
 HyperSync is maintained and hosted by Envio for all supported networks. We handle the infrastructure, allowing you to focus on building your indexer logic.
-
-### Improving resilience with RPC fallback
-
-HyperIndex allows you to configure additional RPC providers as fallback data sources. This redundancy is **recommended** for production deployments to ensure continuous operation of your indexer. If HyperSync experiences any interruption, your indexer will automatically switch to the fallback RPC provider.
-
-Adding an RPC fallback provides these benefits:
-
-- **High availability**: Your indexer continues to function even during temporary HyperSync outages
-- **Automatic failover**: The system detects issues and switches to fallback RPC without manual intervention
-- **Operational control**: You can specify which RPC providers to use as fallbacks based on your requirements
-
-Configure a fallback RPC by adding the `rpc` field to your network configuration:
-
-```diff
-name: Greeter
-description: Greeter indexer
-networks:
-  - id: 137 # Polygon
-+   # Short and simple
-+   rpc: https://eth-mainnet.your-rpc-provider.com?API_KEY={ENVIO_MAINNET_API_KEY}
-+   # Or provide multiple RPC endpoints with more flexibility
-+   rpc:
-+     - url: https://eth-mainnet.your-rpc-provider.com?API_KEY={ENVIO_MAINNET_API_KEY}
-+       for: fallback
-+     - url: https://eth-mainnet.your-free-rpc-provider.com
-+       for: fallback
-+       initial_block_interval: 1000
-    start_block: 0 # With HyperSync, you can use 0 regardless of contract deployment time
-    contracts:
-      - name: PolygonGreeter
-        abi_file_path: abis/greeter-abi.json
-        address: 0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c
-        handler: ./src/EventHandlers.bs.js
-        events:
-          - event: NewGreeting
-          - event: ClearGreeting
-```
-
-:::info
-This feature is available starting from version `2.14.0`. The fallback RPC is activated only when a primary data source doesn't receive a new block for more than 20 seconds.
-:::
 
 ### Supported Networks
 
 HyperSync supports numerous EVM networks including Ethereum, Unichain, Arbitrum, Optimism, and more. For a complete and up-to-date list of supported networks, see the HyperSync Supported Networks documentation.
 
-### Alternatives
+### Alternative Data Sources
 
-HyperSync data source is vendorlock-free. While HyperSync is recommended for optimal performance, you can always switch to RPCs without the need to change your indexer code. For information on configuring RPC-based indexing, visit the RPC Data Source documentation.
+HyperSync data source is vendorlock-free. While HyperSync is **recommended for optimal performance**, you can always switch to RPCs without the need to change your indexer code. For information on configuring RPC-based indexing, visit the RPC Data Source documentation.
+
+### Improving Resilience with RPC fallback
+
+For production deployments, it’s recommended to use HyperSync as the primary data source and have RPCs as fallback to improve reliability.You can read more about it in the RPC Fallback section.
 
 ## Performance Comparison
 
@@ -6022,6 +7139,47 @@ To get the best performance when using RPC:
 3. **Use a paid service** for better reliability and higher rate limits
 4. **Consider multiple fallback RPCs** for redundancy
 
+### Improving resilience with RPC fallback
+
+HyperIndex allows you to configure additional RPC providers as fallback data sources. This redundancy is **recommended** for production deployments to ensure continuous operation of your indexer. If HyperSync experiences any interruption, your indexer will automatically switch to the fallback RPC provider.
+
+Adding an RPC fallback provides these benefits:
+
+- **High availability**: Your indexer continues to function even during temporary HyperSync outages
+- **Automatic failover**: The system detects issues and switches to fallback RPC without manual intervention
+- **Operational control**: You can specify which RPC providers to use as fallbacks based on your requirements
+
+Configure a fallback RPC by adding the `rpc` field to your network configuration:
+
+```diff
+name: Greeter
+description: Greeter indexer
+networks:
+  - id: 137 # Polygon
++   # Short and simple
++   rpc: https://eth-mainnet.your-rpc-provider.com?API_KEY={ENVIO_MAINNET_API_KEY}
++   # Or provide multiple RPC endpoints with more flexibility
++   rpc:
++     - url: https://eth-mainnet.your-rpc-provider.com?API_KEY={ENVIO_MAINNET_API_KEY}
++       for: fallback
++     - url: https://eth-mainnet.your-free-rpc-provider.com
++       for: fallback
++       initial_block_interval: 1000
+    start_block: 0 # With HyperSync, you can use 0 regardless of contract deployment time
+    contracts:
+      - name: PolygonGreeter
+        abi_file_path: abis/greeter-abi.json
+        address: 0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c
+        handler: ./src/EventHandlers.bs.js
+        events:
+          - event: NewGreeting
+          - event: ClearGreeting
+```
+
+:::info
+This feature is available starting from version `2.14.0`. The fallback RPC is activated only when a primary data source doesn't receive a new block for more than 20 seconds.
+:::
+
 ## Enhanced RPC with eRPC
 
 For more robust RPC usage, you can implement eRPC - a fault-tolerant EVM RPC proxy with advanced features like caching and failover.
@@ -6117,7 +7275,7 @@ For any questions about using RPC with HyperIndex, please contact the Envio team
 
 **File:** `Advanced/config-schema-reference.md`
 
-Static, deep-linkable reference for the `config.yaml` JSON Schema.
+Static, deep-linkable reference for the `config.yaml` Schema.
 
 > Tip: Use the Table of Contents to jump to a field or definition.
 
@@ -6627,11 +7785,11 @@ event_decoder: hypersync-client
 
 **File:** `Guides/cli-commands.md`
 
-This comprehensive reference guide covers all available commands and options in the Envio CLI tool. Use this documentation to explore the full capabilities of the `envio` command and its subcommands for managing your indexing projects.
+This comprehensive reference guide covers all available commands and options in the Envio CLI tool. Use this documentation to explore the full capabilities of the `envio` command and its subcommands for managing your blockchain indexing projects.
 
 ## Getting Started
 
-The Envio CLI provides a powerful set of tools for creating, developing, and managing your indexers. Whether you're starting a new project, running a development server, or deploying to production, the CLI offers commands to simplify and automate your workflow.
+The Envio CLI provides a powerful set of tools for creating, developing, and managing your blockchain indexers. Whether you're starting a new project, running a development server, or deploying to production, the CLI offers commands to simplify and automate your workflow.
 
 ## Command Overview
 
@@ -6670,9 +7828,9 @@ The base command that provides access to all Envio functionality.
 
 ###### **Options:**
 
-- `-d`, `--directory ` — The directory of the project. Defaults to current dir ("./")
-- `-o`, `--output-directory ` — The directory within the project that generated code should output to (Default: `generated`)
-- `--config ` — The file in the project containing config (Default: `config.yaml`)
+- `-d`, `--directory ` - The directory of the project. Defaults to current dir ("./")
+- `-o`, `--output-directory ` - The directory within the project that generated code should output to (Default: `generated`)
+- `--config ` - The file in the project containing config (Default: `config.yaml`)
 
 ## Initialization Commands
 
@@ -6686,15 +7844,15 @@ Initialize an indexer with one of the initialization options.
 
 ###### **Subcommands:**
 
-- `contract-import` — Initialize Evm indexer by importing config from a contract for a given chain
-- `template` — Initialize Evm indexer from an example template
-- `fuel` — Initialization option for creating Fuel indexer
+- `contract-import` - Initialize Evm indexer by importing config from a contract for a given chain
+- `template` - Initialize Evm indexer from an example template
+- `fuel` - Initialization option for creating Fuel indexer
 
 ###### **Options:**
 
-- `-n`, `--name ` — The name of your project
-- `-l`, `--language ` — The language used to write handlers (Options: `javascript`, `typescript`, `rescript`)
-- `--api-token ` — The hypersync API key to be initialized in your templates .env file
+- `-n`, `--name ` - The name of your project
+- `-l`, `--language ` - The language used to write handlers (Options: `javascript`, `typescript`, `rescript`)
+- `--api-token ` - The hypersync API key to be initialized in your templates .env file
 
 ### `envio init contract-import`
 
@@ -6704,14 +7862,14 @@ Initialize Evm indexer by importing config from a contract for a given chain.
 
 ###### **Subcommands:**
 
-- `explorer` — Initialize by pulling the contract ABI from a block explorer
-- `local` — Initialize from a local json ABI file
+- `explorer` - Initialize by pulling the contract ABI from a block explorer
+- `local` - Initialize from a local json ABI file
 
 ###### **Options:**
 
-- `-c`, `--contract-address ` — Contract address to generate the config from
-- `--single-contract` — If selected, prompt will not ask for additional contracts/addresses/networks
-- `--all-events` — If selected, prompt will not ask to confirm selection of events on a contract
+- `-c`, `--contract-address ` - Contract address to generate the config from
+- `--single-contract` - If selected, prompt will not ask for additional contracts/addresses/networks
+- `--all-events` - If selected, prompt will not ask to confirm selection of events on a contract
 
 ### `envio init contract-import explorer`
 
@@ -6721,7 +7879,7 @@ Initialize by pulling the contract ABI from a block explorer.
 
 ###### **Options:**
 
-- `-b`, `--blockchain ` — Network to import the contract from (Options include `ethereum-mainnet`, `polygon`, `arbitrum-one`, etc. For complete list, run: `envio init contract-import explorer --help`)
+- `-b`, `--blockchain ` - Network to import the contract from (Options include `ethereum-mainnet`, `polygon`, `arbitrum-one`, etc. For complete list, run: `envio init contract-import explorer --help`)
 
 ### `envio init contract-import local`
 
@@ -6731,11 +7889,11 @@ Initialize from a local json ABI file.
 
 ###### **Options:**
 
-- `-a`, `--abi-file ` — The path to a json abi file
-- `--contract-name ` — The name of the contract
-- `-b`, `--blockchain ` — Name or ID of the contract network
-- `-r`, `--rpc-url ` — The rpc url to use if the network id used is unsupported by our hypersync
-- `-s`, `--start-block ` — The start block to use on this network
+- `-a`, `--abi-file ` - The path to a json abi file
+- `--contract-name ` - The name of the contract
+- `-b`, `--blockchain ` - Name or ID of the contract network
+- `-r`, `--rpc-url ` - The rpc url to use if the network id used is unsupported by our hypersync
+- `-s`, `--start-block ` - The start block to use on this network
 
 ### `envio init template`
 
@@ -6745,7 +7903,7 @@ Initialize Evm indexer from an example template.
 
 ###### **Options:**
 
-- `-t`, `--template ` — Template to use (Options: `greeter`, `erc20`)
+- `-t`, `--template ` - Template to use (Options: `greeter`, `erc20`)
 
 ### `envio init fuel`
 
@@ -6755,8 +7913,8 @@ Initialization option for creating Fuel indexer.
 
 ###### **Subcommands:**
 
-- `contract-import` — Initialize Fuel indexer by importing config from a contract
-- `template` — Initialize Fuel indexer from an example template
+- `contract-import` - Initialize Fuel indexer by importing config from a contract
+- `template` - Initialize Fuel indexer from an example template
 
 ### `envio init fuel contract-import`
 
@@ -6766,13 +7924,13 @@ Initialize Fuel indexer by importing config from a contract for a given chain.
 
 ###### **Subcommands:**
 
-- `local` — Initialize from a local json ABI file
+- `local` - Initialize from a local json ABI file
 
 ###### **Options:**
 
-- `-c`, `--contract-address ` — Contract address to generate the config from
-- `--single-contract` — If selected, prompt will not ask for additional contracts/addresses/networks
-- `--all-events` — If selected, prompt will not ask to confirm selection of events on a contract
+- `-c`, `--contract-address ` - Contract address to generate the config from
+- `--single-contract` - If selected, prompt will not ask for additional contracts/addresses/networks
+- `--all-events` - If selected, prompt will not ask to confirm selection of events on a contract
 
 ### `envio init fuel contract-import local`
 
@@ -6782,8 +7940,8 @@ Initialize from a local json ABI file.
 
 ###### **Options:**
 
-- `-a`, `--abi-file ` — The path to a json abi file
-- `--contract-name ` — The name of the contract
+- `-a`, `--abi-file ` - The path to a json abi file
+- `--contract-name ` - The name of the contract
 
 ### `envio init fuel template`
 
@@ -6793,7 +7951,7 @@ Initialize Fuel indexer from an example template.
 
 ###### **Options:**
 
-- `-t`, `--template ` — Name of the template (Options: `greeter`)
+- `-t`, `--template ` - Name of the template (Options: `greeter`)
 
 ## Development Commands
 
@@ -6825,8 +7983,8 @@ Start the indexer without any automatic codegen.
 
 ###### **Options:**
 
-- `-r`, `--restart` — Clear your database and restart indexing from scratch
-- `-b`, `--bench` — Saves benchmark data to a file during indexing
+- `-r`, `--restart` - Clear your database and restart indexing from scratch
+- `-b`, `--bench` - Saves benchmark data to a file during indexing
 
 ## Environment Management Commands
 
@@ -6840,8 +7998,8 @@ Prepare local environment for envio testing.
 
 ###### **Subcommands:**
 
-- `docker` — Local Envio and ganache environment commands
-- `db-migrate` — Local Envio database commands
+- `docker` - Local Envio and ganache environment commands
+- `db-migrate` - Local Envio database commands
 
 ### `envio local docker`
 
@@ -6851,8 +8009,8 @@ Local Envio and ganache environment commands.
 
 ###### **Subcommands:**
 
-- `up` — Create docker images required for local environment
-- `down` — Delete existing docker images on local environment
+- `up` - Create docker images required for local environment
+- `down` - Delete existing docker images on local environment
 
 ### `envio local docker up`
 
@@ -6874,9 +8032,9 @@ Local Envio database commands.
 
 ###### **Subcommands:**
 
-- `up` — Migrate latest schema to database
-- `down` — Drop database schema
-- `setup` — Setup database by dropping schema and then running migrations
+- `up` - Migrate latest schema to database
+- `down` - Drop database schema
+- `setup` - Setup database by dropping schema and then running migrations
 
 ### `envio local db-migrate up`
 
@@ -7105,7 +8263,7 @@ By properly configuring reorg support, you ensure that your indexed data remains
 
 ## Overview
 
-The `/generated` directory contains files automatically created by Envio's code generation system. These files form the backbone of your indexer's runtime operations, translating your configuration, schema, and event handlers into executable code that processes blockchain data.
+The `/generated` directory contains files automatically created by Envio's code generation system. These files form the backbone of your blockchain indexer's runtime operations, translating your configuration, schema, and event handlers into executable code that processes blockchain data.
 
 > **Important:** Generated files should never be manually edited. Any changes will be overwritten the next time code generation runs.
 
@@ -7580,11 +8738,11 @@ A query language for interacting with APIs, commonly used in blockchain systems 
 
 The data presentation part of an Envio indexer. Typically, it's a GraphQL API auto-generated from the schema file, allowing flexible and efficient data queries.
 
-### Indexer
+### Blockchain Indexer
 
 A specialized database management system (DBMS) that indexes and organizes blockchain data, making it easier for developers to efficiently query, retrieve, and utilize on-chain data.
 
-Web2 apps usually rely on indexers like Google to pre-sort information into indices for data retrieval and filtering. In blockchain and Web3, applications need indexers to achieve similar data retrieval capabilities.
+Web2 apps usually rely on indexers like Google to pre-sort information into indices for data retrieval and filtering. In blockchain and Web3, applications need blockchain indexers to achieve similar data retrieval capabilities.
 
 ### Query
 
@@ -7626,7 +8784,7 @@ A superset of JavaScript that adds static typing and other advanced features to 
 
 ### Hosted Service
 
-A managed service platform for building, hosting, and querying Envio's Indexers with guaranteed uptime and performance service level agreements. The Hosted Service removes the operational burden of running indexers.
+A managed service platform for building, hosting, and querying Envio's Indexers with guaranteed uptime and performance service level agreements. The Hosted Service removes the operational burden of running blockchain indexers.
 
 ### Ploffen
 
@@ -7669,7 +8827,7 @@ As your indexed data grows, database performance becomes critical to maintaining
 
 ## Understanding Database Indices
 
-Database indices are special data structures that improve the speed of data retrieval operations. Think of them like the index at the back of a book — rather than scanning every page (row) to find what you're looking for, indices allow the database to quickly locate the relevant data.
+Database indices are special data structures that improve the speed of data retrieval operations. Think of them like the index at the back of a book - rather than scanning every page (row) to find what you're looking for, indices allow the database to quickly locate the relevant data.
 
 ### Why Indices Matter
 
@@ -8295,6 +9453,186 @@ ERC20.Transfer.handler(async ({ event, context }) => {
 
 ---
 
+## Using WebSockets with GraphQL
+
+**File:** `Advanced/websockets.md`
+
+> **⚠️ Important**: WebSocket support is available but should be used at your own risk on plans other than dedicated.
+
+## Overview
+
+By default, HyperIndex provides GraphQL endpoints over HTTP/HTTPS. However, you can also connect to your GraphQL endpoint using WebSocket connections (WSS/WS) for real-time subscriptions and persistent connections.
+
+## WebSocket Support Status
+
+WebSocket connections are available with different levels of support depending on your hosting plan:
+
+- **Dedicated**: WebSockets are fully supported. The dedicated package includes additional infrastructure such as connection pooling which enables proper WebSocket support.
+- **Other Plans**: WebSocket support is available but should be used at your own risk. These plans do not have the same infrastructure support for WebSockets as dedicated. We don't recommend relying on WebSockets for more than 10 concurrent connections.
+
+## How to Use WebSockets
+
+To use WebSockets with your HyperIndex GraphQL endpoint, simply swap the protocol in your endpoint URL:
+
+### Protocol Mapping
+
+- **HTTPS → WSS**: Change `https://` to `wss://` in your GraphQL endpoint URL
+- **HTTP → WS**: Change `http://` to `ws://` in your GraphQL endpoint URL
+
+### Example
+
+If your GraphQL endpoint is:
+
+```
+https://indexer.hyperindex.xyz/123abcd/graphql
+```
+
+You can connect via WebSocket using:
+
+```
+wss://indexer.hyperindex.xyz/123abcd/graphql
+```
+
+Similarly, for HTTP endpoints:
+
+```
+http://localhost:8080/v1/graphql
+```
+
+Becomes:
+
+```
+ws://localhost:8080/v1/graphql
+```
+
+## Usage Example
+
+Here's a TypeScript example using the `graphql-ws` library to subscribe to real-time updates from your indexer:
+
+```typescript
+
+// Define the entity you are subscribing to (must match your schema definition)
+interface Swap {
+  id: string;
+}
+
+interface SubscriptionData {
+  data?: {
+    Swap?: Swap[];
+  };
+}
+
+const client = createClient({
+  url: 'ws://localhost:8080/v1/graphql',
+});
+
+console.log('Connecting to WebSocket...');
+
+client.subscribe(
+  {
+    query: `
+      subscription {
+        Swap(order_by: { id: desc }, limit: 10) {
+          id
+        }
+      }
+    `,
+  },
+  {
+    next: (data) => {
+      console.log('\n📥 New event received:');
+      console.log(JSON.stringify(data, null, 2));
+    },
+    error: (err) => {
+      console.error('❌ Error:', err);
+    },
+    complete: () => {
+      console.log('✅ Subscription completed');
+    },
+  }
+);
+```
+
+### Installation
+
+To use this example, install the required dependencies:
+
+```bash
+npm install graphql-ws ws
+# or
+yarn add graphql-ws ws
+```
+
+## Getting Support
+
+For any questions about WebSocket usage, contact the Envio team via Telegram or Discord.
+
+---
+
+## Query Conversion
+
+**File:** `Advanced/query-conversion.md`
+
+Envio uses standard GraphQL query language, while TheGraph uses a custom GraphQL syntax. While the queries are very similar, there are some important differences to be aware of when migrating.
+
+This guide covers all the differences between TheGraph's query syntax and Envio's query syntax, with examples for each conversion rule.
+
+## Converter Tool
+
+We've built a query converter tool that automatically converts TheGraph queries to Envio's GraphQL syntax. You can:
+
+- **Convert and execute**: Provide your Envio GraphQL endpoint and a query written in TheGraph syntax. The tool will convert it, execute it against your endpoint, and return the results
+- **Convert only**: Use the tool to convert queries and view the converted output without executing them. To convert queries without executing them, add `/debug` to the converter endpoint and send your query. The response will contain only the converted query without actually running it.
+
+**Repository**: subgraph-to-hyperindex-query-converter
+
+:::info Availability
+The query converter tool is only available to users on paid tiers.
+:::
+
+:::info Setup Assistance
+If you'd like to use the query converter tool for your indexer, please reach out to our team and we can add an instance of the converter tool to be deployed with your indexer.
+:::
+
+:::tip Best Practice
+**We strongly recommend converting your queries to use Envio's standard GraphQL syntax** rather than relying on the query converter tool. This ensures better performance, maintainability, and avoids potential conversion limitations. The converter tool is primarily intended for backwards compatibility in cases where you might have external-facing APIs which depend on TheGraph's query syntax.
+:::
+
+:::warning Beta Status
+This converter tool is still very much in beta. We're actively working on it and discovering new query conversions that need to be handled.  
+**If you encounter any conversion failures or incorrect conversions, please file a GitHub issue in the repository so we can address it.**
+:::
+
+### Converter Tool Limitations
+
+The query converter tool has several limitations to be aware of:
+
+- **Rate limits**: The rate limits of your associated tier will still apply when using the converter tool.
+- **Beta status and incomplete coverage**: Since the tool is in beta there is a possibility we have missed some conversion patterns. Some queries may still fail to convert correctly or may not be handled at all. If you encounter any conversion failures or incorrect conversions, please file a GitHub issue in the repository so we can address it.
+- **WebSocket subscriptions**: WebSocket subscriptions are not supported. The converter only works with standard HTTP GraphQL queries.
+- **Directives not supported**: GraphQL directives (such as `@skip`, `@include`, etc.) are not supported because the converter uses simple string parsing rather than a full GraphQL parser. Directives are ignored or may break parsing.
+- **Variables in orderBy/orderDirection**: Variables used in `orderBy` and `orderDirection` parameters are ignored because HyperIndex requires literal field names in `order_by` clauses, and variable values are unknown at conversion time. Queries using variables for ordering will return unordered results.
+- **Array filter operators**: The `_containsAny` and `_containsAll` filters are TheGraph-specific array operators that don't have direct Hasura equivalents. The converter explicitly rejects these and returns an `UnsupportedFilter` error. Use `_in` for array matching instead.
+- **Meta queries**: Meta queries only support `_meta { block { number } }` because HyperIndex exposes block information differently. Other `_meta` fields (hash, timestamp, deployment, hasIndexingErrors) are not available in HyperIndex's schema and will return a `ComplexMetaQuery` error.
+- **Introspection queries**: Introspection queries only work if they use the operation name `"IntrospectionQuery"`. Other introspection queries (like querying `__schema` directly) will fail because they go through normal conversion which doesn't understand introspection syntax.
+
+For production applications, we recommend migrating your queries to Envio's standard GraphQL syntax to avoid these limitations.
+
+
+## Summary Table
+
+| Category | TheGraph | Envio | Example |
+|----------|-----------|-------|---------|
+| **Entity Names** | Plural camelCase | Singular PascalCase (as-is from schema) | `pools` → `Pool` |
+| **Pagination** | `first`, `skip` | `limit`, `offset` | `first: 10, skip: 20` → `limit: 10, offset: 20` |
+| **Ordering** | `orderBy`, `orderDirection` | `order_by: {field: direction}` | `orderBy: name, orderDirection: desc` → `order_by: {name: desc}` |
+| **Equality Filter** | `field: value` | `field: {_eq: value}` | `name: "test"` → `name: {_eq: "test"}` |
+| **Comparison Filters** | `field_gt`, `field_gte`, etc. | `field: {_gt: value}`, etc. | `amount_gt: 100` → `amount: {_gt: 100}` |
+| **String Filters** | `_contains`, `_starts_with`, etc. | `_ilike` with `%` wildcards | `name_contains: "test"` → `name: {_ilike: "%test%"}` |
+| **Variable Types** | `ID`, `Bytes`, `BigInt`, `BigDecimal` | `String`, `numeric` | `$id: ID!` → `$id: String!` |
+
+---
+
 ## Logging
 
 **File:** `Troubleshoot/logging.mdx`
@@ -8303,7 +9641,7 @@ ERC20.Transfer.handler(async ({ event, context }) => {
 
 # Logging in Envio HyperIndex
 
-Effective logging is essential for monitoring your indexer's performance, diagnosing issues, and gathering insights. The Envio indexer uses pino, a high-performance logging library for JavaScript. These logs can be integrated with analytics tools such as Kibana to generate metrics and visualizations.
+Effective logging is essential for monitoring your blockchain indexer's performance, diagnosing issues, and gathering insights. The Envio indexer uses pino, a high-performance logging library for JavaScript. These logs can be integrated with analytics tools such as Kibana to generate metrics and visualizations.
 
 ## Table of Contents
 
@@ -8510,7 +9848,7 @@ This guide helps you identify and resolve common issues you might encounter when
 
 ### Cannot find module errors on `pnpm start`
 
-**Problem:** Errors like `Cannot find module` when starting your indexer indicate missing generated files.
+**Problem:** Errors like `Cannot find module` when starting your blockchain indexer indicate missing generated files.
 
 **Cause:** The indexer cannot find necessary files, typically because the code generation step was skipped after cloning the repository.
 
@@ -8525,9 +9863,25 @@ pnpm codegen
 
 > **Important:** Always run `pnpm codegen` immediately after cloning an indexer repository using Envio.
 
+### Using Envio inside a monorepo
+
+**Problem:** Your indexer lives inside a larger monorepo and you see `Cannot find module` or missing-generated-code errors even after running `pnpm codegen`.
+
+**Cause:** `pnpm-workspace.yaml` doesn't include both your indexer root and its generated output directory.
+
+**Solution:** Add both `` and `/generated` to the `packages` list in `pnpm-workspace.yaml`, for example:
+
+```yaml
+packages:
+  - "apps/*"
+  - "packages/*"
+  - "envio-indexer"
+  - "envio-indexer/generated"
+```
+
 ### Smart contract updated after the initial codegen
 
-**Problem:** Changes to smart contracts aren't reflected in your indexer.
+**Problem:** Changes to smart contracts aren't reflected in your blockchain indexer.
 
 **Cause:** When smart contracts are modified after initial setup, the ABIs need to be regenerated and the indexer needs to be updated.
 
@@ -9052,7 +10406,7 @@ contracts:
 **Solution**:
 
 - Check your event handler logic for errors
-- Review recent changes to your indexer
+- Review recent changes to your blockchain indexer
 - If unable to resolve, contact support through Discord with error details
 
 ## Database-Related Errors
@@ -9198,7 +10552,7 @@ pnpm envio local db-migrate setup
 
 When creating your Envio indexer, certain words cannot be used in entity names, field names, contract names, or event names because they are reserved by the underlying programming languages or by Envio itself. Using these reserved words will trigger validation errors (such as `EE102` for configuration files or `EE210` for schema files).
 
-Reserved words in Envio are taken from JavaScript, TypeScript, and ReScript because Envio generates code in these languages to power your indexer. Using these reserved words would create syntax conflicts in the generated code.
+Reserved words in Envio are taken from JavaScript, TypeScript, and ReScript because Envio generates code in these languages to power your blockchain indexer. Using these reserved words would create syntax conflicts in the generated code.
 
 ## Why This Matters
 
@@ -9518,13 +10872,41 @@ Can’t find what you’re looking for or need support? Reach out to us on Disco
 
 ---
 
+## Solana
+
+**File:** `solana/solana.md`
+
+> Experimental. Available since 3.0.0-alpha.3.  
+> RPC-only source. HyperSync for Solana is not available yet; we’ll consider it if there’s demand.
+
+## What’s supported
+
+- Block Handler
+- Effect API
+- Hosted Service
+
+## Quickstart
+
+```bash
+pnpx envio@3.0.0-alpha.14 init svm
+```
+
+## Notes
+
+- RPC-only data source (no HyperSync for Solana yet).
+- Only `onBlock` handler is supported; log/instruction-level handlers are not available yet.
+- Block data is not fetched automatically; fetch by slot as needed using RPC or any other source.
+- Tracks finalized blocks only (no reorg support yet), resulting in **~20s latency**.
+
+---
+
 ## Indexing on Fuel Network
 
 **File:** `fuel/fuel.md`
 
 ## Introduction
 
-Envio has expanded its indexing capabilities beyond EVM-compatible blockchains to now fully support the Fuel Network (both mainnet and testnet). This documentation covers how to use Envio's products with Fuel's unique architecture and features. ⛽⚡
+Envio supports the Fuel Network on mainnet and testnet. This page shows how to use HyperIndex with Fuel’s architecture and features.
 
 Fuel offers several advantages as a modular execution layer including:
 
@@ -9673,66 +11055,6 @@ SwayContract.NewGreeting.handler(async ({ event, context }) => {
   });
 });
 ```
-
-## Migration Guide from v2.x.x-fuel
-
-Starting with V2.3, the Fuel indexer has been integrated into the main `envio` package. If you were using the Fuel-specific version (`envio@2.x.x-fuel`), follow these steps to migrate:
-
-### 1. Update Package Version
-
-```bash
-# Update local dependency
-pnpm i envio@latest
-
-# If installed globally
-pnpm i -g envio@latest
-```
-
-### 2. Update Configuration
-
-Add the `ecosystem: fuel` field to your `config.yaml`:
-
-```yaml
-ecosystem: fuel # Required for Fuel indexers
-network:
-  name: "fuel_testnet"
-  # other network config...
-```
-
-### 3. Update Event Handler Code
-
-Several field names have changed in the event object:
-
-| Old Field             | New Field              |
-| --------------------- | ---------------------- |
-| `event.data.x`        | `event.params.x`       |
-| `event.time`          | `event.block.time`     |
-| `event.blockHeight`   | `event.block.height`   |
-| (none)                | `event.block.id`       |
-| `event.transactionId` | `event.transaction.id` |
-| `event.contractId`    | `event.srcAddress`     |
-| `event.receiptIndex`  | `event.logIndex`       |
-| `event.receiptType`   | (removed)              |
-
-Example migration:
-
-```diff
-SwayContract.NewGreeting.handler(async ({ event, context }) => {
-  context.Greeting.set({
--   id: event.data.id,
--   message: event.data.message,
--   createdAt: event.time,
--   blockHeight: event.blockHeight,
-+   id: event.params.id,
-+   message: event.params.message,
-+   createdAt: event.block.time,
-+   blockHeight: event.block.height,
-    transaction: event.transaction.id,
-  });
-});
-```
-
-> **Note**: If you use loaders, also follow the v1 to v2 migration guide for loader-specific changes.
 
 ## HyperFuel
 
@@ -10114,7 +11436,7 @@ The Company will retain Your Personal Data only for as long as is necessary for 
 The Company will also retain Usage Data for internal analysis purposes. Usage Data is generally retained for a shorter period of time, except when this data is used to strengthen the security or to improve the functionality of Our Service, or We are legally obligated to retain this data for longer time periods.
 
 Transfer of Your Personal Data
-Your information, including Personal Data, is processed at the Company's operating offices and in any other places where the parties involved in the processing are located. It means that this information may be transferred to — and maintained on — computers located outside of Your state, province, country, or other governmental jurisdiction where the data protection laws may differ than those from Your jurisdiction.
+Your information, including Personal Data, is processed at the Company's operating offices and in any other places where the parties involved in the processing are located. It means that this information may be transferred to - and maintained on - computers located outside of Your state, province, country, or other governmental jurisdiction where the data protection laws may differ than those from Your jurisdiction.
 
 Your consent to this Privacy Policy followed by Your submission of such information represents Your agreement to that transfer.
 
@@ -10174,128 +11496,11 @@ If you have any questions about this Privacy Policy, You can contact us by email
 
 ---
 
-## 0G Newton Testnet
-
-**File:** `supported-networks/0g-newton-testnet.md`
-
-## Indexing 0G Newton Testnet Data with Envio via RPC
-
-:::warning
-RPC as a source is not as fast as HyperSync. It is important in production to source RPC data from reliable sources. We recommend our partners at drpc.org. Below, we have provided a set of free endpoints sourced from chainlist.org. **We don't recommend using these in production** as they may be rate limited. We recommend tweaking the RPC config to accommodate potential rate limiting.
-:::
-
-We suggest getting the latest from chainlist.org.
-
-### Overview
-
-Envio supports 0G Newton Testnet through an RPC-based indexing approach. This method allows you to ingest blockchain data via an RPC endpoint by setting the RPC configuration.
-
----
-
-## Abstract
-
-**File:** `supported-networks/abstract.md`
-
-## Indexing Abstract Data with Envio
-
-| **Field**                     | **Value**                                                                                          |
-|-------------------------------|----------------------------------------------------------------------------------------------------|
-| **Abstract Chain ID**     | 2741                                                                                            |
-| **HyperSync URL Endpoint**    | https://abstract.hypersync.xyz or https://2741.hypersync.xyz |
-| **HyperRPC URL Endpoint**     | https://abstract.rpc.hypersync.xyz or https://2741.rpc.hypersync.xyz |
-
-
-### Defining Network Configurations
-
-```yaml
-name: IndexerName # Specify indexer name
-description: Indexer Description # Include indexer description
-networks:
-  - id: 2741 # Abstract  
-    start_block: START_BLOCK_NUMBER  # Specify the starting block
-    contracts:
-      - name: ContractName
-        address:
-         - "0xYourContractAddress1"
-         - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
-        events:
-          - event: Event # Specify event
-          - event: Event
-```
-
-With these steps completed, your application will be set to efficiently index Abstract data using Envio’s blockchain indexer.
-
-For more information on how to set up your config, define a schema, and write event handlers, refer to the guides section in our documentation.
-
-### Support
-
-Can’t find what you’re looking for or need support? Reach out to us on Discord; we’re always happy to help!
-
----
-
-## Aleph Zero EVM
-
-**File:** `supported-networks/aleph-zero-evm.md`
-
-## Indexing Aleph Zero EVM Data with Envio via RPC
-
-:::warning
-RPC as a source is not as fast as HyperSync. It is important in production to source RPC data from reliable sources. We recommend our partners at drpc.org. Below, we have provided a set of free endpoints sourced from chainlist.org. **We don't recommend using these in production** as they may be rate limited. We recommend tweaking the RPC config to accommodate potential rate limiting.
-:::
-
-We suggest getting the latest from chainlist.org.
-
-### Overview
-
-Envio supports Aleph Zero EVM through an RPC-based indexing approach. This method allows you to ingest blockchain data via an RPC endpoint by setting the RPC configuration.
-
----
-
-## Altlayer OP Demo Testnet
-
-**File:** `supported-networks/altlayer-op-demo-testnet.md`
-
-## Indexing Altlayer OP Demo Testnet Data with Envio via RPC
-
-:::warning
-RPC as a source is not as fast as HyperSync. It is important in production to source RPC data from reliable sources. We recommend our partners at drpc.org. Below, we have provided a set of free endpoints sourced from chainlist.org. **We don't recommend using these in production** as they may be rate limited. We recommend tweaking the RPC config to accommodate potential rate limiting.
-:::
-
-We suggest getting the latest from chainlist.org.
-
-### Overview
-
-Envio supports Altlayer OP Demo Testnet through an RPC-based indexing approach. This method allows you to ingest blockchain data via an RPC endpoint by setting the RPC configuration.
-
----
-
-## Ancient8
-
-**File:** `supported-networks/ancient8.md`
-
-## Indexing Ancient8 Data with Envio via RPC
-
-:::warning
-RPC as a source is not as fast as HyperSync. It is important in production to source RPC data from reliable sources. We recommend our partners at drpc.org. Below, we have provided a set of free endpoints sourced from chainlist.org. **We don't recommend using these in production** as they may be rate limited. We recommend tweaking the RPC config to accommodate potential rate limiting.
-:::
-
-We suggest getting the latest from chainlist.org.
-
-### Overview
-
-Envio supports Ancient8 through an RPC-based indexing approach. This method allows you to ingest blockchain data via an RPC endpoint by setting the RPC configuration.
-
----
-
-
----
-
 ## Frequently Asked Questions (FAQ)
 
 ### What is HyperIndex?
 
-HyperIndex is Envio's multichain blockchain indexing framework. It lets developers define which smart contract events to track, automatically transforms those on-chain events into structured data, and exposes them via a GraphQL API — giving you a complete, queryable backend for any blockchain application. It is powered by HyperSync, Envio's high-performance data engine.
+HyperIndex is Envio's multichain blockchain indexing framework. It lets developers define which smart contract events to track, automatically transforms those on-chain events into structured data, and exposes them via a GraphQL API - giving you a complete, queryable backend for any blockchain application. It is powered by HyperSync, Envio's high-performance data engine.
 
 ### How fast is HyperIndex compared to other indexers?
 
@@ -10311,7 +11516,7 @@ HyperIndex supports TypeScript, JavaScript, and ReScript for writing event handl
 
 ### What are the prerequisites to run HyperIndex locally?
 
-You need Node.js v22 or newer, pnpm v8 or newer, and Docker Desktop. Docker is only required for local development — if you use Envio's hosted service, you can skip it. Windows users also need WSL (Windows Subsystem for Linux).
+You need Node.js v22 or newer, pnpm v8 or newer, and Docker Desktop. Docker is only required for local development - if you use Envio's hosted service, you can skip it. Windows users also need WSL (Windows Subsystem for Linux).
 
 ### Do I need an API token?
 
@@ -10319,7 +11524,7 @@ API tokens are required for local development and self-hosted deployments as of 
 
 ### How do I get started?
 
-Run the following command and follow the prompts — you can have a working indexer in under 5 minutes:
+Run the following command and follow the prompts - you can have a working indexer in under 5 minutes:
 
 ```bash
 pnpx envio init
@@ -10337,17 +11542,17 @@ Yes. HyperIndex automatically handles blockchain reorganisations by default. Thi
 
 ### Does HyperIndex support multichain indexing?
 
-Yes. HyperIndex natively supports indexing across multiple chains in a single indexer. For the best multichain performance, you can enable `unordered_multichain_mode` in your configuration — this is the most common setup for multichain indexing, though it comes with tradeoffs worth understanding (see the docs).
+Yes. HyperIndex natively supports indexing across multiple chains in a single indexer. For the best multichain performance, you can enable `unordered_multichain_mode` in your configuration - this is the most common setup for multichain indexing, though it comes with tradeoffs worth understanding (see the docs).
 
 ### Can I do wildcard indexing (without a specific contract address)?
 
-Yes. HyperIndex supports wildcard indexing, which lets you index all events matching a given event signature across any contract on the chain — no contract address required.
+Yes. HyperIndex supports wildcard indexing, which lets you index all events matching a given event signature across any contract on the chain - no contract address required.
 
 ### How do I migrate from TheGraph and other indexing solutions?
 
 HyperIndex has a dedicated migration guide for TheGraph subgraphs. The three main steps are: (1) convert your `subgraph.yaml` to `config.yaml`, (2) migrate your schema (near copy-paste), and (3) migrate your event handlers. Run `pnpx envio init` to generate a boilerplate, then follow the Migration Guide.
 
-For developers migrating from other indexing solutions such as Ponder, Ormi, SQD (Subsquid), SubQuery, and others, the core concepts map similarly — define your contracts and events in `config.yaml`, write event handlers, and let HyperIndex generate the GraphQL API. Envio also offers full white glove migration support for teams moving from any indexing stack. Reach out via [Discord](https://discord.gg/envio) to get personalised assistance.
+For developers migrating from other indexing solutions such as Ponder, Ormi, SQD (Subsquid), SubQuery, and others, the core concepts map similarly - define your contracts and events in `config.yaml`, write event handlers, and let HyperIndex generate the GraphQL API. Envio also offers full white glove migration support for teams moving from any indexing stack. Reach out via [Discord](https://discord.gg/envio) to get personalised assistance.
 
 ### What does the hosted service offer?
 
@@ -10355,7 +11560,7 @@ Envio's hosted service manages deployment and infrastructure for you. Indexers o
 
 ### Where can I get help?
 
-- **Discord**: [discord.gg/envio](https://discord.gg/envio) — the fastest way to get help from the team and community
+- **Discord**: [discord.gg/envio](https://discord.gg/envio) - the fastest way to get help from the team and community
 - **Telegram**: [Envio Telegram](https://t.me/+kAIGElzPjApiMjI0) - the offcial Envio Telegram to get support from the team and community
 - **GitHub**: [github.com/enviodev](https://github.com/enviodev)
 - **Email**: hello@envio.dev
