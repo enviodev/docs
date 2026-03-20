@@ -20,8 +20,7 @@ If you would like to review the raw benchmark data yourself, it is fully open:
 
 An open, honest, and objective benchmark for blockchain indexers across EVM, Solana, and more. It compares historical backfill speed, latency, data storage, developer experience, and anything else that matters.
 
-We welcome anyone to contribute, run it, test it, and explore the results. We encourage you to share what you find.<span style="text-decoration:underline;">
-</span>
+We welcome anyone to contribute, run it, test it, and explore the results. We encourage you to share what you find.
 
 
 ## What is a blockchain indexer?
