@@ -1,6 +1,6 @@
 ---
 title: "Agentic Blockchain Indexing: How to Deploy an EVM Indexer to Envio's Hosted Service"
-Sidebar_label: "Agentic Blockchain Indexing"
+sidebar_label: "Agentic Blockchain Indexing"
 slug: /blog/agentic-blockchain-indexing-envio-hyperindex
 description: "A step-by-step guide to agentic blockchain indexing with Envio HyperIndex. Learn how an AI agent can scaffold, configure, and deploy an EVM indexer to Envio Hosted Service in minutes using a fully CLI driven workflow."
 ---
@@ -71,8 +71,7 @@ pnpm tsc --noEmit
 ```
 
 
-*Note: the ERC20 template test file references a different contract address and network, so any resulting type errors need to be fixed before the type check passes.
-*
+*Note: the ERC20 template test file references a different contract address and network, so any resulting type errors need to be fixed before the type check passes.*
 
 
 ### Step 3: Push to GitHub
