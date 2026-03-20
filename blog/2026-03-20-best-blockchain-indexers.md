@@ -34,57 +34,15 @@ Want a deeper breakdown? Check out our blog “[What is a Blockchain Indexer](ht
 ## TL;DR: Quick verdict
 
 
-<table>
-  <tr>
-   <td><strong>Indexer</strong>
-   </td>
-   <td><strong>Best For</strong>
-   </td>
-  </tr>
-  <tr>
-   <td>Envio
-   </td>
-   <td>The fastest independently benchmarked EVM indexer. True wildcard indexing, multichain in a single indexer, TypeScript throughout. Fully managed or self-hosted.
-
-   </td>
-  </tr>
-  <tr>
-   <td>The Graph
-   </td>
-   <td>Ecosystem access, existing public subgraphs, decentralised network
-   </td>
-  </tr>
-  <tr>
-   <td>Goldsky
-   </td>
-   <td>Managed subgraphs plus real-time data streaming to your own database
-   </td>
-  </tr>
-  <tr>
-   <td>SubQuery
-   </td>
-   <td>Non-EVM chains, broadest network coverage
-   </td>
-  </tr>
-  <tr>
-   <td>Subsquid (SQD)
-   </td>
-   <td>Fast historical backfills, non-EVM
-   </td>
-  </tr>
-  <tr>
-   <td>Ormi
-   </td>
-   <td>Fully managed, Graph-compatible
-   </td>
-  </tr>
-  <tr>
-   <td>Ponder
-   </td>
-   <td>Self-hosted TypeScript stack, full control
-   </td>
-  </tr>
-</table>
+| Indexer | Best For |
+| --- | --- |
+| Envio | The fastest independently benchmarked EVM indexer. True wildcard indexing, multichain in a single indexer, TypeScript throughout. Fully managed or self-hosted. |
+| The Graph | Ecosystem access, existing public subgraphs, decentralised network |
+| Goldsky | Managed subgraphs plus real-time data streaming to your own database |
+| SubQuery | Non-EVM chains, broadest network coverage |
+| Subsquid (SQD) | Fast historical backfills, non-EVM |
+| Ormi | Fully managed, Graph-compatible |
+| Ponder | Self-hosted TypeScript stack, full control |
 
 
 
