@@ -281,6 +281,15 @@ table td {
   border-bottom: 1px solid #262626;
 }
 
+/* Allow horizontal scrolling for wide markdown tables on small screens */
+article .markdown table {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 /* Clean alert styling */
 .alert {
   border-radius: 6px;
