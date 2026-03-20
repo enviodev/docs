@@ -1,6 +1,6 @@
 ---
 title: "Best Blockchain Indexers in 2026: Real Benchmark Comparison"
-Sidebar_label: Best Blockchain Indexers in 2026
+sidebar_label: Best Blockchain Indexers in 2026
 slug: /blog/best-blockchain-indexers-2026
 description: An accurate, benchmark-backed comparison of the best blockchain indexers in 2026, including Envio HyperIndex, The Graph, Goldsky, SubQuery, Subsquid, Ormi, and Ponder. Every claim is sourced. 
 image: /blog-assets/best-blockchain-indexers.png
@@ -99,12 +99,12 @@ HyperSync's speed also makes HyperIndex the fastest data source for onchain AI a
 
 #### Honest caveats:
 
-HyperSync native support covers 70+ EVM chains and Fuel. For chains not supported by HyperSync, indexing falls back to standard RPC speed, which is subject to the RPS limits of the endpoint. If you need non-EVM chains like Polkadot or Cosmos, SubQuery or Subsquid are better options."
+HyperSync native support covers 70+ EVM chains and Fuel. For chains not supported by HyperSync, indexing falls back to standard RPC speed, which is subject to the RPS limits of the endpoint. If you need non-EVM chains like Polkadot or Cosmos, SubQuery or Subsquid are better options.
 
 **Get started:** 
 
 
-```
+```bash
 pnpx envio init
 ```
 
@@ -260,7 +260,7 @@ There is no official hosted service. You deploy and manage your own infrastructu
 | Hosted service | Yes | Yes (decentralised network) | Yes (fully managed) | Yes (SubQuery Network) | Yes (SQD Network) | Yes (fully managed) | No |
 | Wildcard indexing | Yes | No | Not documented | No | Factory patterns only | No | No |
 | Supported networks | 70+ EVM chains and Fuel via HyperSync, Solana (experimental) and any EVM via RPC | 40+ on network, 90+ total | 150+ chains | 300+ (EVM and non-EVM) | 100+ (EVM and non-EVM) | 70+ EVM | Any EVM via RPC |
-| Independently benchmarked speed | Fastest: 1 min vs 15 min (Subsquid), 2h23m (The Graph), 2h38m (Ponder), Sentio Uniswap V2 Factory benchmark, May 2025 \| ...rest unchanged \| | Benchmarked | Benchmarked (Goldsky_Subgraph, Sentio benchmarks) | Benchmarked (Single contract benchmark) | Benchmarked (15 min, Sentio Uniswap V2 Factory, May 2025) | Not benchmarked | Benchmarked (2h38m, Sentio Uniswap V2 Factory, May 2025) |
+| Independently benchmarked speed | Fastest: 1 min (Sentio Uniswap V2 Factory benchmark, May 2025) | 2h23m (Sentio Uniswap V2 Factory benchmark, May 2025) | Benchmarked (Goldsky_Subgraph, Sentio benchmarks) | Benchmarked (single-contract benchmark) | 15 min (Sentio Uniswap V2 Factory benchmark, May 2025) | Not benchmarked | 2h38m (Sentio Uniswap V2 Factory benchmark, May 2025) |
 | White glove migration | Yes | No | No | No | No | Partial | No |
 | AI-assisted development | Yes | Yes | Yes | Yes | Yes | Yes | No |
 
