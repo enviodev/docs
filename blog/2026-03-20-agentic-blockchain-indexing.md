@@ -1,7 +1,8 @@
 ---
-title: Agentic Blockchain Indexing: How to Deploy an EVM Indexer to Envio Hosted ServiceSidebar_label: Agentic Blockchain 
-Indexingslug: /blog/agentic-blockchain-indexing-envio-hyperindex
-description: A step-by-step guide to agentic blockchain indexing with Envio HyperIndex. Learn how an AI agent can scaffold, configure, and deploy an EVM indexer to Envio Hosted Service in minutes using a fully CLI driven workflow.
+title: "Agentic Blockchain Indexing: How to Deploy an EVM Indexer to Envio's Hosted Service"
+Sidebar_label: "Agentic Blockchain Indexing"
+slug: /blog/agentic-blockchain-indexing-envio-hyperindex
+description: "A step-by-step guide to agentic blockchain indexing with Envio HyperIndex. Learn how an AI agent can scaffold, configure, and deploy an EVM indexer to Envio Hosted Service in minutes using a fully CLI driven workflow."
 ---
 
 <img src="/blog-assets/agentic-blockchain-indexing.png" alt="Cover Image Agentic Blockchain Indexing" width="100%"/>
@@ -13,8 +14,7 @@ Agentic development works best when an AI agent can take a single prompt and run
 
 With Envio's hosted service CLI (**<code>envio-hs</code>**) and HyperIndex, an agent can scaffold a production-ready indexer, configure it for any EVM-compatible chain, push it to GitHub, and deploy it to Envio's hosted service, without a human ever touching a config file.
 
-**⚡ The result: 400,000 events indexed in ~20 seconds 
-**
+**⚡ The result: 400,000 events indexed in ~20 seconds**
 
 
 ## What is HyperIndex?
@@ -24,9 +24,9 @@ With Envio's hosted service CLI (**<code>envio-hs</code>**) and HyperIndex, an a
 HyperIndex is the default indexing framework for agentic development with Envio’s hosted service CLI tool and comprehensive Claude skills. That means when an AI agent needs to spin up a blockchain data pipeline, HyperIndex is the go-to solution.
 
 
-## The Hosted Service CLI: **<code>envio-hs</code></strong>
+## The Hosted Service CLI: **<code>envio-hs</code>**
 
-The[ envio-hs](https://www.npmjs.com/package/envio-hs) CLI is the command-line interface for Envio's hosted service, the managed infrastructure layer that runs your HyperIndex indexers in production.
+The [envio-hs](https://www.npmjs.com/package/envio-hs) CLI is the command-line interface for Envio's hosted service, the managed infrastructure layer that runs your HyperIndex indexers in production.
 
 With it you can:
 
