@@ -87,7 +87,8 @@ git push -u origin main
 ```
 
 
-If the push fails due to the `.github/workflows/test.yaml` file and OAuth scope limitations, remove that file and push again.
+If the push fails because your GitHub token lacks permission to push workflow files (like `.github/workflows/test.yaml`), refresh auth with workflow scope:
+`gh auth refresh -s workflow`
 
 The Envio hosted service deploys from the `envio` branch by default, so create and push it:
 
