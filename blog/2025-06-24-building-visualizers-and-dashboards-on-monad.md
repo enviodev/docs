@@ -3,8 +3,8 @@ title: Building Visualizers & Dashboards on Monad using Envio
 sidebar_label: How to Build Visualizers and Dashboards on Monad Using Envio
 slug: /how-to-build-visualizers-and-dashboards-on-monad-using-envio
 description: "Learn how to build visual dashboards on Monad using Envio to stream real-time and historical data and create interactive analytics experiences with ease."
+image: /blog-assets/building-visualizers-and-dash-monad.png
 ---
-
 <img src="/blog-assets/building-visualizers-and-dash-monad.png" alt="Cover Image Building Visualizers and Dashboards on Monad" width="100%"/>
 
 <!--truncate-->

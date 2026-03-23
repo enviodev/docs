@@ -3,8 +3,8 @@ title: Envio Developer Update September 2023
 sidebar_label: Envio Developer Update September 2023
 slug: /envio-developer-community-update-no-2
 description: "Get the inside scoop on what Envio shipped last month including bounty launches, multi chain integrations, developer milestones, and our fast sync HyperSync upgrade."
+image: /blog-assets/envio-developer-community-update-2.png
 ---
-
 <img src="/blog-assets/envio-developer-community-update-2.png" alt="Cover Image Envio Developer Community Update No.2" width="100%"/>
 
 <!--truncate-->

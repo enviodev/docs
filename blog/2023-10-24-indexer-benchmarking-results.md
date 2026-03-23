@@ -3,8 +3,8 @@ title: "Benchmarking Blockchain Indexer Sync Speeds"
 sidebar_label: "Benchmarking Blockchain Indexer Sync Speeds"
 slug: /indexer-benchmarking-results
 description: "Dive into Envio’s benchmarking of indexer sync speeds—see how different solutions stack up, understand key methods and caveats, and learn what this means for real-world dApp performance."
+image: /blog-assets/envio-benchmarking-blockchain-indexing-sync-speeds.png
 ---
-
 <img src="/blog-assets/envio-benchmarking-blockchain-indexing-sync-speeds.png" alt="benchmarking sync speeds" width="100%"/>
 
 <!--truncate-->

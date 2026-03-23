@@ -3,8 +3,8 @@ title: Envio Developer Update August 2024
 sidebar_label: Envio Developer Update August 2024
 slug: /envio-developer-update-august-2024
 description: "Here’s what the Envio team shipped in August 2024 including new integration highlights, and community milestones that move our blockchain indexing tool forward."
+image: /blog-assets/envio-developer-community-august-2024.png
 ---
-
 <img src="/blog-assets/envio-developer-community-august-2024.png" alt="Cover Image Envio Developer Community Update August 2024" width="100%"/>
 
 <!--truncate-->

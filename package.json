@@ -8,7 +8,7 @@
     "start": "docusaurus start",
     "predev": "node ./scripts/update-endpoints.js",
     "dev": "yarn start",
-    "prebuild": "node ./scripts/update-endpoints.js",
+    "prebuild": "node ./scripts/update-endpoints.js && node ./scripts/validate-blog-social-images.js",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "update-endpoints": "node ./scripts/update-endpoints.js",
@@ -22,7 +22,7 @@
     "write-translations": "docusaurus write-translations",
     "preinstall": "npx only-allow yarn",
     "consolidate-docs": "node ./scripts/consolidate-hyperindex-docs.js --all",
-    "build-llm": "yarn consolidate-docs && npx docusaurus build --config docusaurus.config.llm.js",
+    "build-llm": "yarn consolidate-docs && node ./scripts/validate-blog-social-images.js && npx docusaurus build --config docusaurus.config.llm.js",
     "start-llm": "yarn consolidate-docs && npx docusaurus start --config docusaurus.config.llm.js"
   },
   "dependencies": {

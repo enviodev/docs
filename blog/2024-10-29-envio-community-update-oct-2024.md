@@ -3,8 +3,8 @@ title: Envio Developer Update October 2024
 sidebar_label: Envio Developer Update October 2024
 slug: /envio-developer-update-october-2024
 description: "Check out what Envio rolled out in October 2024 including new releases, platform enhancements, and community-driven integrations that push our indexing infrastructure forward."
+image: /blog-assets/envio-developer-community-oct-2024.png
 ---
-
 <img src="/blog-assets/envio-developer-community-oct-2024.png" alt="Cover Image Envio Developer Community Update October 2024" width="100%"/>
 
 <!--truncate-->

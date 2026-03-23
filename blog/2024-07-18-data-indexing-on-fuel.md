@@ -3,8 +3,8 @@ title: Fast Data Indexing on Fuel using Envio
 sidebar_label: Envio's Blockchain Indexer Supports Fuel With Fast Data Indexing
 slug: /fast-data-indexing-on-fuel-using-envio
 description: "Learn how Envio brings fast data indexing to the Fuel Network so developers and data analysts can query both real-time and historical on-chain data with speed and simplicity."
+image: /blog-assets/fuel-envio.png
 ---
-
 <img src="/blog-assets/fuel-envio.png" alt="Cover Image Data Querying on Fuel" width="100%"/>
 
 <!--truncate-->

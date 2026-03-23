@@ -3,8 +3,8 @@ title: Envio's V2 Hosted Service Is Here
 sidebar_label: V2 Hosted Service Is Here
 slug: /hosted-service-v2
 description: "Discover how Envio’s hosted service brings ten times faster build and deployment speeds improved performance and zero infrastructure overhead for blockchain indexers."
+image: /blog-assets/hosted-service-v2.png
 ---
-
 <img src="/blog-assets/hosted-service-v2.png" alt="Envio Cover Photo" width="100%"/>
 
 <!--truncate-->

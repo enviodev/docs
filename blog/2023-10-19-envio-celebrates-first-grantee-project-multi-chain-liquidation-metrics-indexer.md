@@ -3,8 +3,8 @@ title: Envio Celebrates Its First Successful Grantee
 sidebar_label: Envio Celebrates Its First Successful Grantee
 slug: /envio-celebrates-first-grantee-multi-chain-liquidation-metrics-indexer
 description: "Discover how our first grant recipient built a multi chain multi protocol liquidation metrics indexer using Envio to boost performance cross chain insight and developer efficiency."
+image: /blog-assets/envio-multi-chain-liquidation-metrics-indexer.png
 ---
-
 
 <img src="/blog-assets/envio-multi-chain-liquidation-metrics-indexer.png" alt="Cover Image How to Become a Blockchain DApp Developer" width="100%"/>
 

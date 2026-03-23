@@ -1,10 +1,10 @@
 ---
 title: Blockchain Indexer For Application Backends
 sidebar_label: Blockchain Indexer For Application Backends
-slug: /blog/blockchain-indexer-application-backends
+slug: /blockchain-indexer-application-backends
 description: "How blockchain indexers are used in practice to build reliable application backends and how Envio fits into that workflow."
+image: /blog-assets/blockchain-indexer-backends.png
 ---
-
 <img src="/blog-assets/blockchain-indexer-backends.png" alt="Cover Image for Blockchain Indexer For Application Backends blog" width="100%"/>
 
 <!--truncate-->

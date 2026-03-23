@@ -3,8 +3,8 @@ title: "How to Query Blockchain Data: Methods and Trade Offs"
 sidebar_label: Existing methods to query blockchain data and their trade-offs
 slug: /methods-to-query-blockchain-data-and-their-trade-offs
 description: "Learn how to query blockchain data using full nodes, RPC providers, or indexing solutions and understand the trade-offs in performance, reliability, and cost."
+image: /blog-assets/envio-existing-methods-query-blockchain-data.png
 ---
-
 <img src="/blog-assets/envio-existing-methods-query-blockchain-data.png" alt="future of blockchain indexing" width="100%"/>
 
 <!--truncate-->

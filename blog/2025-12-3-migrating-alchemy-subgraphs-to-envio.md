@@ -1,10 +1,10 @@
 ---
 title: How to Migrate Alchemy Subgraphs to Envio
 sidebar_label: How to Migrate Alchemy Subgraphs to Envio
-slug: /blog/migrating-alchemy-subgraphs-to-envio
+slug: /migrating-alchemy-subgraphs-to-envio
 description: "Migrate your Alchemy Subgraphs to Envio’s HyperIndex with a clean four step flow. Keep your existing schema, avoid a full rebuild, and get fast real-time indexing."
+image: /blog-assets/migrating-alchemy-subgraphs.png
 ---
-
 <img src="/blog-assets/migrating-alchemy-subgraphs.png" alt="Migrating from Alchemy to Envio" width="100%"/>
 
 Alchemy is sunsetting their Subgraph support on the **8th December 2025**. If you are running production workloads or preparing for mainnet, you need a stable home for your data and a migration path that keeps most of your existing work intact.

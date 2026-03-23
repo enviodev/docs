@@ -3,8 +3,8 @@ title: Envio Developer Update March 2024
 sidebar_label: Envio Developer Update March 2024
 slug: /envio-community-update-no-7
 description: "See what the Envio team shipped March 2024 including major version upgrades, new network integrations, ChainDensity, and Envio being featured on Primodata as proud sponsors."
+image: /blog-assets/envio-developer-community-update-7.jpg
 ---
-
 
 <img src="/blog-assets/envio-developer-community-update-7.jpg" alt="Cover Image Envio Developer Community Update No.7" width="100%"/>
 

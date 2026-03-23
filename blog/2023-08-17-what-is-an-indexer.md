@@ -3,8 +3,8 @@ title: What is a blockchain indexing?
 sidebar_label: What is blockchain indexing?
 slug: /what-is-a-blockchain-indexer-for-dapp-development
 description: "Learn how blockchain indexers like Envio simplify data retrieval for your dApp, speed up queries across contracts and chains, and free you from raw node logic."
+image: /blog-assets/envio-what-is-an-indexer.png
 ---
-
 <img src="/blog-assets/envio-what-is-an-indexer.png" alt="Envio Cover Photo" width="100%"/>
 
 <!--truncate-->

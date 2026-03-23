@@ -3,8 +3,8 @@ title: MetaMask Smart Accounts x Monad Hackathon Winners
 sidebar_label: "MetaMask Smart Accounts x Monad x Envio Hackathon: Envio Winners"
 slug: /metamask-smart-accounts-hackathon-winners
 description: "Explore the standout projects from the MetaMask Smart Accounts x Monad Dev Cook Off. Builders pushed smart account innovation forward using MetaMask SDKs, Monad’s high performance chain, and Envio’s real time indexing."
+image: /blog-assets/metamask-hackathon-2025.png
 ---
-
 <img src="/blog-assets/metamask-hackathon-2025.png" alt="Metamask Dev-cook off 2025 Hackathon Winners" width="100%"/>
 
 <!--truncate-->

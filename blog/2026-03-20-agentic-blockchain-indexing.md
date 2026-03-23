@@ -1,7 +1,7 @@
 ---
 title: "Agentic Blockchain Indexing: How to Deploy an EVM Indexer to Envio's Hosted Service"
 sidebar_label: "Agentic Blockchain Indexing"
-slug: /blog/agentic-blockchain-indexing-envio-hyperindex
+slug: /agentic-blockchain-indexing-envio-hyperindex
 description: "A step-by-step guide to agentic blockchain indexing with Envio HyperIndex. Learn how an AI agent can scaffold, configure, and deploy an EVM indexer to Envio Hosted Service in minutes using a fully CLI driven workflow."
 image: /blog-assets/agentic-blockchain-indexing.png
 ---
