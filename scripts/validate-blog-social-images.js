@@ -39,7 +39,12 @@ function toStaticFilePath(imagePath) {
   if (!imagePath.startsWith("/")) {
     return null;
   }
-  return path.join(staticDir, imagePath.slice(1));
+  const base = path.resolve(staticDir);
+  const resolvedPath = path.resolve(staticDir, imagePath.slice(1));
+  if (resolvedPath === base || resolvedPath.startsWith(base + path.sep)) {
+    return resolvedPath;
+  }
+  return null;
 }
 
 function main() {
