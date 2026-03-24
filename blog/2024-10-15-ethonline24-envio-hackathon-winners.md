@@ -3,8 +3,8 @@ title: EthOnline 2024 Envio Hackathon Winners
 sidebar_label: EthOnline 2024 Envio Hackathon Winners  
 slug: /ethonline-envio-hackathon-winners  
 description: "Celebrate the winners of EthOnline 2024 where Envio supported 40+ project submissions and $5000 in bounties while enabling builders to ship next-gen indexing solutions."  
+image: /blog-assets/ethonline-hackathon-winners.png
 ---
-
 
 <img src="/blog-assets/ethonline-hackathon-winners.png" alt="Cover Image EthOnline 2024 Envio Hackathon Winners" width="100%"/>
 

@@ -1,7 +1,7 @@
 ---
 title: "Agentic Blockchain Indexing: How to Deploy an EVM Indexer to Envio's Hosted Service"
 sidebar_label: "Agentic Blockchain Indexing"
-slug: /blog/agentic-blockchain-indexing-envio-hyperindex
+slug: /agentic-blockchain-indexing-envio-hyperindex
 description: "A step-by-step guide to agentic blockchain indexing with Envio HyperIndex. Learn how an AI agent can scaffold, configure, and deploy an EVM indexer to Envio Hosted Service in minutes using a fully CLI driven workflow."
 image: /blog-assets/agentic-blockchain-indexing.png
 ---
@@ -87,7 +87,8 @@ git push -u origin main
 ```
 
 
-If the push fails due to the `.github/workflows/test.yaml` file and OAuth scope limitations, remove that file and push again.
+If the push fails because your GitHub token lacks permission to push workflow files (like `.github/workflows/test.yaml`), refresh auth with workflow scope:
+`gh auth refresh -s workflow`
 
 The Envio hosted service deploys from the `envio` branch by default, so create and push it:
 

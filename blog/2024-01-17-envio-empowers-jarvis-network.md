@@ -3,8 +3,8 @@ title: "Jarvis Network Case Study: Chainlink Price Feeds"
 sidebar_label: "Envio Empowers Jarvis Network: Lightning-Fast Data Indexing for Chainlink Price Feeds"
 slug: /envio-empowers-jarvis-network
 description: "Discover how Envio supports Jarvis Network by indexing Chainlink price feeds across multiple chains, enabling real-time fiat price data, improved liquidity pool analytics, and better DeFi insights."
+image: /blog-assets/envio-empowers-jarvis-network.png
 ---
-
 <img src="/blog-assets/envio-empowers-jarvis-network.png" alt="Cover Image Envio Empowers Jarvis Network" width="100%"/>
 
 <!--truncate-->

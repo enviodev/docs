@@ -3,8 +3,8 @@ title: "Peppy Finance Case Study: Real-time Blockchain Indexing"
 sidebar_label: How Peppy Finance uses Envio to power its Perpetual Future Markets with Real-time Blockchain Indexing
 slug: /envio-real-time-indexing-powers-peppy-finance
 description: "Learn how Peppy Finance uses Envio’s blockchain indexer to power real-time and historical data for its perpetual futures on Shimmer delivering low latency data access and a seamless user experience."
+image: /blog-assets/case-study-peppy-finance.png
 ---
-
 <img src="/blog-assets/case-study-peppy-finance.png" alt="Cover Image for Case Study peppy Finance" width="100%"/>
 
 <!--truncate-->

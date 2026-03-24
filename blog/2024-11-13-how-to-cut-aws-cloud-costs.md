@@ -3,8 +3,8 @@ title: Optimizing Blockchain Indexers on AWS
 sidebar_label: How to Optimize Blockchain Indexers on AWS and Reduce Cloud Costs
 slug: /cut-aws-cloud-costs
 description: "Learn how to optimize your blockchain indexer on AWS using smarter infrastructure planning caching and scaling techniques to cut costs and improve performance."
+image: /blog-assets/cut-aws-cloud-costs1.png
 ---
-
 <img src="/blog-assets/cut-aws-cloud-costs1.png" alt="Envio Cover Photo" width="100%"/>
 
 <!--truncate-->

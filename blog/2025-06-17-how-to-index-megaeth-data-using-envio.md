@@ -3,8 +3,8 @@ title: How to Index MegaEth Data Using Envio
 sidebar_label: How to Index MegaEth Data Using Envio
 slug: /how-to-index-megaeth-data-using-envio
 description: "Learn how to index data on the MegaEth using Envio with a step-by-step guide to project setup contract mapping and real-time data querying."
+image: /blog-assets/indexing-megaeth-data.png
 ---
-
 
 <img src="/blog-assets/indexing-megaeth-data.png" alt="Cover Image How to Index MegaEth Data Using Envio" width="100%"/>
 

@@ -3,8 +3,8 @@ title: How to Index Monad Data Using Envio
 sidebar_label: How to Index Monad Data Using Envio
 slug: /how-to-index-monad-data-using-envio
 description: "Learn how to efficiently index data on Monad using Envio from setting up your project to mapping contracts and querying on-chain events in real-time."
+image: /blog-assets/indexing-monad-data.png
 ---
-
 <img src="/blog-assets/indexing-monad-data.png" alt="Cover Image How to Index Monad Data Using Envio" width="100%"/>
 
 <!--truncate-->

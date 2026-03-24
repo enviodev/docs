@@ -3,8 +3,8 @@ title: Envio launches “Build Bigger. Ship Faster” Grant Program
 sidebar_label: Envio launches “Build Bigger. Ship Faster” Grant Program
 slug: /envio-grant-program-now-live
 description: "Learn how you can apply for Envio’s Build Bigger. Ship Faster Grant Program, build a standout dApp or indexer with us, and access a $10,000 USDC prize pool."
+image: /blog-assets/envio-grant-program-is-live.png
 ---
-
 <img src="/blog-assets/envio-grant-program-is-live.png" alt="Envio Cover Photo" width="100%"/>
 
 <!--truncate-->

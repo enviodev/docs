@@ -21,3 +21,6 @@ yarn-error.log*
 
 # VSCode
 /.vscode
+
+# Local git worktrees
+/.worktrees

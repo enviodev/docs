@@ -3,8 +3,8 @@ title: "Envio Bounty Graduate: POAP Multichain Blockchain Indexer"
 sidebar_label: "Envio Bounty Graduate: POAP Multichain Blockchain Indexer"
 slug: /envio-bounty-graduate-poap-multi-chain-indexer
 description: "Learn how to build a multichain POAP indexer across Ethereum and Gnosis using Envio to enable seamless tracking of on chain event data and showcase the power of multichain indexing."
+image: /blog-assets/envio-bounty-poap-indexer.png
 ---
-
 <img src="/blog-assets/envio-bounty-poap-indexer.png" alt="Cover Image for Envio Bounty Graduate: POAP Multichain Blockchain Indexer" width="100%"/>
 
 <!--truncate-->

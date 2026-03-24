@@ -3,8 +3,8 @@ title: "GBlast Case Study: Player Engagement with Envio"
 sidebar_label: How GBlast uses Envio's Blockchain Indexer for Enhanced Player Engagement
 slug: /case-study-gblast
 description: "See how GBlast integrated Envio’s blockchain indexer to boost player engagement and power gaming analytics with real-time and historical on-chain data insights."
+image: /blog-assets/case-study-gblast.png
 ---
-
 <img src="/blog-assets/case-study-gblast.png" alt="Cover Image for Case Study GBlast" width="100%"/>
 
 <!--truncate-->

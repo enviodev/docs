@@ -3,8 +3,8 @@ title: Envio Developer Update April 2024
 sidebar_label: Envio Developer Update April 2024
 slug: /envio-developer-update-april-2024
 description: "Discover what Envio shipped in April 2024 including release v0.0.40, new HyperSync support on Fuel Network, custom indices feature, and our developer event line-up."
+image: /blog-assets/envio-developer-community-update-9.png
 ---
-
 <img src="/blog-assets/envio-developer-community-update-9.png" alt="Cover Image Envio Developer Community Update No.9" width="100%"/>
 
 <!--truncate-->

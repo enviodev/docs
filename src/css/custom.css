@@ -282,12 +282,14 @@ table td {
 }
 
 /* Allow horizontal scrolling for wide markdown tables on small screens */
-article .markdown table {
-  display: block;
-  width: max-content;
-  max-width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+@media (max-width: 768px) {
+  article .markdown table {
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 /* Clean alert styling */

@@ -3,7 +3,9 @@ title: Envio Developer Update May 2024
 sidebar_label: Envio Developer Update May 2024  
 slug: /envio-developer-update-may-2024  
 description: "Explore Envio’s May 2024 update with release v1.1.0, our new Python HyperFuel client, upcoming developer events and the latest community milestones."  
----  
+image: /blog-assets/envio-dev-community-update-may-2024.png
+---
+  
 
 <img src="/blog-assets/envio-dev-community-update-may-2024.png" alt="Cover Image Envio Developer Community Update May 2024" width="100%"/>
 

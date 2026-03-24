@@ -3,8 +3,8 @@ title: Indexing and Reorgs
 sidebar_label: Indexing and Reorgs
 slug: /indexing-and-reorgs
 description: "Learn how Envio handles blockchain reorgs to maintain data accuracy and consistency when indexing on-chain events across multiple networks."
+image: /blog-assets/indexing-and-reorgs.png
 ---
-
 <img src="/blog-assets/indexing-and-reorgs.png" alt="Envio Cover Photo" width="100%"/>
 
 <!--truncate-->

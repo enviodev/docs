@@ -3,8 +3,8 @@ title: Envio Developer Update November 2023
 sidebar_label: Envio Developer Update November 2023
 slug: /envio-developer-community-update-no-4
 description: "Get the monthly low-down on what Envio shipped this past month—from new network integrations and major event appearances to the launch of our next-phase bounty program."
+image: /blog-assets/envio-developer-community-update-4.png
 ---
-
 
 <img src="/blog-assets/envio-developer-community-update-4.png" alt="Cover Image Envio Developer Community Update No.4" width="100%"/>
 
