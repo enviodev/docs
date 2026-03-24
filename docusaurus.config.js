@@ -116,10 +116,6 @@ const redirectsList = [
     to: "/docs/HyperIndex/rpc-sync",
   },
   {
-    from: "/docs/persisted_files",
-    to: "/docs/HyperIndex/persisted_files",
-  },
-  {
     from: "/docs/generated-files",
     to: "/docs/HyperIndex/generated-files",
   },
@@ -430,7 +426,6 @@ This file contains links to documentation sections following the llmstxt.org sta
 - [Historical Sync](https://docs.envio.dev/docs/HyperIndex/historical-sync.md): Learn how to optimize historical sync with HyperIndex for fast and efficient data retrieval.
 - [Performance Optimization](https://docs.envio.dev/docs/HyperIndex/performance.md): Learn how to optimize HyperIndex performance for syncing, indexing, and querying data.
 - [Understanding Chain Head Latency](https://docs.envio.dev/docs/HyperIndex/latency-at-head.md): Learn how Envio keeps blockchain indexers updated with low latency and reliable multi-chain sync.
-- [Persisted File Changes](https://docs.envio.dev/docs/HyperIndex/persisted_files.md): Learn how Envio manages file changes to optimize indexing and re-sync sequences efficiently.
 - [Preload Optimization](https://docs.envio.dev/docs/HyperIndex/preload-optimization.md): Learn how preload optimization improves event handlers with batched reads and parallel external calls.
 - [Query Conversion Guide](https://docs.envio.dev/docs/HyperIndex/query-conversion.md): Learn how to convert queries from TheGraph's custom GraphQL syntax to Envio's standard GraphQL syntax.
 - [Chain Reorganization Support](https://docs.envio.dev/docs/HyperIndex/reorgs-support.md): Learn how to handle chain reorgs and keep your indexed data consistent.
