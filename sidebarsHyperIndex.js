@@ -118,7 +118,6 @@ module.exports = {
         "Advanced/config-schema-reference",
         "Guides/cli-commands",
         "Advanced/reorgs-support",
-        // "Advanced/persisted-files",
         "Advanced/generated-files",
         "Advanced/metadata-query",
         "Advanced/terminology",
