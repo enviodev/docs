@@ -65,6 +65,8 @@ If you’re new to HyperSync clients, please start by going through these exampl
 
 Let’s discuss how we are going to structure our script. Instead of streaming events directly, we are going to stream height. When we get a new height, we query HyperSync to fetch the data we need. Here is a visual representation of that:
 
+![Visual representation of the script's data flow](/blog-assets/polymarket-data-flow.png)
+
 ## Stream Height
 
 We already have a height-streaming example in the HyperSync Node client, and we are going to use that here. Open `index.ts` and paste the following snippet, then we can go over it.
@@ -104,7 +106,7 @@ async function main() {
       // Handle different types of events
       switch (event.type) {
         case "Height":
-          await fetchOrderFilledEvents(client, event.height); // will be explained in while
+          await fetchOrderFilledEvents(client, event.height); // will be explained later
           break;
 
         case "Connected":
@@ -221,13 +223,13 @@ const ORDER_FILLED_ABI = {
 const ORDER_FILLED_ABI_ITEMS = [ORDER_FILLED_ABI] as const; // we can push it to query directly as an array
 ```
 
-Let’s start with the function definition. We are going to pass the HyperSync client and block height to this function.
+Let's define the function signature. We are going to pass the HyperSync client and block height to this function.
 
 ```typescript
 async function fetchOrderFilledEvents(client: HypersyncClient, height: number);
 ```
 
-To fetch the data from HyperSync, we need to create a query. If you're not familiar with HyperSync queries, the query builder at [https://builder.hypersync.xyz/](https://builder.hypersync.xyz/) is a good starting point.. In short, in this query we define which event from which contracts we want to fetch, and what fields we want in the response.
+To fetch the data from HyperSync, we need to create a query. If you're not familiar with HyperSync queries, the query builder at [https://builder.hypersync.xyz/](https://builder.hypersync.xyz/) is a good starting point. In short, in this query we define which event from which contracts we want to fetch, and what fields we want in the response.
 
 ```typescript
 const query: Query = {
