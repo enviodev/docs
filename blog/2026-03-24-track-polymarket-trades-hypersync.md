@@ -1,8 +1,9 @@
 ---
 title: How to Track Polymarket Trades Using Envio's HyperSync
 sidebar_label: How to Track Polymarket Trades Using Envio's HyperSync
-slug: /blog/track-polymarket-trades-hypersync
+slug: /track-polymarket-trades-hypersync
 description: "Learn how to track Polymarket trades in real time using Envio's HyperSync. Stream OrderFilled events on Polygon, decode trade data, and filter by amount or wallet address using TypeScript and Bun."
+image: /blog-assets/polymarket-trades-hypersync.png
 ---
 
 <img src="/blog-assets/polymarket-trades-hypersync.png" alt="Cover Image: Track Polymarket Trades in Real-Time" width="100%"/>
