@@ -41,7 +41,7 @@ pnpm dev             # run the indexer locally
 ## Step 0: Bootstrap the Project
 
 ```bash
-npx envio init
+pnpx envio init
 ```
 
 This generates a `config.yaml`, a starter `schema.graphql`, and handler stubs. Use your Ponder project as the source of truth for contract addresses, ABIs, and events, then fill in the generated files.
