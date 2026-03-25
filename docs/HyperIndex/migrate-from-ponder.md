@@ -18,7 +18,6 @@ If you are new to HyperIndex, start with the [Getting Started](/docs/HyperIndex/
 
 - **Up to 158x faster** historical sync via [HyperSync](/docs/HyperIndex/hypersync)
 - **Multichain by default** — index any number of chains in one config
-- **No infrastructure to manage** — deploy with `envio deploy`
 - **Same language** — your TypeScript logic transfers directly
 
 ## Migration Overview
