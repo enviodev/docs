@@ -83,6 +83,7 @@ When indexing stops, the dashboard clearly surfaces the issue so you can investi
 ## Related Documentation
 
 - **[Deploying Your Indexer](./hosted-service-deployment.md)** - Complete deployment guide
+- **[Envio Cloud CLI](./envio-cloud-cli.md)** - Monitor deployments from the command line with `envio-cloud deployment metrics` and `envio-cloud deployment status`
 - **[Features](./hosted-service-features.md)** - Learn about all available hosted service features
 - **[Pricing & Billing](./hosted-service-billing.mdx)** - Compare plans and see feature availability
 
