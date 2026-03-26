@@ -51,6 +51,7 @@ You can view and manage your hosted indexers in the [Envio Explorer](https://env
 
 - **[Features](./hosted-service-features.md)** - Learn about all available hosted service features
 - **[Deployment Guide](./hosted-service-deployment.md)** - Step-by-step instructions for deploying your indexer
+- **[Envio Cloud CLI](./envio-cloud-cli.md)** - Manage and monitor your hosted indexers from the command line
 - **[Pricing & Billing](./hosted-service-billing.mdx)** - Compare plans and pricing options
 - **[Self-Hosting](./self-hosting.md)** - Run your indexer on your own infrastructure
 

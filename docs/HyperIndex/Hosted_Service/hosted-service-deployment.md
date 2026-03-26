@@ -205,6 +205,7 @@ Manage indexer configurations and deployments using the sidebar navigation on th
 ## Related Documentation
 
 - **[Features](./hosted-service-features.md)** - Learn about all available hosted service features
+- **[Envio Cloud CLI](./envio-cloud-cli.md)** - Deploy and manage indexers from the command line
 - **[Pricing & Billing](./hosted-service-billing.mdx)** - Compare plans and see feature availability
 - **[Overview](./hosted-service.md)** - Introduction to the hosted service
 - **[Self-Hosting](./self-hosting.md)** - Run your indexer on your own infrastructure
