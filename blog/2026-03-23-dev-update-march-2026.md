@@ -26,7 +26,7 @@ Loads of exciting progress landed across the latest alpha releases this month. T
 
 Three new filter operators have been added for getWhere queries, following Hasura-style conventions:
 
-```
+```typescript
 context.Entity.getWhere({ amount: { _gte: 100n } })
 context.Entity.getWhere({ amount: { _lte: 500n } })
 context.Entity.getWhere({ status: { _in: ["active", "pending"] } })
@@ -36,7 +36,7 @@ context.Entity.getWhere({ status: { _in: ["active", "pending"] } })
 
 Allows double handler registration for the same event with similar filters:
 
-```
+```typescript
 import { ERC20 } from "generated";
 
 ERC20.Transfer.handler(async ({ event, context }) => {
@@ -90,7 +90,7 @@ As an example, **400,000+ wstETH events were indexed on Monad in ~20 seconds.**
 
 Use the following command to scaffold your indexer:
 
-```
+```bash
 pnpx envio@3.0.0-alpha.18 init template -t erc20 -l typescript -d ./my-indexer --api-token ""
 ```
 
@@ -124,7 +124,7 @@ See original post: [https://x.com/jonjonclark/status/2031016707309949042?s=20](h
 
 <img src="/blog-assets/dev-update-march-2026-4.png" alt="EthCC sponsorship" width="100%"/>
 
-Envio is a Sapphire sponsor of [EthCC](https://ethcc.io)[9], taking place at Palais des Festivals in Cannes from March 30 to April 2, 2026.
+Envio is a Sapphire sponsor of [EthCC[9]](https://ethcc.io), taking place at Palais des Festivals in Cannes from March 30 to April 2, 2026.
 
 EthCC is an annual Ethereum community conference bringing together developers, researchers, and teams from across the ecosystem.
 
@@ -176,7 +176,7 @@ More here: [https://github.com/enviodev/poly-whale-tracker](https://github.com/e
 
 Run:
 
-```
+```bash
 npx poly-whales
 ```
 
