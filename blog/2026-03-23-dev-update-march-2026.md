@@ -109,6 +109,18 @@ The process is handled end-to-end, converting your subgraph to HyperIndex and ge
 Learn more here: [https://envio.dev/pricing/subgraphs](https://envio.dev/pricing/subgraphs)  
 Get started on Discord - open a support ticket: [https://discord.com/invite/envio](https://discord.com/invite/envio)
 
+## Envio Cloud (formerly Hosted Service)
+
+As part of our product positioning updates, Hosted Service is now called **Envio Cloud**.
+
+This naming better reflects a production-ready deployment platform and helps distinguish Envio Cloud from self-hosting. Envio Cloud is the managed way to run HyperIndex in production, with infrastructure, scaling, monitoring, and operational workflows handled for your team.
+
+In docs, sales, and UI, we'll use:
+
+* Envio Cloud (formerly Hosted Service)
+
+Learn more: [https://docs.envio.dev/docs/HyperIndex/hosted-service](https://docs.envio.dev/docs/HyperIndex/hosted-service)
+
 ## Heatbook: Polymarket Orderbooks as Heatmaps
 
 <img src="/blog-assets/dev-update-march-2026-3.png" alt="Heatbook" width="100%"/>
