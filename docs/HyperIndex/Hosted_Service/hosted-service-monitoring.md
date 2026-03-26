@@ -7,7 +7,7 @@ slug: /hosted-service-monitoring
 
 # Monitoring Your Blockchain Indexer
 
-Once your blockchain indexer is deployed, the Envio Hosted Service provides several tools to help you monitor its health, performance, and progress.
+Once your blockchain indexer is deployed, Envio Cloud provides several tools to help you monitor its health, performance, and progress.
 
 ## Dashboard Overview
 
@@ -41,7 +41,7 @@ When issues occur, the dashboard displays failure information to help you quickl
 
 ## Logging
 
-_Full logging supported is integrated and configured by Envio via the Hosted Service_
+_Full logging supported is integrated and configured by Envio via Envio Cloud_
 
 Access detailed logs to troubleshoot issues and monitor indexer behavior:
 
@@ -84,6 +84,6 @@ When indexing stops, the dashboard clearly surfaces the issue so you can investi
 
 - **[Deploying Your Indexer](./hosted-service-deployment.md)** - Complete deployment guide
 - **[Envio Cloud CLI](./envio-cloud-cli.md)** - Monitor deployments from the command line with `envio-cloud deployment metrics` and `envio-cloud deployment status`
-- **[Features](./hosted-service-features.md)** - Learn about all available hosted service features
+- **[Features](./hosted-service-features.md)** - Learn about all available Envio Cloud features
 - **[Pricing & Billing](./hosted-service-billing.mdx)** - Compare plans and see feature availability
 

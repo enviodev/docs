@@ -146,9 +146,9 @@ A superset of JavaScript that adds static typing and other advanced features to 
 
 ## Envio Platform
 
-### Hosted Service
+### Envio Cloud
 
-A managed service platform for building, hosting, and querying Envio's Indexers with guaranteed uptime and performance service level agreements. The Hosted Service removes the operational burden of running blockchain indexers.
+A managed service platform for building, hosting, and querying Envio's Indexers with guaranteed uptime and performance service level agreements. Envio Cloud removes the operational burden of running blockchain indexers.
 
 ### Ploffen
 

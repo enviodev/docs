@@ -228,4 +228,4 @@ Learn more in the [event handlers guide](./Guides/event-handlers.mdx).
 
 **Congratulations!** Your HyperIndex indexer is now ready to run and query data!
 
-Next step: [Running your Indexer locally](./running-locally) or [Deploying to Hosted Service](./hosted-service).
+Next step: [Running your Indexer locally](./running-locally) or [Deploying to Envio Cloud](./hosted-service).

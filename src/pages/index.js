@@ -39,7 +39,7 @@ export default function Home() {
                   className={styles.docLink}
                   to="/docs/HyperIndex/hosted-service"
                 >
-                  HyperIndex Hosted Service Docs
+                  HyperIndex Envio Cloud Docs
                 </Link>
               </div>
             </div>

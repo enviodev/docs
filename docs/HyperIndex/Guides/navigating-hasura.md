@@ -141,7 +141,7 @@ When testing, you may need to reset your database:
 
 ## Aggregations: local vs hosted (avoid the foot‑gun)
 
-When developing locally with Hasura, you may notice that GraphQL aggregate helpers (for example, count/sum-style aggregations) are available. On the hosted service, these aggregate endpoints are intentionally not exposed. Aggregations over large datasets can be very slow and unpredictable in production.
+When developing locally with Hasura, you may notice that GraphQL aggregate helpers (for example, count/sum-style aggregations) are available. On Envio Cloud, these aggregate endpoints are intentionally not exposed. Aggregations over large datasets can be very slow and unpredictable in production.
 
 The recommended approach is to compute and store aggregates at indexing time, not at query time. In practice this means maintaining counters, sums, and other rollups in entities as part of your event handlers, and then querying those precomputed values.
 
@@ -193,7 +193,7 @@ This pattern scales: you can keep per-entity counters, rolling windows (daily/ho
 
 #### Exceptional cases
 
-If runtime aggregate queries are a hard requirement for your use case, please reach out and we can evaluate options for your project on the hosted service. Contact us on [Discord](https://discord.gg/envio).
+If runtime aggregate queries are a hard requirement for your use case, please reach out and we can evaluate options for your project on Envio Cloud. Contact us on [Discord](https://discord.gg/envio).
 
 ## Disable Hasura for Self-Hosted Blockchain Indexers
 

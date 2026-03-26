@@ -50,7 +50,7 @@ HyperIndex for Fuel supports all the core features available in the EVM version:
 - ✅ [No-code Contract Import](../contract-import.md)
 - ✅ [Dynamic Contracts / Factory Tracking](../Advanced/dynamic-contracts.md)
 - ✅ [Testing Framework](/docs/HyperIndex/testing)
-- ✅ [Hosted Service](../Hosted_Service/hosted-service.md)
+- ✅ [Envio Cloud](../Hosted_Service/hosted-service.md)
 - ✅ [Wildcard Indexing](../Advanced/wildcard-indexing.mdx)
 
 ## Fuel-Specific Event Types

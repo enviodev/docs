@@ -3,18 +3,18 @@ id: hosted-service-deployment
 title: Deploying Your Indexer
 sidebar_label: Deploying
 slug: /hosted-service-deployment
-description: Learn how to deploy, manage, and version your indexers effortlessly using git workflow
+description: Learn how to deploy, manage, and version your indexers on Envio Cloud using a git workflow
 ---
 
 # Deploying Your Indexer
 
-The Envio Hosted Service provides a seamless git-based deployment workflow, similar to modern platforms like Vercel. This enables you to easily deploy, update, and manage your blockchain indexers through your normal development workflow.
+Envio Cloud provides a seamless git-based deployment workflow, similar to modern platforms like Vercel. This enables you to easily deploy, update, and manage your blockchain indexers through your normal development workflow.
 
 ## Prerequisites & Important Information
 
 ### Requirements
 
-- **Version Support**: Deployment on the Hosted Service requires at least version `2.21.5`. 
+- **Version Support**: Deployment on Envio Cloud requires at least version `2.21.5`. 
 Additionally, the following versions are not supported: 
   - `2.29.x`
 - **PNPM Support**: deployment must be compatible with pnpm version `9.10.0`
@@ -27,7 +27,7 @@ Before deploying your indexer, please be aware of the following limits and polic
 ### Deployment Limits
 - **3 development plan indexers** per organization
 - **Deployments per indexer**:  3 deployments per indexer
-- Deployments can be deleted in the hosted service to make space for more deployments
+- Deployments can be deleted in Envio Cloud to make space for more deployments
 
 ### Development Plan Fair Usage Policy
 The free development plan includes automatic deletion policies to ensure fair resource allocation:
@@ -115,7 +115,7 @@ For a robust deployment workflow, we recommend:
 
 ### Continuous Configuration
 
-After deploying your indexer, you can manage its configuration through the `Settings` tab in the Envio dashboard:
+After deploying your indexer, you can manage its configuration through the `Settings` tab in the Envio Cloud dashboard:
 
 #### General Tab
 
@@ -204,10 +204,10 @@ Manage indexer configurations and deployments using the sidebar navigation on th
 
 ## Related Documentation
 
-- **[Features](./hosted-service-features.md)** - Learn about all available hosted service features
+- **[Features](./hosted-service-features.md)** - Learn about all available Envio Cloud features
 - **[Envio Cloud CLI](./envio-cloud-cli.md)** - Deploy and manage indexers from the command line
 - **[Pricing & Billing](./hosted-service-billing.mdx)** - Compare plans and see feature availability
-- **[Overview](./hosted-service.md)** - Introduction to the hosted service
+- **[Overview](./hosted-service.md)** - Introduction to Envio Cloud
 - **[Self-Hosting](./self-hosting.md)** - Run your indexer on your own infrastructure
 
 ---

@@ -83,11 +83,11 @@ export ENVIO_API_TOKEN=your-secret-token
 export ENVIO_RPC_URL=https://arbitrum.direct.dev/your-api-key
 ```
 
-### Hosted Service
+### Envio Cloud
 
-When using the Envio Hosted Service, you can configure environment variables through the Envio platform's dashboard. Remember that all variables must still be prefixed with `ENVIO_`.
+When using Envio Cloud, you can configure environment variables through the Envio platform's dashboard. Remember that all variables must still be prefixed with `ENVIO_`.
 
-For more information about environment variables in the hosted service, see the [Hosted Service documentation](../HyperIndex/hosted-service).
+For more information about environment variables in Envio Cloud, see the [Envio Cloud documentation](../HyperIndex/hosted-service).
 
 ## Configuration File
 

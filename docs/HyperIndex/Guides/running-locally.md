@@ -32,5 +32,5 @@ pnpm envio stop
 
 ## What next?
 
-Once you have successfully run the indexer locally, you can deploy the indexer onto Envio's [hosted service](./hosted-service).
+Once you have successfully run the indexer locally, you can deploy the indexer onto Envio's [Envio Cloud](./hosted-service).
 ---

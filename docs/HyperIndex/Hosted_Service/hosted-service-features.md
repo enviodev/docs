@@ -5,9 +5,9 @@ sidebar_label: Features
 slug: /hosted-service-features
 ---
 
-# Hosted Service Features
+# Envio Cloud Features
 
-Our hosted service includes several production-ready features to help you manage and secure your blockchain indexer deployments.
+Envio Cloud includes several production-ready features to help you manage and secure your blockchain indexer deployments.
 
 :::info Plan Availability
 Most features listed on this page are available for **paid production plans only**. The free development plan has limited features and is designed for testing and development purposes. [View our pricing plans](./hosted-service-billing.mdx) to see what's included in each plan.

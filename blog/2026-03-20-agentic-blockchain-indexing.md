@@ -1,8 +1,8 @@
 ---
-title: "Agentic Blockchain Indexing: How to Deploy an EVM Indexer to Envio's Hosted Service"
+title: "Agentic Blockchain Indexing: How to Deploy an EVM Indexer to Envio Cloud"
 sidebar_label: "Agentic Blockchain Indexing"
 slug: /agentic-blockchain-indexing-envio-hyperindex
-description: "A step-by-step guide to agentic blockchain indexing with Envio HyperIndex. Learn how an AI agent can scaffold, configure, and deploy an EVM indexer to Envio Hosted Service in minutes using a fully CLI driven workflow."
+description: "A step-by-step guide to agentic blockchain indexing with Envio HyperIndex. Learn how an AI agent can scaffold, configure, and deploy an EVM indexer to Envio Cloud in minutes using a fully CLI driven workflow."
 image: /blog-assets/agentic-blockchain-indexing.png
 ---
 
@@ -13,7 +13,7 @@ image: /blog-assets/agentic-blockchain-indexing.png
 
 Agentic development works best when an AI agent can take a single prompt and run with it, end-to-end, without handing back to a human at every step. For blockchain indexing, that's exactly what we've built at Envio.
 
-With Envio's hosted service CLI (`envio-hs`) and HyperIndex, an agent can scaffold a production-ready indexer, configure it for any EVM-compatible chain, push it to GitHub, and deploy it to Envio's hosted service, without a human ever touching a config file.
+With the Envio Cloud CLI (`envio-cloud`) and HyperIndex, an agent can scaffold a production-ready indexer, configure it for any EVM-compatible chain, push it to GitHub, and deploy it to Envio Cloud, without a human ever touching a config file.
 
 **⚡ The result: 400,000 events indexed in ~20 seconds**
 
@@ -22,21 +22,21 @@ With Envio's hosted service CLI (`envio-hs`) and HyperIndex, an agent can scaffo
 
 [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) is Envio's high-performance blockchain indexing framework. It's designed to make indexing fast to build and even faster to run, with support for EVM-compatible networks and a developer experience built around real workflows.
 
-HyperIndex is the default indexing framework for agentic development with Envio’s hosted service CLI tool and comprehensive Claude skills. That means when an AI agent needs to spin up a blockchain data pipeline, HyperIndex is the go-to solution.
+HyperIndex is the default indexing framework for agentic development with the Envio Cloud CLI tool and comprehensive Claude skills. That means when an AI agent needs to spin up a blockchain data pipeline, HyperIndex is the go-to solution.
 
 
-## The Hosted Service CLI: `envio-hs`
+## The Envio Cloud CLI: `envio-cloud`
 
-The [envio-hs](https://www.npmjs.com/package/envio-hs) CLI is the command-line interface for Envio's hosted service, the managed infrastructure layer that runs your HyperIndex indexers in production.
+The [envio-cloud](https://www.npmjs.com/package/envio-cloud) CLI is the command-line interface for Envio Cloud, the managed infrastructure layer that runs your HyperIndex indexers in production.
 
 With it you can:
 
 
 
-* Authenticate via GitHub (`envio-hs login`)
-* Register a new indexer pointing to your GitHub repo (`envio-hs indexer add`)
-* Monitor sync progress and deployment status in real-time (`envio-hs deployment status`, `envio-hs deployment metrics`)
-* Promote deployments to production (`envio-hs deployment promote`)
+* Authenticate via GitHub (`envio-cloud login`)
+* Register a new indexer pointing to your GitHub repo (`envio-cloud indexer add`)
+* Monitor sync progress and deployment status in real-time (`envio-cloud deployment status`, `envio-cloud deployment metrics`)
+* Promote deployments to production (`envio-cloud deployment promote`)
 * Pull JSON output for any command (`-o json`), making it fully scriptable and agent-friendly
 
 *⭐ No dashboard required. Everything that matters is exposed through the CLI.*
@@ -90,7 +90,7 @@ git push -u origin main
 If the push fails because your GitHub token lacks permission to push workflow files (like `.github/workflows/test.yaml`), refresh auth with workflow scope:
 `gh auth refresh -s workflow`
 
-The Envio hosted service deploys from the `envio` branch by default, so create and push it:
+Envio Cloud deploys from the `envio` branch by default, so create and push it:
 
 
 ```
@@ -113,8 +113,8 @@ Then grant the bot access to the `wsteth-monad-indexer-demo` repository.
 
 
 ```
-pnpx envio-hs login
-pnpx envio-hs indexer add
+pnpx envio-cloud login
+pnpx envio-cloud indexer add
   --name wsteth-monad-indexer-demo
   --repo wsteth-monad-indexer-demo
   --description "wstETH ERC20 indexer on Monad" 
@@ -129,8 +129,8 @@ pnpx envio-hs indexer add
 
 
 ```
-pnpx envio-hs indexer get wsteth-monad-indexer-demo {org}
-pnpx envio-hs deployment status wsteth-monad-indexer-demo <commit-hash> {org}
+pnpx envio-cloud indexer get wsteth-monad-indexer-demo {org}
+pnpx envio-cloud deployment status wsteth-monad-indexer-demo <commit-hash> {org}
 ```
 
 
@@ -152,7 +152,7 @@ See the full walkthrough on [Loom](https://www.loom.com/share/09cdac43b18f4143ad
 
 The blockchain data layer has historically been one of the friction points in agentic workflows. Spinning up an indexer meant reading docs, manually editing configs, managing infrastructure, and waiting for sync.
 
-HyperIndex and the `envio-hs` CLI change that equation. Every step in the workflow above is scriptable, CLI-driven, and designed to be executed by an agent without human intervention. The JSON output flag (`-o json`) makes it straightforward to pipe deployment status into downstream logic. The GitHub-native deployment flow means agents that can commit code can deploy indexers.
+HyperIndex and the `envio-cloud` CLI change that equation. Every step in the workflow above is scriptable, CLI-driven, and designed to be executed by an agent without human intervention. The JSON output flag (`-o json`) makes it straightforward to pipe deployment status into downstream logic. The GitHub-native deployment flow means agents that can commit code can deploy indexers.
 
 This is what it looks like in practice for HyperIndex to be the default indexing framework for agentic development.
 
@@ -160,11 +160,11 @@ This is what it looks like in practice for HyperIndex to be the default indexing
 
 ## Getting started
 
-Install the hosted service CLI:
+Install the Envio Cloud CLI:
 
 
 ```
-npm install -g envio-hs
+npm install -g envio-cloud
 ```
 
 
@@ -181,9 +181,9 @@ MCP loading.
 
 
 
-## About the Envio’s Hosted Service
+## About Envio Cloud
 
-Envio [Hosted Service](https://docs.envio.dev/docs/HyperIndex/hosted-service) is a managed environment for running HyperIndex indexers in production.
+[Envio Cloud](https://docs.envio.dev/docs/HyperIndex/hosted-service) is a managed environment for running HyperIndex indexers in production.
 
 It handles infrastructure, scaling, and monitoring, so indexers can run reliably without managing operational overhead. Multiple plans are available, from free development environments to dedicated production deployments, each with features such as static endpoints, built in alerts, and production ready infrastructure.
 

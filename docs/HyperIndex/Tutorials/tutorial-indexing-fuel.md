@@ -28,7 +28,7 @@ Sway Farm is a simple farming game and for the sake of a real-world example, let
 - **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
-> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
+> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio Cloud.
 
 ## Initialize the project
 
@@ -306,13 +306,13 @@ Now, we can easily get the top 5 players, the number of inactive and active play
 
 > 🧠 A separate [Guide](./navigating-hasura) page provides more details about navigating Hasura.
 
-## Deploy the indexer onto the hosted service
+## Deploy the indexer to Envio Cloud
 
-Once you have verified that the indexer is working for your contracts, then you are ready to deploy the indexer onto our hosted service.
+Once you have verified that the indexer is working for your contracts, then you are ready to deploy the indexer to Envio Cloud.
 
-Deploying an indexer onto the hosted service allows you to extract information via graphQL queries into your front-end or some back-end application.
+Deploying an indexer to Envio Cloud allows you to extract information via graphQL queries into your front-end or some back-end application.
 
-Navigate to the [hosted service](https://envio.dev/app/login) to start deploying your indexer and refer to this [documentation](../Hosted_Service/hosted-service.md) for more information on deploying your indexer.
+Navigate to the [Envio Cloud](https://envio.dev/app/login) to start deploying your indexer and refer to this [documentation](../Hosted_Service/hosted-service.md) for more information on deploying your indexer.
 
 ## What next?
 

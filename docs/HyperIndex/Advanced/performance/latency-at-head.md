@@ -40,12 +40,12 @@ Maintaining low latency at the chain head is crucial for ensuring timely data up
 - **Reorg Handling**: Our reorg support system ensures data consistency even when chains reorganize.
 - **Documentation**: Contact our team on Discord if you have concerns about reorg support while we finalize documentation.
 
-## Hosted Service Performance
+## Envio Cloud Performance
 
-Our hosted service offers reliable performance with ongoing improvements:
+Envio Cloud offers reliable performance with ongoing improvements:
 
-- **Continuous Enhancement**: We're actively improving sync and build times on our hosted service.
-- **Relative Performance**: Currently, indexers may run slightly slower on the hosted service compared to high-performance local machines.
+- **Continuous Enhancement**: We're actively improving sync and build times on Envio Cloud.
+- **Relative Performance**: Currently, indexers may run slightly slower on Envio Cloud compared to high-performance local machines.
 - **Enterprise Solutions**: For applications requiring exceptional performance, contact us on Discord to discuss our enterprise hosting plans.
 
 By leveraging these features and providing feedback on your specific needs, you can help us continually improve the HyperIndex head latency performance.
