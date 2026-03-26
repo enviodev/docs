@@ -3,7 +3,7 @@ id: licensing
 title: Licensing
 sidebar_label: Licensing
 slug: /licensing
-description: Learn how Envio's licensing lets developers self-host, use generated code, and stay open while protecting hosted services.
+description: Learn how Envio's licensing lets developers self-host, use generated code, and stay open while protecting Envio Cloud.
 ---
 
 ## TL;DR
@@ -11,14 +11,14 @@ description: Learn how Envio's licensing lets developers self-host, use generate
 - Envio's licensing reflects open source ethos but is not OSI recognized.
 - Developers can use Envio's services without vendor lock-in, either by self-hosting or specifying an RPC URL.
 - The generated code is open and public
-- Our license allows self-hosting but restricts third-party competition with Envio's hosted service.
+- Our license allows self-hosting but restricts third-party competition with Envio Cloud.
 - Envio may consider open-sourcing in the future but prioritizes stakeholder interests and market traction.
 
 ## Our position
 
 We're devs and we value OS ethos too, that's why our licensing mirrors a lot of the benefits from open source licensing however Envio and its products do not use a recognized open source license by the [OSI](https://opensource.org/), we are however public and open and our licensing reflects this.
 
-Our future business model lies in our hosted service and HyperSync requests and so we are protecting this, but to ensure continuity and no vendor lock-in, developers are able to run and develop on their indexer without either. Either by self-hosting, which our license permits, or by specifying an RPC URL in their indexer configuration and thus bypassing HyperSync.
+Our future business model lies in Envio Cloud and HyperSync requests and so we are protecting this, but to ensure continuity and no vendor lock-in, developers are able to run and develop on their indexer without either. Either by self-hosting, which our license permits, or by specifying an RPC URL in their indexer configuration and thus bypassing HyperSync.
 
 Envio is in its formative stages and though we may look to open-source the software in the future we are dedicated to ensuring the best interests of all stakeholders. Going open source is somewhat of a one-way function and it is easier to go open source than to proverbially go "closed source". Once we have gained more market traction we will review our position on going open source.
 

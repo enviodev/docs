@@ -21,7 +21,7 @@ _The fine print: Please note these terms are intended to protect us, where adver
    Envio provides the following services:
 
    - A development framework named HyperIndex.
-   - A hosted service for deploying and hosting HyperIndex indexers.
+   - Envio Cloud, a hosted service for deploying and hosting HyperIndex indexers.
    - Low-level read-only API accessible as Hypersync and HyperRPC.
 
 3. **User Accounts**

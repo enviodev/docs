@@ -22,7 +22,7 @@ Before starting, ensure you have the following installed:
 - **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
-> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
+> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio Cloud.
 
 ## Step 1: Initialize Your Indexer
 
@@ -193,6 +193,6 @@ Congratulations! You've successfully created an indexer for Optimism Bridge depo
 
 - Try customizing the event handlers to add additional logic
 - Create relationships between events on different networks
-- Deploy your indexer to Envio's hosted service
+- Deploy your indexer to Envio Cloud
 
 For more tutorials and advanced features, check out our [documentation](https://docs.envio.dev) or watch our [video walkthroughs](https://www.youtube.com/watch?v=9U2MTFU9or0) on YouTube.

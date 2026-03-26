@@ -96,7 +96,7 @@ For production deployments, it’s recommended to use HyperSync as the primary d
 | Resource Usage     | High                  | Optimized                    |
 | Network Calls      | Many individual calls | Batched for efficiency       |
 | Rate Limiting      | Common issue          | Not applicable               |
-| Cost               | Pay per API call      | Included with Hosted Service |
+| Cost               | Pay per API call      | Included with Envio Cloud |
 
 ## Summary
 

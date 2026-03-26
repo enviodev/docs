@@ -79,7 +79,7 @@ module.exports = {
     },
     {
       type: "category",
-      label: "Hosting",
+      label: "Envio Cloud",
       collapsed: false,
       items: [
         "Hosted_Service/hosted-service",

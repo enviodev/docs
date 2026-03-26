@@ -30,7 +30,7 @@ This document contains all HyperIndex documentation consolidated into a single f
 
 - **Prerequisites:** Node.js v22+, pnpm v8+, Docker Desktop (local dev only)
 
-- **Deployment:** Hosted service (managed, no API token needed) or self hosted
+- **Deployment:** Envio Cloud (managed, no API token needed) or self hosted
 
 - **API token:** Required for local dev and self hosted deployments via ENVIO_API_TOKEN env variable (from 3 November 2025)
 
@@ -74,7 +74,7 @@ HyperSync (the data engine powering HyperIndex) implements rate limits for reque
 
 - **Local Development**: An API token will be required. An automatic login feature from the CLI will be available to make this smoother.
 - **Self-Hosted Deployments**: API tokens are required for HyperSync access in self-hosted deployments. The token can be set via the `ENVIO_API_TOKEN` environment variable in your indexer configuration. This can be read from the `.env` file in the root of your HyperIndex project.
-- **Hosted Service**: Indexers deployed to our hosted service will have special access that doesn't require a custom API token.
+- **Envio Cloud**: Indexers deployed to Envio Cloud will have special access that doesn't require a custom API token.
 - **Future Pricing**: From mid-November 2025 onwards, we will introduce tiered packages for those self-hosting HyperIndex and wishing to use HyperSync. For preferred introductory pricing based on your specific use case, reach out to us on Discord.
 
 For more details about API tokens, including how to generate and implement them, see our API Tokens documentation.
@@ -101,7 +101,7 @@ Learn how to create and run a blockchain indexer with Envio’s HyperIndex, from
 - **pnpm** _(v8 or newer)_
 - **Docker Desktop** _(required to run the Envio indexer locally)_
 
-> **Note:** Docker is required only if you plan to run your indexer locally. You can skip installing Docker if you'll only be using Envio's Hosted Service.
+> **Note:** Docker is required only if you plan to run your indexer locally. You can skip installing Docker if you'll only be using Envio Cloud.
 
 #### Additionally for Windows Users:
 
@@ -2117,7 +2117,7 @@ pool->Option.forEach(pool => {
 
 ### `context.log`
 
-The context object also provides a logger that you can use to log messages to the console. Compared to `console.log` calls, these logs will be displayed on our Hosted Service runtime logs page.
+The context object also provides a logger that you can use to log messages to the console. Compared to `console.log` calls, these logs will be displayed on Envio Cloud's runtime logs page.
 
 Read more in the Logging Guide.
 
@@ -2700,7 +2700,7 @@ When testing, you may need to reset your database:
 
 ## Aggregations: local vs hosted (avoid the foot‑gun)
 
-When developing locally with Hasura, you may notice that GraphQL aggregate helpers (for example, count/sum-style aggregations) are available. On the hosted service, these aggregate endpoints are intentionally not exposed. Aggregations over large datasets can be very slow and unpredictable in production.
+When developing locally with Hasura, you may notice that GraphQL aggregate helpers (for example, count/sum-style aggregations) are available. On Envio Cloud, these aggregate endpoints are intentionally not exposed. Aggregations over large datasets can be very slow and unpredictable in production.
 
 The recommended approach is to compute and store aggregates at indexing time, not at query time. In practice this means maintaining counters, sums, and other rollups in entities as part of your event handlers, and then querying those precomputed values.
 
@@ -2752,7 +2752,7 @@ This pattern scales: you can keep per-entity counters, rolling windows (daily/ho
 
 #### Exceptional cases
 
-If runtime aggregate queries are a hard requirement for your use case, please reach out and we can evaluate options for your project on the hosted service. Contact us on Discord.
+If runtime aggregate queries are a hard requirement for your use case, please reach out and we can evaluate options for your project on Envio Cloud. Contact us on Discord.
 
 ## Disable Hasura for Self-Hosted Blockchain Indexers
 
@@ -2839,11 +2839,11 @@ export ENVIO_API_TOKEN=your-secret-token
 export ENVIO_RPC_URL=https://arbitrum.direct.dev/your-api-key
 ```
 
-### Hosted Service
+### Envio Cloud
 
-When using the Envio Hosted Service, you can configure environment variables through the Envio platform's dashboard. Remember that all variables must still be prefixed with `ENVIO_`.
+When using Envio Cloud, you can configure environment variables through the Envio platform's dashboard. Remember that all variables must still be prefixed with `ENVIO_`.
 
-For more information about environment variables in the hosted service, see the Hosted Service documentation.
+For more information about environment variables in Envio Cloud, see the Envio Cloud documentation.
 
 ## Configuration File
 
@@ -2999,24 +2999,24 @@ These are official indexers maintained by the Sablier team and represent product
 
 ---
 
-## Hosted Service
+## Envio Cloud
 
 **File:** `Hosted_Service/hosted-service.md`
 
 Envio offers a fully managed hosting solution for your blockchain indexers, providing all the infrastructure, scaling, and monitoring needed to run production-grade indexers without operational overhead.
 
-Our hosted service offers multiple plans to suit different needs, from free development environments to enterprise-grade dedicated hosting. Each plan includes powerful features like static production endpoints, built-in alerts, and production-ready infrastructure. 
+Envio Cloud offers multiple plans to suit different needs, from free development environments to enterprise-grade dedicated hosting. Each plan includes powerful features like static production endpoints, built-in alerts, and production-ready infrastructure.
 
 
 ## Deployment Options
 
 Envio provides flexibility in how you deploy and host your indexers:
 
-- **Fully Managed Hosted Service**: Let Envio handle everything. The following sections of this page outline the Fully Managed Hosted Service in more detail. This is the recommended deployment method for most users and removes the hosting overhead for your team. See below for the all the awesome features we provide and see the Pricing & Billing page for more information on which Hosting plan suits your indexing needs.
+- **Envio Cloud (Fully Managed)**: Let Envio handle everything. The following sections of this page outline Envio Cloud in more detail. This is the recommended deployment method for most users and removes the hosting overhead for your team. See below for the all the awesome features we provide and see the Pricing & Billing page for more information on which Hosting plan suits your indexing needs.
 
 - **Self-Hosting**: Run your indexer on your own infrastructure. This requires advanced setup and infrastructure knowledge not unique to Envio. See the following repository for a simple docker example to get you started. Please note this example does not cover all infrastructure related needs. It is recommended that at least a separate Postgres management tool is used for self-hosting in production. For further instructions see the Self Hosting Guide
 
-## Hosted Service Key Features
+## Key Features
 
 - **Git-based Deployments**: Similar to Vercel, deploy your indexer by simply pushing to a designated deployment branch
 - **Zero Infrastructure Management**: We handle all the servers, databases, and scaling for you
@@ -3028,9 +3028,9 @@ Envio provides flexibility in how you deploy and host your indexers:
 - **Multichain Support**: Deploy indexers that track multiple networks from a single codebase
 
 
-## Hosted Service Deployment Model
+## Deployment Model
 
-The Envio Hosted Service provides a seamless GitHub-integrated deployment workflow:
+Envio Cloud provides a seamless GitHub-integrated deployment workflow:
 
 1. **GitHub Integration**: Install the Envio Deployments GitHub App to connect your repositories
 2. **Flexible Configuration**: Support for monorepos with configurable root directories, config file locations, and deployment branches
@@ -3046,23 +3046,23 @@ You can view and manage your hosted indexers in the Envio Explorer.
 
 ## Getting Started
 
-- **Features** - Learn about all available hosted service features
+- **Features** - Learn about all available Envio Cloud features
 - **Deployment Guide** - Step-by-step instructions for deploying your indexer
 - **Pricing & Billing** - Compare plans and pricing options
 - **Self-Hosting** - Run your indexer on your own infrastructure
 
 :::info
-It is recommended that before deploying to the Hosted Service, the indexer is built and tested locally to ensure it runs smoothly on the Hosted Service.
+It is recommended that before deploying to Envio Cloud, the indexer is built and tested locally to ensure it runs smoothly on Envio Cloud.
 For a complete list of local CLI commands to develop your indexer, see the CLI Commands documentation.
 :::
 
 ---
 
-## Hosted Service Features
+## Envio Cloud Features
 
 **File:** `Hosted_Service/hosted-service-features.md`
 
-Our hosted service includes several production-ready features to help you manage and secure your blockchain indexer deployments.
+Envio Cloud includes several production-ready features to help you manage and secure your blockchain indexer deployments.
 
 :::info Plan Availability
 Most features listed on this page are available for **paid production plans only**. The free development plan has limited features and is designed for testing and development purposes. View our pricing plans to see what's included in each plan.
@@ -3240,13 +3240,13 @@ For deployment instructions and limits, see our Deployment Guide. For pricing an
 
 **File:** `Hosted_Service/hosted-service-deployment.md`
 
-The Envio Hosted Service provides a seamless git-based deployment workflow, similar to modern platforms like Vercel. This enables you to easily deploy, update, and manage your blockchain indexers through your normal development workflow.
+Envio Cloud provides a seamless git-based deployment workflow, similar to modern platforms like Vercel. This enables you to easily deploy, update, and manage your blockchain indexers through your normal development workflow.
 
 ## Prerequisites & Important Information
 
 ### Requirements
 
-- **Version Support**: Deployment on the Hosted Service requires at least version `2.21.5`. 
+- **Version Support**: Deployment on Envio Cloud requires at least version `2.21.5`. 
 Additionally, the following versions are not supported: 
   - `2.29.x`
 - **PNPM Support**: deployment must be compatible with pnpm version `9.10.0`
@@ -3259,7 +3259,7 @@ Before deploying your indexer, please be aware of the following limits and polic
 ### Deployment Limits
 - **3 development plan indexers** per organization
 - **Deployments per indexer**:  3 deployments per indexer
-- Deployments can be deleted in the hosted service to make space for more deployments
+- Deployments can be deleted in Envio Cloud to make space for more deployments
 
 ### Development Plan Fair Usage Policy
 The free development plan includes automatic deletion policies to ensure fair resource allocation:
@@ -3436,9 +3436,9 @@ Manage indexer configurations and deployments using the sidebar navigation on th
 
 ## Related Documentation
 
-- **Features** - Learn about all available hosted service features
+- **Features** - Learn about all available Envio Cloud features
 - **Pricing & Billing** - Compare plans and see feature availability
-- **Overview** - Introduction to the hosted service
+- **Overview** - Introduction to Envio Cloud
 - **Self-Hosting** - Run your indexer on your own infrastructure
 
 ---
@@ -3447,7 +3447,7 @@ Manage indexer configurations and deployments using the sidebar navigation on th
 
 **File:** `Hosted_Service/hosted-service-monitoring.md`
 
-Once your blockchain indexer is deployed, the Envio Hosted Service provides several tools to help you monitor its health, performance, and progress.
+Once your blockchain indexer is deployed, Envio Cloud provides several tools to help you monitor its health, performance, and progress.
 
 ## Dashboard Overview
 
@@ -3481,7 +3481,7 @@ When issues occur, the dashboard displays failure information to help you quickl
 
 ## Logging
 
-_Full logging supported is integrated and configured by Envio via the Hosted Service_
+_Full logging supported is integrated and configured by Envio via Envio Cloud_
 
 Access detailed logs to troubleshoot issues and monitor indexer behavior:
 
@@ -3523,12 +3523,12 @@ When indexing stops, the dashboard clearly surfaces the issue so you can investi
 ## Related Documentation
 
 - **Deploying Your Indexer** - Complete deployment guide
-- **Features** - Learn about all available hosted service features
+- **Features** - Learn about all available Envio Cloud features
 - **Pricing & Billing** - Compare plans and see feature availability
 
 ---
 
-## Hosted Service Billing
+## Envio Cloud Billing
 
 **File:** `Hosted_Service/hosted-service-billing.mdx`
 
@@ -3539,7 +3539,7 @@ Envio offers flexible pricing options to meet the needs of projects at different
 
 ## Pricing Plans
 
-Our hosted service offers flexible pricing plans to match your project's needs, from free development environments to enterprise-grade dedicated hosting.
+Envio Cloud offers flexible pricing plans to match your project's needs, from free development environments to enterprise-grade dedicated hosting.
 
 :::info Current Pricing
 For the most up-to-date pricing information, detailed plan comparisons, and feature breakdowns, please visit our official Envio Pricing Page.
@@ -3571,10 +3571,10 @@ For detailed feature explanations, see our Features page. For deployment instruc
 This documentation page is actively being improved. Check back regularly for updates and additional information.
 :::
 
-While Envio offers a fully managed Hosted Service, you may prefer to run your blockchain indexer on your own infrastructure. This guide covers everything you need to know about self-hosting Envio indexers.
+While Envio offers Envio Cloud as a fully managed hosting solution, you may prefer to run your blockchain indexer on your own infrastructure. This guide covers everything you need to know about self-hosting Envio indexers.
 
 :::note
-We deeply appreciate users who choose our hosted service, as it directly supports our team and helps us continue developing and improving Envio's technology. If your use case allows for it, please consider the hosted option.
+We deeply appreciate users who choose Envio Cloud, as it directly supports our team and helps us continue developing and improving Envio's technology. If your use case allows for it, please consider the hosted option.
 :::
 
 ## Why Self-Host?
@@ -3628,7 +3628,7 @@ If you encounter issues with self-hosting:
 - Join the Envio Discord community for community support
 
 :::tip
-For most production use cases, we recommend using the Envio Hosted Service to benefit from automatic scaling, monitoring, and maintenance.
+For most production use cases, we recommend using Envio Cloud to benefit from automatic scaling, monitoring, and maintenance.
 :::
 
 ---
@@ -3637,12 +3637,12 @@ For most production use cases, we recommend using the Envio Hosted Service to be
 
 **File:** `Hosted_Service/organisation-setup.md`
 
-Use this guide to set up an organisation in the Envio Hosted Service and grant access to your team.
+Use this guide to set up an organisation in Envio Cloud and grant access to your team.
 
 
 ## Access Control
 
-Being a member of the GitHub organisation **does not** automatically grant access to the organisation in the Envio Hosted Service UI. Each member must be explicitly added by the organisation admin. If someone attempts to visit the organisation URL (e.g., `https://envio.dev/app/`) without being added, they'll see a "You are not a member of this team" message.
+Being a member of the GitHub organisation **does not** automatically grant access to the organisation in the Envio Cloud UI. Each member must be explicitly added by the organisation admin. If someone attempts to visit the organisation URL (e.g., `https://envio.dev/app/`) without being added, they'll see a "You are not a member of this team" message.
 
 
 
@@ -3672,7 +3672,7 @@ Before starting, ensure you have the following installed:
 - **pnpm** _(v8 or newer)_
 - **Docker Desktop** _(required to run the Envio indexer locally)_
 
-> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
+> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio Cloud.
 
 ## Step 1: Initialize Your Indexer
 
@@ -3843,7 +3843,7 @@ Congratulations! You've successfully created an indexer for Optimism Bridge depo
 
 - Try customizing the event handlers to add additional logic
 - Create relationships between events on different networks
-- Deploy your indexer to Envio's hosted service
+- Deploy your indexer to Envio Cloud
 
 For more tutorials and advanced features, check out our documentation or watch our video walkthroughs on YouTube.
 
@@ -3869,7 +3869,7 @@ Before starting, ensure you have the following installed:
 - **pnpm** _(v8 or newer)_
 - **Docker Desktop** _(required to run the Envio indexer locally)_
 
-> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
+> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio Cloud.
 
 ## Step 1: Initialize Your Indexer
 
@@ -4027,7 +4027,7 @@ Congratulations! You've successfully created an indexer for USDC token transfers
 - Try customizing the event handlers to add additional logic
 - Create aggregated statistics about token transfers
 - Add more tokens or events to your indexer
-- Deploy your indexer to Envio's hosted service
+- Deploy your indexer to Envio Cloud
 
 For more tutorials and advanced features, check out our documentation or watch our video walkthrough on YouTube.
 
@@ -4059,7 +4059,7 @@ Website | X | Discord
 - **pnpm** _(v8 or newer)_
 - **Docker Desktop** _(required to run the Envio indexer locally)_
 
-> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
+> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio Cloud.
 
 ## Initialize the project
 
@@ -4335,13 +4335,13 @@ Now, we can easily get the top 5 players, the number of inactive and active play
 
 > 🧠 A separate Guide page provides more details about navigating Hasura.
 
-## Deploy the indexer onto the hosted service
+## Deploy the indexer to Envio Cloud
 
-Once you have verified that the indexer is working for your contracts, then you are ready to deploy the indexer onto our hosted service.
+Once you have verified that the indexer is working for your contracts, then you are ready to deploy the indexer to Envio Cloud.
 
-Deploying an indexer onto the hosted service allows you to extract information via graphQL queries into your front-end or some back-end application.
+Deploying an indexer to Envio Cloud allows you to extract information via graphQL queries into your front-end or some back-end application.
 
-Navigate to the hosted service to start deploying your indexer and refer to this documentation for more information on deploying your indexer.
+Navigate to Envio Cloud to start deploying your indexer and refer to this documentation for more information on deploying your indexer.
 
 ## What next?
 
@@ -4379,7 +4379,7 @@ Before starting, ensure you have the following installed:
 - **pnpm** _(v8 or newer)_
 - **Docker Desktop** _(required to run the Envio indexer locally)_
 
-> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
+> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio Cloud.
 
 ## Step 1: Initialize Your Project
 
@@ -4545,11 +4545,11 @@ query GetGreetings {
 
 When you're ready to move from local development to production:
 
-1. Visit the Envio Hosted Service
+1. Visit Envio Cloud
 2. Follow the steps to deploy your indexer
 3. Get a production GraphQL endpoint for your application
 
-For detailed deployment instructions, see the Hosted Service documentation.
+For detailed deployment instructions, see the Envio Cloud documentation.
 
 ## What You've Learned
 
@@ -6228,9 +6228,9 @@ When the indexer is rerun by using `envio dev` or `envio start -r` call, the ini
 > **Note:** This feature is available starting from `envio@2.26.0`. It also doesn't support rollbacks on reorgs. The support for reorgs will be added in the future.
 
 
-### Cache on Hosted Service
+### Cache on Envio Cloud
 
-The hosted service provides built-in cache management for Effect API results, allowing you to save and restore caches directly from the dashboard without committing files to your repository.
+Envio Cloud provides built-in cache management for Effect API results, allowing you to save and restore caches directly from the dashboard without committing files to your repository.
 
 **Key Features:**
 - **Save Cache**: Capture effect data from any deployment with one click via Quick Actions
@@ -6910,7 +6910,7 @@ export const getIpfsMetadata = createEffect(
 
 > **Important:** While the example repository includes SQLite-based caching, this approach is outdated and leads to many indexing issues.
 
-> **Note:** We're working on a better integration with the hosted service. Currently, due to the cache size, it's not recommended to commit the `.envio/cache` directory to the GitHub repository.
+> **Note:** We're working on a better integration with Envio Cloud. Currently, due to the cache size, it's not recommended to commit the `.envio/cache` directory to the GitHub repository.
 
 ### 4. Learn about Preload Optimization
 
@@ -7044,7 +7044,7 @@ For production deployments, it’s recommended to use HyperSync as the primary d
 | Resource Usage     | High                  | Optimized                    |
 | Network Calls      | Many individual calls | Batched for efficiency       |
 | Rate Limiting      | Common issue          | Not applicable               |
-| Cost               | Pay per API call      | Included with Hosted Service |
+| Cost               | Pay per API call      | Included with Envio Cloud |
 
 ## Summary
 
@@ -7261,7 +7261,7 @@ For more detailed configuration options, refer to the eRPC documentation.
 | Speed           | 10-100x faster                                                     | Baseline                     |
 | Configuration   | Minimal                                                            | Requires tuning              |
 | Rate Limits     | None                                                               | Depends on provider          |
-| Cost            | Included with Hosted Service                                       | Pay per request/subscription |
+| Cost            | Included with Envio Cloud                                       | Pay per request/subscription |
 | Network Support | Supported networks | Any EVM network              |
 | Maintenance     | Managed by Envio                                                   | Self-managed                 |
 
@@ -8791,9 +8791,9 @@ A superset of JavaScript that adds static typing and other advanced features to 
 
 ## Envio Platform
 
-### Hosted Service
+### Envio Cloud
 
-A managed service platform for building, hosting, and querying Envio's Indexers with guaranteed uptime and performance service level agreements. The Hosted Service removes the operational burden of running blockchain indexers.
+A managed service platform for building, hosting, and querying Envio's Indexers with guaranteed uptime and performance service level agreements. Envio Cloud removes the operational burden of running blockchain indexers.
 
 ### Ploffen
 
@@ -9115,12 +9115,12 @@ Maintaining low latency at the chain head is crucial for ensuring timely data up
 - **Reorg Handling**: Our reorg support system ensures data consistency even when chains reorganize.
 - **Documentation**: Contact our team on Discord if you have concerns about reorg support while we finalize documentation.
 
-## Hosted Service Performance
+## Envio Cloud Performance
 
-Our hosted service offers reliable performance with ongoing improvements:
+Envio Cloud offers reliable performance with ongoing improvements:
 
-- **Continuous Enhancement**: We're actively improving sync and build times on our hosted service.
-- **Relative Performance**: Currently, indexers may run slightly slower on the hosted service compared to high-performance local machines.
+- **Continuous Enhancement**: We're actively improving sync and build times on Envio Cloud.
+- **Relative Performance**: Currently, indexers may run slightly slower on Envio Cloud compared to high-performance local machines.
 - **Enterprise Solutions**: For applications requiring exceptional performance, contact us on Discord to discuss our enterprise hosting plans.
 
 By leveraging these features and providing feedback on your specific needs, you can help us continually improve the HyperIndex head latency performance.
@@ -10892,7 +10892,7 @@ Can’t find what you’re looking for or need support? Reach out to us on Disco
 
 - Block Handler
 - Effect API
-- Hosted Service
+- Envio Cloud
 
 ## Quickstart
 
@@ -10955,7 +10955,7 @@ HyperIndex for Fuel supports all the core features available in the EVM version:
 - ✅ No-code Contract Import
 - ✅ Dynamic Contracts / Factory Tracking
 - ✅ Testing Framework
-- ✅ Hosted Service
+- ✅ Envio Cloud
 - ✅ Wildcard Indexing
 
 ## Fuel-Specific Event Types
@@ -11128,14 +11128,14 @@ If you encounter any issues with Fuel indexing, please:
 - Envio's licensing reflects open source ethos but is not OSI recognized.
 - Developers can use Envio's services without vendor lock-in, either by self-hosting or specifying an RPC URL.
 - The generated code is open and public
-- Our license allows self-hosting but restricts third-party competition with Envio's hosted service.
+- Our license allows self-hosting but restricts third-party competition with Envio Cloud.
 - Envio may consider open-sourcing in the future but prioritizes stakeholder interests and market traction.
 
 ## Our position
 
 We're devs and we value OS ethos too, that's why our licensing mirrors a lot of the benefits from open source licensing however Envio and its products do not use a recognized open source license by the OSI, we are however public and open and our licensing reflects this.
 
-Our future business model lies in our hosted service and HyperSync requests and so we are protecting this, but to ensure continuity and no vendor lock-in, developers are able to run and develop on their indexer without either. Either by self-hosting, which our license permits, or by specifying an RPC URL in their indexer configuration and thus bypassing HyperSync.
+Our future business model lies in Envio Cloud and HyperSync requests and so we are protecting this, but to ensure continuity and no vendor lock-in, developers are able to run and develop on their indexer without either. Either by self-hosting, which our license permits, or by specifying an RPC URL in their indexer configuration and thus bypassing HyperSync.
 
 Envio is in its formative stages and though we may look to open-source the software in the future we are dedicated to ensuring the best interests of all stakeholders. Going open source is somewhat of a one-way function and it is easier to go open source than to proverbially go "closed source". Once we have gained more market traction we will review our position on going open source.
 
@@ -11226,7 +11226,7 @@ _The fine print: Please note these terms are intended to protect us, where adver
    Envio provides the following services:
 
    - A development framework named HyperIndex.
-   - A hosted service for deploying and hosting HyperIndex indexers.
+   - Envio Cloud, a hosted service for deploying and hosting HyperIndex indexers.
    - Low-level read-only API accessible as Hypersync and HyperRPC.
 
 3. **User Accounts**
@@ -11538,11 +11538,11 @@ HyperIndex supports TypeScript, JavaScript, and ReScript for writing event handl
 
 ### What are the prerequisites to run HyperIndex locally?
 
-You need Node.js v22 or newer, pnpm v8 or newer, and Docker Desktop. Docker is only required for local development — if you use Envio's hosted service, you can skip it. Windows users also need WSL (Windows Subsystem for Linux).
+You need Node.js v22 or newer, pnpm v8 or newer, and Docker Desktop. Docker is only required for local development — if you use Envio Cloud, you can skip it. Windows users also need WSL (Windows Subsystem for Linux).
 
 ### Do I need an API token?
 
-API tokens are required for local development and self-hosted deployments as of 3 November 2025. You can set your token via the `ENVIO_API_TOKEN` environment variable in your project's `.env` file. Indexers deployed to Envio's hosted service have special access and do not require a custom API token.
+API tokens are required for local development and self-hosted deployments as of 3 November 2025. You can set your token via the `ENVIO_API_TOKEN` environment variable in your project's `.env` file. Indexers deployed to Envio Cloud have special access and do not require a custom API token.
 
 ### How do I get started?
 
@@ -11576,9 +11576,9 @@ HyperIndex has a dedicated migration guide for TheGraph subgraphs. The three mai
 
 For developers migrating from other indexing solutions such as Ponder, Ormi, SQD (Subsquid), SubQuery, and others, the core concepts map similarly — define your contracts and events in `config.yaml`, write event handlers, and let HyperIndex generate the GraphQL API. Envio also offers full white glove migration support for teams moving from any indexing stack. Reach out via [Discord](https://discord.gg/envio) to get personalised assistance.
 
-### What does the hosted service offer?
+### What does Envio Cloud offer?
 
-Envio's hosted service manages deployment and infrastructure for you. Indexers on the hosted service do not require a custom API token for HyperSync access. For pricing details and self-hosted tiered packages, reach out on Discord.
+Envio Cloud manages deployment and infrastructure for you. Indexers on Envio Cloud do not require a custom API token for HyperSync access. For pricing details and self-hosted tiered packages, reach out on Discord.
 
 ### Where can I get help?
 

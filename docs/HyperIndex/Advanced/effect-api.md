@@ -166,9 +166,9 @@ When the indexer is rerun by using `envio dev` or `envio start -r` call, the ini
 > **Note:** This feature is available starting from `envio@2.26.0`. It also doesn't support rollbacks on reorgs. The support for reorgs will be added in the future.
 
 
-### Cache on Hosted Service
+### Cache on Envio Cloud
 
-The hosted service provides built-in cache management for Effect API results, allowing you to save and restore caches directly from the dashboard without committing files to your repository.
+Envio Cloud provides built-in cache management for Effect API results, allowing you to save and restore caches directly from the dashboard without committing files to your repository.
 
 **Key Features:**
 - **Save Cache**: Capture effect data from any deployment with one click via Quick Actions

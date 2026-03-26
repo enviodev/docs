@@ -16,7 +16,7 @@ Learn how to create and run a blockchain indexer with Envio’s HyperIndex, from
 - **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
-> **Note:** Docker is required only if you plan to run your indexer locally. You can skip installing Docker if you'll only be using Envio's Hosted Service.
+> **Note:** Docker is required only if you plan to run your indexer locally. You can skip installing Docker if you'll only be using Envio Cloud.
 
 #### Additionally for Windows Users:
 
@@ -115,11 +115,11 @@ This will shut down and remove all Docker containers used for your local develop
 
 For more detailed instructions, refer to our [guide to running the indexer locally](./running-locally).
 
-### Deploy to Hosted Service
+### Deploy to Envio Cloud
 
-Once you're ready, effortlessly deploy your configured indexer to Envio's Hosted Service and begin querying your endpoint immediately.
+Once you're ready, effortlessly deploy your configured indexer to Envio Cloud and begin querying your endpoint immediately.
 
-Check out our [Hosted Service documentation](./hosted-service) for details on deployment and usage.
+Check out our [Envio Cloud documentation](./hosted-service) for details on deployment and usage.
 
 ---
 

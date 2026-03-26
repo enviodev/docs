@@ -22,7 +22,7 @@ Before starting, ensure you have the following installed:
 - **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
-> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
+> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio Cloud.
 
 ## Step 1: Initialize Your Indexer
 
@@ -180,6 +180,6 @@ Congratulations! You've successfully created an indexer for USDC token transfers
 - Try customizing the event handlers to add additional logic
 - Create aggregated statistics about token transfers
 - Add more tokens or events to your indexer
-- Deploy your indexer to Envio's hosted service
+- Deploy your indexer to Envio Cloud
 
 For more tutorials and advanced features, check out our [documentation](https://docs.envio.dev) or watch our [video walkthrough](https://www.youtube.com/watch?v=e1xznmKBLa8) on YouTube.

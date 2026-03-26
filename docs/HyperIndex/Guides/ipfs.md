@@ -297,7 +297,7 @@ export const getIpfsMetadata = createEffect(
 
 > **Important:** While the example repository includes SQLite-based caching, this approach is outdated and leads to many indexing issues.
 
-> **Note:** We're working on a better integration with the hosted service. Currently, due to the cache size, it's not recommended to commit the `.envio/cache` directory to the GitHub repository.
+> **Note:** We're working on a better integration with Envio Cloud. Currently, due to the cache size, it's not recommended to commit the `.envio/cache` directory to the GitHub repository.
 
 ### 4. Learn about Preload Optimization
 

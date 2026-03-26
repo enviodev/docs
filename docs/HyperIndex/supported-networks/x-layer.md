@@ -27,7 +27,7 @@ Envio is a modular hyper-performant data indexing solution for X Layer, enabling
 
 HyperSync accelerates the synchronization of historical data on X Layer, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
 
-Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted service.
+Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
 To get started, see our documentation or follow our quickstart [guide](/docs/HyperIndex/contract-import).
 

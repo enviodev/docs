@@ -3,7 +3,7 @@ id: solana
 title: Solana
 sidebar_label: Solana
 slug: /solana
-description: Experimental Solana support in HyperIndex. Supports Block Handler, Effect API, and Hosted Service.
+description: Experimental Solana support in HyperIndex. Supports Block Handler, Effect API, and Envio Cloud.
 ---
 
 > Experimental. Available since 3.0.0-alpha.3.  
@@ -13,7 +13,7 @@ description: Experimental Solana support in HyperIndex. Supports Block Handler, 
 
 - [Block Handler](/docs/HyperIndex/block-handlers)
 - [Effect API](/docs/HyperIndex/effect-api)
-- [Hosted Service](/docs/HyperIndex/hosted-service)
+- [Envio Cloud](/docs/HyperIndex/hosted-service)
 
 ## Quickstart
 

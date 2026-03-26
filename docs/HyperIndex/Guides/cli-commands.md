@@ -10,8 +10,8 @@ description: Explore and manage indexer projects with Envio CLI, from setup to d
 
 This comprehensive reference guide covers all available commands and options in the Envio CLI tool. Use this documentation to explore the full capabilities of the `envio` command and its subcommands for managing your blockchain indexing projects.
 
-:::tip Hosted Service CLI
-Looking to manage your hosted indexers from the command line? See the **[Envio Cloud CLI](/docs/HyperIndex/envio-cloud-cli)** for deployment, monitoring, and management commands for the Envio Hosted Service.
+:::tip Envio Cloud CLI
+Looking to manage your hosted indexers from the command line? See the **[Envio Cloud CLI](/docs/HyperIndex/envio-cloud-cli)** for deployment, monitoring, and management commands for Envio Cloud.
 :::
 
 ## Getting Started

@@ -445,14 +445,14 @@ This file contains links to documentation sections following the llmstxt.org sta
 - [Entities Schema (schema.graphql)](https://docs.envio.dev/docs/HyperIndex/schema.md): Learn how to define GraphQL schemas, manage entities, and handle different types in HyperIndex.
 - [Testing](https://docs.envio.dev/docs/HyperIndex/testing.md): Learn to test HyperIndex indexers with mock databases, simulated events, and full workflow validation.
 
-### Hosted Service
+### Envio Cloud
 
 - [Pricing & Billing](https://docs.envio.dev/docs/HyperIndex/hosted-service-billing.md): Explore Envio's flexible pricing tiers, from free development plans to scalable production options.
 - [Deploying Your Indexer](https://docs.envio.dev/docs/HyperIndex/hosted-service-deployment.md): Learn how to deploy, manage, and version your indexers effortlessly using git workflow.
-- [Features](https://docs.envio.dev/docs/HyperIndex/hosted-service-features.md): Explore production-ready features of the Envio Hosted Service including monitoring, zero-downtime rollbacks, and deployment management.
-- [Monitoring Your Indexer](https://docs.envio.dev/docs/HyperIndex/hosted-service-monitoring.md): Monitor your deployed indexer health, sync progress, and performance using the Envio Hosted Service dashboard.
-- [Envio Hosted Service](https://docs.envio.dev/docs/HyperIndex/hosted-service.md): Explore Envio's fully managed hosting for indexers with easy Git deployments, monitoring, and multi-chain support.
-- [Organisation Setup](https://docs.envio.dev/docs/HyperIndex/organisation-setup.md): Learn how to create an organisation in the Envio hosted service and manage team members.
+- [Features](https://docs.envio.dev/docs/HyperIndex/hosted-service-features.md): Explore production-ready features of the Envio Cloud including monitoring, zero-downtime rollbacks, and deployment management.
+- [Monitoring Your Indexer](https://docs.envio.dev/docs/HyperIndex/hosted-service-monitoring.md): Monitor your deployed indexer health, sync progress, and performance using the Envio Cloud dashboard.
+- [Envio Cloud](https://docs.envio.dev/docs/HyperIndex/hosted-service.md): Explore Envio's fully managed hosting for indexers with easy Git deployments, monitoring, and multi-chain support.
+- [Organisation Setup](https://docs.envio.dev/docs/HyperIndex/organisation-setup.md): Learn how to create an organisation in the Envio Cloud and manage team members.
 - [Self-Hosting Guide](https://docs.envio.dev/docs/HyperIndex/self-hosting.md): Learn how to self-host Envio indexers with Docker, PostgreSQL, and Hasura for full control.
 
 ### Troubleshooting
@@ -480,12 +480,12 @@ This file contains links to documentation sections following the llmstxt.org sta
 - [HyperIndex Quickstart](https://docs.envio.dev/docs/HyperIndex/contract-import.md): Learn to quickly autogenerate and configure a HyperIndex indexer for any smart contract.
 - [Fuel](https://docs.envio.dev/docs/HyperIndex/fuel.md): Explore how to index and query real-time and historical data on Fuel Network with HyperIndex.
 - [Getting Started with Envio](https://docs.envio.dev/docs/HyperIndex/getting-started.md): Get started with Envio indexer setup, templates, and local or hosted deployment quickly.
-- [Licensing](https://docs.envio.dev/docs/HyperIndex/licensing.md): Learn how Envio's licensing lets developers self-host, use generated code, and stay open while protecting hosted services.
+- [Licensing](https://docs.envio.dev/docs/HyperIndex/licensing.md): Learn how Envio's licensing lets developers self-host, use generated code, and stay open while protecting Envio Cloud.
 - [Migrate from Alchemy to Envio](https://docs.envio.dev/docs/HyperIndex/migrate-from-alchemy.md): Easily migrate your existing Alchemy subgraphs to Envio for 143x faster indexing than subgraphs, multichain support, and a better developer experience.
 - [Migrate to HyperIndex V3 Alpha](https://docs.envio.dev/docs/HyperIndex/migrate-to-v3.md): Learn how to upgrade from HyperIndex V2 to V3 Alpha, featuring ESM support, top-level await, automatic handler registration, and more.
 - [Migrate from The Graph to Envio](https://docs.envio.dev/docs/HyperIndex/migration-guide.md): Easily migrate your existing subgraph to HyperIndex for up to 100x faster indexing speeds, multichain support, and a better developer experience.
 - [HyperIndex: Fast Multichain Blockchain Indexer](https://docs.envio.dev/docs/HyperIndex/overview.md): Explore HyperIndex, a blazing-fast multichain indexer for real-time blockchain data.
-- [Solana](https://docs.envio.dev/docs/HyperIndex/solana.md): Experimental Solana support in HyperIndex. Supports Block Handler, Effect API, and Hosted Service.
+- [Solana](https://docs.envio.dev/docs/HyperIndex/solana.md): Experimental Solana support in HyperIndex. Supports Block Handler, Effect API, and Envio Cloud.
 
 ## HyperSync
 

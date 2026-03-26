@@ -30,7 +30,7 @@ Before starting, ensure you have the following installed:
 - **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
-> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio's hosted service.
+> **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio Cloud.
 
 ## Step 1: Initialize Your Project
 
@@ -196,11 +196,11 @@ query GetGreetings {
 
 When you're ready to move from local development to production:
 
-1. Visit the [Envio Hosted Service](https://envio.dev/app/login)
+1. Visit [Envio Cloud](https://envio.dev/app/login)
 2. Follow the steps to deploy your indexer
 3. Get a production GraphQL endpoint for your application
 
-For detailed deployment instructions, see the [Hosted Service documentation](../Hosted_Service/hosted-service.md).
+For detailed deployment instructions, see the [Envio Cloud documentation](../Hosted_Service/hosted-service.md).
 
 ## What You've Learned
 

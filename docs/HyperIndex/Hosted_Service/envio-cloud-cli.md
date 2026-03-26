@@ -3,7 +3,7 @@ id: envio-cloud-cli
 title: Envio Cloud CLI
 sidebar_label: Envio Cloud CLI
 slug: /envio-cloud-cli
-description: Command-line interface for managing and monitoring your indexers on the Envio Hosted Service.
+description: Command-line interface for managing and monitoring your indexers on Envio Cloud.
 ---
 
 # Envio Cloud CLI
@@ -14,7 +14,7 @@ The `envio-cloud` CLI is currently in **alpha**. The tool is under active develo
 For feature requests, please reach out to us on [Telegram](https://t.me/envaborations) or [Discord](https://discord.gg/Q9qt8gZ2fX).
 :::
 
-The `envio-cloud` CLI is a command-line tool for interacting with the Envio Hosted Service. It enables you to deploy, manage, and monitor your blockchain indexers directly from the terminal — making it particularly useful for CI/CD pipelines, scripting, and agentic workflows.
+The `envio-cloud` CLI is a command-line tool for interacting with Envio Cloud. It enables you to deploy, manage, and monitor your blockchain indexers directly from the terminal — making it particularly useful for CI/CD pipelines, scripting, and agentic workflows.
 
 ## Installation
 
@@ -209,7 +209,7 @@ envio-cloud indexer list --org enviodev -o json | jq -r '.data[].indexer_id'
 
 ## Related Documentation
 
-- **[Hosted Service Overview](./hosted-service.md)** - Introduction to the Envio Hosted Service
+- **[Envio Cloud Overview](./hosted-service.md)** - Introduction to Envio Cloud
 - **[Deploying Your Indexer](./hosted-service-deployment.md)** - Step-by-step deployment guide via the dashboard
 - **[Monitoring](./hosted-service-monitoring.md)** - Dashboard monitoring and alerts
 - **[Envio CLI](../Guides/cli-commands.md)** - Local development CLI reference

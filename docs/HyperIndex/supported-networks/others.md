@@ -35,7 +35,7 @@ Envio is a modular hyper-performant data indexing solution for the B² Testnet, 
 
 HyperSync accelerates the synchronization of historical data on the B² Testnet, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
 
-Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted service.
+Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
 To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
 
@@ -113,7 +113,7 @@ Envio is a modular hyper-performant data indexing solution for [Base](https://ww
 
 HyperSync accelerates the synchronization of historical data on Base, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
 
-Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted service.
+Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
 To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
 
@@ -199,7 +199,7 @@ Envio is a modular hyper-performant data indexing solution for [Berachain](https
 
 HyperSync accelerates the synchronization of historical data on Berachain, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
 
-Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted service.
+Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
 To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
 
@@ -277,7 +277,7 @@ Envio is a modular hyper-performant data indexing solution for [Blast](https://b
 
 HyperSync accelerates the synchronization of historical data on Blast, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
 
-Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted service.
+Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
 To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
 
@@ -362,7 +362,7 @@ Envio is a modular hyper-performant data indexing solution for [Boba](https://bo
 
 HyperSync accelerates the synchronization of historical data on Boba, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
 
-Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted service.
+Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
 To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
 
@@ -440,7 +440,7 @@ Envio is a modular hyper-performant data indexing solution for [BSC](https://www
 
 HyperSync accelerates the synchronization of historical data on BSC, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
 
-Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted service.
+Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
 To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
 
@@ -525,7 +525,7 @@ Envio is a modular hyper-performant data indexing solution for Celo, enabling ap
 
 HyperSync accelerates the synchronization of historical data on Celo, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
 
-Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted service.
+Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
 To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
 
@@ -603,7 +603,7 @@ Envio is a modular hyper-performant data indexing solution for [Chiliz](https://
 
 HyperSync accelerates the synchronization of historical data on Chiliz, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 1000x faster than traditional RPC methods.
 
-Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted service.
+Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
 To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
 
