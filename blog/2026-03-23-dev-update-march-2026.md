@@ -11,9 +11,7 @@ image: /blog-assets/dev-update-march-2026.png
 <!--truncate-->
 
 March saw continued progress across HyperIndex, tooling, and the wider Envio ecosystem. We shipped multiple alpha releases focused on improving scale, flexibility, testing, and observability, alongside new workflows that make it easier to go from idea to production-ready indexers.
-
-Alongside this, we introduced updates across subgraph hosting, agentic indexing workflows, and new ways to explore and interact with prediction market data. We also officially rebranded Hosted Service to Envio Cloud to better reflect our managed deployment platform. Across the ecosystem, we saw strong developer contributions, new projects being built with Envio, and continued momentum leading into upcoming events.
-
+This month we also rebranded our Hosted Service to Envio Cloud. Alongside this, we introduced updates across subgraph hosting, agentic indexing workflows, and new ways to explore and interact with prediction market data. Across the ecosystem, we saw strong developer contributions, new projects being built with Envio, and continued momentum leading into upcoming events.
 Let's dive in!
 
 ## 💻 Alpha Releases: Alpha.15 -> Alpha.19
@@ -78,6 +76,14 @@ For more information and to stay up to date with all current and past releases, 
 👉 See full [release notes](https://github.com/enviodev/hyperindex/releases)  
 👉 Star us on [GitHub](https://github.com/enviodev/hyperindex) ⭐
 
+## Envio Cloud (formerly Hosted Service)
+
+Envio Cloud (formerly Hosted Service) is a fully managed hosting solution for your blockchain indexers, providing all the infrastructure, scaling, and monitoring needed to run production-grade indexers without operational overhead.
+
+Envio Cloud offers multiple plans to suit different needs, from free development environments to enterprise-grade dedicated hosting. Each plan includes powerful features like static production endpoints, built-in alerts, and production-ready infrastructure.
+
+Learn more: [https://docs.envio.dev/docs/HyperIndex/hosted-service](https://docs.envio.dev/docs/HyperIndex/hosted-service)
+
 ## Agentic blockchain indexing with Envio
 
 <img src="/blog-assets/dev-update-march-2026-1.png" alt="Agentic blockchain indexing with Envio" width="100%"/>
@@ -108,18 +114,6 @@ The process is handled end-to-end, converting your subgraph to HyperIndex and ge
 
 Learn more here: [https://envio.dev/pricing/subgraphs](https://envio.dev/pricing/subgraphs)  
 Get started on Discord - open a support ticket: [https://discord.com/invite/envio](https://discord.com/invite/envio)
-
-## Envio Cloud (formerly Hosted Service)
-
-As part of our product positioning updates, Hosted Service is now called **Envio Cloud**.
-
-This naming better reflects a production-ready deployment platform and helps distinguish Envio Cloud from self-hosting. Envio Cloud is the managed way to run HyperIndex in production, with infrastructure, scaling, monitoring, and operational workflows handled for your team.
-
-In docs, sales, and UI, we'll use:
-
-* Envio Cloud (formerly Hosted Service)
-
-Learn more: [https://docs.envio.dev/docs/HyperIndex/hosted-service](https://docs.envio.dev/docs/HyperIndex/hosted-service)
 
 ## Heatbook: Polymarket Orderbooks as Heatmaps
 
