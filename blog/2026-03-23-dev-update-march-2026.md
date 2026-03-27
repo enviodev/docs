@@ -2,7 +2,7 @@
 title: Envio Developer Update March 2026
 sidebar_label: Envio Developer Update March 2026
 slug: /envio-developer-update-march-2026
-description: "Envio Developer Update March 2026: HyperIndex alpha.15-19, agentic indexing workflows, subgraph hosting, ecosystem highlights, and upcoming events."
+description: "Envio Developer Update March 2026: HyperIndex alpha.15-20, including improved multiple data-sources support, agentic indexing workflows, subgraph hosting, ecosystem highlights, and upcoming events."
 image: /blog-assets/dev-update-march-2026.png
 ---
 
@@ -11,13 +11,43 @@ image: /blog-assets/dev-update-march-2026.png
 <!--truncate-->
 
 March saw continued progress across HyperIndex, tooling, and the wider Envio ecosystem. We shipped multiple alpha releases focused on improving scale, flexibility, testing, and observability, alongside new workflows that make it easier to go from idea to production-ready indexers.
+This includes the latest v3.0.0-alpha.20 release, which introduces improved multiple data-sources support and primary source recovery logic.
 This month we also rebranded our Hosted Service to Envio Cloud. Alongside this, we introduced updates across subgraph hosting, agentic indexing workflows, and new ways to explore and interact with prediction market data. Across the ecosystem, we saw strong developer contributions, new projects being built with Envio, and continued momentum leading into upcoming events.
 
 Let's dive in!
 
-## 💻 Alpha Releases: Alpha.15 -> Alpha.19
+## 💻 Alpha Releases: Alpha.15 -> Alpha.20
 
 Loads of exciting progress landed across the latest alpha releases this month. This stretch focused on improving scale, flexibility, testing, and the overall developer experience across HyperIndex, with a mix of new features, internal improvements, and important updates to observability.
+
+### Alpha.20
+
+#### 🔁 Improved Multiple Data-Sources Support
+
+With this change, we are introducing primary source recovery logic: after switching to a fallback source, HyperIndex attempts to recover to the primary source 60 seconds later. Previously, it would stay at the fallback source until the fallback source was down or the indexer was restarted.
+
+Additionally, we improved the logic for choosing which data source to use next, enabling much better indexing resilience and reducing vendor lock-in to a single source, as well as stricter enforcement of the source usage configured for <code>live</code> mode.
+
+### Alpha.18
+
+#### ⚡ Support indexers with 2.1B+ events per chain
+
+Scale indexers approaching int32 limits. Now you can build even larger, more performant indexers with HyperIndex.
+
+#### 🚨 Breaking: Official <code>/metrics</code> endpoint
+
+Existing Prometheus metrics just got a major upgrade.
+
+We cleaned up metric names and measured data, switched time units to seconds instead of milliseconds, and started following Prometheus naming conventions more closely.
+
+We also added metrics for data points previously covered by the `--bench` feature.
+
+Starting with v3.0.0, Prometheus metrics are no longer experimental. The `/metrics` endpoint now follows semver and will be documented.
+
+For more information and to stay up to date with all current and past releases, be sure to check out our release notes below.
+
+👉 See full [release notes](https://github.com/enviodev/hyperindex/releases)  
+👉 Star us on [GitHub](https://github.com/enviodev/hyperindex) ⭐
 
 ### Alpha.15
 
@@ -55,27 +85,6 @@ We consistently improve HyperIndex to make it easier to contribute to for both h
 * Moving tests from mocha/chai to vitest
 * Reworking the CI pipeline to run faster and reuse the production artifact for both testing and publishing
 * Developing a highly customisable internal testing framework so AI can create reproduction tests for tricky edge cases
-
-### Alpha.18
-
-#### ⚡ Support indexers with 2.1B+ events per chain
-
-Scale indexers approaching int32 limits. Now you can build even larger, more performant indexers with HyperIndex.
-
-#### 🚨 Breaking: Official <code>/metrics</code> endpoint
-
-Existing Prometheus metrics just got a major upgrade.
-
-We cleaned up metric names and measured data, switched time units to seconds instead of milliseconds, and started following Prometheus naming conventions more closely.
-
-We also added metrics for data points previously covered by the `--bench` feature.
-
-Starting with v3.0.0, Prometheus metrics are no longer experimental. The `/metrics` endpoint now follows semver and will be documented.
-
-For more information and to stay up to date with all current and past releases, be sure to check out our release notes below.
-
-👉 See full [release notes](https://github.com/enviodev/hyperindex/releases)  
-👉 Star us on [GitHub](https://github.com/enviodev/hyperindex) ⭐
 
 ## Hosted Service is now Envio Cloud
 <img src="/blog-assets/envio-cloud-1.png" alt="Hosted Service renamed to Envio Cloud" width="100%"/>
