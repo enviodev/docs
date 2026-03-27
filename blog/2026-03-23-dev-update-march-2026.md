@@ -44,11 +44,6 @@ We also added metrics for data points previously covered by the `--bench` featur
 
 Starting with v3.0.0, Prometheus metrics are no longer experimental. The `/metrics` endpoint now follows semver and will be documented.
 
-For more information and to stay up to date with all current and past releases, be sure to check out our release notes below.
-
-👉 See full [release notes](https://github.com/enviodev/hyperindex/releases)  
-👉 Star us on [GitHub](https://github.com/enviodev/hyperindex) ⭐
-
 ### Alpha.15
 
 #### 🔍 New getWhere operators: <code>_gte</code>, <code>_lte</code>, <code>_in</code>
@@ -86,6 +81,10 @@ We consistently improve HyperIndex to make it easier to contribute to for both h
 * Reworking the CI pipeline to run faster and reuse the production artifact for both testing and publishing
 * Developing a highly customisable internal testing framework so AI can create reproduction tests for tricky edge cases
 
+For more information and to stay up to date with all current and past releases, be sure to check out our release notes below.
+
+👉 See full [release notes](https://github.com/enviodev/hyperindex/releases)  
+👉 Star us on [GitHub](https://github.com/enviodev/hyperindex) ⭐
 ## Hosted Service is now Envio Cloud
 <img src="/blog-assets/envio-cloud-1.png" alt="Hosted Service renamed to Envio Cloud" width="100%"/>
 
