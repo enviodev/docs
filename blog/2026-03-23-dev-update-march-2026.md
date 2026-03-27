@@ -12,6 +12,7 @@ image: /blog-assets/dev-update-march-2026.png
 
 March saw continued progress across HyperIndex, tooling, and the wider Envio ecosystem. We shipped multiple alpha releases focused on improving scale, flexibility, testing, and observability, alongside new workflows that make it easier to go from idea to production-ready indexers.
 This includes the latest v3.0.0-alpha.20 release, which introduces improved multiple data-sources support and primary source recovery logic.
+
 This month we also rebranded our Hosted Service to Envio Cloud. Alongside this, we introduced updates across subgraph hosting, agentic indexing workflows, and new ways to explore and interact with prediction market data. Across the ecosystem, we saw strong developer contributions, new projects being built with Envio, and continued momentum leading into upcoming events.
 
 Let's dive in!
