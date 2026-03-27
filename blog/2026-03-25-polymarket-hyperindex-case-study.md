@@ -16,7 +16,7 @@ image: /blog-assets/polymarket-hyperindex-case-study.png
 
 For years, Polymarket's data infrastructure relied on 8 independent subgraphs on [The Graph](https://thegraph.com), each written in AssemblyScript, each tracking a separate domain, all running since 2021. This post documents how all 8 were replaced with a single Envio HyperIndex indexer, syncing over 4,000,000,000 events in 6 days on Polygon Mainnet.
 
-The indexer is fully open source: [github.com/moose-code/polymarket-indexer](https://github.com/moose-code/polymarket-indexer)
+The indexer is fully open source: [github.com/enviodev/polymarket-indexer](https://github.com/enviodev/polymarket-indexer)
 
 ## Envio HyperIndex: The Fastest Blockchain Indexer Available
 
@@ -64,7 +64,7 @@ A `ConditionalTokens.PositionSplit` event previously triggered separate processi
 
 The full handler structure:
 
-```
+```text
 src/
   handlers/
     ConditionalTokens.ts       # Open interest + activity + PnL (merged from 4 subgraphs)
@@ -159,7 +159,7 @@ HyperIndex is a multichain blockchain indexing framework for EVM chains built by
 HyperSync is Envio's high-performance data engine. Instead of querying RPC endpoints block by block, HyperSync fetches filtered event data in bulk from a purpose-built data lake, delivering up to 2,000x faster data access than traditional RPC. 70+ EVM chains have native HyperSync coverage, with any EVM chain accessible via standard RPC.
 
 **How do I index Polymarket data?**
-The fastest way to index Polymarket data on Polygon is with Envio HyperIndex and HyperSync. The full open-source reference implementation is available at [github.com/moose-code/polymarket-indexer](https://github.com/moose-code/polymarket-indexer). It covers all 8 domains of Polymarket's onchain activity and syncs the full history in 6 days.
+The fastest way to index Polymarket data on Polygon is with Envio HyperIndex and HyperSync. The full open-source reference implementation is available at [github.com/enviodev/polymarket-indexer](https://github.com/enviodev/polymarket-indexer). It covers all 8 domains of Polymarket's onchain activity and syncs the full history in 6 days.
 
 **How long does it take to index Polymarket's full history on Polygon?**
 Using Envio HyperIndex with HyperSync, the full historical sync of Polymarket's onchain data on Polygon, over 4,000,000,000 events from block 3,764,531, completed in 6 days.
