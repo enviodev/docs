@@ -12,6 +12,7 @@ image: /blog-assets/dev-update-march-2026.png
 
 March saw continued progress across HyperIndex, tooling, and the wider Envio ecosystem. We shipped multiple alpha releases focused on improving scale, flexibility, testing, and observability, alongside new workflows that make it easier to go from idea to production-ready indexers.
 This month we also rebranded our Hosted Service to Envio Cloud. Alongside this, we introduced updates across subgraph hosting, agentic indexing workflows, and new ways to explore and interact with prediction market data. Across the ecosystem, we saw strong developer contributions, new projects being built with Envio, and continued momentum leading into upcoming events.
+
 Let's dive in!
 
 ## 💻 Alpha Releases: Alpha.15 -> Alpha.19
@@ -76,13 +77,13 @@ For more information and to stay up to date with all current and past releases, 
 👉 See full [release notes](https://github.com/enviodev/hyperindex/releases)  
 👉 Star us on [GitHub](https://github.com/enviodev/hyperindex) ⭐
 
-## Envio Cloud (formerly Hosted Service)
+## Hosted Service is now Envio Cloud
+<img src="/blog-assets/envio-cloud-1.png" alt="Hosted Service renamed to Envio Cloud" width="100%"/>
 
-Envio Cloud (formerly Hosted Service) is a fully managed hosting solution for your blockchain indexers, providing all the infrastructure, scaling, and monitoring needed to run production-grade indexers without operational overhead.
+We've renamed the Hosted Service to Envio Cloud. Same product, same infrastructure, no changes required on your end.
+For those new to it, Envio Cloud is a fully managed hosting solution for your indexers, taking care of all infrastructure, scaling, and monitoring so you can focus on building. Plans range from free dev environments through to enterprise-grade dedicated hosting, with static production endpoints, built-in alerts, and production-ready infrastructure across all tiers.
 
-Envio Cloud offers multiple plans to suit different needs, from free development environments to enterprise-grade dedicated hosting. Each plan includes powerful features like static production endpoints, built-in alerts, and production-ready infrastructure.
-
-Learn more: [https://docs.envio.dev/docs/HyperIndex/hosted-service](https://docs.envio.dev/docs/HyperIndex/hosted-service)
+Learn more in our [docs](https://docs.envio.dev/docs/HyperIndex/hosted-service)
 
 ## Agentic blockchain indexing with Envio
 
