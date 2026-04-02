@@ -246,6 +246,3 @@ If you discover helpful tips during your migration, we'd love contributions! Ope
 
 **Join Our Discord**: The fastest way to get personalized help is through our [Discord community](https://discord.gg/envio).
 
-```
-
-```
