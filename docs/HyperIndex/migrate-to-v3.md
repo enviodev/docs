@@ -197,7 +197,7 @@ HyperIndex now supports Solana with RPC as a source. This feature is experimenta
 To initialize a Solana project:
 
 ```bash
-pnpx envio@3.0.0-alpha.15 init svm
+pnpx envio@3.0.0-alpha.16 init svm
 ```
 
 See the [Solana documentation](/docs/HyperIndex/solana) for more details.
@@ -404,6 +404,10 @@ ERC20.Transfer.handler(async ({ event, context }) => {
 });
 ```
 
+### Updated Dev Docker Flow
+
+`envio dev` no longer uses a generated Docker Compose file and manages containers, network, and volumes directly for greater flexibility. For example, disabling Hasura with `ENVIO_HASURA` now prevents `envio dev` from pulling the Hasura image.
+
 ## Breaking Changes
 
 ### Node.js & Runtime
@@ -444,6 +448,7 @@ export ENVIO_API_TOKEN=your_token_here
 - Removed `UNSTABLE__TEMP_UNORDERED_HEAD_MODE` environment variable
 - Removed `UNORDERED_MULTICHAIN_MODE` environment variable
 - Removed `MAX_BATCH_SIZE` environment variable (use `full_batch_size` in config.yaml instead)
+- Renamed `ENVIO_PG_PUBLIC_SCHEMA` to `ENVIO_PG_SCHEMA` (the old name is still supported for now but will be removed in a future release)
 
 ### Generated Code Changes
 
@@ -500,7 +505,7 @@ Update your `package.json` with the following changes:
     "node": ">=22.0.0"
   },
   "dependencies": {
-    "envio": "3.0.0-alpha.15"
+    "envio": "3.0.0-alpha.16"
   },
   "devDependencies": {
     "typescript": "^5.7.3"
@@ -807,6 +812,7 @@ If you encounter any issues during migration, join our [Discord community](https
 
 For detailed release notes, see:
 
+- [v3.0.0-alpha.16](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.16)
 - [v3.0.0-alpha.15](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.15)
 - [v3.0.0-alpha.14](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.14)
 - [v3.0.0-alpha.13](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.13)
