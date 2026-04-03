@@ -1034,19 +1034,17 @@ const transfers = await context.Transfer.getWhere.from.eq("0x123...");
 const transfers = await context.Transfer.getWhere({ from: { _eq: "0x123..." } });
 ```
 
-### Direct RPC Client
-
-Replaced Ethers.js with a direct RPC client implementation, reducing dependencies and improving performance.
-
-### New `getWhere` Operators: `_gte`, `_lte`, `_in`
-
-Three new filter operators for `getWhere` queries following Hasura-style conventions:
+Additionally, three new filter operators are available following Hasura-style conventions:
 
 ```typescript
 context.Entity.getWhere({ amount: { _gte: 100n } })
 context.Entity.getWhere({ amount: { _lte: 500n } })
 context.Entity.getWhere({ status: { _in: ["active", "pending"] } })
 ```
+
+### Direct RPC Client
+
+Replaced Ethers.js with a direct RPC client implementation, reducing dependencies and improving performance.
 
 ### Block Lag Configuration
 
