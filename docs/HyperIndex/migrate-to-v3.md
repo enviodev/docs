@@ -197,7 +197,7 @@ HyperIndex now supports Solana with RPC as a source. This feature is experimenta
 To initialize a Solana project:
 
 ```bash
-pnpx envio@3.0.0-alpha.14 init svm
+pnpx envio@3.0.0-alpha.15 init svm
 ```
 
 See the [Solana documentation](/docs/HyperIndex/solana) for more details.
@@ -232,7 +232,7 @@ We gave our TUI some love, making it look more beautiful and compact. It also co
 
 ![TUI](/img/sync.gif)
 
-### New Testing Framework (Experimental)
+### New Testing Framework
 
 We introduced a new testing framework that allows you to test handlers' logic using real blockchain data and programmatically debug code without repetitive local runs. Key capabilities include:
 
@@ -366,6 +366,46 @@ const transfers = await context.Transfer.getWhere({ from: { _eq: "0x123..." } })
 
 Replaced Ethers.js with a direct RPC client implementation, reducing dependencies and improving performance.
 
+### New `getWhere` Operators: `_gte`, `_lte`, `_in`
+
+Three new filter operators for `getWhere` queries following Hasura-style conventions:
+
+```typescript
+context.Entity.getWhere({ amount: { _gte: 100n } })
+context.Entity.getWhere({ amount: { _lte: 500n } })
+context.Entity.getWhere({ status: { _in: ["active", "pending"] } })
+```
+
+### Block Lag Configuration
+
+A new per-chain `block_lag` configuration that allows indexers to lag behind the chain head by a specified number of blocks. Replaces the global `ENVIO_INDEXING_BLOCK_LAG` environment variable with per-chain control. Defaults to 0 (no lag).
+
+```yaml
+chains:
+  - id: 1
+    block_lag: 5
+```
+
+### Separate Runtime Metrics Endpoint
+
+Added a new `/metrics/runtime` endpoint with a dedicated Prometheus registry for runtime metrics, isolated from the default `/metrics` endpoint.
+
+### Double Handler Registration
+
+It's now possible to register multiple handlers for the same event with similar filters:
+
+```typescript
+import { ERC20 } from "generated";
+
+ERC20.Transfer.handler(async ({ event, context }) => {
+  // Your logic here
+});
+
+ERC20.Transfer.handler(async ({ event, context }) => {
+  // And here
+});
+```
+
 ## Breaking Changes
 
 ### Node.js & Runtime
@@ -462,7 +502,7 @@ Update your `package.json` with the following changes:
     "node": ">=22.0.0"
   },
   "dependencies": {
-    "envio": "3.0.0-alpha.14"
+    "envio": "3.0.0-alpha.15"
   },
   "devDependencies": {
     "typescript": "^5.7.3"
@@ -769,6 +809,7 @@ If you encounter any issues during migration, join our [Discord community](https
 
 For detailed release notes, see:
 
+- [v3.0.0-alpha.15](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.15)
 - [v3.0.0-alpha.14](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.14)
 - [v3.0.0-alpha.13](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.13)
 - [v3.0.0-alpha.12](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.12)
