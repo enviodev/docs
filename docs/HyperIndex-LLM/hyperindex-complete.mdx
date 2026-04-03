@@ -1048,7 +1048,7 @@ Replaced Ethers.js with a direct RPC client implementation, reducing dependencie
 
 ### Block Lag Configuration
 
-A per-chain `block_lag` option to index behind the chain head by a specified number of blocks. Defaults to 0. This is for advanced use cases — only use it if you know what you're doing.
+A per-chain `block_lag` option to index behind the chain head by a specified number of blocks. Replaces the global `ENVIO_INDEXING_BLOCK_LAG` environment variable. Defaults to 0. This is for advanced use cases — only use it if you know what you're doing.
 
 ```yaml
 chains:
