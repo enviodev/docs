@@ -392,7 +392,6 @@ Starting from the v3.0.0 release, Prometheus metrics will follow semver and be d
 
 Breaking changes:
 
-- Renamed `chain_block_height` Prometheus metric to `envio_indexing_known_height`
 - Cleaned up metric names and switched time units from milliseconds to seconds
 - Removed [`--bench`](/docs/HyperIndex/benchmarking) support — use the `/metrics` endpoint instead
 
