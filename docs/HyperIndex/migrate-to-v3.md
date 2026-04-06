@@ -197,7 +197,7 @@ HyperIndex now supports Solana with RPC as a source. This feature is experimenta
 To initialize a Solana project:
 
 ```bash
-pnpx envio@3.0.0-alpha.16 init svm
+pnpx envio@3.0.0-alpha.18 init svm
 ```
 
 See the [Solana documentation](/docs/HyperIndex/solana) for more details.
@@ -384,9 +384,11 @@ chains:
     block_lag: 5
 ```
 
-### Separate Runtime Metrics Endpoint
+### Official `/metrics` Endpoint
 
-Added a new `/metrics/runtime` endpoint with a dedicated Prometheus registry for runtime metrics, isolated from the default `/metrics` endpoint.
+Prometheus metrics are now official. We cleaned up metric names, switched time units to seconds instead of milliseconds, and followed Prometheus naming conventions more closely. Metrics also cover data points previously available only via the `--bench` feature. A separate `/metrics/runtime` endpoint with a dedicated Prometheus registry is available for runtime metrics, isolated from the default `/metrics` endpoint.
+
+Starting from the v3.0.0 release, Prometheus metrics will follow semver and be documented.
 
 ### Double Handler Registration
 
@@ -461,6 +463,16 @@ export ENVIO_API_TOKEN=your_token_here
 ### Metrics Changes
 
 - Renamed `chain_block_height` Prometheus metric to `envio_indexing_known_height`
+- Cleaned up metric names and switched time units from milliseconds to seconds
+- Removed [`--bench`](/docs/HyperIndex/benchmarking) support — use the `/metrics` endpoint instead
+
+### Postgres Column Updates
+
+- `raw_events.event_id`: `NUMERIC` → `BIGINT`
+- `raw_events.serial`: `SERIAL` → `BIGSERIAL`
+- `envio_chains.events_processed`: `INTEGER` → `BIGINT`
+- `envio_checkpoints.id`: `INTEGER` → `BIGINT`
+- Deprecated `envio_chains._num_batches_fetched` — always returns 0 for backward compatibility
 
 ## Fixes
 
@@ -468,6 +480,7 @@ export ENVIO_API_TOKEN=your_token_here
 - Fixed checksum for addresses returned by RPC in lowercase
 - Fixed incorrect validation of transactions `to` field returned by RPC
 - Fixed OOM error on RPC request crashing loop
+- Fixed an edge case where a multichain indexer could freeze during a rollback on reorg (also backported to v2.32.10)
 
 ## Migration Guide
 
@@ -505,7 +518,7 @@ Update your `package.json` with the following changes:
     "node": ">=22.0.0"
   },
   "dependencies": {
-    "envio": "3.0.0-alpha.16"
+    "envio": "3.0.0-alpha.18"
   },
   "devDependencies": {
     "typescript": "^5.7.3"
@@ -812,6 +825,8 @@ If you encounter any issues during migration, join our [Discord community](https
 
 For detailed release notes, see:
 
+- [v3.0.0-alpha.18](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.18)
+- [v3.0.0-alpha.17](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.17)
 - [v3.0.0-alpha.16](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.16)
 - [v3.0.0-alpha.15](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.15)
 - [v3.0.0-alpha.14](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.14)
