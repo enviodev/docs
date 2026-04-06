@@ -448,7 +448,7 @@ export ENVIO_API_TOKEN=your_token_here
 - Removed `UNSTABLE__TEMP_UNORDERED_HEAD_MODE` environment variable
 - Removed `UNORDERED_MULTICHAIN_MODE` environment variable
 - Removed `MAX_BATCH_SIZE` environment variable (use `full_batch_size` in config.yaml instead)
-- Renamed `ENVIO_PG_PUBLIC_SCHEMA` to `ENVIO_PG_SCHEMA` (the old name is still supported for now but will be removed in a future release)
+- Renamed `ENVIO_PG_PUBLIC_SCHEMA` to `ENVIO_PG_SCHEMA` (the old name is still supported until v4)
 
 ### Generated Code Changes
 
