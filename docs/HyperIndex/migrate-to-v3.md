@@ -390,6 +390,12 @@ Prometheus metrics are now official. We cleaned up metric names, switched time u
 
 Starting from the v3.0.0 release, Prometheus metrics will follow semver and be documented.
 
+Breaking changes:
+
+- Renamed `chain_block_height` Prometheus metric to `envio_indexing_known_height`
+- Cleaned up metric names and switched time units from milliseconds to seconds
+- Removed [`--bench`](/docs/HyperIndex/benchmarking) support — use the `/metrics` endpoint instead
+
 ### Double Handler Registration
 
 It's now possible to register multiple handlers for the same event with similar filters:
@@ -459,12 +465,6 @@ export ENVIO_API_TOKEN=your_token_here
 - Removed `getGeneratedByChainId` (use `indexer` value instead)
 - **Lowercased entity types removed**: Generated code no longer exports lowercased entity types (e.g., `transfer`). Use capitalized names instead (e.g., `Transfer`)
 - Entity array field values are now typed as `readonly` — update any code that directly mutates array fields
-
-### Metrics Changes
-
-- Renamed `chain_block_height` Prometheus metric to `envio_indexing_known_height`
-- Cleaned up metric names and switched time units from milliseconds to seconds
-- Removed [`--bench`](/docs/HyperIndex/benchmarking) support — use the `/metrics` endpoint instead
 
 ### Postgres Column Updates
 

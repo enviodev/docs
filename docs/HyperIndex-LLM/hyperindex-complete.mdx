@@ -905,7 +905,7 @@ We gave our TUI some love, making it look more beautiful and compact. It also co
 
 !TUI
 
-### New Testing Framework
+### New Testing Framework (Experimental)
 
 We introduced a new testing framework that allows you to test handlers' logic using real blockchain data and programmatically debug code without repetitive local runs. Key capabilities include:
 
@@ -1034,53 +1034,9 @@ const transfers = await context.Transfer.getWhere.from.eq("0x123...");
 const transfers = await context.Transfer.getWhere({ from: { _eq: "0x123..." } });
 ```
 
-Additionally, three new filter operators are available following Hasura-style conventions:
-
-```typescript
-context.Entity.getWhere({ amount: { _gte: 100n } })
-context.Entity.getWhere({ amount: { _lte: 500n } })
-context.Entity.getWhere({ status: { _in: ["active", "pending"] } })
-```
-
 ### Direct RPC Client
 
 Replaced Ethers.js with a direct RPC client implementation, reducing dependencies and improving performance.
-
-### Block Lag Configuration
-
-A per-chain `block_lag` option to index behind the chain head by a specified number of blocks. Replaces the global `ENVIO_INDEXING_BLOCK_LAG` environment variable. Defaults to 0. This is for advanced use cases — only use it if you know what you're doing.
-
-```yaml
-chains:
-  - id: 1
-    block_lag: 5
-```
-
-### Official `/metrics` Endpoint
-
-Prometheus metrics are now official. We cleaned up metric names, switched time units to seconds instead of milliseconds, and followed Prometheus naming conventions more closely. Metrics also cover data points previously available only via the `--bench` feature. A separate `/metrics/runtime` endpoint with a dedicated Prometheus registry is available for runtime metrics, isolated from the default `/metrics` endpoint.
-
-Starting from the v3.0.0 release, Prometheus metrics will follow semver and be documented.
-
-### Double Handler Registration
-
-It's now possible to register multiple handlers for the same event with similar filters:
-
-```typescript
-import { ERC20 } from "generated";
-
-ERC20.Transfer.handler(async ({ event, context }) => {
-  // Your logic here
-});
-
-ERC20.Transfer.handler(async ({ event, context }) => {
-  // And here
-});
-```
-
-### Updated Dev Docker Flow
-
-`envio dev` no longer uses a generated Docker Compose file and manages containers, network, and volumes directly for greater flexibility. For example, disabling Hasura with `ENVIO_HASURA` now prevents `envio dev` from pulling the Hasura image.
 
 ## Breaking Changes
 
@@ -1122,7 +1078,6 @@ export ENVIO_API_TOKEN=your_token_here
 - Removed `UNSTABLE__TEMP_UNORDERED_HEAD_MODE` environment variable
 - Removed `UNORDERED_MULTICHAIN_MODE` environment variable
 - Removed `MAX_BATCH_SIZE` environment variable (use `full_batch_size` in config.yaml instead)
-- Renamed `ENVIO_PG_PUBLIC_SCHEMA` to `ENVIO_PG_SCHEMA` (the old name is still supported until v4)
 
 ### Generated Code Changes
 
@@ -1135,16 +1090,6 @@ export ENVIO_API_TOKEN=your_token_here
 ### Metrics Changes
 
 - Renamed `chain_block_height` Prometheus metric to `envio_indexing_known_height`
-- Cleaned up metric names and switched time units from milliseconds to seconds
-- Removed `--bench` support — use the `/metrics` endpoint instead
-
-### Postgres Column Updates
-
-- `raw_events.event_id`: `NUMERIC` → `BIGINT`
-- `raw_events.serial`: `SERIAL` → `BIGSERIAL`
-- `envio_chains.events_processed`: `INTEGER` → `BIGINT`
-- `envio_checkpoints.id`: `INTEGER` → `BIGINT`
-- Deprecated `envio_chains._num_batches_fetched` — always returns 0 for backward compatibility
 
 ## Fixes
 
@@ -1152,7 +1097,6 @@ export ENVIO_API_TOKEN=your_token_here
 - Fixed checksum for addresses returned by RPC in lowercase
 - Fixed incorrect validation of transactions `to` field returned by RPC
 - Fixed OOM error on RPC request crashing loop
-- Fixed an edge case where a multichain indexer could freeze during a rollback on reorg (also backported to v2.32.10)
 
 ## Migration Guide
 
@@ -1495,10 +1439,6 @@ If you encounter any issues during migration, join our Discord community for sup
 
 For detailed release notes, see:
 
-- v3.0.0-alpha.18
-- v3.0.0-alpha.17
-- v3.0.0-alpha.16
-- v3.0.0-alpha.15
 - v3.0.0-alpha.14
 - v3.0.0-alpha.13
 - v3.0.0-alpha.12
