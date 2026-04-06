@@ -197,7 +197,7 @@ HyperIndex now supports Solana with RPC as a source. This feature is experimenta
 To initialize a Solana project:
 
 ```bash
-pnpx envio@3.0.0-alpha.14 init svm
+pnpx envio@3.0.0-alpha.20 init svm
 ```
 
 See the [Solana documentation](/docs/HyperIndex/solana) for more details.
@@ -232,7 +232,7 @@ We gave our TUI some love, making it look more beautiful and compact. It also co
 
 ![TUI](/img/sync.gif)
 
-### New Testing Framework (Experimental)
+### New Testing Framework
 
 We introduced a new testing framework that allows you to test handlers' logic using real blockchain data and programmatically debug code without repetitive local runs. Key capabilities include:
 
@@ -362,9 +362,62 @@ const transfers = await context.Transfer.getWhere.from.eq("0x123...");
 const transfers = await context.Transfer.getWhere({ from: { _eq: "0x123..." } });
 ```
 
+Additionally, three new filter operators are available following Hasura-style conventions:
+
+```typescript
+context.Entity.getWhere({ amount: { _gte: 100n } })
+context.Entity.getWhere({ amount: { _lte: 500n } })
+context.Entity.getWhere({ status: { _in: ["active", "pending"] } })
+```
+
 ### Direct RPC Client
 
 Replaced Ethers.js with a direct RPC client implementation, reducing dependencies and improving performance.
+
+### Block Lag Configuration
+
+A per-chain `block_lag` option to index behind the chain head by a specified number of blocks. Replaces the global `ENVIO_INDEXING_BLOCK_LAG` environment variable. Defaults to 0. This is for advanced use cases — only use it if you know what you're doing.
+
+```yaml
+chains:
+  - id: 1
+    block_lag: 5
+```
+
+### Official `/metrics` Endpoint
+
+Prometheus metrics are now official. We cleaned up metric names, switched time units to seconds instead of milliseconds, and followed Prometheus naming conventions more closely. Metrics also cover data points previously available only via the `--bench` feature. A separate `/metrics/runtime` endpoint with a dedicated Prometheus registry is available for runtime metrics, isolated from the default `/metrics` endpoint.
+
+Starting from the v3.0.0 release, Prometheus metrics will follow semver and be documented.
+
+Breaking changes:
+
+- Cleaned up metric names and switched time units from milliseconds to seconds
+- Removed [`--bench`](/docs/HyperIndex/benchmarking) support — use the `/metrics` endpoint instead
+
+### Double Handler Registration
+
+It's now possible to register multiple handlers for the same event with similar filters:
+
+```typescript
+import { ERC20 } from "generated";
+
+ERC20.Transfer.handler(async ({ event, context }) => {
+  // Your logic here
+});
+
+ERC20.Transfer.handler(async ({ event, context }) => {
+  // And here
+});
+```
+
+### Improved Multiple Data-Sources Support
+
+After switching to a fallback source, HyperIndex now attempts to recover to the primary source 60 seconds later. Previously, it would stay on the fallback until the fallback was down or the indexer was restarted. The source selection logic has also been improved for better indexing resilience and stricter enforcement of the `live` mode configuration.
+
+### Updated Dev Docker Flow
+
+`envio dev` no longer uses a generated Docker Compose file and manages containers, network, and volumes directly for greater flexibility. For example, disabling Hasura with `ENVIO_HASURA` now prevents `envio dev` from pulling the Hasura image. Use `envio dev --restart` (or `-r`) to forcefully clear the database even if there are no config changes detected.
 
 ## Breaking Changes
 
@@ -406,6 +459,7 @@ export ENVIO_API_TOKEN=your_token_here
 - Removed `UNSTABLE__TEMP_UNORDERED_HEAD_MODE` environment variable
 - Removed `UNORDERED_MULTICHAIN_MODE` environment variable
 - Removed `MAX_BATCH_SIZE` environment variable (use `full_batch_size` in config.yaml instead)
+- Renamed `ENVIO_PG_PUBLIC_SCHEMA` to `ENVIO_PG_SCHEMA` (the old name is still supported until v4)
 
 ### Generated Code Changes
 
@@ -415,9 +469,13 @@ export ENVIO_API_TOKEN=your_token_here
 - **Lowercased entity types removed**: Generated code no longer exports lowercased entity types (e.g., `transfer`). Use capitalized names instead (e.g., `Transfer`)
 - Entity array field values are now typed as `readonly` — update any code that directly mutates array fields
 
-### Metrics Changes
+### Postgres Column Updates
 
-- Renamed `chain_block_height` Prometheus metric to `envio_indexing_known_height`
+- `raw_events.event_id`: `NUMERIC` → `BIGINT`
+- `raw_events.serial`: `SERIAL` → `BIGSERIAL`
+- `envio_chains.events_processed`: `INTEGER` → `BIGINT`
+- `envio_checkpoints.id`: `INTEGER` → `BIGINT`
+- Deprecated `envio_chains._num_batches_fetched` — always returns 0 for backward compatibility
 
 ## Fixes
 
@@ -425,6 +483,7 @@ export ENVIO_API_TOKEN=your_token_here
 - Fixed checksum for addresses returned by RPC in lowercase
 - Fixed incorrect validation of transactions `to` field returned by RPC
 - Fixed OOM error on RPC request crashing loop
+- Fixed an edge case where a multichain indexer could freeze during a rollback on reorg (also backported to v2.32.10)
 
 ## Migration Guide
 
@@ -462,7 +521,7 @@ Update your `package.json` with the following changes:
     "node": ">=22.0.0"
   },
   "dependencies": {
-    "envio": "3.0.0-alpha.14"
+    "envio": "3.0.0-alpha.20"
   },
   "devDependencies": {
     "typescript": "^5.7.3"
@@ -769,6 +828,12 @@ If you encounter any issues during migration, join our [Discord community](https
 
 For detailed release notes, see:
 
+- [v3.0.0-alpha.20](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.20)
+- [v3.0.0-alpha.19](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.19)
+- [v3.0.0-alpha.18](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.18)
+- [v3.0.0-alpha.17](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.17)
+- [v3.0.0-alpha.16](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.16)
+- [v3.0.0-alpha.15](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.15)
 - [v3.0.0-alpha.14](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.14)
 - [v3.0.0-alpha.13](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.13)
 - [v3.0.0-alpha.12](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.12)
