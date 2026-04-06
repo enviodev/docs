@@ -197,7 +197,7 @@ HyperIndex now supports Solana with RPC as a source. This feature is experimenta
 To initialize a Solana project:
 
 ```bash
-pnpx envio@3.0.0-alpha.18 init svm
+pnpx envio@3.0.0-alpha.20 init svm
 ```
 
 See the [Solana documentation](/docs/HyperIndex/solana) for more details.
@@ -411,9 +411,13 @@ ERC20.Transfer.handler(async ({ event, context }) => {
 });
 ```
 
+### Improved Multiple Data-Sources Support
+
+After switching to a fallback source, HyperIndex now attempts to recover to the primary source 60 seconds later. Previously, it would stay on the fallback until the fallback was down or the indexer was restarted. The source selection logic has also been improved for better indexing resilience and stricter enforcement of the `live` mode configuration.
+
 ### Updated Dev Docker Flow
 
-`envio dev` no longer uses a generated Docker Compose file and manages containers, network, and volumes directly for greater flexibility. For example, disabling Hasura with `ENVIO_HASURA` now prevents `envio dev` from pulling the Hasura image.
+`envio dev` no longer uses a generated Docker Compose file and manages containers, network, and volumes directly for greater flexibility. For example, disabling Hasura with `ENVIO_HASURA` now prevents `envio dev` from pulling the Hasura image. Use `envio dev --restart` (or `-r`) to forcefully clear the database even if there are no config changes detected.
 
 ## Breaking Changes
 
@@ -517,7 +521,7 @@ Update your `package.json` with the following changes:
     "node": ">=22.0.0"
   },
   "dependencies": {
-    "envio": "3.0.0-alpha.18"
+    "envio": "3.0.0-alpha.20"
   },
   "devDependencies": {
     "typescript": "^5.7.3"
@@ -824,6 +828,8 @@ If you encounter any issues during migration, join our [Discord community](https
 
 For detailed release notes, see:
 
+- [v3.0.0-alpha.20](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.20)
+- [v3.0.0-alpha.19](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.19)
 - [v3.0.0-alpha.18](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.18)
 - [v3.0.0-alpha.17](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.17)
 - [v3.0.0-alpha.16](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.16)
