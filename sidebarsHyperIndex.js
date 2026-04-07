@@ -62,6 +62,7 @@ module.exports = {
         "Guides/testing",
         "Guides/navigating-hasura",
         "Guides/environment-variables",
+        "Guides/mcp-server",
       ],
     },
     {
