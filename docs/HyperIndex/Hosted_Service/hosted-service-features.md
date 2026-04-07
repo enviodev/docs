@@ -126,8 +126,6 @@ Monitor your indexer's performance and health using standard Prometheus metrics.
 | `envio_progress_block` | gauge | Latest block number processed and stored in the database. Labeled by `chainId`. |
 | `envio_progress_events` | gauge | Number of events processed and reflected in the database. Labeled by `chainId`. |
 | `envio_progress_ready` | gauge | Whether the chain is fully synced to the head (`1` = synced). Labeled by `chainId`. |
-| `envio_progress_latency` | gauge | Latency in milliseconds between event creation and storage write. Labeled by `chainId`. |
-| `hyperindex_synced_to_head` | gauge | Whether all chains are fully synced to head (`1` = synced). |
 
 #### Event Processing
 
