@@ -8,7 +8,7 @@ description: Connect AI coding assistants to Envio documentation using the Model
 
 # MCP Server
 
-Envio provides a [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) server that lets AI coding assistants search and retrieve documentation directly. This means tools like Claude Code, Cursor, and other MCP-compatible clients can access Envio docs without you needing to copy-paste context manually.
+Envio provides a Model Context Protocol (MCP) server that lets AI coding assistants search and retrieve documentation directly. This means tools like Claude Code, Cursor, and other MCP-compatible clients can access Envio docs without you needing to copy-paste context manually.
 
 ## Endpoint
 
