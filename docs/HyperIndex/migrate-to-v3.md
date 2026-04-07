@@ -12,7 +12,7 @@ HyperIndex V3 is currently in **alpha**. While we don't plan major API changes, 
 
 # Migrate to HyperIndex V3 Alpha
 
-15 full months have passed since the official HyperIndex v2.0.0. Since then, we have shipped [33 minor releases](https://github.com/enviodev/hyperindex/releases) and multiple patches with **zero breaking changes** to the documented API. We also received PRs from 6 external contributors, grew from 1 GitHub star to over 470, and saw many big projects rely on HyperIndex.
+15 full months have passed since the official HyperIndex v2.0.0. Since then, we have shipped [32 minor releases](https://github.com/enviodev/hyperindex/releases) and multiple patches with **zero breaking changes** to the documented API. We also received PRs from 6 external contributors, grew from 1 GitHub star to over 470, and saw many big projects rely on HyperIndex.
 
 HyperIndex V3 Alpha focuses on modernizing the codebase and laying the foundation for many more months of development. This guide walks you through upgrading from V2 to V3.
 
@@ -185,16 +185,10 @@ Multiple updates on the HyperSync side to achieve smaller latency and less traff
 - Server-Sent Events instead of polling to get updates about new blocks
 - CapnProto instead of JSON for query serialization
 - Cache for queries with repetitive filters - huge egress saving when indexing thousands of addresses
-
-### HyperSync Client Improvements
-
 - Improved connection establishment behind a proxy
-- Configurable log level support for HyperSync via `ENVIO_HYPERSYNC_LOG_LEVEL` environment variable
+- Configurable log level support via `ENVIO_HYPERSYNC_LOG_LEVEL` environment variable
 - Automatic rate-limiting handling on the client side
-
-### Improved Height Streaming Reliability
-
-Better reconnection logic, logging, and fallbacks for HyperSync SSE and RPC WebSocket height streaming, resulting in more stable indexing at the chain head.
+- Better reconnection logic, logging, and fallbacks for HyperSync SSE and RPC WebSocket height streaming for more stable indexing at the chain head
 
 ### Fuel Block Handler Support
 
