@@ -396,6 +396,20 @@ const config = {
     }),
   plugins: [
     [
+      "docusaurus-plugin-mcp-server",
+      {
+        server: {
+          name: "envio-docs",
+          version: "1.0.0",
+        },
+        excludeRoutes: [
+          "/docs/HyperIndex-LLM/**",
+          "/docs/HyperSync-LLM/**",
+          "/docs/HyperRPC-LLM/**",
+        ],
+      },
+    ],
+    [
       require.resolve("./plugins/plugin-generate-llms"),
       {
         filesConfigs: [
