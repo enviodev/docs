@@ -14,17 +14,28 @@ Envio Cloud provides a seamless git-based deployment workflow, similar to modern
 
 ### Requirements
 
-- **Version Support**: Deployment on Envio Cloud requires at least version `2.21.5`. 
-Additionally, the following versions are not supported: 
+- **Version Support**: We strongly advise using the latest [release version](https://github.com/enviodev/hyperindex/releases) for improved deployment performance. Envio Cloud requires a minimum version of at least `2.21.5`.
+Additionally, the following versions are not supported on Envio Cloud: 
   - `2.29.x`
-- **PNPM Support**: deployment must be compatible with pnpm version `9.10.0`
-- **Package.json**: the `package.json` file must be present and include the above two requirements.
-- **Configuration file**: a HyperIndex configuration file must be present (the name can be set in the [indexer settings](#configure-your-indexer))
-- **GitHub Repository**: The repository must be no larger than `100MB`
+- **PNPM Support**: the deployment must be compatible with pnpm version `10.32.0`
+- **Repository Folder**:
+  - **Package.json**: a `package.json` file must be present in the root folder and support the above two requirements, with the envio version explicitly configured in the dependencies.
+  - **Configuration file**: a HyperIndex [configuration file](/docs/HyperIndex/configuration-file) must be present.
 
-Before deploying your indexer, please be aware of the following limits and policies:
+  The root folder and configuration file name can be set in the [indexer settings](#configure-your-indexer).
+- **GitHub Repository**: The repository must be no larger than `100MB`. Caching between deployments is supported for paid plans using the [Effects Api](/docs/HyperIndex/effect-api#cache-on-envio-cloud).
+- **Node Version**: It is strongly recommended that the indexer is compatible with node version [24 or higher](https://github.com/nodejs/node/tags).
+
+
+
+:::note Fair use and limitations
+Before deploying your indexer, please be aware of the below limits and policies
+:::
 
 ### Deployment Limits
+
+
+
 - **3 development plan indexers** per organization
 - **Deployments per indexer**:  3 deployments per indexer
 - Deployments can be deleted in Envio Cloud to make space for more deployments
