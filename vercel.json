@@ -1,6 +1,6 @@
 {
   "functions": {
-    "api/mcp.js": {
+    "api/mcp.mjs": {
       "includeFiles": "build/mcp/**"
     }
   },
