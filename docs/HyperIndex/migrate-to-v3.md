@@ -3,7 +3,7 @@ id: migrate-to-v3
 title: Migrate to HyperIndex V3 Alpha
 sidebar_label: Migrate to V3 Alpha
 slug: /migrate-to-v3
-description: Learn how to upgrade from HyperIndex V2 to V3 Alpha, featuring ESM support, top-level await, automatic handler registration, and more.
+description: Learn how to upgrade from HyperIndex V2 to V3 Alpha, featuring ESM support, top-level await, automatic handler registration, new testing framework, and more.
 ---
 
 :::warning
@@ -185,6 +185,10 @@ Multiple updates on the HyperSync side to achieve smaller latency and less traff
 - Server-Sent Events instead of polling to get updates about new blocks
 - CapnProto instead of JSON for query serialization
 - Cache for queries with repetitive filters - huge egress saving when indexing thousands of addresses
+- Improved connection establishment behind a proxy
+- Configurable log level support via `ENVIO_HYPERSYNC_LOG_LEVEL` environment variable
+- Automatic rate-limiting handling on the client side
+- Better reconnection logic, logging, and fallbacks for HyperSync SSE and RPC WebSocket height streaming for more stable indexing at the chain head
 
 ### Fuel Block Handler Support
 
@@ -197,7 +201,7 @@ HyperIndex now supports Solana with RPC as a source. This feature is experimenta
 To initialize a Solana project:
 
 ```bash
-pnpx envio@3.0.0-alpha.20 init svm
+pnpx envio@3.0.0-alpha.21 init svm
 ```
 
 See the [Solana documentation](/docs/HyperIndex/solana) for more details.
@@ -206,7 +210,7 @@ See the [Solana documentation](/docs/HyperIndex/solana) for more details.
 
 - Removed language selection to prefer TypeScript by default
 - Cleaned up templates to follow the latest good practices
-- Added new templates to highlight HyperIndex features, starting with: `Feature: Factory Contract`
+- Added new templates to highlight HyperIndex features: `Feature: Factory Contract`, `Feature: External Calls`
 - Pre-configured GitHub Actions workflow for running tests and initialized git repository
 - Generated projects include Cursor/Claude skills to support agent-driven development
 
@@ -234,50 +238,42 @@ We gave our TUI some love, making it look more beautiful and compact. It also co
 
 ### New Testing Framework
 
-We introduced a new testing framework that allows you to test handlers' logic using real blockchain data and programmatically debug code without repetitive local runs. Key capabilities include:
-
-- Testing block and event handlers together
-- Snapshot testing support
-- Parallel test execution via worker thread isolation
+HyperIndex ships a purpose-built testing framework powered by `createTestIndexer()`. Write tests against the same indexer that runs in production — no database, no Docker, no manual mock wiring.
 
 The framework integrates with [Vitest](https://vitest.dev/), replacing the previous mocha/chai setup with a single package that doesn't require configuration by default and includes snapshot testing out-of-the-box. It also provides typed test assertions and utilities to read/write entities in-between processing runs.
 
-```typescript
-import { describe, it, expect } from "vitest"
-import { createTestIndexer } from "generated"
+#### Three ways to feed events
 
-describe("Indexer Testing", () => {
-  it("Should create accounts from ERC20 Transfer events", async () => {
+**1. Auto-exit** — processes the first block with matching events, then exits. Each subsequent call continues where the last one stopped. Zero config needed.
+
+```typescript
+import { describe, it } from "vitest";
+import { createTestIndexer } from "generated";
+
+describe("ERC20 indexer", () => {
+  it("processes the first block with events", async (t) => {
     const indexer = createTestIndexer();
 
-    expect(
-      await indexer.process({
-        chains: {
-          1: {
-            startBlock: 10_861_674,
-            endBlock: 10_861_674,
-          },
-        },
-      }),
-      "Should find the first mint at block 10_861_674"
-    ).toMatchInlineSnapshot(`
+    const result = await indexer.process({ chains: { 1: {} } });
+
+    // Auto-filled by Vitest on first run — just review and commit
+    t.expect(result).toMatchInlineSnapshot(`
       {
         "changes": [
           {
-            "Account": {
+            "Transfer": {
               "sets": [
                 {
-                  "balance": -1000000000000000000000000000n,
-                  "id": "0x0000000000000000000000000000000000000000",
-                },
-                {
-                  "balance": 1000000000000000000000000000n,
-                  "id": "0x41653c7d61609d856f29355e404f310ec4142cfb",
+                  "blockNumber": 10861674,
+                  "from": "0x0000000000000000000000000000000000000000",
+                  "id": "1-10861674-23",
+                  "to": "0x41653c7d61609D856f29355E404F310Ec4142Cfb",
+                  "transactionHash": "0x4b37d2f343608457ca...",
+                  "value": 1000000000000000000000000000n,
                 },
               ],
             },
             "block": 10861674,
-            "blockHash": "0x32e4dd857b5b7e756551a00271e44b61dbda0a91db951cf79a3e58adb28f5c09",
             "chainId": 1,
             "eventsProcessed": 1,
           },
@@ -288,7 +284,45 @@ describe("Indexer Testing", () => {
 });
 ```
 
-The test indexer also exposes chain information and provides `Entity.get`/`Entity.set` for reading and writing entities in-between processing runs:
+**2. Explicit block range** — pin to specific blocks for deterministic CI snapshots.
+
+```typescript
+const result = await indexer.process({
+  chains: {
+    1: {
+      startBlock: 10_861_674,
+      endBlock: 10_861_674,
+    },
+  },
+});
+```
+
+**3. Simulate** — feed typed synthetic events for pure unit tests. No network, no block ranges.
+
+```typescript
+await indexer.process({
+  chains: {
+    137: {
+      simulate: [
+        {
+          contract: "Greeter",
+          event: "NewGreeting",
+          params: { greeting: "Hello", user: "0x123..." },
+        },
+      ],
+    },
+  },
+});
+```
+
+#### Key capabilities
+
+- **Snapshot-driven assertions** — `result.changes` captures every entity set/delete per block. Pair with `toMatchInlineSnapshot` for auto-generated, reviewable snapshots.
+- **Direct entity access** — `indexer.Entity.get()`, `.getOrThrow()`, `.getAll()`, and `.set()` for reading and presetting state.
+- **Real pipeline, real confidence** — tests exercise the full indexer pipeline including dynamic contract registration, multi-chain support, and handler context.
+- **Parallel test execution** via worker thread isolation.
+
+The test indexer also exposes chain information:
 
 ```typescript
 const indexer = createTestIndexer();
@@ -315,6 +349,31 @@ The `envio init` command now supports contracts with nested tuples in event sign
 ### PostgreSQL Update for Local Docker Compose
 
 The local development Docker Compose setup now uses PostgreSQL 18.1 (upgraded from 17.5).
+
+### `contractName` and `eventName` on Event
+
+Events now include `contractName` and `eventName` fields, making it easier to identify which contract and event you're working with in handlers:
+
+```typescript
+ERC20.Transfer.handler(async ({ event }) => {
+  console.log(event.contractName); // "ERC20"
+  console.log(event.eventName);    // "Transfer"
+});
+```
+
+### New Official Exported Types
+
+Generated code now exports official generic types for entities, enums, and events. These replace the previous contract-specific type exports:
+
+```typescript
+import type {
+  MyEntity,        // Still exported but Entity<"MyEntity"> is preferred
+  Entity,          // Generic entity type — use as Entity<"MyEntity">
+  Enum,            // Generic enum type — use as Enum<"MyEnum"> (replaces direct MyEnum export)
+  EvmEvent,        // Generic event type — use as EvmEvent<"ERC20", "Transfer">
+                   // Access specific fields: EvmEvent<"ERC20", "Transfer">["block"]
+} from "generated";
+```
 
 ### Support for DESC Indices
 
@@ -434,6 +493,7 @@ After switching to a fallback source, HyperIndex now attempts to recover to the 
 - `Address` type changed from `string` to `` `0x${string}` ``
 - Removed `transaction.chainId` from field selection — use `context.chain.id` or `event.chainId` instead
 - **`getWhere` API redesigned** — changed from `context.Entity.getWhere.fieldName.eq(value)` to `context.Entity.getWhere({ fieldName: { _eq: value } })` using GraphQL-style filter syntax
+- Events now include `contractName` and `eventName` fields
 
 ### config.yaml Changes
 
@@ -468,6 +528,81 @@ export ENVIO_API_TOKEN=your_token_here
 - Removed `getGeneratedByChainId` (use `indexer` value instead)
 - **Lowercased entity types removed**: Generated code no longer exports lowercased entity types (e.g., `transfer`). Use capitalized names instead (e.g., `Transfer`)
 - Entity array field values are now typed as `readonly` — update any code that directly mutates array fields
+
+### Deprecated: `MockDb` Testing API
+
+The `MockDb` testing API has been removed. Migrate to `createTestIndexer()` with `simulate`:
+
+```diff
+-import { TestHelpers, type User } from "generated";
+-const { MockDb, Greeter, Addresses } = TestHelpers;
++import { createTestIndexer, type User } from "generated";
++import { TestHelpers } from "envio";
++const { Addresses } = TestHelpers;
+
+ it("A NewGreeting event creates a User entity", async (t) => {
+-  const mockDbInitial = MockDb.createMockDb();
++  const indexer = createTestIndexer();
+   const userAddress = Addresses.defaultAddress;
+   const greeting = "Hi there";
+
+-  const mockNewGreetingEvent = Greeter.NewGreeting.createMockEvent({
+-    greeting: greeting,
+-    user: userAddress,
+-  });
+-
+-  const updatedMockDb = await Greeter.NewGreeting.processEvent({
+-    event: mockNewGreetingEvent,
+-    mockDb: mockDbInitial,
+-  });
++  await indexer.process({
++    chains: {
++      137: {
++        simulate: [
++          {
++            contract: "Greeter",
++            event: "NewGreeting",
++            params: { greeting, user: userAddress },
++          },
++        ],
++      },
++    },
++  });
+
+   const expectedUserEntity: User = {
+     id: userAddress,
+     latestGreeting: greeting,
+     numberOfGreetings: 1,
+     greetings: [greeting],
+   };
+
+-  const actualUserEntity = updatedMockDb.entities.User.get(userAddress);
++  const actualUserEntity = await indexer.User.getOrThrow(userAddress);
+   t.expect(actualUserEntity).toEqual(expectedUserEntity);
+ });
+```
+
+#### MockDb Migration Cheat Sheet
+
+| Old (`MockDb`) | New (`createTestIndexer`) |
+|---|---|
+| `MockDb.createMockDb()` | `createTestIndexer()` |
+| `Contract.Event.createMockEvent({...})` | Inline in `simulate: [{ contract, event, params }]` |
+| `Contract.Event.processEvent({event, mockDb})` | `indexer.process({ chains: { id: { simulate } } })` |
+| `mockDb.entities.Entity.get(id)` | `await indexer.Entity.getOrThrow(id)` |
+| `mockDb.entities.Entity.set({...})` | `indexer.Entity.set({...})` |
+| Manual handler threading & event chaining | Automatic — pass multiple events in the `simulate` array |
+
+### Deprecated: Contract-Specific Type Exports
+
+Generated code no longer exports contract-specific event log types (e.g., `ERC20_Transfer_eventLog`) or direct enum types (e.g., `MyEnum`). Use the new generic types instead:
+
+| Old | New |
+|---|---|
+| `ERC20_Transfer_eventLog` | `EvmEvent<"ERC20", "Transfer">` |
+| `ERC20_Transfer_block` | `EvmEvent<"ERC20", "Transfer">["block"]` |
+| `MyEnum` (direct export) | `Enum<"MyEnum">` |
+| `MyEntity` | `Entity<"MyEntity">` (preferred) |
 
 ### Postgres Column Updates
 
@@ -521,7 +656,7 @@ Update your `package.json` with the following changes:
     "node": ">=22.0.0"
   },
   "dependencies": {
-    "envio": "3.0.0-alpha.20"
+    "envio": "3.0.0-alpha.21"
   },
   "devDependencies": {
     "typescript": "^5.7.3"
@@ -815,6 +950,8 @@ pnpm dev
 - [ ] Replace `transaction.chainId` with `context.chain.id` or `event.chainId`
 - [ ] Replace lowercased entity type imports with capitalized versions (e.g., `transfer` → `Transfer`)
 - [ ] Update `getWhere` calls to new GraphQL-style filter syntax (e.g., `getWhere({ field: { _eq: value } })`)
+- [ ] Migrate from `MockDb` to `createTestIndexer()` (see [MockDb Migration Cheat Sheet](#mockdb-migration-cheat-sheet))
+- [ ] Replace contract-specific type exports (`ERC20_Transfer_eventLog`) with generic types (`EvmEvent<"ERC20", "Transfer">`)
 
 **Verify:**
 
@@ -828,6 +965,7 @@ If you encounter any issues during migration, join our [Discord community](https
 
 For detailed release notes, see:
 
+- [v3.0.0-alpha.21](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.21)
 - [v3.0.0-alpha.20](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.20)
 - [v3.0.0-alpha.19](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.19)
 - [v3.0.0-alpha.18](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.18)
