@@ -4,6 +4,7 @@ Sidebar_label: Envio Developer Update February 2026
 slug: /envio-developer-update-february-2026
 description: "Envio Developer Update February 2026: HyperIndex v3 alpha.13 with 3x faster backfills, improved RPC support, MegaETH and Sei indexing, new builder series, and Uniswap v4 alert bots."
 image: /blog-assets/dev-update-feb-26.png
+tags: ["product-updates"]
 ---
 <img src="/blog-assets/dev-update-feb-26.png" alt="Cover Image Envio Developer Update Feb 2026" width="100%"/>
 

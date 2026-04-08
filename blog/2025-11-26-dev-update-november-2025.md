@@ -4,6 +4,7 @@ Sidebar_label: Envio Developer Update November 2025
 slug: /envio-developer-update-november-2025
 description: "November brings Envio v2.32.0, Monad Mainnet indexing support, Alchemy Subgraphs migration guidance, HyperSync Sonic performance results, new Rootstock indexing tutorials, hackathon highlights and our latest featured developer."
 image: /blog-assets/dev-update-nov-25.png
+tags: ["product-updates"]
 ---
 
 <img src="/blog-assets/dev-update-nov-25.png" alt="Cover Image Envio Developer Update Nov 2025" width="100%"/>

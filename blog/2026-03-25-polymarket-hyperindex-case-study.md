@@ -2,6 +2,7 @@
 title: "How Envio Indexed 4 Billion Polymarket Events"
 sidebar_label: "How Envio Indexed 4 Billion Polymarket Events"
 slug: /polymarket-hyperindex-case-study
+featured: true
 tags: ["case-studies"]
 keywords: ["case study", "Polymarket", "blockchain indexer", "HyperIndex", "The Graph migration"]
 description: "How Envio HyperIndex consolidated 8 Polymarket subgraphs into one TypeScript blockchain indexer on Polygon, syncing over 4 billion events in 6 days. Open source reference included."

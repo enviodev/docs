@@ -4,6 +4,7 @@ sidebar_label: Envio Developer Update May 2025
 slug: /envio-developer-update-may-2025
 description: "Discover what Envio shipped in May 2025 including major version releases, CLI improvement, indexer tooling updates, integrations and our DappCon 2025 sponsorship."
 image: /blog-assets/dev-update-may-2025.png
+tags: ["product-updates"]
 ---
 
 <img src="/blog-assets/dev-update-may-2025.png" alt="Cover Image Envio Developer Update May 2025" width="100%"/>

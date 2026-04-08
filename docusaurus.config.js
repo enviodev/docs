@@ -250,9 +250,8 @@ const config = {
           showReadingTime: true,
           blogTitle: "Envio Blog",
           blogDescription: "News, announcements, tutorials, and developer updates from the Envio team.",
-          postsPerPage: 9,
-          blogSidebarTitle: "All posts",
-          blogSidebarCount: "ALL",
+          postsPerPage: "ALL",
+          blogSidebarCount: 0,
         },
 
         theme: {
