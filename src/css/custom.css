@@ -253,7 +253,7 @@ article a {
 /* Clean table styling */
 table {
   border-radius: 6px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 [data-theme="dark"] table {
@@ -281,9 +281,32 @@ table td {
   border-bottom: 1px solid #262626;
 }
 
-/* Allow horizontal scrolling for wide markdown tables on small screens */
+/* Keep wide markdown/blog tables usable on mobile */
+.markdown .table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.markdown .table-wrapper > table {
+  width: max-content;
+  min-width: 100%;
+}
+
 @media (max-width: 768px) {
-  article .markdown table {
+  .markdown .table-wrapper::after {
+    content: "Swipe horizontally to view more \2192";
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.75rem;
+    color: var(--ifm-color-emphasis-600);
+    text-align: right;
+    white-space: nowrap;
+  }
+}
+
+/* Fallback for tables that are not wrapped by markdown */
+@media (max-width: 768px) {
+  article .markdown > table {
     display: block;
     width: max-content;
     max-width: 100%;
