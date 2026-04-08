@@ -92,7 +92,7 @@ This feature is only available for blockchain indexers deployed with version 2.2
 Stay informed about your indexer's health and performance with our integrated alerting system. Configure multiple notification channels and choose which alerts you want to receive.
 
 :::info Version Requirement
-This feature is only available for blockchain indexers deployed with version 2.24.0 or higher.
+This feature is only available for indexers deployed with version 2.24.0 or higher.
 :::
 
 ### Notification Channels
@@ -103,6 +103,130 @@ Configure one or multiple notification channels to receive alerts:
 - **Slack**
 - **Telegram** 
 - **Email** 
+
+## Monitoring
+
+:::info Version Requirement
+This feature is only available for indexers deployed with version 3.0.0 or higher.
+:::
+
+Monitor your indexer's performance and health using standard Prometheus metrics. Metrics are exposed at your deployment's endpoint under `/hyperindex/metrics`, making it easy to integrate with your existing monitoring stack (Prometheus, Grafana, Datadog, etc.).
+
+**Endpoint:**
+```
+<your-endpoint-url>/hyperindex/metrics
+```
+
+### Available Metrics
+
+#### Progress & Sync Status
+
+| Metric | Type | Description |
+|--------|------|-------------|
+| `envio_progress_block` | gauge | Latest block number processed and stored in the database. Labeled by `chainId`. |
+| `envio_progress_events` | gauge | Number of events processed and reflected in the database. Labeled by `chainId`. |
+| `envio_progress_ready` | gauge | Whether the chain is fully synced to the head (`1` = synced). Labeled by `chainId`. |
+
+#### Event Processing
+
+| Metric | Type | Description |
+|--------|------|-------------|
+| `envio_processing_seconds` | counter | Cumulative time spent executing event handlers during batch processing. |
+| `envio_processing_handler_seconds` | counter | Cumulative time spent inside individual event handler executions. Labeled by `contract` and `event`. |
+| `envio_processing_handler_total` | counter | Total number of individual event handler executions. Labeled by `contract` and `event`. |
+| `envio_processing_max_batch_size` | gauge | Maximum number of items to process in a single batch. |
+
+#### Entity Preloading
+
+| Metric | Type | Description |
+|--------|------|-------------|
+| `envio_preload_seconds` | counter | Cumulative time spent preloading entities during batch processing. |
+| `envio_preload_handler_seconds` | counter | Wall-clock time spent inside individual preload handler executions. Labeled by `contract` and `event`. |
+| `envio_preload_handler_seconds_total` | counter | Cumulative time spent in preload handlers (can exceed wall-clock time due to parallel execution). Labeled by `contract` and `event`. |
+| `envio_preload_handler_total` | counter | Total number of individual preload handler executions. Labeled by `contract` and `event`. |
+
+#### Storage
+
+| Metric | Type | Description |
+|--------|------|-------------|
+| `envio_storage_write_seconds` | counter | Cumulative time spent writing batch data to storage. |
+| `envio_storage_write_total` | counter | Total number of batch writes to storage. |
+| `envio_storage_load_seconds` | counter | Time spent loading data from storage. Labeled by `operation`. |
+| `envio_storage_load_total` | counter | Number of successful storage load operations. Labeled by `operation`. |
+| `envio_storage_load_size` | counter | Cumulative number of records loaded from storage. Labeled by `operation`. |
+
+#### Data Source & Fetching
+
+| Metric | Type | Description |
+|--------|------|-------------|
+| `envio_fetching_block_range_seconds` | counter | Cumulative time spent fetching block ranges. Labeled by `chainId`. |
+| `envio_fetching_block_range_total` | counter | Total number of block range fetch operations. Labeled by `chainId`. |
+| `envio_fetching_block_range_events_total` | counter | Cumulative number of events fetched across all block range operations. Labeled by `chainId`. |
+| `envio_fetching_block_range_size` | counter | Cumulative number of blocks covered across all fetch operations. Labeled by `chainId`. |
+| `envio_source_request_total` | counter | Number of requests made to data sources. Labeled by `source`, `chainId`, and `method`. |
+| `envio_source_known_height` | gauge | Latest known block number reported by the data source. Labeled by `source` and `chainId`. |
+
+#### Indexing Pipeline
+
+| Metric | Type | Description |
+|--------|------|-------------|
+| `envio_indexing_known_height` | gauge | Latest known block number reported by the active indexing source. Labeled by `chainId`. |
+| `envio_indexing_concurrency` | gauge | Number of executing concurrent queries to the chain data source. Labeled by `chainId`. |
+| `envio_indexing_max_concurrency` | gauge | Maximum number of concurrent queries allowed. Labeled by `chainId`. |
+| `envio_indexing_buffer_size` | gauge | Current number of items in the indexing buffer. Labeled by `chainId`. |
+| `envio_indexing_buffer_block` | gauge | Highest block number fully fetched by the indexer. Labeled by `chainId`. |
+| `envio_indexing_idle_seconds` | counter | Time the indexer source syncing has been idle. A high value may indicate a bottleneck. Labeled by `chainId`. |
+| `envio_indexing_partitions` | gauge | Number of partitions used to split fetching logic. Labeled by `chainId`. |
+| `envio_indexing_addresses` | gauge | Number of addresses indexed on chain (static and dynamic). Labeled by `chainId`. |
+
+#### Reorgs & Rollbacks
+
+| Metric | Type | Description |
+|--------|------|-------------|
+| `envio_reorg_detected_total` | counter | Total number of reorgs detected. |
+| `envio_reorg_detected_block` | gauge | Block number where a reorg was last detected. |
+| `envio_reorg_threshold` | gauge | Whether indexing is currently within the reorg threshold. |
+| `envio_rollback_enabled` | gauge | Whether rollback on reorg is enabled. |
+| `envio_rollback_total` | counter | Number of successful rollbacks on reorg. |
+| `envio_rollback_seconds` | counter | Total time spent on rollbacks. |
+| `envio_rollback_events` | counter | Number of events rolled back on reorg. |
+
+#### Effect API
+
+| Metric | Type | Description |
+|--------|------|-------------|
+| `envio_effect_call_seconds` | counter | Processing time taken to call the Effect function. Labeled by `effect`. |
+| `envio_effect_call_total` | counter | Cumulative number of resolved Effect function calls. Labeled by `effect`. |
+| `envio_effect_active_calls` | gauge | Number of Effect function calls currently running. Labeled by `effect`. |
+| `envio_effect_cache` | gauge | Number of items in the effect cache. Labeled by `effect`. |
+| `envio_effect_queue` | gauge | Number of effect calls waiting in the rate limit queue. |
+
+#### System Info
+
+| Metric | Type | Description |
+|--------|------|-------------|
+| `envio_info` | gauge | Information about the indexer. Labeled by `version`. |
+| `envio_process_start_time_seconds` | gauge | Start time of the process since Unix epoch in seconds. |
+
+### Example: Scraping with Prometheus
+
+Add the following to your `prometheus.yml` to scrape your indexer's metrics:
+
+```yaml
+scrape_configs:
+  - job_name: "envio-indexer"
+    metrics_path: "/hyperindex/metrics"
+    static_configs:
+      - targets: ["<your-endpoint-host>"]
+```
+
+### Example: Key Metrics to Watch
+
+- **`envio_progress_ready`** and **`hyperindex_synced_to_head`** — confirm your indexer is caught up to the chain head
+- **`envio_progress_block`** — track indexing progress over time
+- **`envio_processing_handler_seconds`** — identify slow event handlers by contract and event
+- **`envio_indexing_idle_seconds`** — a high value may indicate the data source sync is a bottleneck
+- **`envio_reorg_detected_total`** — monitor for chain reorganizations
 
 ## Zero-Downtime Deployments
 
