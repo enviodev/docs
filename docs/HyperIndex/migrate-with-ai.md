@@ -52,30 +52,50 @@ This structure gives Claude Code visibility into both projects so it can read an
 
 Open Claude Code in the monorepo root directory and provide a prompt like the following (replace the repo names with your own):
 
-```
-In this repo I have a subgraph indexer in `my-subgraph/` which I would like
-to migrate to a HyperIndex indexer. I've created a HyperIndex boilerplate
-indexer using the same contracts in `my-hyperindex-indexer/`.
+```xml
+<context>
+This monorepo contains two indexers:
+- `my-subgraph/` — an existing Graph Protocol subgraph indexer (source of truth)
+- `my-hyperindex-indexer/` — a HyperIndex boilerplate scaffolded from the same
+  contracts (migration target)
+</context>
 
-There are Claude skills available in `.claude/skills/` which explain patterns
-and best practices for HyperIndex. Specifically, there is a subgraph migration
-skill with step-by-step migration guides, common migration patterns, quality
-checks, and a migration checklist.
+<task>
+Migrate the subgraph indexer to a fully working HyperIndex indexer.
+Follow these phases in order:
 
-Please follow the subgraph migration skills step-by-step to completely migrate
-the subgraph indexer to HyperIndex. Work slowly and methodically, ensuring all
-checks are made and all migration patterns are followed correctly. Start by
-reviewing the subgraph repo to understand its logic, then review the HyperIndex
-repo and the migration skills, and then begin the migration.
+Phase 1 — Plan
+- Produce a migration plan mapping each subgraph component to its HyperIndex
+  equivalent.
+- Flag anything that has no direct equivalent and propose a workaround.
+- Do NOT write code yet.
+
+Phase 2 — Implement
+- Migrate the entire subgraph following the plan and skill guides.
+- Process one handler file at a time.
+- After each file, run `pnpm envio codegen` to validate, and verify it against
+  the migration checklist before moving on.
+
+Phase 3 — Verify
+- Walk through every checklist item from the migration skill and confirm it
+  passes.
+- Run any available build or type check commands.
+- List any items you could not complete and why.
+</task>
+
+<rules>
+- Only modify files in `my-hyperindex-indexer/`. Do not change the subgraph repo.
+- Preserve all entity fields and event mappings from the subgraph.
+- Do not skip or summarize checklist items — execute every one.
+- If you are uncertain about a migration decision, pause and ask me.
+</rules>
 ```
 
 :::tip
-- Claude will automatically discover and use the `.claude/skills/` directory in the HyperIndex project
-- We recommend reviewing Claude's plan before it begins implementation
 - After migration, run `pnpm dev` to verify the indexer runs correctly
-- Use the Indexer Migration Validator to compare outputs between your subgraph and the new HyperIndex indexer
+- Use the [Indexer Migration Validator](https://github.com/enviodev/indexer-migration-validator) to compare outputs between your subgraph and the new HyperIndex indexer
 :::
 
 ## Manual Migration
 
-For a detailed manual migration guide covering the step by step conversion of `subgraph.yaml`, schema, and event handlers, see [Migrate from The Graph](./migration-guide).
+For a detailed manual migration guide covering the step by step conversion of subgraph.yaml, schema, and event handlers, see [Migrate from The Graph](./migration-guide).
