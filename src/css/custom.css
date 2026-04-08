@@ -256,6 +256,49 @@ table {
   overflow: visible;
 }
 
+/* Keep wide tables inside the article column (desktop + mobile) */
+.markdown .table-wrapper {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.markdown .table-wrapper > table {
+  width: max-content;
+  min-width: 100%;
+}
+
+/* Explicit wrapper for very wide comparison tables in blog posts */
+.table-scroll-x {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  padding-bottom: 2px;
+}
+
+/* Docusaurus markdown tables are often wrapped in .table-wrapper */
+.table-scroll-x > .table-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-scroll-x table {
+  display: table;
+  width: max-content;
+  min-width: 1400px;
+}
+
+.table-scroll-x table th,
+.table-scroll-x table td {
+  white-space: nowrap;
+}
+
 [data-theme="dark"] table {
   border: 1px solid #262626;
 }
@@ -282,16 +325,6 @@ table td {
 }
 
 /* Keep wide markdown/blog tables usable on mobile */
-.markdown .table-wrapper {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.markdown .table-wrapper > table {
-  width: max-content;
-  min-width: 100%;
-}
-
 @media (max-width: 768px) {
   .markdown .table-wrapper::after {
     content: "Swipe horizontally to view more \2192";
@@ -304,15 +337,13 @@ table td {
   }
 }
 
-/* Fallback for tables that are not wrapped by markdown */
-@media (max-width: 768px) {
-  article .markdown > table {
-    display: block;
-    width: max-content;
-    max-width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
+/* Fallback for markdown tables that are not wrapped by .table-wrapper */
+article .markdown > table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Clean alert styling */
