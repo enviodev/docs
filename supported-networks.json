@@ -69,6 +69,7 @@
       "supported-networks/energy-web",
       "supported-networks/eos",
       "supported-networks/eth",
+      "supported-networks/etherlink",
       "supported-networks/etherlink-testnet",
       "supported-networks/exosama",
       "supported-networks/fantom",

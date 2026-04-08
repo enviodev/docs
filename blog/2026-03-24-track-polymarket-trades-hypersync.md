@@ -8,6 +8,8 @@ image: /blog-assets/polymarket-trades-hypersync.png
 
 <img src="/blog-assets/polymarket-trades-hypersync.png" alt="Cover Image: Track Polymarket Trades in Real-Time" width="100%"/>
 
+<!--truncate-->
+
 Since the rise of prediction markets like [Polymarket](https://polymarket.com) and [Kalshi](https://kalshi.com), many people have been tracking activity on them to get a sense of where the money is going. If we try to track every trade on these prediction markets, you will see many people betting like $10 here, $15 there. If you want a stronger signal, then you should track trades with higher amounts, since those traders have more conviction in the outcome they are betting on.
 
 In this article, we are going to build a tool with HyperSync where you can track Polymarket trades above a certain amount. We also have one feature where you can track trades from certain addresses. If you know some addresses from good traders, you can follow them too.

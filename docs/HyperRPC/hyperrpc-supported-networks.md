@@ -52,6 +52,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Cyber                     | 7560            | https://cyber.rpc.hypersync.xyz or https://7560.rpc.hypersync.xyz                        |
 | Eth Traces                | 1               | https://eth-traces.rpc.hypersync.xyz or https://1-traces.rpc.hypersync.xyz               |
 | Ethereum Mainnet          | 1               | https://eth.rpc.hypersync.xyz or https://1.rpc.hypersync.xyz                             |
+| Etherlink                 | 42793           | https://etherlink.rpc.hypersync.xyz or https://42793.rpc.hypersync.xyz                   |
 | Fantom                    | 250             | https://fantom.rpc.hypersync.xyz or https://250.rpc.hypersync.xyz                        |
 | Flare                     | 14              | https://flare.rpc.hypersync.xyz or https://14.rpc.hypersync.xyz                          |
 | Fraxtal                   | 252             | https://fraxtal.rpc.hypersync.xyz or https://252.rpc.hypersync.xyz                       |

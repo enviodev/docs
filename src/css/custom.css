@@ -281,7 +281,6 @@ table {
   padding-bottom: 2px;
 }
 
-/* Docusaurus markdown tables are often wrapped in .table-wrapper */
 .table-scroll-x > .table-wrapper {
   overflow-x: auto;
   overflow-y: hidden;
@@ -334,6 +333,17 @@ table td {
     color: var(--ifm-color-emphasis-600);
     text-align: right;
     white-space: nowrap;
+  }
+}
+
+/* Fallback for tables that are not wrapped by markdown */
+@media (max-width: 768px) {
+  article .markdown > table {
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
