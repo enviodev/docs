@@ -4,6 +4,7 @@ sidebar_label: Envio Developer Update March 2026
 slug: /envio-developer-update-march-2026
 description: "Envio Developer Update March 2026: HyperIndex alpha.15-20, including improved multiple data-sources support, agentic indexing workflows, subgraph hosting, ecosystem highlights, and upcoming events."
 image: /blog-assets/dev-update-march-2026.png
+tags: ["product-updates"]
 ---
 
 <img src="/blog-assets/dev-update-march-2026.png" alt="Cover Image Envio Developer Update March 2026" width="100%"/>
