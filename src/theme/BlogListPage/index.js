@@ -8,15 +8,15 @@ const FILTERS = [
   { label: 'All', value: 'all' },
   { label: 'Case Studies', value: 'case-studies' },
   { label: 'Product Updates', value: 'product-updates' },
-  { label: 'Community Updates', value: 'community-updates' },
   { label: 'Announcements', value: 'announcements' },
+  { label: 'AI', value: 'ai' },
   { label: 'Tutorials', value: 'tutorials' },
 ];
 
 const TAG_LABELS = {
   'case-studies': 'Case Studies',
   'product-updates': 'Product Updates',
-  'community-updates': 'Community Updates',
+  'ai': 'AI',
   'announcements': 'Announcements',
   'tutorials': 'Tutorials',
 };
