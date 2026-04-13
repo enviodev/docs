@@ -3,18 +3,18 @@ id: migrate-with-ai
 title: How to Migrate Using AI
 sidebar_label: Migrate Using AI
 slug: /migrate-with-ai
-description: Use Claude Code with built-in HyperIndex skills to automatically migrate your subgraph to Envio HyperIndex.
+description: Use an AI programming assistant like Cursor or Claude Code with HyperIndex Claude skills to migrate your subgraph to Envio HyperIndex.
 ---
 
 # How to Migrate Using AI
 
-HyperIndex v3 includes built-in Claude skills that guide Claude Code through the entire subgraph migration process, from understanding your subgraph logic to converting handlers and running quality checks. This is the recommended way to migrate complex subgraphs.
+HyperIndex v3 includes built-in Claude skills that guide AI programming assistants through the full subgraph migration process, from understanding your existing logic to converting handlers and running quality checks. This is the recommended way to migrate complex subgraphs.
 
 ## Prerequisites
 
-- Claude Code installed
+- An AI programming assistant (Cursor or Claude Code)
 - pnpm installed
-- HyperIndex v3 (Claude skills are only available in v3)
+- HyperIndex v3 (Claude skills are available in v3)
 
 ## Step 1: Initialize a Boilerplate HyperIndex Indexer
 
@@ -27,7 +27,7 @@ pnpx envio init
 Follow the CLI prompts to set up the boilerplate indexer with the same contracts and events as your existing subgraph.
 
 :::caution
-The Claude migration skills are only available in HyperIndex v3. If the latest stable version is not v3, you need to specify a v3 version explicitly:
+The Claude skills are only available in HyperIndex v3. If the latest stable version is not v3, you need to specify a v3 version explicitly:
 
 ```bash
 pnpx envio@3.0.0-alpha.21 init
@@ -46,11 +46,11 @@ my-migration/
 └── my-hyperindex-indexer/ # The boilerplate HyperIndex indexer from Step 1
 ```
 
-This structure gives Claude Code visibility into both projects so it can read and understand your subgraph logic while writing the HyperIndex implementation.
+This structure gives your assistant visibility into both projects so it can read and understand your subgraph logic while writing the HyperIndex implementation.
 
-## Step 3: Run Claude Code
+## Step 3: Run Your AI Programming Assistant
 
-Open Claude Code in the monorepo root directory and provide a prompt like the following (replace the repo names with your own):
+Open the monorepo root with your AI programming assistant running there (for example, run Claude Code in the monorepo root or open the monorepo in Cursor). **Put your assistant in plan mode first**, then provide a prompt like the following (replace the repo names with your own):
 
 ```xml
 <context>
