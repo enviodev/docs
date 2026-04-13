@@ -91,10 +91,6 @@ Phase 3 — Verify
 </rules>
 ```
 
-:::tip Model selection
-Anthropic models work best because HyperIndex Claude skills are designed for Claude-style workflows. If you use a non-Anthropic model, explicitly instruct it to read and use the HyperIndex Claude skills so it still follows the same migration checklist and phases.
-:::
-
 :::tip
 - After migration, run `pnpm dev` to verify the indexer runs correctly
 - Use the [Indexer Migration Validator](https://github.com/enviodev/indexer-migration-validator) to compare outputs between your subgraph and the new HyperIndex indexer
