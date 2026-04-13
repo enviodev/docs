@@ -166,6 +166,7 @@
       "supported-networks/sonic-testnet",
       "supported-networks/sophon",
       "supported-networks/sophon-testnet",
+      "supported-networks/status",
       "supported-networks/status-sepolia",
       "supported-networks/stratovm-testnet",
       "supported-networks/superseed",
