@@ -269,19 +269,6 @@ envio-cloud deployment status hyperindex b3ead3a mjyoung114 --watch-till-synced
 envio-cloud deployment info <indexer> <commit> [organisation]
 ```
 
-No authentication required.
-
-#### Deployment Endpoint
-
-Get the GraphQL query endpoint URL for a deployment:
-
-```bash
-envio-cloud deployment endpoint <indexer> <commit> [organisation]
-curl "$(envio-cloud deployment endpoint hyperindex b3ead3a mjyoung114)" -d '{"query": "{ ... }"}'
-```
-
-No authentication required.
-
 #### Promote a Deployment
 
 Promote a deployment to the production endpoint. Requires confirmation (`y/N`).
