@@ -23,6 +23,8 @@ This guide helps you identify and resolve common issues you might encounter when
   - [RPC-Related Issues](#rpc-related-issues)
 - [Debugging a Stuck Indexer](#debugging-a-stuck-indexer)
   - [Indexer Not Making Progress](#indexer-not-making-progress)
+- [Rate Limiting on Hosted Service](#rate-limiting-on-hosted-service)
+  - [HTTP 429 Errors](#http-429-errors-when-querying-your-endpoint)
 - [Infrastructure Conflicts](#infrastructure-conflicts)
   - [Local Postgres Conflicts](#postgres-running-locally)
 
@@ -205,6 +207,31 @@ If the logs don't reveal an obvious error, work through the common causes below:
 - Check the deployment logs in the [Envio Cloud dashboard](https://envio.dev/app) for error details.
 - If the deployment is unrecoverable, you can delete it and redeploy from the dashboard.
 - Consider running the same configuration locally first to reproduce and debug the issue before redeploying.
+
+## Rate Limiting on Hosted Service
+
+### HTTP 429 errors when querying your endpoint
+
+**Problem:** You receive `429 Too Many Requests` responses when querying your hosted GraphQL endpoint, or your queries are being throttled.
+
+**Cause:** Envio Cloud applies rate limits to GraphQL query endpoints based on your plan tier. This protects shared infrastructure and ensures fair usage across all deployments.
+
+**What to check:**
+
+1. **Confirm it's a query rate limit (not an RPC issue)**
+   - Rate limiting applies to your _GraphQL query endpoint_, not to the indexer's data ingestion. If your indexer is slow to sync, that's a different issue — see [Debugging a Stuck Indexer](#debugging-a-stuck-indexer).
+
+2. **Check your plan's limits**
+   - Review your current plan in the [Envio Cloud dashboard](https://envio.dev/app) under your deployment settings. Higher-tier plans include higher query rate limits. See [Billing & Plans](../Hosted_Service/hosted-service-billing.mdx) for details.
+
+3. **Reduce query frequency from your application**
+   - If your frontend or backend polls the endpoint frequently, consider adding caching, reducing poll intervals, or using [WebSocket subscriptions](../Advanced/websockets.md) for real-time updates instead of polling.
+
+4. **Check for unexpected traffic**
+   - Ensure your endpoint URL hasn't been shared publicly or isn't being hit by an unintended client. You can restrict access — see the [Hosted Service features](../Hosted_Service/hosted-service-features.md) for endpoint security options.
+
+5. **Upgrade your plan**
+   - If you consistently hit rate limits, consider upgrading to a higher tier for increased query throughput.
 
 ## Infrastructure Conflicts
 
