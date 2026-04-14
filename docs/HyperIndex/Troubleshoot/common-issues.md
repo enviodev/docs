@@ -247,7 +247,7 @@ If the logs don't reveal an obvious error, work through the common causes below:
 
 When running locally with `pnpm dev`, the default Hasura admin secret is `testing`. Access the console at `http://localhost:8080` and enter `testing` when prompted.
 
-You can customize this by setting the `ENVIO_PG_PASSWORD` environment variable before starting your indexer.
+You can customize this by setting the `HASURA_GRAPHQL_ADMIN_SECRET` environment variable before starting your indexer.
 
 **Envio Cloud (hosted):**
 
