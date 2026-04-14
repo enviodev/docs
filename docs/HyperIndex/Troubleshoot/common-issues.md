@@ -29,6 +29,8 @@ This guide helps you identify and resolve common issues you might encounter when
   - [Cannot Log In to the Hasura Console](#cannot-log-in-to-the-hasura-console)
 - [Infrastructure Conflicts](#infrastructure-conflicts)
   - [Local Postgres Conflicts](#postgres-running-locally)
+- [Missing Events](#missing-events)
+  - [Events Not Appearing in Indexed Data](#events-not-appearing-in-indexed-data)
 
 ## Setup and Configuration Issues
 
@@ -285,5 +287,33 @@ You can further customize your Postgres connection with these additional environ
 - `ENVIO_PG_PASSWORD`: Set a custom password
 - `ENVIO_PG_USER`: Set a custom username
 - `ENVIO_PG_DATABASE`: Set a custom database name
+
+## Missing Events
+
+### Events not appearing in indexed data
+
+**Problem:** Some expected events are missing from your indexed data, or event counts don't match what you see on-chain.
+
+**Common causes:**
+
+1. **Incorrect `start_block`**
+   - If your `start_block` is set after the block where the event was emitted, it will be missed. Verify that the start block in your `config.yaml` is at or before the contract's deployment block.
+
+2. **ABI mismatch**
+   - If the ABI in your config doesn't match the contract's actual event signature, events won't be decoded. Double-check that your ABI file is up to date and matches the deployed contract.
+
+3. **Missing contract address**
+   - For multi-address or dynamic contract setups, ensure all relevant addresses are registered. If using [dynamic contracts](../Advanced/dynamic-contracts.md), verify that the `contractRegister` handler is correctly adding addresses.
+
+4. **RPC provider issues**
+   - Some RPC providers may return incomplete log data, especially for older blocks. Try switching to a different RPC endpoint or use [HyperSync](../Advanced/hypersync.md) for more reliable data retrieval.
+
+5. **Reorg handling**
+   - During chain reorganizations, events from orphaned blocks may temporarily appear and then be removed. If `rollback_on_reorg` is enabled (default), the indexer will handle this automatically. See [Reorg Support](../Advanced/reorgs-support.md).
+
+**How to verify:**
+- Compare your indexed event count against a block explorer (e.g., Etherscan's event logs for the contract)
+- Check the indexer logs for any skipped blocks or error messages
+- Test with a small block range locally to isolate the issue
 
 ---
