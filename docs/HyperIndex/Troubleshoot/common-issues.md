@@ -21,6 +21,8 @@ This guide helps you identify and resolve common issues you might encounter when
   - [Indexer Start Block Issues](#indexer-not-starting-at-the-specified-start-block)
   - [Tables Not Registered in Hasura](#tables-for-entities-are-not-registered-on-hasura)
   - [RPC-Related Issues](#rpc-related-issues)
+- [Debugging a Stuck Indexer](#debugging-a-stuck-indexer)
+  - [Indexer Not Making Progress](#indexer-not-making-progress)
 - [Infrastructure Conflicts](#infrastructure-conflicts)
   - [Local Postgres Conflicts](#postgres-running-locally)
 
@@ -168,6 +170,41 @@ network:
   # Replace with a more reliable RPC
   rpc_url: "https://mainnet.infura.io/v3/YOUR-API-KEY"
 ```
+
+## Debugging a Stuck Indexer
+
+### Indexer not making progress
+
+**Problem:** Your indexer appears frozen — the block counter stops advancing, or sync has been running far longer than expected with no visible progress.
+
+**First step — check the logs:**
+
+The most important thing to do is check your indexer logs for errors or warnings. Logs will almost always point you to the root cause.
+
+- **Locally:** Check the terminal output from `pnpm dev` for error messages or stack traces.
+- **Envio Cloud:** Go to your deployment in the [Envio Cloud dashboard](https://envio.dev/app) and open the **Logs** tab.
+
+If the logs don't reveal an obvious error, work through the common causes below:
+
+1. **RPC rate limiting or connectivity issues**
+   - If using RPC sync, your provider may be throttling requests. Check your RPC provider's dashboard for 429 errors or usage spikes.
+   - Try switching to a different RPC endpoint or using [HyperSync](../Advanced/hypersync.md) if your network is supported.
+
+2. **Large blocks or high event density**
+   - Some blocks contain an unusually large number of events (e.g., airdrop blocks, protocol launches). The indexer may appear stuck while processing them.
+   - Check the logs for the current block number — if it's advancing slowly rather than frozen, the indexer is likely processing a dense block range.
+
+3. **Handler errors causing silent failures**
+   - An unhandled error in your event handler can cause the indexer to stall. Look for error messages or stack traces in the logs that point to a specific handler or event.
+
+4. **Memory pressure**
+   - Processing very large datasets or having expensive handler logic (e.g., many `eth_call` requests) can cause memory issues. See the [performance optimization guide](../Advanced/performance/index.md) for tuning options.
+
+**If running on Envio Cloud:**
+
+- Check the deployment logs in the [Envio Cloud dashboard](https://envio.dev/app) for error details.
+- If the deployment is unrecoverable, you can delete it and redeploy from the dashboard.
+- Consider running the same configuration locally first to reproduce and debug the issue before redeploying.
 
 ## Infrastructure Conflicts
 
