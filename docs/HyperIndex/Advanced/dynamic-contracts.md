@@ -115,6 +115,20 @@ NftFactory.SimpleNftCreated.contractRegister(async ({ event, context }) => {
 });
 ```
 
+## Coming from TheGraph?
+
+If you're migrating from a subgraph that uses **data source templates** (`DataSource.create()`), the equivalent in Envio is the `contractRegister` handler.
+
+| TheGraph | Envio (HyperIndex) |
+|---|---|
+| Define a template in `subgraph.yaml` | Define the contract in `config.yaml` without an `address` |
+| Call `MyTemplate.create(address)` in a mapping | Call `context.addMyContract(address)` in a `contractRegister` handler |
+| Templates are triggered from other mappings | `contractRegister` runs before the event handler, on any event |
+
+The key difference is that Envio's `contractRegister` is more flexible — you can add conditional logic, perform async calls, and register contracts from any event, not just from a dedicated factory mapping.
+
+For a step-by-step migration guide, see [Migrating from a Subgraph](/docs/HyperIndex/migration-guide).
+
 ## When to Use Dynamic Contract Registration
 
 Use dynamic contract registration when:
