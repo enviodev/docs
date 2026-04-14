@@ -312,7 +312,7 @@ You can further customize your Postgres connection with these additional environ
    - During chain reorganizations, events from orphaned blocks may temporarily appear and then be removed. If `rollback_on_reorg` is enabled (default), the indexer will handle this automatically. See [Reorg Support](../Advanced/reorgs-support.md).
 
 **How to verify:**
-- Compare your indexed event count against a block explorer (e.g., Etherscan's event logs for the contract)
+
 - Check the indexer logs for any skipped blocks or error messages
 - Test with a small block range locally to isolate the issue
 

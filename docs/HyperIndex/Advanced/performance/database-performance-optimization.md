@@ -243,6 +243,34 @@ query getUpdatedTransfers($lastFetched: BigInt!) {
 }
 ```
 
+## Diagnosing Slow Queries
+
+If your GraphQL queries are returning slowly, follow this workflow:
+
+### 1. Check if you have indices on filtered fields
+
+The most common cause of slow queries is missing indices. If you're filtering or sorting by a field that doesn't have `@index`, add it:
+
+```graphql
+# Before - slow queries on userAddress
+type Transaction {
+  id: ID!
+  userAddress: String!
+}
+
+# After - fast queries on userAddress
+type Transaction {
+  id: ID!
+  userAddress: String! @index
+}
+```
+
+After adding indices, you'll need to redeploy (on Envio Cloud) or restart locally for the schema changes to take effect.
+
+### 2. Reduce result set size
+
+Large unbounded queries are a common cause of slow responses. Always use `limit` and check that you're not requesting more data than needed.
+
 ## Summary
 
 Proper database indexing is essential for maintaining performance as your indexed data grows. By strategically placing indices on frequently queried fields and field combinations, you can ensure fast query responses even with large datasets.

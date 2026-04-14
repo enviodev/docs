@@ -27,9 +27,11 @@ Admin-secret / password for local Hasura is `testing`.
 When running `pnpm dev`, HyperIndex watches for changes to your **event handler** files. When you save a handler file, the indexer will automatically re-process events using your updated logic without needing to restart manually.
 
 **What triggers a hot reload:**
+
 - Changes to event handler files (e.g., `src/EventHandlers.ts`)
 
 **What requires a full restart:**
+
 - Changes to `config.yaml` (adding contracts, events, or networks)
 - Changes to `schema.graphql` (adding or modifying entities)
 - Changes to ABIs
@@ -70,10 +72,6 @@ During development, temporarily set `start_block` in your `config.yaml` to a rec
 
 Remember to set it back to the correct start block before deploying to production.
 
-### Preserve state between restarts
-
-If you only changed handler logic (not schema or config), the hot reload will apply your changes without losing indexed state. Avoid running `pnpm envio stop` unless you need a clean slate.
-
 ### Force a clean re-index
 
 If you need to re-index from scratch (e.g., after schema changes or to clear corrupted state):
@@ -93,5 +91,4 @@ pnpm envio stop
 
 ## What next?
 
-Once you have successfully run the indexer locally, you can deploy the indexer onto Envio's [Envio Cloud](./hosted-service).
----
+## Once you have successfully run the indexer locally, you can deploy the indexer onto Envio's [Envio Cloud](./hosted-service).
