@@ -7,6 +7,8 @@ image: /blog-assets/dev-update-march-2026.png
 tags: ["product-updates"]
 ---
 
+Author: [Jords](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
+
 <img src="/blog-assets/dev-update-march-2026.png" alt="Cover Image Envio Developer Update March 2026" width="100%"/>
 
 <!--truncate-->
@@ -240,8 +242,3 @@ Stay tuned for more monthly updates by subscribing to our newsletter, following 
 [Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
 
 [Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
-
----
-
-Author: [Jords](https://x.com/j_o_r_d_y_s)  
-Head of Marketing & Operations

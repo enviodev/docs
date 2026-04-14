@@ -7,6 +7,8 @@ description: "Learn how to track Polymarket trades in real time using Envio's Hy
 image: /blog-assets/polymarket-trades-hypersync.png
 ---
 
+Author: [Nikhil Bhintade](https://x.com/nikbhintade), Growth Engineer
+
 <img src="/blog-assets/polymarket-trades-hypersync.png" alt="Cover Image: Track Polymarket Trades in Real-Time" width="100%"/>
 
 <!--truncate-->
@@ -405,8 +407,3 @@ Stay tuned for more monthly updates by subscribing to our newsletter, following 
 [Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
 
 [Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
-
-—
-
-Author: [Nikhil](https://x.com/nikbhintade)  
-Growth Engineer at Envio
