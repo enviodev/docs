@@ -304,6 +304,27 @@ This is an advanced configuration option. When using a custom output directory, 
 
 ---
 
+## Performance Tuning
+
+Several configuration options affect indexing performance and resource usage. Here's a summary of the key levers:
+
+| Option | Effect | When to use |
+|---|---|---|
+| `preload_handlers: true` | Batches and pre-fetches data for handlers, significantly speeding up processing | Recommended for most indexers. See [Preload Optimization](/docs/HyperIndex/preload-optimization) |
+| `unordered_multichain_mode: true` | Processes chains in parallel without cross-chain ordering | When you don't need strict cross-chain event ordering |
+| `rollback_on_reorg: false` | Disables reorg handling, reducing overhead | Only if your use case can tolerate occasional stale data during reorgs |
+| Field selection (per event) | Reduces data fetched per event by selecting only needed fields | When you don't need all block/transaction fields |
+
+### Memory and Resource Considerations
+
+- **RPC rate limits**: If using RPC sync, your provider's rate limits will cap throughput. Use [HyperSync](../Advanced/hypersync.md) where supported for significantly faster data retrieval.
+- **Handler complexity**: Expensive operations in handlers (e.g., many `eth_call` via the [Effect API](../Advanced/effect-api.md)) slow down processing. Use caching and batching to mitigate.
+- **Database size**: Large entity tables slow down both writes and queries. Add [database indices](../Advanced/performance/database-performance-optimization.md) for frequently queried fields.
+
+For detailed performance optimization strategies, see the [Performance guide](../Advanced/performance/index.md).
+
+---
+
 ## Full config file example
 
 This example indexes events from multiple contracts across multiple networks.
