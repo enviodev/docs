@@ -30,7 +30,7 @@ npx envio-cloud <command>
 
 ## Shell Completion
 
-The `envio-cloud` CLI is ships with shell completion scripts for `bash`, `zsh`, `fish`, and `powershell`. Completion includes dynamic suggestions for **indexer names** and **commit hashes**, so you can tab-complete them directly from the terminal.
+The `envio-cloud` CLI ships with shell completion scripts for `bash`, `zsh`, `fish`, and `powershell`. Completion includes dynamic suggestions for **indexer names** and **commit hashes**, so you can tab-complete them directly from the terminal.
 
 Run the one-liner for your shell to install completions:
 
