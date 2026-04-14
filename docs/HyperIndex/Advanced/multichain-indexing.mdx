@@ -181,11 +181,11 @@ Implement robust error handling for network-specific issues. A failure on one ch
 To add a new chain to a running indexer:
 
 1. Add the new network entry to your `config.yaml` with the appropriate `start_block` and contract addresses
-2. Push the updated code to your deployment branch (for Envio Cloud) or restart locally with `pnpm dev`
+2. Push the updated code to your deployment branch (for Envio Cloud) or restart locally with `pnpm envio start -r`
 
 On **Envio Cloud**, this creates a new deployment that re-indexes all chains (including the new one). Your previous deployment continues serving queries with zero downtime until the new deployment is fully synced. See the [deployment guide](../Hosted_Service/hosted-service-deployment.md#updating-your-deployment) for details.
 
-**Locally**, adding a new chain requires a restart. If you want to avoid re-indexing existing chains from scratch, consider using a recent `start_block` for the new chain during development.
+**Locally**, adding a new chain requires a restart and will re-index all chains from their respective start blocks.
 
 ## Troubleshooting Common Issues
 

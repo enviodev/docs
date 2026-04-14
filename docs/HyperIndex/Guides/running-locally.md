@@ -36,11 +36,10 @@ When running `pnpm dev`, HyperIndex watches for changes to your **event handler*
 - Changes to `schema.graphql` (adding or modifying entities)
 - Changes to ABIs
 
-For config or schema changes, stop the indexer and restart:
+For config or schema changes, restart the indexer:
 
 ```bash
-pnpm envio stop
-pnpm dev
+pnpm envio start -r
 ```
 
 :::tip
@@ -77,8 +76,7 @@ Remember to set it back to the correct start block before deploying to productio
 If you need to re-index from scratch (e.g., after schema changes or to clear corrupted state):
 
 ```bash
-pnpm envio stop  # Removes Docker containers and database
-pnpm dev          # Fresh start from start_block
+pnpm envio start -r  # Restarts and re-indexes from start_block
 ```
 
 ## Stopping the Indexer
