@@ -25,6 +25,8 @@ This guide helps you identify and resolve common issues you might encounter when
   - [Indexer Not Making Progress](#indexer-not-making-progress)
 - [Rate Limiting on Hosted Service](#rate-limiting-on-hosted-service)
   - [HTTP 429 Errors](#http-429-errors-when-querying-your-endpoint)
+- [Hasura Authentication](#hasura-authentication)
+  - [Cannot Log In to the Hasura Console](#cannot-log-in-to-the-hasura-console)
 - [Infrastructure Conflicts](#infrastructure-conflicts)
   - [Local Postgres Conflicts](#postgres-running-locally)
 
@@ -232,6 +234,30 @@ If the logs don't reveal an obvious error, work through the common causes below:
 
 5. **Upgrade your plan**
    - If you consistently hit rate limits, consider upgrading to a higher tier for increased query throughput.
+
+## Hasura Authentication
+
+### Cannot log in to the Hasura console
+
+**Problem:** You're prompted for an admin secret or password when accessing the Hasura console, and don't know what it is.
+
+**Local development:**
+
+When running locally with `pnpm dev`, the default Hasura admin secret is `testing`. Access the console at `http://localhost:8080` and enter `testing` when prompted.
+
+You can customize this by setting the `ENVIO_PG_PASSWORD` environment variable before starting your indexer.
+
+**Envio Cloud (hosted):**
+
+On Envio Cloud, you **do not need the Hasura admin secret** to query your data. Your deployed indexer exposes a public GraphQL endpoint that you can query directly without authentication:
+
+```
+https://indexer.dev.hyperindex.xyz/<your-deployment-id>/v1/graphql
+```
+
+The Hasura console UI is not exposed on hosted deployments. To explore your data, use the GraphQL playground available in the [Envio Cloud dashboard](https://envio.dev/app), or query the endpoint directly from your application or tools like Postman.
+
+If you need to restrict access to your endpoint, see the [Hosted Service features](../Hosted_Service/hosted-service-features.md) for security options.
 
 ## Infrastructure Conflicts
 
