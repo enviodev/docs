@@ -21,8 +21,16 @@ This guide helps you identify and resolve common issues you might encounter when
   - [Indexer Start Block Issues](#indexer-not-starting-at-the-specified-start-block)
   - [Tables Not Registered in Hasura](#tables-for-entities-are-not-registered-on-hasura)
   - [RPC-Related Issues](#rpc-related-issues)
+- [Debugging a Stuck Indexer](#debugging-a-stuck-indexer)
+  - [Indexer Not Making Progress](#indexer-not-making-progress)
+- [Rate Limiting on Hosted Service](#rate-limiting-on-hosted-service)
+  - [HTTP 429 Errors](#http-429-errors-when-querying-your-endpoint)
+- [Hasura Authentication](#hasura-authentication)
+  - [Cannot Log In to the Hasura Console](#cannot-log-in-to-the-hasura-console)
 - [Infrastructure Conflicts](#infrastructure-conflicts)
   - [Local Postgres Conflicts](#postgres-running-locally)
+- [Missing Events](#missing-events)
+  - [Events Not Appearing in Indexed Data](#events-not-appearing-in-indexed-data)
 
 ## Setup and Configuration Issues
 
@@ -169,6 +177,90 @@ network:
   rpc_url: "https://mainnet.infura.io/v3/YOUR-API-KEY"
 ```
 
+## Debugging a Stuck Indexer
+
+### Indexer not making progress
+
+**Problem:** Your indexer appears frozen — the block counter stops advancing, or sync has been running far longer than expected with no visible progress.
+
+**First step — check the logs:**
+
+The most important thing to do is check your indexer logs for errors or warnings. Logs will almost always point you to the root cause.
+
+- **Locally:** Check the terminal output from `pnpm dev` for error messages or stack traces.
+- **Envio Cloud:** Go to your deployment in the [Envio Cloud dashboard](https://envio.dev/app) and open the **Logs** tab.
+
+If the logs don't reveal an obvious error, work through the common causes below:
+
+1. **RPC rate limiting or connectivity issues**
+   - If using RPC sync, your provider may be throttling requests. Check your RPC provider's dashboard for 429 errors or usage spikes.
+   - Try switching to a different RPC endpoint or using [HyperSync](../Advanced/hypersync.md) if your network is supported.
+
+2. **Large blocks or high event density**
+   - Some blocks contain an unusually large number of events (e.g., airdrop blocks, protocol launches). The indexer may appear stuck while processing them.
+   - Check the logs for the current block number — if it's advancing slowly rather than frozen, the indexer is likely processing a dense block range.
+
+3. **Handler errors causing silent failures**
+   - An unhandled error in your event handler can cause the indexer to stall. Look for error messages or stack traces in the logs that point to a specific handler or event.
+
+4. **Memory pressure**
+   - Processing very large datasets or having expensive handler logic (e.g., many `eth_call` requests) can cause memory issues. See the [performance optimization guide](../Advanced/performance/index.md) for tuning options.
+
+**If running on Envio Cloud:**
+
+- Check the deployment logs in the [Envio Cloud dashboard](https://envio.dev/app) for error details.
+- If the deployment is unrecoverable, you can delete it and redeploy from the dashboard.
+- Consider running the same configuration locally first to reproduce and debug the issue before redeploying.
+
+## Rate Limiting on Hosted Service
+
+### HTTP 429 errors when querying your endpoint
+
+**Problem:** You receive `429 Too Many Requests` responses when querying your hosted GraphQL endpoint, or your queries are being throttled.
+
+**Cause:** Envio Cloud applies rate limits to GraphQL query endpoints based on your plan tier. This protects shared infrastructure and ensures fair usage across all deployments.
+
+**What to check:**
+
+1. **Confirm it's a query rate limit (not an RPC issue)**
+   - Rate limiting applies to your _GraphQL query endpoint_, not to the indexer's data ingestion. If your indexer is slow to sync, that's a different issue — see [Debugging a Stuck Indexer](#debugging-a-stuck-indexer).
+
+2. **Check your plan's limits**
+   - Review your current plan in the [Envio Cloud dashboard](https://envio.dev/app) under your deployment settings. Higher-tier plans include higher query rate limits. See [Billing & Plans](../Hosted_Service/hosted-service-billing.mdx) for details.
+
+3. **Reduce query frequency from your application**
+   - If your frontend or backend polls the endpoint frequently, consider adding caching, reducing poll intervals, or using [WebSocket subscriptions](../Advanced/websockets.md) for real-time updates instead of polling.
+
+4. **Check for unexpected traffic**
+   - Ensure your endpoint URL hasn't been shared publicly or isn't being hit by an unintended client. You can restrict access — see the [Hosted Service features](../Hosted_Service/hosted-service-features.md) for endpoint security options.
+
+5. **Upgrade your plan**
+   - If you consistently hit rate limits, consider upgrading to a higher tier for increased query throughput.
+
+## Hasura Authentication
+
+### Cannot log in to the Hasura console
+
+**Problem:** You're prompted for an admin secret or password when accessing the Hasura console, and don't know what it is.
+
+**Local development:**
+
+When running locally with `pnpm dev`, the default Hasura admin secret is `testing`. Access the console at `http://localhost:8080` and enter `testing` when prompted.
+
+You can customize this by setting the `HASURA_GRAPHQL_ADMIN_SECRET` environment variable before starting your indexer.
+
+**Envio Cloud (hosted):**
+
+On Envio Cloud, you **do not need the Hasura admin secret** to query your data. Your deployed indexer exposes a public GraphQL endpoint that you can query directly without authentication:
+
+```
+https://indexer.dev.hyperindex.xyz/<your-deployment-id>/v1/graphql
+```
+
+The Hasura console UI is not exposed on hosted deployments. To explore your data, use the GraphQL playground available in the [Envio Cloud dashboard](https://envio.dev/app), or query the endpoint directly from your application or tools like Postman.
+
+If you need to restrict access to your endpoint, see the [Hosted Service features](../Hosted_Service/hosted-service-features.md) for security options.
+
 ## Infrastructure Conflicts
 
 ### Postgres running locally
@@ -195,5 +287,33 @@ You can further customize your Postgres connection with these additional environ
 - `ENVIO_PG_PASSWORD`: Set a custom password
 - `ENVIO_PG_USER`: Set a custom username
 - `ENVIO_PG_DATABASE`: Set a custom database name
+
+## Missing Events
+
+### Events not appearing in indexed data
+
+**Problem:** Some expected events are missing from your indexed data, or event counts don't match what you see on-chain.
+
+**Common causes:**
+
+1. **Incorrect `start_block`**
+   - If your `start_block` is set after the block where the event was emitted, it will be missed. Verify that the start block in your `config.yaml` is at or before the contract's deployment block.
+
+2. **ABI mismatch**
+   - If the ABI in your config doesn't match the contract's actual event signature, events won't be decoded. Double-check that your ABI file is up to date and matches the deployed contract.
+
+3. **Missing contract address**
+   - For multi-address or dynamic contract setups, ensure all relevant addresses are registered. If using [dynamic contracts](../Advanced/dynamic-contracts.md), verify that the `contractRegister` handler is correctly adding addresses.
+
+4. **RPC provider issues**
+   - Some RPC providers may return incomplete log data, especially for older blocks. Try switching to a different RPC endpoint or use [HyperSync](../Advanced/hypersync.md) for more reliable data retrieval.
+
+5. **Reorg handling**
+   - During chain reorganizations, events from orphaned blocks may temporarily appear and then be removed. If `rollback_on_reorg` is enabled (default), the indexer will handle this automatically. See [Reorg Support](../Advanced/reorgs-support.md).
+
+**How to verify:**
+
+- Check the indexer logs for any skipped blocks or error messages
+- Test with a small block range locally to isolate the issue
 
 ---

@@ -109,6 +109,43 @@ If you're working in a monorepo, ensure all your imports are contained within yo
     - Rollback to previous versions if needed
 
 
+## Updating Your Deployment
+
+After your initial deployment, you can update your indexer by pushing new commits to the deployment branch. Each push creates a new deployment version.
+
+### What happens on each push
+
+When you push to your deployment branch, Envio Cloud will:
+
+1. Build your updated indexer code
+2. Start a **new deployment** that re-indexes from the start block
+3. Keep your previous deployment running and serving queries until the new one is fully synced
+
+This means there is **no downtime** during updates — your existing deployment continues serving data while the new one catches up.
+
+### When re-indexing is required
+
+A full re-index from the start block happens on every new deployment. This includes changes to:
+
+- Event handler logic
+- Schema (`schema.graphql`)
+- Configuration (`config.yaml`)
+- ABIs or contract addresses
+
+:::tip
+Use the [Effects API cache](../Advanced/effect-api.md#cache-on-envio-cloud) to speed up re-indexing by caching expensive external calls (like `eth_call` results) across deployments. This is available on paid plans.
+:::
+
+### Adding a new chain to your indexer
+
+To add a new chain, update your `config.yaml` with the new network configuration and push to the deployment branch. The new deployment will index all configured chains, including the new one.
+
+Your previous deployment continues serving data for the existing chains while the new deployment syncs.
+
+### Rolling back to a previous version
+
+If a new deployment introduces issues, you can switch back to a previous version from the Envio Cloud dashboard. Navigate to your indexer and select the version you want to activate.
+
 ## Monitoring
 
 Once your indexer is deployed, you can monitor its health, performance, and progress using several built-in tools including the dashboard, logs, and alerts.
