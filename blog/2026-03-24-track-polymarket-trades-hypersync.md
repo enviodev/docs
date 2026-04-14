@@ -6,6 +6,8 @@ description: "Learn how to track Polymarket trades in real time using Envio's Hy
 image: /blog-assets/polymarket-trades-hypersync.png
 ---
 
+Author: [Nikhil Bhintade](https://x.com/nikbhintade), Growth Engineer
+
 <img src="/blog-assets/polymarket-trades-hypersync.png" alt="Cover Image: Track Polymarket Trades in Real-Time" width="100%"/>
 
 Since the rise of prediction markets like [Polymarket](https://polymarket.com) and [Kalshi](https://kalshi.com), many people have been tracking activity on them to get a sense of where the money is going. If we try to track every trade on these prediction markets, you will see many people betting like $10 here, $15 there. If you want a stronger signal, then you should track trades with higher amounts, since those traders have more conviction in the outcome they are betting on.
@@ -402,8 +404,3 @@ Stay tuned for more monthly updates by subscribing to our newsletter, following 
 [Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
 
 [Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
-
-—
-
-Author: [Nikhil](https://x.com/nikbhintade)  
-Growth Engineer at Envio
