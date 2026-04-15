@@ -36,7 +36,7 @@ Run the one-liner for your shell to install completions:
 
 | Shell | One-liner |
 |-------|-----------|
-| `zsh` | `envio-cloud completion zsh > "${fpath[1]}/_envio-cloud"` |
+| `zsh` | `echo 'source <(envio-cloud completion zsh)' >> ~/.zshrc` |
 | `bash` | `envio-cloud completion bash > ~/.local/share/bash-completion/completions/envio-cloud` |
 | `fish` | `envio-cloud completion fish > ~/.config/fish/completions/envio-cloud.fish` |
 | `powershell` | `envio-cloud completion powershell >> $PROFILE` |
