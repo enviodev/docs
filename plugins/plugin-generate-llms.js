@@ -74,12 +74,16 @@ function GenerateLLMSPlugin(context, options) {
 
             // 1. collect docs metadata
             for (const plugin of plugins) {
-                if (
-                    Array.isArray(plugin) &&
-                    plugin[0] === "@docusaurus/plugin-content-docs"
-                ) {
+                const pluginName = Array.isArray(plugin) ? plugin[0] : null;
+                const isDocsPlugin =
+                    typeof pluginName === "string" &&
+                    (pluginName === "@docusaurus/plugin-content-docs" ||
+                        pluginName.includes("plugin-content-docs"));
+
+                if (isDocsPlugin) {
                     const config = plugin[1];
-                    const docsPath = path.resolve(config.path);
+                    // Resolve relative to siteDir so it works regardless of CWD
+                    const docsPath = path.resolve(context.siteDir, config.path);
                     const routeBasePath = config.routeBasePath || "";
 
                     const allFiles = glob.sync("**/*.{md,mdx}", {
@@ -106,7 +110,7 @@ function GenerateLLMSPlugin(context, options) {
                         )}`;
 
                         collectedDocs.push({
-                            filePath: path.join(config.path, file),
+                            filePath: fullPath, // absolute path, safe across CWD changes
                             title,
                             description,
                             pageUrl,
