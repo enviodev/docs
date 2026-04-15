@@ -28,6 +28,21 @@ Or run directly without installation:
 npx envio-cloud <command>
 ```
 
+## Shell Completion
+
+The `envio-cloud` CLI ships with shell completion scripts for `bash`, `zsh`, `fish`, and `powershell`. Completion includes dynamic suggestions for **indexer names** and **commit hashes**, so you can tab-complete them directly from the terminal.
+
+Run the one-liner for your shell to install completions:
+
+| Shell | One-liner |
+|-------|-----------|
+| `zsh` | `echo 'source <(envio-cloud completion zsh)' >> ~/.zshrc` |
+| `bash` | `envio-cloud completion bash > ~/.local/share/bash-completion/completions/envio-cloud` |
+| `fish` | `envio-cloud completion fish > ~/.config/fish/completions/envio-cloud.fish` |
+| `powershell` | `envio-cloud completion powershell >> $PROFILE` |
+
+Restart your shell (or `source` your profile) for the completions to take effect. Run `envio-cloud completion --help` for further options.
+
 ## Authentication
 
 ### Browser Login
