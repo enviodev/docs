@@ -408,6 +408,7 @@ const config = {
         ],
       },
     ],
+    require.resolve("./plugins/plugin-blog-jsonld"),
     [
       require.resolve("./plugins/plugin-generate-llms"),
       {
