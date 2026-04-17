@@ -1,0 +1,29 @@
+.authorCol {
+  max-width: inherit !important;
+  flex-grow: 1 !important;
+}
+
+.imageOnlyAuthorRow {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.imageOnlyAuthorCol {
+  margin-left: 0.3rem;
+  margin-right: 0.3rem;
+}
+
+.authorLabel {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #737373;
+  margin-top: 1.25rem;
+  margin-bottom: 0;
+}
+
+[data-theme='light'] .authorLabel {
+  color: #525252;
+}

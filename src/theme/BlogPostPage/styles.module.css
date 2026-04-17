@@ -1,0 +1,27 @@
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 6px 0;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #525252;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  font-family: inherit;
+}
+
+.backButton:hover {
+  color: #000000;
+}
+
+[data-theme='dark'] .backButton {
+  color: #a3a3a3;
+}
+
+[data-theme='dark'] .backButton:hover {
+  color: #ffffff;
+}

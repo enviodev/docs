@@ -2,8 +2,8 @@ import React from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import clsx from 'clsx';
-import {useHistory, useLocation} from '@docusaurus/router';
-import styles from './styles.module.css';
+import {useHistory} from '@docusaurus/router';
+import styles from '../BlogListPage/styles.module.css';
 
 const FILTERS = [
   { label: 'All', value: 'all' },
@@ -35,33 +35,6 @@ function getFirstTagKey(content) {
   return null;
 }
 
-function FeaturedCard({ content }) {
-  const { metadata, frontMatter } = content;
-  const { title, description, permalink } = metadata;
-  const image = frontMatter?.image;
-  const firstTagKey = getFirstTagKey(content);
-  const tagLabel = firstTagKey ? (TAG_LABELS[firstTagKey] ?? firstTagKey) : null;
-
-  return (
-    <Link to={permalink} className={clsx(styles.card, styles.featuredCard)}>
-      <div className={styles.featuredImage}>
-        {image ? (
-          <img src={image} alt={title} loading="lazy" />
-        ) : (
-          <div className={styles.cardImagePlaceholder} />
-        )}
-      </div>
-      <div className={styles.featuredBody}>
-        {tagLabel && <span className={styles.categoryTag}>{tagLabel}</span>}
-        <h2 className={styles.featuredTitle}>{title}</h2>
-        {description && (
-          <p className={styles.featuredDescription}>{description}</p>
-        )}
-      </div>
-    </Link>
-  );
-}
-
 function BlogCard({ content }) {
   const { metadata, frontMatter } = content;
   const { title, description, permalink } = metadata;
@@ -89,48 +62,26 @@ function BlogCard({ content }) {
   );
 }
 
-export default function BlogListPage({ items }) {
+export default function BlogTagsPostsPage({ tag, items }) {
   const history = useHistory();
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const activeFilter = params.get('tag') || 'all';
+
+  // Extract active filter value from tag permalink e.g. /blog/tag/case-studies → case-studies
+  const activeFilter = tag?.permalink
+    ? tag.permalink.replace(/^\/blog\/tag\//, '')
+    : 'all';
 
   const setFilter = (value) => {
     if (value === 'all') {
       history.push('/blog');
     } else {
-      history.push(`/blog?tag=${value}`);
+      history.push(`/blog/tag/${value}`);
     }
   };
 
-  const allFiltered =
-    activeFilter === 'all'
-      ? items
-      : items.filter(({ content }) => {
-          const rawTags = content.frontMatter?.tags;
-          if (Array.isArray(rawTags)) {
-            return rawTags.some((t) =>
-              (typeof t === 'string' ? t : t?.label) === activeFilter
-            );
-          }
-          return content.metadata?.tags?.some(
-            (tag) => tag.label === activeFilter
-          );
-        });
-
-  const featuredItem =
-    activeFilter === 'all'
-      ? allFiltered.find(({ content }) => content.frontMatter?.featured === true)
-      : null;
-
-  const regularItems = featuredItem
-    ? allFiltered.filter(({ content }) => content !== featuredItem.content)
-    : allFiltered;
-
   return (
     <Layout
-      title="Envio Blog"
-      description="News, announcements, tutorials, and developer updates from the Envio team."
+      title={`${tag?.label ?? 'Tagged'} — Envio Blog`}
+      description={`Blog posts tagged with ${tag?.label ?? 'this tag'}.`}
     >
       <div className={styles.container}>
         <h1 className={styles.pageTitle}>Envio Blog</h1>
@@ -149,21 +100,14 @@ export default function BlogListPage({ items }) {
           ))}
         </div>
 
-        {allFiltered.length === 0 ? (
+        {items.length === 0 ? (
           <p className={styles.empty}>No posts found.</p>
         ) : (
-          <>
-            {featuredItem && (
-              <div className={styles.featuredWrapper}>
-                <FeaturedCard content={featuredItem.content} />
-              </div>
-            )}
-            <div className={styles.grid}>
-              {regularItems.map(({ content }) => (
-                <BlogCard key={content.metadata.permalink} content={content} />
-              ))}
-            </div>
-          </>
+          <div className={styles.grid}>
+            {items.map(({ content }) => (
+              <BlogCard key={content.metadata.permalink} content={content} />
+            ))}
+          </div>
         )}
       </div>
     </Layout>
