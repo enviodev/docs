@@ -253,6 +253,12 @@
   margin-bottom: 8px;
   letter-spacing: 0.03em;
   text-transform: uppercase;
+  text-decoration: none !important;
+}
+
+.categoryTag:hover {
+  background: rgba(255, 130, 103, 0.25);
+  color: #ff8267;
 }
 
 .empty {

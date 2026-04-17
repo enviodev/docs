@@ -155,8 +155,6 @@
       "supported-networks/scroll-sepolia",
       "supported-networks/sei",
       "supported-networks/sei-testnet",
-      "supported-networks/sentient",
-      "supported-networks/sentient-testnet",
       "supported-networks/sepolia",
       "supported-networks/shibarium",
       "supported-networks/shimmer-evm",

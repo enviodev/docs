@@ -252,6 +252,7 @@ const config = {
           blogDescription: "News, announcements, tutorials, and developer updates from the Envio team.",
           postsPerPage: "ALL",
           blogSidebarCount: 0,
+          tagsBasePath: 'tag',
         },
 
         theme: {
@@ -394,6 +395,7 @@ const config = {
       ],
     }),
   plugins: [
+    require.resolve('./plugins/plugin-author-pages'),
     [
       "docusaurus-plugin-mcp-server",
       {
