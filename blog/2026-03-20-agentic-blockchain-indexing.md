@@ -1,21 +1,32 @@
 ---
-title: "Agentic Blockchain Indexing: How to Deploy an EVM Indexer to Envio Cloud"
+title: "Agentic Blockchain Indexing with Envio Cloud"
 sidebar_label: "Agentic Blockchain Indexing"
 slug: /agentic-blockchain-indexing-envio-hyperindex
 tags: ["ai"]
-description: "A step-by-step guide to agentic blockchain indexing with Envio HyperIndex. Learn how an AI agent can scaffold, configure, and deploy an EVM indexer to Envio Cloud in minutes using a fully CLI driven workflow."
+description: "Learn how an AI agent can scaffold, configure, and deploy an EVM indexer to Envio Cloud using the envio-cloud CLI, with no manual config required."
 image: /blog-assets/agentic-blockchain-indexing-updated.png
+last_update:
+  date: 2026-04-15
+  author: Jords
+authors: ["j_o_r_d_y_s"]
 ---
 
 <img src="/blog-assets/agentic-blockchain-indexing-updated.png" alt="Cover Image Agentic Blockchain Indexing" width="100%"/>
 
 <!--truncate-->
 
+:::note TL;DR
+- Envio HyperIndex and the `envio-cloud` CLI enable end-to-end agentic deployment of blockchain indexers with no manual config.
+- An AI agent scaffolded, configured, pushed to GitHub, and deployed a wstETH indexer on Monad Mainnet from a single prompt.
+- 400,000 events indexed in approximately 20 seconds.
+- Every step is CLI-driven and scriptable, with JSON output for downstream agent logic.
+:::
+
 Agentic development works best when an AI agent can take a single prompt and run with it, end-to-end, without handing back to a human at every step. For blockchain indexing, that's exactly what we've built at Envio.
 
 With the Envio Cloud CLI (`envio-cloud`) and HyperIndex, an agent can scaffold a production-ready indexer, configure it for any EVM-compatible chain, push it to GitHub, and deploy it to Envio Cloud, without a human ever touching a config file.
 
-**⚡ The result: 400,000 events indexed in ~20 seconds**
+**The result: 400,000 events indexed in ~20 seconds**
 
 ## What is HyperIndex?
 
@@ -35,7 +46,7 @@ With it you can:
 - Promote deployments to production (`envio-cloud deployment promote`)
 - Pull JSON output for any command (`-o json`), making it fully scriptable and agent-friendly
 
-_⭐ No dashboard required. Everything that matters is exposed through the CLI._
+_No dashboard required. Everything that matters is exposed through the CLI._
 
 ## End-to-End: Agentic deployment of a wstETH indexer on Monad
 
@@ -114,7 +125,7 @@ Once synced, the indexer is viewable in the browser at `https://envio.dev/app/{o
 Check the live deployment from this demo here:
 [https://envio.dev/app/denhampreen/wsteth-monad-indexer-demo/5d55d35](https://envio.dev/app/denhampreen/wsteth-monad-indexer-demo/5d55d35)
 
-**⚡400,000 events indexed. ~20 seconds**
+**400,000 events indexed. ~20 seconds**
 
 <img src="/blog-assets/agentic-blockchain-indexing-1.png" alt="Cover Image Agentic Blockchain Indexing" width="100%"/>
 
@@ -144,7 +155,24 @@ pnpx envio@3.0.0-alpha.18 init template -t erc20 -l typescript -d ./my-indexer -
 
 Whether you're building on Monad, Ethereum, or any other EVM compatible network, Envio enables agent driven indexing from first prompt to live deployment. The GitHub-native deployment flow means agents that can commit code can deploy indexers in minutes.
 
-MCP loading.
+Be sure to check out our [Envio Docs MCP Server](https://docs.envio.dev/blog/envio-docs-mcp-server) for AI-assisted indexer development.
+
+## Frequently Asked Questions
+
+### What is agentic blockchain indexing?
+Agentic blockchain indexing is the process of using an AI agent to scaffold, configure, and deploy a blockchain indexer without manual human intervention. With Envio HyperIndex and the envio-cloud CLI, an agent can go from a single prompt to a live production indexer in minutes.
+
+### What is the envio-cloud CLI?
+The envio-cloud CLI is the command-line interface for Envio Cloud, the managed infrastructure layer that runs HyperIndex indexers in production. It supports login, indexer registration, deployment monitoring, and promotion, all scriptable with JSON output via the `-o json` flag.
+
+### How fast is Envio HyperIndex for historical sync?
+In independent benchmarks run by Sentio, HyperIndex completed the Uniswap V2 Factory sync in 1 minute, 143x faster than The Graph. In the agentic deployment demo, 400,000 wstETH events on Monad Mainnet were indexed in approximately 20 seconds.
+
+### Which chains does Envio support for agentic indexing?
+Envio supports any EVM-compatible chain. Over 70 chains have native HyperSync coverage for maximum speed, including Ethereum, Base, Arbitrum, Optimism, Polygon, and Monad. Any EVM chain without native HyperSync support can be indexed via standard RPC.
+
+### How do I get started with agentic indexing on Envio?
+Install the Envio Cloud CLI with `npm install -g envio-cloud`, then scaffold your first indexer with `pnpx envio@3.0.0-alpha.18 init template -t erc20 -l typescript -d ./my-indexer --api-token ""`. Push to GitHub and deploy with the envio-cloud CLI.
 
 ## About Envio Cloud
 
@@ -154,7 +182,7 @@ It handles infrastructure, scaling, and monitoring, so indexers can run reliably
 
 ## Build With Envio
 
-Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data. If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.
+Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data ([Sentio benchmark, May 2025](https://github.com/enviodev/open-indexer-benchmark)). If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.
 
 Stay tuned for more updates by subscribing to our newsletter, following us on X, or hopping into our Discord.
 

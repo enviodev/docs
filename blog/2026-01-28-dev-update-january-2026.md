@@ -1,11 +1,16 @@
 ---
 title: Envio Developer Update January 2026
-Sidebar_label: Envio Developer January 2026
+sidebar_label: Envio Developer Update January 2026
 slug: /envio-developer-update-january-2026
-description: "Envio Developer Update January 2026 covers HyperIndex V3 alpha progress, including a new testing framework, Vitest support, init improvements, and recent ecosystem updates."
-image: /blog-assets/dev-update-jan-26.png
 tags: ["product-updates"]
+description: "Envio Developer Update January 2026: HyperIndex V3 alpha with a new testing framework, Vitest support, init improvements, and ecosystem updates."
+image: /blog-assets/dev-update-jan-26.png
+last_update:
+  date: 2026-04-15
+  author: Jords
+authors: ["j_o_r_d_y_s"]
 ---
+
 <img src="/blog-assets/dev-update-jan-26.png" alt="Cover Image Envio Developer Update Jan 2026" width="100%"/>
 
 <!--truncate-->
@@ -20,7 +25,7 @@ As always, these changes are incremental building blocks toward a more reliable 
 ## HyperIndex V3 (alpha): Exciting Feature Updates 
 
 
-### 🚨BIG feature alert: New Testing Framework (experimental)
+### BIG feature alert: New Testing Framework (experimental)
 
 V3 supports testing handler logic using real blockchain data, programmatic debugging, & testing block handlers together with event handlers.
 
@@ -165,16 +170,16 @@ This is just the beginning for V3. Many of these features are early building blo
 
 For a deeper dive into everything included so far, be sure to check out the full release notes. More updates coming soon.
 
-👉 See full [release notes](https://github.com/enviodev/hyperindex/releases)
+ See full [release notes](https://github.com/enviodev/hyperindex/releases)
 
-👉 Star us on [GitHub](https://github.com/enviodev/hyperindex) ⭐
+ Star us on [GitHub](https://github.com/enviodev/hyperindex)
 
 
 ## Indexing Data on Injective
 
 <img src="/blog-assets/dev-update-jan-26-6.png" alt="Indexing Data on Injective" width="100%"/>
 
-Envio proudly supports developers and analysts building on [Injective](https://injective.com) by providing efficient access to real-time and historical on-chain data to help teams build robust apps on Injective.
+Envio proudly supports developers and analysts building on [Injective](https://injective.com) by providing efficient access to real-time and historical onchain data to help teams build robust apps on Injective.
 
 With Envio, teams can sync and query Injective data and define fully customizable indexing logic based on their application needs, without managing indexing infrastructure themselves.
 
@@ -191,14 +196,14 @@ The full implementation is available here:
 
 [https://github.com/enviodev/polymarket-indexer](https://github.com/enviodev/polymarket-indexer) 
 
-*<span style={{textDecoration: 'underline'}}>⚠️ Note: This example is still a work in progress and under active testing</span>*
+*<span style={{textDecoration: 'underline'}}> Note: This example is still a work in progress and under active testing</span>*
 
 
 ## Blockchain Indexer For Application Backends
 
 <img src="/blog-assets/blockchain-indexer-backends.png" alt="Blockchain Indexer asset" width="100%"/>
 
-Indexers are a core part of most application backends, sitting between the blockchain and the app. By transforming raw on-chain data into structured, queryable state, indexing removes a lot of complexity from backend logic and makes applications easier to build and scale as they grow. Envio fits into this workflow by providing a consistent indexing layer teams can use from local development through production, without changing how their backend logic is defined.
+Indexers are a core part of most application backends, sitting between the blockchain and the app. By transforming raw onchain data into structured, queryable state, indexing removes a lot of complexity from backend logic and makes applications easier to build and scale as they grow. Envio fits into this workflow by providing a consistent indexing layer teams can use from local development through production, without changing how their backend logic is defined.
 
 For more details, read the full [blog](https://docs.envio.dev/blog/blockchain-indexer-application-backends).
 
@@ -207,27 +212,27 @@ For more details, read the full [blog](https://docs.envio.dev/blog/blockchain-in
 
 <img src="/blog-assets/dev-update-jan-26-9.png" alt="Envio & Funnel" width="100%"/>
 
-[Funnel](https://funnel.markets/) is back after completing a successful backend migration to Envio, which has improved the performance and reliability of the on-chain data powering their application heading into 2026.
+[Funnel](https://funnel.markets/) is back after completing a successful backend migration to Envio, which has improved the performance and reliability of the onchain data powering their application heading into 2026.
 
-Funnel uses Envio as its indexing layer to ingest and query on-chain data used across the app, including data supporting trading views and listings built on Hyperliquid.
+Funnel uses Envio as its indexing layer to ingest and query onchain data used across the app, including data supporting trading views and listings built on Hyperliquid.
 
 The migration gives the Funnel team a more robust and maintainable data pipeline, allowing them to focus on shipping product without managing indexing infrastructure.
 
 See this post on [X](https://x.com/funnel_markets/status/2009670839940329711) for more info.
 
 
-## 🗓️ Current & Upcoming Events & Hackathons
+## Current & Upcoming Events & Hackathons
 
 * [EthDenver - Denver](https://ethdenver.com/): Feb 17th → 21st
 * [EthCC - Cannes](https://ethcc.io/): March 30th → April 2nd
 * [EthConf - New York](https://ethconf.com/): June 8th → 10th 
 
 
-## 🧑‍💻 Featured Developer: Zod
+## Featured Developer: Zod
 
 <img src="/blog-assets/dev-update-jan-26-10.png" alt="DOTM Jan 2026" width="100%"/>
 
-This month’s featured developer is Zod. They’ve been building for a few decades and working on-chain since 2019. Over the past year, they’ve been actively using tools like Cursor and exploring in-the-loop agentic development.
+This month’s featured developer is Zod. They’ve been building for a few decades and working onchain since 2019. Over the past year, they’ve been actively using tools like Cursor and exploring in-the-loop agentic development.
 
 In August 2024, Zod took over [Scale](https://scale.farm/) from [Equalizer](https://migrate.equalizer.exchange/) and began transforming it into what they describe as a MetaIndex. This concept focuses on generating revenue across DeFi, rather than limiting revenue to V2 pools, to reduce fresh emissions by earning treasury revenue through other protocols such as Aerodrome.
 
@@ -238,16 +243,16 @@ Scale continues to emit its own token and run liquidity, while integrating Manua
 Well done, Zod. Be sure to check out Scale and follow the team on [X](https://x.com/Scale_Farm) to stay up to date with their latest developments.
 
 
-## 🎧️ Playlist of the Month
+## Playlist of the Month
 
 <img src="/blog-assets/dev-update-jan-26-11.png" alt="PLOTM Jan 2026" width="100%"/>
 
-▶️ [Open Spotify](https://open.spotify.com/playlist/3LismooWdej6nDxwY9486d?si=00ab83ef26874d81)
+▶ [Open Spotify](https://open.spotify.com/playlist/3LismooWdej6nDxwY9486d?si=00ab83ef26874d81)
 
 
-## 🚢 Ship With Us
+## Build With Envio
 
-Envio is a multi-chain EVM blockchain indexer for querying real-time and historical data. If you’re working on a Web3 project and want a smoother development process, Envio’s got your back(end). Check out our docs, join the community, and let’s talk about your data needs.
+Envio is a multichain EVM blockchain indexer for querying real-time and historical data. If you’re working on a Web3 project and want a smoother development process, Envio’s got your back(end). Check out our docs, join the community, and let’s talk about your data needs.
 
 Stay tuned for more monthly updates by subscribing to our newsletter, following us on X, or hopping into our Discord for more up-to-date information.
 

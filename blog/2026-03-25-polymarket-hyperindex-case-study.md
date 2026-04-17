@@ -5,14 +5,24 @@ slug: /polymarket-hyperindex-case-study
 featured: true
 tags: ["case-studies"]
 keywords: ["case study", "Polymarket", "blockchain indexer", "HyperIndex", "The Graph migration"]
-description: "How Envio HyperIndex consolidated 8 Polymarket subgraphs into one TypeScript blockchain indexer on Polygon, syncing over 4 billion events in 6 days. Open source reference included."
+description: "Envio HyperIndex replaced 8 Polymarket subgraphs with one TypeScript indexer on Polygon, syncing 4 billion events in 6 days. Open source reference included."
 image: /blog-assets/polymarket-hyperindex-case-study.png
 authors: ["nikbhintade", "j_o_r_d_y_s"]
+last_update:
+  date: 2026-04-15
+  author: Jordyn Laurier
 ---
 
 <img src="/blog-assets/polymarket-hyperindex-case-study.png" alt="Indexing 4 Billion Polymarket Events Using Envio HyperIndex" width="100%"/>
 
 <!--truncate-->
+
+:::note TL;DR
+- Polymarket's 8 independent subgraphs on The Graph were replaced with a single Envio HyperIndex indexer written in TypeScript.
+- The unified indexer synced over 4,000,000,000 events from block 3,764,531 on Polygon Mainnet in 6 days.
+- Handler merging processes each shared contract event once, updating all relevant domains simultaneously rather than redundantly across multiple subgraphs.
+- The full indexer is open source at [github.com/enviodev/polymarket-indexer](https://github.com/enviodev/polymarket-indexer).
+:::
 
 [Polymarket](https://polymarket.com) is one of the most data-intensive protocols in Web3. Every trade, position, fee, liquidity event, and oracle resolution across its entire prediction market ecosystem lives onchain on Polygon. Querying any of it meaningfully requires a serious blockchain indexer.
 
@@ -69,14 +79,14 @@ The full handler structure:
 ```text
 src/
   handlers/
-    ConditionalTokens.ts       # Open interest + activity + PnL (merged from 4 subgraphs)
-    Exchange.ts                # Orderbook + PnL
-    NegRiskAdapter.ts          # Open interest + activity + PnL
-    FixedProductMarketMaker.ts # FPMM analytics + PnL + LP tracking
-    FPMMFactory.ts             # Dynamic contract registration
-    FeeModule.ts               # Fee refund tracking
-    UmaSportsOracle.ts         # Sports oracle
-    Wallet.ts                  # Wallet creation + USDC balances
+ConditionalTokens.ts       # Open interest + activity + PnL (merged from 4 subgraphs)
+Exchange.ts                # Orderbook + PnL
+NegRiskAdapter.ts          # Open interest + activity + PnL
+FixedProductMarketMaker.ts # FPMM analytics + PnL + LP tracking
+FPMMFactory.ts             # Dynamic contract registration
+FeeModule.ts               # Fee refund tracking
+UmaSportsOracle.ts         # Sports oracle
+Wallet.ts                  # Wallet creation + USDC balances
 ```
 
 ### Contracts Indexed
@@ -177,12 +187,12 @@ Envio supports any EVM chain. 70+ EVM chains have native HyperSync coverage for 
 
 ## Get Started
 
-The Polymarket indexer is fully open source and available as a production reference for anyone building on Polygon or migrating from The Graph.
+The Polymarket indexer is fully open source and available as a production reference for anyone building on Polygon or migrating from The Graph. For a hands-on guide to streaming Polymarket trade data in real time, see [How to Track Polymarket Trades Using Envio HyperSync](https://docs.envio.dev/blog/track-polymarket-trades-hypersync).
 
 - Repo: [https://github.com/enviodev/polymarket-indexer](https://github.com/enviodev/polymarket-indexer)
 - Live deployment: [https://envio.dev/app/moose-code/polymarket-indexer/7cad3ad](https://envio.dev/app/moose-code/polymarket-indexer/7cad3ad)
 - Envio docs: [https://docs.envio.dev/](https://docs.envio.dev/)
-- Discord: [https://discord.gg/envio](https://discord.gg/envio)
+- Discord: [https://discord.com/invite/gt7yEUZKeB](https://discord.com/invite/gt7yEUZKeB)
 - Telegram: [https://t.me/+kAIGElzPjApiMjI0](https://t.me/+kAIGElzPjApiMjI0)
 - Follow us on X: [https://x.com/envio_indexer](https://x.com/envio_indexer)
 
@@ -190,6 +200,6 @@ The Polymarket indexer is fully open source and available as a production refere
 
 Envio HyperIndex is independently benchmarked as the fastest EVM blockchain indexer available. The Polymarket indexer is one example of what's possible. If you're building onchain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, or talk to us about your data needs.
 
-[Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post)
+[Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
 
 [Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)

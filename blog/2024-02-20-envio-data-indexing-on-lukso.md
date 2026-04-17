@@ -1,56 +1,126 @@
 ---
-title: Indexing Data on LUKSO using Envio
-sidebar_label: Envio’s Blockchain Indexer Supports Developers Building on LUKSO
+title: Indexing Real-Time Data on LUKSO Using Envio
+sidebar_label: Indexing Real-Time Data on LUKSO Using Envio
 slug: /envio-data-indexing-supports-developers-building-on-lukso
-description: "Learn how Envio’s blockchain indexer helps developers on LUKSO access real-time and historical data with faster queries and deeper insights for their dApps."
+description: "Learn how Envio's blockchain indexer helps developers on LUKSO access real-time and historical onchain data with faster queries and deeper insights."
 image: /blog-assets/envio-partner-lukso.png
+last_update:
+  date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
+
 <img src="/blog-assets/envio-partner-lukso.png" alt="Envio Lukso Partnership Cover Image" width="100%"/>
 
 <!--truncate-->
 
-LUKSO is bringing blockchain technology to its next frontier and Envio is providing the speed. Envio’s HyperIndex now fully supports developers and analysts building on LUKSO with its hyper-performant query speeds, providing a robust solution to efficiently organise and query real-time and historical on-chain data for their dapps and use cases.
+:::note TL;DR
+- LUKSO developers need fast, reliable access to real-time and historical onchain data for dApps built on the EVM-compatible LUKSO network.
+- Envio HyperIndex supports LUKSO with HyperSync-powered sync speeds up to 2000x faster than standard RPC, plus a no-code contract import quickstart.
+- A single config.yaml covers all chains, giving Envio a structural advantage over The Graph and Goldsky, which require separate subgraphs or pipelines per network.
+:::
+
+Envio HyperIndex fully supports developers and analysts building on LUKSO. It provides hyper-performant query speeds and a robust solution to efficiently organize and query real-time and historical onchain data for dApps and data-driven use cases on LUKSO.
 
 ## How to index data on LUKSO using Envio
 
-[Envio](https://envio.dev/) stands out as a dev-friendly EVM-compatible blockchain indexing solution empowering developers to reliably read and process real-time and historical smart contract events through a robust [GraphQL](https://graphql.org/) API.
+[Envio](https://envio.dev/) is a dev-friendly EVM-compatible blockchain indexing solution that lets developers reliably read and process real-time and historical smart contract events through a [GraphQL](https://graphql.org/) API.
 
-Envio supports indexing on LUKSO and **any EVM-compatible blockchain**, enabling developers to:
+Envio supports indexing on LUKSO and any EVM-compatible blockchain, enabling developers to:
 
-- Flexible language support: Configure your event handling in familiar and widely supported languages, such as [JavaScript](https://www.javascript.com/), [TypeScript](https://www.typescriptlang.org/), or [ReScript](https://rescript-lang.org/).
-- Contract import: Autogenerate a basic indexer and queryable GraphQL API for a single or a set of smart contracts deployed on single or multiple EVM networks in less than 5 minutes
-- HyperSync: To ensure blazing-fast retrieval of historical on-chain data and a seamless developer experience, Envio’s HyperSync endpoint allows for 100x faster indexing than standard RPC.
-- Multi-chain indexing: Aggregate data stored across multiple networks into a single database, making it super easy to present aggregated information in your front end with a unified GraphQL API.
-- Join on-chain and off-chain data: Connect indexed blockchain data as well as ingest data from external sources to create a flexible API for rich data beyond just what is emitted simply from events on-chain.
+- **Flexible language support**: Configure your event handling in JavaScript, TypeScript, or ReScript.
+- **Contract import**: Autogenerate a basic indexer and queryable GraphQL API for a single or multiple smart contracts in less than 5 minutes.
+- **HyperSync**: Envio's proprietary data layer delivers up to 2000x faster indexing than standard RPC for historical onchain data.
+- **Multichain indexing**: Aggregate data from multiple networks into a single database with a unified GraphQL API.
+- **Join onchain and off-chain data**: Connect indexed blockchain data with external sources to create a flexible API for rich data beyond onchain events.
 
-## What Envio Supports on LUKSO?
+## What Envio supports on LUKSO
 
-Envio's HyperIndex equips LUKSO developers with a feature-rich data indexing framework that innovates beyond challenges experienced with traditional indexing solutions. Envio serves as the front door for developers, analysts and applications built on LUKSO to access, transform, and store real-time or historical data from any EVM-compatible smart contracts.
+Envio HyperIndex equips LUKSO developers with a feature-rich data indexing framework that goes beyond what traditional indexing solutions offer. Envio serves as the data access layer for developers, analysts, and applications built on LUKSO to access, transform, and store real-time or historical data from any EVM-compatible smart contracts.
 
-Envio is purpose-built for modern EVM blockchain indexing and extends its support to various EVM blockchains, including Polygon, Avalanche, Linea, Arbitrum, Base, ZkSync, and, of course, Lukso. This enables developers building on the LUKSO network to sync millions of events in minutes, instead of hours, a staggering 100x faster than standard RPC greatly improving the developer experience and performance of blockchain-based applications and use cases on LUKSO.
+Envio supports various EVM blockchains, including Polygon, Avalanche, Linea, Arbitrum, Base, ZkSync, and LUKSO. This enables developers building on LUKSO to sync millions of events in minutes instead of hours. Compared to alternatives like The Graph (which requires a separate subgraph per chain) or Goldsky (which requires separate pipelines), Envio uses a single `config.yaml` to cover all chains and exposes a single GraphQL endpoint.
 
-## Relevant Links
+### Getting started
 
-- [Envio Quickstart](https://docs.envio.dev/docs/quickstart)
+Initialize a new indexer with:
+
+```bash
+pnpx envio init
+```
+
+A minimal `config.yaml` for a LUKSO contract looks like:
+
+```yaml
+name: LuksoIndexer
+networks:
+  - id: 42
+    start_block: 0
+    contracts:
+      - name: MyContract
+        abi_file_path: ./abis/my-contract-abi.json
+        handler: ./src/EventHandlers.ts
+        events:
+          - event: Transfer
+```
+
+And a basic event handler in TypeScript:
+
+```typescript
+import { MyContract } from "generated";
+
+MyContract.Transfer.handler(async ({ event, context }) => {
+  context.Transfer.set({
+    id: event.transaction.hash,
+    from: event.params.from,
+    to: event.params.to,
+    value: event.params.value,
+  });
+});
+```
+
+## Relevant links
+
+- [Envio Quickstart](https://docs.envio.dev/docs/HyperIndex/getting-started)
 - [Envio HyperSync](https://docs.envio.dev/docs/HyperSync/overview)
 - [Contract Import](https://docs.envio.dev/docs/HyperIndex/contract-import)
-- [Envio Hosted Service](https://docs.envio.dev/docs/hosted-service)
+- [Envio Hosted Service](https://docs.envio.dev/docs/HyperIndex/hosted-service)
 - [LUKSO Docs](https://docs.lukso.tech/tools/partners/)
 
 ## About LUKSO
 
-[LUKSO](https://lukso.network/) is a Layer-1 blockchain network built using the Ethereum EVM stack and is compatible with any other EVM-based blockchain, including other platforms or protocols built on Ethereum.
+[LUKSO](https://lukso.network/) is a Layer 1 blockchain network built using the Ethereum EVM stack and is compatible with any other EVM-based blockchain, including other platforms or protocols built on Ethereum.
 
-LUKSO is dedicated to existing and coming digital lifestyles and creative use cases, by revolutionizing the way people interact with blockchain technology, unlocking opportunities for new kinds of dApps and on-chain experiences. The heart of LUKSO's innovation is the Universal Profile (UP) system, next-generation smart contract accounts designed to streamline and humanize blockchain interactions. By replacing traditional wallet structures with UPs, LUKSO is setting the stage for a more accessible and user-friendly web3 experience.
+LUKSO is dedicated to digital lifestyles and creative use cases, revolutionizing how people interact with blockchain technology. The heart of LUKSO's innovation is the Universal Profile (UP) system: next-generation smart contract accounts designed to streamline and humanize blockchain interactions.
 
 [Website](https://lukso.network/) | [X](https://twitter.com/lukso_io) | [Discord](https://discord.com/invite/lukso)
 
-## About Envio
+## Frequently asked questions
 
-[Envio](https://envio.dev) is a fast, developer-friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
+### Does Envio support LUKSO mainnet and testnet?
 
-With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
+Yes. Envio HyperIndex and HyperSync support LUKSO mainnet. You configure which network to index in your `config.yaml` using the LUKSO chain ID. Testnet support follows the same pattern.
 
-If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
+### How fast is Envio HyperSync on LUKSO compared to standard RPC?
 
-[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)
+HyperSync can deliver up to 2000x faster historical sync than standard RPC endpoints by bypassing the RPC layer entirely and using a purpose-built binary data format. This means syncing millions of events in minutes rather than hours.
+
+### Do I need to manage my own infrastructure to index LUKSO with Envio?
+
+No. Envio's hosted service manages all infrastructure on AWS with Kubernetes and Hasura. You push code to GitHub and the Envio Deployments bot handles deployment automatically. A free tier is available.
+
+### How does Envio compare to The Graph for LUKSO indexing?
+
+The Graph requires you to deploy a separate subgraph for each chain, with separate endpoints per network. Envio uses a single `config.yaml` to define all networks and exposes a single GraphQL endpoint across all of them, simplifying multichain data access significantly.
+
+### Can I run an Envio LUKSO indexer locally before deploying?
+
+Yes. Run `pnpm dev` to start the indexer locally using Docker. The same handler code runs locally and in production without any changes.
+
+## Build With Envio
+
+Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data. If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.
+
+Stay tuned for more updates by subscribing to our newsletter, following us on X, or hopping into our Discord.
+
+[Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
+
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)

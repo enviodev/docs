@@ -1,11 +1,16 @@
 ---
 title: Envio Developer Update February 2026
-Sidebar_label: Envio Developer Update February 2026
+sidebar_label: Envio Developer Update February 2026
 slug: /envio-developer-update-february-2026
-description: "Envio Developer Update February 2026: HyperIndex v3 alpha.13 with 3x faster backfills, improved RPC support, MegaETH and Sei indexing, new builder series, and Uniswap v4 alert bots."
-image: /blog-assets/dev-update-feb-26.png
 tags: ["product-updates"]
+description: "Envio Developer Update February 2026: HyperIndex v3 alpha.13, 3x faster backfills, MegaETH and Sei indexing, new builder series, and Uniswap v4 alert bots."
+image: /blog-assets/dev-update-feb-26.png
+last_update:
+  date: 2026-04-15
+  author: Jords
+authors: ["j_o_r_d_y_s"]
 ---
+
 <img src="/blog-assets/dev-update-feb-26.png" alt="Cover Image Envio Developer Update Feb 2026" width="100%"/>
 
 <!--truncate-->
@@ -15,11 +20,11 @@ February brings a couple new HyperIndex V3 alpha release along with expanded net
 We expanded our indexing support to MegaETH mainnet and Sei. This month also includes a new multi-part YouTube series on building with HyperIndex and updates to our Uniswap v4 alert bots. Let’s dive in! 
 
 
-## ⚡ New release: HyperIndex v3.0.0 - alpha.13 & alpha.14
+## New release: HyperIndex v3.0.0 - alpha.13 & alpha.14
 
 ### Alpha.14
 
-### 🚨 Breaking: New getWhere API
+###  Breaking: New getWhere API
 
 We updated our getWhere API to enable support for multiple filters at a time in future HyperIndex versions. Instead of chaining, it now uses a single function call with filters that match GraphQL style for familiarity.
 
@@ -27,20 +32,20 @@ We updated our getWhere API to enable support for multiple filters at a time in 
 Old: context.Entity.getWhere.fieldName.eq(value)
 New: context.Entity.getWhere({ fieldName: { _eq: value } })
 ```
-### 🔄 Breaking: Removed Ordered Multichain Mode Support
+### Breaking: Removed Ordered Multichain Mode Support
 
 Ordered Multichain Mode forced events across all processed chains into global onchain order, causing significant latency and allowing one bad chain to freeze the entire indexing process.
 
-Events are still processed in on-chain order per chain.
+Events are still processed in onchain order per chain.
 For cross-chain interactions, create a partial entity on one chain and finalize it when the related event arrives on another chain. This provides lower latency and a more reliable system.
 
-### 🤖 Big Cursor/Claude Skills Update
+###  Big Cursor/Claude Skills Update
 
 We updated `envio init` to create projects with multiple skills to support agentic driven development.
 
 The LLM landscape changes quickly, so we welcome feedback to improve the skills and the development experience with them.
 
-### ⛓️ Chain Info for Test Indexer
+###  Chain Info for Test Indexer
 
 ```
 const indexer = createTestIndexer();
@@ -65,7 +70,7 @@ Historical backfills are significantly faster, query flexibility has improved wi
 
 
 
-### 🏎️ 3x Historical Backfill Performance
+### 3x Historical Backfill Performance
 
 We introduced chunking logic to request events across multiple ranges at once, fixed overfetching for contracts with much later `start_block` values, and sped up dynamic contract registration.
 
@@ -74,7 +79,7 @@ If data fetching was your bottleneck, this release helps.
 **<span style={{ textDecoration: 'underline' }}>25k events per second is now standard</span>**
 
 
-### 📉 Support for DESC Indices
+### Support for DESC Indices
 
 You can now define indices with descending order to improve query performance: 
 
@@ -90,7 +95,7 @@ type PoolDayData
 
 
 
-### ⛽ Improved RPC Source Support
+### Improved RPC Source Support
 
 Added support for receipt-only fields:
 
@@ -103,11 +108,11 @@ Added support for receipt-only fields:
 When one of these fields is added in `field_selection`, HyperIndex will automatically perform an additional `eth_getTransactionReceipt` request.
 
 
-### 🔌 WebSocket Support for RPC (Experimental)
+### WebSocket Support for RPC (Experimental)
 
 Experimental WebSocket support for RPC sources to improve head latency.
 
-If you run into issues, please open a GitHub issue. 🙏
+If you run into issues, please open a GitHub issue. 
 
 
 ```
@@ -121,7 +126,7 @@ chains:
 
 
 
-### 🚨Breaking: rpc_config Removed
+### Breaking: rpc_config Removed
 
 `rpc_config` has been removed in favour of **<code>rpc</code>**.
 
@@ -153,9 +158,9 @@ We recommend migrating to v3.0.0 alpha. 13 to take advantage of the performance 
 
 For information, be sure to check out the full release notes. More updates coming soon.
 
-👉 See full [release notes](https://github.com/enviodev/hyperindex/releases)
+ See full [release notes](https://github.com/enviodev/hyperindex/releases)
 
-👉 Star us on [GitHub](https://github.com/enviodev/hyperindex) ⭐
+ Star us on [GitHub](https://github.com/enviodev/hyperindex)
 
 
 ## Indexing Data on MegaEth Mainnet
@@ -230,23 +235,23 @@ The [MEV Alerts bot](https://t.me/+5uldwTve8ns3MDFk) highlights MEV driven TVL e
 Be sure to join the bot groups on Telegram to receive alerts in real-time and stay up to date on Uniswap v4 pool activity.
 
 
-## 🗓️ Current & Upcoming Events & Hackathons
+## Current & Upcoming Events & Hackathons
 
 * [EthDenver - Denver](https://ethdenver.com/): Feb 17th → 21st
 * [EthCC - Cannes](https://ethcc.io/): March 30th → April 2nd
 * [EthConf - New York](https://ethconf.com/): June 8th → 10th 
 
 
-## 🎧️ Playlist of the Month
+## Playlist of the Month
 
 <img src="/blog-assets/dev-update-feb-26-7.png" alt="PLOTM Feb 2026" width="100%"/>
 
-▶️ [Open Spotify](https://open.spotify.com/playlist/0CNf2YeAWBGUii76h6xilv?si=575e6a3e76c844b5)
+▶ [Open Spotify](https://open.spotify.com/playlist/0CNf2YeAWBGUii76h6xilv?si=575e6a3e76c844b5)
 
 
-## Build with Envio
+## Build With Envio
 
-Envio is a multi-chain EVM blockchain indexer for querying real-time and historical data. If you’re working on a Web3 project and want a smoother development process, Envio’s got your back(end). Check out our docs, join the community, and let’s talk about your data needs.
+Envio is a multichain EVM blockchain indexer for querying real-time and historical data. If you’re working on a Web3 project and want a smoother development process, Envio’s got your back(end). Check out our docs, join the community, and let’s talk about your data needs.
 
 Stay tuned for more monthly updates by subscribing to our newsletter, following us on X, or hopping into our Discord for more up-to-date information.
 

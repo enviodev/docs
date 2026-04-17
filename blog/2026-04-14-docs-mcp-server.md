@@ -3,8 +3,11 @@ title: Introducing the Envio Docs MCP Server
 sidebar_label: Introducing the Envio Docs MCP Server
 slug: /envio-docs-mcp-server
 tags: ["ai"]
-description: "Envio's documentation is now available as an MCP server. Connect Claude Code, Cursor, Copilot, or any MCP-compatible assistant and get accurate, always up-to-date Envio context without copy-pasting."
+description: "Envio's documentation is now available as an MCP server. Connect Claude Code, Cursor, or any MCP-compatible assistant for always up-to-date Envio context."
 image: /blog-assets/envio-docs-mcp-server.png
+last_update:
+  date: 2026-04-15
+  author: Jordyn Laurier
 ---
 
 Co-authors: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations, and [Kenau Vith](https://x.com/KenauVith32), Growth Engineer
@@ -99,9 +102,14 @@ The Envio Docs MCP server works with any MCP-compatible client. Setup instructio
 ### Is the Envio MCP Server Always Up to Date?
 Yes. The MCP server reads directly from the live Envio docs site. When documentation is updated, your assistant has access to the latest version immediately.
 
+### How Do I Get Started with Envio HyperIndex?
+Run `pnpx envio init` to scaffold your first indexer in minutes. Write event handlers in TypeScript, configure your chains and contracts in `config.yaml`, and deploy to Envio Cloud for managed hosting. See the [HyperIndex overview](https://docs.envio.dev/docs/HyperIndex/overview) and [getting started guide](https://docs.envio.dev/docs/HyperIndex/getting-started) for full documentation.
+
 ## Build With Envio
 
-Envio HyperIndex is independently benchmarked as the fastest EVM blockchain indexer available. If you are building onchain and need indexing that keeps up with your chain, check out the docs, run the benchmarks yourself, or come talk to us about your data needs.
+Envio HyperIndex is independently benchmarked as the fastest EVM blockchain indexer available. If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, or come talk to us about your data needs.
+
+Stay tuned for more updates by subscribing to our newsletter, following us on X, or hopping into our Discord.
 
 [Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
 

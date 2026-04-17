@@ -1,15 +1,25 @@
 ---
-title: Building ChainDensity with HyperSync
-sidebar_label: "Unveiling Blockchain Activity Patterns with HyperSync"
+title: "Building ChainDensity with HyperSync"
+sidebar_label: "Building ChainDensity with HyperSync"
 slug: /building-chaindensity
-description: "Learn how Envio’s HyperSync powers ChainDensity to visualise blockchain event and transaction density across 70+ chains enabling data analysts and developers to spot patterns in seconds."
+description: "How Envio's HyperSync powers ChainDensity to visualize blockchain event and transaction density across 70+ chains, processing millions of events in seconds."
 image: /blog-assets/density1.png
+last_update:
+  date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
+
 <img src="/blog-assets/density1.png" alt="Cover Image for Building ChainDensity" width="100%"/>
 
 <!--truncate-->
 
-Understanding address activity in blockchain networks is more than just a technical necessity, it reveals the underlying dynamics of decentralized applications. Enter [ChainDensity](https://chaindensity.xyz/), a simple yet powerful tool designed to visualize event and transaction density across Ethereum and any other EVM-compatible blockchain.
+:::note TL;DR
+- ChainDensity is an open-source tool that visualizes event and transaction density for any address across Ethereum and 70+ EVM chains, built on top of Envio's HyperSync Python client.
+- HyperSync replaces thousands of `eth_getLogs` RPC calls with a single efficient query, enabling ChainDensity to process 9+ million events in under 32 seconds.
+- The tool helps developers planning indexing projects estimate event volumes and distribution before committing to an indexing approach.
+:::
+
+[ChainDensity](https://chaindensity.xyz/) is a tool that visualizes event and transaction density for any address across Ethereum and any EVM-compatible blockchain. Built using Envio's HyperSync Python client, it processes millions of events in seconds by replacing traditional RPC calls with a single efficient query.
 
 ChainDensity transforms raw data into clear visualizations, empowering developers, data analysts, and researchers to uncover trends, optimize performance, and harness the full potential of blockchain technology. By creating density plots that span the entire length of a chain, ChainDensity allows users to quickly grasp when an address is most active and assess its total activity over time.
 
@@ -47,18 +57,18 @@ The conventional approach to blockchain data retrieval involves running a node a
 * Nodes are optimized for maintaining blockchain functionality, not for rapid and flexible data retrieval.
 * Replicating ChainDensity's functionality using traditional methods would require tens of thousands of `eth_getLogs` calls, a time-consuming and resource-intensive endeavour.
 
-This inefficiency isn't unique to ChainDensity's use case; it's a common hurdle in various blockchain data applications, from analytics to protocol development.
+This inefficiency isn't unique to ChainDensity's use case. It's a common hurdle in various blockchain data applications, from analytics to protocol development.
 
 ## Enter HyperSync: Modern Blockchain Data Retrieval
 
 [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) emerges as a game-changing solution in the blockchain data retrieval landscape. This highly specialized data node, built with Rust, offers a quantum leap in data retrieval speeds while providing unparalleled flexibility.
 
-### Key Features of HyperSync:
+### Key Features of HyperSync
 
 * A powerful API that is capable of filtering blocks, transactions, logs, and traces.
 * Granular control over data retrieval.
 * Support for [Python](https://github.com/enviodev/hypersync-client-python), [Rust](https://github.com/enviodev/hypersync-client-rust), and [NodeJs](https://github.com/enviodev/hypersync-client-node) clients.
-* Compatibility with ~60 EVM chains and [Fuel](https://github.com/enviodev/hyperfuel-json-api).
+* Compatibility with 70+ EVM chains and [Fuel](https://github.com/enviodev/hyperfuel-json-api).
 
 ### HyperSync in Action: The ChainDensity Example
 
@@ -76,7 +86,7 @@ def create_query(address, start_block, request_type):
             )],
             field_selection=FieldSelection(
                 log=[
-                    LogField.BLOCK_NUMBER,
+LogField.BLOCK_NUMBER,
                 ],
             ),
         )
@@ -84,12 +94,12 @@ def create_query(address, start_block, request_type):
         query = hypersync.Query(
             from_block=start_block,
             transactions=[
-                TransactionSelection(from_=[address]),
-                TransactionSelection(to=[address]),
+TransactionSelection(from_=[address]),
+TransactionSelection(to=[address]),
             ],
             field_selection=FieldSelection(
                 transaction=[
-                    TransactionField.BLOCK_NUMBER,
+TransactionField.BLOCK_NUMBER,
                 ],
             ),
         )
@@ -106,7 +116,7 @@ The true prowess of HyperSync becomes evident when dealing with large-scale data
 * 9,108,786 events processed.
 * All accomplished in just 31.51 seconds.
 
-This translates to an impressive processing rate of 7,761,296 blocks per second and 289,107 events per second. This level of performance is achievable "cold" (without caching) for any address across more than 50 different chains. Such speed and efficiency open up new possibilities for all kinds of applications previously impossible due to data retrieval limitations.
+This translates to an impressive processing rate of 7,761,296 blocks per second and 289,107 events per second. This level of performance is achievable "cold" (without caching) for any address across more than 70 different chains. Such speed and efficiency open up new possibilities for all kinds of applications previously impossible due to data retrieval limitations.
 
 <img src="/blog-assets/aave-v3-pool.png" alt="Aave v3: Pool" width="100%"/>
 
@@ -129,18 +139,18 @@ While ChainDensity already offers powerful insights, there's potential for even 
 * **Multi-address analysis**: Comparing activity patterns across multiple addresses on a single plot.
 * **Cross-chain comparisons**: Visualizing how an address or contract behaves across different networks.
 
-Why not head over to the [repo](https://github.com/enviodev/chain-density) and make a pull request? 
+Why not head over to the [repo](https://github.com/enviodev/chain-density) and make a pull request?
 
 ## Use HyperSync yourself
 
 Explore [ChainDensity](https://chaindensity.xyz) to experience the power of [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) firsthand. If you're looking to leverage HyperSync for your project, visit our documentation or hop in our [Discord](https://discord.com/invite/gt7yEUZKeB) for support.
 
-## About Envio
+## Build With Envio
 
-[Envio](https://envio.dev) is a fast, developer friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
+Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data. If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.
 
-With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
+Stay tuned for more updates by subscribing to our newsletter, following us on X, or hopping into our Discord.
 
-If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
+[Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
 
-[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)

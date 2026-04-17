@@ -1,63 +1,104 @@
 ---
-title: Dedicated Hosting for Web3 dApps
-sidebar_label: How Dedicated Hosting Improves Performance and Reliability for Web3 dApps
+title: "Dedicated Hosting for Blockchain Indexers"
+sidebar_label: Dedicated Hosting for Blockchain Indexers
 slug: /powers-of-dedicated-hosting-for-web3-dapps
-description: "Learn how Envio's dedicated hosting enhances the performance and reliability of your Web3 dApp by simplifying infrastructure management and delivering a smoother developer experience."
+description: "What dedicated hosting means for blockchain indexer developers, how Envio Cloud handles infrastructure, and why managed hosting reduces development overhead."
 image: /blog-assets/envio-dedicated-hosting.png
+last_update:
+  date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
 
-<img src="/blog-assets/envio-dedicated-hosting.png" alt="Cover Image for Powers of Dedicated Hosting for Web3 Apps" width="100%"/>
+<img src="/blog-assets/envio-dedicated-hosting.png" alt="Dedicated Hosting for Blockchain Indexers" width="100%"/>
 
 <!--truncate-->
 
-Blockchain technology has transformed the way we interact with the digital world. Decentralized applications are on the rise, creating new opportunities and challenges for blockchain developers. In this article, we'll explore the power of a dedicated hosting service, the benefits it offers to blockchain developers, and why Envio stands out as the best blockchain indexing solution designed to cater to the unique needs of blockchain development.
+:::note TL;DR
+- Running a blockchain indexer in production requires a database, a GraphQL API layer, uptime monitoring, and infrastructure that scales with your data.
+- Envio Cloud handles all of this as a managed service, so teams can focus on handler logic rather than infrastructure.
+- Self-hosting via Docker is also supported for teams that want full infrastructure control.
+:::
 
-## What is a Hosted Service In Web3?
+Deploying a blockchain indexer locally is straightforward. Keeping one running reliably in production is a different problem. You need a database, a GraphQL API layer, uptime guarantees, and a deployment process that does not require manual intervention every time your handler logic changes.
 
-Hosted services are the unsung heroes of the Web3 ecosystem, playing a pivotal role in the development and operation of dApps. At its core, a hosted service in Web3 serves as the technical backbone for dApps, ensuring their smooth and secure operation. These services simplify the deployment process, alleviate concerns about complex infrastructure management, and, most importantly, enhance the overall user experience. By taking care of the technical intricacies, hosted services empower developers to concentrate on what truly matters: delivering innovative and user-friendly Web3 applications to the world.
+This article covers what a dedicated hosted indexer service provides, how Envio Cloud works, and how to decide between managed hosting and self-hosting.
 
-In an era where efficient data access and security are paramount, hosted services provide an additional layer of confidence to both developers and users. Quick and efficient access to data is essential to creating smooth user experiences as a dApp developer. Additionally, understanding the on-chain usage of your dApp or understanding the usage of other applications by looking at, analyzing, and understanding the data they produce is essential to maintaining a competitive edge in this industry.
+## What a Hosted Indexer Service Provides
 
-## Benefits of a Dedicated Hosted Service
+A hosted indexer service takes your indexer configuration, schema, and handler code and runs the full stack for you. This includes:
 
-Dedicated hosting services provide a range of benefits that can significantly enhance the user experience, simplify the development process, and bolster security. Let's dive into some of these key advantages:
+- **Database**: Storing indexed events and entity tables
+- **GraphQL API**: Auto-generated from your schema via Hasura, queryable by your frontend
+- **Uptime**: The service monitors availability and handles restarts automatically
+- **Deployment**: Syncing from your repository so new versions deploy without manual steps
 
-**1. Prioritizing User Experience**
+Without a hosted service, each of these components needs to be provisioned, maintained, and scaled independently. For teams focused on building a product rather than managing infrastructure, this is significant overhead.
 
-In Web3, delivering a seamless user experience is paramount. Users expect dApps to run smoothly and provide a reliable interface. A dedicated hosting service plays a crucial role by ensuring consistent uptime and reliability. This focus on user experience is what sets Web3 applications apart and makes them more attractive to users.
+## How Envio Cloud Works
 
-**2. Revolutionizing dApp Development**
+[Envio Cloud](https://docs.envio.dev/docs/HyperIndex/hosted-service) is the managed hosting option for HyperIndex. It runs on AWS infrastructure with Kubernetes orchestration and Hasura for the GraphQL layer.
 
-The emergence of blockchain-hosted services has ushered in a new era in dApp development. These services offer a robust and reliable infrastructure that can address many of the pain points associated with traditional hosting solutions. Whether it's high availability, scalability, or redundancy, dedicated hosting services provide the necessary backbone to support the growth and evolution of dApps.
+Deployment is integrated with GitHub. An Envio GitHub bot monitors your repository and triggers new deployments when changes land in your specified branch. There is no manual deploy step once the integration is configured.
 
-**3. Simplifying Development**
+The stack Envio Cloud manages:
 
-Developing and maintaining hosting services can be a daunting task, requiring expertise in cloud computing, containerized management with tools like Kubernetes, and complex networking configurations. By integrating dedicated hosting services, developers can shift their focus away from these backend intricacies. This shift allows them to dedicate more time and resources to perfecting the Web3 aspects of their products, such as smart contracts, decentralized data storage, and user interfaces.
+- **AWS**: Cloud infrastructure and compute
+- **Kubernetes**: Container orchestration and scaling
+- **Hasura**: Real-time GraphQL API generation from your schema
+- **HyperSync**: The data engine powering historical sync, up to 2000x faster than standard RPC
 
-**4. Security and Transparency**
+For local development, the full stack runs with a single `pnpm dev` command using Docker Desktop. The same handler logic runs locally and in production without modification.
 
-Blockchain data is inherently public, making it a unique asset in data security. When dApps utilize hosted services on the blockchain, users benefit from an added layer of security. The transparent nature of blockchain data reduces the risk of sensitive data breaches, instilling greater confidence in the use of these services. Users can interact with dApps, confident that their data remains secure and private.
+## Managed Hosting vs Self-Hosting
 
-## Exploring Envio's Hosted Service
+HyperIndex supports both options:
 
-Envio is at the forefront of the Web3 hosting services revolution, offering blockchain developers an innovative solution that simplifies the deployment and management of their dApps. With a laser focus on enhancing the user experience, Envio provides a dedicated [hosted service](https://docs.envio.dev/docs/HyperIndex/hosted-service) that empowers development teams to concentrate on what matters most to their users.
+| | Envio Cloud | Self-hosted (Docker) |
+|---|---|---|
+| Infrastructure setup | Handled by Envio | You manage |
+| Uptime monitoring | Included | You manage |
+| Deployment | GitHub bot auto-deploy | Manual or custom CI |
+| Cost | Free tier and paid plans | Your infrastructure costs |
+| Control | Standard configuration | Full control |
 
-It strikes a balance between developer control and convenience, offering an alternative that eases the management strain and domain knowledge required for self-hosting in Web3 applications. Our streamlined deployment process ensures that developers can self-host and locally manage deployments, providing all the necessary components to set up a containerized application with a database connection for local indexing.
+For most teams, Envio Cloud is the faster path to production. For teams with specific compliance requirements or existing infrastructure preferences, self-hosting via Docker gives full control without changing any handler code.
 
-Envio leverages a comprehensive stack of technologies, including [GitHub](https://github.com/), [AWS](https://aws.amazon.com/), [Hasura](https://hasura.io/), [Kubernetes](https://kubernetes.io/), and more, to provide a secure and effortless deployment process. An integrated GitHub bot streamlines deployments, ensuring they stay up-to-date and adhere to specified criteria, such as branches, folders, and files to be used for hosting and building indexers.
+## Getting Started
 
-In essence, Envio offers the easiest way to deploy and host your indexer, handling the entire infrastructure and eliminating worries about complex infrastructure setup and management. This approach allows developers to focus on their dApp's core functionality, ensuring a top-tier user experience.
+Deploy to Envio Cloud from the [hosted service docs](https://docs.envio.dev/docs/HyperIndex/hosted-service). If you do not have an indexer yet, the contract import quickstart generates a working indexer from any deployed contract address in under 5 minutes:
 
-For more information on how to deploy an indexer to Envio’s hosted service visit our [docs](https://docs.envio.dev/docs/hosted-service).
+```bash
+pnpx envio init
+```
 
-As Web3 continues to evolve, Envio's dedicated hosted service remains a prime choice for those seeking to simplify their development process, unlock the true potential of Web3 infrastructure, and join a growing community dedicated to enhancing the Web3 ecosystem.
+## Frequently asked questions
 
-## About Envio
+### What infrastructure does Envio Cloud run on?
 
-[Envio](https://envio.dev) is a fast, developer-friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
+Envio Cloud uses AWS for compute, Kubernetes for orchestration, and Hasura for the GraphQL API layer. HyperSync powers historical data retrieval for all supported networks.
 
-With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
+### How does deployment work with Envio Cloud?
 
-If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
+Envio Cloud integrates with GitHub via a bot that monitors your repository. When changes land in your configured branch, a new deployment is triggered automatically.
 
-[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)
+### Can I self-host HyperIndex instead of using Envio Cloud?
+
+Yes. HyperIndex can be self-hosted using Docker. The same handler logic and schema work identically in both environments. See the [hosting docs](https://docs.envio.dev/docs/HyperIndex/hosted-service) for setup instructions.
+
+### What is included in the free tier?
+
+See the [Envio Cloud docs](https://docs.envio.dev/docs/HyperIndex/hosted-service) for current plan details and limits.
+
+### Does Envio Cloud support multichain indexers?
+
+Yes. A single HyperIndex instance can index multiple networks and all data is queryable through one GraphQL endpoint, whether hosted on Envio Cloud or self-hosted.
+
+## Build With Envio
+
+Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data. If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.
+
+Stay tuned for more updates by subscribing to our newsletter, following us on X, or hopping into our Discord.
+
+[Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
+
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)

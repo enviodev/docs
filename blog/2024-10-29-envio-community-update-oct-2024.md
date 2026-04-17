@@ -2,18 +2,22 @@
 title: Envio Developer Update October 2024
 sidebar_label: Envio Developer Update October 2024
 slug: /envio-developer-update-october-2024
-description: "Check out what Envio rolled out in October 2024 including new releases, platform enhancements, and community-driven integrations that push our indexing infrastructure forward."
+description: "What Envio shipped in October 2024: new releases, platform enhancements, and community integrations across the blockchain indexing stack."
 image: /blog-assets/envio-developer-community-oct-2024.png
+last_update:
+  date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
+
 <img src="/blog-assets/envio-developer-community-oct-2024.png" alt="Cover Image Envio Developer Community Update October 2024" width="100%"/>
 
 <!--truncate-->
 
-Welcome to our October 2024 developer update! We’re excited to share the latest version, which features improvements like smoother contract imports and better error handling. This month, we’re spotlighting our integrations with MIRA Exchange and Gateway.fm, along with our recent success at the Encode hackathon, where the ModuleScan project stood out. Let’s dive in!
+Welcome to our October 2024 developer update. This month, we're spotlighting our integrations with MIRA Exchange and Gateway.fm, along with our recent success at the Encode hackathon, where the ModuleScan project stood out. Let's dive in!
 
-## 🚀 HyperIndex Version 2.6.0 is now available 🚀
+## HyperIndex Version 2.6.0 is now available
 
-We are excited to announce that the current release is **v.2.6.1**!
+We are pleased to announce that the current release is **v.2.6.1**!
 
 **Improvements:**
 
@@ -25,7 +29,7 @@ We are excited to announce that the current release is **v.2.6.1**!
 
 For more information, you can view [all past and current release notes](https://github.com/enviodev/hyperindex/releases) in the Envio github.
 
-To stay updated with our latest releases and developments, give us a star on [GitHub](https://github.com/enviodev/hyperindex)! Your support is greatly appreciated! ⭐
+To stay updated with our latest releases and developments, give us a star on [GitHub](https://github.com/enviodev/hyperindex)! Your support is greatly appreciated!
 
 ## Dynamic Contract Pre-registration
 
@@ -46,7 +50,7 @@ PoolFactory.CreatePool.contractRegister(
 
 <img src="/blog-assets/envio-developer-community-oct-2024-2.png" alt="Fuel Envio Indexer Partnership" width="100%"/>
 
-Just like a well-tuned engine, the right Fuel makes all the difference. Envio is proud to support applications and developers with the fastest access to real-time and historical data on the [Fuel](https://fuel.network/) Network.
+Envio is proud to support applications and developers with the fastest access to real-time and historical data on the [Fuel](https://fuel.network/) Network.
 
 Learn which [Fuel applications](https://x.com/envio_indexer/status/1849103562602655890) we are supporting to date.
 
@@ -54,21 +58,21 @@ Learn which [Fuel applications](https://x.com/envio_indexer/status/1849103562602
 
 <img src="/blog-assets/envio-developer-community-oct-2024-1.png" alt="Mira Exchange on Fuel Envio Partnership" width="100%"/>
 
-We’re thrilled to announce that Envio's efficient indexing solution has been integrated with [MIRA](https://mira.ly/), an open-source DeFi platform designed to match traders and liquidity providers using the most efficient AMM on the Fuel Network. ⚡️
+Envio's efficient indexing solution has been integrated with [MIRA](https://mira.ly/), an open-source DeFi platform designed to match traders and liquidity providers using the most efficient AMM on the Fuel Network.
 
-This integration enhances the capabilities of MIRA by providing faster and more reliable access to on-chain data, ensuring a seamless experience for all users.
+This integration enhances the capabilities of MIRA by providing faster and more reliable access to onchain data, ensuring a seamless experience for all users.
 
 ## Envio Powers GatewayFM With Efficient Indexing
 
 <img src="/blog-assets/envio-developer-community-oct-2024-3.png" alt="Envio supports RAAS Gateway with Indexing Partnership" width="100%"/>
 
-We’re excited to share that Envio's modular data indexing solution powers [Gateway](http://gateway.fm/), a pioneering Web3 infrastructure provider. With Gateway, you can deploy zkEVM app rollups in minutes,code-free! With Envio’s native support for indexing any EVM-compatible chain, this makes a fruitful partnership. One-click integration next, stay tuned 😎
+Envio's modular data indexing solution powers [Gateway](http://gateway.fm/), a pioneering Web3 infrastructure provider. With Gateway, you can deploy zkEVM app rollups in minutes, code-free! With Envio's native support for indexing any EVM-compatible chain, this makes a fruitful partnership.
 
 ## Can We Really Predict the Future?
 
 <img src="/blog-assets/case-study-limitless.png" alt="Cover Image Limitless Prediction Markets Case Study" width="100%"/>
 
-As prediction markets reshape media and decision-making, discover how they work and how Envio enhances [Limitless Exchange](https://limitless.exchange/) with real-time data indexing and insights in our latest case study. 🔮⚡
+As prediction markets reshape media and decision-making, discover how they work and how Envio enhances [Limitless Exchange](https://limitless.exchange/) with real-time data indexing and insights in our latest case study.
 
 Read the [full case study](https://docs.envio.dev/blog/case-study-limitless-prediction-market).
 
@@ -76,7 +80,7 @@ Read the [full case study](https://docs.envio.dev/blog/case-study-limitless-pred
 
 <img src="/blog-assets/case-study-bridgg-op-superchain.png" alt="Cover Image Bridgg OP Superchain Case Study" width="100%"/>
 
-Layer 2s have created a multi-chain ecosystem for Ethereum's scalability, but liquidity fragmentation and poor UX continue to be challenges. Explore how [Brid.gg](http://brid.gg/) is working to transform user interactions with the [OP Superchain](https://www.superchain.eco/), enhancing accessibility in our latest case study.
+Layer 2s have created a multichain ecosystem for Ethereum's scalability, but liquidity fragmentation and poor UX continue to be challenges. Explore how [Brid.gg](http://brid.gg/) is working to transform user interactions with the [OP Superchain](https://www.superchain.eco/), enhancing accessibility in our latest case study.
 
 Read the [full case study](https://docs.envio.dev/blog/case-study-bridgg-op-superchain).
 
@@ -97,61 +101,61 @@ Explore ModuleScan:
 - [Codebase](https://github.com/Destiner/modulescan)
 - [YouTube Demo](https://www.youtube.com/watch?v=Jp2jQOioSmk&feature=youtu.be)
 
-We’re proud to award ModuleScan:
+We're proud to award ModuleScan:
 
 - Best Use of HyperIndex: $1,500
-- Most Creative Application of Envio’s Features: $1,000
+- Most Creative Application of Envio's Features: $1,000
 
-Kudos to [Timur Badretdinov](https://x.com/DestinerX)! 👏
+Kudos to [Timur Badretdinov](https://x.com/DestinerX)!
 
 ## Highlights from Zebu Live & Encode London
 
 <img src="/blog-assets/envio-developer-community-oct-2024-5.png" alt="Zebu Live JonJon CoFounder Speaker Photo" width="100%"/>
 
-We had a fantastic time at [Zebu Live](https://www.zebulive.xyz/) and the [Encode London](https://www.encode.club/encodelondon-24/#Prizes) Hackathon & Conference! At both events, we hosted data indexing workshops where blockchain developers could explore faster, smarter ways to access their on-chain data, demonstrating how alternative indexers like Envio can improve their data retrieval.
+We had a fantastic time at [Zebu Live](https://www.zebulive.xyz/) and the [Encode London](https://www.encode.club/encodelondon-24/#Prizes) Hackathon & Conference! At both events, we hosted data indexing workshops where blockchain developers could explore faster, smarter ways to access their onchain data, demonstrating how alternative indexers like Envio can improve their data retrieval.
 
-Additionally, we sponsored $4,500 in bounties at the Encode London Conference, encouraging developers to engage with our platform and showcase their skills. A massive thank you to the organizers and to everyone who attended our workshops and participated in our [bounties](https://x.com/envio_indexer/status/1849446338326401523).
+Additionally, we sponsored $4,500 in bounties at the Encode London Conference, encouraging developers to engage with our platform and showcase their skills. A massive thank you to the organizers and to everyone who attended our workshops and participated in our bounties.
 
 For more upcoming events and where to catch us - be sure to check out our upcoming events below.
 
-## Upcoming Events 🗓️
+## Upcoming Events
 
 - [DevCon](https://devcon.org/en/): 12-17 November 2024
 - [EthGlobal Bangkok](https://ethglobal.com/events/bangkok): 15-17 November 2024
 - [Rootstock Educate: Why Is Blockchain Data So Slow? How to Get It Fast on Rootstock](https://lu.ma/e0514_3111?tk=wnw72A&utm_source=yve8mz) - 10 December 2024
 
-## Featured Developer 🧑‍💻
+## Featured Developer
 
 <img src="/blog-assets/envio-developer-community-oct-2024-6.png" alt="Developer of the Month" width="100%"/>
 
 This month's featured developer and community member of the month is [Ankush Jha](https://www.noveleader.xyz/), a dedicated developer and crypto native with three years in the space. Known for his sharp research skills and innovative approach, Ankush has made significant contributions to our community as a developer and researcher.
 
-***"Envio is an amazing product. What I like the most about them is their blazing-fast indexing speed. I’ve never had an experience like this 💟" – Ankush Jha***
+***"Envio is an amazing product. What I like the most about them is their blazing-fast indexing speed. I've never had an experience like this" – Ankush Jha***
 
-Ankush developed a GMX V2 multi-chain indexer spanning Arbitrum and Avalanche, where GMX data can be queried via a unified API. The code repo is available on [GitHub](https://github.com/Noveleader/gmx-v2-subgraph-envio).
+Ankush developed a GMX V2 multichain indexer spanning Arbitrum and Avalanche, where GMX data can be queried via a unified API. The code repo is available on [GitHub](https://github.com/Noveleader/gmx-v2-subgraph-envio).
 
 Be sure to follow Ankush on [X](https://x.com/0xnoveleader) and check out his work on [GitHub](https://github.com/noveleader) to stay up-to-date with their latest projects and contributions.
 
 For a full list of deployed indexers visit our [explorer](https://envio.dev/explorer).
 
-## Playlist of the Month 🎧️
+## Playlist of the Month
 
-▶️ [Open Spotify](https://open.spotify.com/playlist/50pryGy4bfJfqAVKZAojNh?si=19a115a6742e4292)
+[Open Spotify](https://open.spotify.com/playlist/50pryGy4bfJfqAVKZAojNh?si=19a115a6742e4292)
 
 <img src="/blog-assets/envio-developer-community-oct-2024-7.png" alt="Developer of the Month" width="100%"/>
 
-## Envio Freelancer Network 🌐
+## Envio Freelancer Network
 
-Need an indexer but don’t have the bandwidth? Whether you're looking to find top-notch freelancers or you’re a freelancer seeking new opportunities, we've got you covered. Our thriving Freelancer Network connects skilled contractors with Web3 protocols to service their data needs. ⚡️
+Need an indexer but don't have the bandwidth? Whether you're looking to find top-notch freelancers or you're a freelancer seeking new opportunities, we've got you covered. Our thriving Freelancer Network connects skilled contractors with Web3 protocols to service their data needs.
 
 Simply fill out the [form](https://noteforms.com/forms/envio-freelancer-network-u9zqbv) to join our freelancer network.
 
-## About Envio
+## Build With Envio
 
-[Envio](https://envio.dev) is a fast, developer friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
+Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data. If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.
 
-With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
+Stay tuned for more updates by subscribing to our newsletter, following us on X, or hopping into our Discord.
 
-If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
+[Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
 
-[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)

@@ -1,78 +1,98 @@
 ---
 title: Fast Data Indexing on Fuel using Envio
-sidebar_label: Envio's Blockchain Indexer Supports Fuel With Fast Data Indexing
+sidebar_label: Fast Data Indexing on Fuel using Envio
 slug: /fast-data-indexing-on-fuel-using-envio
-description: "Learn how Envio brings fast data indexing to the Fuel Network so developers and data analysts can query both real-time and historical on-chain data with speed and simplicity."
+description: "Learn how Envio brings fast data indexing to Fuel Network so developers can query real-time and historical onchain data with speed and simplicity."
 image: /blog-assets/fuel-envio.png
+last_update:
+  date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
+
 <img src="/blog-assets/fuel-envio.png" alt="Cover Image Data Querying on Fuel" width="100%"/>
 
 <!--truncate-->
 
- The [Fuel Network](https://fuel.network/) stands out as a beacon of hope for solving Ethereum's scalability challenges. Ethereum, the leader in security and decentralization, has struggled to scale smoothly in line with user demand as more users and dApps join the network.
+:::note TL;DR
+- The Fuel Network is a high-performance Ethereum rollup OS with the FuelVM and the Sway programming language, purpose-built for parallel execution and scalable dApps.
+- Envio supports Fuel with two products: HyperFuel (fast raw data access) and HyperIndex (full GraphQL indexing framework with hosted deployment).
+- Unlike The Graph (EVM-only, separate subgraph per chain), Envio's single-config approach supports both Fuel and EVM chains from one indexer.
+:::
 
-The real-world implications of execution bottlenecks are far-reaching, affecting both users and developers. High gas fees, network congestion, and scalability constraints hinder the growth and usability of the Ethereum ecosystem. Addressing these challenges requires innovation and improvements to the execution layer.
+The [Fuel Network](https://fuel.network/) addresses Ethereum's scalability challenges with a parallelized execution environment and state-minimized architecture. Envio provides the data infrastructure layer for Fuel, giving developers and data analysts efficient access to real-time and historical onchain data through a modular indexing stack.
 
-At the heart of Fuel is the FuelVM, an execution environment that is parallelized for maximum performance throughput and state-minimized for sustainable state growth. Still leveraging Ethereum’s security and data availability, Fuel aims to be the rollup OS for Ethereum. For a more technical deep dive into Fuel’s mission, you can follow their [blog](https://fuel.mirror.xyz/uQxyb1o_Gu4oBSyT1ULuqRu7ffmIXuZtx9ux8ndFMXs).
-
-Fuel is also shaking up the evm solidity narrative by introducing a new programming language—[Sway](https://docs.fuel.network/docs/sway/). Sway is a strongly-typed programming language written in Rust, serving as a new standard for smart contract development. It takes inspiration from various languages, aiming to incorporate only the best features without limiting itself to any specific language.
-
-Envio plays an integral part in streamlining application development on the Fuel ecosystem. It provides a state-of-the-art SDK for building performant and scalable decentralized applications and serves as the accelerated data query layer. Envio equips developers and projects with the necessary toolkits to query vast amounts of real-time and historical data and extract meaningful insights.
-
-In this blog, we explore how developers and data analysts can leverage Envio’s modular data stack to index and query data on the Fuel Network.
+In this blog, we explore how developers and data analysts can leverage Envio's data stack to index and query data on the Fuel Network.
 
 ## What is the Fuel Network?
 
-The [Fuel Network](https://fuel.network/) is a high-performance, modular blockchain infrastructure designed to support scalable and efficient dApps. It utilizes a unique combination of Fuel Virtual Machine ([FuelVM](https://docs.fuel.network/docs/intro/what-is-fuel/)) and Optimistic Rollup technology to achieve exceptional transaction throughput and low fees. The network's modular architecture enables developers to customize and optimize various components, enhancing flexibility and performance. With its emphasis on speed, security, and scalability, the Fuel Network is positioned to drive the next generation of blockchain innovations, providing a robust platform for dApps that prioritize efficiency and seamless user experiences.
+The [Fuel Network](https://fuel.network/) is a high-performance, modular blockchain infrastructure designed to support scalable and efficient dApps. It combines the Fuel Virtual Machine ([FuelVM](https://docs.fuel.network/docs/intro/what-is-fuel/)) with Optimistic Rollup technology to achieve high transaction throughput and low fees. Fuel also introduces [Sway](https://docs.fuel.network/docs/sway/), a strongly-typed language inspired by Rust designed for smart contract development.
 
-## What Envio Supports on the Fuel Network
+At the heart of Fuel is the FuelVM: an execution environment parallelized for maximum throughput and state-minimized for sustainable state growth. For a technical deep dive into Fuel's architecture, see the [Fuel blog](https://fuel.mirror.xyz/uQxyb1o_Gu4oBSyT1ULuqRu7ffmIXuZtx9ux8ndFMXs).
+
+## What Envio supports on the Fuel Network
 
 ### HyperFuel
 
-Envio’s [HyperFuel](https://docs.envio.dev/docs/HyperIndex/fuel) is a version of [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) specifically adapted for the Fuel Network. It provides a low-level API for developers and data analysts to create flexible, filtered, high-speed, queries for smart contract data and large data sets.
+Envio's [HyperFuel](https://docs.envio.dev/docs/HyperSync/hyperfuel) is a version of [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) specifically adapted for the Fuel Network. It provides a low-level API for developers and data analysts to run flexible, filtered, high-speed queries for smart contract data and large datasets.
 
-HyperFuel acts as a high-performance real-time data archive that accelerates data retrieval on the Fuel Network, enabling efficient parsing, querying, and analysis of Fuel data.
+HyperFuel acts as a high-performance real-time data archive that accelerates data retrieval on Fuel, enabling efficient parsing, querying, and analysis of Fuel data.
 
-Developers and data analysts can interact with HyperFuel API using JavaScript, Python, or Rust [clients](https://github.com/enviodev/hyperfuel-json-api), and choose the output their data in JSON, Arrow, and Parquet formats.
+Developers and data analysts can interact with the HyperFuel API using JavaScript, Python, or Rust [clients](https://github.com/enviodev/hyperfuel-json-api), and choose to output data in JSON, Arrow, and Parquet formats.
 
-With HyperFuel, developers can sync large datasets in minutes, eliminating the need to use slow or rate-limited node endpoints, like RPCs, which would typically take hours or even days to fetch large data sets. HyperFuel is ideal for developers building dApps, block explorers, wallets, analytics, and other data-heavy use cases on the Fuel Network.
+With HyperFuel, developers can sync large datasets in minutes, eliminating the need to use slow or rate-limited node endpoints. HyperFuel is ideal for developers building dApps, block explorers, wallets, analytics tools, and other data-heavy use cases on Fuel.
 
 ### HyperIndex
 
-Envio’s [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview), is a developer-first, real-time data indexing framework for rapidly building a custom GraphQL APIs for smart contract data.
+Envio's [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) is a developer-first, real-time data indexing framework for rapidly building custom GraphQL APIs for smart contract data on Fuel.
 
-Envio’s [Contract Import](https://docs.envio.dev/docs/HyperIndex/contract-import) serves as a starting point for most developers building a backend for their decentralized application - a quickstart to effortlessly build and automatically generate a basic Fuel indexer in less than a minute. Developers achieve this by supplying the contract ABI, selecting the events they’re interested in, and following CLI command prompts to create their first indexer.
+[Contract Import](https://docs.envio.dev/docs/HyperIndex/contract-import) is the fastest starting point for most Fuel developers: supply your contract ABI, select the events you want to index, and follow the CLI prompts to generate your first indexer in under a minute.
 
-For a detailed tutorial demonstrating how to leverage this quickstart, explore our [tutorial](https://docs.envio.dev/docs/HyperIndex/tutorial-indexing-fuel) on creating an indexer for [Sway Farm](https://www.swayfarm.xyz/)—a real-world example of an on-chain farming game and how you can create an indexer for its farmer leaderboard.
+For a detailed tutorial, see the [Sway Farm indexer tutorial](https://docs.envio.dev/docs/HyperIndex/tutorial-indexing-fuel), which walks through creating an indexer for a real-world onchain farming game on Fuel.
 
-*⚠️Note: Before diving into this tutorial, ensure you have the necessary [prerequisites](https://docs.envio.dev/docs/HyperIndex/getting-started) installed.*
+Fuel teams can host their indexer on [Envio Cloud](https://docs.envio.dev/docs/HyperIndex/hosted-service), a managed platform with guaranteed uptime, so teams can focus on their application rather than infrastructure.
 
-Fuel application teams also have the option of hosting their indexer and custom application API on Envio’s reliable [Hosted Service](https://docs.envio.dev/docs/HyperIndex/hosted-service), making infrastructure deployment and management a painless and seamless experience, so that teams can focus on the core of their application, and other business functions such as providing seamless user experience, exceptional user support and spending more time on growth strategies for adoption.
+Unlike The Graph (which supports EVM chains only and requires a separate subgraph per network) or Goldsky (which requires separate pipelines), Envio uses a single `config.yaml` for all networks and exposes a single GraphQL endpoint across all chains.
 
-## Relevant Resources
+## Data indexer use cases on Fuel using Envio
+
+- [Data Indexer](https://github.com/compolabs/spark-envio-indexer) for [Spark](https://sprk.fi/), a DeFi super app with perpetual contracts, an orderbook, and lending and borrowing features.
+- [Data Indexer](https://github.com/enviodev/fuel-thunder-exchange/tree/main) for [Thunder](https://thundernft.market/), an NFT marketplace allowing multiple NFT purchases in a single transaction thanks to Fuel's parallel execution.
+
+## Relevant resources
 
 - [Envio Tutorial: Indexing Sway Farm on the Fuel Network](https://docs.envio.dev/docs/HyperIndex/tutorial-indexing-fuel)
 - [Envio HyperIndex Quickstart](https://docs.envio.dev/docs/HyperIndex/getting-started)
 - [Envio HyperFuel](https://docs.envio.dev/docs/HyperSync/hyperfuel)
-- [Envio’s Hosted Service](https://docs.envio.dev/docs/HyperIndex/hosted-service)
+- [Envio Cloud](https://docs.envio.dev/docs/HyperIndex/hosted-service)
 
-## Data Indexer Use Cases on Fuel using Envio
+## Frequently asked questions
 
-- [Data Indexer](https://github.com/compolabs/spark-envio-indexer) for [Spark](https://sprk.fi/), a DeFi super app with perpetual contracts, an orderbook. and as well as lending & borrowing features.
-- [Data Indexer](https://github.com/enviodev/fuel-thunder-exchange/tree/main) for [Thunder](https://thundernft.market/), an NFT marketplace, allowing multiple purchases of NFTs in a single transaction thanks to parallel execution by Fuel.
+### What is the difference between HyperFuel and HyperIndex for Fuel development?
 
-## Getting Support
+HyperFuel is a low-level raw data API for fetching large volumes of Fuel data quickly, suited for custom pipelines and analytics. HyperIndex is a full indexing framework that transforms onchain events into a structured database with a GraphQL API, suited for dApp backends. Many Fuel developers use both.
 
-Data indexing can be challenging, especially for complex use cases. Our engineers are ready to assist you with your data availability needs.
+### Can I use TypeScript to write my Fuel indexer with Envio?
 
-Join our growing community of elite builders and achieve peace of mind with Envio.
+Yes. HyperIndex event handlers are written in TypeScript (JavaScript is also supported). You define your schema in `schema.graphql`, your network config in `config.yaml`, and your handler logic in TypeScript files.
 
-[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Hey](https://hey.xyz/u/envio) | [Medium](https://medium.com/@Envio_Indexer) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
+### Does Envio support the Fuel Sway programming language?
 
-Email: [hello@envio.dev](mailto:hello@envio.dev)
+Envio indexes the events and logs emitted by Sway contracts on Fuel. You provide the contract ABI (which represents the contract interface) and Envio handles the rest. Sway-specific data types are supported through the HyperFuel and HyperIndex ABIs.
 
-## About Envio
+### How does Envio compare to other indexing options for Fuel?
 
-[Envio](https://envio.dev/) is a modern, dev-friendly, speed-optimized blockchain indexing solution that addresses the limitations of traditional blockchain indexing approaches and gives developers peace of mind. Fuel developers and data analysts can harness the power of Envio to overcome the challenges posed by latency, reliability, infrastructure management, and costs across various sources.
+The Graph does not support Fuel. Envio is purpose-built for Fuel with HyperFuel for raw data access and HyperIndex for GraphQL indexing. Envio Cloud includes GitHub-based auto-deployment and managed infrastructure, which is not available from alternatives.
 
-If you're a blockchain developer looking to enhance your development process and unlock the true potential of Web3 infrastructure, look no further.
+### Is Envio free to use for Fuel indexers?
+
+Envio offers a free development tier for hosted indexers. You can also run indexers locally for free using Docker and `pnpm dev`. Production tiers are available for teams that need guaranteed uptime SLAs.
+
+## Build With Envio
+
+Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data. If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.
+
+Stay tuned for more updates by subscribing to our newsletter, following us on X, or hopping into our Discord.
+
+[Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
+
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)

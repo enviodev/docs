@@ -2,17 +2,30 @@
 title: "Best Blockchain Indexers in 2026: Real Benchmark Comparison"
 sidebar_label: Best Blockchain Indexers in 2026
 slug: /best-blockchain-indexers-2026
-description: An accurate, benchmark-backed comparison of the best blockchain indexers in 2026, including Envio HyperIndex, The Graph, Goldsky, SubQuery, Subsquid, Ormi, and Ponder. Every claim is sourced. 
+description: "An accurate, benchmark-backed comparison of blockchain indexers in 2026, including Envio HyperIndex, The Graph, Goldsky, SubQuery, Subsquid, Ormi, and Ponder."
 image: /blog-assets/best-blockchain-indexers.png
+last_update:
+  date: 2026-04-15
+  author: Jords
 ---
 
 <img src="/blog-assets/best-blockchain-indexers.png" alt="Cover Image Best Blockchain Indexers" width="100%"/>
 
 <!--truncate-->
 
-Most blockchain indexer comparisons rely on self-reported metrics. This one doesn't. Every claim is backed by public documentation or third-party benchmarks.
+:::note TL;DR
+- Picking an indexer shouldn’t be a marketing bake-off. This piece compares seven frameworks with sources you can actually click through.
+- We lean on public docs and third-party benchmarks, and we’re upfront when something is self-reported.
+- Want the raw runs? Clone or inspect the open benchmark: [https://github.com/enviodev/open-indexer-benchmark](https://github.com/enviodev/open-indexer-benchmark)
+- For a fast “who is this for?” take, jump to the **TL;DR: Quick verdict** table right below.
+:::
 
-We cover 7 indexers: Envio, [The Graph](https://thegraph.com) (Subgraphs), [Goldsky](https://goldsky.com), [SubQuery](https://subquery.network), [Subsquid](https://www.sqd.ai) (SQD), [Ormi](https://ormilabs.com) and [Ponder](https://ponder.sh).
+
+Choosing a blockchain indexer should be straightforward, but most comparisons rely on self-reported metrics or product descriptions rather than independently benchmarked data and publicly verifiable sources.
+
+This article takes a different approach. Every claim is backed by public documentation or third-party benchmarks, with clear notes where only self-reported data exists.
+
+We cover seven blockchain indexers: Envio, [The Graph](https://thegraph.com) (Subgraphs), [Goldsky](https://goldsky.com), [SubQuery](https://subquery.network), [Subsquid](https://www.sqd.ai) (SQD), [Ormi](https://ormilabs.com) and [Ponder](https://ponder.sh).
 
 If you would like to review the raw benchmark data yourself, it is fully open:
 [https://github.com/enviodev/open-indexer-benchmark](https://github.com/enviodev/open-indexer-benchmark) 
@@ -22,9 +35,15 @@ An open, honest, and objective benchmark for blockchain indexers across EVM, Sol
 We welcome anyone to contribute, run it, test it, and explore the results. We encourage you to share what you find.
 
 
-## TL;DR: Benchmark results
+## What is a blockchain indexer?
 
-Envio completed the Uniswap V2 Factory backfill in 1 minute. Subsquid took 15 minutes. The Graph took 2 hours 23 minutes. Ponder took 2 hours 38 minutes. Source: Sentio, May 2025.
+A blockchain indexer is a system that listens to blockchain events, organises raw onchain data (transactions, logs, state changes, and blocks) into structured, queryable formats, and exposes that data via APIs. Without an indexer, developers would need to query raw RPC endpoints for every piece of data, which is slow, expensive, and impractical at scale.
+
+Custom indexing frameworks (the focus of this article) let you define exactly what data to track, write handlers that transform onchain events into your own data model, and query the results via a GraphQL or SQL API. This is different from pre-built data APIs like Dune Analytics or Covalent, which expose pre-indexed, read-only data that you query but cannot customise.
+Want a deeper breakdown? Check out our blog “[What is a Blockchain Indexer](https://docs.envio.dev/blog/what-is-a-blockchain-indexer)”. Or watch our intro tutorial “[How to set up a blockchain indexer](https://www.youtube.com/watch?v=LNhaN-Cikis)” on YouTube.
+
+
+## TL;DR: Quick verdict
 
 
 | Indexer | Best For |
@@ -240,9 +259,6 @@ There is no official hosted service. You deploy and manage your own infrastructu
 
 ## Feature comparison
 
-<div style={{ overflowX: "auto", maxWidth: "100%", WebkitOverflowScrolling: "touch" }}>
-<div style={{ minWidth: "1400px" }}>
-
 
 | Feature | Envio | The Graph | Goldsky | SubQuery | Subsquid (SQD) | Ormi | Ponder |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -258,9 +274,6 @@ There is no official hosted service. You deploy and manage your own infrastructu
 | Independently benchmarked speed | Fastest: 1 min (Sentio Uniswap V2 Factory benchmark, May 2025) | 2h23m (Sentio Uniswap V2 Factory benchmark, May 2025) | Benchmarked (Goldsky_Subgraph, Sentio benchmarks) | Benchmarked (single-contract benchmark) | 15 min (Sentio Uniswap V2 Factory benchmark, May 2025) | Not benchmarked | 2h38m (Sentio Uniswap V2 Factory benchmark, May 2025) |
 | White glove migration | Yes | No | No | No | No | Partial | No |
 | AI-assisted development | Yes | Yes | Yes | Yes | Yes | Yes | No |
-
-</div>
-</div>
 
 
 
@@ -296,8 +309,6 @@ Get started in under 5 minutes: **<code>pnpx envio init</code>**
 ### What is a blockchain indexer?
 
 A blockchain indexer is a system that listens to onchain events (transactions, logs, state changes, blocks) and organises them into a structured, queryable database. Developers use indexers to build fast, reliable backends for dApps, DeFi protocols, NFT platforms, and analytics tools without querying slow RPC endpoints directly.
-
-Want a deeper breakdown? Check out our blog “[What is a Blockchain Indexer](https://docs.envio.dev/blog/what-is-a-blockchain-indexer)”. Or watch our intro tutorial “[How to set up a blockchain indexer](https://www.youtube.com/watch?v=LNhaN-Cikis)” on YouTube.
 
 
 ### What is the fastest blockchain indexer in 2026?

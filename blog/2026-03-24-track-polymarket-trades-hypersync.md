@@ -3,14 +3,24 @@ title: How to Track Polymarket Trades Using Envio's HyperSync
 sidebar_label: How to Track Polymarket Trades Using Envio's HyperSync
 slug: /track-polymarket-trades-hypersync
 tags: ["tutorials"]
-description: "Learn how to track Polymarket trades in real time using Envio's HyperSync. Stream OrderFilled events on Polygon, decode trade data, and filter by amount or wallet address using TypeScript and Bun."
+description: "Track Polymarket trades in real time using Envio HyperSync. Stream OrderFilled events on Polygon and decode trade data using TypeScript and Bun."
 authors: ["nikbhintade"]
 image: /blog-assets/polymarket-trades-hypersync.png
+last_update:
+  date: 2026-04-15
+  author: Nikhil Bhintade
 ---
 
 <img src="/blog-assets/polymarket-trades-hypersync.png" alt="Cover Image: Track Polymarket Trades in Real-Time" width="100%"/>
 
 <!--truncate-->
+
+:::note TL;DR
+- Build a real-time Polymarket trade tracker using Envio HyperSync and TypeScript with Bun.
+- Stream block heights from Polygon and query OrderFilled events from the Polymarket Exchange contracts on each new block.
+- Decode events with Viem, identify buy vs sell trades by checking `makerAssetId`, and calculate price per share.
+- Extend with filters for trade amount or specific wallet addresses to track high-conviction traders.
+:::
 
 Since the rise of prediction markets like [Polymarket](https://polymarket.com) and [Kalshi](https://kalshi.com), many people have been tracking activity on them to get a sense of where the money is going. If we try to track every trade on these prediction markets, you will see many people betting like $10 here, $15 there. If you want a stronger signal, then you should track trades with higher amounts, since those traders have more conviction in the outcome they are betting on.
 
@@ -77,7 +87,7 @@ We already have a height-streaming example in the HyperSync Node client, and we 
 
 ```typescript
 import {
-  HypersyncClient,
+HypersyncClient,
   type Query, // for later use
   type QueryResponseData, // for later use
 } from "@envio-dev/hypersync-client";
@@ -379,6 +389,8 @@ async function fetchOrderFilledEvents(client: HypersyncClient, height: number) {
 
 You can check the project code in this repo: [https://github.com/enviodev/track-poly-trades](https://github.com/enviodev/track-poly-trades)
 
+For the full production-scale Polymarket indexer covering all 8 subgraph domains and 4 billion events, see the [Polymarket HyperIndex Case Study](https://docs.envio.dev/blog/polymarket-hyperindex-case-study).
+
 ## Next Steps
 
 Our aim was to create a tracker that filters trades based on amount and addresses, but we haven’t completed that aim yet. This article gave you the main steps you need to create that tool, so your next step is to add filtering for amount and addresses.
@@ -397,11 +409,28 @@ pnpx poly-whales
 
 ![poly-whales TUI screenshot](/blog-assets/poly-whales-tui.png)
 
+## Frequently Asked Questions
+
+### What is Envio HyperSync?
+HyperSync is Envio's high-performance blockchain data retrieval layer, built as an alternative to traditional JSON-RPC endpoints. It delivers up to 2,000x faster data access than standard RPC methods. Client libraries are available for TypeScript/Node.js, Python, Rust, and Go, with support for 70+ EVM chains including Polygon.
+
+### How do I track Polymarket trades in real time?
+Use the Envio HyperSync Node.js client to stream block heights from Polygon, then query the Exchange contract for OrderFilled events on each new block. Decode the event data with Viem to extract maker, taker, asset IDs, and amounts. A `makerAssetId` of 0 indicates a buy trade.
+
+### How do I identify buy vs sell trades on Polymarket?
+In the OrderFilled event, if `makerAssetId` is 0, the order is a buy where the maker is spending USDC to purchase shares. If `makerAssetId` is non-zero, the order is a sell. Price per share for a buy trade is `makerAmountFilled / takerAmountFilled`, formatted to 6 decimal places.
+
+### What are the Polymarket Exchange contract addresses on Polygon?
+The Polymarket Exchange contracts on Polygon are `0x4bfb41d5b3570defd03c39a9a4d8de6bd8b8982e` and `0xc5d563a36ae78145c45a50134d48a1215220f80a`. The OrderFilled event topic0 is `0xd0a08e8c493f9c94f29311604c9de1b4e8c8d4c06bd0c789af57f2d65bfec0f6`.
+
+### Is there a ready-made Polymarket trade tracker I can run?
+Yes. The full project is available at [github.com/enviodev/track-poly-trades](https://github.com/enviodev/track-poly-trades). For a terminal UI version, run `pnpx poly-whales` to launch the Poly-Whales TUI, which tracks Polymarket whale activity in real time.
+
 ## Build With Envio
 
-Envio is a multi-chain EVM blockchain indexer for querying real-time and historical data. If you’re working on a Web3 project and want a smoother development process, Envio’s got your back(end). Check out our docs, join the community, and let’s talk about your data needs.
+Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data. If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.
 
-Stay tuned for more monthly updates by subscribing to our newsletter, following us on X, or hopping into our Discord for more up-to-date information.
+Stay tuned for more updates by subscribing to our newsletter, following us on X, or hopping into our Discord.
 
 [Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
 

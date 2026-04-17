@@ -1,65 +1,77 @@
 ---
-title: How Envio Simplifies Data Retrieval for Multichain DApps
-sidebar_label: How Envio Simplifies Data Retrieval for Multichain DApps
+title: "How Envio Simplifies Data Retrieval for Multichain dApps"
+sidebar_label: How Envio Simplifies Data Retrieval for Multichain dApps
 slug: /how-envio-simplifies-data-retrieval-for-multi-chain-dapps
-description: "Learn how blockchain indexers like Envio streamline data retrieval for multichain dApps by indexing smart contracts across networks and providing real-time access through a unified query layer."
+description: "How multichain indexing works with Envio HyperIndex, with a practical walkthrough of config, schema, and event handlers for indexing across multiple EVM chains."
 image: /blog-assets/envio-simplifies-data-retrieval-for-multi-chain-dapps.png
+last_update:
+  date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
 
-<img src="/blog-assets/envio-simplifies-data-retrieval-for-multi-chain-dapps.png" alt="Cover Image for Simplifying Data Retrieval for Multi-chain dApps" width="100%"/>
+<img src="/blog-assets/envio-simplifies-data-retrieval-for-multi-chain-dapps.png" alt="How Envio Simplifies Data Retrieval for Multichain dApps" width="100%"/>
 
 <!--truncate-->
 
-The idea that a single blockchain would dominate the digital assets industry was widely accepted in the early days of Web3. It was common to witness debates among ETH and [Bitcoin](https://bitcoin.org/en/) "maxis" arguing over which chain would prevail in Web3. However, fast-forwarding to the present day, the emergence of new Layer-1 networks, Layer-2 scaling solutions, and application-specific chains (referred to as Layer-3s), have paved the way for a multichain future for Web3. This transition introduced new possibilities for scalability, interoperability, and innovation.
+:::note TL;DR
+- Deploying a dApp across multiple chains creates a fragmented data problem. Each chain has its own events, its own state, and no native way to query across them together.
+- Envio HyperIndex solves this with a single indexer instance that reads events from multiple networks and exposes everything through one GraphQL endpoint.
+- Configuration is a single `config.yaml` file. No separate deployments, no cross-service data joins.
+:::
 
-Interoperability, in particular, has created opportunities for projects (incl. blue-chip decentralized applications like [AAVE](https://aave.com/), [Uniswap](https://app.uniswap.org/swap), and [Compound](https://compound.finance/)) to access new markets by deploying dApps across multiple chains. For example, Uniswap is currently operational across over 8+ EVM blockchains, including [Ethereum](https://ethereum.org/en/), [Arbitrum](https://arbitrum.io/), [Optimism](https://www.optimism.io/), [Polygon](https://polygon.technology/), [Base](https://base.org/), [Binance](https://www.binance.com/en), [Avalanche](https://www.avax.network/), and [Celo](https://celo.org/). This deployment strategy demonstrates how dApps can improve user acquisition and profitability by leveraging the benefits of multichain technology.
+The multichain future is already here. Protocols like [Uniswap](https://app.uniswap.org/), [Aave](https://aave.com/), and [Compound](https://compound.finance/) are deployed across Ethereum, Arbitrum, Optimism, Base, Polygon, and more. Reaching users on multiple chains means accepting the data fragmentation that comes with it.
 
-As the multichain universe takes center stage, there is a growing demand for innovative solutions to efficiently manage data across various blockchain networks. For blockchain developers, dealing with fragmented sets of data across multiple blockchains presents a significant challenge. In the case of the Uniswap example, conventional indexing solutions require developers to create separate indexers and, depending on the approach, host individual databases, for each chain deployment. This method can quickly lead to the proliferation of multiple infrastructure components, resulting in increased operational maintenance and higher costs. Additional logic on the client-side application would also be required to aggregate and consolidate the data.
+For developers, this fragmentation is a real infrastructure problem. Traditional indexing approaches require a separate indexer and database per chain. Aggregating that data in your frontend means either stitching together multiple API calls or building additional backend logic to consolidate it. Both approaches add complexity and maintenance overhead.
 
-Builders deploying their dApps across multiple chains are seeking swift and optimized solutions for accessing data dispersed across these networks. This is where multichain indexing comes to the rescue by simplifying complexities and expanding developers' horizons in the Web3 ecosystem. Multichain indexing solutions, like Envio, give builders the option to index and aggregate data across multiple networks into a single database, allowing builders to query all of their data with a unified endpoint.
+## The Multichain Data Problem
 
-### How Envio's MultiChain Indexer Simplifies Data Retrieval
+When a dApp is deployed across multiple chains, every interaction that matters (swaps, transfers, liquidations, mints) is emitted as an event on each respective chain. There is no native cross-chain view of this data.
 
-Envio is thrilled to unveil its latest multichain indexing feature. This groundbreaking feature heralds a new era in Web3 development, offering builders a seamless way to access fragmented data across multiple chains. With this capability, indexing and accessing data from smart contracts on multiple chains becomes effortless through a unified [GraphQL](https://graphql.org/) API.
+The conventional approach requires:
 
-To witness the power of this advancement in action, let's explore a practical example using Envio’s [Greeter Contract Tutorial](https://docs.envio.dev/docs/greeter-tutorial) further below.
+- One indexer deployment per chain
+- One database per chain
+- Custom aggregation logic in the frontend or a separate backend layer
 
-### Multichain Greeter Contract Example
+This compounds quickly. A protocol on five chains needs five indexer deployments to maintain, five databases to keep in sync, and aggregation logic that breaks every time a new chain is added.
 
-A Greeter contract is a very simple smart contract that allows a user to write a greeting message on the blockchain and is deployed on both the [Polygon](https://polygon.technology/) and the [Linea](https://linea.xyz/) blockchain, respectively. For this example, we will only look at the `NewGreeting` event.
+## Multichain Indexing with Envio HyperIndex
 
-In the `config.yaml` file, a user would specify the networks, contract specifications and event information to be used in the indexing process.
+[Envio HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) handles multichain indexing from a single indexer instance. All networks are defined in one `config.yaml`. All indexed data lands in one database. Everything is queryable through one GraphQL endpoint.
+
+Other indexers require a separate subgraph or pipeline per chain. With Envio, adding a new chain is a config change, not a new deployment.
+
+## Example: Greeter Contract on Polygon and Linea
+
+The following example walks through a multichain Greeter indexer that listens for `NewGreeting` events from contracts deployed on both Polygon and Linea.
+
+### config.yaml
 
 ```yaml
 name: Greeter
 description: Greeter indexer
-#Global contract definitions that must contain all definitions except
-#addresses. Now you can share a single handler/abi/event definitions
-#for contracts across multiple chains
-contracts:
-- name: Greeter
-abi_file_path: ./abis/greeter-abi.json
-handler: ./src/EventHandlers.bs.js
-events:
-- event: "NewGreeting"
-requiredEntities:
-- name: "User"
 networks:
-- id: 137 # Polygon
-start_block: 45336336
-contracts:
-- name: Greeter #A reference to the global contract definition
-address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
-- id: 59144 # Linea
-start_block: 367801
-contracts:
-- name: Greeter #A reference to the global contract definition
-address: "0xdEe21B97AB77a16B4b236F952e586cf8408CF32A"
+  - id: 137 # Polygon
+    start_block: 45336336
+    contracts:
+      - name: Greeter
+        abi_file_path: ./abis/greeter-abi.json
+        handler: ./src/EventHandlers.ts
+        events:
+          - event: NewGreeting
+  - id: 59144 # Linea
+    start_block: 367801
+    contracts:
+      - name: Greeter
+        abi_file_path: ./abis/greeter-abi.json
+        handler: ./src/EventHandlers.ts
+        events:
+          - event: NewGreeting
 ```
 
-The Greeter indexer listens to `NewGreeting` events from both the Polygon and Linea [Greeter contracts](https://docs.linea.build/blog/index-greeter-contract-using-envio) to update the Greeting entity.
+Both networks share the same handler and ABI. Adding a third chain means adding another network block. The handler logic stays unchanged.
 
-Through Envio's multichain indexing, builders can specify their event handler to operate against a common schema. The `schema.graphql` file would look like this:
+### schema.graphql
 
 ```graphql
 type User {
@@ -70,43 +82,57 @@ type User {
 }
 ```
 
-Envio allows users to specify a single handler to process common events across contracts deployed on multiple networks. The code snippet example below uses TypeScript as the preferred language.
+### Event handler
+
+A single TypeScript handler processes `NewGreeting` events from both chains:
 
 ```typescript
-import {
-GreeterContract_NewGreeting_loader,
-GreeterContract_NewGreeting_handler,
-} from "../generated/src/Handlers.gen";
+import { Greeter } from "generated";
 
-import { GreetingEntity } *from* "../generated/src/Types.gen";
+Greeter.NewGreeting.handler(async ({ event, context }) => {
+  const currentUser = await context.User.get(event.params.user.toString());
 
-GreeterContract_NewGreeting_loader(({ event, context }) => {
-
-context.User.load(event.params.user.toString());
-...
-});
-
-GreeterContract_NewGreeting_handler(({ event, context }) => {
-let currentUser = context.User.get(event.params.user);
-...
-
+  context.User.set({
+    id: event.params.user.toString(),
+    latestGreeting: event.params.greeting,
+    numberOfGreetings: (currentUser?.numberOfGreetings ?? 0) + 1,
+    greetings: [...(currentUser?.greetings ?? []), event.params.greeting],
+  });
 });
 ```
 
-For a more comprehensive walkthrough on this feature, the documentation can be found [here](https://docs.envio.dev/docs/multichain-indexing).
+The handler runs identically for events from any network in the config. Chain-specific context (like `event.chainId`) is available if you need it for cross-chain logic.
 
-For a more complicated multichain indexing example, builders are encouraged to explore the [Compound V2 Liquidation Metrics](https://docs.envio.dev/docs/example-liquidation-metrics) indexer, built by Envio’s first successful Grantee as part of the [Envio “Build Bigger. Ship Faster” Program](https://docs.envio.dev/blog/envio-grant-program-now-live).
+For the full multichain indexing documentation, see the [Envio docs](https://docs.envio.dev/docs/HyperIndex/multichain-indexing). For a more complex multichain example, see the [Compound V2 Liquidation Metrics indexer](https://docs.envio.dev/docs/HyperIndex/example-liquidation-metrics).
 
-## Conclusion
+## Frequently asked questions
 
-By gaining a deep understanding of how multichain indexing works, developers can leverage Envio’s multichain indexing solution for a more streamlined and efficient way for blazing-fast retrieval of data across multiple chains. Whether you're developing DeFi aggregators, cross-chain NFT marketplaces, or any Web3 application that requires data from multiple networks, Envio’s multichain indexing simplifies the development process, enhancing the user experience, and fostering cross-chain interoperability.
+### How does Envio handle events from multiple chains in one indexer?
 
-## About Envio
+All networks are defined in a single `config.yaml`. HyperIndex processes events from each network in parallel and writes them to a shared database. Your GraphQL API reflects the combined state of all indexed chains.
 
-[Envio](https://envio.dev) is a fast, developer-friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
+### Do I need separate deployments for each chain?
 
-With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
+No. A single HyperIndex instance handles all configured networks. One deployment, one database, one GraphQL endpoint.
 
-If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
+### Can the same handler logic run across different chains?
 
-[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)
+Yes. A single handler function processes matching events from all networks in your config. If you need to apply chain-specific logic, `event.chainId` is available in the handler context.
+
+### How many chains does Envio support?
+
+HyperSync natively supports 70+ EVM chains. Any supported chain can be added to your `config.yaml`. For chains not yet covered by HyperSync, you can fall back to an RPC endpoint without changing your handler code.
+
+### Where can I see a full multichain indexing example?
+
+The [Greeter tutorial](https://docs.envio.dev/docs/greeter-tutorial) in the Envio docs walks through multichain indexing step by step. The [Compound V2 Liquidation Metrics](https://docs.envio.dev/docs/HyperIndex/example-liquidation-metrics) indexer is a more complex real-world example covering 9 forks across 4 chains.
+
+## Build With Envio
+
+Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data. If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.
+
+Stay tuned for more updates by subscribing to our newsletter, following us on X, or hopping into our Discord.
+
+[Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
+
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
