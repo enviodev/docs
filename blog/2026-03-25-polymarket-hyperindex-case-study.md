@@ -7,12 +7,11 @@ tags: ["case-studies"]
 keywords: ["case study", "Polymarket", "blockchain indexer", "HyperIndex", "The Graph migration"]
 description: "Envio HyperIndex replaced 8 Polymarket subgraphs with one TypeScript indexer on Polygon, syncing 4 billion events in 6 days. Open source reference included."
 image: /blog-assets/polymarket-hyperindex-case-study.png
+authors: ["nikbhintade", "j_o_r_d_y_s"]
 last_update:
   date: 2026-04-15
   author: Jordyn Laurier
 ---
-
-Co-authors: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations, and [Nikhil Bhintade](https://x.com/nikbhintade), Growth Engineer
 
 <img src="/blog-assets/polymarket-hyperindex-case-study.png" alt="Indexing 4 Billion Polymarket Events Using Envio HyperIndex" width="100%"/>
 

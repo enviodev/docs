@@ -4,13 +4,12 @@ sidebar_label: How to Track Polymarket Trades Using Envio's HyperSync
 slug: /track-polymarket-trades-hypersync
 tags: ["tutorials"]
 description: "Track Polymarket trades in real time using Envio HyperSync. Stream OrderFilled events on Polygon and decode trade data using TypeScript and Bun."
+authors: ["nikbhintade"]
 image: /blog-assets/polymarket-trades-hypersync.png
 last_update:
   date: 2026-04-15
   author: Nikhil Bhintade
 ---
-
-Author: [Nikhil Bhintade](https://x.com/nikbhintade), Growth Engineer
 
 <img src="/blog-assets/polymarket-trades-hypersync.png" alt="Cover Image: Track Polymarket Trades in Real-Time" width="100%"/>
 

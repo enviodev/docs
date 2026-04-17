@@ -1,0 +1,21 @@
+.wrapper {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e5e5e5;
+  display: flex;
+  justify-content: center;
+}
+
+[data-theme='dark'] .wrapper {
+  border-top: 1px solid #262626;
+}
+
+.iframe {
+  width: 100%;
+  max-width: 560px;
+  height: 315px;
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
+  display: block;
+}

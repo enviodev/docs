@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "prestart": "node ./scripts/update-endpoints.js",
+    "prestart": "node ./scripts/update-endpoints.js && node ./scripts/generate-blog-index.js",
     "start": "docusaurus start",
     "predev": "node ./scripts/update-endpoints.js",
     "dev": "yarn start",
-    "prebuild": "node ./scripts/update-endpoints.js && node ./scripts/validate-blog-social-images.js && node ./scripts/generate-og-images.js && node ./scripts/test-blog-jsonld.js",
+    "prebuild": "node ./scripts/update-endpoints.js && node ./scripts/generate-blog-index.js && node ./scripts/validate-blog-social-images.js && node ./scripts/generate-og-images.js && node ./scripts/test-blog-jsonld.js",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "update-endpoints": "node ./scripts/update-endpoints.js",
