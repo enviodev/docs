@@ -11,6 +11,13 @@ const TAG_LABELS = {
   tutorials: 'Tutorials',
 };
 
+const TAG_HEADING = {
+  'case-studies': 'More Case Studies',
+  'product-updates': 'More Product Updates',
+  announcements: 'More Announcements',
+  tutorials: 'More Tutorials',
+};
+
 function PostCard({post}) {
   const tagLabel = post.tags[0] ? (TAG_LABELS[post.tags[0]] ?? post.tags[0]) : null;
   return (
@@ -35,7 +42,7 @@ function PostCard({post}) {
 
 export default function RelatedPosts() {
   const {metadata} = useBlogPost();
-  const [posts, setPosts] = useState([]);
+  const [result, setResult] = useState(null);
 
   useEffect(() => {
     fetch('/blog-posts-index.json')
@@ -48,24 +55,30 @@ export default function RelatedPosts() {
           (p) => p.permalink !== metadata.permalink,
         );
 
-        // Posts sharing at least one tag with current post, newest first
-        const samTag = others.filter((p) =>
+        const sameTag = others.filter((p) =>
           p.tags.some((t) => currentTags.includes(t)),
         );
 
-        const toShow = samTag.length > 0 ? samTag.slice(0, 3) : others.slice(0, 3);
-        setPosts(toShow);
+        const fromTag = sameTag.length > 0;
+        const items = fromTag ? sameTag.slice(0, 3) : others.slice(0, 3);
+        setResult({items, fromTag, firstTag: currentTags[0] ?? null});
       })
       .catch(() => {});
   }, [metadata.permalink]);
 
-  if (posts.length === 0) return null;
+  if (!result || result.items.length === 0) return null;
+
+  const {items, fromTag, firstTag} = result;
+  const heading =
+    fromTag && firstTag && TAG_HEADING[firstTag]
+      ? TAG_HEADING[firstTag]
+      : 'More Posts';
 
   return (
     <div className={styles.wrapper}>
-      <h3 className={styles.heading}>More posts</h3>
+      <h3 className={styles.heading}>{heading}</h3>
       <div className={styles.grid}>
-        {posts.map((post) => (
+        {items.map((post) => (
           <PostCard key={post.permalink} post={post} />
         ))}
       </div>
