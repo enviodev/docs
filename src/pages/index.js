@@ -1,6 +1,7 @@
 import React from "react";
 import Layout from "@theme/Layout";
 import Link from "@docusaurus/Link";
+import Head from "@docusaurus/Head";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import styles from "./index.module.css";
 
@@ -9,9 +10,11 @@ export default function Home() {
 
   return (
     <Layout
-      title={`${siteConfig.title} - Documentation`}
-      description="Envio documentation for HyperIndex, HyperSync, and HyperRPC—learn how to build, deploy, and scale fast blockchain indexers and data APIs."
+      description="Build real-time multichain blockchain indexers. Index, query, and ship production web3 apps across any EVM chain in minutes."
     >
+      <Head>
+        <title>Envio | Real-time Blockchain Indexer</title>
+      </Head>
       <main className={styles.main}>
         <div className={styles.container}>
           <h1 className={styles.title}>Envio Documentation</h1>
