@@ -250,9 +250,8 @@ const config = {
           showReadingTime: true,
           blogTitle: "Envio Blog",
           blogDescription: "News, announcements, tutorials, and developer updates from the Envio team.",
-          postsPerPage: 9,
-          blogSidebarTitle: "All posts",
-          blogSidebarCount: "ALL",
+          postsPerPage: "ALL",
+          blogSidebarCount: 0,
         },
 
         theme: {
@@ -395,6 +394,21 @@ const config = {
       ],
     }),
   plugins: [
+    [
+      "docusaurus-plugin-mcp-server",
+      {
+        server: {
+          name: "envio-docs",
+          version: "1.0.0",
+        },
+        excludeRoutes: [
+          "/docs/HyperIndex-LLM/**",
+          "/docs/HyperSync-LLM/**",
+          "/docs/HyperRPC-LLM/**",
+        ],
+      },
+    ],
+    require.resolve("./plugins/plugin-blog-jsonld"),
     [
       require.resolve("./plugins/plugin-generate-llms"),
       {

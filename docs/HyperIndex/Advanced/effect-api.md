@@ -70,6 +70,10 @@ ERC20.Transfer.handler(async ({ event, context }) => {
 });
 ```
 
+### Reading On-Chain State (eth_call)
+
+The Effect API is how you perform `eth_call`-style reads from your handlers — for example, reading a token balance, fetching a contract's name, or querying any view function at a specific block.
+
 ### Viem Transport Batching
 
 You can use `viem` or any other blockchain client inside your effect functions. When doing so, it's highly recommended to enable the `batch` option to group all effect calls into fewer RPC requests:
@@ -208,6 +212,63 @@ export const getBalance = createEffect(
 
 Watch the following video to learn more about createEffect and other updates introduced in [v2.32.0](https://github.com/enviodev/hyperindex/releases/tag/v2.32.0).
 <Video id="yvUVzV1ifig" title="Envio v2.32.0" />
+
+### Sending Notifications (Webhooks)
+
+You can use the Effect API to send push notifications or webhook calls when specific events occur. This is useful for alerting systems, Discord/Slack bots, or triggering downstream workflows.
+
+```typescript
+import { createEffect, S } from "envio";
+
+export const sendWebhook = createEffect(
+  {
+    name: "sendWebhook",
+    input: {
+      event: S.string,
+      data: S.string,
+    },
+    output: S.boolean,
+    rateLimit: {
+      calls: 10,
+      per: "second",
+    },
+    // Don't cache webhook calls - we want them to fire every time
+    cache: false,
+  },
+  async ({ input, context }) => {
+    try {
+      await fetch("https://your-webhook-url.com/notify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ event: input.event, data: input.data }),
+      });
+      return true;
+    } catch (error) {
+      context.log.error(`Webhook failed: ${error}`);
+      return false;
+    }
+  }
+);
+```
+
+Then call it from your handler:
+
+```typescript
+MyContract.LargeTransfer.handler(async ({ event, context }) => {
+  await context.effect(sendWebhook, {
+    event: "large_transfer",
+    data: JSON.stringify({
+      from: event.params.from,
+      to: event.params.to,
+      amount: event.params.value.toString(),
+    }),
+  });
+});
+```
+
+:::warning
+Webhook effects will fire on every indexer re-run unless you set `cache: true`. If you cache them, the webhook will only fire once per unique input. Consider which behavior is appropriate for your use case.
+:::
 
 ### Migrate from Experimental
 

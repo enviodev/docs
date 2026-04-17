@@ -2,6 +2,7 @@
 title: Envio Developer Update June 2025
 sidebar_label: Envio Developer Update June 2025
 slug: /envio-developer-update-june-2025
+tags: ["product-updates"]
 description: "What Envio shipped in June 2025: new indexer tools, upgraded data pipelines, and expanded network support for multichain development."
 image: /blog-assets/dev-update-june-2025.png
 last_update:

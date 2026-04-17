@@ -2,6 +2,7 @@
 title: Envio Developer Update October 2025
 sidebar_label: Envio Developer Update October 2025
 slug: /envio-developer-update-october-2025
+tags: ["product-updates"]
 description: "What Envio shipped in October 2025: v2.31.0 with rollback improvements, Scaffold ETH 2 extension, and highlights from ETHOnline and Encode London."
 image: /blog-assets/dev-update-oct-25.png
 last_update:

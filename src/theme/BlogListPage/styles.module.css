@@ -1,0 +1,263 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+}
+
+.pageTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.75rem;
+  color: var(--ifm-color-emphasis-900);
+}
+
+/* Filter pills */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.filterBtn {
+  padding: 0.4rem 1rem;
+  border-radius: 9999px;
+  border: 1px solid #262626;
+  background: transparent;
+  color: #737373;
+  font-size: 0.875rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.filterBtn:hover {
+  border-color: #454545;
+  color: #ffffff;
+}
+
+.filterBtnActive {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+  font-weight: 600;
+}
+
+.filterBtnActive:hover {
+  background: #e5e5e5;
+  border-color: #e5e5e5;
+  color: #000000;
+}
+
+[data-theme='light'] .filterBtn {
+  border-color: #e5e5e5;
+  color: #525252;
+}
+
+[data-theme='light'] .filterBtn:hover {
+  border-color: #a3a3a3;
+  color: #000000;
+}
+
+[data-theme='light'] .filterBtnActive {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+}
+
+[data-theme='light'] .filterBtnActive:hover {
+  background: #1a1a1a;
+  border-color: #1a1a1a;
+}
+
+/* Featured post */
+.featuredWrapper {
+  margin-bottom: 1.25rem;
+}
+
+.featuredCard {
+  display: flex;
+  flex-direction: row !important;
+  align-items: stretch;
+}
+
+.featuredImage {
+  flex: 0 0 55%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-right: 1px solid #242424;
+}
+
+.featuredImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.featuredBody {
+  flex: 1;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.featuredTitle {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 10px;
+  color: var(--ifm-color-emphasis-900);
+}
+
+.featuredDescription {
+  font-size: 0.9375rem;
+  color: #a1a1a1;
+  line-height: 1.6;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Regular card grid */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.grid > * {
+  flex: 0 0 calc((100% - 2rem) / 3);
+}
+
+@media (max-width: 996px) {
+  .grid > * {
+    flex: 0 0 calc((100% - 1rem) / 2);
+  }
+
+  .featuredCard {
+    flex-direction: column !important;
+  }
+
+  .featuredImage {
+    flex: none;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-right: none;
+    border-bottom: 1px solid #242424;
+  }
+}
+
+@media (max-width: 600px) {
+  .grid > * {
+    flex: 0 0 100%;
+  }
+
+  .pageTitle {
+    font-size: 2rem;
+  }
+}
+
+/* Shared card base */
+.card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none !important;
+  color: inherit;
+  border: 1px solid #242424;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  border-color: #454545;
+  transform: scale(1.02);
+  color: inherit;
+}
+
+[data-theme='light'] .card {
+  border-color: #e5e5e5;
+}
+
+[data-theme='light'] .card:hover {
+  border-color: #a3a3a3;
+}
+
+/* Regular card thumbnail */
+.cardImage {
+  height: 200px;
+  overflow: hidden;
+  border-bottom: 1px solid #242424;
+}
+
+.cardImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+[data-theme='light'] .cardImage {
+  border-bottom-color: #e5e5e5;
+}
+
+.cardImagePlaceholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #ff8267 0%, #fdd700 100%);
+}
+
+/* Regular card body */
+.cardBody {
+  padding: 16px 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.cardTitle {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ifm-color-emphasis-900);
+}
+
+.cardDescription {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #a1a1a1;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Category tag badge (above title) */
+.categoryTag {
+  display: inline-block;
+  align-self: flex-start;
+  width: fit-content;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  background: rgba(255, 130, 103, 0.15);
+  color: #ff8267;
+  margin-bottom: 8px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.empty {
+  color: #a1a1a1;
+  text-align: center;
+  padding: 4rem 0;
+  font-size: 1rem;
+}

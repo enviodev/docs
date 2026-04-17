@@ -8,13 +8,16 @@
     "start": "docusaurus start",
     "predev": "node ./scripts/update-endpoints.js",
     "dev": "yarn start",
-    "prebuild": "node ./scripts/update-endpoints.js && node ./scripts/validate-blog-social-images.js",
+    "prebuild": "node ./scripts/update-endpoints.js && node ./scripts/validate-blog-social-images.js && node ./scripts/generate-og-images.js && node ./scripts/test-blog-jsonld.js",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "update-endpoints": "node ./scripts/update-endpoints.js",
+    "test-blog-jsonld": "node ./scripts/test-blog-jsonld.js",
     "update-cli-help": "node ./scripts/update-cli-help.js",
     "update-evm-config-schema": "curl https://raw.githubusercontent.com/enviodev/hyperindex/main/codegenerator/cli/npm/envio/evm.schema.json > ./static/schemas/config.evm.json",
     "generate-config-schema-doc": "node ./scripts/generate-config-schema-doc.js",
+    "generate-og-images": "node ./scripts/generate-og-images.js",
+    "preview-og": "node ./scripts/generate-og-images.js --preview",
     "predeploy": "yarn update-endpoints && yarn update-cli-help && yarn update-evm-config-schema && yarn generate-config-schema-doc",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
@@ -35,6 +38,7 @@
     "clsx": "^1.2.1",
     "docusaurus": "^1.14.7",
     "docusaurus-json-schema-plugin": "^1.12.2",
+    "docusaurus-plugin-mcp-server": "^0.11.0",
     "minimatch": "^10.0.3",
     "prism-react-renderer": "^2.1.0",
     "react": "^18.2.0",
@@ -43,7 +47,9 @@
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.3.2",
     "@docusaurus/types": "3.0.0",
-    "docusaurus-plugin-llms": "^0.2.2"
+    "docusaurus-plugin-llms": "^0.2.2",
+    "sharp": "^0.34.5",
+    "vercel": "^50.40.0"
   },
   "browserslist": {
     "production": [

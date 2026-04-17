@@ -207,8 +207,10 @@ function GenerateLLMSPlugin(context, options) {
                 fs.writeFileSync(outPath, output, "utf-8");
 
                 // ✅ Only run markdown copy for main config
+                // Write .md copies for ALL collected docs so every link in the
+                // static root text resolves — not just those in includeOrder.
                 if (main) {
-                    writeMarkdownCopies(orderedDocs);
+                    writeMarkdownCopies(collectedDocs);
                 }
             }
         },

@@ -2,6 +2,7 @@
 title: Envio Developer Update April 2025
 sidebar_label: Envio Developer Update April 2025
 slug: /envio-developer-update-april-2025
+tags: ["product-updates"]
 description: "What Envio shipped in April 2025: HyperIndex v2.16 and v2.17, topic filters by contract address, a new dev console, and expanded Monad network support."
 image: /blog-assets/dev-update-april-2025.png
 last_update:

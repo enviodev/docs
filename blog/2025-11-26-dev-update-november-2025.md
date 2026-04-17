@@ -2,6 +2,7 @@
 title: Envio Developer Update November 2025
 sidebar_label: Envio Developer Update November 2025
 slug: /envio-developer-update-november-2025
+tags: ["product-updates"]
 description: "What Envio shipped in November 2025: v2.32.0, Monad Mainnet indexing, Alchemy Subgraphs migration, HyperSync Sonic results, and new Rootstock tutorials."
 image: /blog-assets/dev-update-nov-25.png
 last_update:

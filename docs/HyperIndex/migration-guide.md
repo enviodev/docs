@@ -6,7 +6,6 @@ slug: /migration-guide
 description: Easily migrate your existing subgraph to HyperIndex for up to 100x faster indexing speeds, multichain support, and a better developer experience.
 ---
 
-
 # Migrate from The Graph to Envio
 
 :::info
@@ -18,6 +17,10 @@ Please reach out to our team on [Discord](https://discord.gg/envio) for personal
 Migrating your existing subgraph to Envio's HyperIndex is designed to be a developer-friendly process. HyperIndex draws strong inspiration from The Graph’s subgraph architecture, which makes the migration simple, especially with the help of coding assistants like Cursor and AI tools (don't forget to use our [ai friendly docs](/docs/HyperIndex-LLM/hyperindex-complete)).
 
 The process is simple but requires a good understanding of the underlying concepts. If you are new to HyperIndex, we recommend starting with the [Getting Started](../HyperIndex/getting-started) guide.
+
+:::tip Prefer AI-assisted migration?
+If you want an assistant-led workflow, see [How to Migrate Using AI](./migrate-with-ai) for a guided process that works in both Cursor and Claude Code.
+:::
 
 ## Why Migrate to HyperIndex?
 
@@ -193,12 +196,47 @@ context.Subscription.set(entity);
 
 HyperIndex is a powerful tool that can be used to index any contract. There are some features that are especially powerful that go above subgraph implementations and so in some cases you may want to optimise your migration to HyperIndex further to take advantage of these features. Here are some useful tips:
 
-- Use the `field_selection` option to add additional fields to your index. Doc here: [field selection](../HyperIndex/configuration-file#field-selection)
+- Use `field_selection` to opt into optional transaction and block fields (e.g. `hash`, `status`, `gasUsed`) that are not included by default, see [Transaction receipts](#transaction-receipts) for a migration-focused example and the [field selection](../HyperIndex/configuration-file#field-selection) docs for the full list.
 - Use the `unordered_multichain_mode` option to enable unordered multichain mode, this is the most common need for multichain indexing. However comes with tradeoffs worth understanding. Doc here: [unordered multichain mode](../HyperIndex/configuration-file#unordered-multichain-mode)
 - Use wildcard indexing to index by event signatures rather than by contract address.
 - HyperIndex uses the standard GraphQL query language, whereas TheGraph uses a custom GraphQL syntax. You can read about the differences and how to convert queries in our [Query Conversion Guide](/docs/HyperIndex/query-conversion). We also provide a query converter tool for backwards compatibility with existing TheGraph queries.
 - Loaders are a powerful feature to optimize historical sync performance. You can read more about them [here](../HyperIndex/loaders).
 - HyperIndex is very flexible and can be used to index offchain data too or send messages to a queue etc for fetching external data, you can further optimise the fetching by using the [effects api](/docs/HyperIndex/effect-api)
+
+### Transaction receipts
+
+In The Graph, you opt into receipt data per-handler with `receipt: true` in `subgraph.yaml`:
+
+```yaml
+eventHandlers:
+  - event: Transfer(indexed address,indexed address,indexed uint256)
+    handler: handleTransfer
+    receipt: true
+````
+
+This makes `event.receipt` available inside the handler with fields like `status`, `gasUsed`, and `logs`.
+
+In HyperIndex, receipt-level fields are part of `transaction_fields` and must be requested via `field_selection` in `config.yaml`. There is no separate receipt object — the fields are accessed directly on `event.transaction`:
+
+```yaml
+field_selection:
+  transaction_fields:
+    - hash
+    - status # 1 = success, 0 = reverted
+    - gasUsed
+    - cumulativeGasUsed
+    - contractAddress # non-null for contract-creation transactions
+    - logsBloom
+```
+
+```typescript
+MyContract.Transfer.handler(async ({ event, context }) => {
+  const { status, gasUsed } = event.transaction;
+  // ...
+});
+```
+
+See the full list of available `transaction_fields` in the [Configuration File](../HyperIndex/configuration-file#field-selection) docs.
 
 ## Validating Your Migration
 
@@ -211,4 +249,4 @@ If you discover helpful tips during your migration, we'd love contributions! Ope
 ## Getting Help
 
 **Join Our Discord**: The fastest way to get personalized help is through our [Discord community](https://discord.gg/envio).
-```
+

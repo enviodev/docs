@@ -2,6 +2,7 @@
 title: "Agentic Blockchain Indexing with Envio Cloud"
 sidebar_label: "Agentic Blockchain Indexing"
 slug: /agentic-blockchain-indexing-envio-hyperindex
+tags: ["ai"]
 description: "Learn how an AI agent can scaffold, configure, and deploy an EVM indexer to Envio Cloud using the envio-cloud CLI, with no manual config required."
 image: /blog-assets/agentic-blockchain-indexing-updated.png
 last_update:

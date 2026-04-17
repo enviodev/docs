@@ -2,6 +2,7 @@
 title: Announcing the Monad Envio Hackathon Winners
 sidebar_label: Announcing the Monad Envio Hackathon Winners
 slug: /announcing-the-monad-envio-hackathon-winners
+tags: ["announcements"]
 description: "Winning projects from the Monad Envio Hackathon where developers built high-performance apps and showcased real-time blockchain data indexing on Monad."
 image: /blog-assets/monad-hackathon-winners-2025.png
 last_update:

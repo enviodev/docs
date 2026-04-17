@@ -2,6 +2,7 @@
 title: Envio Developer Update December 2025
 sidebar_label: Envio Developer Update December 2025
 slug: /envio-developer-update-december-2025
+tags: ["product-updates"]
 description: "What Envio shipped in December 2025: an early look at HyperIndex v3.0.0, Solana experimentation, Sonic support, and a USDT0 indexing example."
 image: /blog-assets/dev-update-dec-25.png
 last_update:

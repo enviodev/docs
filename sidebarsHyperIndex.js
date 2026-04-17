@@ -45,7 +45,7 @@ module.exports = {
       type: "category",
       label: "Migrate to Envio",
       collapsed: false,
-      items: ["migration-guide", "migrate-from-alchemy", "migrate-to-v3"],
+      items: ["migrate-with-ai", "migration-guide", "migrate-from-ponder", "migrate-from-alchemy", "migrate-to-v3"],
     },
 
     {
@@ -62,6 +62,7 @@ module.exports = {
         "Guides/testing",
         "Guides/navigating-hasura",
         "Guides/environment-variables",
+        "Guides/mcp-server",
       ],
     },
     {
