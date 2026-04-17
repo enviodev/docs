@@ -6,9 +6,8 @@ description: "Learn how efficient blockchain indexers like Envio simplify data a
 image: /blog-assets/blockchain-indexer.png
 last_update:
   date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
-
-Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
 
 <img src="/blog-assets/blockchain-indexer.png" alt="future of blockchain indexing" width="100%"/>
 

@@ -7,9 +7,8 @@ description: "Discover how tokenized real world assets enable fractional real es
 image: /blog-assets/tokenizing-rwa.png
 last_update:
   date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
-
-Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
 
 <img src="/blog-assets/tokenizing-rwa.png" alt="Cover Image Tokenizing RWAs: How Blockchain is Redefining Real Estate Investment" width="100%"/>
 

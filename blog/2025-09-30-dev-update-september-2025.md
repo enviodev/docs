@@ -7,9 +7,8 @@ description: "Catch the highlights from Envio's September 2025 developer update 
 image: /blog-assets/sep-update-2025-0.png
 last_update:
   date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
-
-Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
 
 <img src="/blog-assets/sep-update-2025-0.png" alt="Cover Image Envio Developer Community Update September 2025" width="100%"/>
 

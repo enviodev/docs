@@ -7,9 +7,8 @@ description: "What Envio shipped in July 2025: built-in cache for effect calls, 
 image: /blog-assets/dev-update-july-2025.png
 last_update:
   date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
-
-Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
 
 <img src="/blog-assets/dev-update-july-2025.png" alt="Cover Image Envio Developer Community Update July 2025" width="100%"/>
 

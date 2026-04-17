@@ -6,9 +6,8 @@ description: "What Envio shipped in October 2024: new releases, platform enhance
 image: /blog-assets/envio-developer-community-oct-2024.png
 last_update:
   date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
-
-Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
 
 <img src="/blog-assets/envio-developer-community-oct-2024.png" alt="Cover Image Envio Developer Community Update October 2024" width="100%"/>
 

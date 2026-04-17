@@ -6,9 +6,8 @@ description: "How Envio's HyperSync powers ChainDensity to visualize blockchain 
 image: /blog-assets/density1.png
 last_update:
   date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
-
-Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
 
 <img src="/blog-assets/density1.png" alt="Cover Image for Building ChainDensity" width="100%"/>
 

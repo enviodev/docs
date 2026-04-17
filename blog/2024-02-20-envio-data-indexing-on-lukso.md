@@ -6,9 +6,8 @@ description: "Learn how Envio's blockchain indexer helps developers on LUKSO acc
 image: /blog-assets/envio-partner-lukso.png
 last_update:
   date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
-
-Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
 
 <img src="/blog-assets/envio-partner-lukso.png" alt="Envio Lukso Partnership Cover Image" width="100%"/>
 

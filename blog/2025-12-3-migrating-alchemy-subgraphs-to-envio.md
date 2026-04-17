@@ -6,9 +6,8 @@ description: "Migrate Alchemy Subgraphs to Envio HyperIndex with a clean four-st
 image: /blog-assets/migrating-alchemy-subgraphs.png
 last_update:
   date: 2026-04-15
+authors: ["j_o_r_d_y_s", "nikbhintade"]
 ---
-
-Co-authors: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations, and [Nikhil Bhintade](https://x.com/nikbhintade), Growth Engineer
 
 <img src="/blog-assets/migrating-alchemy-subgraphs.png" alt="Migrating from Alchemy to Envio" width="100%"/>
 

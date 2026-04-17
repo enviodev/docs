@@ -7,9 +7,8 @@ description: "What Envio shipped in December 2025: an early look at HyperIndex v
 image: /blog-assets/dev-update-dec-25.png
 last_update:
   date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
-
-Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
 
 <img src="/blog-assets/dev-update-dec-25.png" alt="Cover Image Envio Developer Update Dec 2025" width="100%"/>
 

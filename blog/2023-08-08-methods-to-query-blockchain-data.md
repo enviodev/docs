@@ -6,9 +6,8 @@ description: "How to query blockchain data: a practical comparison of self-hoste
 image: /blog-assets/how-to-query-blockchain-data.png
 last_update:
   date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
-
-Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
 
 <img src="/blog-assets/how-to-query-blockchain-data.png" alt="How to Query Blockchain Data: Self-Hosted Nodes, RPC Providers, and Indexers Compared" width="100%"/>
 

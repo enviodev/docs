@@ -6,9 +6,8 @@ description: "How blockchain indexers are used in practice to build reliable app
 image: /blog-assets/blockchain-indexer-backends.png
 last_update:
   date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
-
-Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
 
 <img src="/blog-assets/blockchain-indexer-backends.png" alt="Blockchain Indexer For Application Backends" width="100%"/>
 

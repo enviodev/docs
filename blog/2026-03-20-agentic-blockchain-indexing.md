@@ -8,9 +8,8 @@ image: /blog-assets/agentic-blockchain-indexing-updated.png
 last_update:
   date: 2026-04-15
   author: Jords
+authors: ["j_o_r_d_y_s"]
 ---
-
-Author: [Jords](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
 
 <img src="/blog-assets/agentic-blockchain-indexing-updated.png" alt="Cover Image Agentic Blockchain Indexing" width="100%"/>
 

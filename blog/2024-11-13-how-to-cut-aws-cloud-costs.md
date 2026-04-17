@@ -6,9 +6,8 @@ description: "Learn how to optimize your blockchain indexer on AWS using smarter
 image: /blog-assets/cut-aws-cloud-costs1.png
 last_update:
   date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
-
-Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
 
 <img src="/blog-assets/cut-aws-cloud-costs1.png" alt="Envio Cover Photo" width="100%"/>
 

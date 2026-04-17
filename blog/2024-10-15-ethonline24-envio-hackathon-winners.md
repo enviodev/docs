@@ -6,9 +6,8 @@ description: "The winners of EthOnline 2024 where Envio supported 40+ project su
 image: /blog-assets/ethonline-hackathon-winners.png
 last_update:
   date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
-
-Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
 
 <img src="/blog-assets/ethonline-hackathon-winners.png" alt="Cover Image EthOnline 2024 Envio Hackathon Winners" width="100%"/>
 

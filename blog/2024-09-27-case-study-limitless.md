@@ -7,9 +7,8 @@ description: "How Limitless Exchange uses Envio to power a daily prediction mark
 image: /blog-assets/case-study-limitless.png
 last_update:
   date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
-
-Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
 
 <img src="/blog-assets/case-study-limitless.png" alt="Cover Image Limitless Prediction Markets Case Study" width="100%"/>
 

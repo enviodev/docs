@@ -7,9 +7,8 @@ description: "How Sablier replaced 12 separate indexer deployments with one Envi
 image: /blog-assets/case-study-sablier.png
 last_update:
   date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
-
-Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
 
 <img src="/blog-assets/case-study-sablier.png" alt="Cover Image for Case Study Sablier" width="100%"/>
 

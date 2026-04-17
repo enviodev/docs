@@ -7,9 +7,8 @@ description: "Standout projects from the MetaMask Smart Accounts x Monad Dev Coo
 image: /blog-assets/metamask-hackathon-2025.png
 last_update:
   date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
-
-Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
 
 <img src="/blog-assets/metamask-hackathon-2025.png" alt="Metamask Dev-cook off 2025 Hackathon Winners" width="100%"/>
 

@@ -6,9 +6,8 @@ description: "Catch the latest from Envio in November 2024 including platform en
 image: /blog-assets/envio-developer-community-november-2024.png
 last_update:
   date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
-
-Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
 
 <img src="/blog-assets/envio-developer-community-november-2024.png" alt="Cover Image Envio Developer Community Update November 2024" width="100%"/>
 

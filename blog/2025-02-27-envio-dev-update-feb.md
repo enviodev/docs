@@ -7,9 +7,8 @@ description: "What Envio shipped in February 2025: new HyperSync network support
 image: /blog-assets/envio-dev-update-feb-2025.png
 last_update:
   date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
-
-Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
 
 <img src="/blog-assets/envio-dev-update-feb-2025.png" alt="Cover Image Envio Developer Community Update February 2025" width="100%"/>
 

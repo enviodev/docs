@@ -6,9 +6,8 @@ description: "Learn how Envio enables multichain indexing to unify data from mul
 image: /blog-assets/what-is-multi-chain-indexing.png
 last_update:
   date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
-
-Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
 
 <img src="/blog-assets/what-is-multi-chain-indexing.png" alt="Cover Image What is Multichain Indexing?" width="100%"/>
 

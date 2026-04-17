@@ -6,9 +6,8 @@ description: "A practical guide to blockchain dApp development covering smart co
 image: /blog-assets/how-to-become-a-blockchain-developer.png
 last_update:
   date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
-
-Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
 
 <img src="/blog-assets/how-to-become-a-blockchain-developer.png" alt="Cover Image How to Become a Blockchain DApp Developer" width="100%"/>
 

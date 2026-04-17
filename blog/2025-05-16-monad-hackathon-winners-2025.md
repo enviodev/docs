@@ -7,9 +7,8 @@ description: "Winning projects from the Monad Envio Hackathon where developers b
 image: /blog-assets/monad-hackathon-winners-2025.png
 last_update:
   date: 2026-04-15
+authors: ["j_o_r_d_y_s"]
 ---
-
-Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
 
 <img src="/blog-assets/monad-hackathon-winners-2025.png" alt="Cover Image Monad Hackathon Winners" width="100%"/>
 
