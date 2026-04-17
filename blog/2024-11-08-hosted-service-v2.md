@@ -1,73 +1,71 @@
 ---
-title: Envio's V2 Hosted Service Is Here
-sidebar_label: V2 Hosted Service Is Here
+title: "Introducing Envio Cloud: 10x Faster Indexer Deployments"
+sidebar_label: "Introducing Envio Cloud"
 slug: /hosted-service-v2
-description: "Discover how Envio’s hosted service brings ten times faster build and deployment speeds improved performance and zero infrastructure overhead for blockchain indexers."
+description: "Envio Cloud launched November 2024 with 10x faster build and deployment speeds, improved performance, and zero infrastructure overhead for blockchain indexers."
 image: /blog-assets/hosted-service-v2.png
+last_update:
+  date: 2026-04-15
 ---
-<img src="/blog-assets/hosted-service-v2.png" alt="Envio Cover Photo" width="100%"/>
+
+Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
+
+<img src="/blog-assets/hosted-service-v2.png" alt="Envio Cloud Launch" width="100%"/>
 
 <!--truncate-->
 
-Hold on to your Moonlanders—V2 Hosted Service has arrived! It’s a significant upgrade that brings you faster build times, enhanced features, and an overall smoother experience. Starting **Wednesday, Nov 6th, 2024**, all new deployments will automatically utilize V2. Let’s see what you can expect!👇
+:::note TL;DR
+- Envio Cloud launched on November 6th, 2024, with 10x faster build and deployment times, improved UI/UX, and direct database connection access.
+- All new deployments automatically route to Envio Cloud via a GitHub-push deployment model.
+- This post covers the original launch. For current setup, plans, and pricing, see the [Envio Cloud docs](https://docs.envio.dev/docs/HyperIndex/hosted-service).
+:::
 
+This is the original launch announcement for Envio Cloud, published November 6th, 2024. For the most up-to-date information on getting started, plans, and pricing, see the [Envio Cloud documentation](https://docs.envio.dev/docs/HyperIndex/hosted-service).
 
-## What’s New with V2?
+## What launched with Envio Cloud
 
-Here’s what you can expect from the V2 Hosted Service:
+- 10x faster build and deployment times
+- Faster indexing speeds
+- Improved UI/UX
+- Access to direct database connections, IP address whitelisting, and advanced analytics
+- Increased flexibility, improved reliability, and reduced costs behind the scenes
 
+## About Envio Cloud
 
+[Envio Cloud](https://docs.envio.dev/docs/HyperIndex/hosted-service) is the managed infrastructure layer for running HyperIndex indexers in production. With the Envio Deployments GitHub app, you configure and manage your indexers directly from your repository. Push to the `envio` branch and Envio handles the rest, including infrastructure provisioning, scaling, and uptime.
 
-* 10x faster build and deployment times 
-* Faster indexing speeds
-* Improved UI/UX
+Plans range from a free development tier (3 indexers per organization) to paid production plans with static endpoints, built-in alerts, and SLA guarantees. For full pricing details, see the [Pricing and Billing page](https://docs.envio.dev/docs/HyperIndex/hosted-service-billing).
 
-More features:
+Deployment on Envio Cloud requires at least Envio version `2.21.5`. See the [deployment docs](https://docs.envio.dev/docs/HyperIndex/hosted-service-deployment) for setup steps.
 
+## Frequently asked questions
 
+### What is Envio Cloud?
 
-* Access to direct database connections, IP address whitelisting, advanced analytics, and more!
+Envio Cloud is Envio's managed hosting platform for HyperIndex indexers. It handles infrastructure, scaling, and monitoring so you can run indexers in production without managing operational overhead.
 
-Behind-the-scenes enhancements: 
+### How do I deploy to Envio Cloud?
 
+Connect the Envio Deployments GitHub app to your repo, then push to the `envio` branch. Envio Cloud picks up the push and deploys automatically. See the [deployment guide](https://docs.envio.dev/docs/HyperIndex/hosted-service-deployment) for a full walkthrough.
 
+### What plans are available on Envio Cloud?
 
-* Experience increased flexibility, improved reliability, and reduced costs.
+Envio Cloud offers a free development plan (3 indexers per organization) for testing and development, and paid production plans with static endpoints, alerts, and SLA guarantees. See the [Pricing and Billing page](https://docs.envio.dev/docs/HyperIndex/hosted-service-billing) for a full comparison.
 
-*🚨Please note: From November 6th, 2024, all new indexer deployments will automatically route to the V2 Hosted Service instead of the current V1 Hosted Service. If you have existing indexers, any new pushes will deploy to V2 as well. *
+### What is the minimum Envio version required for Envio Cloud?
 
-You can explore your indexers in our new [Explorer](https://v2.envio.dev/explorer), while your V1 indexers will still be accessible at[ envio.dev](http://envio.dev).
+Deployment on Envio Cloud requires at least version `2.21.5`. Always check the [deployment docs](https://docs.envio.dev/docs/HyperIndex/hosted-service-deployment) for the current requirement.
 
+### Where can I get help with Envio Cloud?
 
-## No Costs, Just Upgrades!
+Join the [Discord](https://discord.com/invite/gt7yEUZKeB) for support, or reach out via an existing connection for production plan inquiries.
 
-All developers will automatically be placed on our free development tier, so you won’t incur any costs during this transition. If you’d like to move to a production tier, contact us directly via [Discord](https://discord.com/invite/gt7yEUZKeB) or an existing connection.
+## Build With Envio
 
-*⭐Note: The free development tier does have certain limits to maintain optimal performance for everyone. Also, make sure you’re using Envio version v2.6.0 or greater to deploy on the V2 hosted service—upgrade if you haven’t already!*
+Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data. If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.
 
+Stay tuned for more updates by subscribing to our newsletter, following us on X, or hopping into our Discord.
 
-## A Special Offer for V1 Users
+[Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
 
-To celebrate this milestone, we’re offering all V1-hosted service users a 50% discount on any production plan with a 6-month commitment. This offer supersedes the previous $100 credit for early users, so don’t miss out!
-
-For full details and a list of FAQs, feel free to check out our dedicated Notion [page](https://envio-dev.notion.site/V2-Hosted-Service-Transition-and-FAQs-12faf438121380c98ec7f7626c9f9f83). 👈
-
-If you have any questions or need assistance with the transition, please reach out to us in our [Discord](https://discord.gg/FmEpnAMHSv)—we’re always happy to help!
-
-
-## About Envio’s Hosted Service
-
-Envio’s Hosted Service is designed to simplify the deployment and management of indexers for developers. With the Envio Deployments GitHub app, you can easily configure and manage your indexers, streamlining both development and deployment processes. For those looking to get started, our hosted service provides the entire infrastructure needed to host your indexer. All you need to do is `git push` the latest versions of your codebase to GitHub, and we take care of the rest.
-
-For more information about our hosted service and pricing visit our [docs](https://docs.envio.dev/docs/HyperIndex/hosted-service).
-
-
-## About Envio
-
-[Envio](https://envio.dev) is a fast, developer-friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
-
-With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
-
-If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
-
-[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)

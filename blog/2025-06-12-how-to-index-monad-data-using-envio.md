@@ -2,31 +2,36 @@
 title: How to Index Monad Data Using Envio
 sidebar_label: How to Index Monad Data Using Envio
 slug: /how-to-index-monad-data-using-envio
-description: "Learn how to efficiently index data on Monad using Envio from setting up your project to mapping contracts and querying on-chain events in real-time."
+description: "Learn how to efficiently index data on Monad using Envio from setting up your project to mapping contracts and querying onchain events in real-time."
 image: /blog-assets/indexing-monad-data.png
+last_update:
+  date: 2026-04-15
 ---
+
+Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
+
 <img src="/blog-assets/indexing-monad-data.png" alt="Cover Image How to Index Monad Data Using Envio" width="100%"/>
 
 <!--truncate-->
 
-Name a better duo? We’ll start. Envio is proud to support developers and data analysts building on Monad by providing the most efficient and reliable access to real-time and historical data on the Monad network through our modular indexing stack. By combining Monad’s exceptional speed with Envio’s powerful blockchain indexing solution, developers can easily build highly performant applications that thrive on fast, reliable, and comprehensive data.
+:::note TL;DR
+- Monad is a high-performance EVM Layer 1 with 1-second block times, parallel execution, and 10,000+ TPS, purpose-built for data-rich decentralized applications.
+- Envio supports Monad with HyperIndex (full GraphQL indexing), HyperSync (up to 10,000x faster than RPC for historical data), and HyperRPC (drop-in RPC proxy backed by HyperSync).
+- Compared to The Graph (EVM-only, separate subgraph per chain), Envio's single config covers Monad and all other supported chains through one GraphQL endpoint.
+:::
 
-Monad has emerged as a promising new chapter in blockchain performance, delivering unmatched throughput of up to 10,000 transactions per second for developers and users alike. As a fully EVM-compatible Layer 1, Monad combines one-second block times, optimistic parallel execution, and single-slot finality to redefine what is possible on-chain.
+Envio supports developers and data analysts building on Monad with efficient and reliable access to real-time and historical data through a modular indexing stack. Monad's exceptional throughput of up to 10,000 transactions per second, combined with Envio's indexing infrastructure, gives developers everything they need to build highly performant applications.
 
-In this blog, we will explore why Envio is the best blockchain indexer on Monad and how our indexing stack empowers you to seamlessly sync, query, and leverage data, unlocking everything from analytics dashboards to advanced applications and user-facing experiences.
-
+Monad is a fully EVM-compatible Layer 1 that combines one-second block times, optimistic parallel execution, and single-slot finality. In this blog, we explore why Envio is the right blockchain indexer for Monad and how the indexing stack lets you sync, query, and leverage data on Monad.
 
 ## What is Monad?
 
-[Monad](https://www.monad.xyz/) is a high-performance Layer 1 blockchain built to bring scalability to the EVM without compromising composability. With Monad’s parallel execution engine and focus on low-latency performance, developers can build highly efficient applications that offer higher throughput and lower fees without needing to rewrite existing EVM code.
+[Monad](https://www.monad.xyz/) is a high-performance Layer 1 blockchain built to bring scalability to the EVM without compromising composability. With Monad's parallel execution engine and focus on low-latency performance, developers can build efficient applications with higher throughput and lower fees without rewriting existing EVM code.
 
-
-### Monad features:
-
-
+### Monad features
 
 * One-second block times that reduce transaction finality delays.
-* [Parallel execution](https://docs.monad.xyz/monad-arch/execution/parallel-execution) through Monad’s superscalar architecture for efficient transaction processing.
+* [Parallel execution](https://docs.monad.xyz/monad-arch/execution/parallel-execution) through Monad's superscalar architecture for efficient transaction processing.
 * Single-slot finality powered by [MonadBFT](https://docs.monad.xyz/monad-arch/consensus/monad-bft) consensus, ensuring fast and secure state updates.
 * A highly optimized storage layer called [MonadDB](https://docs.monad.xyz/monad-arch/execution/monaddb) for efficient state access and management.
 * [RaptorCast](https://docs.monad.xyz/monad-arch/consensus/raptorcast) for efficient block transmission and network performance.
@@ -34,80 +39,83 @@ In this blog, we will explore why Envio is the best blockchain indexer on Monad 
 
 These features make Monad an ideal foundation for data-rich decentralized applications that demand speed, reliability, and seamless composability.
 
+## How to index data on Monad
 
-## How to Index Data on Monad
+### HyperIndex
 
-
-#### HyperIndex
-
-A full-featured blockchain indexing framework that transforms on-chain events into structured, queryable databases with GraphQL APIs. It offers Monad developers a complete indexing solution with schema management and event handling, making data on Monad easily accessible and developer-friendly.
+A full-featured blockchain indexing framework that transforms onchain events into structured, queryable databases with GraphQL APIs. It offers Monad developers a complete indexing solution with schema management and event handling, making data on Monad easily accessible and developer-friendly.
 
 [Learn more](https://docs.envio.dev/docs/HyperIndex/overview)
 
-
-#### HyperSync 
+### HyperSync
 
 A high-performance data retrieval layer that gives developers unprecedented access to data on Monad. It directly replaces traditional RPC endpoints, delivering up to 10,000x faster data access. HyperSync enables rapid and cost-effective retrieval of both real-time and historical blockchain data and can be used directly for custom data pipelines and specialized applications.
 
-
 [Learn more](https://docs.envio.dev/docs/HyperSync/overview)
 
+### HyperRPC
 
-#### HyperRPC
-
-A local RPC proxy that supercharges blockchain data access by mapping standard RPC requests to HyperSync’s ultra-fast data engine. HyperRPC accepts typical RPC calls and translates them into HyperSync queries, dramatically reducing latency and eliminating the bottlenecks of traditional RPC endpoints. 
+A local RPC proxy that supercharges blockchain data access by mapping standard RPC requests to HyperSync's ultra-fast data engine. HyperRPC accepts typical RPC calls and translates them into HyperSync queries, dramatically reducing latency and eliminating the bottlenecks of traditional RPC endpoints.
 
 [Learn more](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc)
 
-A high-throughput chain deserves infrastructure that can keep up. By utilizing Envio, you can harness the full potential of Monad’s high-throughput environment and build unstoppable applications.
+A high-throughput chain deserves infrastructure that can keep up. By utilizing Envio, you can harness the full potential of Monad's high-throughput environment and build fast, reliable applications.
 
-
-### Additional Features for Monad Indexers Built Using Envio
+### Additional features for Monad indexers built using Envio
 
 Envio offers a range of advanced capabilities that make it easy to build rich, flexible data pipelines on Monad:
 
+* **Flexible language support**: Configure your event handling in JavaScript, TypeScript, or ReScript.
+* **No-code quickstart**: Autogenerate the key boilerplate for an entire indexer project based on single or multiple smart contracts. Deploy within minutes.
+* **Multichain support**: Aggregate data across multiple networks into a single database and query everything through a unified GraphQL API.
+* **Join onchain and off-chain data**: Connect indexed blockchain data with off-chain data to create a flexible API that goes beyond simple onchain event logs, such as integrating external NFT metadata.
+* **Factory contracts**: Automatically register and process events emitted by all child contracts created by a specified factory or dynamic contract.
+* **Hosted service**: The simplest way to deploy production-ready indexers on Monad. A managed service platform for building, hosting, and querying Envio's Indexers with guaranteed uptime and performance service level agreements.
 
-
-* **Flexible Language Support**: Configure your event handling in familiar and widely supported languages such as JavaScript, TypeScript, or ReScript.
-* **No-Code Quickstart**: Autogenerate the key boilerplate for an entire indexer project based on single or multiple smart contracts. Deploy within minutes.
-* **Multichain Support**: Aggregate data across multiple networks into a single database and query everything through a unified GraphQL API.
-* **Join On-Chain and Off-Chain Data**: Connect indexed blockchain data with off-chain data to create a flexible API that goes beyond simple on-chain event logs, such as integrating external NFT metadata.
-* **Factory Contracts**: Automatically register and process events emitted by all child contracts created by a specified factory or dynamic contract.
-* **Hosted Service**: The simplest way to deploy production-ready indexers on Monad. A managed service platform for building, hosting, and querying Envio's Indexers with guaranteed uptime and performance service level agreements.
-
-These additional features make Envio the ideal choice for building next-generation data-driven applications on Monad and beyond.
-
-
-## Existing Use Cases on Monad Utilizing Envio
-
-
+## Existing use cases on Monad utilizing Envio
 
 * [Monorail](https://github.com/monorail-xyz/uniswap-v3-pools-indexer)
 * [Nad.fun](https://x.com/naddotfun/status/1920483968417177768)
 * [Haha Wallet](https://x.com/envio_indexer/status/1892230066328756263)
 
+These are just a few examples of Envio powering applications in the Monad ecosystem. Check out this [thread](https://x.com/envio_indexer/status/1900493623784808598) for more examples, or explore the [Envio Explorer](https://envio.dev/explorer).
 
-These are just a few great examples of Envio in the wild, powering awesome applications in the Monad ecosystem. Feel free to check out this [thread](https://x.com/envio_indexer/status/1900493623784808598) for even more examples or dive into our [Explorer](https://envio.dev/explorer).
-
-
-## Relevant Resources
-
-
+## Relevant resources
 
 * [Getting Started](https://docs.envio.dev/docs/HyperIndex/getting-started)
 * [Indexing Monad Data with Envio](https://docs.envio.dev/docs/HyperIndex/monad-testnet#indexing-monad-testnet-data-with-envio)
-* [Envio’s HyperSync](https://docs.envio.dev/docs/HyperSync/overview)
-* [Envio’s Hosted Service](https://docs.envio.dev/docs/HyperIndex/hosted-service)
+* [Envio's HyperSync](https://docs.envio.dev/docs/HyperSync/overview)
+* [Envio's Hosted Service](https://docs.envio.dev/docs/HyperIndex/hosted-service)
 * [How to build a transfer notification bot with Envio HyperIndex](https://docs.monad.xyz/guides/indexers/tg-bot-using-envio)
 
+## Frequently asked questions
 
-## Getting Support
+### Does Envio support Monad mainnet and testnet?
 
-Data indexing can be challenging, especially for complex use cases. Our engineers are always ready to assist you with your data availability needs. Join our growing community of elite builders and experience peace of mind with Envio. Feel free to reach out to us on Discord or email us at hello@envio.dev.
+Yes. Envio HyperSync and HyperIndex support both Monad mainnet and testnet. You configure the network in your `config.yaml` using the appropriate chain ID, and the indexer handles data retrieval automatically.
 
+### How fast is HyperSync on Monad compared to standard RPC?
 
-## About Envio
+HyperSync can deliver up to 10,000x faster historical data retrieval than standard RPC on Monad by bypassing the JSON-RPC layer entirely. This means syncing millions of events that would take hours via RPC completes in minutes.
 
-[Envio](https://envio.dev/) is a modern, multichain EVM blockchain indexer designed for real-time and historical data access. If you’re building on Monad or any other EVM-compatible network, Envio is here to make your development process faster and more efficient. Explore our [documentation](https://docs.envio.dev/docs/HyperIndex/overview), join the community, and let’s connect about your data needs.
+### Can I use Envio to index multiple chains including Monad in a single indexer?
+
+Yes. Add Monad and any other EVM chains to the `networks` section of your `config.yaml`. The resulting indexer processes all chains and exposes a single GraphQL endpoint for all data, making cross-chain queries straightforward.
+
+### What is the difference between HyperSync and HyperRPC on Monad?
+
+HyperSync is a low-level API used internally by HyperIndex for fast historical data retrieval and available as a standalone API for custom pipelines. HyperRPC is a local proxy that maps standard JSON-RPC calls to HyperSync queries, so existing tools that use RPC can benefit from HyperSync's speed without code changes.
+
+### Is Envio the best indexer for Monad compared to The Graph?
+
+The Graph does not natively support Monad. Envio has dedicated HyperSync support for Monad and provides the full HyperIndex framework for building GraphQL APIs on Monad data. Envio's single-config multichain approach also makes it easier to combine Monad data with data from other EVM chains in one indexer.
+
+## Build With Envio
+
+Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data. If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.
+
+Stay tuned for more updates by subscribing to our newsletter, following us on X, or hopping into our Discord.
+
+[Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
 
 [Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)

@@ -4,6 +4,9 @@ sidebar_label: Envio Developer Update March 2026
 slug: /envio-developer-update-march-2026
 description: "Envio Developer Update March 2026: HyperIndex alpha.15-19, agentic indexing workflows, subgraph hosting, ecosystem highlights, and upcoming events."
 image: /blog-assets/dev-update-march-2026.png
+last_update:
+  date: 2026-04-15
+  author: Jords
 ---
 
 Author: [Jords](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
@@ -17,13 +20,13 @@ This month we also rebranded our Hosted Service to Envio Cloud. Alongside this, 
 
 Let's dive in!
 
-## 💻 Alpha Releases: Alpha.15 -> Alpha.19
+## Alpha Releases: Alpha.15 -> Alpha.19
 
 Loads of exciting progress landed across the latest alpha releases this month. This stretch focused on improving scale, flexibility, testing, and the overall developer experience across HyperIndex, with a mix of new features, internal improvements, and important updates to observability.
 
 ### Alpha.15
 
-#### 🔍 New getWhere operators: <code>_gte</code>, <code>_lte</code>, <code>_in</code>
+#### New getWhere operators: <code>_gte</code>, <code>_lte</code>, <code>_in</code>
 
 Three new filter operators have been added for getWhere queries, following Hasura-style conventions:
 
@@ -33,7 +36,7 @@ context.Entity.getWhere({ amount: { _lte: 500n } })
 context.Entity.getWhere({ status: { _in: ["active", "pending"] } })
 ```
 
-#### 👨‍🚒 Support double handler registration
+#### Support double handler registration
 
 Allows double handler registration for the same event with similar filters:
 
@@ -49,7 +52,7 @@ ERC20.Transfer.handler(async ({ event, context }) => {
 });
 ```
 
-#### 🤖 Other improvements
+#### Other improvements
 
 We consistently improve HyperIndex to make it easier to contribute to for both humans and AI. Recent work includes:
 
@@ -60,11 +63,11 @@ We consistently improve HyperIndex to make it easier to contribute to for both h
 
 ### Alpha.18
 
-#### ⚡ Support indexers with 2.1B+ events per chain
+#### Support indexers with 2.1B+ events per chain
 
 Scale indexers approaching int32 limits. Now you can build even larger, more performant indexers with HyperIndex.
 
-#### 🚨 Breaking: Official <code>/metrics</code> endpoint
+#### Breaking: Official <code>/metrics</code> endpoint
 
 Existing Prometheus metrics just got a major upgrade.
 
@@ -76,8 +79,8 @@ Starting with v3.0.0, Prometheus metrics are no longer experimental. The `/metri
 
 For more information and to stay up to date with all current and past releases, be sure to check out our release notes below.
 
-👉 See full [release notes](https://github.com/enviodev/hyperindex/releases)  
-👉 Star us on [GitHub](https://github.com/enviodev/hyperindex) ⭐
+ See full [release notes](https://github.com/enviodev/hyperindex/releases)  
+ Star us on [GitHub](https://github.com/enviodev/hyperindex)
 
 ## Hosted Service is now Envio Cloud
 <img src="/blog-assets/envio-cloud-1.png" alt="Hosted Service renamed to Envio Cloud" width="100%"/>
@@ -201,12 +204,12 @@ It's a practical breakdown of the trade-offs between tools and what to consider 
 
 Learn and compare in our latest blog: [https://docs.envio.dev/blog/best-blockchain-indexers-2026](https://docs.envio.dev/blog/best-blockchain-indexers-2026)
 
-## 🗓️ Current & Upcoming Events & Hackathons
+## Current & Upcoming Events & Hackathons
 
 * [EthCC - Cannes](https://ethcc.io/): March 30th -> April 2nd
 * [EthConf - New York](https://ethconf.com/): June 8th -> 10th
 
-## 🧑‍💻 Featured Developer: Praveen Matheesha
+## Featured Developer: Praveen Matheesha
 
 <img src="/blog-assets/dev-update-march-2026-9.png" alt="Featured developer Praveen Matheesha" width="100%"/>
 
@@ -214,19 +217,19 @@ This month's featured developer is Praveen Matheesha, a developer focused on bui
 
 **What Praveen had to say about Envio:**
 
-> ***"Before discovering Envio, I was building my own EVM indexer from scratch in Rust. I implemented support for chain reorg handling, historical backfilling, batched RPC ingestion, and WebSocket streams for real-time updates. While it worked, a significant amount of time went into building and maintaining the infrastructure layer itself. When I discovered Envio and HyperSync, it immediately stood out as a much more efficient approach. It solves many of the challenges around reliable, high-performance blockchain data access that developers often end up rebuilding from scratch. If I had found it earlier, I likely could have saved weeks of work and focused more on the actual analytics and business logic rather than the ingestion pipeline. I also wrote a detailed article about building a production-ready EVM indexer in Rust, where I mentioned Envio as a great option for developers who want to avoid spending weeks building indexing infrastructure themselves. Overall, HyperSync makes it significantly easier to work with large volumes of on-chain data and allows developers to focus on building insights and applications instead of reinventing core data infrastructure."***
+> ***"Before discovering Envio, I was building my own EVM indexer from scratch in Rust. I implemented support for chain reorg handling, historical backfilling, batched RPC ingestion, and WebSocket streams for real-time updates. While it worked, a significant amount of time went into building and maintaining the infrastructure layer itself. When I discovered Envio and HyperSync, it immediately stood out as a much more efficient approach. It solves many of the challenges around reliable, high-performance blockchain data access that developers often end up rebuilding from scratch. If I had found it earlier, I likely could have saved weeks of work and focused more on the actual analytics and business logic rather than the ingestion pipeline. I also wrote a detailed article about building a production-ready EVM indexer in Rust, where I mentioned Envio as a great option for developers who want to avoid spending weeks building indexing infrastructure themselves. Overall, HyperSync makes it significantly easier to work with large volumes of onchain data and allows developers to focus on building insights and applications instead of reinventing core data infrastructure."***
 
 Well done, Praveen. Be sure to follow the team on [X](https://x.com/hpmszk) and check out their [GitHub](https://github.com/matheeshame) to stay up to date with their latest developments.
 
-## 🎧️ Playlist of the Month
+## Playlist of the Month
 
 <img src="/blog-assets/dev-update-march-2026-10.png" alt="Playlist of the month" width="100%"/>
 
-▶️ [Open Spotify](https://open.spotify.com/playlist/240pHTCbwvf6kBMdfWGmw9?si=bb40d616e82a49f3)
+▶ [Open Spotify](https://open.spotify.com/playlist/240pHTCbwvf6kBMdfWGmw9?si=bb40d616e82a49f3)
 
-## Build with Envio
+## Build With Envio
 
-Envio is a multi-chain EVM blockchain indexer for querying real-time and historical data. If you're working on a Web3 project and want a smoother development process, Envio's got your back(end). Check out our docs, join the community, and let's talk about your data needs.
+Envio is a multichain EVM blockchain indexer for querying real-time and historical data. If you're working on a Web3 project and want a smoother development process, Envio's got your back(end). Check out our docs, join the community, and let's talk about your data needs.
 
 Stay tuned for more monthly updates by subscribing to our newsletter, following us on X, or hopping into our Discord for more up-to-date information.
 

@@ -2,114 +2,127 @@
 title: Exploring Real-time Oracle Behavior and Push Based Feeds
 sidebar_label: Exploring Real-time Oracle Behavior and Push Based Feeds
 slug: /oracle-wars
-description: "Learn how Oracle Wars uses Envio’s HyperIndex to visualise how different oracle providers behave in real-time so you can design more reliable on-chain systems."
+description: "Learn how Oracle Wars uses Envio's HyperIndex to visualise how different oracle providers behave in real-time so you can design more reliable onchain systems."
 image: /blog-assets/oracle-wars-1.png
+last_update:
+  date: 2026-04-15
 ---
+
+Co-authors: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations, and [Jonjon Clark](https://x.com/jonjonclark), Co-Founder at Envio
 
 <img src="/blog-assets/oracle-wars-1.png" alt="Cover Image Oracle Wars" width="100%"/>
 
 <!--truncate-->
 
-Oracles are the unsung heroes of DeFi. They connect blockchains to real-world data, enabling smart contracts to interact with off-chain events like asset prices (USDC, ETH), market rates, or even real-time sports scores. But while the concept of oracles is often discussed in theoretical terms, visualizing how they behave in practice can offer a new level of clarity, especially for developers building apps on-chain.
+:::note TL;DR
+- Oracle Wars is a live dashboard that visualizes real-time oracle behavior on MegaETH, built with Envio HyperIndex in under two hours.
+- Push oracles use heartbeat intervals and deviation thresholds to trigger updates. A 0.5% deviation threshold does not mean consecutive onchain prices only differ by 0.5%.
+- HyperIndex makes building real-time monitoring tools for high-throughput chains like MegaETH straightforward, with no RPC rate limit concerns.
+:::
 
-Enter [Oracle Wars](https://www.oraclewars.xyz/), a live feed of on-chain oracle data that compares how different providers behave in real-time. It helps developers visualize and gain a better understanding of how oracles actually function under different market conditions, so they can design more reliable and secure smart contracts.
+Oracles are the connection between blockchains and real-world data, enabling smart contracts to interact with off-chain events like asset prices, market rates, or real-time sports scores. Visualizing how they behave in practice offers a new level of clarity for developers building onchain apps.
 
-⭐ **Please note**: The dashboard shown above is no longer live on the site. Oracle Wars is currently displaying live ETH/USD price oracle updates from the [Redstone Bolt](https://blog.redstone.finance/2025/04/08/introducing-redstone-bolt-the-fastest-blockchain-oracle-to-date/) oracle feed on MegaETH, rather than the multi-oracle comparison dashboard featured above. Oracle Wars remains an educational and experimental tool for surfacing real-time data from various oracle providers, helping developers better understand oracle behavior as the data and tooling continues to evolve.
+[Oracle Wars](https://www.oraclewars.xyz/) is a live feed of onchain oracle data that shows how different providers behave in real time. It helps developers visualize and better understand how oracles function under different market conditions, so they can design more reliable and secure smart contracts.
 
+**Please note**: The multi-oracle comparison dashboard shown in earlier versions is no longer live on the site. Oracle Wars currently displays live ETH/USD price oracle updates from the [Redstone Bolt](https://blog.redstone.finance/2025/04/08/introducing-redstone-bolt-the-fastest-blockchain-oracle-to-date/) oracle feed on MegaETH. Oracle Wars remains an educational and experimental tool for surfacing real-time data from various oracle providers.
 
-## What is a Blockchain Oracle?
+## What is a blockchain oracle?
 
-If you're building in the decentralized space, you’ve more than likely heard about oracles. In simple terms, they allow smart contracts to react to external data sources. Whether it's the latest price of an asset or the outcome of a sporting event, oracles are how the blockchain sees the world.
+In simple terms, oracles allow smart contracts to react to external data sources. Whether it is the latest price of an asset or the outcome of a sporting event, oracles are how the blockchain sees the world.
 
-Over time, oracle architectures have evolved. From the early days of Truffle and Ganache to today’s production-grade protocols, we've seen the rise of push-based oracles, pull-based oracles, and many more. Each design has trade-offs. For now, let’s zero in on push oracles and how they behave from a data perspective.
+Over time, oracle architectures have evolved, giving rise to push-based oracles, pull-based oracles, and many more. Each design has trade-offs. This post focuses on push oracles and how they behave from a data perspective.
 
+### Push oracles in practice
 
+A push oracle periodically pushes data onto the blockchain. Your contract reads that data and responds accordingly, whether it is executing a trade, adjusting a loan-to-value ratio, or triggering another onchain action.
 
-### Push Oracles in Practice
+Most push oracles use two primary mechanisms:
 
-A push oracle works exactly as the name implies: it periodically pushes data onto the blockchain. Your contract can then read that data and respond accordingly, whether it's executing a trade, adjusting a loan-to-value ratio, or minting some ridiculous meme coin.
+1. **Heartbeat intervals**: Regular updates (e.g., every 24 hours)
+2. **Deviation thresholds**: Immediate updates when data shifts significantly (e.g., 0.5% price movement)
 
+## Visualizing real-time oracle activity with Oracle Wars
 
-#### Most push oracles use two primary mechanisms:
+Wonder what happens in live conditions during periods of high volatility? That is where Oracle Wars comes in. It shows a live comparison between price feeds from different oracle providers such as [Chainlink](https://chain.link/) and [RedStone](https://www.redstone.finance/).
 
-
-
-1. **Heartbeat intervals** – Regular updates (e.g., every 24 hours)
-2. **Deviation thresholds** – Immediate updates when data shifts significantly (e.g., 0.5% price movement)
-
-
-
-## Visualizing Real-Time Oracle Activity with Oracle Wars
-
-Wonder what happens in live conditions, during periods of high volatility? That’s where Oracle Wars comes in. It can show a live comparison between price feeds from different oracle providers, such as [Chainlink](https://chain.link/) and [RedStone](https://www.redstone.finance/).
-
-You’ll notice that updates aren’t always evenly spaced. That’s the deviation threshold kicking in when markets get volatile, updates come in fast. When things are calm, fewer updates appear. It’s a valuable pattern to observe, especially if you’re designing a protocol that depends on accurate and real-time data.
-
-For example, this volatility spike, between Chainlink and RedStone posted frequent updates to reflect price changes, an essential feature for platforms like [Aave](https://app.aacve.com/dashboard), which depend on real-time data for liquidation logic and capital safety.
+You will notice that updates are not always evenly spaced. That is the deviation threshold kicking in: when markets get volatile, updates come in fast. When things are calm, fewer updates appear. This is a valuable pattern to observe if you are designing a protocol that depends on accurate and real-time data.
 
 <img src="/blog-assets/oracle-wars-2.png" alt="Oracle Wars 2" width="100%"/>
 
-## Understanding the Limitations of Deviation Thresholds in Push Oracles
+## Understanding the limitations of deviation thresholds in push oracles
 
-Oracle Wars also allows you to see the maximum deviation between any two consecutive price points over 24 hours. Why does this matter? Every DeFi protocol relies on timely and accurate price data, and large shifts between updates can lead to exploit risk, broken assumptions, or cascading failures. This metric gives developers a real-world view of how much price movement can actually occur between updates, even when using well-known oracle providers.
+Oracle Wars also shows the maximum deviation between any two consecutive price points over 24 hours. Every DeFi protocol relies on timely and accurate price data, and large shifts between updates can lead to exploit risk, broken assumptions, or cascading failures. This metric gives developers a real-world view of how much price movement can actually occur between updates, even when using well-known oracle providers.
 
 This brings us to a common misunderstanding: deviation thresholds are not strict limits.
 
-Take Chainlink and RedStone, for instance. Both use a 0.5% deviation threshold for price feeds. That should mean the oracle updates whenever the price moves more than 0.5%. But here’s the catch:
+Take Chainlink and RedStone, for instance. Both use a 0.5% deviation threshold for price feeds. That should mean the oracle updates whenever the price moves more than 0.5%. But here is the catch:
 
-A 0.5% deviation threshold does not mean consecutive on-chain prices will only differ by 0.5%.
+A 0.5% deviation threshold does not mean consecutive onchain prices will only differ by 0.5%.
 
-In practice, you might see larger deviations. Over 24 hours alone, Oracle Wars recorded deviations of around 0.67% for both providers. This doesn’t mean the oracles were broken, it means they’re working as designed. The threshold is more of a trigger condition than a strict upper bound.
+In practice, you might see larger deviations. Over 24 hours alone, Oracle Wars recorded deviations of around 0.67% for both providers. This does not mean the oracles were broken. It means they are working as designed. The threshold is more of a trigger condition than a strict upper bound.
 
-So if you're competing in security audits on platforms like Sherlock, Code4rena, or CodeHawks, it's worth thinking through these edge cases. Your protocol logic needs to account for these potentially higher-than-expected changes, especially in volatile markets.
+If you are competing in security audits on platforms like Sherlock, Code4rena, or CodeHawks, these edge cases are worth thinking through. Your protocol logic needs to account for potentially higher-than-expected changes, especially in volatile markets.
 
+## Is a super-fast push oracle now better than a pull oracle?
 
-## Is a Super-Fast Push Oracle Now Better Than a Pull Oracle?
+With the advent of high-speed chains like MegaETH and Monad, we are starting to see ultra-fast push oracles that update data with each block. This near-instantaneous data feed challenges traditional push oracles, offering freshness comparable to pull oracles, provided transaction costs remain manageable.
 
-With the advent of high-speed chains like MegaETH and Monad, we’re starting to see the rise of ultra-fast push oracles that update data with each block. This near-instantaneous data feed challenges traditional push oracles, offering freshness comparable to pull oracles, provided transaction costs remain manageable.
-
-On Oracle Wars, you can now observe how these super-fast push oracles behave in real-time, with feeds like the ETH/USD price on MegaETH. The data is continuously updated, providing a new level of insight into how push oracles might evolve to rival the responsiveness of pull models.
+On Oracle Wars, you can observe how these super-fast push oracles behave in real time, with feeds like the ETH/USD price on MegaETH. The data is continuously updated, providing a new level of insight into how push oracles might evolve to rival the responsiveness of pull models.
 
 <img src="/blog-assets/oracle-wars-3.png" alt="Oracle Wars 2" width="100%"/>
 
-However, one aspect that remains intriguing is the frequent occurrence of multiple price updates at the same timestamp. This raises questions about whether these oracles are pushing multiple updates within the same block, and the rationale behind this granularity.
+One aspect that remains intriguing is the frequent occurrence of multiple price updates at the same timestamp. This raises questions about whether these oracles are pushing multiple updates within the same block and the rationale behind this granularity.
 
-While Redstone's "Bolt" push oracle is an exciting development, it’s still early days. It will be interesting to see how other oracle providers and chains approach the super-fast push model. The key question remains: Can these ultra-fast push oracles maintain the freshness and reliability of pull oracles without significant cost overhead?
+While Redstone's Bolt push oracle is an exciting development, it is still early days. It will be interesting to see how other oracle providers and chains approach the super-fast push model. The key question remains: can ultra-fast push oracles maintain the freshness and reliability of pull oracles without significant cost overhead?
 
+## Oracle Wars: powered by Envio's HyperIndex
 
-## Oracle Wars: Powered by Envio’s HyperIndex
+Oracle Wars was built in under two hours using Envio's HyperIndex, which made indexing real-time oracle data smooth and straightforward. No custom RPC infrastructure was needed, and no rate limit concerns applied.
 
-To pull this off and index this level of data, we used HyperIndex, our open blockchain indexing framework which seamlessly queried this data effortlessly. The entire Oracle Wars platform was built in under two hours using Envio’s HyperIndex, which made indexing real-time oracle data smooth and easy.
+If you are building dashboards, simulations, or monitoring tools, it is worth checking out. Need help getting started? Feel free to reach out in our Discord or on Telegram.
 
-If you're building dashboards, simulations, or monitoring tools, it’s worth checking out. Need help getting started? Feel free to reach out to us in our Discord or on Telegram, we’re always happy to walk you through it!
-
-
-### Helpful Resources
-
-
+### Helpful resources
 
 * [HyperIndex Quickstart](https://docs.envio.dev/docs/HyperIndex/contract-import)
 * [Guides](https://docs.envio.dev/docs/HyperIndex/configuration-file)
 * [Examples](https://docs.envio.dev/docs/HyperIndex/example-uniswap-v4-multi-chain-indexer)
 * [GitHub Repo](https://github.com/enviodev/hyperindex)
 
-Thanks for reading, and if you're curious, feel free to check out the original background posts on X that kicked this all off: 
-
-
+Background posts on X that kicked this off:
 
 * [Thinking through oracles with data](https://x.com/jonjonclark/status/1890426833088246054)
 * [Understanding the Limitations of Deviation Thresholds in Push Oracles](https://x.com/jonjonclark/status/1892208677815300350)
 * [How Much Latency Do High-Frequency Oracle Push Feeds Actually Have?](https://x.com/jonjonclark/status/1903109614318575809)
-* [Is a super-fast push oracle now better than a pull oracle?](https://x.com/jonjonclark/status/1909635483182789020) 
+* [Is a super-fast push oracle now better than a pull oracle?](https://x.com/jonjonclark/status/1909635483182789020)
 
+## Frequently asked questions
 
+### What is the difference between a push oracle and a pull oracle?
 
-## About Envio
+A push oracle periodically writes updated data directly to the blockchain. A pull oracle does not write data proactively. Instead, it allows consumers to request data on demand, usually with a small fee. Pull oracles can offer fresher data per request, but push oracles are simpler to integrate since the data is already onchain when your contract needs it.
 
-[Envio](https://envio.dev) is a fast, developer friendly blockchain indexer and the fastest, most flexible way to get on-chain data, making real-time data accessible for developers across the Web3 ecosystem.
+### Why can the actual price deviation between oracle updates exceed the stated deviation threshold?
 
-With Envio, developers can query and stream blockchain data efficiently without the complexity of running their own infrastructure. Envio’s blockchain indexing tools supports any EVM network and is trusted by many teams building everything from DeFi platforms to analytics dashboards and production applications.
+Deviation thresholds are trigger conditions, not strict caps. When the threshold is set at 0.5%, the oracle updates whenever the price moves 0.5% from the last onchain price. However, by the time the update transaction is confirmed, the actual market price may have moved further. During high volatility, you can observe deviations larger than the configured threshold.
 
-If you’re a blockchain developer or analyst looking to enhance your workflow, look no further. Join our growing community of Web3 builders and explore our docs.
+### How was Oracle Wars built so quickly using Envio?
 
-[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [GitHub](https://github.com/enviodev) | [Medium](https://medium.com/@Envio_Indexer)
+Oracle Wars was built in under two hours because Envio HyperIndex handles all data ingestion, storage, and GraphQL API generation automatically. The developer only needed to define the oracle contract's ABI, configure the events of interest in `config.yaml`, and write event handlers to store price updates. Envio handles the rest.
+
+### Can HyperIndex handle the data throughput of high-frequency oracle feeds on MegaETH?
+
+Yes. HyperIndex is designed for high-throughput chains and uses HyperSync as its data retrieval layer, which bypasses RPC entirely for historical data and keeps up with real-time blocks efficiently. Oracle Wars on MegaETH demonstrates this with continuous ETH/USD price streaming at sub-millisecond block times.
+
+### Should I use Oracle Wars for production smart contract design decisions?
+
+Oracle Wars is an educational and experimental tool, not a production monitoring service. It is useful for understanding how push oracles behave under real market conditions and for informing your protocol design. For production systems, use the oracle provider's official documentation and run your own analysis of historical deviation data.
+
+## Build With Envio
+
+Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data. If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.
+
+Stay tuned for more updates by subscribing to our newsletter, following us on X, or hopping into our Discord.
+
+[Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
+
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)

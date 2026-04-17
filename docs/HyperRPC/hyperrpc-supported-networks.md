@@ -52,6 +52,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Cyber                     | 7560            | https://cyber.rpc.hypersync.xyz or https://7560.rpc.hypersync.xyz                        |
 | Eth Traces                | 1               | https://eth-traces.rpc.hypersync.xyz or https://1-traces.rpc.hypersync.xyz               |
 | Ethereum Mainnet          | 1               | https://eth.rpc.hypersync.xyz or https://1.rpc.hypersync.xyz                             |
+| Etherlink                 | 42793           | https://etherlink.rpc.hypersync.xyz or https://42793.rpc.hypersync.xyz                   |
 | Fantom                    | 250             | https://fantom.rpc.hypersync.xyz or https://250.rpc.hypersync.xyz                        |
 | Flare                     | 14              | https://flare.rpc.hypersync.xyz or https://14.rpc.hypersync.xyz                          |
 | Fraxtal                   | 252             | https://fraxtal.rpc.hypersync.xyz or https://252.rpc.hypersync.xyz                       |
@@ -94,8 +95,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Scroll                    | 534352          | https://scroll.rpc.hypersync.xyz or https://534352.rpc.hypersync.xyz                     |
 | Sei*                      | 1329            | https://sei.rpc.hypersync.xyz or https://1329.rpc.hypersync.xyz                          |
 | Sei Testnet*              | 1328            | https://sei-testnet.rpc.hypersync.xyz or https://1328.rpc.hypersync.xyz                  |
-| Sentient                  | 6767            | https://sentient.rpc.hypersync.xyz or https://6767.rpc.hypersync.xyz                     |
-| Sentient Testnet          | 1184075182      | https://sentient-testnet.rpc.hypersync.xyz or https://1184075182.rpc.hypersync.xyz       |
 | Sepolia                   | 11155111        | https://sepolia.rpc.hypersync.xyz or https://11155111.rpc.hypersync.xyz                  |
 | Shimmer Evm               | 148             | https://shimmer-evm.rpc.hypersync.xyz or https://148.rpc.hypersync.xyz                   |
 | Soneium                   | 1868            | https://soneium.rpc.hypersync.xyz or https://1868.rpc.hypersync.xyz                      |

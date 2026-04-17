@@ -1,22 +1,27 @@
 ---
 title: Envio Developer Update December 2025
-Sidebar_label: Envio Developer Update December 2025
+sidebar_label: Envio Developer Update December 2025
 slug: /envio-developer-update-december-2025
-description: "Envio Developer Update December 2025 covering an early look at HyperIndex v3.0.0, early Solana experimentation, Sonic support, Decypted Bytes streams, a USDT0 indexing example, and community updates."
+description: "What Envio shipped in December 2025: an early look at HyperIndex v3.0.0, Solana experimentation, Sonic support, and a USDT0 indexing example."
 image: /blog-assets/dev-update-dec-25.png
+last_update:
+  date: 2026-04-15
 ---
+
+Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
+
 <img src="/blog-assets/dev-update-dec-25.png" alt="Cover Image Envio Developer Update Dec 2025" width="100%"/>
 
 <!--truncate-->
 
-As we wrap up the end of the year, December’s developer update shares what’s next for Envio and what we’ve been working on across the product and community.
+Welcome to the Envio monthly developer update. Here is what shipped in December 2025.
 
-This month includes an early look at HyperIndex v3.0.0, early experimentation with Solana support, continued support for teams building on Sonic, updates from Decypted Bytes streams, a new USDT0 indexing example, and our featured developer for December, and much more. 
+As we wrap up the end of the year, this update shares what's next for Envio and what we've been working on across the product and community.
 
-Let’s dive in.
+This month includes an early look at HyperIndex v3.0.0, early experimentation with Solana support, continued support for teams building on Sonic, updates from Decypted Bytes streams, a new USDT0 indexing example, and our featured developer for December, and much more.
 
 
-## 🚨 HyperIndex v3.0.0 is Coming
+## HyperIndex v3.0.0 is Coming
 
 HyperIndex v3.0.0 is an alpha release introducing ESM support with top-level await and automatic handler registration, alongside lower HyperSync latency and faster queries. The release also includes an experimental ClickHouse Sink, cleaner configuration and defaults, and early experimental Solana support, and much more to come.
 
@@ -96,7 +101,7 @@ HyperIndex v3 automatically registers handler files from src/handlers. You no lo
 
 If you prefer a different structure, you can override this using the handlers option. Explicit handler paths still work as before.
 
-*⚠️ Deprecation: Explicit handler paths are still supported, so no changes are required.*
+*Deprecation: Explicit handler paths are still supported, so no changes are required.*
 
 
 ### Block handler indexers
@@ -117,7 +122,7 @@ Several updates on the HyperSync side reduce latency and unnecessary traffic. Th
 
 ### Experimental ClickHouse Sink support
 
-HyperIndex v3 adds experimental ClickHouse Sink support.Postgres remains the primary database. You can additionally sink entities to ClickHouse for restart and reorg resistant workloads.
+HyperIndex v3 adds experimental ClickHouse Sink support. Postgres remains the primary database. You can additionally sink entities to ClickHouse for restart and reorg resistant workloads.
 
 
 
@@ -140,9 +145,9 @@ Deprecated APIs and legacy options have been removed, defaults have been updated
 
 This is just the start, with a lot more to come. Stay tuned! 
 
-👉 See full [release notes](https://github.com/enviodev/hyperindex/releases)
+See full [release notes](https://github.com/enviodev/hyperindex/releases)
 
-👉 Star us on [GitHub](https://github.com/enviodev/hyperindex) ⭐
+Star us on [GitHub](https://github.com/enviodev/hyperindex)
 
 
 
@@ -150,13 +155,13 @@ This is just the start, with a lot more to come. Stay tuned!
 
 <img src="/blog-assets/dev-update-dec-25-1.png" alt="Envio supports Sonic" width="100%"/>
 
-Envio supports developers and analysts building on Sonic by providing access to real-time and historical on-chain data through a reliable indexing layer designed for high-throughput environments.
+Envio supports developers and analysts building on Sonic by providing access to real-time and historical onchain data through a reliable indexing layer designed for high-throughput environments.
 
-With Sonic’s fast finality and high transaction volumes, teams need indexing infrastructure that can keep up without adding operational complexity. Envio is built to handle these conditions, allowing developers and analysts to query, monitor, and analyze Sonic data efficiently.
+With Sonic's fast finality and high transaction volumes, teams need indexing infrastructure that can keep up without adding operational complexity. Envio is built to handle these conditions, allowing developers and analysts to query, monitor, and analyze Sonic data efficiently.
 
 This support makes it easier for teams to build data-heavy applications, analytics dashboards, and monitoring tools on Sonic without having to manage indexing infrastructure themselves.
 
-👉 [Start building on Sonic](https://docs.envio.dev/docs/HyperIndex/sonic)
+[Start building on Sonic](https://docs.envio.dev/docs/HyperIndex/sonic)
 
 
 
@@ -164,24 +169,24 @@ This support makes it easier for teams to build data-heavy applications, analyti
 
 The Monad testnet underwent a full re-genesis, restarting the network from block 1.
 
-For Envio users indexing Monad, this means indexers need to reindex from block 1 now that the refreshed testnet is live. As part of the re-genesis, all existing on-chain state was reset and any deployed contracts needed to be redeployed.
+For Envio users indexing Monad, this means indexers need to reindex from block 1 now that the refreshed testnet is live. As part of the re-genesis, all existing onchain state was reset and any deployed contracts needed to be redeployed.
 
 This update removes legacy behaviours from early testnet phases and is expected to reduce state sync time going forward. Teams indexing Monad can continue building against the refreshed testnet.
 
-If you need support reindexing or redeploying after the re-genesis, feel free to reach out to the Envio team in our [Discord](https://discord.gg/RKPAjwUvRr).
+If you need support reindexing or redeploying after the re-genesis, feel free to reach out to the Envio team in our [Discord](https://discord.com/invite/gt7yEUZKeB).
 
 
 ## Envio at Solana Breakpoint 2025 in Abu Dhabi
 
 <img src="/blog-assets/dev-update-dec-25-2.png" alt="Solana Breakpoint 2025" width="100%"/>
 
-The Envio team attended [Solana Breakpoint](https://solana.com/breakpoint) in Abu Dhabi this month, spending time with teams across the Solana ecosystem and learning more about their data needs and how they’re building on Solana.
+The Envio team attended [Solana Breakpoint](https://solana.com/breakpoint) in Abu Dhabi this month, spending time with teams across the Solana ecosystem and learning more about their data needs and how they're building on Solana.
 
 We had a great few days of conversations with builders, protocols, and infrastructure teams, getting a better sense of the tools, patterns, and challenges teams are working through as the ecosystem continues to grow.
 
-Alongside the event, we’ve been experimenting with early, [experimental Solana support](https://docs.envio.dev/docs/HyperIndex/solana) in Envio. These conversations were valuable in helping us better understand Solana use cases and how indexing infrastructure can support developers and analysts building on the network.
+Alongside the event, we've been experimenting with early, [experimental Solana support](https://docs.envio.dev/docs/HyperIndex/solana) in Envio. These conversations were valuable in helping us better understand Solana use cases and how indexing infrastructure can support developers and analysts building on the network.
 
-Big thanks to everyone we met and spoke with at Solana Breakpoint. We’re looking forward to continuing these conversations as our Solana support evolves. Watch this space.
+Big thanks to everyone we met and spoke with at Solana Breakpoint. We're looking forward to continuing these conversations as our Solana support evolves. Watch this space.
 
 
 ## Envio Developer Workshops: Decypted Bytes Is Back
@@ -197,7 +202,7 @@ Recent and upcoming sessions cover practical indexing patterns and data pipeline
 
 * [Base–Solana Bridge Indexer with HyperIndex](https://www.youtube.com/watch?v=yWfw5gfTibI), showing how to track cross-chain token transfers between Base and Solana
 
-* [DuckDB Sink for HyperSyn](https://www.youtube.com/watch?v=8wNprGmbN24)c, covering how to write indexed blockchain data into DuckDB for local analytics and querying
+* [DuckDB Sink for HyperSync](https://www.youtube.com/watch?v=8wNprGmbN24), covering how to write indexed blockchain data into DuckDB for local analytics and querying
 
 All stream links, topics, and the full schedule are available via the [Decypted Bytes stream schedule](https://decrypted-bytes.notion.site/2c30f730c03780d8a0a5dfba76689f96?v=2c30f730c03780b7b59b000c65b4467d). Be sure to subscribe to stay up to date with upcoming sessions.
 
@@ -228,11 +233,11 @@ You can explore the full example, code, and setup instructions in the [GitHub re
 
 <img src="/blog-assets/dev-update-dec-25-6.png" alt="Slab Cash" width="100%"/>
 
-[Slab.cash](https://slab.cash) recently went live, bringing on-chain collectibles to users.
+[Slab.cash](https://slab.cash) recently went live, bringing onchain collectibles to users.
 
 Envio proudly powers Slab.cash with efficient data indexing, giving the team easy and reliable access to real-time and historical blockchain data so their app can run smoothly as usage grows.
 
-Big congrats to the Slab.cash team on the launch. Be sure to check it out and see what they’ve shipped.
+Big congrats to the Slab.cash team on the launch.
 
 
 
@@ -252,26 +257,26 @@ As part of the [MetaMask x Envio Advanced Permissions Hackathon](https://www.hac
 
 The session covered setting up an indexer, exploring demos and examples, and understanding how Envio can support data needs while building.
 
-The MetaMask Advanced Permissions Hackathon is live and runs until December 31, 2025. If you’re taking part and building with Envio, we’re happy to help support teams throughout the hack.
+The MetaMask Advanced Permissions Hackathon is live and runs until December 31, 2025. If you're taking part and building with Envio, we're happy to help support teams throughout the hack.
 
 
 
-## 🗓️ Current & Upcoming Events 
+## Current & Upcoming Events 
 
 * [MetaMask x Envio: Advanced Permissions Dev Cook-Off Hackathon](https://www.hackquest.io/hackathons/MetaMask-Advanced-Permissions-Dev-Cook-Off): 18th Nov → 31st Dec 2025
 
 
-## 🧑‍💻 Featured Developer: Port
+## Featured Developer: Port
 
 <img src="/blog-assets/dev-update-dec-25-7.png" alt="DOTM Dec 2025" width="100%"/>
 
-This month’s featured developer is Port, a builder who loves experimenting with ideas and shipping fast. His journey into development started a few years ago after a health scare, which pushed him to rethink how he wanted to spend his time. Coming from a non-technical background, he began learning web development through The Odin Project and quickly found his way into Web3.
+This month's featured developer is Port, a builder who loves experimenting with ideas and shipping fast. His journey into development started a few years ago after a health scare, which pushed him to rethink how he wanted to spend his time. Coming from a non-technical background, he began learning web development through The Odin Project and quickly found his way into Web3.
 
 After discovering Monad, Port became deeply involved in the ecosystem, moving on to Speedrun Ethereum and joining [BuidlGuidl](https://buidlguidl.com). Along the way, he built and contributed to a wide range of open source and community projects, including the block explorer for [Scaffold ETH](https://scaffoldeth.io), [address.vision](https://address.vision), and contributions to [abi.ninja](https://abi.ninja).
 
 Today, Port is part of the Monad devrel team, where he continues to explore what the tech makes possible while building and experimenting whenever he gets the chance. Some of his recent and notable projects include [NFT Snapshot](https://nft-snapshot-beta.vercel.app), [Monad Monitor](https://github.com/portdeveloper/monad-monitor), [Oracle Dashboard](https://oracle-dashboard-seven.vercel.app), [Calculate My PnL](https://calculate-my-pnl.vercel.app), [MonadClip](https://monadclip.fun), [Splait](https://github.com/portdeveloper/splait), [Gulltoppr](https://github.com/portdeveloper/gulltoppr), [ConvertETH](https://github.com/portdeveloper/converteth), [Anvuil](https://github.com/portdeveloper/anvuil), and [Vanitoor](https://github.com/portdeveloper/vanitoor).
 
-***“I had an idea, asked it to Claude, and Claude suggested and built the app with Envio without me interfering at any point. I just added the API key to the env file. It was very easy to build with Envio, and the founders are very responsive so you can just ask them questions about how you should be using it.” - Port, DevRel at Monad***
+***"I had an idea, asked it to Claude, and Claude suggested and built the app with Envio without me interfering at any point. I just added the API key to the env file. It was very easy to build with Envio, and the founders are very responsive so you can just ask them questions about how you should be using it." - Port, DevRel at Monad***
 
 Be sure to follow them on [X](https://x.com/port_dev) and check out their work on [GitHub](https://github.com/portdeveloper?tab=repositories) to stay up to date with what they are building.
 
@@ -282,25 +287,22 @@ Be sure to follow them on [X](https://x.com/port_dev) and check out their work o
 
 As the year comes to a close, we want to say a big thank you to everyone building with Envio for your contributions, feedback, and continued support throughout the year.
 
-We’re wishing many of you a fantastic time over the festive season. The Envio team will still be fully available throughout the Christmas period, so feel free to reach out if you need support or want to chat about what you’re building.
-
-Merry Xmas from all of us at Envio 🎄
+We're wishing many of you a fantastic time over the festive season. The Envio team will still be fully available throughout the Christmas period, so feel free to reach out if you need support or want to chat about what you're building.
 
 
-## 🎧️ Playlist of the Month
+## Playlist of the Month
 
 <img src="/blog-assets/dev-update-dec-25-9.png" alt="PLOTM Dec 2025" width="100%"/>
 
-▶️ [Open Spotify](https://open.spotify.com/playlist/757HncfHabgU6rpMv9748b?si=94a19e83ccdc4f0d)
+[Open Spotify](https://open.spotify.com/playlist/757HncfHabgU6rpMv9748b?si=94a19e83ccdc4f0d)
 
 
-## 🚢 Ship With Us
+## Build With Envio
 
-Envio is a multi-chain EVM blockchain indexer for querying real-time and historical data. If you’re working on a Web3 project and want a smoother development process, Envio’s got your back(end). Check out our docs, join the community, and let’s talk about your data needs.
+Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data. If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.
 
-Stay tuned for more monthly updates by subscribing to our newsletter, following us on X, or hopping into our Discord for more up-to-date information.
+Stay tuned for more updates by subscribing to our newsletter, following us on X, or hopping into our Discord.
 
-
-[Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌 
+[Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
 
 [Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)

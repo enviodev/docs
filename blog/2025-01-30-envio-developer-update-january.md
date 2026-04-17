@@ -2,20 +2,24 @@
 title: Envio Developer Update January 2025
 sidebar_label: Envio Developer Update January 2025
 slug: /envio-developer-update-january-2025
-description: "See what Envio shipped in January 2025 including new network integrations, feature releases, and our support for builders tackling multichain indexing challenges."
+description: "What Envio shipped in January 2025: new network integrations, feature releases, and tooling for multichain indexing."
 image: /blog-assets/envio-developer-community-january-2025.png
+last_update:
+  date: 2026-04-15
 ---
+
+Author: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations
+
 <img src="/blog-assets/envio-developer-community-january-2025.png" alt="Cover Image Envio Developer Community Update January 2025" width="100%"/>
 
 <!--truncate-->
 
+Welcome to our first update of 2025!
 
-Welcome to our first update of 2025! We’re kicking off the year with a bang!
-
-Learn more about our latest release and new features to make your indexing experience even better. We’ve also rolled out new guides and integrations, making it easier than ever to work with Envio’s tools and solutions. Plus, we’ve got some exciting integrations, partnerships, and events coming up. Let’s dive in! 👇
+Learn more about our latest release and new features to make your indexing experience even better. We've also rolled out new guides and integrations, making it easier than ever to work with Envio's tools and solutions. Plus, we've got some exciting integrations, partnerships, and events coming up. Let's dive in!
 
 
-## 🚀 HyperIndex Version 2.12.0 is now available 🚀
+## HyperIndex Version 2.12.0 is now available
 
 Please note: The latest release is V2.12.1.
 
@@ -24,11 +28,11 @@ Please note: The latest release is V2.12.1.
 
 
 
-Before this big release, the RPC data source in HyperIndex had several limitations and lacked many of the features available in the HyperSync data source. We’re excited to announce that this has now been resolved! 
+Before this big release, the RPC data source in HyperIndex had several limitations and lacked many of the features available in the HyperSync data source. This has now been resolved!
 
-You’re no longer tied to HyperSync or held back when adding new chains that aren’t supported yet. HyperIndex is now a fully equipped RPC indexer, ready for anything! 💪
+You're no longer tied to HyperSync or held back when adding new chains that aren't supported yet. HyperIndex is now a fully equipped RPC indexer, ready for anything!
 
-**What's changed for the RPC data source?** 
+**What's changed for the RPC data source?**
 
 * Wildcard Indexing support for the RPC data source.
 * Pre-registration support for the RPC data source.
@@ -38,15 +42,15 @@ You’re no longer tied to HyperSync or held back when adding new chains that ar
 
 For more information, you can view [all past and current release notes](https://github.com/enviodev/hyperindex/releases) on our GitHub.
 
-If you love what we’re building as much as we do and want to stay updated on our latest releases and developments, give us a star on [GitHub](https://github.com/enviodev/hyperindex)! Your support means the world to us!  ⭐
+If you love what we're building as much as we do and want to stay updated on our latest releases and developments, give us a star on [GitHub](https://github.com/enviodev/hyperindex)! Your support means the world to us!
 
 
-## Indexing Contract Events with Envio HyperSync 
+## Indexing Contract Events with Envio HyperSync
 
 <img src="/blog-assets/envio-developer-community-january-2025-2.png" alt="Indexing Conract Events" width="100%"/>
 
 
-Intuition recently shared their experience using Envio HyperSync to index contract events efficiently with Rust. They highlighted how HyperSync’s real-time data extraction, multi-chain support, and extreme speed—scanning 200M blocks in 10 seconds—enhanced their infrastructure.
+Intuition recently shared their experience using Envio HyperSync to index contract events efficiently with Rust. They highlighted how HyperSync's real-time data extraction, multichain support, and extreme speed - scanning 200M blocks in 10 seconds - enhanced their infrastructure.
 
 Their open-source envio-indexer crate enables seamless event indexing, supporting both database storage and direct streaming to SQS. They also provided a Dockerized setup for scalability and portability.
 
@@ -61,14 +65,14 @@ Need price data in your indexer? Whether it's for historical token transfers or 
 
 
 
-* Oracles (e.g., API3, Chainlink) push price updates on-chain but may lag behind real-time values.
+* Oracles (e.g., API3, Chainlink) push price updates onchain but may lag behind real-time values.
 
 * DEX pools (e.g., Uniswap V3) offer decentralized price data but can be impacted by low liquidity and manipulation.
 
 * Offchain APIs (e.g., CoinGecko) provide broad historical data but come with latency and paywall restrictions.
 
 
-Each method has trade-offs between speed, accuracy, and decentralization—choose what fits your use case. 🚀
+Each method has trade-offs between speed, accuracy, and decentralization - choose what fits your use case.
 
 Learn more in our latest [guide](https://docs.envio.dev/docs/HyperIndex/price-data).
 
@@ -78,7 +82,7 @@ Learn more in our latest [guide](https://docs.envio.dev/docs/HyperIndex/price-da
 <img src="/blog-assets/envio-developer-community-january-2025-3.png" alt="Falcon Gun Integrates Envio" width="100%"/>
 
 
-We’re excited to announce our integration with [Falcon Gun](https://falcongun.com/). Their lightning-fast trading bot terminal now leverages Envio’s indexing solution to streamline data retrieval for faster, more reliable trades. Stay ahead of the crypto market with FalconGun’s powerful sniping tool. 🦅
+We're pleased to announce our integration with [Falcon Gun](https://falcongun.com/). Their lightning-fast trading bot terminal now leverages Envio's indexing solution to streamline data retrieval for faster, more reliable trades.
 
 Learn more [here](https://x.com/FalconGunBot/status/1879860589704745030).
 
@@ -89,7 +93,7 @@ Learn more [here](https://x.com/FalconGunBot/status/1879860589704745030).
 <img src="/blog-assets/envio-developer-community-january-2025-4.png" alt="What is an indexer" width="100%"/>
 
 
-New to indexing or need a refresher? Check out our latest blog where we explain how blockchain indexers transform complex on-chain data into easy-to-query, actionable insights. Learn how Envio’s tools like HyperSync and multichain support make data retrieval faster and help you build decentralized apps more efficiently.
+New to indexing or need a refresher? Check out our latest blog where we explain how blockchain indexers transform complex onchain data into easy-to-query, actionable insights. Learn how Envio's tools like HyperSync and multichain support make data retrieval faster and help you build decentralized apps more efficiently.
 
 Read the full [blog](https://docs.envio.dev/blog/what-is-a-blockchain-indexer).
 
@@ -102,12 +106,12 @@ Read the full [blog](https://docs.envio.dev/blog/what-is-a-blockchain-indexer).
 Envio & [ChainDensity](https://chaindensity.xyz/) are proud to sponsor and be featured alongside 300+ leading tools in Primo Data's [directory](https://www.primodata.org/blockchain-data). Explore the most comprehensive blockchain data resources and discover cutting-edge companies and open-source projects building tools to query, analyze, and visualize blockchain data.
 
 
-## Featured Developer 🧑‍💻
+## Featured Developer
 
 <img src="/blog-assets/envio-developer-community-january-2025-6.png" alt="Jan 2025 Dev of the month" width="100%"/>
 
 
-This month’s featured developer and community member of the month is Luis Eduardo Boiko Ferreira!
+This month's featured developer and community member of the month is Luis Eduardo Boiko Ferreira!
 
 Luis is a senior backend engineer who started in Web3 in 2018. His experience spans everything from building secure enclave code to developing efficient APIs and deploying cloud solutions. Currently, at [Intuition](https://www.intuition.systems/), Luis is leading the development of a contract event ingestion pipeline, handling data indexing, processing, and adding new layers of interpretation. Before Intuition, Luis worked at Bolt Labs, where he developed secure enclave systems for private key management, ensuring they passed rigorous audits. His earlier work includes building settlement engines for gaming businesses and creating multi-step data ingestion pipelines, APIs, CLIs, and TUIs.
 
@@ -119,30 +123,26 @@ In addition, Luis wrote the outstanding blog on indexing contract events using H
 Follow Luis on [X](https://x.com/lockpickingtux) for more updates and check them out on [GitHub](https://github.com/leboiko).
 
 
-## Playlist of the Month 🎧️ 
+## Playlist of the Month
 
 <img src="/blog-assets/envio-developer-community-january-2025-7.png" alt="Jan playlist of the month" width="100%"/>
 
 
-▶️ [Open Spotify](https://open.spotify.com/playlist/6RrIwtSy6PiKOmUHuPtBFc?si=194fb56ca8da4282)
+[Open Spotify](https://open.spotify.com/playlist/6RrIwtSy6PiKOmUHuPtBFc?si=194fb56ca8da4282)
 
 
-## Envio Freelancer Network 🌐 
+## Envio Freelancer Network
 
-Need an indexer but don’t have the bandwidth? Whether you're looking to find top-notch freelancers or you’re a freelancer seeking new opportunities, we've got you covered. Our thriving Freelancer Network connects skilled contractors with Web3 protocols to service their data needs. ⚡️
+Need an indexer but don't have the bandwidth? Whether you're looking to find top-notch freelancers or you're a freelancer seeking new opportunities, we've got you covered. Our thriving Freelancer Network connects skilled contractors with Web3 protocols to service their data needs.
 
 Simply fill out the [form](https://noteforms.com/forms/envio-freelancer-network-u9zqbv) to join our freelancer network.
 
+## Build With Envio
 
-## Ship with us. 🚢 
+Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data. If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.
 
-[Envio](https://envio.dev/) is a modern, multi-chain EVM blockchain indexing framework that is speed-optimized for querying real-time and historical data.
+Stay tuned for more updates by subscribing to our newsletter, following us on X, or hopping into our Discord.
 
-If you're a blockchain developer looking to enhance your development process and unlock the true potential of Web3 infrastructure, look no further. Join our growing community of elite developers, check out our docs, and let's work together to revolutionize the blockchain world and propel your project to the next level.
+[Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
 
-Stay tuned for more monthly updates by subscribing to our newsletter, following us on X, or hopping into our Discord for more up-to-date information.
-
-
-[Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌 
-
-[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Farcaster](https://warpcast.com/envio) | [Medium](https://medium.com/@Envio_Indexer) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer) | [GitHub](https://github.com/enviodev)
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
