@@ -138,7 +138,7 @@ Planned variations include different numbers of contracts and events, varying ev
 
 ## Build With Envio
 
-Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data. If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.
+Envio was the fastest EVM blockchain indexer in the 2023 benchmark above, and more recent independent tests run by Sentio in May 2025 show HyperIndex is still the fastest blockchain indexer available ([Sentio benchmark, May 2025](https://github.com/enviodev/open-indexer-benchmark)). If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.
 
 Stay tuned for more updates by subscribing to our newsletter, following us on X, or hopping into our Discord.
 

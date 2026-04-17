@@ -171,7 +171,7 @@ Simply fill out the [form](https://noteforms.com/forms/envio-freelancer-network-
 
 ## Build With Envio
 
-Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data. If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.
+Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data ([Sentio benchmark, May 2025](https://github.com/enviodev/open-indexer-benchmark)). If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.
 
 Stay tuned for more updates by subscribing to our newsletter, following us on X, or hopping into our Discord.
 
