@@ -8,6 +8,10 @@ description: Get started with Envio indexer setup, templates, and local or hoste
 
 Learn how to create and run a blockchain indexer with Envio’s HyperIndex, from initialization to local testing and deployment.
 
+:::tip Building with an AI agent?
+For workflows optimized for coding agents—**non-interactive** `envio init`, codegen and test loops, and optional subgraph migration—see **[Developing with AI](./developing-with-ai)**.
+:::
+
 ## Indexer Initialization
 
 ### Prerequisites

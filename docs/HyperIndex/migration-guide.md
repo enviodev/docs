@@ -19,7 +19,7 @@ Migrating your existing subgraph to Envio's HyperIndex is designed to be a devel
 The process is simple but requires a good understanding of the underlying concepts. If you are new to HyperIndex, we recommend starting with the [Getting Started](../HyperIndex/getting-started) guide.
 
 :::tip Prefer AI-assisted migration?
-If you want an assistant-led workflow, see [How to Migrate Using AI](./migrate-with-ai) for a guided process that works in both Cursor and Claude Code.
+For an agent-friendly workflow (Cursor, Claude Code, or similar), see [Developing with AI](./developing-with-ai). It covers non-interactive CLI setup, development and test loops, and a subgraph migration recipe.
 :::
 
 ## Why Migrate to HyperIndex?

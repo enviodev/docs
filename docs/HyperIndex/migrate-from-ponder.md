@@ -15,7 +15,7 @@ Migrating from Ponder to HyperIndex is straightforward — both frameworks use T
 If you are new to HyperIndex, start with the [Getting Started](/docs/HyperIndex/getting-started) guide first.
 
 :::tip Prefer AI-assisted migration?
-For an assistant-led workflow, see [How to Migrate Using AI](./migrate-with-ai), which includes a shared process for Cursor and Claude Code.
+For an agent-friendly workflow, see [Developing with AI](./developing-with-ai)—non-interactive CLI, codegen and testing loops, plus optional migration prompts you can adapt for Ponder → HyperIndex.
 :::
 
 ## Why Migrate to HyperIndex?

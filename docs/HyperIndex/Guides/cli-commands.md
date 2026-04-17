@@ -328,6 +328,15 @@ pnpx envio init contract-import explorer -n usdc-indexer -c 0xA0b86991c6218b36c1
 - `&& cd usdc-indexer` - Navigate to project
 - `&& pnpm dev` - Start the indexer
 
+### Multiple contracts
+
+A single `envio init contract-import` command accepts **one** `--contract-address` (`-c`); you cannot repeat `-c` in the same invocation.
+
+To index **additional** contracts:
+
+- Run **`pnpx envio init`** interactively and add further contracts through the prompts, or
+- After the first import, edit **`config.yaml`** to register more contracts and events (see the [Configuration file](./configuration-file) guide).
+
 ### Contract Import from Local ABI
 
 For unverified contracts or custom networks:
