@@ -92,13 +92,13 @@ Limitless Exchange is able to query information such as:
 <img src="/blog-assets/case-study-limitless-9.png" alt="Screenshot of app showing markets" width="100%"/>
 *A screenshot of https://limitless.exchange/ quick bets, powered by Envio.*
 
-The [Limitless Exchange Indexer](https://envio.dev/app/limitless-labs-group/fork-prod) and other indexers can be viewed in the Explorer of Envio's Hosted Service.
+The [Limitless Exchange Indexer](https://envio.dev/app/limitless-labs-group/fork-prod) and other indexers can be viewed in the Explorer of Envio Cloud.
 
 ## Relevant Links
 
 - [Envio HyperIndex Quickstart](https://docs.envio.dev/docs/HyperIndex/contract-import)
 - [Envio HyperSync](https://docs.envio.dev/docs/HyperSync/overview)
-- [Envio Hosted Service](https://docs.envio.dev/docs/HyperIndex/hosted-service)
+- [Envio Cloud](https://docs.envio.dev/docs/HyperIndex/hosted-service)
 
 ## Conclusion
 

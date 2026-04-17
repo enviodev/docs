@@ -43,7 +43,7 @@ Most push oracles use two primary mechanisms:
 
 ## Visualizing real-time oracle activity with Oracle Wars
 
-Wonder what happens in live conditions during periods of high volatility? That is where Oracle Wars comes in. It shows a live comparison between price feeds from different oracle providers such as [Chainlink](https://chain.link/) and [RedStone](https://www.redstone.finance/).
+Wonder what happens in live conditions during periods of high volatility? That is where Oracle Wars came in. The earlier version of the dashboard showed a live comparison between price feeds from different oracle providers such as [Chainlink](https://chain.link/) and [RedStone](https://www.redstone.finance/). Oracle Wars now focuses on Redstone Bolt ETH/USD updates on MegaETH, but the patterns below still apply to the earlier multi-oracle view.
 
 You will notice that updates are not always evenly spaced. That is the deviation threshold kicking in: when markets get volatile, updates come in fast. When things are calm, fewer updates appear. This is a valuable pattern to observe if you are designing a protocol that depends on accurate and real-time data.
 

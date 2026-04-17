@@ -33,7 +33,7 @@ The traditional method of retrieving blockchain data relies on RPC, which, altho
 
 
 
-## HyperIndex Version 2.11.0 is now available
+## HyperIndex Version 2.11.2 is now available
 
 We're pleased to announce the release of **v.2.11.2**!
 

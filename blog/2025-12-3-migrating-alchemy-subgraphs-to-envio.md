@@ -15,18 +15,18 @@ Co-authors: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Ope
 <!--truncate-->
 
 :::note TL;DR
-- Alchemy is sunsetting Subgraph support on December 8th, 2025. Teams need a migration path that preserves their existing indexing logic and keeps data live without a full rebuild.
-- Envio's HyperIndex accepts your existing schema and mapping logic, adds 143x faster backfills via HyperSync, and includes 2 months of free hosting for all Alchemy users.
+- Alchemy sunset Subgraph support on December 8th, 2025. Teams need a migration path that preserves their existing indexing logic and keeps data live without a full rebuild.
+- Envio's HyperIndex accepts your existing schema and mapping logic, adds 143x faster backfills via HyperSync ([Sentio Uniswap V2 Factory benchmark, May 2025](https://github.com/enviodev/open-indexer-benchmark)), and includes 2 months of free hosting for all Alchemy users.
 - The migration takes four steps: generate a new HyperIndex project, bring over your schema, move your mapping logic, and use migration cursors to avoid replaying from block zero.
 :::
 
-Alchemy is sunsetting their Subgraph support on the **8th December 2025**. If you are running production workloads or preparing for mainnet, you need a stable home for your data and a migration path that keeps most of your existing work intact.
+Alchemy sunset their Subgraph support on the **8th December 2025**. If you are running production workloads or preparing for mainnet, you need a stable home for your data and a migration path that keeps most of your existing work intact.
 
 Envio gives you a clean and fast way to migrate your existing Alchemy Subgraphs into Envio's [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) so your data stays live, stable, and real-time. This guide covers exactly how to migrate your Alchemy Subgraph, what changes you need to make, and why Envio is the right destination for your migration.
 
 ## Why teams are migrating their Alchemy Subgraphs to Envio
 
-With Alchemy sunsetting its Subgraph support, teams need to move quickly. You still rely on your data, you still need your indexers, and rebuilding the entire stack is not realistic in the given timeframe. With Envio, you get:
+With Alchemy having sunset its Subgraph support, teams need to move quickly. You still rely on your data, you still need your indexers, and rebuilding the entire stack is not realistic in the given timeframe. With Envio, you get:
 
 - 143x faster backfills via HyperIndex
 - Multichain indexing supported out of the box
@@ -77,7 +77,7 @@ Copy your Subgraph mappings into Envio mapping files. The structure is familiar 
 
 Envio has a dedicated migration cursor flow so you do not have to replay your entire chain from block zero. This saves hours for larger projects.
 
-After this, you can run the indexer locally with Docker or deploy directly to [Envio's hosted service](https://docs.envio.dev/docs/HyperIndex/hosted-service). Once deployed, your indexer will sync with HyperSync-level speed.
+After this, you can run the indexer locally with Docker or deploy directly to [Envio Cloud](https://docs.envio.dev/docs/HyperIndex/hosted-service). Once deployed, your indexer will sync with HyperSync-level speed.
 
 If you prefer hands-on help, or would like the team to check your setup, you can book a free migration call [here](https://envio.dev/alchemy-migration). Alternatively, reach out in [Discord](https://discord.com/invite/gt7yEUZKeB).
 
@@ -116,7 +116,7 @@ Queries will be very similar. HyperIndex uses a GraphQL API structure that is fa
 
 The Graph is the closest architectural equivalent to Alchemy Subgraphs, but it has the same limitations: separate subgraph per chain, slower historical sync, and no native multichain support. Envio delivers 143x faster backfills via HyperSync, supports multichain indexing from a single config, and includes an active team for migration support.
 
-### Is there a free tier on Envio's hosted service for migrating teams?
+### Is there a free tier on Envio Cloud for migrating teams?
 
 Yes. Alchemy users get 2 months of free hosting when migrating to Envio. A permanent free development tier is also available for all developers. Production tiers with SLA guarantees are available for teams that need them.
 
