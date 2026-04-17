@@ -228,7 +228,7 @@ const redirectsList = [
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Envio",
-  tagline: "Envio's documentation for HyperIndex, HyperSync and HyperRPC. Learn how to index blockchain data, query real-time data and build production-ready applications.",
+  tagline: "Build real-time multichain blockchain indexers. Index, query, and ship production web3 apps across any EVM chain in minutes.",
   favicon: "img/favicon.ico",
   url: "https://docs.envio.dev",
   baseUrl: "/",
