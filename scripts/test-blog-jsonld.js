@@ -324,7 +324,7 @@ test("known FAQ posts all parse to >= 3 question pairs", () => {
   const expected = {
     "2026-03-20-best-blockchain-indexers.md": 6,
     "2026-03-25-polymarket-hyperindex-case-study.md": 10,
-    "2026-04-14-docs-mcp-server.md": 4,
+    "2026-04-14-docs-mcp-server.md": 5,
   };
   for (const [file, expectedCount] of Object.entries(expected)) {
     const raw = fs.readFileSync(path.join(blogDir, file), "utf-8");
@@ -343,24 +343,22 @@ test("known FAQ posts all parse to >= 3 question pairs", () => {
   }
 });
 
-test("no non-FAQ posts accidentally match the FAQ pattern", () => {
-  const knownFaqFiles = new Set([
-    "2026-03-20-best-blockchain-indexers.md",
-    "2026-03-25-polymarket-hyperindex-case-study.md",
-    "2026-04-14-docs-mcp-server.md",
-  ]);
-  const unexpected = [];
+test("all FAQ-matching posts produce valid schemas with well-formed pairs", () => {
+  // We intentionally do not hardcode the full FAQ-post list any more: gold standard
+  // technical/evergreen posts include a 5-question FAQ block, and more are added over
+  // time. This test just asserts that every post whose content matches the FAQ pattern
+  // produces pairs with non-trivial questions and answers.
+  const failures = [];
   for (const f of blogFiles) {
-    if (knownFaqFiles.has(f)) continue;
     const parsed = matter(fs.readFileSync(path.join(blogDir, f), "utf-8"));
     const pairs = extractFaqPairs(parsed.content);
-    if (pairs) unexpected.push(`${f} (${pairs.length} pairs)`);
+    if (!pairs) continue;
+    for (const p of pairs) {
+      if (p.question.length <= 2) failures.push(`${f}: empty question`);
+      if (p.answer.length <= 10) failures.push(`${f}: short answer for "${p.question}"`);
+    }
   }
-  assert.strictEqual(
-    unexpected.length,
-    0,
-    `unexpected FAQ matches: ${unexpected.join(", ")}`
-  );
+  assert.strictEqual(failures.length, 0, failures.join("\n"));
 });
 
 console.log(`\n${passed} passed, ${failed} failed`);
