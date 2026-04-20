@@ -286,7 +286,7 @@ The right indexer depends on what you are building, which chains you need, and h
 
 **If you need non-EVM chains (Polkadot, Cosmos, Bitcoin, etc.).** Use SubQuery (300+ chains) or Subsquid (100+ chains). Both support EVM and non-EVM networks in a single framework.
 
-**If you have existing Graph subgraphs and want a managed upgrade.** Migrate to Envio for significantly faster indexing with white glove migration support. Or use Goldsky (149+ chains, Mirror streaming, fully managed) or Ormi (fully managed, GraphQL/REST/SQL) for a near-zero-rewrite migration. Both are Graph-compatible.
+**If you have existing Graph subgraphs and want a managed upgrade.** Migrate to Envio for significantly faster indexing with white glove migration support. Or use Goldsky (150+ chains, Mirror streaming, fully managed) or Ormi (fully managed, GraphQL/REST/SQL) for a near-zero-rewrite migration. Both are Graph-compatible.
 
 **If you want to stream raw blockchain data into your own database.** Use Envio HyperSync for custom pipelines, up to 2000x faster than RPC with client libraries for Python, Rust, Node.js, and Go. Or use Goldsky Mirror for automatic streaming to Postgres and other sinks with no code required.
 

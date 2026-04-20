@@ -281,30 +281,8 @@ table td {
   border-bottom: 1px solid #262626;
 }
 
-/* Keep wide markdown/blog tables usable on mobile */
-.markdown .table-wrapper {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.markdown .table-wrapper > table {
-  width: max-content;
-  min-width: 100%;
-}
-
-@media (max-width: 768px) {
-  .markdown .table-wrapper::after {
-    content: "Swipe horizontally to view more \2192";
-    display: block;
-    margin-top: 0.35rem;
-    font-size: 0.75rem;
-    color: var(--ifm-color-emphasis-600);
-    text-align: right;
-    white-space: nowrap;
-  }
-}
-
-/* Explicit scroll wrapper for wide tables in MDX */
+/* Scrollable wrappers for wide markdown/blog tables */
+.markdown .table-wrapper,
 .scroll-table {
   display: block;
   overflow-x: auto;
@@ -312,24 +290,27 @@ table td {
   max-width: 100%;
   scrollbar-width: thin;
   margin-bottom: 1rem;
-  position: relative;
 }
 
+.markdown .table-wrapper::-webkit-scrollbar,
 .scroll-table::-webkit-scrollbar {
   height: 10px;
   -webkit-appearance: none;
 }
 
+.markdown .table-wrapper::-webkit-scrollbar-thumb,
 .scroll-table::-webkit-scrollbar-thumb {
   background-color: rgba(128, 128, 128, 0.5);
   border-radius: 5px;
 }
 
+.markdown .table-wrapper::-webkit-scrollbar-track,
 .scroll-table::-webkit-scrollbar-track {
   background-color: rgba(128, 128, 128, 0.1);
   border-radius: 5px;
 }
 
+.markdown .table-wrapper > table,
 .scroll-table > table {
   width: max-content;
   min-width: 100%;
@@ -337,6 +318,7 @@ table td {
 }
 
 @media (max-width: 768px) {
+  .markdown .table-wrapper::after,
   .scroll-table::after {
     content: "Swipe horizontally to view more \2192";
     display: block;
@@ -345,14 +327,15 @@ table td {
     color: var(--ifm-color-emphasis-600);
     text-align: right;
     white-space: nowrap;
-    position: sticky;
-    left: 0;
   }
 
+  .markdown .table-wrapper > table,
   .scroll-table > table {
     font-size: 0.8125rem;
   }
 
+  .markdown .table-wrapper > table th,
+  .markdown .table-wrapper > table td,
   .scroll-table > table th,
   .scroll-table > table td {
     padding: 8px 10px;
