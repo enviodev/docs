@@ -304,6 +304,61 @@ table td {
   }
 }
 
+/* Explicit scroll wrapper for wide tables in MDX */
+.scroll-table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  scrollbar-width: thin;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.scroll-table::-webkit-scrollbar {
+  height: 10px;
+  -webkit-appearance: none;
+}
+
+.scroll-table::-webkit-scrollbar-thumb {
+  background-color: rgba(128, 128, 128, 0.5);
+  border-radius: 5px;
+}
+
+.scroll-table::-webkit-scrollbar-track {
+  background-color: rgba(128, 128, 128, 0.1);
+  border-radius: 5px;
+}
+
+.scroll-table > table {
+  width: max-content;
+  min-width: 100%;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .scroll-table::after {
+    content: "Swipe horizontally to view more \2192";
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.75rem;
+    color: var(--ifm-color-emphasis-600);
+    text-align: right;
+    white-space: nowrap;
+    position: sticky;
+    left: 0;
+  }
+
+  .scroll-table > table {
+    font-size: 0.8125rem;
+  }
+
+  .scroll-table > table th,
+  .scroll-table > table td {
+    padding: 8px 10px;
+  }
+}
+
 /* Fallback for tables that are not wrapped by markdown */
 @media (max-width: 768px) {
   article .markdown > table {

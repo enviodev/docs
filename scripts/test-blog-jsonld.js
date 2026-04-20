@@ -322,7 +322,7 @@ test("every real FAQ post produces a schema that passes validateFaqPageSchema", 
 
 test("known FAQ posts all parse to >= 3 question pairs", () => {
   const expected = {
-    "2026-03-20-best-blockchain-indexers.md": 6,
+    "2026-03-20-best-blockchain-indexers.md": 9,
     "2026-03-25-polymarket-hyperindex-case-study.md": 10,
     "2026-04-14-docs-mcp-server.md": 5,
   };
