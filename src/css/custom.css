@@ -317,6 +317,12 @@ table td {
   margin: 0;
 }
 
+.scroll-table:focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 @media (max-width: 768px) {
   .markdown .table-wrapper::after,
   .scroll-table::after {
