@@ -228,7 +228,7 @@ const redirectsList = [
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Envio",
-  tagline: "Build real-time multichain blockchain indexers. Index, query, and ship production web3 apps across any EVM chain in minutes.",
+  tagline: "Envio's documentation for HyperIndex, HyperSync and HyperRPC. Learn how to index blockchain data, query real-time data and build production-ready applications.",
   favicon: "img/favicon.ico",
   url: "https://docs.envio.dev",
   baseUrl: "/",
@@ -528,6 +528,15 @@ This file contains links to documentation sections following the llmstxt.org sta
 - [HyperSync Supported Networks](https://docs.envio.dev/docs/HyperSync/hypersync-supported-networks.md): Full list of networks supported by HyperSync, including coverage tiers, reliability notes, and the criteria used when adding new chains.
 - [HyperRPC Supported Networks](https://docs.envio.dev/docs/HyperRPC/hyperrpc-supported-networks.md): Full list of networks supported by HyperRPC, including endpoints, network IDs, and trace support.
 
+## Case Studies
+
+- [Indexing 4 Billion Polymarket Events](https://docs.envio.dev/blog/polymarket-hyperindex-case-study.md): How Envio HyperIndex replaced 8 Polymarket subgraphs with one TypeScript indexer on Polygon, syncing 4 billion events in 6 days.
+- [Sablier: One Indexer Across 27 Chains](https://docs.envio.dev/blog/case-study-sablier.md): How Sablier replaced 12 separate indexer deployments with one Envio multichain indexer spanning 27 chains, cutting costs and accelerating feature delivery.
+- [Limitless: Real-Time Prediction Market on Base](https://docs.envio.dev/blog/case-study-limitless-prediction-market.md): How Limitless Exchange uses Envio to power a daily prediction market on Base with real-time onchain data, custom GraphQL APIs, and a seamless transaction feed.
+- [Bridgg: 12 OP Superchain Networks, One API](https://docs.envio.dev/blog/case-study-bridgg-op-superchain.md): How Bridgg uses Envio to aggregate deposit and withdrawal data across 12 OP Superchain networks into a single API, indexing 11 million events in one deployment.
+- [zkPass: Multichain ZKP Identity Verification](https://docs.envio.dev/blog/zkpass-shaping-future-of-data-privacy.md): How zkPass uses zero knowledge proofs with Envio to verify identity and transactions across 8 EVM networks while keeping user data private.
+- [GBlast: Eliminating Data Latency on Blast](https://docs.envio.dev/blog/case-study-gblast.md): How GBlast integrated Envio to eliminate real-time data latency, power their points system, and deliver a responsive GambleFi experience on Blast.
+
 ## Legal
 
 - [Privacy Policy](https://docs.envio.dev/docs/HyperIndex/privacy-policy.md): Read Envio's Privacy Policy covering how we collect, use, store, and protect your personal data when you use our website and services.
@@ -535,6 +544,7 @@ This file contains links to documentation sections following the llmstxt.org sta
 `,
           },
         ],
+        blog: true,
       },
     ],
     [
