@@ -115,6 +115,63 @@ function GenerateLLMSPlugin(context, options) {
                 }
             }
 
+            // 1b. collect blog posts (classic preset registers plugin-content-blog
+            // under presets, not plugins, so we resolve the source dir from options).
+            if (options.blog) {
+                const blogConfig =
+                    typeof options.blog === "object" ? options.blog : {};
+                const blogDir = blogConfig.path || "blog";
+                const blogRouteBasePath = blogConfig.routeBasePath || "blog";
+                const blogAbsPath = path.resolve(context.siteDir, blogDir);
+
+                if (fs.existsSync(blogAbsPath)) {
+                    const blogFiles = glob.sync("**/*.{md,mdx}", {
+                        cwd: blogAbsPath,
+                        // Authors / tags metadata lives alongside posts but isn't a post.
+                        ignore: ["**/authors.{md,mdx}", "**/tags.{md,mdx}"],
+                    });
+
+                    for (const file of blogFiles) {
+                        const fullPath = path.join(blogAbsPath, file);
+                        const raw = fs.readFileSync(fullPath, "utf-8");
+                        const parsed = matter(raw);
+
+                        const title = parsed.data.title;
+                        const description = parsed.data.description || "";
+                        if (!title) continue;
+
+                        // Blog posts may declare an explicit slug, otherwise Docusaurus
+                        // derives one from the filename (YYYY-MM-DD-slug pattern).
+                        let slug = parsed.data.slug;
+                        if (!slug) {
+                            const base = path.basename(
+                                file,
+                                path.extname(file)
+                            );
+                            const m = base.match(
+                                /^\d{4}-\d{2}-\d{2}-(.+)$/
+                            );
+                            slug = m ? m[1] : base;
+                        }
+
+                        const pageUrl = `${url.replace(
+                            /\/$/,
+                            ""
+                        )}/${blogRouteBasePath.replace(
+                            /^\//,
+                            ""
+                        )}/${slug.replace(/^\//, "")}`;
+
+                        collectedDocs.push({
+                            filePath: fullPath,
+                            title,
+                            description,
+                            pageUrl,
+                        });
+                    }
+                }
+            }
+
             // Helper to convert Windows paths to POSIX
             function toPosix(p) {
                 return p.split(path.sep).join("/");
