@@ -148,10 +148,18 @@ function GenerateLLMSPlugin(context, options) {
                                 file,
                                 path.extname(file)
                             );
-                            const m = base.match(
+                            // Folder-style posts (YYYY-MM-DD-slug/index.md) expose
+                            // "index" as the basename; fall back to the parent
+                            // directory name so the date prefix is still stripped
+                            // and each folder post gets its own unique slug.
+                            const candidate =
+                                base === "index"
+                                    ? path.basename(path.dirname(file))
+                                    : base;
+                            const m = candidate.match(
                                 /^\d{4}-\d{2}-\d{2}-(.+)$/
                             );
-                            slug = m ? m[1] : base;
+                            slug = m ? m[1] : candidate;
                         }
 
                         const pageUrl = `${url.replace(
