@@ -118,6 +118,9 @@ Context is stored at `~/.envio-cloud/context.json`. Resolution priority:
 
 #### List Indexers
 
+Lists indexers across every organisation you are a member of. Use `--org` to
+scope to a single organisation. Requires authentication.
+
 ```bash
 envio-cloud indexer list
 envio-cloud indexer list --org myorg
@@ -127,7 +130,7 @@ envio-cloud indexer list -o json
 
 | Flag | Description |
 |------|-------------|
-| `--org` | Filter by organization |
+| `--org` | Scope to a single organisation you belong to |
 | `--limit` | Limit number of results |
 | `-o, --output` | Output format (`json`) |
 
@@ -139,7 +142,8 @@ envio-cloud indexer get hyperindex mjyoung114 -o json
 envio-cloud indexer get hyperindex --org mjyoung114
 ```
 
-Organisation can be omitted if set via context.
+Organisation can be omitted if set via context. Requires authentication — you
+can only view indexers in organisations you are a member of.
 
 #### Add an Indexer
 
@@ -283,6 +287,34 @@ envio-cloud deployment status hyperindex b3ead3a mjyoung114 --watch-till-synced
 ```bash
 envio-cloud deployment info <indexer> <commit> [organisation]
 ```
+
+#### Get Query Endpoint
+
+Returns the GraphQL query endpoint URL for a deployment. The endpoint is
+computed from deployment parameters and the cluster is resolved from the
+deployment tier via the API. Output is a bare URL, so it composes cleanly with
+shell scripting.
+
+```bash
+envio-cloud deployment endpoint <indexer> <commit> [organisation]
+envio-cloud deployment endpoint hyperindex b3ead3a mjyoung114
+envio-cloud deployment endpoint hyperindex b3ead3a mjyoung114 -o json
+```
+
+Use the URL directly in a `curl` query:
+
+```bash
+curl "$(envio-cloud deployment endpoint hyperindex b3ead3a mjyoung114)" \
+  -H "Content-Type: application/json" \
+  -d '{"query": "{ _meta { chainMetadata { chainId } } }"}'
+```
+
+| Flag | Description |
+|------|-------------|
+| `--cluster` | Override cluster (`hyper`, `hypertierchicago`, `ip-projects`, `prodaws`, `staging`) |
+| `-o, --output` | Output format (`json`) |
+
+The `ep` alias is also available: `envio-cloud deployment ep <indexer> <commit>`.
 
 #### Promote a Deployment
 
