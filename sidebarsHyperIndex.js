@@ -39,6 +39,7 @@ module.exports = {
   someSidebar: [
     "overview",
     "getting-started",
+    "quickstart-with-ai",
     "contract-import",
     "benchmarks",
     {
