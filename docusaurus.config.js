@@ -421,7 +421,7 @@ const config = {
             root: `
 # Envio: Fast, Multi-Chain Blockchain Indexer
 
-> Envio is a real-time multichain blockchain indexer. HyperIndex is a multichain indexer supporting any EVM chain, plus Solana and Fuel. HyperSync is a high-throughput data layer natively available on 70+ EVM chains and Fuel, and supports any EVM chain via RPC. HyperRPC is a read-only JSON-RPC endpoint powered by HyperSync, up to 5x faster than traditional nodes. Benchmark: Envio 1 min vs The Graph 143 min (Uniswap V2 Factory, Sentio, May 2025).
+> Envio is a real-time multichain blockchain indexer. HyperIndex is a multichain indexer supporting any EVM chain, plus Solana and Fuel. HyperSync is a high-throughput data layer natively available on 70+ EVM chains and Fuel, and supports any EVM chain via RPC. HyperRPC is a read-only JSON-RPC endpoint powered by HyperSync, up to 5x faster than traditional nodes. Benchmark: Envio 1 min vs The Graph 143 min (Uniswap V2 Factory, [Sentio, May 2025](https://docs.envio.dev/docs/HyperIndex/benchmarks.md)).
 
 This file contains links to documentation sections following the llmstxt.org standard.
 
