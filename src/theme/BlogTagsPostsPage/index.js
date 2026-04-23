@@ -1,9 +1,12 @@
 import React from 'react';
 import Layout from '@theme/Layout';
+import Head from '@docusaurus/Head';
 import Link from '@docusaurus/Link';
 import clsx from 'clsx';
 import {useHistory} from '@docusaurus/router';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from '../BlogListPage/styles.module.css';
+import {TAG_META} from '../BlogListPage';
 
 const FILTERS = [
   { label: 'All', value: 'all' },
@@ -64,11 +67,20 @@ function BlogCard({ content }) {
 
 export default function BlogTagsPostsPage({ tag, items }) {
   const history = useHistory();
+  const {siteConfig} = useDocusaurusContext();
 
-  // Extract active filter value from tag permalink e.g. /blog/tag/case-studies → case-studies
   const activeFilter = tag?.permalink
     ? tag.permalink.replace(/^\/blog\/tag\//, '')
     : 'all';
+
+  const meta = TAG_META[activeFilter] ?? {
+    pageTitle: tag?.label ? `Envio Blog: ${tag.label}` : 'Envio Blog',
+    htmlTitle: tag?.label ? `${tag.label} | Envio Blog` : 'Envio Blog',
+    description: `Blog posts tagged with ${tag?.label ?? 'this tag'} from Envio.`,
+    image: '/blog-assets/og/blog.png',
+  };
+
+  const absoluteImage = `${siteConfig.url}${meta.image}`;
 
   const setFilter = (value) => {
     if (value === 'all') {
@@ -80,11 +92,19 @@ export default function BlogTagsPostsPage({ tag, items }) {
 
   return (
     <Layout
-      title={`${tag?.label ?? 'Tagged'} — Envio Blog`}
-      description={`Blog posts tagged with ${tag?.label ?? 'this tag'}.`}
+      title={meta.htmlTitle}
+      description={meta.description}
     >
+      <Head>
+        <meta property="og:image" content={absoluteImage} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content={absoluteImage} />
+      </Head>
       <div className={styles.container}>
-        <h1 className={styles.pageTitle}>Envio Blog</h1>
+        <h1 className={styles.pageTitle}>{meta.pageTitle}</h1>
+        <p className={styles.pageSubtitle}>{meta.description}</p>
         <div className={styles.filters}>
           {FILTERS.map((filter) => (
             <button

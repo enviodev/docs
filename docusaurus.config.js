@@ -249,7 +249,8 @@ const config = {
         blog: {
           showReadingTime: true,
           blogTitle: "Envio Blog",
-          blogDescription: "News, announcements, tutorials, and developer updates from the Envio team.",
+          blogDescription:
+            "Technical articles, case studies, tutorials, product updates, and agentic indexing insights from Envio's blockchain data infrastructure team.",
           postsPerPage: "ALL",
           blogSidebarCount: 0,
           tagsBasePath: 'tag',
