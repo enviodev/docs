@@ -110,6 +110,7 @@ function GenerateLLMSPlugin(context, options) {
                             title,
                             description,
                             pageUrl,
+                            source: "docs",
                         });
                     }
                 }
@@ -175,6 +176,7 @@ function GenerateLLMSPlugin(context, options) {
                             title,
                             description,
                             pageUrl,
+                            source: "blog",
                         });
                     }
                 }
@@ -224,6 +226,26 @@ function GenerateLLMSPlugin(context, options) {
                     output += `- [${doc.title}](${doc.pageUrl}.md): ${desc}\n`;
                 }
                 return output;
+            }
+
+            // Concatenate every item's stripped markdown content into a single
+            // file with source URL delimiters. Agents (Claude Projects, Cursor)
+            // can paste the whole file in as knowledge-base context.
+            function renderLLMSFull(items, header) {
+                const parts = [header.trim(), ""];
+                for (const item of items) {
+                    const raw = fs.readFileSync(item.filePath, "utf-8");
+                    const body = matter(raw).content.trimStart();
+                    parts.push(`<!-- source: ${item.pageUrl} -->`);
+                    parts.push(`# ${item.title}`);
+                    if (item.description) parts.push(`\n> ${item.description}`);
+                    parts.push("");
+                    parts.push(body.trimEnd());
+                    parts.push("");
+                    parts.push("---");
+                    parts.push("");
+                }
+                return parts.join("\n");
             }
 
             // --- NEW: write .md copies into build folder ---
@@ -276,6 +298,46 @@ function GenerateLLMSPlugin(context, options) {
                 // static root text resolves — not just those in includeOrder.
                 if (main) {
                     writeMarkdownCopies(collectedDocs);
+
+                    // Generate llms-full variants: one for docs, one for blog.
+                    // Agents that cannot browse mid-conversation (Claude Projects,
+                    // Cursor) paste these into their context window for full recall.
+                    const docsItems = collectedDocs.filter(
+                        (d) => d.source === "docs"
+                    );
+                    const blogItems = collectedDocs.filter(
+                        (d) => d.source === "blog"
+                    );
+
+                    if (docsItems.length > 0) {
+                        const header =
+                            `# Envio: Full Documentation for LLMs\n\n` +
+                            `> Every page of docs.envio.dev concatenated as markdown, ` +
+                            `with per-page source URLs, for direct ingestion into ` +
+                            `LLM context windows. Pair with https://docs.envio.dev/llms.txt ` +
+                            `for the navigational index.`;
+                        const content = renderLLMSFull(docsItems, header);
+                        fs.writeFileSync(
+                            path.join(context.outDir, "llms-full.txt"),
+                            content,
+                            "utf-8"
+                        );
+                    }
+
+                    if (blogItems.length > 0) {
+                        const header =
+                            `# Envio: Full Blog and Case Studies for LLMs\n\n` +
+                            `> Every blog post and case study on docs.envio.dev ` +
+                            `concatenated as markdown, with per-page source URLs. ` +
+                            `Pair with https://docs.envio.dev/llms-full.txt for ` +
+                            `technical documentation.`;
+                        const content = renderLLMSFull(blogItems, header);
+                        fs.writeFileSync(
+                            path.join(context.outDir, "llms-full-blog.txt"),
+                            content,
+                            "utf-8"
+                        );
+                    }
                 }
             }
         },
