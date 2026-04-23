@@ -2,5 +2,5 @@
 # https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-policies/about-code-owners
 
 # llms.txt and related AI-discoverability content
-docusaurus.config.js                  @Jordy-baby @nikbhintade
-plugins/plugin-generate-llms.js       @Jordy-baby @nikbhintade
+docusaurus.config.js                  @Jordy-Baby @nikbhintade
+plugins/plugin-generate-llms.js       @Jordy-Baby @nikbhintade
