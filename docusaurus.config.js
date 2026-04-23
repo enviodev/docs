@@ -552,7 +552,7 @@ This file contains links to documentation sections following the llmstxt.org sta
 - [HyperIndex repo](https://github.com/enviodev/hyperindex): Source and issues.
 - [Releases](https://github.com/enviodev/hyperindex/releases): HyperIndex changelog.
 - [Quickstart with AI](https://docs.envio.dev/docs/HyperIndex/quickstart-with-ai.md): End-to-end guide for building an indexer with Claude Code, Cursor, or any MCP-compatible AI coding assistant.
-- [MCP Server](https://docs.envio.dev/docs/HyperIndex/mcp-server.md): Model Context Protocol server for AI coding assistants; endpoint at https://docs.envio.dev/mcp.
+- [MCP Server](https://docs.envio.dev/docs/HyperIndex/mcp-server.md): Model Context Protocol server for AI coding assistants. Endpoint: https://docs.envio.dev/mcp
 - [X](https://x.com/envio_indexer): Social updates.
 - [Telegram](https://t.me/+5mI61oZibEM5OGQ8): Community chat.
 - [Discord](https://discord.gg/envio): Community support.
