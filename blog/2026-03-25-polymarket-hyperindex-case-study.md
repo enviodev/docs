@@ -192,7 +192,7 @@ The Polymarket indexer is fully open source and available as a production refere
 - Repo: [https://github.com/enviodev/polymarket-indexer](https://github.com/enviodev/polymarket-indexer)
 - Live deployment: [https://envio.dev/app/moose-code/polymarket-indexer/7cad3ad](https://envio.dev/app/moose-code/polymarket-indexer/7cad3ad)
 - Envio docs: [https://docs.envio.dev/](https://docs.envio.dev/)
-- Discord: [https://discord.com/invite/gt7yEUZKeB](https://discord.com/invite/gt7yEUZKeB)
+- Discord: [https://discord.gg/envio](https://discord.gg/envio)
 - Telegram: [https://t.me/+kAIGElzPjApiMjI0](https://t.me/+kAIGElzPjApiMjI0)
 - Follow us on X: [https://x.com/envio_indexer](https://x.com/envio_indexer)
 
@@ -202,4 +202,4 @@ Envio HyperIndex is independently benchmarked as the fastest EVM blockchain inde
 
 [Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
 
-[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.gg/envio) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)

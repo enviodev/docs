@@ -70,7 +70,7 @@ The full list of HyperSync supported networks can be found [here](https://docs.e
 
 ### Support
 
-Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.com/invite/Q9qt8gZ2fX); we’re always happy to help!
+Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.gg/envio); we’re always happy to help!
 
 
 ### About The B² Testnet 
@@ -156,7 +156,7 @@ The full list of HyperSync supported networks can be found [here](https://docs.e
 
 ### Support
 
-Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.com/invite/Q9qt8gZ2fX); we’re always happy to help!
+Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.gg/envio); we’re always happy to help!
 
 
 ### About Base
@@ -234,7 +234,7 @@ The full list of HyperSync supported networks can be found [here](https://docs.e
 
 ### Support
 
-Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.com/invite/Q9qt8gZ2fX); we’re always happy to help!
+Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.gg/envio); we’re always happy to help!
 
 
 ### About Berachain
@@ -319,7 +319,7 @@ The full list of HyperSync supported networks can be found [here](https://docs.e
 
 ### Support
 
-Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.com/invite/Q9qt8gZ2fX); we’re always happy to help!
+Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.gg/envio); we’re always happy to help!
 
 
 ### About Blast
@@ -397,7 +397,7 @@ The full list of HyperSync supported networks can be found [here](https://docs.e
 
 ### Support
 
-Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.com/invite/Q9qt8gZ2fX); we’re always happy to help!
+Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.gg/envio); we’re always happy to help!
 
 
 ### About Boba
@@ -482,7 +482,7 @@ The full list of HyperSync supported networks can be found [here](https://docs.e
 
 ### Support
 
-Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.com/invite/Q9qt8gZ2fX); we’re always happy to help!
+Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.gg/envio); we’re always happy to help!
 
 
 ### About BSC
@@ -560,7 +560,7 @@ The full list of HyperSync supported networks can be found [here](https://docs.e
 
 ### Support
 
-Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.com/invite/Q9qt8gZ2fX); we’re always happy to help!
+Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.gg/envio); we’re always happy to help!
 
 
 ### About Celo
@@ -638,7 +638,7 @@ The full list of HyperSync supported networks can be found [here](https://docs.e
 
 ### Support
 
-Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.com/invite/Q9qt8gZ2fX); we’re always happy to help!
+Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.gg/envio); we’re always happy to help!
 
 
 ### About Chiliz

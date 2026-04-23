@@ -51,4 +51,4 @@ networks:
           - event: Event
 ```
 
-Want HyperSync for Telos EVM Mainnet? Request network support here [Discord](https://discord.gg/fztEvj79m3)!
+Want HyperSync for Telos EVM Mainnet? Request network support here [Discord](https://discord.gg/envio)!

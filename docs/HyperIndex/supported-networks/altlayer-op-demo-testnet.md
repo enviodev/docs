@@ -51,4 +51,4 @@ networks:
           - event: Event
 ```
 
-Want HyperSync for Altlayer OP Demo Testnet? Request network support here [Discord](https://discord.gg/fztEvj79m3)!
+Want HyperSync for Altlayer OP Demo Testnet? Request network support here [Discord](https://discord.gg/envio)!

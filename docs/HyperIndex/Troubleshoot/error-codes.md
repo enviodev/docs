@@ -18,7 +18,7 @@ When encountering an error in Envio, you'll receive an error code (like `EE101`)
 2. Read the explanation to understand what caused the error
 3. Follow the recommended steps to resolve the issue
 
-If you can't resolve an error after following the suggestions, please reach out for support on our [Discord community](https://discord.gg/DhfFhzuJQh).
+If you can't resolve an error after following the suggestions, please reach out for support on our [Discord community](https://discord.gg/envio).
 
 ## Error Categories
 
@@ -393,7 +393,7 @@ contracts:
 
 - Check your event handler logic for errors
 - Review recent changes to your blockchain indexer
-- If unable to resolve, contact support through [Discord](https://discord.gg/Q9qt8gZ2fX) with error details
+- If unable to resolve, contact support through [Discord](https://discord.gg/envio) with error details
 
 ## Database-Related Errors
 
@@ -501,7 +501,7 @@ pnpm envio local db-migrate setup
 
 **Issue**: Contract name not found in interface mapping (unexpected internal error).
 
-**Solution**: Contact support through [Discord](https://discord.gg/Q9qt8gZ2fX) for assistance.
+**Solution**: Contact support through [Discord](https://discord.gg/envio) for assistance.
 
 ## Network-Related Errors
 
@@ -526,6 +526,6 @@ pnpm envio local db-migrate setup
 - Check network connectivity
 - Verify RPC endpoint performance
 - Consider increasing timeouts if possible
-- If persists, contact support through [Discord](https://discord.gg/Q9qt8gZ2fX)
+- If persists, contact support through [Discord](https://discord.gg/envio)
 
 ---

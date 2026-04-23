@@ -119,7 +119,7 @@ Migrate your existing subgraphs and keep the same API, with faster sync, quicker
 The process is handled end-to-end, converting your subgraph to HyperIndex and getting it up and running without needing to manage infrastructure.
 
 Learn more here: [https://envio.dev/pricing/subgraphs](https://envio.dev/pricing/subgraphs)  
-Get started on Discord - open a support ticket: [https://discord.com/invite/envio](https://discord.com/invite/envio)
+Get started on Discord - open a support ticket: [https://discord.gg/envio](https://discord.gg/envio)
 
 ## Heatbook: Polymarket Orderbooks as Heatmaps
 
@@ -235,4 +235,4 @@ Stay tuned for more monthly updates by subscribing to our newsletter, following 
 
 [Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
 
-[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.gg/envio) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)

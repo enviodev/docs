@@ -93,8 +93,8 @@ HyperSync powers a wide range of blockchain applications, enabling developers to
 - [Get an API Token](/docs/HyperSync/api-tokens) to access HyperSync services
 - [View Supported Networks](/docs/HyperSync/hypersync-supported-networks) to see available chains
 - [Check Client Documentation](/docs/HyperSync/hypersync-clients) for language-specific guides
-- [Join our Discord](https://discord.gg/Q9qt8gZ2fX) for support and updates
+- [Join our Discord](https://discord.gg/envio) for support and updates
 
 :::note
-Our documentation is continuously improving! If you have questions or need assistance, please reach out in our [Discord community](https://discord.gg/Q9qt8gZ2fX).
+Our documentation is continuously improving! If you have questions or need assistance, please reach out in our [Discord community](https://discord.gg/envio).
 :::

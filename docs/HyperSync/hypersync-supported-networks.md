@@ -7,7 +7,7 @@ description: See all networks currently supported by HyperSync, including covera
 ---
 
 :::note
-We are rapidly adding new supported networks. If you don't see your network here or would like us to add a network to HyperSync, pop us a message in our [Discord](https://discord.gg/Q9qt8gZ2fX).
+We are rapidly adding new supported networks. If you don't see your network here or would like us to add a network to HyperSync, pop us a message in our [Discord](https://discord.gg/envio).
 :::
 
 :::info
@@ -26,7 +26,7 @@ Currently, tiers relate to various service quality aspects including:
 While detailed tier specifications are still being finalized, we're committed to providing transparent service level information in the near future.
 
 
-If you are a network operator or user and would like improved service support or to discuss upgrading a chain's level of support, please reach out to us in [Discord](https://discord.gg/Q9qt8gZ2fX).
+If you are a network operator or user and would like improved service support or to discuss upgrading a chain's level of support, please reach out to us in [Discord](https://discord.gg/envio).
 :::
 | Network Name              | Network ID      | HyperSync URL                                                                            | HyperRPC URL                                                                             | Tier |
 | ------------------------- | --------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---- |

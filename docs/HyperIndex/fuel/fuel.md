@@ -209,5 +209,5 @@ Powered by the FuelVM, Fuel expands Ethereum's capabilities without compromising
 If you encounter any issues with Fuel indexing, please:
 
 1. Check our [Troubleshooting](../Troubleshoot/common-issues.md) guides
-2. Join our [Discord](https://discord.com/invite/gt7yEUZKeB) for community support
+2. Join our [Discord](https://discord.gg/envio) for community support
 3. Create an issue in our [GitHub repository](https://github.com/enviodev/hyperindex)

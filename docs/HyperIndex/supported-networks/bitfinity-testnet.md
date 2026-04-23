@@ -49,4 +49,4 @@ networks:
           - event: Event
 ```
 
-Want HyperSync for Bitfinity Testnet? Request network support here [Discord](https://discord.gg/fztEvj79m3)!
+Want HyperSync for Bitfinity Testnet? Request network support here [Discord](https://discord.gg/envio)!

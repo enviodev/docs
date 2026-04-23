@@ -7,7 +7,7 @@ description: See all networks currently supported by HyperRPC, including their e
 ---
 
 :::note
-Please note we are rapidly adding new supported networks. If you don't see your network here or would like us to add a network to HyperRPC, pop us a message in [Discord](https://discord.gg/Q9qt8gZ2fX).
+Please note we are rapidly adding new supported networks. If you don't see your network here or would like us to add a network to HyperRPC, pop us a message in [Discord](https://discord.gg/envio).
 :::
 
 :::caution API Tokens Recommended

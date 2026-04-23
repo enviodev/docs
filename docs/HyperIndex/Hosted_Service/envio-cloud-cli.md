@@ -11,7 +11,7 @@ description: Command-line interface for managing and monitoring your indexers on
 :::warning Alpha Release
 The `envio-cloud` CLI is currently in **alpha**. The tool is under active development and will be iterated on before a stable version 1 release once the final form of the tool's interaction is finalized.
 
-For feature requests, please reach out to us on [Telegram](https://t.me/envaborations) or [Discord](https://discord.gg/Q9qt8gZ2fX).
+For feature requests, please reach out to us on [Telegram](https://t.me/envaborations) or [Discord](https://discord.gg/envio).
 :::
 
 The `envio-cloud` CLI is a command-line tool for interacting with Envio Cloud. It enables you to deploy, manage, and monitor your blockchain indexers directly from the terminal — making it particularly useful for CI/CD pipelines, scripting, and agentic workflows.
