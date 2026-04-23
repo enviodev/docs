@@ -42,8 +42,8 @@ const logoPath = path.join(STATIC_DIR, "img", "envio-logo.png");
 const logoBase64 = fs.readFileSync(logoPath).toString("base64");
 const logoDataUri = `data:image/png;base64,${logoBase64}`;
 
-// Logo rendered at 25% of original (459x145 → ~172x54)
-const LOGO_W = 172;
+// Logo rendered at native height 54 (390x94 → ~224x54)
+const LOGO_W = 224;
 const LOGO_H = 54;
 const LOGO_X = 90;
 const LOGO_Y = 60;
