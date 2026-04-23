@@ -359,8 +359,9 @@ async function processFile(filePath) {
   const outputPath = getOutputPath(filePath);
   const staticUrl = toStaticUrl(outputPath);
 
-  // Skip if image already set and not forcing
-  if (fm.image && !FORCE) {
+  // Skip only if frontmatter has image AND the PNG actually exists on disk.
+  // Otherwise regenerate so a stale frontmatter ref doesn't leave the site 404ing.
+  if (fm.image && fs.existsSync(outputPath) && !FORCE) {
     console.log(`  SKIP (has image): ${path.relative(REPO_ROOT, filePath)}`);
     return { status: "skip" };
   }
