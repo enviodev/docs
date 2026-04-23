@@ -421,7 +421,7 @@ const config = {
             root: `
 # Envio: Fast, Multi-Chain Blockchain Indexer
 
-> Envio.dev is a high-performance, multi-chain blockchain indexing framework designed for developers. It offers real-time and historical data querying via GraphQL APIs, supports automatic reorg handling, and enables rapid deployment with zero-downtime rollbacks. Built for EVM-compatible chains and Fuel, Envio empowers developers to build scalable blockchain applications efficiently.
+> Envio is a real-time multichain blockchain indexer. HyperIndex is a multichain indexer supporting any EVM chain, plus Solana and Fuel. HyperSync is a high-throughput data layer natively available on 70+ EVM chains and Fuel, and supports any EVM chain via RPC. HyperRPC is a read-only JSON-RPC endpoint powered by HyperSync, up to 5x faster than traditional nodes. Benchmark: Envio 1 min vs The Graph 143 min (Uniswap V2 Factory, Sentio, May 2025).
 
 This file contains links to documentation sections following the llmstxt.org standard.
 
@@ -520,7 +520,7 @@ This file contains links to documentation sections following the llmstxt.org sta
 
 ## HyperRPC
 
-- [HyperRPC](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc.md): Ultra-fast read-only RPC built on top of HyperSync, offering up to 5x faster performance than traditional nodes for data-intensive operations like eth_getLogs, block queries, and transaction lookups. Use as a drop-in replacement for existing JSON-RPC tooling — no code changes needed. Covers supported methods, API tokens, performance benchmarks, and getting started.
+- [HyperRPC](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc.md): Ultra-fast read-only RPC built on top of HyperSync, offering up to 5x faster performance than traditional nodes for data-intensive operations like eth_getLogs, block queries, and transaction lookups. Use as a drop-in replacement for existing JSON-RPC tooling, no code changes needed. Covers supported methods, API tokens, performance benchmarks, and getting started.
 
 ## Supported Networks
 
@@ -541,6 +541,23 @@ This file contains links to documentation sections following the llmstxt.org sta
 
 - [Privacy Policy](https://docs.envio.dev/docs/HyperIndex/privacy-policy.md): Read Envio's Privacy Policy covering how we collect, use, store, and protect your personal data when you use our website and services.
 - [Terms of Service](https://docs.envio.dev/docs/HyperIndex/terms-of-service.md): Read the Terms and Conditions for using Envio services.
+
+## Optional
+
+- [Envio website](https://envio.dev): Product overview and landing page.
+- [Envio root llms.txt](https://envio.dev/llms.txt): Marketing-facing llms.txt summary.
+- [Pricing](https://envio.dev/pricing): Envio Cloud plans and billing.
+- [Supported chains overview](https://envio.dev/chains): Canonical chains page across all products.
+- [GitHub organization](https://github.com/enviodev): Public repositories.
+- [HyperIndex repo](https://github.com/enviodev/hyperindex): Source and issues.
+- [Releases](https://github.com/enviodev/hyperindex/releases): HyperIndex changelog.
+- [Quickstart with AI](https://docs.envio.dev/docs/HyperIndex/quickstart-with-ai.md): End-to-end guide for building an indexer with Claude Code, Cursor, or any MCP-compatible AI coding assistant.
+- [MCP Server](https://docs.envio.dev/docs/HyperIndex/mcp-server.md): Model Context Protocol server for AI coding assistants; endpoint at https://docs.envio.dev/mcp.
+- [X](https://x.com/envio_indexer): Social updates.
+- [Telegram](https://t.me/+5mI61oZibEM5OGQ8): Community chat.
+- [Discord](https://discord.gg/envio): Community support.
+- [LinkedIn](https://www.linkedin.com/company/envio_indexer): Company page.
+- [YouTube](https://www.youtube.com/@envio_indexer): Video content.
 `,
           },
         ],
