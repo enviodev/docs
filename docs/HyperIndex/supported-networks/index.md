@@ -19,6 +19,6 @@ If a [network is supported](/docs/HyperSync/hypersync-supported-networks) on Hyp
 
 If the network that you want to index is not supported on HyperSync, please navigate to [RPC Data Source](/docs/HyperIndex/Advanced/rpc-sync.md) for more information to use RPC as a data source.
 
-You can also request a network to be added to HyperSync in the [Discord](https://discord.gg/Q9qt8gZ2fX).
+You can also request a network to be added to HyperSync in the [Discord](https://discord.gg/envio).
 
 ---

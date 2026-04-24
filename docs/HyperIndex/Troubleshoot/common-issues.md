@@ -8,7 +8,7 @@ description: Discover quick fixes and proven solutions for setup, runtime, and c
 
 # Common Issues and Troubleshooting
 
-This guide helps you identify and resolve common issues you might encounter when working with Envio HyperIndex. If you don't find a solution to your problem here, please join our [Discord community](https://discord.gg/DhfFhzuJQh) for additional support.
+This guide helps you identify and resolve common issues you might encounter when working with Envio HyperIndex. If you don't find a solution to your problem here, please join our [Discord community](https://discord.gg/envio) for additional support.
 
 ## Table of Contents
 

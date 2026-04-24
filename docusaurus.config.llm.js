@@ -99,7 +99,7 @@ const config = {
           {
             title: "Community",
             items: [
-              { label: "Discord", href: "https://discord.gg/Q9qt8gZ2fX" },
+              { label: "Discord", href: "https://discord.gg/envio" },
               { label: "Twitter", href: "https://twitter.com/envio_indexer" },
             ],
           },

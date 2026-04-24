@@ -78,7 +78,7 @@ Envio has a dedicated migration cursor flow so you do not have to replay your en
 
 After this, you can run the indexer locally with Docker or deploy directly to [Envio Cloud](https://docs.envio.dev/docs/HyperIndex/hosted-service). Once deployed, your indexer will sync with HyperSync-level speed.
 
-If you prefer hands-on help, or would like the team to check your setup, you can book a free migration call [here](https://envio.dev/alchemy-migration). Alternatively, reach out in [Discord](https://discord.com/invite/gt7yEUZKeB).
+If you prefer hands-on help, or would like the team to check your setup, you can book a free migration call [here](https://envio.dev/alchemy-migration). Alternatively, reach out in [Discord](https://discord.gg/envio).
 
 ## What changes when you leave Alchemy?
 
@@ -127,4 +127,4 @@ Stay tuned for more updates by subscribing to our newsletter, following us on X,
 
 [Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
 
-[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.gg/envio) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)

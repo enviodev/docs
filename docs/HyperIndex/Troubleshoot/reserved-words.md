@@ -136,6 +136,6 @@ CONTRACT_TYPE
 3. **Run validation early** with `pnpm codegen` to catch issues before spending time on implementation
 4. **Use prefixes for domain entities** (e.g., `TokenTransfer` instead of `Transfer`)
 
-If you encounter persistent issues with reserved words or need help refactoring your schema to avoid them, please reach out for support on our [Discord community](https://discord.gg/DhfFhzuJQh).
+If you encounter persistent issues with reserved words or need help refactoring your schema to avoid them, please reach out for support on our [Discord community](https://discord.gg/envio).
 
 ---

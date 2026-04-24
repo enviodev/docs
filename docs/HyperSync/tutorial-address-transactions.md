@@ -93,4 +93,4 @@ Other use cases include:
 - Try modifying the scripts for your specific use cases
 - Learn more about [HyperSync's capabilities](/docs/HyperSync/hypersync-query) for blockchain data analysis
 
-For any questions or support, join our [Discord community](https://discord.gg/Q9qt8gZ2fX) or create an issue on the GitHub repository.
+For any questions or support, join our [Discord community](https://discord.gg/envio) or create an issue on the GitHub repository.

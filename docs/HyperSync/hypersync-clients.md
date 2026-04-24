@@ -172,7 +172,7 @@ Choose the client that best fits your use case:
 
 Need help getting started or have questions about our clients? Connect with our community:
 
-- [Discord Community](https://discord.gg/Q9qt8gZ2fX)
+- [Discord Community](https://discord.gg/envio)
 - [GitHub Issues](https://github.com/enviodev)
 - [Documentation Feedback](https://github.com/enviodev/docs/issues)
 

@@ -308,7 +308,7 @@ For more information on how to set up your config, define a schema, and write ev
 
 ### Support
 
-Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.com/invite/Q9qt8gZ2fX); we’re always happy to help!
+Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.gg/envio); we’re always happy to help!
 
 ---
 `;
@@ -381,7 +381,7 @@ networks:
 \`\`\`
 
 Want HyperSync for ${network.name
-    }? Request network support here [Discord](https://discord.gg/fztEvj79m3)!
+    }? Request network support here [Discord](https://discord.gg/envio)!
 `;
 };
 

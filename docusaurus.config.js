@@ -351,7 +351,7 @@ const config = {
             items: [
               {
                 label: "Discord",
-                href: "https://discord.gg/Q9qt8gZ2fX",
+                href: "https://discord.gg/envio",
               },
               {
                 label: "Twitter",

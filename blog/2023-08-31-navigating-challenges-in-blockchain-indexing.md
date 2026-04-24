@@ -121,7 +121,7 @@ A few of the most frequent issues and their fixes:
 - **RPC errors or timeouts**: Switch to HyperSync if your network is supported, which eliminates RPC rate limiting entirely
 - **Tables missing from Hasura**: Run `pnpm envio stop` then `pnpm dev` to resync the schema
 
-For issues not covered here, the [Envio Discord](https://discord.com/invite/gt7yEUZKeB) has an active support channel with the core team.
+For issues not covered here, the [Envio Discord](https://discord.gg/envio) has an active support channel with the core team.
 
 ## Frequently asked questions
 
@@ -153,4 +153,4 @@ Stay tuned for more updates by subscribing to our newsletter, following us on X,
 
 [Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
 
-[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.gg/envio) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)

@@ -39,7 +39,7 @@ Envio supports any EVM chain and Fuel with an expanding list of networks, includ
 
 See the full list of supported networks in the [documentation](https://docs.envio.dev/docs/HyperSync/hypersync-supported-networks).
 
-We are rapidly adding new supported networks. If your network is not listed or you would like HyperSync support added, pop us a message in our [Discord](https://discord.com/invite/gt7yEUZKeB).
+We are rapidly adding new supported networks. If your network is not listed or you would like HyperSync support added, pop us a message in our [Discord](https://discord.gg/envio).
 
 ## Why use Envio?
 
@@ -57,7 +57,7 @@ Envio HyperIndex offers a developer-centric blockchain data indexing solution, e
 - [Getting started](https://docs.envio.dev/docs/HyperIndex/getting-started)
 - [Guides](https://docs.envio.dev/docs/HyperIndex/configuration-file)
 - [Tutorials](https://docs.envio.dev/docs/HyperIndex/tutorial-op-bridge-deposits)
-- [Get support](https://discord.com/invite/gt7yEUZKeB)
+- [Get support](https://discord.gg/envio)
 
 ## Conclusion
 
@@ -67,7 +67,7 @@ Envio is a powerful alternative to traditional blockchain indexing methods. Its 
 
 ### How do I check if my network is supported by Envio HyperSync?
 
-Visit the [HyperSync supported networks page](https://docs.envio.dev/docs/HyperSync/hypersync-supported-networks) in the documentation. If your network is not listed, you can request support by opening a message in the [Discord](https://discord.com/invite/gt7yEUZKeB).
+Visit the [HyperSync supported networks page](https://docs.envio.dev/docs/HyperSync/hypersync-supported-networks) in the documentation. If your network is not listed, you can request support by opening a message in the [Discord](https://discord.gg/envio).
 
 ### Can I use Envio on a network that HyperSync does not yet support?
 
@@ -93,4 +93,4 @@ Stay tuned for more updates by subscribing to our newsletter, following us on X,
 
 [Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
 
-[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.gg/envio) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)

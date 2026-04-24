@@ -318,4 +318,4 @@ Navigate to the [Envio Cloud](https://envio.dev/app/login) to start deploying yo
 
 Once you have successfully finished the tutorial, you are ready to become a blockchain indexing wizard!
 
-Join our [Discord](https://discord.com/invite/gt7yEUZKeB) channel to make sure you catch all new releases.
+Join our [Discord](https://discord.gg/envio) channel to make sure you catch all new releases.

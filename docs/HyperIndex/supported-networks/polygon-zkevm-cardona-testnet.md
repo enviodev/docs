@@ -50,4 +50,4 @@ networks:
           - event: Event
 ```
 
-Want HyperSync for Polygon zkEVM Cardona Testnet? Request network support here [Discord](https://discord.gg/fztEvj79m3)!
+Want HyperSync for Polygon zkEVM Cardona Testnet? Request network support here [Discord](https://discord.gg/envio)!

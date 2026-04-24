@@ -330,7 +330,7 @@ A custom indexing framework (HyperIndex, The Graph, Ponder, etc.) lets you defin
 
 ### How do I migrate from The Graph to Envio HyperIndex?
 
-HyperIndex has a [dedicated migration guide](https://docs.envio.dev/docs/HyperIndex/migration-guide) that walks you through it in 3 simple steps. Envio also offers white glove migration support for teams moving from any stack. Reach out to us via [Discord](https://discord.com/invite/envio) for support.
+HyperIndex has a [dedicated migration guide](https://docs.envio.dev/docs/HyperIndex/migration-guide) that walks you through it in 3 simple steps. Envio also offers white glove migration support for teams moving from any stack. Reach out to us via [Discord](https://discord.gg/envio) for support.
 
 
 ### What is HyperSync?
@@ -363,4 +363,4 @@ Stay tuned for more updates by subscribing to our newsletter, following us on X,
 [Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
 
 
-[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.gg/envio) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)

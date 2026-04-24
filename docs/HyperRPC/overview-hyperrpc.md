@@ -118,7 +118,7 @@ To start using HyperRPC:
    ```
 
 4. **Provide Feedback**:
-   Your testing and feedback are incredibly valuable as we continue to improve HyperRPC. Let us know about your experience in our [Discord](https://discord.gg/Q9qt8gZ2fX).
+   Your testing and feedback are incredibly valuable as we continue to improve HyperRPC. Let us know about your experience in our [Discord](https://discord.gg/envio).
 
 ## Development Status
 
@@ -127,7 +127,7 @@ To start using HyperRPC:
 - HyperRPC is under active development to further improve performance and stability
 - It is designed for read-only operations and does not support all standard RPC methods
 - It has not yet undergone formal security audits
-- We welcome questions and feedback in our [Discord](https://discord.gg/Q9qt8gZ2fX)
+- We welcome questions and feedback in our [Discord](https://discord.gg/envio)
   :::
 
 ---

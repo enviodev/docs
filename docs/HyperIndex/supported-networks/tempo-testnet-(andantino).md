@@ -48,4 +48,4 @@ networks:
           - event: Event
 ```
 
-Want HyperSync for Tempo Testnet (Andantino)? Request network support here [Discord](https://discord.gg/fztEvj79m3)!
+Want HyperSync for Tempo Testnet (Andantino)? Request network support here [Discord](https://discord.gg/envio)!

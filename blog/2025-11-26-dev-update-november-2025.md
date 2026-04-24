@@ -96,7 +96,7 @@ Star us on [GitHub](https://github.com/enviodev/hyperindex)
 
 Envio is live on [Monad](https://www.monad.xyz) Mainnet. Get easy access to real-time and historical data on Monad through performant syncing and a smooth, high performance indexing experience from day one. We supported teams throughout testnet and continue to provide the same fast, reliable indexing setup for a growing ecosystem on Mainnet.
 
-If you are live or going live on Monad and need help getting set up, chat to us about your data needs in [Discord](https://discord.com/invite/gt7yEUZKeB). For more on how to index data on Monad, read our [blog article](https://docs.envio.dev/blog/how-to-index-monad-data-using-envio).
+If you are live or going live on Monad and need help getting set up, chat to us about your data needs in [Discord](https://discord.gg/envio). For more on how to index data on Monad, read our [blog article](https://docs.envio.dev/blog/how-to-index-monad-data-using-envio).
 
 
 ## How to Migrate Alchemy Subgraphs to Envio
@@ -236,4 +236,4 @@ Stay tuned for more updates by subscribing to our newsletter, following us on X,
 
 [Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post) 💌
 
-[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.gg/envio) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)

@@ -111,7 +111,7 @@ networks:
 </div>
 </div>
 
-If you hit any issues, check the [Configuration File](https://docs.envio.dev/docs/HyperIndex/configuration-file) docs or reach out to our team in [Discord](https://discord.com/invite/envio).
+If you hit any issues, check the [Configuration File](https://docs.envio.dev/docs/HyperIndex/configuration-file) docs or reach out to our team in [Discord](https://discord.gg/envio).
 
 ### schema.graphql Migration
 
@@ -186,4 +186,4 @@ If you come across anything useful during your migration, please feel free to co
 
 ## Getting Help
 
-Join our [Discord](https://discord.com/invite/envio) if you need support. It is the fastest way to get direct help from the team and the community.
+Join our [Discord](https://discord.gg/envio) if you need support. It is the fastest way to get direct help from the team and the community.
