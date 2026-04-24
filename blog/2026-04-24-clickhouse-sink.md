@@ -61,11 +61,11 @@ The sink writes two things:
 Reorgs are handled by a single **`DELETE`** per table that removes all rows above the reorg checkpoint, the append only model makes rollbacks trivial, with no partial state to unwind. Schemas are auto-created on startup from your **`schema.graphql`**, with type mappings handled for you (`BigInt` → `Decimal`, `Date` → `DateTime64`, `enums` → `Enum8`/`Enum16`, and so on). No DDL to write.
 
 
-:::info 📝 **Note** 
+:::info[Note]
 During historical backfill, the sink does not store every intermediate entity change. If an entity is modified multiple times within a single batch, only the final state of that batch is written to ClickHouse. Once the indexer reaches the head and is processing live, every change is captured.
 :::
 
-:::warning ⚠️ **Warning:** 
+:::warning[Warning]
 Do not run multiple sinks against the same ClickHouse database at the same time.
 :::
 
@@ -143,7 +143,7 @@ Running a separate ETL pipeline (CDC from Postgres to ClickHouse, a Kafka connec
 
 ## Build With Envio
 
-Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data. If you are building onchain and need indexing that keeps up with your chain and now, analytics that keep up with your indexer \- check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.
+Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data. If you are building onchain and need indexing that keeps up with your chain, plus analytics that keep up with your indexer, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.
 
 Stay tuned for more updates by subscribing to our newsletter, following us on X, or hopping into our Discord.
 
