@@ -128,6 +128,7 @@ const config = {
         ],
       },
       metadata: [
+        { name: "robots", content: "noindex, nofollow" },
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:site", content: "@envio_indexer" },
         { property: "og:type", content: "website" },

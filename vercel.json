@@ -9,5 +9,114 @@
       "source": "/mcp",
       "destination": "/api/mcp"
     }
+  ],
+  "headers": [
+    {
+      "source": "/blog/tags",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, follow" }]
+    },
+    {
+      "source": "/blog/tags/:path*",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, follow" }]
+    },
+    {
+      "source": "/blog/archive",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, follow" }]
+    },
+    {
+      "source": "/blog/atom.xml",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, follow" }]
+    },
+    {
+      "source": "/blog/rss.xml",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, follow" }]
+    },
+    {
+      "source": "/blog/page/:path*",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, follow" }]
+    },
+    {
+      "source": "/docs/HyperIndex-LLM/:path*",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/docs/HyperSync-LLM/:path*",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/docs/HyperRPC-LLM/:path*",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    }
+  ],
+  "redirects": [
+    { "source": "/blog/blog/dev-update-december-2025", "destination": "/blog/envio-developer-update-december-2025", "permanent": true },
+    { "source": "/blog/blog/:path*", "destination": "/blog/:path*", "permanent": true },
+    { "source": "/blog/2024/11/08/06-hosted-service-v2", "destination": "/blog/hosted-service-v2", "permanent": true },
+    { "source": "/blog/navigating-common-challenges-in-blockchain-indexing", "destination": "/blog/common-challenges-in-blockchain-indexing", "permanent": true },
+    { "source": "/docs/migration-guide", "destination": "/docs/HyperIndex/migration-guide", "permanent": true },
+    { "source": "/docs/subgraph-migration", "destination": "/docs/HyperIndex/migration-guide", "permanent": true },
+    { "source": "/docs/api", "destination": "/docs/HyperIndex/overview", "permanent": true },
+    { "source": "/docs/HyperIndex/migration-guide-v1-v2", "destination": "/docs/HyperIndex/migration-guide", "permanent": true },
+    { "source": "/docs/HyperIndex/v2/privacy-policy", "destination": "/docs/HyperIndex/overview", "permanent": true },
+    { "source": "/docs/HyperIndex/v2/terms-of-service", "destination": "/docs/HyperIndex/overview", "permanent": true },
+    { "source": "/docs/HyperIndex/v2/:path*", "destination": "/docs/HyperIndex/:path*", "permanent": true },
+    { "source": "/docs/HyperSync/overview-hyperrpc", "destination": "/docs/HyperRPC/overview-hyperrpc", "permanent": true },
+    { "source": "/docs/HyperIndex/overview-hyperrpc", "destination": "/docs/HyperRPC/overview-hyperrpc", "permanent": true },
+    { "source": "/docs/HyperIndex/overview-hypersync", "destination": "/docs/HyperSync/overview", "permanent": true },
+    { "source": "/docs", "destination": "/docs/HyperIndex/overview", "permanent": true },
+    { "source": "/docs/quickstart", "destination": "/docs/HyperIndex/overview", "permanent": true },
+    { "source": "/docs/overview", "destination": "/docs/HyperIndex/overview", "permanent": true },
+    { "source": "/docs/getting-started", "destination": "/docs/HyperIndex/getting-started", "permanent": true },
+    { "source": "/docs/hyperindex-basics", "destination": "/docs/HyperIndex/getting-started", "permanent": true },
+    { "source": "/docs/contract-import", "destination": "/docs/HyperIndex/contract-import", "permanent": true },
+    { "source": "/docs/configuration-file", "destination": "/docs/HyperIndex/configuration-file", "permanent": true },
+    { "source": "/docs/schema", "destination": "/docs/HyperIndex/schema", "permanent": true },
+    { "source": "/docs/event-handlers", "destination": "/docs/HyperIndex/event-handlers", "permanent": true },
+    { "source": "/docs/testing", "destination": "/docs/HyperIndex/testing", "permanent": true },
+    { "source": "/docs/running-locally", "destination": "/docs/HyperIndex/running-locally", "permanent": true },
+    { "source": "/docs/navigating-hasura", "destination": "/docs/HyperIndex/navigating-hasura", "permanent": true },
+    { "source": "/docs/cli-commands", "destination": "/docs/HyperIndex/cli-commands", "permanent": true },
+    { "source": "/docs/hosted-service", "destination": "/docs/HyperIndex/hosted-service", "permanent": true },
+    { "source": "/docs/hosted-service-deployment", "destination": "/docs/HyperIndex/hosted-service-deployment", "permanent": true },
+    { "source": "/docs/hosted-service-billing", "destination": "/docs/HyperIndex/hosted-service-billing", "permanent": true },
+    { "source": "/docs/licensing", "destination": "/docs/HyperIndex/licensing", "permanent": true },
+    { "source": "/docs/fuel", "destination": "/docs/HyperIndex/fuel", "permanent": true },
+    { "source": "/docs/tutorial-op-bridge-deposits", "destination": "/docs/HyperIndex/tutorial-op-bridge-deposits", "permanent": true },
+    { "source": "/docs/tutorial-erc20-token-transfers", "destination": "/docs/HyperIndex/tutorial-erc20-token-transfers", "permanent": true },
+    { "source": "/docs/tutorial-indexing-fuel", "destination": "/docs/HyperIndex/tutorial-indexing-fuel", "permanent": true },
+    { "source": "/docs/greeter-tutorial", "destination": "/docs/HyperIndex/greeter-tutorial", "permanent": true },
+    { "source": "/docs/linked-entity-loaders", "destination": "/docs/HyperIndex/overview", "permanent": true },
+    { "source": "/docs/HyperIndex/linked-entity-loaders", "destination": "/docs/HyperIndex/overview", "permanent": true },
+    { "source": "/docs/dynamic-contracts", "destination": "/docs/HyperIndex/dynamic-contracts", "permanent": true },
+    { "source": "/docs/multichain-indexing", "destination": "/docs/HyperIndex/multichain-indexing", "permanent": true },
+    { "source": "/docs/hypersync", "destination": "/docs/HyperIndex/hypersync", "permanent": true },
+    { "source": "/docs/rpc-sync", "destination": "/docs/HyperIndex/rpc-sync", "permanent": true },
+    { "source": "/docs/generated-files", "destination": "/docs/HyperIndex/generated-files", "permanent": true },
+    { "source": "/docs/terminology", "destination": "/docs/HyperIndex/terminology", "permanent": true },
+    { "source": "/docs/async-mode", "destination": "/docs/HyperIndex/overview", "permanent": true },
+    { "source": "/docs/HyperIndex/async-mode", "destination": "/docs/HyperIndex/overview", "permanent": true },
+    { "source": "/docs/labels", "destination": "/docs/HyperIndex/overview", "permanent": true },
+    { "source": "/docs/HyperIndex/labels", "destination": "/docs/HyperIndex/overview", "permanent": true },
+    { "source": "/docs/performance", "destination": "/docs/HyperIndex/performance", "permanent": true },
+    { "source": "/docs/example-sablier-v2", "destination": "/docs/HyperIndex/example-sablier", "permanent": true },
+    { "source": "/docs/example-liquidation-metrics", "destination": "/docs/HyperIndex/example-liquidation-metrics", "permanent": true },
+    { "source": "/docs/example-uniswap-v3", "destination": "/docs/HyperIndex/example-uniswap-v4-multi-chain-indexer", "permanent": true },
+    { "source": "/docs/example-uniswap-v4", "destination": "/docs/HyperIndex/example-uniswap-v4-multi-chain-indexer", "permanent": true },
+    { "source": "/docs/example-ens", "destination": "/docs/HyperIndex/example-ens", "permanent": true },
+    { "source": "/docs/logging", "destination": "/docs/HyperIndex/logging", "permanent": true },
+    { "source": "/docs/common-issues", "destination": "/docs/HyperIndex/common-issues", "permanent": true },
+    { "source": "/docs/error-codes", "destination": "/docs/HyperIndex/error-codes", "permanent": true },
+    { "source": "/docs/reserved-words", "destination": "/docs/HyperIndex/reserved-words", "permanent": true },
+    { "source": "/docs/hyperfuel", "destination": "/docs/HyperIndex/fuel", "permanent": true },
+    { "source": "/docs/overview-hypersync", "destination": "/docs/HyperSync/overview", "permanent": true },
+    { "source": "/docs/hypersync-usage", "destination": "/docs/HyperSync/hypersync-usage", "permanent": true },
+    { "source": "/docs/hypersync-query", "destination": "/docs/HyperSync/hypersync-query", "permanent": true },
+    { "source": "/docs/hypersync-clients", "destination": "/docs/HyperSync/hypersync-clients", "permanent": true },
+    { "source": "/docs/hypersync-curl-example", "destination": "/docs/HyperSync/hypersync-curl-examples", "permanent": true },
+    { "source": "/docs/hypersync-url-endpoints", "destination": "/docs/HyperSync/hypersync-supported-networks", "permanent": true },
+    { "source": "/docs/HyperSync/hypersync-url-endpoints", "destination": "/docs/HyperSync/hypersync-supported-networks", "permanent": true },
+    { "source": "/docs/HyperSync/hyperrpc-url-endpoints", "destination": "/docs/HyperRPC/hyperrpc-supported-networks", "permanent": true },
+    { "source": "/docs/hyperfuel-query", "destination": "/docs/HyperSync/hyperfuel-query", "permanent": true },
+    { "source": "/docs/overview-hyperrpc", "destination": "/docs/HyperRPC/overview-hyperrpc", "permanent": true }
   ]
 }
