@@ -38,7 +38,7 @@ Here are step-by-step instructions for creating new API tokens: [https://docs.en
 
 [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) is Envio's high-performance blockchain data retrieval layer, built as an alternative to traditional JSON-RPC endpoints. It gives developers direct access to onchain data up to 2000x faster than standard RPC methods.
 
-For this article, we are using HyperSync to stream real-time block heights and query Polymarket trade events on Polygon as they happen. Client libraries are available for Python, Rust, Node.js, and Go. HyperSync supports 70+ EVM chains, so the same approach works across any supported network.
+For this article, we are using HyperSync to stream real-time block heights and query Polymarket trade events on Polygon as they happen. Client libraries are available for Python, Rust, Node.js, and Go. HyperSync supports <HyperSyncChainCount /> EVM chains, so the same approach works across any supported network.
 
 ## OrderFilled Event
 
@@ -412,7 +412,7 @@ pnpx poly-whales
 ## Frequently Asked Questions
 
 ### What is Envio HyperSync?
-HyperSync is Envio's high-performance blockchain data retrieval layer, built as an alternative to traditional JSON-RPC endpoints. It delivers up to 2,000x faster data access than standard RPC methods. Client libraries are available for TypeScript/Node.js, Python, Rust, and Go, with support for 70+ EVM chains including Polygon.
+HyperSync is Envio's high-performance blockchain data retrieval layer, built as an alternative to traditional JSON-RPC endpoints. It delivers up to 2,000x faster data access than standard RPC methods. Client libraries are available for TypeScript/Node.js, Python, Rust, and Go, with support for <HyperSyncChainCount /> EVM chains including Polygon.
 
 ### How do I track Polymarket trades in real time?
 Use the Envio HyperSync Node.js client to stream block heights from Polygon, then query the Exchange contract for OrderFilled events on each new block. Decode the event data with Viem to extract maker, taker, asset IDs, and amounts. A `makerAssetId` of 0 indicates a buy trade.

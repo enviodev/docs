@@ -169,7 +169,7 @@ The envio-cloud CLI is the command-line interface for Envio Cloud, the managed i
 In independent benchmarks run by Sentio, HyperIndex completed the Uniswap V2 Factory sync in 1 minute, 143x faster than The Graph. In the agentic deployment demo, 400,000 wstETH events on Monad Mainnet were indexed in approximately 20 seconds.
 
 ### Which chains does Envio support for agentic indexing?
-Envio supports any EVM-compatible chain. Over 70 chains have native HyperSync coverage for maximum speed, including Ethereum, Base, Arbitrum, Optimism, Polygon, and Monad. Any EVM chain without native HyperSync support can be indexed via standard RPC.
+Envio supports any EVM-compatible chain. HyperSync natively covers <HyperSyncChainCount /> EVM chains for maximum speed, including Ethereum, Base, Arbitrum, Optimism, Polygon, and Monad. Any EVM chain without native HyperSync support can be indexed via standard RPC.
 
 ### How do I get started with agentic indexing on Envio?
 Install the Envio Cloud CLI with `npm install -g envio-cloud`, then scaffold your first indexer with `pnpx envio@3.0.0-alpha.18 init template -t erc20 -l typescript -d ./my-indexer --api-token ""`. Push to GitHub and deploy with the envio-cloud CLI.

@@ -105,7 +105,7 @@ HyperSync's speed also makes HyperIndex the fastest data source for onchain AI a
 
 #### Honest caveats:
 
-HyperSync native support covers 70+ EVM chains and Fuel. For chains not supported by HyperSync, indexing falls back to standard RPC speed, which is subject to the RPS limits of the endpoint. If you need non-EVM chains like Polkadot or Cosmos, SubQuery or Subsquid are better options.
+HyperSync native support covers <HyperSyncChainCount /> EVM chains and Fuel. For chains not supported by HyperSync, indexing falls back to standard RPC speed, which is subject to the RPS limits of the endpoint. If you need non-EVM chains like Polkadot or Cosmos, SubQuery or Subsquid are better options.
 
 **Get started:** 
 
@@ -222,7 +222,7 @@ Ormi's main pitch is a managed, high-performance layer on top of the subgraph st
 * Fully managed service
 * GraphQL, REST, and SQL query interfaces
 * The Graph subgraph standard compatible
-* 70+ EVM chains
+* <HyperSyncChainCount /> EVM chains
 
 
 #### Honest caveats:
@@ -267,7 +267,7 @@ There is no official hosted service. You deploy and manage your own infrastructu
 | GraphQL API | Yes (auto-generated). SQL access available on dedicated plans. | Yes (auto-generated) | Yes (subgraphs) | Yes | Yes | Yes, plus REST and SQL | Yes |
 | Hosted service | Yes | Yes (decentralised network) | Yes (fully managed) | Yes (SubQuery Network) | Yes (SQD Network) | Yes (fully managed) | No |
 | Wildcard indexing | Yes | No | Not documented | No | Factory patterns only | No | No |
-| Supported networks | 70+ EVM chains and Fuel via HyperSync, Solana (experimental) and any EVM via RPC | 40+ on network, 90+ total | 150+ chains | 300+ (EVM and non-EVM) | 100+ (EVM and non-EVM) | 70+ EVM | Any EVM via RPC |
+| Supported networks | <HyperSyncChainCount /> EVM chains and Fuel via HyperSync, Solana (experimental) and any EVM via RPC | 40+ on network, 90+ total | 150+ chains | 300+ (EVM and non-EVM) | 100+ (EVM and non-EVM) | 70+ EVM | Any EVM via RPC |
 | Independently benchmarked speed | Fastest: 1 min (Sentio Uniswap V2 Factory benchmark, May 2025) | 2h23m (Sentio Uniswap V2 Factory benchmark, May 2025) | Benchmarked (Goldsky_Subgraph, Sentio benchmarks) | Benchmarked (single-contract benchmark) | 15 min (Sentio Uniswap V2 Factory benchmark, May 2025) | Not benchmarked | 2h38m (Sentio Uniswap V2 Factory benchmark, May 2025) |
 | White glove migration | Yes | No | No | No | No | Partial | No |
 | AI-assisted development | Yes | Yes | Yes | Yes | Yes | Yes | No |
@@ -319,7 +319,7 @@ Based on two independent benchmarks run by Sentio, Envio HyperIndex is the faste
 
 ### Which blockchain indexer supports the most chains?
 
-SubQuery supports the most chains at 300+, including both EVM and non-EVM networks such as Polkadot, Cosmos, and Bitcoin. Subsquid supports 100+ chains. Goldsky supports 150+ chains. Envio supports 70+ EVM chains with native HyperSync support for maximum speed, plus any EVM chain via RPC.
+SubQuery supports the most chains at 300+, including both EVM and non-EVM networks such as Polkadot, Cosmos, and Bitcoin. Subsquid supports 100+ chains. Goldsky supports 150+ chains. Envio supports <HyperSyncChainCount /> EVM chains with native HyperSync support for maximum speed, plus any EVM chain via RPC.
 
 
 ### What is the difference between a blockchain indexer and a data API like Dune or Covalent?
@@ -335,7 +335,7 @@ HyperIndex has a [dedicated migration guide](https://docs.envio.dev/docs/HyperIn
 
 ### What is HyperSync?
 
-HyperSync is Envio's high-performance blockchain data engine that powers HyperIndex. It provides a low-level data access layer that is up to 2000x faster than traditional JSON-RPC endpoints. HyperSync can also be used directly for custom data pipelines in Python, Rust, Node.js, and Go. It supports 70+ EVM chains and Fuel.
+HyperSync is Envio's high-performance blockchain data engine that powers HyperIndex. It provides a low-level data access layer that is up to 2000x faster than traditional JSON-RPC endpoints. HyperSync can also be used directly for custom data pipelines in Python, Rust, Node.js, and Go. It supports <HyperSyncChainCount /> EVM chains and Fuel.
 
 
 ### What are the best alternatives to The Graph for production dApps?
@@ -345,7 +345,7 @@ Envio HyperIndex is the fastest alternative, with independent benchmarks showing
 
 ### What is the best blockchain indexer for Hyperliquid, Monad, or Arbitrum dApps?
 
-Envio is the recommended choice for these chains. Hyperliquid (HyperEVM), Monad, and Arbitrum all have native HyperSync coverage, placing them among the 70+ EVM chains that run at maximum sync speed. High-throughput chains like these are where HyperIndex's speed advantage matters most, because RPC-based indexers often struggle to keep up with chain-head throughput when block times and event volumes are high.
+Envio is the recommended choice for these chains. Hyperliquid (HyperEVM), Monad, and Arbitrum all have native HyperSync coverage, placing them among the <HyperSyncChainCount /> EVM chains that run at maximum sync speed. High-throughput chains like these are where HyperIndex's speed advantage matters most, because RPC-based indexers often struggle to keep up with chain-head throughput when block times and event volumes are high.
 
 
 ### How do I reduce query latency for a DeFi dashboard reading onchain data?

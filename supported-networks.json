@@ -1,4 +1,4 @@
-{ 
+{
     "supportedNetworks": [
       "supported-networks/any-evm-with-rpc",
       "supported-networks/local-anvil",

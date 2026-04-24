@@ -1,3 +1,7 @@
+import networkCount from "../../data/network-count.json";
+
+const hyperSyncChainCount = networkCount.hyperSyncChainCount;
+
 const tags = {
   hyperindex: "HyperIndex",
   hypersync: "HyperSync",
@@ -105,10 +109,8 @@ const sites = [
   {
     slug: "chain-density",
     title: "Chain Density",
-    description:
-      "Analyze and visualize transaction and event density for any address across 70+ chains.",
-    longDescription:
-      "Chain Density is a cross-chain analytics tool that visualizes transaction and event density for any wallet address across more than 70 blockchain networks. Built with Envio's HyperSync, it leverages high-speed data retrieval to quickly scan activity across dozens of chains, generating density maps and activity heatmaps for any given address. The platform is useful for on-chain investigators, portfolio trackers, and anyone looking to understand multi-chain wallet activity patterns without manually checking each network individually.",
+    description: `Analyze and visualize transaction and event density for any address across ${hyperSyncChainCount}+ chains.`,
+    longDescription: `Chain Density is a cross-chain analytics tool that visualizes transaction and event density for any wallet address across more than ${hyperSyncChainCount} blockchain networks. Built with Envio's HyperSync, it leverages high-speed data retrieval to quickly scan activity across dozens of chains, generating density maps and activity heatmaps for any given address. The platform is useful for on-chain investigators, portfolio trackers, and anyone looking to understand multi-chain wallet activity patterns without manually checking each network individually.`,
     image: "/img/showcase/chaindensity.xyz_.png",
     source: "https://chaindensity.xyz/",
     tags: [tags.hypersync],
