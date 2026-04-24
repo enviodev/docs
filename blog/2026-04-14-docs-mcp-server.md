@@ -8,9 +8,8 @@ image: /blog-assets/envio-docs-mcp-server.png
 last_update:
   date: 2026-04-15
   author: Jordyn Laurier
+authors: ["j_o_r_d_y_s", "KenauVith32"]
 ---
-
-Co-authors: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations, and [Kenau Vith](https://x.com/KenauVith32), Growth Engineer
 
 <img src="/blog-assets/envio-docs-mcp-server.png" alt="Introducing the Envio Docs MCP Server" width="100%"/>
 
