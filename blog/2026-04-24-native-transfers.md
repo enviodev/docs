@@ -7,7 +7,7 @@ description: "Native ETH transfers don't emit event logs, so tracking them over 
 image: /blog-assets/tracking-native-eth-transfers-hypersync.png
 authors: ["nikbhintade", "j_o_r_d_y_s"]
 last_update:
-  date: 2026-04-17
+  date: 2026-04-24
   author: Nikhil Bhintade
 ---
 
