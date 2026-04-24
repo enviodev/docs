@@ -1,7 +1,7 @@
 ---
 title: Using ClickHouse Sink in HyperIndex V3
-Sidebar_label: /blog/clickhouse-sink-hyperindex-v3
-slug: /blog/clickhouse-sink-hyperindex-v3
+Sidebar_label: Using ClickHouse Sink in HyperIndex V3
+slug: /clickhouse-sink-hyperindex-v3
 tags: ["tutorials"]
 description: "HyperIndex V3 Alpha adds experimental ClickHouse Sink support. Postgres stays primary, entity data mirrors to ClickHouse for analytics workloads on billions of onchain events."
 image: /blog-assets/clickhouse-sink.png
