@@ -7,7 +7,7 @@ description: "HyperIndex V3 Alpha adds experimental ClickHouse Sink support. Pos
 image: /blog-assets/clickhouse-sink.png
 authors: ["nikbhintade", "j_o_r_d_y_s"]
 last_update:
-  date: 2026-04-17
+  date: 2026-04-24
   author: Nikhil Bhintade
 ---
 
