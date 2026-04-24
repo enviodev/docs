@@ -1,8 +1,10 @@
 import React from 'react';
 import Layout from '@theme/Layout';
+import Head from '@docusaurus/Head';
 import Link from '@docusaurus/Link';
 import clsx from 'clsx';
 import {useHistory, useLocation} from '@docusaurus/router';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './styles.module.css';
 
 const FILTERS = [
@@ -20,6 +22,51 @@ const TAG_LABELS = {
   'ai': 'AI',
   'announcements': 'Announcements',
   'tutorials': 'Tutorials',
+};
+
+export const TAG_META = {
+  all: {
+    pageTitle: 'Envio Blog',
+    htmlTitle: 'Envio Blog',
+    description:
+      "Technical articles, case studies, tutorials, product updates, and agentic indexing insights from Envio's blockchain data infrastructure team.",
+    image: '/blog-assets/og/blog.png',
+  },
+  'case-studies': {
+    pageTitle: 'Envio Case Studies',
+    htmlTitle: 'Envio Case Studies',
+    description:
+      'See how industry-leading Web3 teams scale onchain data with Envio in minutes. Learn how to do the same or build production-ready indexers for your project.',
+    image: '/blog-assets/og/case-studies.png',
+  },
+  'product-updates': {
+    pageTitle: 'Envio Product Updates',
+    htmlTitle: 'Envio Product Updates',
+    description:
+      'Monthly product updates and change logs across Envio. New releases, features, supported networks, agentic indexing workflows and more.',
+    image: '/blog-assets/og/product-updates.png',
+  },
+  announcements: {
+    pageTitle: 'Envio Announcements',
+    htmlTitle: 'Envio Announcements',
+    description:
+      'Official Envio updates: product launches, partnerships, new network support, and integrations across HyperIndex, HyperSync, and HyperRPC.',
+    image: '/blog-assets/og/announcements.png',
+  },
+  ai: {
+    pageTitle: 'Envio AI',
+    htmlTitle: 'Envio AI',
+    description:
+      'Build agentic blockchain indexing, MCP servers, and AI-native data workflows using Envio. Real-time onchain data for LLMs and AI agents.',
+    image: '/blog-assets/og/ai.png',
+  },
+  tutorials: {
+    pageTitle: 'Envio Tutorials',
+    htmlTitle: 'Envio Tutorials',
+    description:
+      'Hands-on developer tutorials covering subgraph migrations, querying onchain data at scale, building production-ready indexers and much more using Envio.',
+    image: '/blog-assets/og/tutorials.png',
+  },
 };
 
 function getFirstTagKey(content) {
@@ -92,14 +139,17 @@ function BlogCard({ content }) {
 export default function BlogListPage({ items }) {
   const history = useHistory();
   const location = useLocation();
+  const {siteConfig} = useDocusaurusContext();
   const params = new URLSearchParams(location.search);
   const activeFilter = params.get('tag') || 'all';
+  const meta = TAG_META[activeFilter] ?? TAG_META.all;
+  const absoluteImage = `${siteConfig.url}${meta.image}`;
 
   const setFilter = (value) => {
     if (value === 'all') {
       history.push('/blog');
     } else {
-      history.push(`/blog?tag=${value}`);
+      history.push(`/blog/tag/${value}`);
     }
   };
 
@@ -129,11 +179,19 @@ export default function BlogListPage({ items }) {
 
   return (
     <Layout
-      title="Envio Blog"
-      description="News, announcements, tutorials, and developer updates from the Envio team."
+      title={meta.htmlTitle}
+      description={meta.description}
     >
+      <Head>
+        <meta property="og:image" content={absoluteImage} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content={absoluteImage} />
+      </Head>
       <div className={styles.container}>
-        <h1 className={styles.pageTitle}>Envio Blog</h1>
+        <h1 className={styles.pageTitle}>{meta.pageTitle}</h1>
+        <p className={styles.pageSubtitle}>{meta.description}</p>
         <div className={styles.filters}>
           {FILTERS.map((filter) => (
             <button
