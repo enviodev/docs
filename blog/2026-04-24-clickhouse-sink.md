@@ -1,6 +1,6 @@
 ---
 title: Using ClickHouse Sink in HyperIndex V3
-Sidebar_label: Using ClickHouse Sink in HyperIndex V3
+sidebar_label: Using ClickHouse Sink in HyperIndex V3
 slug: /clickhouse-sink-hyperindex-v3
 tags: ["tutorials"]
 description: "HyperIndex V3 Alpha adds experimental ClickHouse Sink support. Postgres stays primary, entity data mirrors to ClickHouse for analytics workloads on billions of onchain events."
@@ -86,7 +86,7 @@ This will set up a fresh project on the latest alpha release. From there, enabli
 | `ENVIO_CLICKHOUSE_SINK_USERNAME` | Username for the sink connection. |
 | `ENVIO_CLICKHOUSE_SINK_PASSWORD` | Password for the sink connection. |
 
-Once those are set on your Envio Cloud deployment, HyperIndex will replicate the same entity data it writes to Postgres into your ClickHouse database. Every entity in your **schema**.graphql becomes a ClickHouse table with a matching schema, so you can point your analytics queries, BI tools, or dashboards directly at ClickHouse, no extra ETL pipeline needed.
+Once those are set on your Envio Cloud deployment, HyperIndex will replicate the same entity data it writes to Postgres into your ClickHouse database. Every entity in your `schema.graphql` becomes a ClickHouse table with a matching schema, so you can point your analytics queries, BI tools, or dashboards directly at ClickHouse, no extra ETL pipeline needed.
 
 Postgres and GraphQL keep working exactly as they do today. The sink is additive: you get a second read-optimised surface without giving up the one you already have.
 
@@ -127,7 +127,7 @@ Because the history tables store every change with a checkpoint ID tied to a spe
 
 ### Can I Add Custom Tables or Indexes to My ClickHouse Database?
 
-The sink manages its own tables based on your **schema**.graphql and will create them on startup. You can add your own tables, materialised views, or downstream aggregations in the same database alongside the sink's tables, as long as you don't modify or collide with the sink-managed tables. A common pattern is to build materialised views on top of the history tables to pre-aggregate heavy queries.
+The sink manages its own tables based on your `schema.graphql` and will create them on startup. You can add your own tables, materialised views, or downstream aggregations in the same database alongside the sink's tables, as long as you don't modify or collide with the sink-managed tables. A common pattern is to build materialised views on top of the history tables to pre-aggregate heavy queries.
 
 ### What Happens If My ClickHouse Instance Goes Down?
 
