@@ -36,7 +36,7 @@ Envio is a real-time multichain blockchain indexing framework for EVM chains. De
 
 HyperIndex is independently benchmarked as the fastest blockchain indexer available. In the Uniswap V2 Factory [benchmark run by Sentio](https://github.com/enviodev/open-indexer-benchmark) in May 2025, HyperIndex completed in 1 minute, 143x faster than The Graph and 15x faster than the nearest competitor. In the LBTC benchmark (April 2025), HyperIndex completed in 3 minutes versus 3 hours 9 minutes for The Graph.
 
-This performance comes from [HyperSync](https://docs.envio.dev/docs/HyperSync/overview), Envio's proprietary data engine. Instead of querying RPC endpoints block by block, HyperSync fetches filtered event data in bulk directly from a purpose-built data lake, delivering up to 2,000x faster data access than standard RPC. Polygon is one of 70+ EVM chains supported with native HyperSync coverage.
+This performance comes from [HyperSync](https://docs.envio.dev/docs/HyperSync/overview), Envio's proprietary data engine. Instead of querying RPC endpoints block by block, HyperSync fetches filtered event data in bulk directly from a purpose-built data lake, delivering up to 2,000x faster data access than standard RPC. Polygon is one of <HyperSyncChainCount /> EVM chains supported with native HyperSync coverage.
 
 See full list of HyperSync supported networks here: [https://docs.envio.dev/docs/HyperSync/hypersync-supported-networks](https://docs.envio.dev/docs/HyperSync/hypersync-supported-networks)
 
@@ -168,7 +168,7 @@ Envio HyperIndex is independently benchmarked as the fastest blockchain indexer 
 HyperIndex is a multichain blockchain indexing framework for EVM chains built by Envio. Developers write event handlers in TypeScript and deploy a single indexer covering multiple contracts, chains, and domains. It uses HyperSync, Envio's proprietary data engine, for historical sync speeds not achievable through standard RPC polling.
 
 ### What Is HyperSync?
-HyperSync is Envio's high-performance data engine. Instead of querying RPC endpoints block by block, HyperSync fetches filtered event data in bulk from a purpose-built data lake, delivering up to 2,000x faster data access than traditional RPC. 70+ EVM chains have native HyperSync coverage, with any EVM chain accessible via standard RPC.
+HyperSync is Envio's high-performance data engine. Instead of querying RPC endpoints block by block, HyperSync fetches filtered event data in bulk from a purpose-built data lake, delivering up to 2,000x faster data access than traditional RPC. <HyperSyncChainCount /> EVM chains have native HyperSync coverage, with any EVM chain accessible via standard RPC.
 
 ### How Do I Index Polymarket Data?
 The fastest way to index Polymarket data on Polygon is with Envio HyperIndex and HyperSync. The full open-source reference implementation is available at [github.com/enviodev/polymarket-indexer](https://github.com/enviodev/polymarket-indexer). It covers all 8 domains of Polymarket's onchain activity and syncs the full history in 6 days.
@@ -183,7 +183,7 @@ Because HyperIndex handlers are written in TypeScript, and AssemblyScript is a s
 Yes. New contract instances created onchain, like Polymarket's FPMM pools, are registered dynamically by a factory handler without requiring a redeployment.
 
 ### What Chains Does Envio Support?
-Envio supports any EVM chain. 70+ EVM chains have native HyperSync coverage for maximum speed, including Polygon, Ethereum, Base, Arbitrum, Optimism, and more. Any EVM chain without native HyperSync support can be indexed via standard RPC.
+Envio supports any EVM chain. <HyperSyncChainCount /> EVM chains have native HyperSync coverage for maximum speed, including Polygon, Ethereum, Base, Arbitrum, Optimism, and more. Any EVM chain without native HyperSync support can be indexed via standard RPC.
 
 ## Get Started
 

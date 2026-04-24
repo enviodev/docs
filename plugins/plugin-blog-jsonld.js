@@ -20,6 +20,16 @@ const glob = require("glob");
 const FAQ_HEADING_RE = /^##[ \t]+(frequently[ \t]+asked[ \t]+questions|faq)[ \t]*$/im;
 const DATE_FROM_FILENAME_RE = /^(\d{4})-(\d{1,2})-(\d{1,2})-(.+)\.mdx?$/;
 
+// Substitute dynamic-count MDX macros before stripping HTML tags, so the
+// JSON-LD carries the actual number instead of an empty string.
+function substituteDynamicMacros(content, context) {
+  const count = context?.hyperSyncChainCount;
+  if (!count) return content;
+  return content
+    .replace(/<HyperSyncChainCount\s*\/>/g, `${count}+`)
+    .replace(/<HyperSyncChainCountPlain\s*\/>/g, `${count}`);
+}
+
 function resolveBlogUrlPath(filename, frontMatter) {
   if (frontMatter.slug) {
     return `/blog/${String(frontMatter.slug).replace(/^\/+/, "")}`;
@@ -193,6 +203,17 @@ function injectIntoHtml(html, scriptsBlock) {
 
 function BlogJsonLdPlugin(context, options = {}) {
   const blogDir = path.resolve(context.siteDir, options.blogDir || "blog");
+  // Resolve the current HyperSync chain count so <HyperSyncChainCount />
+  // macros in FAQ answers get substituted with the real number in JSON-LD.
+  let dynamicMacroContext = {};
+  try {
+    const countPath = path.resolve(context.siteDir, "src/data/network-count.json");
+    if (fs.existsSync(countPath)) {
+      dynamicMacroContext = JSON.parse(fs.readFileSync(countPath, "utf-8"));
+    }
+  } catch (e) {
+    console.warn("[plugin-blog-jsonld] could not load network-count.json:", e.message);
+  }
 
   return {
     name: "docusaurus-plugin-blog-jsonld",
@@ -219,7 +240,8 @@ function BlogJsonLdPlugin(context, options = {}) {
 
         if (fm.jsonld === false) continue;
 
-        const faqPairs = extractFaqPairs(parsed.content);
+        const preprocessed = substituteDynamicMacros(parsed.content, dynamicMacroContext);
+        const faqPairs = extractFaqPairs(preprocessed);
         if (!faqPairs) {
           noFaq++;
           continue;

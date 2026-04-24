@@ -3,7 +3,7 @@ id: overview
 title: HyperSync
 sidebar_label: Overview
 slug: /overview
-description: Explore HyperSync for ultra-fast blockchain data access and flexible queries across 70+ networks.
+description: Explore HyperSync for ultra-fast blockchain data access and flexible queries across 86+ networks.
 ---
 
 # HyperSync: Ultra-Fast & Flexible Data API
@@ -32,7 +32,7 @@ Traditional blockchain data access through JSON-RPC faces several limitations:
 ## Key Benefits
 
 - **Exceptional Performance**: Retrieve and process blockchain data up to 1000x faster than traditional RPC methods
-- **Comprehensive Coverage**: Access data across [70+ EVM chains](/docs/HyperSync/hypersync-supported-networks) and Fuel, with new networks added regularly
+- **Comprehensive Coverage**: Access data across [<HyperSyncChainCount /> EVM chains](/docs/HyperSync/hypersync-supported-networks) and Fuel, with new networks added regularly
 - **Flexible Query Capabilities**: Filter, select, and process exactly the data you need with powerful query options
 - **Cost Efficiency**: Dramatically reduce infrastructure costs for data-intensive applications
 - **Simple Integration**: Client libraries available for Python, Rust, Node.js, and Go
@@ -63,7 +63,7 @@ HyperSync powers a wide range of blockchain applications, enabling developers to
 
 #### [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview)
 
-- **100x faster blockchain indexing** across 80+ EVM chains and Fuel
+- **100x faster blockchain indexing** across <HyperSyncChainCount /> EVM chains and Fuel
 - **Powers 100 plus applications** like v4.xyz analytics
 
 #### [ChainDensity.xyz](https://chaindensity.xyz)

@@ -437,7 +437,7 @@ const generateMarkdownFiles = async () => {
     // Update supported-networks.json
     fs.writeFileSync(
       path.join(rootDir, "supported-networks.json"),
-      `{ 
+      `{
     "supportedNetworks": [
       "supported-networks/any-evm-with-rpc",
       "supported-networks/local-anvil",
@@ -445,6 +445,55 @@ const generateMarkdownFiles = async () => {
       ${supportedNetworks.sort().join(",\n      ")}]}`,
       "utf8"
     );
+
+    // Generate HyperSync chain count for use across the site.
+    // Matches the "first-class" count shown on envio.dev/chains:
+    // same base filter as the supported-networks table, minus traces variants
+    // (e.g. base-traces, eth-traces) which are alternative endpoints, not distinct chains.
+    const hyperSyncChainCount = sortAndFilterChains(data).filter(
+      (chain) => !chain.name.toLowerCase().includes("traces")
+    ).length;
+    const dataDir = path.join(rootDir, "src", "data");
+    if (!fs.existsSync(dataDir)) {
+      fs.mkdirSync(dataDir, { recursive: true });
+    }
+    fs.writeFileSync(
+      path.join(dataDir, "network-count.json"),
+      JSON.stringify(
+        {
+          hyperSyncChainCount,
+          generatedAt: new Date().toISOString(),
+          source: URL,
+        },
+        null,
+        2
+      ) + "\n",
+      "utf8"
+    );
+    console.log(`Wrote HyperSync chain count: ${hyperSyncChainCount}`);
+
+    // Frontmatter/plain-text targets where MDX components can't be used.
+    // Allowlist is explicit so we only rewrite known lines.
+    const FRONTMATTER_TARGETS = [
+      {
+        file: "docs/HyperSync/overview.md",
+        pattern: /^(description:.*?\b)\d+\+?\s+(networks?|chains?)\b/m,
+        label: "HyperSync overview description",
+      },
+    ];
+    FRONTMATTER_TARGETS.forEach(({ file, pattern, label }) => {
+      const full = path.join(rootDir, file);
+      if (!fs.existsSync(full)) return;
+      const before = fs.readFileSync(full, "utf8");
+      const after = before.replace(
+        pattern,
+        (_, prefix, word) => `${prefix}${hyperSyncChainCount}+ ${word}`
+      );
+      if (after !== before) {
+        fs.writeFileSync(full, after, "utf8");
+        console.log(`Updated chain count in ${label} (${file})`);
+      }
+    });
 
     console.log("Markdown files generated successfully.");
   } catch (error) {

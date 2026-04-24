@@ -189,7 +189,7 @@ See the HyperSync query reference for the full TraceSelection schema and field l
 ## Frequently Asked Questions
 
 ### What Is HyperSync?
-[HyperSync](https://docs.envio.dev/docs/HyperSync/overview) is Envio's high-performance blockchain data retrieval layer, built as an alternative to traditional JSON-RPC endpoints. It gives developers direct access to onchain data up to 2000x faster than standard RPC methods, with client libraries for Python, Rust, Node.js, and Go across 70+ EVM chains.
+[HyperSync](https://docs.envio.dev/docs/HyperSync/overview) is Envio's high-performance blockchain data retrieval layer, built as an alternative to traditional JSON-RPC endpoints. It gives developers direct access to onchain data up to 2000x faster than standard RPC methods, with client libraries for Python, Rust, Node.js, and Go across <HyperSyncChainCount /> EVM chains.
 
 ### Why Can't I Track Native ETH Transfers Using Event Logs?
 Native ETH transfers don't emit events. The ERC-20 `Transfer` event is a standard contract event, but native ETH moves at the protocol level and only shows up in transaction traces. To track them, you have to query traces directly.

@@ -225,6 +225,17 @@ const redirectsList = [
     to: "/docs/HyperRPC/overview-hyperrpc",
   },
 ];
+// Load build-time generated network count (written by scripts/update-endpoints.js).
+// Falls back to a safe default if the file hasn't been generated yet.
+let networkCountData = { hyperSyncChainCount: null };
+try {
+  networkCountData = require("./src/data/network-count.json");
+} catch (e) {
+  console.warn(
+    "network-count.json not found — run scripts/update-endpoints.js to generate it."
+  );
+}
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Envio",
@@ -236,6 +247,9 @@ const config = {
   projectName: "indexer-docs",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
+  customFields: {
+    hyperSyncChainCount: networkCountData.hyperSyncChainCount,
+  },
   i18n: {
     defaultLocale: "en",
     locales: ["en"],
