@@ -9,5 +9,12 @@
       "source": "/mcp",
       "destination": "/api/mcp"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/blog/tags/:tag*",
+      "destination": "/blog/tag/:tag*",
+      "permanent": true
+    }
   ]
 }
