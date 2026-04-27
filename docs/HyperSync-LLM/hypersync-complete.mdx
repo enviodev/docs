@@ -1373,7 +1373,7 @@ struct QueryResponse {
 
 ### Rollback Guard
 
-The `rollback_guard` is returned with every query response and is used to detect chain reorganizations (reorgs). When the blockchain forks, previously returned data may become invalid — the rollback guard gives you the information needed to detect this and re-fetch affected data.
+The optional `rollback_guard` lets you detect chain reorganizations (reorgs) between successive queries.
 
 ```rust
 struct RollbackGuard {
@@ -1386,39 +1386,20 @@ struct RollbackGuard {
 
     /// First block scanned in this query
     first_block_number: u64,
-    /// Parent hash of the first block scanned in this query
+    /// Parent hash of the first block scanned
     first_parent_hash: Hash,
 }
 ```
 
-#### How HyperSync Handles Reorgs Internally
+The field is `Option<RollbackGuard>`: present when the response covers blocks near the chain tip, absent when there is no data to guard.
 
-HyperSync continuously ingests the latest block data. As new blocks arrive, HyperSync validates that each block's `parent_hash` matches the hash of the previous block. If a mismatch is detected — indicating a chain fork — HyperSync re-syncs the affected blocks to stay on the canonical chain.
+**How HyperSync handles reorgs internally.** As HyperSync ingests new blocks it checks each block's `parent_hash` against the previous block's `hash`. On a mismatch it re-syncs the affected blocks and continues serving the canonical chain. A single query response is always internally consistent; the rollback guard is for detecting reorgs _between_ successive queries.
 
-This means HyperSync always serves the latest canonical data. However, if you previously queried data that was later affected by a reorg, that data is now stale. The rollback guard lets you detect this situation.
+**Detecting a reorg.** After each query, store the guard's `block_number` and `hash`. On the next query, compare your stored `hash` against the new response's `first_parent_hash`. A match means the chain is intact; a mismatch means a reorg occurred between the two queries.
 
-#### Data Consistency Within a Query
+**Recovering from a reorg.** The guard tells you _that_ a reorg happened but not how deep. Keep enough history to cover your chain's reorg threshold (for example, 200 blocks for Polygon), then walk backwards: re-fetch each stored block's hash and compare. The first block whose hash still matches is the last canonical block. Rewind downstream state to that point and resume querying.
 
-An important guarantee: **within a single query response, the data is always consistent**. You will never receive data where half comes from one fork and half from another. The rollback guard is relevant for detecting reorgs *between* successive queries.
-
-#### Detecting Reorgs with the Rollback Guard
-
-To detect reorgs, store the rollback guard from each query response and compare it against the next:
-
-1. **Store the `hash`** (last block hash) from each query's `rollback_guard`.
-2. **On each subsequent query**, check if the `first_parent_hash` of the new response equals the `hash` from your previous response.
-3. **If they don't match**, a reorg has occurred and some previously received data may be invalid.
-
-#### Handling a Detected Reorg
-
-When a reorg is detected, the rollback guard tells you *that* a reorg happened, but not *which specific block* was reorganized. To handle this:
-
-1. **Store the rollback guard from every recent query** — keep enough history to cover the reorg threshold for your chain (e.g., up to 200 blocks for Polygon).
-2. **Walk backwards through stored rollback guards** to find the first query whose block hash no longer matches the chain.
-3. **Re-query from that point** to get the updated canonical data.
-4. **Roll back any downstream state** derived from the now-invalid data and reprocess.
-
-Consider using HyperIndex instead of building reorg handling yourself — it automatically detects reorg depth and rolls back database state.
+For automatic reorg handling, use [HyperIndex](/docs/HyperIndex/overview) instead: it tracks recent block hashes, locates the reorg point, and rolls back database state for you.
 
 ## Stream and Collect Functions
 

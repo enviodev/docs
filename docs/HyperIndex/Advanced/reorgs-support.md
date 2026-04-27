@@ -123,14 +123,14 @@ By properly configuring reorg support, you ensure that your indexed data remains
 
 ## Using HyperSync Directly? Handle Reorgs with the Rollback Guard
 
-If you're using [HyperSync](/docs/HyperSync/hypersync-query#rollback-guard) directly (without HyperIndex), you'll need to handle reorg detection and rollback yourself using the **rollback guard** that is returned with every HyperSync query response.
+If you use [HyperSync](/docs/HyperSync/hypersync-query#rollback-guard) directly, without HyperIndex, you have to handle reorg detection and rollback yourself using the **rollback guard** returned on each query response.
 
-HyperSync validates block parent hashes internally and re-syncs when it detects a fork, so it always serves canonical chain data. However, data you've already fetched may become stale after a reorg. The rollback guard provides the block hashes you need to detect this: compare the `first_parent_hash` of your current query response against the `hash` from your previous query response. If they don't match, a reorg has occurred and you should re-fetch the affected data.
+HyperSync validates block parent hashes internally and re-syncs when it detects a fork, so it always serves canonical chain data. Data you have already fetched can still go stale after a reorg, though. To detect that, compare the `first_parent_hash` of the current response against the `hash` you stored from the previous response. If they differ, a reorg has occurred and you need to re-fetch the affected range.
 
-For full details on reorg detection with the rollback guard, including a pseudocode example, see the [HyperSync Rollback Guard documentation](/docs/HyperSync/hypersync-query#rollback-guard).
+For full details, including a pseudocode example, see the [HyperSync Rollback Guard documentation](/docs/HyperSync/hypersync-query#rollback-guard).
 
 :::tip
-HyperIndex automates all of this — it fetches recent block hashes to pinpoint exactly where a reorg occurred and automatically rolls back database state. If you don't need the full flexibility of raw HyperSync, HyperIndex can save you significant implementation effort.
+HyperIndex automates all of this: it fetches recent block hashes to pinpoint exactly where a reorg occurred and automatically rolls back database state. Unless you need the full flexibility of raw HyperSync, HyperIndex saves significant implementation effort.
 :::
 
 ---

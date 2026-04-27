@@ -470,7 +470,7 @@ struct QueryResponse {
 
 ### Rollback Guard
 
-The `rollback_guard` is returned with every query response and is used to detect chain reorganizations (reorgs). When the blockchain forks, previously returned data may become invalid — the rollback guard gives you the information needed to detect this and re-fetch affected data.
+The optional `rollback_guard` lets you detect chain reorganizations (reorgs) between successive queries, so you can re-fetch any data that has become stale.
 
 ```rust
 struct RollbackGuard {
@@ -483,104 +483,74 @@ struct RollbackGuard {
 
     /// First block scanned in this query
     first_block_number: u64,
-    /// Parent hash of the first block scanned in this query
+    /// Parent hash of the first block scanned
     first_parent_hash: Hash,
 }
 ```
 
-#### How HyperSync Handles Reorgs Internally
+The guard is `Option<RollbackGuard>`: it is present whenever the response covers blocks near the chain tip (where reorgs can still happen) and absent for queries that return no data.
 
-HyperSync continuously ingests the latest block data. As new blocks arrive, HyperSync validates that each block's `parent_hash` matches the hash of the previous block. If a mismatch is detected — indicating a chain fork — HyperSync re-syncs the affected blocks to stay on the canonical chain.
+#### How HyperSync handles reorgs internally
 
-This means HyperSync always serves the latest canonical data. However, if you previously queried data that was later affected by a reorg, that data is now stale. The rollback guard lets you detect this situation.
+As HyperSync ingests new blocks it checks each block's `parent_hash` against the previous block's `hash`. When a mismatch is detected, HyperSync re-syncs the affected blocks and continues serving the canonical chain.
 
-#### Data Consistency Within a Query
+A single query response is always internally consistent: you will never receive a mix of blocks from different forks. The rollback guard exists to detect reorgs that happen _between_ successive queries, where data you fetched earlier may now be stale.
 
-An important guarantee: **within a single query response, the data is always consistent**. You will never receive data where half comes from one fork and half from another. The rollback guard is relevant for detecting reorgs *between* successive queries.
+#### Detecting a reorg
 
-#### Detecting Reorgs with the Rollback Guard
+After each query, store the guard's `block_number` and `hash`. On the next query, compare:
 
-To detect reorgs, you need to store the rollback guard from each query response and compare it against the next query's rollback guard. Here's how it works:
+- `previous response.hash` (last block you saw)
+- `next response.first_parent_hash` (parent of the first block in the new batch)
 
-1. **Store the `hash`** (last block hash) from each query's `rollback_guard`.
-2. **On each subsequent query**, check if the `first_parent_hash` of the new response equals the `hash` from your previous response.
-3. **If they don't match**, a reorg has occurred — the chain has reorganized since your last query, and some of the data you previously received may now be invalid.
+If they match, the chain is intact. If they differ, a reorg occurred somewhere between the two queries.
 
 ```
-Query N response:
-  rollback_guard.hash = 0xABC...     ← store this
+Query N:    rollback_guard.hash              = 0xABC...   (stored)
 
-Query N+1 response:
-  rollback_guard.first_parent_hash = 0xABC...  ← matches! No reorg.
-
-                    — OR —
-
-Query N+1 response:
-  rollback_guard.first_parent_hash = 0xDEF...  ← mismatch! Reorg detected.
+Query N+1:  rollback_guard.first_parent_hash = 0xABC...   match    -> no reorg
+                                             = 0xDEF...   mismatch -> reorg
 ```
 
-#### Handling a Detected Reorg
+#### Recovering from a reorg
 
-When a reorg is detected, the rollback guard tells you *that* a reorg happened, but not *which specific block* was reorganized (because the hashes of all subsequent blocks change after a reorg). To handle this:
-
-1. **Store the rollback guard from every recent query** — keep at least enough history to cover the reorg threshold for your chain (e.g., up to 200 blocks for Polygon).
-2. **Walk backwards through your stored rollback guards** to find the first query whose block hash no longer matches the chain. This tells you how far back the reorg goes.
-3. **Re-query from that point** to get the updated canonical data.
-4. **Roll back any downstream state** (database writes, computed state, etc.) that was derived from the now-invalid data, and reprocess with the fresh data.
-
-Here's a simplified example in pseudocode:
+The guard tells you _that_ a reorg happened but not how deep. To find the depth, keep enough history to cover your chain's reorg threshold (for example, 200 blocks for Polygon) and walk backwards: re-fetch each stored block's hash and compare. The first block whose hash still matches is the last canonical block; rewind your downstream state to there and resume querying.
 
 ```python
-# Store rollback guards from recent queries
-rollback_history = []  # list of (block_number, hash) tuples
+history = []  # list of (block_number, hash)
 
 while True:
-    response = hypersync_client.get(query)
+    res = client.get(query)
+    guard = res.rollback_guard
+    if guard is None:
+        process(res.data)
+        query.from_block = res.next_block
+        continue
 
-    if rollback_history:
-        last_hash = rollback_history[-1][1]
-        if response.rollback_guard.first_parent_hash != last_hash:
-            # Reorg detected! Find how far back it goes.
-            reorg_start = None
-            for i in range(len(rollback_history) - 1, -1, -1):
-                stored_block, stored_hash = rollback_history[i]
-                # Re-fetch this block's hash from the chain to verify
-                chain_hash = get_block_hash_from_hypersync(stored_block)
-                if chain_hash == stored_hash:
-                    # This block is still valid, reorg starts after this
-                    reorg_start = stored_block + 1
-                    break
+    if history and guard.first_parent_hash != history[-1][1]:
+        # Walk back to find the last block still on chain.
+        while history:
+            block_num, stored_hash = history[-1]
+            if client.get_block_hash(block_num) == stored_hash:
+                break
+            history.pop()
 
-            if reorg_start:
-                # Roll back your state to reorg_start
-                rollback_state_to(reorg_start)
-                # Trim history and re-query from reorg_start
-                rollback_history = [
-                    (bn, h) for bn, h in rollback_history if bn < reorg_start
-                ]
-                query.from_block = reorg_start
-                continue
+        rewind_to = history[-1][0] + 1 if history else query.from_block
+        rollback_state_to(rewind_to)
+        query.from_block = rewind_to
+        continue
 
-    # No reorg — process data normally
-    process_data(response.data)
+    process(res.data)
+    history.append((guard.block_number, guard.hash))
 
-    # Store this query's rollback guard
-    rollback_history.append((
-        response.rollback_guard.block_number,
-        response.rollback_guard.hash
-    ))
+    cutoff = guard.block_number - REORG_THRESHOLD
+    history = [(b, h) for b, h in history if b >= cutoff]
 
-    # Trim old history beyond reorg threshold
-    min_block = response.rollback_guard.block_number - REORG_THRESHOLD
-    rollback_history = [
-        (bn, h) for bn, h in rollback_history if bn >= min_block
-    ]
-
-    query.from_block = response.next_block
+    query.from_block = res.next_block
 ```
 
 :::tip Consider HyperIndex
-If you need automatic reorg handling, consider using [HyperIndex](/docs/HyperIndex/overview) instead of building this yourself. HyperIndex fetches an array of recent block hashes and numbers to pinpoint exactly where a reorg occurred, then automatically rolls back database state to the correct point. This saves significant implementation effort. HyperSync gives you full flexibility to handle reorgs however you want, but HyperIndex handles this complexity for you out of the box.
+[HyperIndex](/docs/HyperIndex/overview) handles all of this for you: it tracks recent block hashes, locates the reorg point, and rolls back database state automatically. See [Reorgs Support](/docs/HyperIndex/Advanced/reorgs-support) for details.
 :::
 
 ## Stream and Collect Functions
