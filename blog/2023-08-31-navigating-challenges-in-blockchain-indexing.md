@@ -139,7 +139,7 @@ Yes. HyperIndex supports multichain indexing from a single instance. You define 
 
 ### How do I debug a blockchain indexer that is returning incorrect data?
 
-Start by checking whether the indexer has processed all expected blocks using the terminal UI. If data looks stale, stop the indexer with `pnpm envio stop` and restart with `pnpm dev` to clear persisted state. If you are using an RPC endpoint, check for rate limiting errors in the logs and consider switching to HyperSync for your network. The [Envio docs](https://docs.envio.dev/docs/HyperIndex/Troubleshoot/common-issues) cover the most common issues in detail.
+Start by checking whether the indexer has processed all expected blocks using the terminal UI. If data looks stale, stop the indexer with `pnpm envio stop` and restart with `pnpm dev` to clear persisted state. If you are using an RPC endpoint, check for rate limiting errors in the logs and consider switching to HyperSync for your network. The [Envio docs](https://docs.envio.dev/docs/HyperIndex/common-issues) cover the most common issues in detail.
 
 ### Do I need to manage my own infrastructure to run Envio HyperIndex?
 

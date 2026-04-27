@@ -112,7 +112,7 @@ Get started in under 5 minutes:
 pnpx envio init
 ```
 
-For a deeper look at how blockchain indexers work, see [How Does a Blockchain Indexer Work?](https://docs.envio.dev/blog/what-is-a-blockchain-indexer-for-dapp-development).
+For a deeper look at how blockchain indexers work, see [What is a Blockchain Indexer?](https://docs.envio.dev/blog/what-is-a-blockchain-indexer).
 
 ## Frequently asked questions
 
