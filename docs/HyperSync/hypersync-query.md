@@ -550,7 +550,7 @@ while True:
 ```
 
 :::tip Consider HyperIndex
-[HyperIndex](/docs/HyperIndex/overview) handles all of this for you: it tracks recent block hashes, locates the reorg point, and rolls back database state automatically. See [Reorgs Support](/docs/HyperIndex/Advanced/reorgs-support) for details.
+[HyperIndex](/docs/HyperIndex/overview) handles all of this for you: it tracks recent block hashes, locates the reorg point, and rolls back database state automatically. See [Reorgs Support](/docs/reorgs-support) for details.
 :::
 
 ## Stream and Collect Functions
