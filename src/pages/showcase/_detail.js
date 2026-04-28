@@ -2,8 +2,8 @@ import Link from "@docusaurus/Link";
 import Layout from "@theme/Layout";
 import Head from "@docusaurus/Head";
 
-function renderWithCode(text) {
-  const parts = text.split(/(`[^`]+`)/g);
+function renderWithCode(text = "") {
+  const parts = String(text).split(/(`[^`]+`)/g);
   return parts.map((part, i) => {
     if (part.startsWith("`") && part.endsWith("`")) {
       return <code key={i}>{part.slice(1, -1)}</code>;
@@ -117,7 +117,7 @@ export default function ShowcaseDetail({ site }) {
 
         <div style={{ lineHeight: 1.8, color: "var(--ifm-color-emphasis-700)" }}>
           <p style={{ fontSize: "1rem" }}>
-            {renderWithCode(site.longDescription || site.description)}
+            {renderWithCode(site.longDescription || site.description || "")}
           </p>
         </div>
 
