@@ -2,6 +2,16 @@ import Link from "@docusaurus/Link";
 import Layout from "@theme/Layout";
 import Head from "@docusaurus/Head";
 
+function renderWithCode(text) {
+  const parts = text.split(/(`[^`]+`)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith("`") && part.endsWith("`")) {
+      return <code key={i}>{part.slice(1, -1)}</code>;
+    }
+    return part;
+  });
+}
+
 export default function ShowcaseDetail({ site }) {
   if (!site) return null;
 
@@ -107,7 +117,7 @@ export default function ShowcaseDetail({ site }) {
 
         <div style={{ lineHeight: 1.8, color: "var(--ifm-color-emphasis-700)" }}>
           <p style={{ fontSize: "1rem" }}>
-            {site.longDescription || site.description}
+            {renderWithCode(site.longDescription || site.description)}
           </p>
         </div>
 

@@ -158,6 +158,17 @@ const sites = [
     source: "https://builder.hypersync.xyz",
     tags: [tags.hypersync],
   },
+  {
+    slug: "poly-whales",
+    title: "Poly Whales",
+    description:
+      "A real-time terminal UI for tracking large trader activity on Polymarket as it happens.",
+    longDescription:
+      "Poly Whales is a real-time terminal UI built with Envio's HyperSync that monitors whale activity on Polymarket. Run instantly with `npx poly-whales`, it streams `OrderFilled` events from Polymarket's exchange contracts on Polygon and surfaces large, high-conviction trades as they happen, filtering out the noise so you can focus on what matters. HyperSync's high-performance data retrieval layer keeps the feed fast and low-latency, making it easy to follow the biggest players on the market without sifting through smaller trades. Whether you're a trader, researcher, or developer, poly-whales gives you a clean, live window into what Polymarket's major participants are doing in real time.",
+    image: "/img/showcase/poly-whales-tui.png",
+    source: "https://www.npmjs.com/package/poly-whales",
+    tags: [tags.hypersync],
+  },
 ];
 
 export { tags, sites };
