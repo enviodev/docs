@@ -19,6 +19,8 @@ April was a big step forward for AI-assisted indexing on Envio. We launched the 
 
 Let's dive in.
 
+<br/>
+
 ## HyperIndex v3.0.0 Alpha: alpha.20 & alpha.21
 
 Continuing steady progress on V3 across indexing resilience, testing, analytics, and developer experience.
@@ -99,6 +101,12 @@ Read the full walkthrough here: [https://docs.envio.dev/blog/clickhouse-sink-hyp
 See the full [release notes](https://github.com/enviodev/hyperindex/releases).
 Star us on [GitHub](https://github.com/enviodev/hyperindex) ⭐
 
+<br/>
+
+---
+
+<br/>
+
 ## The Top Hundred Polymarket Traders
 
 <img src="/blog-assets/dev-update-april-2026-2.png" alt="The Top Hundred Polymarket Traders" width="100%"/>
@@ -115,6 +123,12 @@ It's a strong example of the kind of analysis you can run when you have full his
 
 Read the full breakdown: [https://x.com/jonjonclark/status/2049067586046816561?s=20](https://x.com/jonjonclark/status/2049067586046816561?s=20)
 
+<br/>
+
+---
+
+<br/>
+
 ## Envio Docs MCP Server
 
 <img src="/blog-assets/dev-update-april-2026-3.png" alt="Envio Docs MCP Server" width="100%"/>
@@ -128,6 +142,12 @@ Envio docs now speak AI. Plug your AI coding assistant (Claude Code, Cursor, Cop
 The biggest shift in AI workflows isn't better prompts, it's better context, and that's exactly what the MCP Server solves. Your assistant pulls live documentation on demand instead of relying on stale training data.
 
 Setup guide and more here: [https://docs.envio.dev/blog/envio-docs-mcp-server](https://docs.envio.dev/blog/envio-docs-mcp-server)
+
+<br/>
+
+---
+
+<br/>
 
 ## Quickstart with AI
 
@@ -147,6 +167,12 @@ This pulls everything together into a single agentic workflow, from scaffolding 
 
 Get started here: [https://docs.envio.dev/docs/HyperIndex/quickstart-with-ai](https://docs.envio.dev/docs/HyperIndex/quickstart-with-ai)
 
+<br/>
+
+---
+
+<br/>
+
 ## Concentrated Liquidity on Uniswap v4
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/UZGtLVQGliE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -157,6 +183,12 @@ JonJon took to the Monroe Stage with his talk "From x*y=k to Ticks: Seeing Conce
 
 Big thanks to the EthCC team, sponsors, organisers, and volunteers for putting on such a great event. Had a great time connecting with some incredible teams and builders across the week, and a special thanks to everyone who swung by our booth.
 
+<br/>
+
+---
+
+<br/>
+
 ## Monad Traces Live on HyperSync
 
 <img src="/blog-assets/dev-update-april-2026-5.png" alt="Monad Traces Live on HyperSync" width="100%"/>
@@ -166,6 +198,12 @@ Monad traces are live on HyperSync, with full history from block 0.
 Stream all Monad trace data in minutes and export it to CSV using our new export tool. Ideal for teams running deep onchain analytics, MEV research, or custom pipelines on top of Monad's execution traces.
 
 Export tool on GitHub: [https://github.com/enviodev/export-monad-traces](https://github.com/enviodev/export-monad-traces)
+
+<br/>
+
+---
+
+<br/>
 
 ## Envio is Live on Tempo
 
@@ -179,6 +217,12 @@ Easy, fast, and fully customisable.
 
 Original post on X: [https://x.com/i/status/2042577679380013222](https://x.com/i/status/2042577679380013222)
 
+<br/>
+
+---
+
+<br/>
+
 ## How to Track Native ETH Transfers Using HyperSync
 
 <img src="/blog-assets/dev-update-april-2026-7.png" alt="How to Track Native ETH Transfers Using HyperSync" width="100%"/>
@@ -191,9 +235,21 @@ HyperSync trace support is currently available on Ethereum, Base, Arbitrum, Gnos
 
 Read the full tutorial: [https://docs.envio.dev/blog/tracking-native-eth-transfers-hypersync](https://docs.envio.dev/blog/tracking-native-eth-transfers-hypersync)
 
+<br/>
+
+---
+
+<br/>
+
 ## Current & Upcoming Events & Hackathons
 
 * [ETHConf - New York](https://ethconf.com/): June 8th -> 10th (sponsoring)
+
+<br/>
+
+---
+
+<br/>
 
 ## Featured Developer: Claude
 
@@ -205,11 +261,23 @@ A shoutout to Anthropic's Claude, who has become a familiar name in the develope
 
 More to come.
 
+<br/>
+
+---
+
+<br/>
+
 ## Playlist of the Month
 
 <img src="/blog-assets/dev-update-april-2026-9.png" alt="Playlist of the month" width="100%"/>
 
 ▶ [Open Spotify](https://open.spotify.com/playlist/240pHTCbwvf6kBMdfWGmw9?si=bb40d616e82a49f3)
+
+<br/>
+
+---
+
+<br/>
 
 ## Build With Envio
 
