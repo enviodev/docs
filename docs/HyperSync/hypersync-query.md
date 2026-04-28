@@ -512,20 +512,88 @@ The `next_block` value tells you where to resume scanning. See [Understanding ne
 
 ### Rollback Guard
 
-The optional `rollback_guard` helps manage chain reorganizations:
+The optional `rollback_guard` lets you detect chain reorganizations (reorgs) between successive queries, so you can re-fetch any data that has become stale.
 
 ```rust
 struct RollbackGuard {
-    /// Last block scanned
+    /// Last block scanned in this query
     block_number: u64,
+    /// Timestamp of the last block scanned
     timestamp: i64,
+    /// Hash of the last block scanned
     hash: Hash,
 
-    /// First block scanned
+    /// First block scanned in this query
     first_block_number: u64,
+    /// Parent hash of the first block scanned
     first_parent_hash: Hash,
 }
 ```
+
+The guard is `Option<RollbackGuard>`: it is present whenever the response covers blocks near the chain tip (where reorgs can still happen) and absent for queries that return no data.
+
+#### How HyperSync handles reorgs internally
+
+As HyperSync ingests new blocks it checks each block's `parent_hash` against the previous block's `hash`. When a mismatch is detected, HyperSync re-syncs the affected blocks and continues serving the canonical chain.
+
+A single query response is always internally consistent: you will never receive a mix of blocks from different forks. The rollback guard exists to detect reorgs that happen _between_ successive queries, where data you fetched earlier may now be stale.
+
+#### Detecting a reorg
+
+After each query, store the guard's `block_number` and `hash`. On the next query, compare:
+
+- `previous response.hash` (last block you saw)
+- `next response.first_parent_hash` (parent of the first block in the new batch)
+
+If they match, the chain is intact. If they differ, a reorg occurred somewhere between the two queries.
+
+```
+Query N:    rollback_guard.hash              = 0xABC...   (stored)
+
+Query N+1:  rollback_guard.first_parent_hash = 0xABC...   match    -> no reorg
+                                             = 0xDEF...   mismatch -> reorg
+```
+
+#### Recovering from a reorg
+
+The guard tells you _that_ a reorg happened but not how deep. To find the depth, keep enough history to cover your chain's reorg threshold (for example, 200 blocks for Polygon) and walk backwards: re-fetch each stored block's hash and compare. The first block whose hash still matches is the last canonical block; rewind your downstream state to there and resume querying.
+
+```python
+history = []  # list of (block_number, hash)
+
+while True:
+    res = client.get(query)
+    guard = res.rollback_guard
+    if guard is None:
+        process(res.data)
+        query.from_block = res.next_block
+        continue
+
+    if history and guard.first_parent_hash != history[-1][1]:
+        # Walk back to find the last block still on chain.
+        while history:
+            block_num, stored_hash = history[-1]
+            if client.get_block_hash(block_num) == stored_hash:
+                break
+            history.pop()
+
+        rewind_to = history[-1][0] + 1 if history else query.from_block
+        rollback_state_to(rewind_to)
+        query.from_block = rewind_to
+        continue
+
+    process(res.data)
+    history.append((guard.block_number, guard.hash))
+
+    cutoff = guard.block_number - REORG_THRESHOLD
+    history = [(b, h) for b, h in history if b >= cutoff]
+
+    query.from_block = res.next_block
+```
+
+:::tip Consider HyperIndex
+[HyperIndex](/docs/HyperIndex/overview) handles all of this for you: it tracks recent block hashes, locates the reorg point, and rolls back database state automatically. See [Reorgs Support](/docs/HyperIndex/reorgs-support) for details.
+:::
 
 ## Stream and Collect Functions
 

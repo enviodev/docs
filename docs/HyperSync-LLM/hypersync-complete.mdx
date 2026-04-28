@@ -1441,20 +1441,33 @@ The `next_block` value tells you where to resume scanning. See Understanding nex
 
 ### Rollback Guard
 
-The optional `rollback_guard` helps manage chain reorganizations:
+The optional `rollback_guard` lets you detect chain reorganizations (reorgs) between successive queries.
 
 ```rust
 struct RollbackGuard {
-    /// Last block scanned
+    /// Last block scanned in this query
     block_number: u64,
+    /// Timestamp of the last block scanned
     timestamp: i64,
+    /// Hash of the last block scanned
     hash: Hash,
 
-    /// First block scanned
+    /// First block scanned in this query
     first_block_number: u64,
+    /// Parent hash of the first block scanned
     first_parent_hash: Hash,
 }
 ```
+
+The field is `Option<RollbackGuard>`: present when the response covers blocks near the chain tip, absent when there is no data to guard.
+
+**How HyperSync handles reorgs internally.** As HyperSync ingests new blocks it checks each block's `parent_hash` against the previous block's `hash`. On a mismatch it re-syncs the affected blocks and continues serving the canonical chain. A single query response is always internally consistent; the rollback guard is for detecting reorgs _between_ successive queries.
+
+**Detecting a reorg.** After each query, store the guard's `block_number` and `hash`. On the next query, compare your stored `hash` against the new response's `first_parent_hash`. A match means the chain is intact; a mismatch means a reorg occurred between the two queries.
+
+**Recovering from a reorg.** The guard tells you _that_ a reorg happened but not how deep. Keep enough history to cover your chain's reorg threshold (for example, 200 blocks for Polygon), then walk backwards: re-fetch each stored block's hash and compare. The first block whose hash still matches is the last canonical block. Rewind downstream state to that point and resume querying.
+
+For automatic reorg handling, use [HyperIndex](/docs/HyperIndex/overview) instead: it tracks recent block hashes, locates the reorg point, and rolls back database state for you.
 
 ## Stream and Collect Functions
 
