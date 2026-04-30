@@ -2,7 +2,7 @@
 title: What is HyperSync?
 sidebar_label: What is HyperSync?
 slug: /what-is-hypersync
-description: "HyperSync is Envio's high-performance blockchain data layer, up to 2000x faster than RPC across 86+ chains. Learn what it is, how it works, and how to query it."
+description: "HyperSync is Envio's high-performance blockchain data layer, up to 2000x faster than RPC across dozens of supported chains. Learn what it is, how it works, and how to query it."
 image: /blog-assets/what-is-hypersync.png
 authors: ["j_o_r_d_y_s"]
 last_update:
@@ -15,7 +15,7 @@ last_update:
 :::info TL;DR
 
 - HyperSync is Envio's high-performance blockchain data-retrieval layer.
-- Up to 2000x faster than RPC for getting or fetching the logs, transactions, traces, and blocks across 86+ chains.
+- Up to 2000x faster than RPC for getting or fetching the logs, transactions, traces, and blocks across <HyperSyncChainCount /> chains.
 - Primary data source for HyperIndex and the data layer behind products like [ChainDensity.xyz](https://chaindensity.xyz), [Scope.sh](https://scope.sh), LogTUI, and the Polymarket reference indexer (4 billion events in 6 days).
 - Client libraries available for TypeScript/Node.js, Python, Rust, and Go.
 
@@ -143,7 +143,7 @@ Streaming is the right default for indexers and real-time applications. Parquet 
 
 ## Switching Networks
 
-Switching chains is a one-line change. The same client works against any of the 86+ supported networks by changing the URL.
+Switching chains is a one-line change. The same client works against any of the <HyperSyncChainCount /> supported networks by changing the URL.
 
 ```ts
 // Ethereum
