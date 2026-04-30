@@ -117,7 +117,7 @@ const logSelection = {
 };
 ```
 
-Trace filters give you access to execution traces and internal transactions, which is the only way to track native ETH transfers since they do not emit event logs. Traces are accessed via a separate trace-enabled endpoint, for example `https://eth-traces.hypersync.xyz`. The [Native ETH Transfers tutorial](/tracking-native-eth-transfers-hypersync) walks through that pattern end to end.
+Trace filters give you access to execution traces and internal transactions, which is the only way to track native ETH transfers since they do not emit event logs. Traces are accessed via a separate trace-enabled endpoint, for example `https://eth-traces.hypersync.xyz`. The [Native ETH Transfers tutorial](/blog/tracking-native-eth-transfers-hypersync) walks through that pattern end to end.
 
 ### 3. Field Selection
 
@@ -280,7 +280,7 @@ HyperSync is the raw data layer. HyperIndex is the full indexing framework built
 
 ### Can I Use HyperSync for Real-Time Data?
 
-Yes. HyperSync streams data continuously and you can poll for new blocks at the head of the chain. The [Polymarket trades tutorial](/track-polymarket-trades-hypersync) is a worked example of real-time streaming.
+Yes. HyperSync streams data continuously and you can poll for new blocks at the head of the chain. The [Polymarket trades tutorial](/blog/track-polymarket-trades-hypersync) is a worked example of real-time streaming.
 
 ### Are Traces Supported on Every Chain?
 
