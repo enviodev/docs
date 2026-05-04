@@ -926,7 +926,7 @@ Update your `package.json` with the following changes:
 Adding `"type": "module"` is **required** for V3. Without it, your project will fail to start due to ESM import errors.
 :::
 
-**Remove the `generated` package.** As of `v3.0.0-rc.0`, the local `generated` package no longer exists — types are emitted to `.envio/types.d.ts` (git-ignored) and wired up via a small `envio-env.d.ts` file at the project root. Drop the entry from `package.json` if you still have it:
+**Remove the `generated` package.** As of `v3.0.0-alpha.24`, the local `generated` package no longer exists — types are emitted to `.envio/types.d.ts` (git-ignored) and wired up via a small `envio-env.d.ts` file at the project root. Drop the entry from `package.json` if you still have it:
 
 ```diff
 -  "optionalDependencies": {
