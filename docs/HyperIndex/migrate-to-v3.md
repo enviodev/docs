@@ -18,6 +18,121 @@ HyperIndex V3 Alpha focuses on modernizing the codebase and laying the foundatio
 
 ## New Features
 
+### Unified Handlers API
+
+In V3 all handler registrations now happen through a single `indexer` value. Contract-specific exports (`ERC20.Transfer.handler`, `UniV3.PoolFactory.contractRegister`, etc.) have been removed in favor of `indexer.onEvent`, `indexer.contractRegister`, and `indexer.onBlock`.
+
+**Event handlers** with `indexer.onEvent`:
+
+```typescript
+import { indexer } from "generated";
+
+indexer.onEvent(
+  {
+    contract: "ERC20",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [
+        { from: chain.Safe.addresses },
+        { to: chain.Safe.addresses },
+      ],
+    }),
+  },
+  async ({ event, context }) => {
+    // Handler logic
+  },
+);
+```
+
+**Dynamic contracts** with `indexer.contractRegister`:
+
+```typescript
+import { indexer } from "generated";
+
+indexer.contractRegister(
+  {
+    contract: "UniV3",
+    event: "PoolFactory",
+  },
+  async ({ event, context }) => {
+    context.chain.Pool.add(event.params.poolAddress);
+  },
+);
+```
+
+**Block handlers** with `indexer.onBlock` consolidate across chains in a single call:
+
+```typescript
+import { indexer } from "generated";
+
+indexer.onBlock(
+  { name: "EveryBlock" },
+  async ({ block, context }) => {
+    // Handler logic
+  },
+);
+```
+
+For chain-specific or interval-based block handlers, use the `where` callback:
+
+```typescript
+indexer.onBlock(
+  {
+    name: "Ranges",
+    where: ({ chain }) => {
+      if (chain.id !== 1) return false;
+      return {
+        block: {
+          number: {
+            _gte: 20_000_000,
+            _lte: 22_000_000,
+            _every: 100,
+          },
+        },
+      };
+    },
+  },
+  async ({ block, context }) => {
+    // Handler logic
+  },
+);
+```
+
+### Per-Event Start Block
+
+Handlers can specify custom start blocks per chain via `where.block.number._gte`, overriding contract and chain configuration:
+
+```typescript
+indexer.onEvent(
+  {
+    contract: "UniV4",
+    event: "Pool",
+    where: ({ chain }) => {
+      let startBlock: number;
+      switch (chain.id) {
+        case 1:
+          startBlock = 18_000_000;
+          break;
+        case 8453:
+          startBlock = 2_000_000;
+          break;
+        default: {
+          const _exhaustive: never = chain.id;
+          return false;
+        }
+      }
+      return {
+        block: { number: { _gte: startBlock } },
+      };
+    },
+  },
+  async ({ event, context }) => {
+    // Handler logic
+  },
+);
+```
+
 ### CommonJS → ESM
 
 We migrated HyperIndex from CommonJS-only to ESM-only. This enables:
@@ -30,24 +145,28 @@ We migrated HyperIndex from CommonJS-only to ESM-only. This enables:
 Thanks to the migration to ESM, you can now use `await` directly in handler and other files:
 
 ```typescript
-import { ERC20 } from "generated";
+import { indexer } from "generated";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 // Load data before registering handlers
 const addressesFromServer = await loadWhitelistedAddresses();
 
-ERC20.Transfer.handler(
+indexer.onEvent(
+  {
+    contract: "ERC20",
+    event: "Transfer",
+    wildcard: true,
+    where: () => ({
+      params: [
+        { from: ZERO_ADDRESS, to: addressesFromServer },
+        { from: addressesFromServer, to: ZERO_ADDRESS },
+      ],
+    }),
+  },
   async ({ event, context }) => {
     // ... your handler logic
   },
-  {
-    wildcard: true,
-    eventFilters: [
-      { from: ZERO_ADDRESS, to: addressesFromServer },
-      { from: addressesFromServer, to: ZERO_ADDRESS },
-    ],
-  }
 );
 ```
 
@@ -84,10 +203,15 @@ In this case, the RPC won't be used for historical sync but will join the source
 The Handler Context object provides chain state via the `chain` property:
 
 ```typescript
-ERC20.Approval.handler(async ({ context }) => {
-  console.log(context.chain.id); // 1 - The chain id of the event
-  console.log(context.chain.isLive); // true - Whether the event chain is indexing at the head
-});
+import { indexer } from "generated";
+
+indexer.onEvent(
+  { contract: "ERC20", event: "Approval" },
+  async ({ context }) => {
+    console.log(context.chain.id); // 1 - The chain id of the event
+    console.log(context.chain.isLive); // true - Whether the event chain is indexing at the head
+  },
+);
 ```
 
 ### Indexer State & Config
@@ -113,33 +237,39 @@ indexer.chains[1].PoolManager.addresses; // ["0x000000000004444c5dc75cB358380D2e
 
 ### Conditional Event Handlers
 
-Now it's possible to return a boolean value from the `eventFilters` function to disable or enable the handler conditionally.
+Now it's possible to return a boolean value from the `where` function to disable or enable the handler conditionally.
 
 ```typescript
-ERC20.Transfer.handler(
-  async ({ event, context }) => {
-    // ... your handler logic
-  },
+import { indexer } from "generated";
+
+indexer.onEvent(
   {
+    contract: "ERC20",
+    event: "Transfer",
     wildcard: true,
-    eventFilters: ({ chainId }) => {
+    where: ({ chain }) => {
       // Skip all ERC20 on Polygon
-      if (chainId === 137) {
+      if (chain.id === 137) {
         return false;
       }
 
       // Track all ERC20 on Ethereum Mainnet
-      if (chainId === 1) {
+      if (chain.id === 1) {
         return true;
       }
 
       // Track only whitelisted addresses on other chains
-      return [
-        { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chainId] },
-        { from: WHITELISTED_ADDRESSES[chainId], to: ZERO_ADDRESS },
-      ];
+      return {
+        params: [
+          { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chain.id] },
+          { from: WHITELISTED_ADDRESSES[chain.id], to: ZERO_ADDRESS },
+        ],
+      };
     },
-  }
+  },
+  async ({ event, context }) => {
+    // ... your handler logic
+  },
 );
 ```
 
@@ -172,7 +302,15 @@ chains:
 
 We added experimental support for a ClickHouse Sink. Postgres still serves as the primary database, and you can additionally sink the entities to a ClickHouse database that is restart- and reorg-resistant.
 
-Configure with environment variables: `ENVIO_CLICKHOUSE_SINK_HOST`, `ENVIO_CLICKHOUSE_SINK_DATABASE`, `ENVIO_CLICKHOUSE_SINK_USERNAME`, `ENVIO_CLICKHOUSE_SINK_PASSWORD`. Currently supported only on Dedicated Plan.
+Enable both storage backends in `config.yaml`:
+
+```yaml
+storage:
+  postgres: true
+  clickhouse: true
+```
+
+Then configure the ClickHouse connection with environment variables: `ENVIO_CLICKHOUSE_SINK_HOST`, `ENVIO_CLICKHOUSE_SINK_DATABASE`, `ENVIO_CLICKHOUSE_SINK_USERNAME`, `ENVIO_CLICKHOUSE_SINK_PASSWORD`. Currently supported only on Dedicated Plan.
 
 :::warning
 Do not run multiple Sinks to the same database at the same time.
@@ -201,7 +339,7 @@ HyperIndex now supports Solana with RPC as a source. This feature is experimenta
 To initialize a Solana project:
 
 ```bash
-pnpx envio@3.0.0-alpha.21 init svm
+pnpx envio@3.0.0-alpha.23 init svm
 ```
 
 See the [Solana documentation](/docs/HyperIndex/solana) for more details.
@@ -355,10 +493,15 @@ The local development Docker Compose setup now uses PostgreSQL 18.1 (upgraded fr
 Events now include `contractName` and `eventName` fields, making it easier to identify which contract and event you're working with in handlers:
 
 ```typescript
-ERC20.Transfer.handler(async ({ event }) => {
-  console.log(event.contractName); // "ERC20"
-  console.log(event.eventName);    // "Transfer"
-});
+import { indexer } from "generated";
+
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event }) => {
+    console.log(event.contractName); // "ERC20"
+    console.log(event.eventName);    // "Transfer"
+  },
+);
 ```
 
 ### New Official Exported Types
@@ -459,15 +602,21 @@ Breaking changes:
 It's now possible to register multiple handlers for the same event with similar filters:
 
 ```typescript
-import { ERC20 } from "generated";
+import { indexer } from "generated";
 
-ERC20.Transfer.handler(async ({ event, context }) => {
-  // Your logic here
-});
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    // Your logic here
+  },
+);
 
-ERC20.Transfer.handler(async ({ event, context }) => {
-  // And here
-});
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    // And here
+  },
+);
 ```
 
 ### Improved Multiple Data-Sources Support
@@ -487,6 +636,11 @@ After switching to a fallback source, HyperIndex now attempts to recover to the 
 
 ### Handler API Changes
 
+- **Unified handler registration via `indexer`** — contract-specific exports were removed. Replace `Contract.Event.handler(handler, options)` with `indexer.onEvent({ contract, event, ...options }, handler)`. Replace `Contract.Event.contractRegister(...)` with `indexer.contractRegister({ contract, event }, ...)`. The old API has been hard removed and no longer works.
+- **Dynamic contract registration** — `context.add<ContractName>(address)` is replaced with `context.chain.<ContractName>.add(address)`.
+- **`eventFilters` renamed to `where`** — the `where` callback receives `{ chain }` (not `{ chainId }`) and returns `false`, `true`, or `{ params: [...], block?: { number: { _gte, _lte, _every } } }`. The previous array shorthand is no longer accepted at the top level — wrap it in `{ params: [...] }`.
+- **Block handlers consolidated** — the standalone `onBlock` export and per-chain `forEach` registration are gone. Use a single `indexer.onBlock({ name, where? }, handler)` call. For chain-specific or interval-based handlers, return `{ block: { number: { _gte, _lte, _every } } }` from `where`, or `false` to skip a chain.
+- **Per-event start block** — handlers can now override the configured start block per chain via `where.block.number._gte`.
 - Removed `experimental_createEffect` in favor of `createEffect`
 - Renamed transaction field `kind` to `type`
 - For block handlers: `block.chainId` is removed in favor of `context.chain.id`
@@ -528,6 +682,12 @@ export ENVIO_API_TOKEN=your_token_here
 - Removed `getGeneratedByChainId` (use `indexer` value instead)
 - **Lowercased entity types removed**: Generated code no longer exports lowercased entity types (e.g., `transfer`). Use capitalized names instead (e.g., `Transfer`)
 - Entity array field values are now typed as `readonly` — update any code that directly mutates array fields
+- `S.nullable` schema type now returns `null` instead of `undefined`
+
+### CLI Behavior Changes
+
+- `envio dev` no longer auto-resets the database. Use `envio dev --restart` (or `-r`) to clear it explicitly.
+- `envio start` is now production-only — use `envio dev` for local development.
 
 ### Deprecated: `MockDb` Testing API
 
@@ -656,7 +816,7 @@ Update your `package.json` with the following changes:
     "node": ">=22.0.0"
   },
   "dependencies": {
-    "envio": "3.0.0-alpha.21"
+    "envio": "3.0.0-alpha.23"
   },
   "devDependencies": {
     "typescript": "^5.7.3"
@@ -857,10 +1017,98 @@ ENVIO_API_TOKEN=your_token_here
 
 ### Step 5: Update Handler Code
 
+**Migrate to the unified `indexer` API:**
+
+All contract-specific handler exports (`ERC20.Transfer.handler`, `Greeter.NewGreeting.contractRegister`, etc.) have been removed. Register every handler through `indexer.onEvent`, `indexer.contractRegister`, or `indexer.onBlock`.
+
+```typescript
+// Before
+import { ERC20 } from "generated";
+
+ERC20.Transfer.handler(
+  async ({ event, context }) => {
+    // ...
+  },
+  {
+    wildcard: true,
+    eventFilters: ({ chainId }) => [
+      { from: ZERO_ADDRESS, to: WHITELIST[chainId] },
+    ],
+  }
+);
+
+// After
+import { indexer } from "generated";
+
+indexer.onEvent(
+  {
+    contract: "ERC20",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [{ from: ZERO_ADDRESS, to: WHITELIST[chain.id] }],
+    }),
+  },
+  async ({ event, context }) => {
+    // ...
+  },
+);
+```
+
+**Migrate dynamic contract registration:**
+
+```typescript
+// Before
+UniV3.PoolFactory.contractRegister(async ({ event, context }) => {
+  context.addPool(event.params.poolAddress);
+});
+
+// After
+indexer.contractRegister(
+  { contract: "UniV3", event: "PoolFactory" },
+  async ({ event, context }) => {
+    context.chain.Pool.add(event.params.poolAddress);
+  },
+);
+```
+
+**Migrate block handlers:**
+
+```typescript
+// Before
+import { indexer, onBlock } from "generated";
+
+indexer.chainIds.forEach((chainId) => {
+  onBlock(
+    { name: "EveryBlock", chain: chainId },
+    async ({ block, context }) => {
+      // ...
+    },
+  );
+});
+
+// After
+import { indexer } from "generated";
+
+indexer.onBlock(
+  { name: "EveryBlock" },
+  async ({ block, context }) => {
+    // ...
+  },
+);
+```
+
+For chain-specific handlers or interval/range filters, use the `where` callback (see [Unified Handlers API](#unified-handlers-api)).
+
 **Rename deprecated APIs:**
 
 | V2 (Deprecated)                     | V3                                    |
 | ----------------------------------- | ------------------------------------- |
+| `Contract.Event.handler(...)`       | `indexer.onEvent({ contract, event, ...options }, handler)` |
+| `Contract.Event.contractRegister(...)` | `indexer.contractRegister({ contract, event }, handler)` |
+| `onBlock({ chain, ... }, handler)`  | `indexer.onBlock({ name, where? }, handler)` |
+| `context.add<Contract>(addr)`       | `context.chain.<Contract>.add(addr)`  |
+| `eventFilters` option               | `where` callback returning `{ params: [...] }` |
 | `experimental_createEffect`         | `createEffect`                        |
 | `block.chainId` (in block handlers) | `context.chain.id`                    |
 | `transaction.kind`                  | `transaction.type`                    |
@@ -894,6 +1142,11 @@ import { transfer, approval } from "generated";
 // After
 import { Transfer, Approval } from "generated";
 ```
+
+**CLI behavior changes:**
+
+- `envio dev` no longer auto-resets the database. If you relied on auto-reset, run `envio dev -r` (or `--restart`) explicitly.
+- `envio start` is now production-only — keep using `envio dev` for local development.
 
 ### Step 6: Test Your Migration
 
@@ -931,6 +1184,7 @@ pnpm dev
 - [ ] Remove `loaders` and `preload_handlers` options
 - [ ] Remove `preRegisterDynamicContracts` option
 - [ ] Remove `event_decoder` option
+- [ ] If using ClickHouse, add `storage: { postgres: true, clickhouse: true }` (env vars are still required for the connection)
 
 **Environment Variables:**
 
@@ -941,6 +1195,12 @@ pnpm dev
 
 **Handler Code:**
 
+- [ ] **Migrate event handlers** from `Contract.Event.handler(...)` to `indexer.onEvent({ contract, event, ...options }, handler)`
+- [ ] **Migrate dynamic contract registration** from `Contract.Event.contractRegister(...)` to `indexer.contractRegister({ contract, event }, handler)`
+- [ ] **Migrate `context.add<Contract>(addr)`** to `context.chain.<Contract>.add(addr)`
+- [ ] **Convert `eventFilters`** to the new `where` callback returning `{ params: [...] }`
+- [ ] **Migrate block handlers** from per-chain `onBlock` loops to a single `indexer.onBlock` call (use `where` for chain-specific or interval filters)
+- [ ] Use the new `where.block.number._gte` to override per-event start blocks if needed
 - [ ] Replace `experimental_createEffect` with `createEffect`
 - [ ] Replace `block.chainId` with `context.chain.id` in block handlers
 - [ ] Replace `transaction.kind` with `transaction.type`
@@ -950,8 +1210,14 @@ pnpm dev
 - [ ] Replace `transaction.chainId` with `context.chain.id` or `event.chainId`
 - [ ] Replace lowercased entity type imports with capitalized versions (e.g., `transfer` → `Transfer`)
 - [ ] Update `getWhere` calls to new GraphQL-style filter syntax (e.g., `getWhere({ field: { _eq: value } })`)
+- [ ] Update any `S.nullable` schema usage — now returns `null` instead of `undefined`
 - [ ] Migrate from `MockDb` to `createTestIndexer()` (see [MockDb Migration Cheat Sheet](#mockdb-migration-cheat-sheet))
 - [ ] Replace contract-specific type exports (`ERC20_Transfer_eventLog`) with generic types (`EvmEvent<"ERC20", "Transfer">`)
+
+**CLI:**
+
+- [ ] If you relied on `envio dev` resetting the database automatically, switch to `envio dev -r`
+- [ ] Use `envio dev` for local development (`envio start` is now production-only)
 
 **Verify:**
 
@@ -965,6 +1231,8 @@ If you encounter any issues during migration, join our [Discord community](https
 
 For detailed release notes, see:
 
+- [v3.0.0-alpha.23](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.23)
+- [v3.0.0-alpha.22](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.22)
 - [v3.0.0-alpha.21](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.21)
 - [v3.0.0-alpha.20](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.20)
 - [v3.0.0-alpha.19](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.19)
