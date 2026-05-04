@@ -25,7 +25,7 @@ In V3 all handler registrations now happen through a single `indexer` value. Con
 **Event handlers** with `indexer.onEvent`:
 
 ```typescript
-import { indexer } from "generated";
+import { indexer } from "envio";
 
 indexer.onEvent(
   {
@@ -48,7 +48,7 @@ indexer.onEvent(
 **Dynamic contracts** with `indexer.contractRegister`:
 
 ```typescript
-import { indexer } from "generated";
+import { indexer } from "envio";
 
 indexer.contractRegister(
   {
@@ -64,7 +64,7 @@ indexer.contractRegister(
 **Block handlers** with `indexer.onBlock` consolidate across chains in a single call:
 
 ```typescript
-import { indexer } from "generated";
+import { indexer } from "envio";
 
 indexer.onBlock(
   { name: "EveryBlock" },
@@ -145,7 +145,7 @@ We migrated HyperIndex from CommonJS-only to ESM-only. This enables:
 Thanks to the migration to ESM, you can now use `await` directly in handler and other files:
 
 ```typescript
-import { indexer } from "generated";
+import { indexer } from "envio";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
@@ -157,12 +157,12 @@ indexer.onEvent(
     contract: "ERC20",
     event: "Transfer",
     wildcard: true,
-    where: () => ({
+    where: {
       params: [
         { from: ZERO_ADDRESS, to: addressesFromServer },
         { from: addressesFromServer, to: ZERO_ADDRESS },
       ],
-    }),
+    },
   },
   async ({ event, context }) => {
     // ... your handler logic
@@ -203,25 +203,25 @@ In this case, the RPC won't be used for historical sync but will join the source
 The Handler Context object provides chain state via the `chain` property:
 
 ```typescript
-import { indexer } from "generated";
+import { indexer } from "envio";
 
 indexer.onEvent(
   { contract: "ERC20", event: "Approval" },
   async ({ context }) => {
     console.log(context.chain.id); // 1 - The chain id of the event
-    console.log(context.chain.isLive); // true - Whether the event chain is indexing at the head
+    console.log(context.chain.isRealtime); // true - Whether the indexer entered realtime mode
   },
 );
 ```
 
 ### Indexer State & Config
 
-As a replacement for the deprecated and removed `getGeneratedByChainId`, we introduce the `indexer` value. It provides nicely typed chains and contract data from your config, as well as the current indexing state, such as `isLive` and `addresses`. Use `indexer` either at the top level of the file or directly from handlers. It returns the latest indexer state.
+As a replacement for the deprecated and removed `getGeneratedByChainId`, we introduce the `indexer` value. It provides nicely typed chains and contract data from your config, as well as the current indexing state, such as `isRealtime` and `addresses`. Use `indexer` either at the top level of the file or directly from handlers. It returns the latest indexer state.
 
 With this change, we also introduce new official types: `Indexer`, `EvmChainId`, `FuelChainId`, and `SvmChainId`.
 
 ```typescript
-import { indexer } from "generated";
+import { indexer } from "envio";
 
 indexer.name; // "uniswap-v4-indexer"
 indexer.description; // "Uniswap v4 indexer"
@@ -229,7 +229,7 @@ indexer.chainIds; // [1, 42161, 10, 8453, 137, 56]
 indexer.chains[1].id; // 1
 indexer.chains[1].startBlock; // 0
 indexer.chains[1].endBlock; // undefined
-indexer.chains[1].isLive; // false
+indexer.chains[1].isRealtime; // false
 indexer.chains[1].PoolManager.name; // "PoolManager"
 indexer.chains[1].PoolManager.abi; // unknown[]
 indexer.chains[1].PoolManager.addresses; // ["0x000000000004444c5dc75cB358380D2e3dE08A90"]
@@ -240,7 +240,7 @@ indexer.chains[1].PoolManager.addresses; // ["0x000000000004444c5dc75cB358380D2e
 Now it's possible to return a boolean value from the `where` function to disable or enable the handler conditionally.
 
 ```typescript
-import { indexer } from "generated";
+import { indexer } from "envio";
 
 indexer.onEvent(
   {
@@ -298,9 +298,9 @@ chains:
       # UniswapV3Pool no longer needed here - auto-configured from global contracts
 ```
 
-### ClickHouse Sink (Experimental)
+### ClickHouse Storage (Experimental)
 
-We added experimental support for a ClickHouse Sink. Postgres still serves as the primary database, and you can additionally sink the entities to a ClickHouse database that is restart- and reorg-resistant.
+We added experimental support for ClickHouse as an additional storage backend. Postgres still serves as the primary database, and you can additionally store the entities in a ClickHouse database that is restart- and reorg-resistant.
 
 Enable both storage backends in `config.yaml`:
 
@@ -310,10 +310,10 @@ storage:
   clickhouse: true
 ```
 
-Then configure the ClickHouse connection with environment variables: `ENVIO_CLICKHOUSE_SINK_HOST`, `ENVIO_CLICKHOUSE_SINK_DATABASE`, `ENVIO_CLICKHOUSE_SINK_USERNAME`, `ENVIO_CLICKHOUSE_SINK_PASSWORD`. Currently supported only on Dedicated Plan.
+Then configure the ClickHouse connection with environment variables: `ENVIO_CLICKHOUSE_HOST`, `ENVIO_CLICKHOUSE_DATABASE`, `ENVIO_CLICKHOUSE_USERNAME`, `ENVIO_CLICKHOUSE_PASSWORD`. Currently supported only on Dedicated Plan.
 
 :::warning
-Do not run multiple Sinks to the same database at the same time.
+Do not run multiple indexers writing to the same ClickHouse database at the same time.
 :::
 
 ### HyperSync Source Improvements
@@ -339,7 +339,7 @@ HyperIndex now supports Solana with RPC as a source. This feature is experimenta
 To initialize a Solana project:
 
 ```bash
-pnpx envio@3.0.0-alpha.23 init svm
+pnpx envio@3.0.0-alpha.24 init svm
 ```
 
 See the [Solana documentation](/docs/HyperIndex/solana) for more details.
@@ -493,7 +493,7 @@ The local development Docker Compose setup now uses PostgreSQL 18.1 (upgraded fr
 Events now include `contractName` and `eventName` fields, making it easier to identify which contract and event you're working with in handlers:
 
 ```typescript
-import { indexer } from "generated";
+import { indexer } from "envio";
 
 indexer.onEvent(
   { contract: "ERC20", event: "Transfer" },
@@ -602,7 +602,7 @@ Breaking changes:
 It's now possible to register multiple handlers for the same event with similar filters:
 
 ```typescript
-import { indexer } from "generated";
+import { indexer } from "envio";
 
 indexer.onEvent(
   { contract: "ERC20", event: "Transfer" },
@@ -816,7 +816,7 @@ Update your `package.json` with the following changes:
     "node": ">=22.0.0"
   },
   "dependencies": {
-    "envio": "3.0.0-alpha.23"
+    "envio": "3.0.0-alpha.24"
   },
   "devDependencies": {
     "typescript": "^5.7.3"
@@ -1038,7 +1038,7 @@ ERC20.Transfer.handler(
 );
 
 // After
-import { indexer } from "generated";
+import { indexer } from "envio";
 
 indexer.onEvent(
   {
@@ -1088,7 +1088,7 @@ indexer.chainIds.forEach((chainId) => {
 });
 
 // After
-import { indexer } from "generated";
+import { indexer } from "envio";
 
 indexer.onBlock(
   { name: "EveryBlock" },
@@ -1231,6 +1231,7 @@ If you encounter any issues during migration, join our [Discord community](https
 
 For detailed release notes, see:
 
+- [v3.0.0-alpha.24](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.24)
 - [v3.0.0-alpha.23](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.23)
 - [v3.0.0-alpha.22](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.22)
 - [v3.0.0-alpha.21](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.21)
