@@ -10898,7 +10898,7 @@ Can’t find what you’re looking for or need support? Reach out to us on Disco
 
 ## What’s supported
 
-- Block Handler
+- Slot Handler
 - Effect API
 - Envio Cloud
 
@@ -10911,9 +10911,9 @@ pnpx envio@3.0.0-alpha.14 init svm
 ## Notes
 
 - RPC-only data source (no HyperSync for Solana yet).
-- Only `onBlock` handler is supported; log/instruction-level handlers are not available yet.
-- Block data is not fetched automatically; fetch by slot as needed using RPC or any other source.
-- Tracks finalized blocks only (no reorg support yet), resulting in **~20s latency**.
+- Only `onSlot` handler is supported; log/instruction-level handlers are not available yet.
+- Slot data is not fetched automatically; fetch by slot as needed using RPC or any other source.
+- Tracks finalized slots only (no reorg support yet), resulting in **~20s latency**.
 
 ---
 
