@@ -94,7 +94,7 @@ Enable it on Envio Cloud by setting four environment variables:
 
 Currently supported on the Dedicated Plan only, and you need to bring your own ClickHouse instance. Managed ClickHouse is coming to Envio Cloud, fill out [this form](https://forms.gle/P19S7KXYfdHQM8J69) to be one of the first users.
 
-Read the full walkthrough here: [https://docs.envio.dev/blog/clickhouse-sink-hyperindex-v3](https://docs.envio.dev/blog/clickhouse-sink-hyperindex-v3)
+Read the full walkthrough here: [https://docs.envio.dev/blog/clickhouse-storage-hyperindex-v3](https://docs.envio.dev/blog/clickhouse-storage-hyperindex-v3)
 
 See the full [release notes](https://github.com/enviodev/hyperindex/releases).
 Star us on [GitHub](https://github.com/enviodev/hyperindex) ⭐
