@@ -66,15 +66,15 @@ HyperSync (the data engine powering HyperIndex) implements rate limits for reque
 - **Local Development**: An API token will be required. An automatic login feature from the CLI will be available to make this smoother.
 - **Self-Hosted Deployments**: API tokens are required for HyperSync access in self-hosted deployments. The token can be set via the `ENVIO_API_TOKEN` environment variable in your indexer configuration. This can be read from the `.env` file in the root of your HyperIndex project.
 - **Envio Cloud**: Indexers deployed to Envio Cloud will have special access that doesn't require a custom API token.
-- **Future Pricing**: From mid-November 2025 onwards, we will introduce tiered packages for those self-hosting HyperIndex and wishing to use HyperSync. For preferred introductory pricing based on your specific use case, reach out to us on Discord.
+- **Future Pricing**: From mid-November 2025 onwards, we will introduce tiered packages for those self-hosting HyperIndex and wishing to use HyperSync. For preferred introductory pricing based on your specific use case, reach out to us on [Discord](https://discord.gg/envio).
 
 For more details about API tokens, including how to generate and implement them, see our API Tokens documentation.
 
 
 ## 🔗 Quick Links
 
-- GitHub Repository ⭐
-- Join our Discord Community
+- [GitHub Repository](https://github.com/enviodev/hyperindex) ⭐
+- [Join our Discord Community](https://discord.gg/envio)
 
 ---
 
@@ -88,15 +88,15 @@ Learn how to create and run a blockchain indexer with Envio’s HyperIndex, from
 
 ### Prerequisites
 
-- **Node.js** _(v22 or newer recommended)_
-- **pnpm** _(v8 or newer)_
-- **Docker Desktop** _(required to run the Envio indexer locally)_
+- **[Node.js](https://nodejs.org/en/download/current)** _(v22 or newer recommended)_
+- **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
+- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
 > **Note:** Docker is required only if you plan to run your indexer locally. You can skip installing Docker if you'll only be using Envio Cloud.
 
 #### Additionally for Windows Users:
 
-- **WSL** _Windows Subsystem for Linux_
+- **[WSL](https://learn.microsoft.com/en-us/windows/wsl/install)** _Windows Subsystem for Linux_
 
 
 ## Essential Files
@@ -122,7 +122,7 @@ For a complete walkthrough of the process, refer to the Quickstart guide.
 
 Build an Envio HyperIndex indexer end-to-end with an AI coding assistant.
 
-Most developers now reach for an AI coding assistant before they open a file. This guide walks through an AI-centric flow for creating, developing, and deploying a HyperIndex indexer. It is semi-generic, so any capable AI coding assistant (Cursor, Windsurf, Copilot Agent, Continue, etc.) will work. That said, **we've seen the best results with Claude Code** and recommend starting there.
+Most developers now reach for an AI coding assistant before they open a file. This guide walks through an AI-centric flow for creating, developing, and deploying a HyperIndex indexer. It is semi-generic, so any capable AI coding assistant (Cursor, Windsurf, Copilot Agent, Continue, etc.) will work. That said, **we've seen the best results with [Claude Code](https://claude.com/claude-code)** and recommend starting there.
 
 :::tip Prefer the interactive flow?
 If you'd rather drive the CLI yourself, see Getting Started and the Quickstart.
@@ -195,7 +195,7 @@ Every command supports `-o json`, which makes it easy for assistants and scripts
 
 The **Quickstart** enables you to instantly autogenerate a powerful blockchain indexer and start querying blockchain data in minutes. This is the fastest and easiest way to begin using HyperIndex.
 
-**Example:** Autogenerate an indexer for the Eigenlayer contract and index its entire history in less than 5 minutes by simply running `pnpx envio init` and providing the contract address from Etherscan.
+**Example:** Autogenerate an indexer for the Eigenlayer contract and index its entire history in less than 5 minutes by simply running `pnpx envio init` and providing the contract address from [Etherscan](https://etherscan.io/address/0x858646372cc42e1a627fce94aa7a7033e7cf075a).
 
 
 ### Video Tutorials
@@ -313,7 +313,7 @@ HyperIndex delivers industry-leading performance for blockchain data indexing. I
 
 ## Recent Independent Benchmarks
 
-The most comprehensive and up-to-date benchmarks were conducted by Sentio in April 2025 and are available in the sentio-benchmark repository. These benchmarks compare Envio's HyperIndex against other popular blockchain indexers across multiple real-world scenarios:
+The most comprehensive and up-to-date benchmarks were conducted by Sentio in April 2025 and are available in the [sentio-benchmark repository](https://github.com/enviodev/sentio-benchmark). These benchmarks compare Envio's HyperIndex against other popular blockchain indexers across multiple real-world scenarios:
 
 ### Key Performance Highlights
 
@@ -339,7 +339,7 @@ You can read the full details in our Indexer Benchmarking Results blog post.
 
 ## Verify For Yourself
 
-We encourage developers to run their own benchmarks. You can also use the templates provided in the Open Indexer Benchmark repository.
+We encourage developers to run their own benchmarks. You can also use the templates provided in the [Open Indexer Benchmark repository](https://github.com/enviodev/open-indexer-benchmark).
 
 ---
 
@@ -372,7 +372,7 @@ The Claude skills are only available in HyperIndex v3. If the latest stable vers
 pnpx envio@3.0.0-alpha.21 init
 ```
 
-Replace `3.0.0-alpha.21` with the latest available v3 version. You can find the latest releases here.
+Replace `3.0.0-alpha.21` with the latest available v3 version. You can find the latest releases [here](https://github.com/enviodev/hyperindex/releases).
 :::
 
 ## Step 2: Set Up a Monorepo Structure
@@ -432,7 +432,7 @@ Phase 3 — Verify
 
 :::tip
 - After migration, run `pnpm dev` to verify the indexer runs correctly
-- Use the Indexer Migration Validator to compare outputs between your subgraph and the new HyperIndex indexer
+- Use the [Indexer Migration Validator](https://github.com/enviodev/indexer-migration-validator) to compare outputs between your subgraph and the new HyperIndex indexer
 :::
 
 ## Manual Migration
@@ -446,7 +446,7 @@ For a detailed manual migration guide covering the step by step conversion of su
 **File:** `migration-guide.md`
 
 :::info
-Please reach out to our team on Discord for personalized migration assistance.
+Please reach out to our team on [Discord](https://discord.gg/envio) for personalized migration assistance.
 :::
 
 ## Introduction
@@ -633,7 +633,7 @@ context.Subscription.set(entity);
 
 HyperIndex is a powerful tool that can be used to index any contract. There are some features that are especially powerful that go above subgraph implementations and so in some cases you may want to optimise your migration to HyperIndex further to take advantage of these features. Here are some useful tips:
 
-- Use `field_selection` to opt into optional transaction and block fields (e.g. `hash`, `status`, `gasUsed`) that are not included by default, see Transaction receipts for a migration-focused example and the field selection docs for the full list.
+- Use `field_selection` to opt into optional transaction and block fields (e.g. `hash`, `status`, `gasUsed`) that are not included by default, see [Transaction receipts](#transaction-receipts) for a migration-focused example and the field selection docs for the full list.
 - Use the `unordered_multichain_mode` option to enable unordered multichain mode, this is the most common need for multichain indexing. However comes with tradeoffs worth understanding. Doc here: unordered multichain mode
 - Use wildcard indexing to index by event signatures rather than by contract address.
 - HyperIndex uses the standard GraphQL query language, whereas TheGraph uses a custom GraphQL syntax. You can read about the differences and how to convert queries in our Query Conversion Guide. We also provide a query converter tool for backwards compatibility with existing TheGraph queries.
@@ -677,15 +677,15 @@ See the full list of available `transaction_fields` in the Configuration File do
 
 ## Validating Your Migration
 
-After completing your migration, it's important to verify that your HyperIndex indexer produces the same data as your original subgraph. Use the Indexer Migration Validator CLI tool to compare results between both endpoints and identify any discrepancies. The tool automatically generates entity configs from your GraphQL schema and provides detailed field-level analysis of differences.
+After completing your migration, it's important to verify that your HyperIndex indexer produces the same data as your original subgraph. Use the [Indexer Migration Validator](https://github.com/enviodev/indexer-migration-validator) CLI tool to compare results between both endpoints and identify any discrepancies. The tool automatically generates entity configs from your GraphQL schema and provides detailed field-level analysis of differences.
 
 ## Share Your Learnings
 
-If you discover helpful tips during your migration, we'd love contributions! Open a PR to this guide and help future developers.
+If you discover helpful tips during your migration, we'd love contributions! Open a [PR](https://github.com/enviodev/docs) to this guide and help future developers.
 
 ## Getting Help
 
-**Join Our Discord**: The fastest way to get personalized help is through our Discord community.
+**Join Our Discord**: The fastest way to get personalized help is through our [Discord community](https://discord.gg/envio).
 
 ---
 
@@ -693,7 +693,7 @@ If you discover helpful tips during your migration, we'd love contributions! Ope
 
 **File:** `migrate-from-ponder.md`
 
-> **Need help?** Reach out on Discord for personalized migration assistance.
+> **Need help?** Reach out on [Discord](https://discord.gg/envio) for personalized migration assistance.
 
 Migrating from Ponder to HyperIndex is straightforward — both frameworks use TypeScript, index EVM events, and expose a GraphQL API. The key differences are the config format, schema syntax, and entity operation API.
 
@@ -821,12 +821,12 @@ See the full list of available fields in the Configuration File docs.
 :::note
 Note: Alchemy subgraphs sunset on Dec 8th, 2025. Envio is offering affected Alchemy users 2 months of free hosting on Envio, along with full white-glove migration support to help projects move over smoothly.
 
-For more info on how you can start your free trial or book migration support, visit this page to learn more.
+For more info on how you can start your free trial or book migration support, visit this [page](https://envio.dev/alchemy-migration) to learn more.
 :::
 
 Migrating Alchemy subgraphs to Envio’s HyperIndex is a simple and developer-friendly process. Alchemy subgraphs follow The Graph’s model and HyperIndex uses a very similar structure, so most of your existing setup can carry over cleanly.
 
-If you're familiar with The Graph’s libraries, the migration process should be straightforward. You can also utilize tools like Cursor to speed things up. If you are new to HyperIndex, we strongly recommend starting with our Getting Started guide before you begin your migration from Alchemy.
+If you're familiar with The Graph’s libraries, the migration process should be straightforward. You can also utilize tools like Cursor to speed things up. If you are new to HyperIndex, we strongly recommend starting with our [Getting Started](https://docs.envio.dev/docs/HyperIndex/getting-started) guide before you begin your migration from Alchemy.
 
 ## Why Migrate to Envio’s HyperIndex?
 - **High Speed Performance**: 143x faster than subgraphs
@@ -923,7 +923,7 @@ networks:
 
 
 
-If you hit any issues, check the Configuration File docs or reach out to our team in Discord.
+If you hit any issues, check the [Configuration File](https://docs.envio.dev/docs/HyperIndex/configuration-file) docs or reach out to our team in [Discord](https://discord.gg/envio).
 
 ### schema.graphql Migration
 
@@ -990,15 +990,15 @@ Here is a code snippet to give you a sense of what these changes look like in pr
     
 
 
-For a few extra tips on migrating from Alchemy to Envio, check out our other migration guide in our docs.
+For a few extra tips on migrating from Alchemy to Envio, check out our other [migration guide](https://docs.envio.dev/docs/HyperIndex/migration-guide#extra-tips) in our docs.
 
 ## Share Your Learnings
 
-If you come across anything useful during your migration, please feel free to contribute. Simply open a PR to this guide and help future developers.
+If you come across anything useful during your migration, please feel free to contribute. Simply open a [PR](https://github.com/enviodev/docs/pulls) to this guide and help future developers.
 
 ## Getting Help
 
-Join our Discord if you need support. It is the fastest way to get direct help from the team and the community.
+Join our [Discord](https://discord.gg/envio) if you need support. It is the fastest way to get direct help from the team and the community.
 
 ---
 
@@ -1006,7 +1006,7 @@ Join our Discord if you need support. It is the fastest way to get direct help f
 
 **File:** `migrate-to-v3.md`
 
-15 full months have passed since the official HyperIndex v2.0.0. Since then, we have shipped 32 minor releases and multiple patches with **zero breaking changes** to the documented API. We also received PRs from 6 external contributors, grew from 1 GitHub star to over 470, and saw many big projects rely on HyperIndex.
+15 full months have passed since the official HyperIndex v2.0.0. Since then, we have shipped [32 minor releases](https://github.com/enviodev/hyperindex/releases) and multiple patches with **zero breaking changes** to the documented API. We also received PRs from 6 external contributors, grew from 1 GitHub star to over 470, and saw many big projects rely on HyperIndex.
 
 HyperIndex V3 focuses on modernizing the codebase and laying the foundation for many more months of development. This guide walks you through upgrading from V2 to V3.
 
@@ -1178,7 +1178,7 @@ The explicit `handler` field in `config.yaml` still works, so you don't need to 
 
 ### RPC for Realtime Indexing
 
-Built by an external contributor @cairoeth to allow specifying `realtime` mode for an RPC data source to embrace low-latency head tracking:
+Built by an external contributor [@cairoeth](https://github.com/cairoeth) to allow specifying `realtime` mode for an RPC data source to embrace low-latency head tracking:
 
 ```yaml
 rpc:
@@ -1375,7 +1375,7 @@ The TUI is now auto-disabled in CI environments and when running under AI agents
 
 HyperIndex ships a purpose-built testing framework powered by `createTestIndexer()`. Write tests against the same indexer that runs in production — no database, no Docker, no manual mock wiring.
 
-The framework integrates with Vitest, replacing the previous mocha/chai setup with a single package that doesn't require configuration by default and includes snapshot testing out-of-the-box. It also provides typed test assertions and utilities to read/write entities in-between processing runs.
+The framework integrates with [Vitest](https://vitest.dev/), replacing the previous mocha/chai setup with a single package that doesn't require configuration by default and includes snapshot testing out-of-the-box. It also provides typed test assertions and utilities to read/write entities in-between processing runs.
 
 #### Three ways to feed events
 
@@ -1474,7 +1474,7 @@ See the Testing documentation for more details.
 
 ### Podman Support
 
-Beyond Docker, HyperIndex now supports Podman for local development environments. This provides an alternative container runtime for developers who prefer Podman or have it available in their environment.
+Beyond Docker, HyperIndex now supports [Podman](https://podman.io/) for local development environments. This provides an alternative container runtime for developers who prefer Podman or have it available in their environment.
 
 ### Nested Tuples for Contract Import
 
@@ -1734,12 +1734,12 @@ For large multichain indexers, HyperIndex now throttles chains that have already
 - Removed `preload_handlers` option (now always enabled)
 - Removed `preRegisterDynamicContracts` option
 - Removed `event_decoder` option (the Rust-based decoder is now the only implementation)
-- Removed `rpc_config` in favor of `rpc`, which now supports multiple URLs, `for` mode (`sync`, `realtime`, `fallback`), and WebSocket configuration (see RPC for Realtime Indexing)
+- Removed `rpc_config` in favor of `rpc`, which now supports multiple URLs, `for` mode (`sync`, `realtime`, `fallback`), and WebSocket configuration (see [RPC for Realtime Indexing](#rpc-for-realtime-indexing))
 - Removed the `output` flag — generated types are always emitted to `.envio/` at the project root
 
 ### HyperSync API Token Required
 
-Indexers using HyperSync as a data source now require an `ENVIO_API_TOKEN` environment variable. You can obtain a free API token at envio.dev/app/api-tokens.
+Indexers using HyperSync as a data source now require an `ENVIO_API_TOKEN` environment variable. You can obtain a free API token at [envio.dev/app/api-tokens](https://envio.dev/app/api-tokens).
 
 ```bash
 export ENVIO_API_TOKEN=your_token_here
@@ -1921,7 +1921,7 @@ Re-run `envio codegen` after upgrading; everything you previously imported from 
 
 **If you use testing with Mocha (recommended: migrate to Vitest):**
 
-We recommend migrating from mocha/chai to Vitest, which offers a better testing experience with the new HyperIndex testing framework:
+We recommend migrating from mocha/chai to [Vitest](https://vitest.dev/), which offers a better testing experience with the new HyperIndex testing framework:
 
 ```bash
 pnpm remove ts-mocha ts-node mocha chai @types/mocha @types/chai
@@ -2067,7 +2067,7 @@ Remove the following options from your config if present:
 - `preRegisterDynamicContracts` — no longer needed
 - `unordered_multichain_mode` — replaced with `multichain` option
 - `event_decoder` — the Rust-based decoder is now the only implementation
-- `rpc_config` — replaced with `rpc` (see Breaking Changes)
+- `rpc_config` — replaced with `rpc` (see [Breaking Changes](#configyaml-changes))
 
 **New option for batch size:**
 
@@ -2087,7 +2087,7 @@ Optionally move your handler files to `src/handlers/` and remove the explicit `h
 
 If your indexer uses HyperSync (the default data source), you need to set up an API token:
 
-1. Get a free API token at envio.dev/app/api-tokens
+1. Get a free API token at [envio.dev/app/api-tokens](https://envio.dev/app/api-tokens)
 2. Set the environment variable:
 
 ```bash
@@ -2185,7 +2185,7 @@ indexer.onBlock(
 );
 ```
 
-For chain-specific handlers or interval/range filters, use the `where` callback (see Unified Handlers API).
+For chain-specific handlers or interval/range filters, use the `where` callback (see [Unified Handlers API](#unified-handlers-api)).
 
 **Rename deprecated APIs:**
 
@@ -2207,7 +2207,7 @@ For chain-specific handlers or interval/range filters, use the `where` callback 
 
 **Removed APIs:**
 
-- `getGeneratedByChainId` — use the `indexer.chains[chainId]` instead (see Indexer State & Config)
+- `getGeneratedByChainId` — use the `indexer.chains[chainId]` instead (see [Indexer State & Config](#indexer-state--config))
 - **`getWhere` API** — update to the new GraphQL-style filter syntax:
 
 ```typescript
@@ -2276,7 +2276,7 @@ pnpm dev
 
 **Environment Variables:**
 
-- [ ] **Set `ENVIO_API_TOKEN`** if using HyperSync (get token)
+- [ ] **Set `ENVIO_API_TOKEN`** if using HyperSync ([get token](https://envio.dev/app/api-tokens))
 - [ ] Remove `UNSTABLE__TEMP_UNORDERED_HEAD_MODE`
 - [ ] Remove `UNORDERED_MULTICHAIN_MODE`
 - [ ] Remove `MAX_BATCH_SIZE` (use `full_batch_size` in config.yaml)
@@ -2300,7 +2300,7 @@ pnpm dev
 - [ ] Replace lowercased entity type imports with capitalized versions (e.g., `transfer` → `Transfer`)
 - [ ] Update `getWhere` calls to new GraphQL-style filter syntax (e.g., `getWhere({ field: { _eq: value } })`)
 - [ ] Update any `S.nullable` schema usage — now returns `null` instead of `undefined`
-- [ ] Migrate from `MockDb` to `createTestIndexer()` (see MockDb Migration Cheat Sheet)
+- [ ] Migrate from `MockDb` to `createTestIndexer()` (see [MockDb Migration Cheat Sheet](#mockdb-migration-cheat-sheet))
 - [ ] Replace contract-specific type exports (`ERC20_Transfer_eventLog`) with generic types (`EvmEvent`)
 
 **CLI:**
@@ -2314,38 +2314,38 @@ pnpm dev
 
 ## Getting Help
 
-If you encounter any issues during migration, join our Discord community for support.
+If you encounter any issues during migration, join our [Discord community](https://discord.gg/envio) for support.
 
 ## Release Notes
 
 For detailed release notes, see:
 
-- v3.0.0-rc.0
-- v3.0.0-alpha.24
-- v3.0.0-alpha.23
-- v3.0.0-alpha.22
-- v3.0.0-alpha.21
-- v3.0.0-alpha.20
-- v3.0.0-alpha.19
-- v3.0.0-alpha.18
-- v3.0.0-alpha.17
-- v3.0.0-alpha.16
-- v3.0.0-alpha.15
-- v3.0.0-alpha.14
-- v3.0.0-alpha.13
-- v3.0.0-alpha.12
-- v3.0.0-alpha.11
-- v3.0.0-alpha.10
-- v3.0.0-alpha.9
-- v3.0.0-alpha.8
-- v3.0.0-alpha.7
-- v3.0.0-alpha.6
-- v3.0.0-alpha.5
-- v3.0.0-alpha.4
-- v3.0.0-alpha.3
-- v3.0.0-alpha.2
-- v3.0.0-alpha.1
-- v3.0.0-alpha.0
+- [v3.0.0-rc.0](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-rc.0)
+- [v3.0.0-alpha.24](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.24)
+- [v3.0.0-alpha.23](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.23)
+- [v3.0.0-alpha.22](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.22)
+- [v3.0.0-alpha.21](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.21)
+- [v3.0.0-alpha.20](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.20)
+- [v3.0.0-alpha.19](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.19)
+- [v3.0.0-alpha.18](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.18)
+- [v3.0.0-alpha.17](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.17)
+- [v3.0.0-alpha.16](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.16)
+- [v3.0.0-alpha.15](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.15)
+- [v3.0.0-alpha.14](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.14)
+- [v3.0.0-alpha.13](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.13)
+- [v3.0.0-alpha.12](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.12)
+- [v3.0.0-alpha.11](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.11)
+- [v3.0.0-alpha.10](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.10)
+- [v3.0.0-alpha.9](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.9)
+- [v3.0.0-alpha.8](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.8)
+- [v3.0.0-alpha.7](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.7)
+- [v3.0.0-alpha.6](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.6)
+- [v3.0.0-alpha.5](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.5)
+- [v3.0.0-alpha.4](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.4)
+- [v3.0.0-alpha.3](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.3)
+- [v3.0.0-alpha.2](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.2)
+- [v3.0.0-alpha.1](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.1)
+- [v3.0.0-alpha.0](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.0)
 
 ---
 
@@ -2605,7 +2605,7 @@ Scalar types represent basic data types and map directly to JavaScript, TypeScri
 | `Timestamp`        | Timestamp with timezone                      | `Date`                    | `Js.Date.t`    |
 | `Json`             | JSON object (from envio@2.20)                | `Json`                    | `Js.Json.t`    |
 
-Learn more about GraphQL scalars here.
+Learn more about GraphQL scalars [here](https://graphql.org/learn/).
 
 
 ## Enum Types
@@ -3174,7 +3174,7 @@ To implement multichain indexing, you need to:
 For a comprehensive, production-ready example of multichain indexing, we recommend exploring our Uniswap V4 Multichain Indexer. This official reference implementation:
 
 - Indexes Uniswap V4 deployments across 10 different blockchain networks
-- Powers the official v4.xyz interface with real-time data
+- Powers the official [v4.xyz](https://v4.xyz) interface with real-time data
 - Demonstrates best practices for high-performance multichain indexing
 - Provides a complete, production-grade implementation you can study and adapt
 
@@ -3405,7 +3405,7 @@ This flow allows you to verify that your event handlers correctly create, update
 
 ## Assertions
 
-The testing library works with any JavaScript assertion library. In the examples, we use Node.js's built-in assert module, but you can also use popular alternatives like chai or expect.
+The testing library works with any JavaScript assertion library. In the examples, we use Node.js's built-in assert module, but you can also use popular alternatives like [chai](https://www.chaijs.com/) or [expect](https://github.com/Automattic/expect.js).
 
 Common assertion patterns include:
 
@@ -3489,7 +3489,7 @@ open Belt
   );
   ```
 
-If you encounter any issues or have questions, please reach out to us on Discord
+If you encounter any issues or have questions, please reach out to us on [Discord](https://discord.gg/envio)
 
 ---
 
@@ -3501,7 +3501,7 @@ If you encounter any issues or have questions, please reach out to us on Discord
 
 ## Introduction
 
-Hasura is a GraphQL engine that provides a web interface for interacting with your indexed blockchain data. When running HyperIndex locally, Hasura serves as your primary tool for:
+[Hasura](https://hasura.io/) is a GraphQL engine that provides a web interface for interacting with your indexed blockchain data. When running HyperIndex locally, Hasura serves as your primary tool for:
 
 - Querying indexed data via GraphQL
 - Visualizing database tables and relationships
@@ -3564,7 +3564,7 @@ query MyQuery {
 
 Click the "Play" button to execute the query and see the results.
 
-For more advanced GraphQL query options, see Hasura's quickstart guide.
+For more advanced GraphQL query options, see Hasura's [quickstart guide](https://hasura.io/docs/latest/queries/quickstart/).
 
 ### Data Tab
 
@@ -3684,7 +3684,7 @@ This pattern scales: you can keep per-entity counters, rolling windows (daily/ho
 
 #### Exceptional cases
 
-If runtime aggregate queries are a hard requirement for your use case, please reach out and we can evaluate options for your project on Envio Cloud. Contact us on Discord.
+If runtime aggregate queries are a hard requirement for your use case, please reach out and we can evaluate options for your project on Envio Cloud. Contact us on [Discord](https://discord.gg/envio).
 
 ## Disable Hasura for Self-Hosted Blockchain Indexers
 
@@ -3858,7 +3858,7 @@ Point any MCP-compatible client to the endpoint URL above using the **Streamable
 
 The following blockchain indexer example is a reference implementation and can serve as a starting point for applications with similar logic.
 
-This official Uniswap V4 indexer is a comprehensive implementation for the Uniswap V4 protocol using Envio HyperIndex. This is the same indexer that powers the v4.xyz website, providing real-time data for the Uniswap V4 interface.
+This [official Uniswap V4 indexer](https://github.com/enviodev/uniswap-v4-indexer) is a comprehensive implementation for the Uniswap V4 protocol using Envio HyperIndex. This is the same indexer that powers the [v4.xyz](https://v4.xyz) website, providing real-time data for the Uniswap V4 interface.
 
 ## Key Features
 
@@ -3894,14 +3894,14 @@ The Envio-powered Uniswap V4 indexer offers extraordinary performance benefits:
 
 To use this indexer, you can:
 
-1. Clone the repository
+1. Clone the [repository](https://github.com/enviodev/uniswap-v4-indexer)
 2. Follow the installation instructions in the README
 3. Run the indexer locally or deploy it to a production environment
 4. Access indexed data through the GraphQL API
 
 ## Contribution
 
-The Uniswap V4 indexer is actively maintained and welcomes contributions from the community. If you'd like to contribute or report issues, please visit the GitHub repository.
+The Uniswap V4 indexer is actively maintained and welcomes contributions from the community. If you'd like to contribute or report issues, please visit the [GitHub repository](https://github.com/enviodev/uniswap-v4-indexer).
 
 :::note
 This is an official reference implementation that powers the v4.xyz website. While extensively tested in production, remember to validate the data for your specific use case. The indexer is continuously updated to support the latest Uniswap V4 features and optimizations.
@@ -3917,21 +3917,21 @@ The following blockchain indexers serve as exceptional reference implementations
 
 ## Overview
 
-Sablier is a token streaming protocol that enables real-time finance on the blockchain, allowing tokens to be streamed continuously over time. These official Sablier indexers track streaming activity across 18 different EVM-compatible chains, providing comprehensive data through a unified GraphQL API.
+[Sablier](https://sablier.com/) is a token streaming protocol that enables real-time finance on the blockchain, allowing tokens to be streamed continuously over time. These official Sablier indexers track streaming activity across 18 different EVM-compatible chains, providing comprehensive data through a unified GraphQL API.
 
 ## Professional Indexer Suite
 
 Sablier maintains three specialized indexers, each targeting a specific part of their protocol:
 
-### 1. Lockup Indexer
+### 1. [Lockup Indexer](https://github.com/sablier-labs/indexers/tree/main/envio/lockup)
 
 Tracks the core Sablier lockup contracts, which handle the streaming of tokens with fixed durations and amounts. This indexer provides data about stream creation, cancellation, and withdrawal events. Used primarily for the vesting functionality of Sablier.
 
-### 2. Flow Indexer
+### 2. [Flow Indexer](https://github.com/sablier-labs/indexers/tree/main/envio/flow)
 
 Monitors Sablier's advanced streaming functionality, allowing for dynamic flow rates and more complex streaming scenarios. This indexer captures stream modifications, batch operations, and other flow-specific events. Powers the payments side of the Sablier application.
 
-### 3. Airdrops Indexer
+### 3. [Airdrops Indexer](https://github.com/sablier-labs/indexers/tree/main/envio/airdrops)
 
 Tracks Sablier's Merkle Airdrops, which enables efficient batch stream creation using cryptographic proofs. This indexer captures data about batch creations, claims, and related activities. Used for both Airstreams and Instant Airdrops functionality.
 
@@ -3962,17 +3962,17 @@ These blockchain indexers demonstrate several development best practices:
 To use these indexers as a reference for your own development:
 
 1. Clone the specific repository based on your needs:
-   - Lockup Indexer
-   - Flow Indexer
-   - Merkle Indexer
+   - [Lockup Indexer](https://github.com/sablier-labs/subgraphs/tree/main/apps/lockup-envio)
+   - [Flow Indexer](https://github.com/sablier-labs/subgraphs/tree/main/apps/flow-envio)
+   - [Merkle Indexer](https://github.com/sablier-labs/subgraphs/tree/main/apps/merkle-envio)
 2. Review the file structure and implementation patterns
 3. Examine the event handlers for efficient data processing techniques
 4. Study the schema design for effective entity modeling
 
 For complete API documentation and usage examples, see:
 
-- Sablier API Overview
-- Implementation Caveats
+- [Sablier API Overview](https://docs.sablier.com/api/overview#envio)
+- [Implementation Caveats](https://docs.sablier.com/api/caveats)
 
 :::note
 These are official indexers maintained by the Sablier team and represent production-quality implementations. They serve as an excellent example of professional blockchain indexer development and are regularly updated to support the latest protocol features.
@@ -3995,7 +3995,7 @@ Envio provides flexibility in how you deploy and host your indexers:
 
 - **Envio Cloud (Fully Managed)**: Let Envio handle everything. The following sections of this page outline Envio Cloud in more detail. This is the recommended deployment method for most users and removes the hosting overhead for your team. See below for the all the awesome features we provide and see the Pricing & Billing page for more information on which plan suits your indexing needs.
 
-- **Self-Hosting**: Run your indexer on your own infrastructure. This requires advanced setup and infrastructure knowledge not unique to Envio. See the following repository for a simple docker example to get you started. Please note this example does not cover all infrastructure related needs. It is recommended that at least a separate Postgres management tool is used for self-hosting in production. For further instructions see the Self Hosting Guide
+- **Self-Hosting**: Run your indexer on your own infrastructure. This requires advanced setup and infrastructure knowledge not unique to Envio. See the following [repository](https://github.com/enviodev/local-docker-example) for a simple docker example to get you started. Please note this example does not cover all infrastructure related needs. It is recommended that at least a separate Postgres management tool is used for self-hosting in production. For further instructions see the Self Hosting Guide
 
 ## Key Features
 
@@ -4021,7 +4021,7 @@ Envio Cloud provides a seamless GitHub-integrated deployment workflow:
 
 **Multiple Indexers**: Deploy several indexers from a single repository using different configurations, branches, or directories.
 
-You can view and manage your hosted indexers in the Envio Explorer.
+You can view and manage your hosted indexers in the [Envio Explorer](https://envio.dev/explorer).
 
 
 
@@ -4228,7 +4228,7 @@ Envio Cloud provides a seamless git-based deployment workflow, similar to modern
 
 ### Requirements
 
-- **Version Support**: We strongly advise using the latest release version for improved deployment performance. Envio Cloud requires a minimum version of at least `2.21.5`.
+- **Version Support**: We strongly advise using the latest [release version](https://github.com/enviodev/hyperindex/releases) for improved deployment performance. Envio Cloud requires a minimum version of at least `2.21.5`.
 Additionally, the following versions are not supported on Envio Cloud: 
   - `2.29.x`
 - **PNPM Support**: the deployment must be compatible with pnpm version `10.32.0`
@@ -4236,9 +4236,9 @@ Additionally, the following versions are not supported on Envio Cloud:
   - **Package.json**: a `package.json` file must be present in the root folder and support the above two requirements, with the envio version explicitly configured in the dependencies.
   - **Configuration file**: a HyperIndex configuration file must be present.
 
-  The root folder and configuration file name can be set in the indexer settings.
+  The root folder and configuration file name can be set in the [indexer settings](#configure-your-indexer).
 - **GitHub Repository**: The repository must be no larger than `100MB`. Caching between deployments is supported for paid plans using the Effects Api.
-- **Node Version**: It is strongly recommended that the indexer is compatible with node version 24 or higher.
+- **Node Version**: It is strongly recommended that the indexer is compatible with node version [24 or higher](https://github.com/nodejs/node/tags).
 
 
 
@@ -4288,7 +4288,7 @@ For complete pricing details and feature comparison, see our Pricing & Billing p
 
 ### Initial Setup
 
-1. **Log in with GitHub**: Visit the Envio App and authenticate with your GitHub account
+1. **Log in with GitHub**: Visit the [Envio App](https://envio.dev/app/login) and authenticate with your GitHub account
 2. **Select an Organization**: Choose your personal account or any organization you have access to
 3. **Install the Envio Deployments GitHub App**: Grant access to the repositories you want to deploy
 
@@ -4567,7 +4567,7 @@ When indexing stops, the dashboard clearly surfaces the issue so you can investi
 :::warning Alpha Release
 The `envio-cloud` CLI is currently in **alpha**. The tool is under active development and will be iterated on before a stable version 1 release once the final form of the tool's interaction is finalized.
 
-For feature requests, please reach out to us on Telegram or Discord.
+For feature requests, please reach out to us on [Telegram](https://t.me/envaborations) or [Discord](https://discord.gg/envio).
 :::
 
 The `envio-cloud` CLI is a command-line tool for interacting with Envio Cloud. It enables you to deploy, manage, and monitor your blockchain indexers directly from the terminal — making it particularly useful for CI/CD pipelines, scripting, and agentic workflows.
@@ -4998,7 +4998,7 @@ envio-cloud indexer list --org enviodev -o json | jq -r '.data[].indexer_id'
 - **Production Features** - Tags, IP whitelisting, caching, and alerts
 - **Monitoring** - Dashboard monitoring and alerts
 - **Envio CLI** - Local development CLI reference
-- **npm package** - Latest version and changelog
+- **[npm package](https://www.npmjs.com/package/envio-cloud)** - Latest version and changelog
 
 ---
 
@@ -5016,7 +5016,7 @@ Envio offers flexible pricing options to meet the needs of projects at different
 Envio Cloud offers flexible pricing plans to match your project's needs, from free development environments to enterprise-grade dedicated hosting.
 
 :::info Current Pricing
-For the most up-to-date pricing information, detailed plan comparisons, and feature breakdowns, please visit our official Envio Pricing Page.
+For the most up-to-date pricing information, detailed plan comparisons, and feature breakdowns, please visit our official [Envio Pricing Page](https://envio.dev/pricing).
 :::
 
 **Available Plans:**
@@ -5042,7 +5042,7 @@ The free development plan is intended for testing and development purposes only 
 :::
 
 :::tip
-For detailed feature explanations, see our Features page. For deployment instructions, see our Deployment Guide. Not sure which option is right for your project? Book a call with our team to discuss your specific needs.
+For detailed feature explanations, see our Features page. For deployment instructions, see our Deployment Guide. Not sure which option is right for your project? [Book a call with our team](https://cal.com/jonjon-clark/15min) to discuss your specific needs.
 :::
 
 ---
@@ -5084,7 +5084,7 @@ Before self-hosting, ensure you have:
 ## Getting Started
 
 In general, if you want to self-host, you will likely use a Docker setup.
-For a working example, check out the local-docker-example repository.
+For a working example, check out the [local-docker-example repository](https://github.com/enviodev/local-docker-example).
 It contains a minimal `Dockerfile` and `docker-compose.yaml` that configure the Envio indexer together with PostgreSQL and Hasura.
 
 ## Configuration Explained
@@ -5108,8 +5108,8 @@ The configuration uses environment variables with sensible defaults. For product
 
 If you encounter issues with self-hosting:
 
-- Check the Envio GitHub repository for known issues
-- Join the Envio Discord community for community support
+- Check the [Envio GitHub repository](https://github.com/enviodev/hyperindex) for known issues
+- Join the [Envio Discord community](https://discord.gg/envio) for community support
 
 :::tip
 For most production use cases, we recommend using Envio Cloud to benefit from automatic scaling, monitoring, and maintenance.
@@ -5142,7 +5142,7 @@ Being a member of the GitHub organisation **does not** automatically grant acces
 
 ## Introduction
 
-This tutorial will guide you through indexing Optimism Standard Bridge deposits in under 5 minutes using Envio HyperIndex's no-code contract import feature.
+This tutorial will guide you through indexing Optimism Standard Bridge deposits in under 5 minutes using Envio HyperIndex's no-code [contract import](https://docs.envio.dev/docs/HyperIndex/contract-import) feature.
 
 The Optimism Standard Bridge enables the movement of ETH and ERC-20 tokens between Ethereum and Optimism. We'll index bridge deposit events by extracting the `DepositFinalized` logs emitted by the bridge contracts on both networks.
 
@@ -5152,9 +5152,9 @@ The Optimism Standard Bridge enables the movement of ETH and ERC-20 tokens betwe
 
 Before starting, ensure you have the following installed:
 
-- **Node.js** _(v22 or newer recommended)_
-- **pnpm** _(v8 or newer)_
-- **Docker Desktop** _(required to run the Envio indexer locally)_
+- **[Node.js](https://nodejs.org/en/download/current)** _(v22 or newer recommended)_
+- **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
+- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
 > **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio Cloud.
 
@@ -5184,7 +5184,7 @@ pnpx envio init
    0x4200000000000000000000000000000000000010
    ```
 
-   View on Optimistic Etherscan
+   [View on Optimistic Etherscan](https://optimistic.etherscan.io/address/0x4200000000000000000000000000000000000010)
 
 3. Select the `DepositFinalized` event:
    - Navigate using arrow keys (↑↓)
@@ -5206,7 +5206,7 @@ pnpx envio init
    0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1
    ```
 
-   View on Etherscan
+   [View on Etherscan](https://etherscan.io/address/0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1)
 
 4. Select the `ETHDepositInitiated` event
 
@@ -5276,7 +5276,7 @@ Now you can interact with your indexed data:
 
 ### Accessing Hasura
 
-1. Open Hasura at http://localhost:8080
+1. Open Hasura at [http://localhost:8080](http://localhost:8080)
 2. When prompted, enter the admin password: `testing`
 
 ### Monitoring Indexing Progress
@@ -5287,7 +5287,7 @@ Now you can interact with your indexed data:
 
 
 
-> **Note:** Thanks to Envio's HyperSync, indexing happens significantly faster than with standard RPC methods.
+> **Note:** Thanks to Envio's [HyperSync](https://docs.envio.dev/docs/hypersync), indexing happens significantly faster than with standard RPC methods.
 
 ### Querying Indexed Events
 
@@ -5329,7 +5329,7 @@ Congratulations! You've successfully created an indexer for Optimism Bridge depo
 - Create relationships between events on different networks
 - Deploy your indexer to Envio Cloud
 
-For more tutorials and advanced features, check out our documentation or watch our video walkthroughs on YouTube.
+For more tutorials and advanced features, check out our [documentation](https://docs.envio.dev) or watch our [video walkthroughs](https://www.youtube.com/watch?v=9U2MTFU9or0) on YouTube.
 
 ---
 
@@ -5339,7 +5339,7 @@ For more tutorials and advanced features, check out our documentation or watch o
 
 ## Introduction
 
-In this tutorial, you'll learn how to index ERC20 token transfers on the Base network using Envio HyperIndex. By leveraging the no-code contract import feature, you'll be able to quickly analyze USDC transfer activity, including identifying the largest transfers.
+In this tutorial, you'll learn how to index ERC20 token transfers on the Base network using Envio HyperIndex. By leveraging the no-code [contract import](https://docs.envio.dev/docs/HyperIndex/contract-import) feature, you'll be able to quickly analyze USDC transfer activity, including identifying the largest transfers.
 
 We'll create an indexer that tracks all USDC token transfers on Base by extracting the `Transfer` events emitted by the USDC contract. The entire process takes less than 5 minutes to set up and start querying data.
 
@@ -5349,9 +5349,9 @@ We'll create an indexer that tracks all USDC token transfers on Base by extracti
 
 Before starting, ensure you have the following installed:
 
-- **Node.js** _(v22 or newer recommended)_
-- **pnpm** _(v8 or newer)_
-- **Docker Desktop** _(required to run the Envio indexer locally)_
+- **[Node.js](https://nodejs.org/en/download/current)** _(v22 or newer recommended)_
+- **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
+- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
 > **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio Cloud.
 
@@ -5381,7 +5381,7 @@ pnpx envio init
    0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
    ```
 
-   View on BaseScan
+   [View on BaseScan](https://basescan.org/address/0x833589fcd6edb6e08f4c7c32d4f71b54bda02913)
 
 3. Select the `Transfer` event:
    - Navigate using arrow keys (↑↓)
@@ -5459,7 +5459,7 @@ Now you can interact with your indexed USDC transfer data:
 
 ### Accessing Hasura
 
-1. Open Hasura at http://localhost:8080
+1. Open Hasura at [http://localhost:8080](http://localhost:8080)
 2. When prompted, enter the admin password: `testing`
 
 
@@ -5472,7 +5472,7 @@ Now you can interact with your indexed USDC transfer data:
 
 
 
-> **Note:** Thanks to Envio's HyperSync, you can index millions of USDC transfers in just minutes rather than hours or days with traditional methods.
+> **Note:** Thanks to Envio's [HyperSync](https://docs.envio.dev/docs/hypersync), you can index millions of USDC transfers in just minutes rather than hours or days with traditional methods.
 
 ### Querying Indexed Events
 
@@ -5513,7 +5513,7 @@ Congratulations! You've successfully created an indexer for USDC token transfers
 - Add more tokens or events to your indexer
 - Deploy your indexer to Envio Cloud
 
-For more tutorials and advanced features, check out our documentation or watch our video walkthrough on YouTube.
+For more tutorials and advanced features, check out our [documentation](https://docs.envio.dev) or watch our [video walkthrough](https://www.youtube.com/watch?v=e1xznmKBLa8) on YouTube.
 
 ---
 
@@ -5521,9 +5521,9 @@ For more tutorials and advanced features, check out our documentation or watch o
 
 **File:** `Tutorials/tutorial-indexing-fuel.md`
 
-HyperIndex supports any EVM-compatible blockchain and the Fuel Network.
+HyperIndex supports any EVM-compatible blockchain and the [Fuel](https://fuel.network/) Network.
 
-Blockchain indexers are vital to the success of any dApp. In this tutorial, we will create an Envio indexer for the Fuel dApp Sway Farm step by step.
+Blockchain indexers are vital to the success of any dApp. In this tutorial, we will create an Envio indexer for the Fuel dApp [Sway Farm](https://swayfarm.xyz/) step by step.
 
 Sway Farm is a simple farming game and for the sake of a real-world example, let's create the indexer for a leaderboard of all farmers 🧑‍🌾
 
@@ -5531,17 +5531,17 @@ Sway Farm is a simple farming game and for the sake of a real-world example, let
 
 ## About Fuel
 
-Fuel is an operating system purpose-built for Ethereum rollups. Fuel's unique architecture allows rollups to solve for PSI (parallelization, state minimized execution, interoperability). Powered by the FuelVM, Fuel aims to expand Ethereum's capability set without compromising security or decentralization.
+[Fuel](https://fuel.network/) is an operating system purpose-built for Ethereum rollups. Fuel's unique architecture allows rollups to solve for PSI (parallelization, state minimized execution, interoperability). Powered by the FuelVM, Fuel aims to expand Ethereum's capability set without compromising security or decentralization.
 
-Website | X | Discord
+[Website](https://fuel.network/) | [X](https://twitter.com/fuel_network?lang=en) | [Discord](https://discord.com/invite/xfpK4Pe)
 
 ## Prerequisites
 
 ### Environment tooling
 
-- **Node.js** _(v22 or newer recommended)_
-- **pnpm** _(v8 or newer)_
-- **Docker Desktop** _(required to run the Envio indexer locally)_
+- **[Node.js](https://nodejs.org/en/download/current)** _(v22 or newer recommended)_
+- **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
+- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
 > **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio Cloud.
 
@@ -5591,7 +5591,7 @@ In the following prompt, you can choose an initialization option. There's a Gree
 
 > A separate Tutorial page provides more details about the `Greeter` template.
 
-Next it'll ask us for an ABI file. You can find it in the `./out/debug` directory after building your Sway contract with `forc build`:
+Next it'll ask us for an ABI file. You can find it in the `./out/debug` directory after building your [Sway](https://docs.fuel.network/docs/sway/) contract with `forc build`:
 
 ```bash
 ? What is the path to your json abi file? ./sway-farm/contract/out/debug/contract-abi.json
@@ -5611,7 +5611,7 @@ After the ABI file is provided, Envio parses all possible events you can use for
 [↑↓ to move, space to select one, → to all, ← to none, type to filter]
 ```
 
-Let's select the events we want to index. I opened the code of the contract file and realized that for a leaderboard we need only events which update player information. Hence, I left only `NewPlayer`, `LevelUp`, and `SellItem` selected in the list. We'd want to index more events in real life, but this is enough for the tutorial.
+Let's select the events we want to index. I opened the code of the [contract file](https://github.com/FuelLabs/sway-farm/blob/47e3ed5a91593ebcf8d2c67ae6fad41d9954c8a8/contract/src/abi_structs.sw#L365-L406) and realized that for a leaderboard we need only events which update player information. Hence, I left only `NewPlayer`, `LevelUp`, and `SellItem` selected in the list. We'd want to index more events in real life, but this is enough for the tutorial.
 
 ```bash
 ? Which events would you like to index?
@@ -5697,7 +5697,7 @@ networks:
 
 In the tutorial, we don't need to adjust it in any way. But later you can modify the file and add more events for indexing.
 
-As a nice to have, you can use a Sway struct name without specifying a `logId`, like this:
+As a nice to have, you can use a [Sway](https://docs.fuel.network/docs/sway/) struct name without specifying a `logId`, like this:
 
 ```
 - name: SellItem
@@ -5787,7 +5787,7 @@ SwayFarmContract.SellItem.handler(async ({ event, context }) => {
 
 Without overengineering, simply set the player data into the database. What's nice is that whenever your ABI or entities in `graphql.schema` change, Envio regenerates types and shows the compilation error.
 
-> 🧠 You can find the indexer repo created during the tutorial on GitHub.
+> 🧠 You can find the indexer repo created during the tutorial on [GitHub](https://github.com/enviodev/sway-farm-indexer).
 
 ## Starting the Indexer
 
@@ -5825,13 +5825,13 @@ Once you have verified that the indexer is working for your contracts, then you 
 
 Deploying an indexer to Envio Cloud allows you to extract information via graphQL queries into your front-end or some back-end application.
 
-Navigate to the Envio Cloud to start deploying your indexer and refer to this documentation for more information on deploying your indexer.
+Navigate to the [Envio Cloud](https://envio.dev/app/login) to start deploying your indexer and refer to this documentation for more information on deploying your indexer.
 
 ## What next?
 
 Once you have successfully finished the tutorial, you are ready to become a blockchain indexing wizard!
 
-Join our Discord channel to make sure you catch all new releases.
+Join our [Discord](https://discord.gg/envio) channel to make sure you catch all new releases.
 
 ---
 
@@ -5845,7 +5845,7 @@ This tutorial provides a step-by-step guide to indexing a simple Greeter smart c
 
 ### What is the Greeter Contract?
 
-The Greeter contract is a straightforward smart contract that allows users to store greeting messages on the blockchain. For this tutorial, we'll be indexing instances of this contract deployed on both **Polygon** and **Linea** networks.
+The [Greeter contract](https://github.com/Float-Capital/hardhat-template) is a straightforward smart contract that allows users to store greeting messages on the blockchain. For this tutorial, we'll be indexing instances of this contract deployed on both **Polygon** and **Linea** networks.
 
 ### What You'll Build
 
@@ -5859,9 +5859,9 @@ By the end of this tutorial, you'll have:
 
 Before starting, ensure you have the following installed:
 
-- **Node.js** _(v22 or newer recommended)_
-- **pnpm** _(v8 or newer)_
-- **Docker Desktop** _(required to run the Envio indexer locally)_
+- **[Node.js](https://nodejs.org/en/download/current)** _(v22 or newer recommended)_
+- **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
+- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
 > **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio Cloud.
 
@@ -5985,14 +5985,14 @@ To see your indexer in action, you can write new greetings to the blockchain:
 
 ### For Polygon:
 
-1. Visit the contract on Polygonscan
+1. Visit the contract on [Polygonscan](https://polygonscan.com/address/0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c#writeContract)
 2. Connect your wallet
 3. Use the `setGreeting` function to write a new greeting
 4. Submit the transaction
 
 ### For Linea:
 
-1. Visit the contract on Lineascan
+1. Visit the contract on [Lineascan](https://lineascan.build/address/0xdEe21B97AB77a16B4b236F952e586cf8408CF32A#writeContract)
 2. Connect your wallet
 3. Use the `setGreeting` function to write a new greeting
 4. Submit the transaction
@@ -6003,7 +6003,7 @@ Since this is a multichain example, you can interact with both contracts to see 
 
 Now you can explore the data your indexer has captured:
 
-1. Open Hasura at http://localhost:8080
+1. Open Hasura at [http://localhost:8080](http://localhost:8080)
 2. When prompted for authentication, use the password: `testing`
 3. Navigate to the **Data** tab to browse the database tables
 4. Or use the **API** tab to write GraphQL queries
@@ -6029,7 +6029,7 @@ query GetGreetings {
 
 When you're ready to move from local development to production:
 
-1. Visit Envio Cloud
+1. Visit [Envio Cloud](https://envio.dev/app/login)
 2. Follow the steps to deploy your indexer
 3. Get a production GraphQL endpoint for your application
 
@@ -6054,7 +6054,7 @@ Now that you've mastered the basics, you can:
 - Explore the Advanced Querying features
 - Create aggregated statistics from your indexed data
 
-For more tutorials and examples, visit the Envio Documentation or join our Discord community for support.
+For more tutorials and examples, visit the [Envio Documentation](https://docs.envio.dev/) or join our [Discord community](https://discord.gg/envio) for support.
 
 ---
 
@@ -6072,7 +6072,7 @@ Many blockchain applications require price data to calculate values such as:
 
 This tutorial explores three different approaches to incorporating price data into your Envio indexer, using a real-world example of tracking ETH deposits into a Uniswap V3 liquidity pool on the Blast blockchain.
 
-> **TL;DR:** The complete code for this tutorial is available in this GitHub repository.
+> **TL;DR:** The complete code for this tutorial is available in [this GitHub repository](https://github.com/enviodev/price-data).
 
 ## What You'll Learn
 
@@ -6097,7 +6097,7 @@ Let's explore each method in detail.
 
 ## Method 1: Using Oracle Price Feeds
 
-Oracle networks provide on-chain price data through specialized smart contracts. For this tutorial, we'll use API3 price feeds on Blast.
+Oracle networks provide on-chain price data through specialized smart contracts. For this tutorial, we'll use [API3](https://api3.org/) price feeds on Blast.
 
 ### How Oracles Work
 
@@ -6111,12 +6111,12 @@ Oracle services like API3 maintain a network of data providers that push price u
 
 To locate the ETH/USD price feed using API3 on Blast:
 
-1. Identify the API3 contract address: `0x709944a48cAf83535e43471680fDA4905FB3920a`
+1. Identify the API3 contract address: [`0x709944a48cAf83535e43471680fDA4905FB3920a`](https://blastscan.io/address/0x709944a48cAf83535e43471680fDA4905FB3920a)
 
 2. Find the data feed ID for ETH/USD:
 
    - The dAPI name "ETH/USD" as bytes32: `0x4554482f55534400000000000000000000000000000000000000000000000000`
-   - Using the `dapiNameToDataFeedId` function, this maps to `0x3efb3990846102448c3ee2e47d22f1e5433cd45fa56901abe7ab3ffa054f70b5`
+   - Using the [`dapiNameToDataFeedId`](https://blastscan.io/address/0x709944a48cAf83535e43471680fDA4905FB3920a#readContract#F8) function, this maps to `0x3efb3990846102448c3ee2e47d22f1e5433cd45fa56901abe7ab3ffa054f70b5`
 
 3. Monitor the `UpdatedBeaconSetWithBeacons` events with this data feed ID to get price updates
 
@@ -6176,9 +6176,9 @@ const factoryContract = getContract({
 })();
 ```
 
-> **Tip:** You can also manually find the pool address using the `getPool` function on a block explorer.
+> **Tip:** You can also manually find the pool address using the [`getPool`](https://blastscan.io/address/0x792edAdE80af5fC680d96a2eD80A44247D2Cf6Fd#readContract#F2) function on a block explorer.
 
-Running this code reveals the USDB/WETH pool is at `0xf52B4b69123CbcF07798AE8265642793b2E8990C`.
+Running this code reveals the USDB/WETH pool is at [`0xf52B4b69123CbcF07798AE8265642793b2E8990C`](https://blastscan.io/address/0xf52B4b69123CbcF07798AE8265642793b2E8990C).
 
 ### Getting Price Data From Swap Events
 
@@ -6200,7 +6200,7 @@ Uniswap V3 emits `Swap` events containing price information in the `sqrtPriceX96
 
 ## Method 3: Using Off-chain APIs
 
-External price APIs like CoinGecko provide comprehensive token price data but require HTTP calls from your indexer.
+External price APIs like [CoinGecko](https://www.coingecko.com/en/api) provide comprehensive token price data but require HTTP calls from your indexer.
 
 ### Making API Requests
 
@@ -6469,7 +6469,7 @@ When comparing our three price data sources, we found:
 
 Looking at the `offchainOracleDiff` column, we can see that oracle and off-chain prices typically align closely but can deviate by as much as 17.98% in some cases.
 
-For the highlighted transaction (0xe7e79ddf29ed2f0ea8cb5bb4ffdab1ea23d0a3a0a57cacfa875f0d15768ba37d), we can compare our calculated values:
+For the highlighted transaction ([0xe7e79ddf29ed2f0ea8cb5bb4ffdab1ea23d0a3a0a57cacfa875f0d15768ba37d](https://blastscan.io/tx/0xe7e79ddf29ed2f0ea8cb5bb4ffdab1ea23d0a3a0a57cacfa875f0d15768ba37d)), we can compare our calculated values:
 
 - **Actual value** (from block explorer): $2,358.27
 - **DEX pool value** (`depositedPool`): $2,117.07
@@ -6518,7 +6518,7 @@ By carefully choosing and implementing the right price data strategy, you can bu
 
 ## Introduction
 
-The Scaffold-ETH 2 Envio extension makes indexing your deployed smart contracts as simple as possible. Generate a boilerplate indexer for your deployed contracts with a single click and start indexing their events immediately.
+The [Scaffold-ETH 2](https://scaffoldeth.io/extensions) Envio extension makes indexing your deployed smart contracts as simple as possible. Generate a boilerplate indexer for your deployed contracts with a single click and start indexing their events immediately.
 
 With this extension, you get:
 - 🔍 **Automatic indexer generation** from your deployed contracts
@@ -6530,10 +6530,10 @@ With this extension, you get:
 
 Before starting, ensure you have the following installed:
 
-- **Node.js v20** _(v20 or newer required)_
-- **pnpm** _(for Envio indexer)_
-- **Docker Desktop** _(required to run the Envio indexer locally)_
-- **Yarn** _(for Scaffold-ETH)_
+- **[Node.js v20](https://nodejs.org/en/download/current)** _(v20 or newer required)_
+- **[pnpm](https://pnpm.io/installation)** _(for Envio indexer)_
+- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
+- **[Yarn](https://yarnpkg.com/getting-started/install)** _(for Scaffold-ETH)_
 
 ## Step 1: Create a New Scaffold-ETH 2 Project with Envio Extension
 
@@ -7617,7 +7617,7 @@ The first argument is an options object that describes the effect:
 
 The second argument is a function that will be called with the effect's input.
 
-> **Note:** For type definitions, you should use `S` from the `envio` package, which uses Sury library under the hood.
+> **Note:** For type definitions, you should use `S` from the `envio` package, which uses [Sury](https://github.com/DZakh/sury) library under the hood.
 
 After defining an effect, you can use `context.effect` to call it from your handler, loader, or another effect.
 
@@ -7717,13 +7717,13 @@ export const getBalance = createEffect(
 
 Every effect cache creates a new table in the database `envio_effect_${effectName}`. You can see it and query in Hasura console with admin secret.
 
-Also, use our Development Console to track the cache size and see number of calls which didn't hit the cache.
+Also, use our [Development Console](https://envio.dev/console) to track the cache size and see number of calls which didn't hit the cache.
 
 ### Reuse Effect Cache on Indexer Reruns
 
 To prevent invalid data we don't keep the effect cache on indexer reruns. But you can explicitly configure cache, which should be preloaded when the indexer is rerun.
 
-Open Development Console of the running indexer which accumulated the cache. You'll be able to see the `Sync Cache` button right at the `Effects` section. Clicking the button will load the cache from the indexer database to the `.envio/cache` directory in your indexer project.
+Open [Development Console](https://envio.dev/console) of the running indexer which accumulated the cache. You'll be able to see the `Sync Cache` button right at the `Effects` section. Clicking the button will load the cache from the indexer database to the `.envio/cache` directory in your indexer project.
 
 When the indexer is rerun by using `envio dev` or `envio start -r` call, the initial cache will be loaded from the `.envio/cache` directory and used for the indexer run.
 
@@ -7745,7 +7745,7 @@ For detailed instructions, see the Effect API Cache documentation.
 
 ### Rate Limit
 
-Starting from `v2.32.0`, the `rateLimit` option was added. It controls how frequently an effect can run within a given timeframe. You can set it to `false` to disable rate limiting or define a custom limit such as calls per second, minute, or a duration in milliseconds.
+Starting from [`v2.32.0`](https://github.com/enviodev/hyperindex/releases/tag/v2.32.0), the `rateLimit` option was added. It controls how frequently an effect can run within a given timeframe. You can set it to `false` to disable rate limiting or define a custom limit such as calls per second, minute, or a duration in milliseconds.
 
 ```typescript
 // Effect to get the balance of a specific address at a specific block
@@ -7770,7 +7770,7 @@ export const getBalance = createEffect(
 );
 ```
 
-Watch the following video to learn more about createEffect and other updates introduced in v2.32.0.
+Watch the following video to learn more about createEffect and other updates introduced in [v2.32.0](https://github.com/enviodev/hyperindex/releases/tag/v2.32.0).
 
 
 ### Sending Notifications (Webhooks)
@@ -7861,7 +7861,7 @@ If you're migrating from `experimental_createEffect` to `createEffect`, remove t
 
 **File:** `Guides/contract-state.md`
 
-> **Example Repository:** The complete code for this guide can be found here
+> **Example Repository:** The complete code for this guide can be found [here](https://github.com/enviodev/rpc-token-data-example)
 
 ## Introduction
 
@@ -7877,7 +7877,7 @@ This guide demonstrates how to access on-chain contract state from your event ha
 
 ### Scenario
 
-We want to track token information (name, symbol, decimals) for every token involved in a Uniswap V3 pool creation event.
+We want to track token information (name, symbol, decimals) for every token involved in a [Uniswap V3 pool creation event](https://docs.uniswap.org/contracts/v3/reference/core/interfaces/IUniswapV3Factory#poolcreated).
 
 ### Problem
 
@@ -7898,10 +7898,10 @@ To get the token name, symbol, and decimals, we need to:
 This guide assumes:
 
 - Basic familiarity with Envio indexing
-- Understanding of the viem library for making contract calls
-- Access to an Ethereum RPC endpoint (dRPC recommended)
+- Understanding of the [viem library](https://viem.sh/) for making contract calls
+- Access to an Ethereum RPC endpoint ([dRPC](https://drpc.org/) recommended)
 
-For a gentle introduction to viem with a similar example, check out this medium article.
+For a gentle introduction to viem with a similar example, check out this [medium article](https://medium.com/@0xape/typescript-and-viem-quickstart-for-blockchain-scripting-3f1846970b6f).
 
 ## Implementation Steps
 
@@ -8154,7 +8154,7 @@ export const getTokenMetadata = createEffect(
 
 Standard RPC requests return the **current state** of a contract, not the state at a specific historical block. For token metadata (name, symbol, decimals), this isn't typically an issue since these values rarely change.
 
-However, if you need historical state (like an account balance at a specific block), you would need a specialized RPC method like eth_getBalanceAt.
+However, if you need historical state (like an account balance at a specific block), you would need a specialized RPC method like [eth_getBalanceAt](https://docs.etherscan.io/api-pro/api-pro#get-historical-ether-balance-for-a-single-address-by-blockno).
 
 ### Handling Rate Limiting
 
@@ -8182,11 +8182,11 @@ For more advanced techniques, explore:
 
 **File:** `Guides/ipfs.md`
 
-> **Example Repository:** The complete code for this guide can be found here
+> **Example Repository:** The complete code for this guide can be found [here](https://github.com/enviodev/bored-ape-yacht-club-indexer)
 
 ## Introduction
 
-This guide demonstrates how to fetch and index data stored on IPFS within your Envio indexer. We'll use the Bored Ape Yacht Club NFT collection as a practical example, showing you how to retrieve and store token metadata from IPFS.
+This guide demonstrates how to fetch and index data stored on IPFS within your Envio indexer. We'll use the [Bored Ape Yacht Club](https://www.boredapeyachtclub.com/) NFT collection as a practical example, showing you how to retrieve and store token metadata from IPFS.
 
 IPFS (InterPlanetary File System) is commonly used in blockchain applications to store larger data like images and metadata that would be prohibitively expensive to store on-chain. By integrating IPFS fetching capabilities into your indexers, you can provide a more complete data model that combines on-chain events with off-chain metadata.
 
@@ -8749,7 +8749,7 @@ This feature is available starting from version `2.14.0`. The fallback RPC is ac
 
 ## Enhanced RPC with eRPC
 
-For more robust RPC usage, you can implement eRPC - a fault-tolerant EVM RPC proxy with advanced features like caching and failover.
+For more robust RPC usage, you can implement [eRPC](https://github.com/erpc/erpc) - a fault-tolerant EVM RPC proxy with advanced features like caching and failover.
 
 ### What eRPC Provides
 
@@ -8810,7 +8810,7 @@ networks:
     # Additional network configuration...
 ```
 
-For more detailed configuration options, refer to the eRPC documentation.
+For more detailed configuration options, refer to the [eRPC documentation](https://docs.erpc.cloud/config/example).
 
 ## Comparing HyperSync and RPC
 
@@ -8849,21 +8849,21 @@ Static, deep-linkable reference for the `config.yaml` Schema.
 
 ## Top-level Properties
 
-- description
-- name (required)
-- ecosystem
-- schema
-- output
-- contracts
-- networks (required)
-- unordered_multichain_mode
-- event_decoder
-- rollback_on_reorg
-- save_full_history
-- field_selection
-- raw_events
-- preload_handlers
-- address_format
+- [description](#description)
+- [name](#name) (required)
+- [ecosystem](#ecosystem)
+- [schema](#schema)
+- [output](#output)
+- [contracts](#contracts)
+- [networks](#networks) (required)
+- [unordered_multichain_mode](#unorderedmultichainmode)
+- [event_decoder](#eventdecoder)
+- [rollback_on_reorg](#rollbackonreorg)
+- [save_full_history](#savefullhistory)
+- [field_selection](#fieldselection)
+- [raw_events](#rawevents)
+- [preload_handlers](#preloadhandlers)
+- [address_format](#addressformat)
 
 ### description {#description}
 
@@ -8898,7 +8898,7 @@ Ecosystem of the project.
 - **type**: `anyOf(object | null)`
 
 Variants:
-- `1`: EcosystemTag
+- `1`: [EcosystemTag](#def-ecosystemtag)
 - `2`: `null`
 
 
@@ -8957,7 +8957,7 @@ Configuration of the blockchain networks that the project is deployed on.
 
 - **type**: `array>`
 - **items**: `object`
-- **items ref**: Network
+- **items ref**: [Network](#def-network)
 
 
 Example (config.yaml):
@@ -8991,7 +8991,7 @@ The event decoder to use for the indexer (default: hypersync-client)
 - **type**: `anyOf(object | null)`
 
 Variants:
-- `1`: EventDecoder
+- `1`: [EventDecoder](#def-eventdecoder)
 - `2`: `null`
 
 
@@ -9034,7 +9034,7 @@ Select the block and transaction fields to include in all events globally
 - **type**: `anyOf(object | null)`
 
 Variants:
-- `1`: FieldSelection
+- `1`: [FieldSelection](#def-fieldselection)
 - `2`: `null`
 
 
@@ -9075,7 +9075,7 @@ Address format for Ethereum addresses: 'checksum' or 'lowercase' (default: check
 - **type**: `anyOf(object | null)`
 
 Variants:
-- `1`: AddressFormat
+- `1`: [AddressFormat](#def-addressformat)
 - `2`: `null`
 
 
@@ -9220,7 +9220,7 @@ networks:
 
 Variants:
 - `1`: `string`
-- `2`: Rpc
+- `2`: [Rpc](#def-rpc)
 - `3`: `array>`
 
 Example (config.yaml):
@@ -9368,26 +9368,26 @@ The commands are organized into the following categories:
 
 ### Initialization Commands
 
-- `envio init` - Create new indexer projects
-- `envio init contract-import` - Import from existing contracts
-- `envio init template` - Use pre-built templates
+- [`envio init`](#envio-init) - Create new indexer projects
+- [`envio init contract-import`](#envio-init-contract-import) - Import from existing contracts
+- [`envio init template`](#envio-init-template) - Use pre-built templates
 
 ### Development Commands
 
-- `envio dev` - Run in development mode with hot reloading
-- `envio codegen` - Generate code from configuration files
-- `envio start` - Start the indexer without code generation
+- [`envio dev`](#envio-dev) - Run in development mode with hot reloading
+- [`envio codegen`](#envio-codegen) - Generate code from configuration files
+- [`envio start`](#envio-start) - Start the indexer without code generation
 
 ### Environment Management
 
-- `envio stop` - Stop running processes
-- `envio local` - Manage local environment
-- `envio local docker` - Control Docker containers
-- `envio local db-migrate` - Manage database schema
+- [`envio stop`](#envio-stop) - Stop running processes
+- [`envio local`](#envio-local) - Manage local environment
+- [`envio local docker`](#envio-local-docker) - Control Docker containers
+- [`envio local db-migrate`](#envio-local-db-migrate) - Manage database schema
 
 ### Analysis Tools
 
-- `envio benchmark-summary` - View performance data
+- [`envio benchmark-summary`](#envio-benchmark-summary) - View performance data
 
 ## Global Command
 
@@ -10231,13 +10231,13 @@ This comprehensive glossary explains the key terms and concepts used throughout 
 
 ## Table of Contents
 
-- Blockchain Fundamentals
-- Smart Contract Concepts
-- Indexing & Data
-- Development Tools
-- Programming Languages
-- Envio Platform
-- Mathematical Concepts
+- [Blockchain Fundamentals](#blockchain-fundamentals)
+- [Smart Contract Concepts](#smart-contract-concepts)
+- [Indexing & Data](#indexing--data)
+- [Development Tools](#development-tools)
+- [Programming Languages](#programming-languages)
+- [Envio Platform](#envio-platform)
+- [Mathematical Concepts](#mathematical-concepts)
 
 ## Blockchain Fundamentals
 
@@ -11176,7 +11176,7 @@ yarn add graphql-ws ws
 
 ## Getting Support
 
-For any questions about WebSocket usage, contact the Envio team via Telegram or Discord.
+For any questions about WebSocket usage, contact the Envio team via [Telegram](https://t.me/envio) or [Discord](https://discord.gg/envio).
 
 ---
 
@@ -11190,12 +11190,12 @@ This guide covers all the differences between TheGraph's query syntax and Envio'
 
 ## Converter Tool
 
-We've built a query converter tool that automatically converts TheGraph queries to Envio's GraphQL syntax. You can:
+We've built a [query converter tool](https://github.com/enviodev/subgraph-to-hyperindex-query-converter) that automatically converts TheGraph queries to Envio's GraphQL syntax. You can:
 
 - **Convert and execute**: Provide your Envio GraphQL endpoint and a query written in TheGraph syntax. The tool will convert it, execute it against your endpoint, and return the results
 - **Convert only**: Use the tool to convert queries and view the converted output without executing them. To convert queries without executing them, add `/debug` to the converter endpoint and send your query. The response will contain only the converted query without actually running it.
 
-**Repository**: subgraph-to-hyperindex-query-converter
+**Repository**: [subgraph-to-hyperindex-query-converter](https://github.com/enviodev/subgraph-to-hyperindex-query-converter)
 
 :::info Availability
 The query converter tool is only available to users on paid tiers.
@@ -11211,7 +11211,7 @@ If you'd like to use the query converter tool for your indexer, please reach out
 
 :::warning Beta Status
 This converter tool is still very much in beta. We're actively working on it and discovering new query conversions that need to be handled.  
-**If you encounter any conversion failures or incorrect conversions, please file a GitHub issue in the repository so we can address it.**
+**If you encounter any conversion failures or incorrect conversions, please [file a GitHub issue](https://github.com/enviodev/subgraph-to-hyperindex-query-converter/issues) in the repository so we can address it.**
 :::
 
 ### Converter Tool Limitations
@@ -11219,7 +11219,7 @@ This converter tool is still very much in beta. We're actively working on it and
 The query converter tool has several limitations to be aware of:
 
 - **Rate limits**: The rate limits of your associated tier will still apply when using the converter tool.
-- **Beta status and incomplete coverage**: Since the tool is in beta there is a possibility we have missed some conversion patterns. Some queries may still fail to convert correctly or may not be handled at all. If you encounter any conversion failures or incorrect conversions, please file a GitHub issue in the repository so we can address it.
+- **Beta status and incomplete coverage**: Since the tool is in beta there is a possibility we have missed some conversion patterns. Some queries may still fail to convert correctly or may not be handled at all. If you encounter any conversion failures or incorrect conversions, please [file a GitHub issue](https://github.com/enviodev/subgraph-to-hyperindex-query-converter/issues) in the repository so we can address it.
 - **WebSocket subscriptions**: WebSocket subscriptions are not supported. The converter only works with standard HTTP GraphQL queries.
 - **Directives not supported**: GraphQL directives (such as `@skip`, `@include`, etc.) are not supported because the converter uses simple string parsing rather than a full GraphQL parser. Directives are ignored or may break parsing.
 - **Variables in orderBy/orderDirection**: Variables used in `orderBy` and `orderDirection` parameters are ignored because HyperIndex requires literal field names in `order_by` clauses, and variable values are unknown at conversion time. Queries using variables for ordering will return unordered results.
@@ -11252,14 +11252,14 @@ For production applications, we recommend migrating your queries to Envio's stan
 
 # Logging in Envio HyperIndex
 
-Effective logging is essential for monitoring your blockchain indexer's performance, diagnosing issues, and gathering insights. The Envio indexer uses pino, a high-performance logging library for JavaScript. These logs can be integrated with analytics tools such as Kibana to generate metrics and visualizations.
+Effective logging is essential for monitoring your blockchain indexer's performance, diagnosing issues, and gathering insights. The Envio indexer uses [pino](https://github.com/pinojs/pino/), a high-performance logging library for JavaScript. These logs can be integrated with analytics tools such as [Kibana](https://www.elastic.co/what-is/kibana) to generate metrics and visualizations.
 
 ## Table of Contents
 
-- User Logging - How to implement logging in your event handlers
-- Configuration & Output Formats - Configuring log output and formats
-- Log Levels - Understanding available log levels
-- Troubleshooting - Common issues and solutions
+- [User Logging](#users) - How to implement logging in your event handlers
+- [Configuration & Output Formats](#metrics-debugging-and-troubleshooting) - Configuring log output and formats
+- [Log Levels](#developer-logging) - Understanding available log levels
+- [Troubleshooting](#troubleshooting) - Common issues and solutions
 
 ## Users
 
@@ -11377,7 +11377,7 @@ LOG_STRATEGY="both-prettyconsole"  # Pretty logs to console, Pino format to file
 LOG_FILE=""
 ```
 
-For production environments or detailed analytics, consider integrating logs with Kibana or similar tools. We're developing Kibana dashboards for self-hosting and UI dashboards for our hosting solution. If you have specific dashboard requirements, please contact us on Discord.
+For production environments or detailed analytics, consider integrating logs with Kibana or similar tools. We're developing Kibana dashboards for self-hosting and UI dashboards for our hosting solution. If you have specific dashboard requirements, please [contact us on Discord](https://discord.gg/envio).
 
 ## Developer Logging
 
@@ -11439,29 +11439,29 @@ This approach allows you to view essential information in the UI while capturing
 
 **File:** `Troubleshoot/common-issues.md`
 
-This guide helps you identify and resolve common issues you might encounter when working with Envio HyperIndex. If you don't find a solution to your problem here, please join our Discord community for additional support.
+This guide helps you identify and resolve common issues you might encounter when working with Envio HyperIndex. If you don't find a solution to your problem here, please join our [Discord community](https://discord.gg/envio) for additional support.
 
 ## Table of Contents
 
-- Setup and Configuration Issues
-  - Module Not Found Errors
-  - Smart Contract Updates
-  - Node.js Version Compatibility
-  - PNPM Version Compatibility
-- Runtime Issues
-  - Indexer Start Block Issues
-  - Tables Not Registered in Hasura
-  - RPC-Related Issues
-- Debugging a Stuck Indexer
-  - Indexer Not Making Progress
-- Rate Limiting on Hosted Service
-  - HTTP 429 Errors
-- Hasura Authentication
-  - Cannot Log In to the Hasura Console
-- Infrastructure Conflicts
-  - Local Postgres Conflicts
-- Missing Events
-  - Events Not Appearing in Indexed Data
+- [Setup and Configuration Issues](#setup-and-configuration-issues)
+  - [Module Not Found Errors](#cannot-find-module-errors-on-pnpm-start)
+  - [Smart Contract Updates](#smart-contract-updated-after-the-initial-codegen)
+  - [Node.js Version Compatibility](#using-the-correct-version-of-nodejs)
+  - [PNPM Version Compatibility](#using-the-correct-version-of-pnpm)
+- [Runtime Issues](#runtime-issues)
+  - [Indexer Start Block Issues](#indexer-not-starting-at-the-specified-start-block)
+  - [Tables Not Registered in Hasura](#tables-for-entities-are-not-registered-on-hasura)
+  - [RPC-Related Issues](#rpc-related-issues)
+- [Debugging a Stuck Indexer](#debugging-a-stuck-indexer)
+  - [Indexer Not Making Progress](#indexer-not-making-progress)
+- [Rate Limiting on Hosted Service](#rate-limiting-on-hosted-service)
+  - [HTTP 429 Errors](#http-429-errors-when-querying-your-endpoint)
+- [Hasura Authentication](#hasura-authentication)
+  - [Cannot Log In to the Hasura Console](#cannot-log-in-to-the-hasura-console)
+- [Infrastructure Conflicts](#infrastructure-conflicts)
+  - [Local Postgres Conflicts](#postgres-running-locally)
+- [Missing Events](#missing-events)
+  - [Events Not Appearing in Indexed Data](#events-not-appearing-in-indexed-data)
 
 ## Setup and Configuration Issues
 
@@ -11619,7 +11619,7 @@ network:
 The most important thing to do is check your indexer logs for errors or warnings. Logs will almost always point you to the root cause.
 
 - **Locally:** Check the terminal output from `pnpm dev` for error messages or stack traces.
-- **Envio Cloud:** Go to your deployment in the Envio Cloud dashboard and open the **Logs** tab.
+- **Envio Cloud:** Go to your deployment in the [Envio Cloud dashboard](https://envio.dev/app) and open the **Logs** tab.
 
 If the logs don't reveal an obvious error, work through the common causes below:
 
@@ -11639,7 +11639,7 @@ If the logs don't reveal an obvious error, work through the common causes below:
 
 **If running on Envio Cloud:**
 
-- Check the deployment logs in the Envio Cloud dashboard for error details.
+- Check the deployment logs in the [Envio Cloud dashboard](https://envio.dev/app) for error details.
 - If the deployment is unrecoverable, you can delete it and redeploy from the dashboard.
 - Consider running the same configuration locally first to reproduce and debug the issue before redeploying.
 
@@ -11654,10 +11654,10 @@ If the logs don't reveal an obvious error, work through the common causes below:
 **What to check:**
 
 1. **Confirm it's a query rate limit (not an RPC issue)**
-   - Rate limiting applies to your _GraphQL query endpoint_, not to the indexer's data ingestion. If your indexer is slow to sync, that's a different issue — see Debugging a Stuck Indexer.
+   - Rate limiting applies to your _GraphQL query endpoint_, not to the indexer's data ingestion. If your indexer is slow to sync, that's a different issue — see [Debugging a Stuck Indexer](#debugging-a-stuck-indexer).
 
 2. **Check your plan's limits**
-   - Review your current plan in the Envio Cloud dashboard under your deployment settings. Higher-tier plans include higher query rate limits. See Billing & Plans for details.
+   - Review your current plan in the [Envio Cloud dashboard](https://envio.dev/app) under your deployment settings. Higher-tier plans include higher query rate limits. See Billing & Plans for details.
 
 3. **Reduce query frequency from your application**
    - If your frontend or backend polls the endpoint frequently, consider adding caching, reducing poll intervals, or using WebSocket subscriptions for real-time updates instead of polling.
@@ -11688,7 +11688,7 @@ On Envio Cloud, you **do not need the Hasura admin secret** to query your data. 
 https://indexer.dev.hyperindex.xyz//v1/graphql
 ```
 
-The Hasura console UI is not exposed on hosted deployments. To explore your data, use the GraphQL playground available in the Envio Cloud dashboard, or query the endpoint directly from your application or tools like Postman.
+The Hasura console UI is not exposed on hosted deployments. To explore your data, use the GraphQL playground available in the [Envio Cloud dashboard](https://envio.dev/app), or query the endpoint directly from your application or tools like Postman.
 
 If you need to restrict access to your endpoint, see the Hosted Service features for security options.
 
@@ -11763,7 +11763,7 @@ When encountering an error in Envio, you'll receive an error code (like `EE101`)
 2. Read the explanation to understand what caused the error
 3. Follow the recommended steps to resolve the issue
 
-If you can't resolve an error after following the suggestions, please reach out for support on our Discord community.
+If you can't resolve an error after following the suggestions, please reach out for support on our [Discord community](https://discord.gg/envio).
 
 ## Error Categories
 
@@ -12138,7 +12138,7 @@ contracts:
 
 - Check your event handler logic for errors
 - Review recent changes to your blockchain indexer
-- If unable to resolve, contact support through Discord with error details
+- If unable to resolve, contact support through [Discord](https://discord.gg/envio) with error details
 
 ## Database-Related Errors
 
@@ -12246,7 +12246,7 @@ pnpm envio local db-migrate setup
 
 **Issue**: Contract name not found in interface mapping (unexpected internal error).
 
-**Solution**: Contact support through Discord for assistance.
+**Solution**: Contact support through [Discord](https://discord.gg/envio) for assistance.
 
 ## Network-Related Errors
 
@@ -12271,7 +12271,7 @@ pnpm envio local db-migrate setup
 - Check network connectivity
 - Verify RPC endpoint performance
 - Consider increasing timeouts if possible
-- If persists, contact support through Discord
+- If persists, contact support through [Discord](https://discord.gg/envio)
 
 ---
 
@@ -12407,7 +12407,7 @@ CONTRACT_TYPE
 3. **Run validation early** with `pnpm codegen` to catch issues before spending time on implementation
 4. **Use prefixes for domain entities** (e.g., `TokenTransfer` instead of `Transfer`)
 
-If you encounter persistent issues with reserved words or need help refactoring your schema to avoid them, please reach out for support on our Discord community.
+If you encounter persistent issues with reserved words or need help refactoring your schema to avoid them, please reach out for support on our [Discord community](https://discord.gg/envio).
 
 ---
 
@@ -12444,8 +12444,8 @@ If you encounter persistent issues with reserved words or need help refactoring 
 | **Field**                     | **Value**                                                                                          |
 |-------------------------------|----------------------------------------------------------------------------------------------------|
 | **Arbitrum Chain ID**     | 42161                                                                                            |
-| **HyperSync URL Endpoint**    | https://arbitrum.hypersync.xyz or https://42161.hypersync.xyz |
-| **HyperRPC URL Endpoint**     | https://arbitrum.rpc.hypersync.xyz or https://42161.rpc.hypersync.xyz |
+| **HyperSync URL Endpoint**    | [https://arbitrum.hypersync.xyz](https://arbitrum.hypersync.xyz) or [https://42161.hypersync.xyz](https://42161.hypersync.xyz) |
+| **HyperRPC URL Endpoint**     | [https://arbitrum.rpc.hypersync.xyz](https://arbitrum.rpc.hypersync.xyz) or [https://42161.rpc.hypersync.xyz](https://42161.rpc.hypersync.xyz) |
 
 
 ### Defining Network Configurations
@@ -12473,7 +12473,7 @@ For more information on how to set up your config, define a schema, and write ev
 
 ### Support
 
-Can’t find what you’re looking for or need support? Reach out to us on Discord; we’re always happy to help!
+Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.gg/envio); we’re always happy to help!
 
 ---
 
@@ -12486,8 +12486,8 @@ Can’t find what you’re looking for or need support? Reach out to us on Disco
 | **Field**                     | **Value**                                                                                          |
 |-------------------------------|----------------------------------------------------------------------------------------------------|
 | **Eth Chain ID**     | 1                                                                                            |
-| **HyperSync URL Endpoint**    | https://eth.hypersync.xyz or https://1.hypersync.xyz |
-| **HyperRPC URL Endpoint**     | https://eth.rpc.hypersync.xyz or https://1.rpc.hypersync.xyz |
+| **HyperSync URL Endpoint**    | [https://eth.hypersync.xyz](https://eth.hypersync.xyz) or [https://1.hypersync.xyz](https://1.hypersync.xyz) |
+| **HyperRPC URL Endpoint**     | [https://eth.rpc.hypersync.xyz](https://eth.rpc.hypersync.xyz) or [https://1.rpc.hypersync.xyz](https://1.rpc.hypersync.xyz) |
 
 
 ### Defining Network Configurations
@@ -12515,7 +12515,7 @@ For more information on how to set up your config, define a schema, and write ev
 
 ### Support
 
-Can’t find what you’re looking for or need support? Reach out to us on Discord; we’re always happy to help!
+Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.gg/envio); we’re always happy to help!
 
 ---
 
@@ -12528,8 +12528,8 @@ Can’t find what you’re looking for or need support? Reach out to us on Disco
 | **Field**                     | **Value**                                                                                          |
 |-------------------------------|----------------------------------------------------------------------------------------------------|
 | **Optimism Chain ID**     | 10                                                                                            |
-| **HyperSync URL Endpoint**    | https://optimism.hypersync.xyz or https://10.hypersync.xyz |
-| **HyperRPC URL Endpoint**     | https://optimism.rpc.hypersync.xyz or https://10.rpc.hypersync.xyz |
+| **HyperSync URL Endpoint**    | [https://optimism.hypersync.xyz](https://optimism.hypersync.xyz) or [https://10.hypersync.xyz](https://10.hypersync.xyz) |
+| **HyperRPC URL Endpoint**     | [https://optimism.rpc.hypersync.xyz](https://optimism.rpc.hypersync.xyz) or [https://10.rpc.hypersync.xyz](https://10.rpc.hypersync.xyz) |
 
 
 ### Defining Network Configurations
@@ -12557,7 +12557,7 @@ For more information on how to set up your config, define a schema, and write ev
 
 ### Support
 
-Can’t find what you’re looking for or need support? Reach out to us on Discord; we’re always happy to help!
+Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.gg/envio); we’re always happy to help!
 
 ---
 
@@ -12570,8 +12570,8 @@ Can’t find what you’re looking for or need support? Reach out to us on Disco
 | **Field**                     | **Value**                                                                                          |
 |-------------------------------|----------------------------------------------------------------------------------------------------|
 | **Polygon Chain ID**     | 137                                                                                            |
-| **HyperSync URL Endpoint**    | https://polygon.hypersync.xyz or https://137.hypersync.xyz |
-| **HyperRPC URL Endpoint**     | https://polygon.rpc.hypersync.xyz or https://137.rpc.hypersync.xyz |
+| **HyperSync URL Endpoint**    | [https://polygon.hypersync.xyz](https://polygon.hypersync.xyz) or [https://137.hypersync.xyz](https://137.hypersync.xyz) |
+| **HyperRPC URL Endpoint**     | [https://polygon.rpc.hypersync.xyz](https://polygon.rpc.hypersync.xyz) or [https://137.rpc.hypersync.xyz](https://137.rpc.hypersync.xyz) |
 
 
 ### Defining Network Configurations
@@ -12599,7 +12599,7 @@ For more information on how to set up your config, define a schema, and write ev
 
 ### Support
 
-Can’t find what you’re looking for or need support? Reach out to us on Discord; we’re always happy to help!
+Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.gg/envio); we’re always happy to help!
 
 ---
 
@@ -12637,7 +12637,7 @@ pnpx envio@3.0.0-alpha.14 init svm
 
 ## Introduction
 
-Envio supports the Fuel Network on mainnet and testnet. This page shows how to use HyperIndex with Fuel’s architecture and features.
+Envio supports the [Fuel Network](https://fuel.network/) on mainnet and testnet. This page shows how to use HyperIndex with Fuel’s architecture and features.
 
 Fuel offers several advantages as a modular execution layer including:
 
@@ -12664,11 +12664,11 @@ Looking for inspiration? Check out these indexers built by projects in the Fuel 
 
 | Project                               | Type             | GitHub Repository                                                                 |
 | ------------------------------------- | ---------------- | --------------------------------------------------------------------------------- |
-| Spark             | Orderbook DEX    | github                        |
-| Mira              | AMM DEX          | github                                |
-| Thunder | NFT Marketplace  | github                          |
-| Swaylend     | Lending Protocol | github |
-| Greeter                               | Tutorial         | github                                |
+| [Spark](https://sprk.fi/)             | Orderbook DEX    | [github](https://github.com/compolabs/spark-envio-indexer)                        |
+| [Mira](https://mira.ly/)              | AMM DEX          | [github](https://github.com/mira-amm/mira-indexer)                                |
+| [Thunder](https://thundernft.market/) | NFT Marketplace  | [github](https://github.com/ThunderFuel/thunder-indexer)                          |
+| [Swaylend](https://swaylend.com/)     | Lending Protocol | [github](https://github.com/Swaylend/swaylend-monorepo/tree/develop/apps/indexer) |
+| Greeter                               | Tutorial         | [github](https://github.com/enviodev/fuel-greeter)                                |
 
 ### Features Supported on Fuel
 
@@ -12688,7 +12688,7 @@ Fuel's event model differs significantly from EVM. Instead of predefined events,
 
 ### LOG_DATA Receipts (Primary Event Type)
 
-The most common event type in Fuel is the `LOG_DATA` receipt, created by the `log` instruction in Sway contracts.
+The most common event type in Fuel is the `LOG_DATA` receipt, created by the `log` instruction in [Sway](https://docs.fuel.network/docs/sway/) contracts.
 
 Unlike Solidity's `emit` which requires predefined event structures, Sway's `log` function allows passing any data, providing greater flexibility.
 
@@ -12802,10 +12802,10 @@ HyperFuel provides:
 
 Access HyperFuel data using any of these clients:
 
-- **Rust**: hyperfuel-client-rust
-- **Python**: hyperfuel-client-python
-- **Node.js**: hyperfuel-client-node
-- **JSON API**: hyperfuel-json-api
+- **Rust**: [hyperfuel-client-rust](https://github.com/enviodev/hyperfuel-client-rust)
+- **Python**: [hyperfuel-client-python](https://github.com/enviodev/hyperfuel-client-python)
+- **Node.js**: [hyperfuel-client-node](https://github.com/enviodev/hyperfuel-client-node)
+- **JSON API**: [hyperfuel-json-api](https://github.com/enviodev/hyperfuel-json-api)
 
 ### HyperFuel Endpoints
 
@@ -12816,7 +12816,7 @@ For detailed information, see the HyperFuel documentation.
 
 ## About Fuel Network
 
-Fuel is an operating system purpose-built for Ethereum rollups with unique architecture focused on:
+[Fuel](https://fuel.network/) is an operating system purpose-built for Ethereum rollups with unique architecture focused on:
 
 - **P**arallelization: Execute transactions concurrently for higher throughput
 - **S**tate-minimized execution: Efficient storage and computation model
@@ -12826,18 +12826,18 @@ Powered by the FuelVM, Fuel expands Ethereum's capabilities without compromising
 
 ### Resources
 
-- Website
-- Twitter
-- Discord
-- Documentation
+- [Website](https://fuel.network/)
+- [Twitter](https://twitter.com/fuel_network)
+- [Discord](https://discord.com/invite/xfpK4Pe)
+- [Documentation](https://docs.fuel.network/)
 
 ## Need Help?
 
 If you encounter any issues with Fuel indexing, please:
 
 1. Check our Troubleshooting guides
-2. Join our Discord for community support
-3. Create an issue in our GitHub repository
+2. Join our [Discord](https://discord.gg/envio) for community support
+3. Create an issue in our [GitHub repository](https://github.com/enviodev/hyperindex)
 
 ---
 
@@ -12855,7 +12855,7 @@ If you encounter any issues with Fuel indexing, please:
 
 ## Our position
 
-We're devs and we value OS ethos too, that's why our licensing mirrors a lot of the benefits from open source licensing however Envio and its products do not use a recognized open source license by the OSI, we are however public and open and our licensing reflects this.
+We're devs and we value OS ethos too, that's why our licensing mirrors a lot of the benefits from open source licensing however Envio and its products do not use a recognized open source license by the [OSI](https://opensource.org/), we are however public and open and our licensing reflects this.
 
 Our future business model lies in Envio Cloud and HyperSync requests and so we are protecting this, but to ensure continuity and no vendor lock-in, developers are able to run and develop on their indexer without either. Either by self-hosting, which our license permits, or by specifying an RPC URL in their indexer configuration and thus bypassing HyperSync.
 
