@@ -300,9 +300,9 @@ chains:
 
 ### ClickHouse Storage (Experimental)
 
-We added experimental support for ClickHouse as an additional storage backend. Postgres still serves as the primary database, and you can additionally store the entities in a ClickHouse database that is restart- and reorg-resistant.
+HyperIndex can now run with multiple storage backends at the same time. Postgres remains the primary database, and entities can additionally be written to a ClickHouse database that is restart- and reorg-resistant. This replaces and continues the early-V3 ClickHouse Sink feature, and the related Prometheus metrics now carry a storage-name label so you can distinguish backends.
 
-Enable both storage backends in `config.yaml`:
+Enable both backends in `config.yaml`:
 
 ```yaml
 storage:
@@ -310,7 +310,7 @@ storage:
   clickhouse: true
 ```
 
-Then configure the ClickHouse connection with environment variables: `ENVIO_CLICKHOUSE_HOST`, `ENVIO_CLICKHOUSE_DATABASE`, `ENVIO_CLICKHOUSE_USERNAME`, `ENVIO_CLICKHOUSE_PASSWORD`. Currently supported only on Dedicated Plan.
+`envio dev` automatically spins up a ClickHouse Docker container for local development. For `envio start`, provide your own connection via the environment variables `ENVIO_CLICKHOUSE_HOST`, `ENVIO_CLICKHOUSE_DATABASE`, `ENVIO_CLICKHOUSE_USERNAME`, and `ENVIO_CLICKHOUSE_PASSWORD`. Currently supported only on Dedicated Plan.
 
 :::warning
 Do not run multiple indexers writing to the same ClickHouse database at the same time.
@@ -635,6 +635,86 @@ After switching to a fallback source, HyperIndex now attempts to recover to the 
 
 `envio dev` no longer uses a generated Docker Compose file and manages containers, network, and volumes directly for greater flexibility. For example, disabling Hasura with `ENVIO_HASURA` now prevents `envio dev` from pulling the Hasura image. Use `envio dev --restart` (or `-r`) to forcefully clear the database even if there are no config changes detected.
 
+### Optimized `envio codegen`
+
+`envio codegen` is now near-instant. We no longer run `pnpm i` for the `generated` package, and we no longer recompile ReScript every time you change `config.yaml` or `schema.graphql`. The output is also a lot quieter.
+
+### Smaller `envio` Package (-88MB)
+
+By eliminating dynamically generated ReScript code, we no longer need to ship or run a ReScript compiler at runtime. The published npm package shrank from 141MB to 53MB.
+
+### No Hard pnpm Requirement
+
+Internal use of pnpm is gone. The `generated` package no longer has its own dependency tree, so HyperIndex works with whichever package manager you prefer.
+
+### Bun Support
+
+Run HyperIndex on Bun:
+
+```bash
+bun --bun envio dev
+```
+
+### Choose Your Package Manager on `envio init`
+
+`envio init` now accepts `--package-manager=pnpm|npm|bun|yarn` so you can scaffold projects without committing to pnpm.
+
+### Better Tuples Developer Experience
+
+Solidity struct components used to be generated as positional tuples in handler params, which made handler code awkward. They are now generated as objects with named fields:
+
+```solidity
+struct CreateEventCommon {
+  address funder;
+  address sender;
+  address recipient;
+  Lockup.CreateAmounts amounts;
+  IERC20 token;
+  bool cancelable;
+  bool transferable;
+  Lockup.Timestamps timestamps;
+  string shape;
+  address broker;
+}
+
+event CreateLockupTranchedStream(
+  uint256 indexed streamId,
+  Lockup.CreateEventCommon commonParams,
+  LockupTranched.Tranche[] tranches
+);
+```
+
+```ts
+// Before
+event.params.commonParams[5];
+event.params.commonParams[3][0];
+
+// After
+event.params.commonParams.cancelable;
+event.params.commonParams.amounts.deposit;
+```
+
+### Improved Multichain Backfill
+
+For large multichain indexers, HyperIndex now throttles chains that have already reached the head so they don't compete for resources while the rest finish backfilling. Once every chain has caught up, throttling is lifted and all chains continue indexing equally.
+
+### Indexer State Restored From Database
+
+When you read the `indexer` value at the top level of a handler file on restart, it now reflects the persisted state from the database — including dynamically registered contract addresses — instead of only the values from `config.yaml`.
+
+```ts
+import { indexer } from "envio";
+
+// Before: only config.yaml values
+// Now: includes initial + dynamically registered addresses persisted in the DB
+console.log(indexer.chains.eth.Pool.addresses);
+```
+
+### Toolchain Upgrades
+
+- ReScript upgraded from v11 to v12 (internally and in `envio init` templates)
+- TypeScript upgraded from v5 to v6 (internally and in `envio init` templates)
+
 ## Breaking Changes
 
 ### Node.js & Runtime
@@ -788,6 +868,8 @@ Generated code no longer exports contract-specific event log types (e.g., `ERC20
 - Fixed incorrect validation of transactions `to` field returned by RPC
 - Fixed OOM error on RPC request crashing loop
 - Fixed an edge case where a multichain indexer could freeze during a rollback on reorg (also backported to v2.32.10)
+- Fixed external Postgres database support via `ENVIO_PG_HOST`
+- Fixed `S.nullable` schema type to be `T | null` instead of `T | undefined`
 
 ## Migration Guide
 
