@@ -741,17 +741,17 @@ If you don't like `src/handlers`, use the `handlers` option in `config.yaml` to 
 The explicit `handler` field in `config.yaml` still works, so you don't need to change anything immediately.
 :::
 
-### RPC for Live Indexing
+### RPC for Realtime Indexing
 
-Built by an external contributor @cairoeth to allow specifying `live` mode for an RPC data source to embrace low-latency head tracking:
+Built by an external contributor @cairoeth to allow specifying `realtime` mode for an RPC data source to embrace low-latency head tracking:
 
 ```yaml
 rpc:
   - url: https://eth-mainnet.your-rpc-provider.com
-    for: live
+    for: realtime
 ```
 
-In this case, the RPC won't be used for historical sync but will join the source selection logic when entering live indexing.
+In this case, the RPC won't be used for historical sync but will join the source selection logic when entering realtime indexing.
 
 ### Chain State on Context
 
@@ -1015,7 +1015,7 @@ chains:
     rpc:
       url: ${ENVIO_RPC_ENDPOINT}
       ws: ${ENVIO_WS_ENDPOINT}
-      for: live
+      for: realtime
 ```
 
 ### Prometheus Metrics for Data Providers
