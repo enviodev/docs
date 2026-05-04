@@ -638,7 +638,7 @@ indexer.onEvent(
 
 ### Improved Multiple Data-Sources Support
 
-After switching to a fallback source, HyperIndex now attempts to recover to the primary source 60 seconds later. Previously, it would stay on the fallback until the fallback was down or the indexer was restarted. The source selection logic has also been improved for better indexing resilience and stricter enforcement of the `live` mode configuration.
+After switching to a fallback source, HyperIndex now attempts to recover to the primary source 60 seconds later. Previously, it would stay on the fallback until the fallback was down or the indexer was restarted. The source selection logic has also been improved for better indexing resilience and stricter enforcement of the `realtime` mode configuration.
 
 ### Updated Dev Docker Flow
 
