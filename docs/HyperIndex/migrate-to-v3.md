@@ -235,7 +235,7 @@ indexer.chains[1].PoolManager.abi; // unknown[]
 indexer.chains[1].PoolManager.addresses; // ["0x000000000004444c5dc75cB358380D2e3dE08A90"]
 ```
 
-On indexer restart, reading `indexer` at the top level of a handler file now returns values restored from the database — including dynamically registered contract addresses — rather than only what's declared in `config.yaml`:
+On indexer restart, reading `indexer` at the top level of a handler file returns values restored from the database — including dynamically registered contract addresses — rather than only what's declared in `config.yaml`:
 
 ```typescript
 import { indexer } from "envio";
@@ -907,7 +907,9 @@ Update your `package.json` with the following changes:
     "envio": "3.0.0-alpha.24"
   },
   "devDependencies": {
-    "typescript": "^5.7.3"
+    "@types/node": "24.12.2",
+    "typescript": "6.0.3",
+    "vitest": "4.1.0"
   }
 }
 ```
