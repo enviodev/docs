@@ -841,14 +841,22 @@ chains:
       # UniswapV3Pool no longer needed here - auto-configured from global contracts
 ```
 
-### ClickHouse Sink (Experimental)
+### ClickHouse Storage (Experimental)
 
-We added experimental support for a ClickHouse Sink. Postgres still serves as the primary database, and you can additionally sink the entities to a ClickHouse database that is restart- and reorg-resistant.
+HyperIndex can run with multiple storage backends at the same time. Postgres remains the primary database, and entities can additionally be written to a ClickHouse database that is restart- and reorg-resistant. Prometheus metrics carry a storage-name label so you can distinguish backends.
 
-Configure with environment variables: `ENVIO_CLICKHOUSE_SINK_HOST`, `ENVIO_CLICKHOUSE_SINK_DATABASE`, `ENVIO_CLICKHOUSE_SINK_USERNAME`, `ENVIO_CLICKHOUSE_SINK_PASSWORD`. Currently supported only on Dedicated Plan.
+Enable both backends in `config.yaml`:
+
+```yaml
+storage:
+  postgres: true
+  clickhouse: true
+```
+
+`envio dev` automatically spins up a ClickHouse Docker container for local development. For `envio start`, provide your own connection via the environment variables `ENVIO_CLICKHOUSE_HOST`, `ENVIO_CLICKHOUSE_DATABASE`, `ENVIO_CLICKHOUSE_USERNAME`, and `ENVIO_CLICKHOUSE_PASSWORD`. Currently supported only on Dedicated Plan.
 
 :::warning
-Do not run multiple Sinks to the same database at the same time.
+Do not run multiple indexers writing to the same ClickHouse database at the same time.
 :::
 
 ### HyperSync Source Improvements

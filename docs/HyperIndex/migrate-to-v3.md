@@ -235,6 +235,15 @@ indexer.chains[1].PoolManager.abi; // unknown[]
 indexer.chains[1].PoolManager.addresses; // ["0x000000000004444c5dc75cB358380D2e3dE08A90"]
 ```
 
+On indexer restart, reading `indexer` at the top level of a handler file now returns values restored from the database — including dynamically registered contract addresses — rather than only what's declared in `config.yaml`:
+
+```typescript
+import { indexer } from "envio";
+
+// Includes initial + dynamically registered addresses persisted in the DB
+console.log(indexer.chains.eth.Pool.addresses);
+```
+
 ### Conditional Event Handlers
 
 Now it's possible to return a boolean value from the `where` function to disable or enable the handler conditionally.
@@ -300,7 +309,7 @@ chains:
 
 ### ClickHouse Storage (Experimental)
 
-HyperIndex can now run with multiple storage backends at the same time. Postgres remains the primary database, and entities can additionally be written to a ClickHouse database that is restart- and reorg-resistant. This replaces and continues the early-V3 ClickHouse Sink feature, and the related Prometheus metrics now carry a storage-name label so you can distinguish backends.
+HyperIndex can now run with multiple storage backends at the same time. Postgres remains the primary database, and entities can additionally be written to a ClickHouse database that is restart- and reorg-resistant. Prometheus metrics carry a storage-name label so you can distinguish backends.
 
 Enable both backends in `config.yaml`:
 
@@ -698,18 +707,6 @@ event.params.commonParams.amounts.deposit;
 
 For large multichain indexers, HyperIndex now throttles chains that have already reached the head so they don't compete for resources while the rest finish backfilling. Once every chain has caught up, throttling is lifted and all chains continue indexing equally.
 
-### Indexer State Restored From Database
-
-When you read the `indexer` value at the top level of a handler file on restart, it now reflects the persisted state from the database — including dynamically registered contract addresses — instead of only the values from `config.yaml`.
-
-```ts
-import { indexer } from "envio";
-
-// Before: only config.yaml values
-// Now: includes initial + dynamically registered addresses persisted in the DB
-console.log(indexer.chains.eth.Pool.addresses);
-```
-
 ### Toolchain Upgrades
 
 - ReScript upgraded from v11 to v12 (internally and in `envio init` templates)
@@ -1025,7 +1022,8 @@ Update your `tsconfig.json` to support ESM:
     "noEmit": true,
 
     /* Code doesn't run in the DOM: */
-    "lib": ["es2022"]
+    "lib": ["es2022"],
+    "types": ["node"]
   }
 }
 ```

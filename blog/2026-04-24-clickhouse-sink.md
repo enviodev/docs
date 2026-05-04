@@ -17,7 +17,7 @@ last_update:
 :::info TL;DR
 - HyperIndex V3 Alpha adds an experimental **ClickHouse Sink**, Postgres stays as the primary database, and your entity data is replicated to ClickHouse for analytics workloads.  
 - ClickHouse is a columnar database built for heavy analytical queries on datasets in the 100s of GBs or TBs, a natural fit for onchain data, which can easily reach billions of events for a single token.  
-- You can enable it on Envio Cloud by setting four environment variables: `ENVIO_CLICKHOUSE_SINK_HOST`, `ENVIO_CLICKHOUSE_SINK_DATABASE`, `ENVIO_CLICKHOUSE_SINK_USERNAME`, and `ENVIO_CLICKHOUSE_SINK_PASSWORD`.  
+- You can enable it on Envio Cloud by setting four environment variables: `ENVIO_CLICKHOUSE_HOST`, `ENVIO_CLICKHOUSE_DATABASE`, `ENVIO_CLICKHOUSE_USERNAME`, and `ENVIO_CLICKHOUSE_PASSWORD`.  
 - Currently supported on the **Dedicated Plan** only, and you need to bring your own ClickHouse instance. Managed ClickHouse is coming to Envio Cloud, [**fill out this form**](https://forms.gle/P19S7KXYfdHQM8J69) if you want to be one of the first users. 
 :::
 
@@ -74,17 +74,25 @@ Do not run multiple sinks against the same ClickHouse database at the same time.
 To scaffold a new V3 alpha indexer, run:
 
 ```bash
-pnpx envio@v3.0.0-alpha.21 init 
+pnpx envio@3.0.0-alpha.24 init
 ```
 
-This will set up a fresh project on the latest alpha release. From there, enabling the ClickHouse Sink on Envio Cloud comes down to setting four environment variables:
+This will set up a fresh project on the latest alpha release. Enable both storage backends in `config.yaml`:
+
+```yaml
+storage:
+  postgres: true
+  clickhouse: true
+```
+
+From there, enabling ClickHouse on Envio Cloud comes down to setting four environment variables:
 
 | Variable | Description |
 | ----- | ----- |
-| `ENVIO_CLICKHOUSE_SINK_HOST` | The host of your ClickHouse instance. |
-| `ENVIO_CLICKHOUSE_SINK_DATABASE` | The ClickHouse database you want to sink into. |
-| `ENVIO_CLICKHOUSE_SINK_USERNAME` | Username for the sink connection. |
-| `ENVIO_CLICKHOUSE_SINK_PASSWORD` | Password for the sink connection. |
+| `ENVIO_CLICKHOUSE_HOST` | The host of your ClickHouse instance. |
+| `ENVIO_CLICKHOUSE_DATABASE` | The ClickHouse database to write into. |
+| `ENVIO_CLICKHOUSE_USERNAME` | Username for the ClickHouse connection. |
+| `ENVIO_CLICKHOUSE_PASSWORD` | Password for the ClickHouse connection. |
 
 Once those are set on your Envio Cloud deployment, HyperIndex will replicate the same entity data it writes to Postgres into your ClickHouse database. Every entity in your `schema.graphql` becomes a ClickHouse table with a matching schema, so you can point your analytics queries, BI tools, or dashboards directly at ClickHouse, no extra ETL pipeline needed.
 
