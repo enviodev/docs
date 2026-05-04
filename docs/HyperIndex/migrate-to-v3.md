@@ -372,6 +372,8 @@ Preload optimization is now enabled by default, replacing the previous `loaders`
 
 We gave our TUI some love, making it look more beautiful and compact. It also consumes fewer resources, shares a link to the Hasura playground, and dynamically adjusts to the terminal width.
 
+The TUI is now auto-disabled in CI environments and when running under AI agents, so logs stay clean without manual configuration. The legacy `TUI_OFF=true` environment variable was renamed to `ENVIO_TUI=false`.
+
 ![TUI](/img/sync.gif)
 
 ### New Testing Framework
@@ -386,7 +388,7 @@ The framework integrates with [Vitest](https://vitest.dev/), replacing the previ
 
 ```typescript
 import { describe, it } from "vitest";
-import { createTestIndexer } from "generated";
+import { createTestIndexer } from "envio";
 
 describe("ERC20 indexer", () => {
   it("processes the first block with events", async (t) => {
@@ -515,7 +517,7 @@ import type {
   Enum,            // Generic enum type — use as Enum<"MyEnum"> (replaces direct MyEnum export)
   EvmEvent,        // Generic event type — use as EvmEvent<"ERC20", "Transfer">
                    // Access specific fields: EvmEvent<"ERC20", "Transfer">["block"]
-} from "generated";
+} from "envio";
 ```
 
 ### Support for DESC Indices
@@ -597,6 +599,12 @@ Breaking changes:
 - Cleaned up metric names and switched time units from milliseconds to seconds
 - Removed [`--bench`](/docs/HyperIndex/benchmarking) support — use the `/metrics` endpoint instead
 
+Use the new `envio metrics` CLI command to fetch the Prometheus metrics of a locally running indexer without curling the endpoint manually.
+
+### Continue on Config Change
+
+HyperIndex can now keep indexing through some `config.yaml` changes — `rpc` configuration is the first to land — instead of erroring out on every restart. Where a change is incompatible, the CLI prints exactly which fields were touched and offers two clear options (revert, or `envio dev -r` to wipe and re-index). More flexibility will be unlocked over time; open a GitHub issue if you need a specific field supported.
+
 ### Double Handler Registration
 
 It's now possible to register multiple handlers for the same event with similar filters:
@@ -658,7 +666,8 @@ After switching to a fallback source, HyperIndex now attempts to recover to the 
 - Removed `preload_handlers` option (now always enabled)
 - Removed `preRegisterDynamicContracts` option
 - Removed `event_decoder` option (the Rust-based decoder is now the only implementation)
-- Removed `rpc_config` in favor of `rpc`, which now supports multiple URLs, `for` mode (`sync`, `live`, `fallback`), and WebSocket configuration (see [RPC for Live Indexing](#rpc-for-live-indexing))
+- Removed `rpc_config` in favor of `rpc`, which now supports multiple URLs, `for` mode (`sync`, `realtime`, `fallback`), and WebSocket configuration (see [RPC for Realtime Indexing](#rpc-for-realtime-indexing))
+- Removed the `output` flag — generated types are always emitted to `.envio/` at the project root
 
 ### HyperSync API Token Required
 
@@ -674,6 +683,7 @@ export ENVIO_API_TOKEN=your_token_here
 - Removed `UNORDERED_MULTICHAIN_MODE` environment variable
 - Removed `MAX_BATCH_SIZE` environment variable (use `full_batch_size` in config.yaml instead)
 - Renamed `ENVIO_PG_PUBLIC_SCHEMA` to `ENVIO_PG_SCHEMA` (the old name is still supported until v4)
+- Renamed `TUI_OFF=true` to `ENVIO_TUI=false` (TUI is also auto-disabled in CI environments and when running under AI agents)
 
 ### Generated Code Changes
 
@@ -696,8 +706,7 @@ The `MockDb` testing API has been removed. Migrate to `createTestIndexer()` with
 ```diff
 -import { TestHelpers, type User } from "generated";
 -const { MockDb, Greeter, Addresses } = TestHelpers;
-+import { createTestIndexer, type User } from "generated";
-+import { TestHelpers } from "envio";
++import { createTestIndexer, type User, TestHelpers } from "envio";
 +const { Addresses } = TestHelpers;
 
  it("A NewGreeting event creates a User entity", async (t) => {
@@ -828,6 +837,16 @@ Update your `package.json` with the following changes:
 Adding `"type": "module"` is **required** for V3. Without it, your project will fail to start due to ESM import errors.
 :::
 
+**Remove the `generated` package.** As of `v3.0.0-alpha.24`, the local `generated` package no longer exists — types are emitted to `.envio/types.d.ts` (git-ignored) and wired up via a small `envio-env.d.ts` file at the project root. Drop the entry from `package.json` if you still have it:
+
+```diff
+-  "optionalDependencies": {
+-    "generated": "./generated"
+-  },
+```
+
+Re-run `envio codegen` after upgrading; everything you previously imported from `generated` is now exported from `envio`.
+
 **If you use testing with Mocha (recommended: migrate to Vitest):**
 
 We recommend migrating from mocha/chai to [Vitest](https://vitest.dev/), which offers a better testing experience with the new HyperIndex testing framework:
@@ -861,7 +880,7 @@ import { expect } from "chai";
 
 // After (vitest)
 import { describe, it, expect } from "vitest";
-import { createTestIndexer } from "generated";
+import { createTestIndexer } from "envio";
 ```
 
 **If you prefer to keep Mocha:**
@@ -1140,7 +1159,7 @@ const bigTransfers = await context.Transfer.getWhere({ value: { _gt: 1000n } });
 import { transfer, approval } from "generated";
 
 // After
-import { Transfer, Approval } from "generated";
+import { Transfer, Approval } from "envio";
 ```
 
 **CLI behavior changes:**
@@ -1171,6 +1190,7 @@ pnpm dev
 - [ ] Update Node.js to >=22
 - [ ] **Add `"type": "module"` to `package.json`** ← Required for V3!
 - [ ] Update `envio` dependency to latest `3.0.0-alpha.x`
+- [ ] Remove the `optionalDependencies.generated` entry from `package.json` (alpha.24+)
 - [ ] Update `engines.node` to `>=22.0.0` in `package.json`
 - [ ] Update `tsconfig.json` for ESM support
 - [ ] Migrate from mocha/chai to vitest (recommended) or replace `ts-mocha`/`ts-node` with `tsx`
@@ -1184,6 +1204,7 @@ pnpm dev
 - [ ] Remove `loaders` and `preload_handlers` options
 - [ ] Remove `preRegisterDynamicContracts` option
 - [ ] Remove `event_decoder` option
+- [ ] Remove the `output` option (types are always written to `.envio/`)
 - [ ] If using ClickHouse, add `storage: { postgres: true, clickhouse: true }` (env vars are still required for the connection)
 
 **Environment Variables:**
@@ -1192,6 +1213,7 @@ pnpm dev
 - [ ] Remove `UNSTABLE__TEMP_UNORDERED_HEAD_MODE`
 - [ ] Remove `UNORDERED_MULTICHAIN_MODE`
 - [ ] Remove `MAX_BATCH_SIZE` (use `full_batch_size` in config.yaml)
+- [ ] Rename `TUI_OFF=true` to `ENVIO_TUI=false` if you set it
 
 **Handler Code:**
 
