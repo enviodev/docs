@@ -6,10 +6,6 @@ slug: /migrate-to-v3
 description: Learn how to upgrade from HyperIndex V2 to V3 Alpha, featuring ESM support, top-level await, automatic handler registration, new testing framework, and more.
 ---
 
-:::warning
-HyperIndex V3 is currently in **alpha**. While we don't plan major API changes, some features may still undergo minor breaking changes and developer experience improvements.
-:::
-
 # Migrate to HyperIndex V3
 
 15 full months have passed since the official HyperIndex v2.0.0. Since then, we have shipped [32 minor releases](https://github.com/enviodev/hyperindex/releases) and multiple patches with **zero breaking changes** to the documented API. We also received PRs from 6 external contributors, grew from 1 GitHub star to over 470, and saw many big projects rely on HyperIndex.
