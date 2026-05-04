@@ -1,7 +1,7 @@
 ---
 id: migrate-to-v3
-title: Migrate to HyperIndex V3 Alpha
-sidebar_label: Migrate to V3 Alpha
+title: Migrate to HyperIndex V3
+sidebar_label: Migrate to V3
 slug: /migrate-to-v3
 description: Learn how to upgrade from HyperIndex V2 to V3 Alpha, featuring ESM support, top-level await, automatic handler registration, new testing framework, and more.
 ---
@@ -10,7 +10,7 @@ description: Learn how to upgrade from HyperIndex V2 to V3 Alpha, featuring ESM 
 HyperIndex V3 is currently in **alpha**. While we don't plan major API changes, some features may still undergo minor breaking changes and developer experience improvements.
 :::
 
-# Migrate to HyperIndex V3 Alpha
+# Migrate to HyperIndex V3
 
 15 full months have passed since the official HyperIndex v2.0.0. Since then, we have shipped [32 minor releases](https://github.com/enviodev/hyperindex/releases) and multiple patches with **zero breaking changes** to the documented API. We also received PRs from 6 external contributors, grew from 1 GitHub star to over 470, and saw many big projects rely on HyperIndex.
 
@@ -348,7 +348,7 @@ HyperIndex now supports Solana with RPC as a source. This feature is experimenta
 To initialize a Solana project:
 
 ```bash
-pnpx envio@3.0.0-alpha.24 init svm
+pnpx envio@3.0.0-rc.0 init svm
 ```
 
 See the [Solana documentation](/docs/HyperIndex/solana) for more details.
@@ -912,7 +912,7 @@ Update your `package.json` with the following changes:
     "node": ">=22.0.0"
   },
   "dependencies": {
-    "envio": "3.0.0-alpha.24"
+    "envio": "3.0.0-rc.0"
   },
   "devDependencies": {
     "@types/node": "24.12.2",
@@ -926,7 +926,7 @@ Update your `package.json` with the following changes:
 Adding `"type": "module"` is **required** for V3. Without it, your project will fail to start due to ESM import errors.
 :::
 
-**Remove the `generated` package.** As of `v3.0.0-alpha.24`, the local `generated` package no longer exists — types are emitted to `.envio/types.d.ts` (git-ignored) and wired up via a small `envio-env.d.ts` file at the project root. Drop the entry from `package.json` if you still have it:
+**Remove the `generated` package.** As of `v3.0.0-rc.0`, the local `generated` package no longer exists — types are emitted to `.envio/types.d.ts` (git-ignored) and wired up via a small `envio-env.d.ts` file at the project root. Drop the entry from `package.json` if you still have it:
 
 ```diff
 -  "optionalDependencies": {
@@ -1280,7 +1280,7 @@ pnpm dev
 - [ ] Update Node.js to >=22
 - [ ] **Add `"type": "module"` to `package.json`** ← Required for V3!
 - [ ] Update `envio` dependency to latest `3.0.0-alpha.x`
-- [ ] Remove the `optionalDependencies.generated` entry from `package.json` (alpha.24+)
+- [ ] Remove the `optionalDependencies.generated` entry from `package.json` (rc.0+)
 - [ ] Update `engines.node` to `>=22.0.0` in `package.json`
 - [ ] Update `tsconfig.json` for ESM support
 - [ ] Migrate from mocha/chai to vitest (recommended) or replace `ts-mocha`/`ts-node` with `tsx`
@@ -1343,7 +1343,7 @@ If you encounter any issues during migration, join our [Discord community](https
 
 For detailed release notes, see:
 
-- [v3.0.0-alpha.24](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.24)
+- [v3.0.0-rc.0](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-rc.0)
 - [v3.0.0-alpha.23](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.23)
 - [v3.0.0-alpha.22](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.22)
 - [v3.0.0-alpha.21](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.21)
