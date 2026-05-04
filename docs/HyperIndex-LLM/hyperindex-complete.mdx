@@ -741,17 +741,17 @@ If you don't like `src/handlers`, use the `handlers` option in `config.yaml` to 
 The explicit `handler` field in `config.yaml` still works, so you don't need to change anything immediately.
 :::
 
-### RPC for Live Indexing
+### RPC for Realtime Indexing
 
-Built by an external contributor @cairoeth to allow specifying `live` mode for an RPC data source to embrace low-latency head tracking:
+Built by an external contributor @cairoeth to allow specifying `realtime` mode for an RPC data source to embrace low-latency head tracking:
 
 ```yaml
 rpc:
   - url: https://eth-mainnet.your-rpc-provider.com
-    for: live
+    for: realtime
 ```
 
-In this case, the RPC won't be used for historical sync but will join the source selection logic when entering live indexing.
+In this case, the RPC won't be used for historical sync but will be used as the primary source once the indexer enters realtime mode.
 
 ### Chain State on Context
 
@@ -841,14 +841,22 @@ chains:
       # UniswapV3Pool no longer needed here - auto-configured from global contracts
 ```
 
-### ClickHouse Sink (Experimental)
+### ClickHouse Storage (Experimental)
 
-We added experimental support for a ClickHouse Sink. Postgres still serves as the primary database, and you can additionally sink the entities to a ClickHouse database that is restart- and reorg-resistant.
+HyperIndex can run with multiple storage backends at the same time. Postgres remains the primary database, and entities can additionally be written to a ClickHouse database that is restart- and reorg-resistant. Prometheus metrics carry a storage-name label so you can distinguish backends.
 
-Configure with environment variables: `ENVIO_CLICKHOUSE_SINK_HOST`, `ENVIO_CLICKHOUSE_SINK_DATABASE`, `ENVIO_CLICKHOUSE_SINK_USERNAME`, `ENVIO_CLICKHOUSE_SINK_PASSWORD`. Currently supported only on Dedicated Plan.
+Enable both backends in `config.yaml`:
+
+```yaml
+storage:
+  postgres: true
+  clickhouse: true
+```
+
+`envio dev` automatically spins up a ClickHouse Docker container for local development. For `envio start`, provide your own connection via the environment variables `ENVIO_CLICKHOUSE_HOST`, `ENVIO_CLICKHOUSE_DATABASE`, `ENVIO_CLICKHOUSE_USERNAME`, and `ENVIO_CLICKHOUSE_PASSWORD`. Currently supported only on Dedicated Plan.
 
 :::warning
-Do not run multiple Sinks to the same database at the same time.
+Do not run multiple indexers writing to the same ClickHouse database at the same time.
 :::
 
 ### HyperSync Source Improvements
@@ -1015,7 +1023,7 @@ chains:
     rpc:
       url: ${ENVIO_RPC_ENDPOINT}
       ws: ${ENVIO_WS_ENDPOINT}
-      for: live
+      for: realtime
 ```
 
 ### Prometheus Metrics for Data Providers
@@ -1063,7 +1071,7 @@ Replaced Ethers.js with a direct RPC client implementation, reducing dependencie
 - Removed `preload_handlers` option (now always enabled)
 - Removed `preRegisterDynamicContracts` option
 - Removed `event_decoder` option (the Rust-based decoder is now the only implementation)
-- Removed `rpc_config` in favor of `rpc`, which now supports multiple URLs, `for` mode (`sync`, `live`, `fallback`), and WebSocket configuration (see RPC for Live Indexing)
+- Removed `rpc_config` in favor of `rpc`, which now supports multiple URLs, `for` mode (`sync`, `realtime`, `fallback`), and WebSocket configuration (see RPC for Realtime Indexing)
 
 ### HyperSync API Token Required
 
@@ -10890,7 +10898,7 @@ Can’t find what you’re looking for or need support? Reach out to us on Disco
 
 ## What’s supported
 
-- Block Handler
+- Slot Handler
 - Effect API
 - Envio Cloud
 
@@ -10903,9 +10911,9 @@ pnpx envio@3.0.0-alpha.14 init svm
 ## Notes
 
 - RPC-only data source (no HyperSync for Solana yet).
-- Only `onBlock` handler is supported; log/instruction-level handlers are not available yet.
-- Block data is not fetched automatically; fetch by slot as needed using RPC or any other source.
-- Tracks finalized blocks only (no reorg support yet), resulting in **~20s latency**.
+- Only `onSlot` handler is supported; log/instruction-level handlers are not available yet.
+- Slot data is not fetched automatically; fetch by slot as needed using RPC or any other source.
+- Tracks finalized slots only (no reorg support yet), resulting in **~20s latency**.
 
 ---
 

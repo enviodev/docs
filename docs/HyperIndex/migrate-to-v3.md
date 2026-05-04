@@ -18,6 +18,121 @@ HyperIndex V3 Alpha focuses on modernizing the codebase and laying the foundatio
 
 ## New Features
 
+### Unified Handlers API
+
+In V3 all handler registrations now happen through a single `indexer` value. Contract-specific exports (`ERC20.Transfer.handler`, `UniV3.PoolFactory.contractRegister`, etc.) have been removed in favor of `indexer.onEvent`, `indexer.contractRegister`, and `indexer.onBlock`.
+
+**Event handlers** with `indexer.onEvent`:
+
+```typescript
+import { indexer } from "envio";
+
+indexer.onEvent(
+  {
+    contract: "ERC20",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [
+        { from: chain.Safe.addresses },
+        { to: chain.Safe.addresses },
+      ],
+    }),
+  },
+  async ({ event, context }) => {
+    // Handler logic
+  },
+);
+```
+
+**Dynamic contracts** with `indexer.contractRegister`:
+
+```typescript
+import { indexer } from "envio";
+
+indexer.contractRegister(
+  {
+    contract: "UniV3",
+    event: "PoolFactory",
+  },
+  async ({ event, context }) => {
+    context.chain.Pool.add(event.params.poolAddress);
+  },
+);
+```
+
+**Block handlers** with `indexer.onBlock` consolidate across chains in a single call:
+
+```typescript
+import { indexer } from "envio";
+
+indexer.onBlock(
+  { name: "EveryBlock" },
+  async ({ block, context }) => {
+    // Handler logic
+  },
+);
+```
+
+For chain-specific or interval-based block handlers, use the `where` callback:
+
+```typescript
+indexer.onBlock(
+  {
+    name: "Ranges",
+    where: ({ chain }) => {
+      if (chain.id !== 1) return false;
+      return {
+        block: {
+          number: {
+            _gte: 20_000_000,
+            _lte: 22_000_000,
+            _every: 100,
+          },
+        },
+      };
+    },
+  },
+  async ({ block, context }) => {
+    // Handler logic
+  },
+);
+```
+
+### Per-Event Start Block
+
+Handlers can specify custom start blocks per chain via `where.block.number._gte`, overriding contract and chain configuration:
+
+```typescript
+indexer.onEvent(
+  {
+    contract: "UniV4",
+    event: "Pool",
+    where: ({ chain }) => {
+      let startBlock: number;
+      switch (chain.id) {
+        case 1:
+          startBlock = 18_000_000;
+          break;
+        case 8453:
+          startBlock = 2_000_000;
+          break;
+        default: {
+          const _exhaustive: never = chain.id;
+          return false;
+        }
+      }
+      return {
+        block: { number: { _gte: startBlock } },
+      };
+    },
+  },
+  async ({ event, context }) => {
+    // Handler logic
+  },
+);
+```
+
 ### CommonJS → ESM
 
 We migrated HyperIndex from CommonJS-only to ESM-only. This enables:
@@ -30,24 +145,28 @@ We migrated HyperIndex from CommonJS-only to ESM-only. This enables:
 Thanks to the migration to ESM, you can now use `await` directly in handler and other files:
 
 ```typescript
-import { ERC20 } from "generated";
+import { indexer } from "envio";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 // Load data before registering handlers
 const addressesFromServer = await loadWhitelistedAddresses();
 
-ERC20.Transfer.handler(
+indexer.onEvent(
+  {
+    contract: "ERC20",
+    event: "Transfer",
+    wildcard: true,
+    where: {
+      params: [
+        { from: ZERO_ADDRESS, to: addressesFromServer },
+        { from: addressesFromServer, to: ZERO_ADDRESS },
+      ],
+    },
+  },
   async ({ event, context }) => {
     // ... your handler logic
   },
-  {
-    wildcard: true,
-    eventFilters: [
-      { from: ZERO_ADDRESS, to: addressesFromServer },
-      { from: addressesFromServer, to: ZERO_ADDRESS },
-    ],
-  }
 );
 ```
 
@@ -67,37 +186,42 @@ If you don't like `src/handlers`, use the `handlers` option in `config.yaml` to 
 The explicit `handler` field in `config.yaml` still works, so you don't need to change anything immediately.
 :::
 
-### RPC for Live Indexing
+### RPC for Realtime Indexing
 
-Built by an external contributor [@cairoeth](https://github.com/cairoeth) to allow specifying `live` mode for an RPC data source to embrace low-latency head tracking:
+Built by an external contributor [@cairoeth](https://github.com/cairoeth) to allow specifying `realtime` mode for an RPC data source to embrace low-latency head tracking:
 
 ```yaml
 rpc:
   - url: https://eth-mainnet.your-rpc-provider.com
-    for: live
+    for: realtime
 ```
 
-In this case, the RPC won't be used for historical sync but will join the source selection logic when entering live indexing.
+In this case, the RPC won't be used for historical sync but will be used as the primary source once the indexer enters realtime mode.
 
 ### Chain State on Context
 
 The Handler Context object provides chain state via the `chain` property:
 
 ```typescript
-ERC20.Approval.handler(async ({ context }) => {
-  console.log(context.chain.id); // 1 - The chain id of the event
-  console.log(context.chain.isLive); // true - Whether the event chain is indexing at the head
-});
+import { indexer } from "envio";
+
+indexer.onEvent(
+  { contract: "ERC20", event: "Approval" },
+  async ({ context }) => {
+    console.log(context.chain.id); // 1 - The chain id of the event
+    console.log(context.chain.isRealtime); // true - Whether the indexer entered realtime mode
+  },
+);
 ```
 
 ### Indexer State & Config
 
-As a replacement for the deprecated and removed `getGeneratedByChainId`, we introduce the `indexer` value. It provides nicely typed chains and contract data from your config, as well as the current indexing state, such as `isLive` and `addresses`. Use `indexer` either at the top level of the file or directly from handlers. It returns the latest indexer state.
+As a replacement for the deprecated and removed `getGeneratedByChainId`, we introduce the `indexer` value. It provides nicely typed chains and contract data from your config, as well as the current indexing state, such as `isRealtime` and `addresses`. Use `indexer` either at the top level of the file or directly from handlers. It returns the latest indexer state.
 
 With this change, we also introduce new official types: `Indexer`, `EvmChainId`, `FuelChainId`, and `SvmChainId`.
 
 ```typescript
-import { indexer } from "generated";
+import { indexer } from "envio";
 
 indexer.name; // "uniswap-v4-indexer"
 indexer.description; // "Uniswap v4 indexer"
@@ -105,41 +229,56 @@ indexer.chainIds; // [1, 42161, 10, 8453, 137, 56]
 indexer.chains[1].id; // 1
 indexer.chains[1].startBlock; // 0
 indexer.chains[1].endBlock; // undefined
-indexer.chains[1].isLive; // false
+indexer.chains[1].isRealtime; // false
 indexer.chains[1].PoolManager.name; // "PoolManager"
 indexer.chains[1].PoolManager.abi; // unknown[]
 indexer.chains[1].PoolManager.addresses; // ["0x000000000004444c5dc75cB358380D2e3dE08A90"]
 ```
 
-### Conditional Event Handlers
-
-Now it's possible to return a boolean value from the `eventFilters` function to disable or enable the handler conditionally.
+On indexer restart, reading `indexer` at the top level of a handler file returns values restored from the database — including dynamically registered contract addresses — rather than only what's declared in `config.yaml`:
 
 ```typescript
-ERC20.Transfer.handler(
-  async ({ event, context }) => {
-    // ... your handler logic
-  },
+import { indexer } from "envio";
+
+// Includes initial + dynamically registered addresses persisted in the DB
+console.log(indexer.chains.eth.Pool.addresses);
+```
+
+### Conditional Event Handlers
+
+Now it's possible to return a boolean value from the `where` function to disable or enable the handler conditionally.
+
+```typescript
+import { indexer } from "envio";
+
+indexer.onEvent(
   {
+    contract: "ERC20",
+    event: "Transfer",
     wildcard: true,
-    eventFilters: ({ chainId }) => {
+    where: ({ chain }) => {
       // Skip all ERC20 on Polygon
-      if (chainId === 137) {
+      if (chain.id === 137) {
         return false;
       }
 
       // Track all ERC20 on Ethereum Mainnet
-      if (chainId === 1) {
+      if (chain.id === 1) {
         return true;
       }
 
       // Track only whitelisted addresses on other chains
-      return [
-        { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chainId] },
-        { from: WHITELISTED_ADDRESSES[chainId], to: ZERO_ADDRESS },
-      ];
+      return {
+        params: [
+          { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chain.id] },
+          { from: WHITELISTED_ADDRESSES[chain.id], to: ZERO_ADDRESS },
+        ],
+      };
     },
-  }
+  },
+  async ({ event, context }) => {
+    // ... your handler logic
+  },
 );
 ```
 
@@ -168,14 +307,22 @@ chains:
       # UniswapV3Pool no longer needed here - auto-configured from global contracts
 ```
 
-### ClickHouse Sink (Experimental)
+### ClickHouse Storage (Experimental)
 
-We added experimental support for a ClickHouse Sink. Postgres still serves as the primary database, and you can additionally sink the entities to a ClickHouse database that is restart- and reorg-resistant.
+HyperIndex can now run with multiple storage backends at the same time. Postgres remains the primary database, and entities can additionally be written to a ClickHouse database that is restart- and reorg-resistant. Prometheus metrics carry a storage-name label so you can distinguish backends.
 
-Configure with environment variables: `ENVIO_CLICKHOUSE_SINK_HOST`, `ENVIO_CLICKHOUSE_SINK_DATABASE`, `ENVIO_CLICKHOUSE_SINK_USERNAME`, `ENVIO_CLICKHOUSE_SINK_PASSWORD`. Currently supported only on Dedicated Plan.
+Enable both backends in `config.yaml`:
+
+```yaml
+storage:
+  postgres: true
+  clickhouse: true
+```
+
+`envio dev` automatically spins up a ClickHouse Docker container for local development. For `envio start`, provide your own connection via the environment variables `ENVIO_CLICKHOUSE_HOST`, `ENVIO_CLICKHOUSE_DATABASE`, `ENVIO_CLICKHOUSE_USERNAME`, and `ENVIO_CLICKHOUSE_PASSWORD`. Currently supported only on Dedicated Plan.
 
 :::warning
-Do not run multiple Sinks to the same database at the same time.
+Do not run multiple indexers writing to the same ClickHouse database at the same time.
 :::
 
 ### HyperSync Source Improvements
@@ -196,12 +343,12 @@ Block handlers are now supported for Fuel indexing.
 
 ### Solana Support (Experimental)
 
-HyperIndex now supports Solana with RPC as a source. This feature is experimental and may undergo minor breaking changes.
+HyperIndex now supports Solana with RPC as a source. This feature is experimental and may undergo minor breaking changes. Solana exposes its block-stream handler as `indexer.onSlot` (rather than `onBlock`) to match Solana's slot-based model.
 
 To initialize a Solana project:
 
 ```bash
-pnpx envio@3.0.0-alpha.21 init svm
+pnpx envio@3.0.0-alpha.24 init svm
 ```
 
 See the [Solana documentation](/docs/HyperIndex/solana) for more details.
@@ -234,6 +381,8 @@ Preload optimization is now enabled by default, replacing the previous `loaders`
 
 We gave our TUI some love, making it look more beautiful and compact. It also consumes fewer resources, shares a link to the Hasura playground, and dynamically adjusts to the terminal width.
 
+The TUI is now auto-disabled in CI environments and when running under AI agents, so logs stay clean without manual configuration. The legacy `TUI_OFF=true` environment variable was renamed to `ENVIO_TUI=false`.
+
 ![TUI](/img/sync.gif)
 
 ### New Testing Framework
@@ -248,7 +397,7 @@ The framework integrates with [Vitest](https://vitest.dev/), replacing the previ
 
 ```typescript
 import { describe, it } from "vitest";
-import { createTestIndexer } from "generated";
+import { createTestIndexer } from "envio";
 
 describe("ERC20 indexer", () => {
   it("processes the first block with events", async (t) => {
@@ -355,10 +504,15 @@ The local development Docker Compose setup now uses PostgreSQL 18.1 (upgraded fr
 Events now include `contractName` and `eventName` fields, making it easier to identify which contract and event you're working with in handlers:
 
 ```typescript
-ERC20.Transfer.handler(async ({ event }) => {
-  console.log(event.contractName); // "ERC20"
-  console.log(event.eventName);    // "Transfer"
-});
+import { indexer } from "envio";
+
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event }) => {
+    console.log(event.contractName); // "ERC20"
+    console.log(event.eventName);    // "Transfer"
+  },
+);
 ```
 
 ### New Official Exported Types
@@ -372,7 +526,7 @@ import type {
   Enum,            // Generic enum type — use as Enum<"MyEnum"> (replaces direct MyEnum export)
   EvmEvent,        // Generic event type — use as EvmEvent<"ERC20", "Transfer">
                    // Access specific fields: EvmEvent<"ERC20", "Transfer">["block"]
-} from "generated";
+} from "envio";
 ```
 
 ### Support for DESC Indices
@@ -402,7 +556,7 @@ chains:
     rpc:
       url: ${ENVIO_RPC_ENDPOINT}
       ws: ${ENVIO_WS_ENDPOINT}
-      for: live
+      for: realtime
 ```
 
 ### Prometheus Metrics for Data Providers
@@ -454,29 +608,117 @@ Breaking changes:
 - Cleaned up metric names and switched time units from milliseconds to seconds
 - Removed [`--bench`](/docs/HyperIndex/benchmarking) support — use the `/metrics` endpoint instead
 
+Use the new `envio metrics` CLI command to fetch the Prometheus metrics of a locally running indexer without curling the endpoint manually.
+
+### Continue on Config Change
+
+HyperIndex can now keep indexing through some `config.yaml` changes — `rpc` configuration is the first to land — instead of erroring out on every restart. Where a change is incompatible, the CLI prints exactly which fields were touched and offers two clear options (revert, or `envio dev -r` to wipe and re-index). More flexibility will be unlocked over time; open a GitHub issue if you need a specific field supported.
+
 ### Double Handler Registration
 
 It's now possible to register multiple handlers for the same event with similar filters:
 
 ```typescript
-import { ERC20 } from "generated";
+import { indexer } from "envio";
 
-ERC20.Transfer.handler(async ({ event, context }) => {
-  // Your logic here
-});
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    // Your logic here
+  },
+);
 
-ERC20.Transfer.handler(async ({ event, context }) => {
-  // And here
-});
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    // And here
+  },
+);
 ```
 
 ### Improved Multiple Data-Sources Support
 
-After switching to a fallback source, HyperIndex now attempts to recover to the primary source 60 seconds later. Previously, it would stay on the fallback until the fallback was down or the indexer was restarted. The source selection logic has also been improved for better indexing resilience and stricter enforcement of the `live` mode configuration.
+After switching to a fallback source, HyperIndex now attempts to recover to the primary source 60 seconds later. Previously, it would stay on the fallback until the fallback was down or the indexer was restarted. The source selection logic has also been improved for better indexing resilience and stricter enforcement of the `realtime` mode configuration.
 
 ### Updated Dev Docker Flow
 
 `envio dev` no longer uses a generated Docker Compose file and manages containers, network, and volumes directly for greater flexibility. For example, disabling Hasura with `ENVIO_HASURA` now prevents `envio dev` from pulling the Hasura image. Use `envio dev --restart` (or `-r`) to forcefully clear the database even if there are no config changes detected.
+
+### Envio Dev Update
+
+`envio dev` no longer automatically resets the database on incompatible config or schema changes. Use `envio dev -r` to explicitly allow this.
+
+### Envio Start Update
+
+`envio start` now has a clear role: to run HyperIndex in the production environment. Use `envio dev` for local development to enable debugging with Dev Console.
+
+### Optimized `envio codegen`
+
+`envio codegen` is now near-instant. We no longer run `pnpm i` for the `generated` package, and we no longer recompile ReScript every time you change `config.yaml` or `schema.graphql`. The output is also a lot quieter.
+
+### Smaller `envio` Package (-88MB)
+
+By eliminating dynamically generated ReScript code, we no longer need to ship or run a ReScript compiler at runtime. The published npm package shrank from 141MB to 53MB.
+
+### No Hard pnpm Requirement
+
+Internal use of pnpm is gone. The `generated` package no longer has its own dependency tree, so HyperIndex works with whichever package manager you prefer.
+
+### Bun Support
+
+Run HyperIndex on Bun:
+
+```bash
+bun --bun envio dev
+```
+
+### Choose Your Package Manager on `envio init`
+
+`envio init` now accepts `--package-manager=pnpm|npm|bun|yarn` so you can scaffold projects without committing to pnpm.
+
+### Better Tuples Developer Experience
+
+Solidity struct components used to be generated as positional tuples in handler params, which made handler code awkward. They are now generated as objects with named fields:
+
+```solidity
+struct CreateEventCommon {
+  address funder;
+  address sender;
+  address recipient;
+  Lockup.CreateAmounts amounts;
+  IERC20 token;
+  bool cancelable;
+  bool transferable;
+  Lockup.Timestamps timestamps;
+  string shape;
+  address broker;
+}
+
+event CreateLockupTranchedStream(
+  uint256 indexed streamId,
+  Lockup.CreateEventCommon commonParams,
+  LockupTranched.Tranche[] tranches
+);
+```
+
+```ts
+// Before
+event.params.commonParams[5];
+event.params.commonParams[3][0];
+
+// After
+event.params.commonParams.cancelable;
+event.params.commonParams.amounts.deposit;
+```
+
+### Improved Multichain Backfill
+
+For large multichain indexers, HyperIndex now throttles chains that have already reached the head so they don't compete for resources while the rest finish backfilling. Once every chain has caught up, throttling is lifted and all chains continue indexing equally.
+
+### Toolchain Upgrades
+
+- ReScript upgraded from v11 to v12 (internally and in `envio init` templates)
+- TypeScript upgraded from v5 to v6 (internally and in `envio init` templates)
 
 ## Breaking Changes
 
@@ -487,6 +729,11 @@ After switching to a fallback source, HyperIndex now attempts to recover to the 
 
 ### Handler API Changes
 
+- **Unified handler registration via `indexer`** — contract-specific exports were removed. Replace `Contract.Event.handler(handler, options)` with `indexer.onEvent({ contract, event, ...options }, handler)`. Replace `Contract.Event.contractRegister(...)` with `indexer.contractRegister({ contract, event }, ...)`. The old API has been hard removed and no longer works.
+- **Dynamic contract registration** — `context.add<ContractName>(address)` is replaced with `context.chain.<ContractName>.add(address)`.
+- **`eventFilters` renamed to `where`** — the `where` callback receives `{ chain }` (not `{ chainId }`) and returns `false`, `true`, or `{ params: [...], block?: { number: { _gte, _lte, _every } } }`. The previous array shorthand is no longer accepted at the top level — wrap it in `{ params: [...] }`.
+- **Block handlers consolidated** — the standalone `onBlock` export and per-chain `forEach` registration are gone. Use a single `indexer.onBlock({ name, where? }, handler)` call. For chain-specific or interval-based handlers, return `{ block: { number: { _gte, _lte, _every } } }` from `where`, or `false` to skip a chain.
+- **Per-event start block** — handlers can now override the configured start block per chain via `where.block.number._gte`.
 - Removed `experimental_createEffect` in favor of `createEffect`
 - Renamed transaction field `kind` to `type`
 - For block handlers: `block.chainId` is removed in favor of `context.chain.id`
@@ -504,7 +751,8 @@ After switching to a fallback source, HyperIndex now attempts to recover to the 
 - Removed `preload_handlers` option (now always enabled)
 - Removed `preRegisterDynamicContracts` option
 - Removed `event_decoder` option (the Rust-based decoder is now the only implementation)
-- Removed `rpc_config` in favor of `rpc`, which now supports multiple URLs, `for` mode (`sync`, `live`, `fallback`), and WebSocket configuration (see [RPC for Live Indexing](#rpc-for-live-indexing))
+- Removed `rpc_config` in favor of `rpc`, which now supports multiple URLs, `for` mode (`sync`, `realtime`, `fallback`), and WebSocket configuration (see [RPC for Realtime Indexing](#rpc-for-realtime-indexing))
+- Removed the `output` flag — generated types are always emitted to `.envio/` at the project root
 
 ### HyperSync API Token Required
 
@@ -520,6 +768,7 @@ export ENVIO_API_TOKEN=your_token_here
 - Removed `UNORDERED_MULTICHAIN_MODE` environment variable
 - Removed `MAX_BATCH_SIZE` environment variable (use `full_batch_size` in config.yaml instead)
 - Renamed `ENVIO_PG_PUBLIC_SCHEMA` to `ENVIO_PG_SCHEMA` (the old name is still supported until v4)
+- Renamed `TUI_OFF=true` to `ENVIO_TUI=false` (TUI is also auto-disabled in CI environments and when running under AI agents)
 
 ### Generated Code Changes
 
@@ -528,6 +777,12 @@ export ENVIO_API_TOKEN=your_token_here
 - Removed `getGeneratedByChainId` (use `indexer` value instead)
 - **Lowercased entity types removed**: Generated code no longer exports lowercased entity types (e.g., `transfer`). Use capitalized names instead (e.g., `Transfer`)
 - Entity array field values are now typed as `readonly` — update any code that directly mutates array fields
+- `S.nullable` schema type now returns `null` instead of `undefined`
+
+### CLI Behavior Changes
+
+- `envio dev` no longer auto-resets the database. Use `envio dev --restart` (or `-r`) to clear it explicitly.
+- `envio start` is now production-only — use `envio dev` for local development.
 
 ### Deprecated: `MockDb` Testing API
 
@@ -536,8 +791,7 @@ The `MockDb` testing API has been removed. Migrate to `createTestIndexer()` with
 ```diff
 -import { TestHelpers, type User } from "generated";
 -const { MockDb, Greeter, Addresses } = TestHelpers;
-+import { createTestIndexer, type User } from "generated";
-+import { TestHelpers } from "envio";
++import { createTestIndexer, type User, TestHelpers } from "envio";
 +const { Addresses } = TestHelpers;
 
  it("A NewGreeting event creates a User entity", async (t) => {
@@ -619,6 +873,8 @@ Generated code no longer exports contract-specific event log types (e.g., `ERC20
 - Fixed incorrect validation of transactions `to` field returned by RPC
 - Fixed OOM error on RPC request crashing loop
 - Fixed an edge case where a multichain indexer could freeze during a rollback on reorg (also backported to v2.32.10)
+- Fixed external Postgres database support via `ENVIO_PG_HOST`
+- Fixed `S.nullable` schema type to be `T | null` instead of `T | undefined`
 
 ## Migration Guide
 
@@ -656,10 +912,12 @@ Update your `package.json` with the following changes:
     "node": ">=22.0.0"
   },
   "dependencies": {
-    "envio": "3.0.0-alpha.21"
+    "envio": "3.0.0-alpha.24"
   },
   "devDependencies": {
-    "typescript": "^5.7.3"
+    "@types/node": "24.12.2",
+    "typescript": "6.0.3",
+    "vitest": "4.1.0"
   }
 }
 ```
@@ -667,6 +925,16 @@ Update your `package.json` with the following changes:
 :::warning
 Adding `"type": "module"` is **required** for V3. Without it, your project will fail to start due to ESM import errors.
 :::
+
+**Remove the `generated` package.** As of `v3.0.0-alpha.24`, the local `generated` package no longer exists — types are emitted to `.envio/types.d.ts` (git-ignored) and wired up via a small `envio-env.d.ts` file at the project root. Drop the entry from `package.json` if you still have it:
+
+```diff
+-  "optionalDependencies": {
+-    "generated": "./generated"
+-  },
+```
+
+Re-run `envio codegen` after upgrading; everything you previously imported from `generated` is now exported from `envio`.
 
 **If you use testing with Mocha (recommended: migrate to Vitest):**
 
@@ -701,7 +969,7 @@ import { expect } from "chai";
 
 // After (vitest)
 import { describe, it, expect } from "vitest";
-import { createTestIndexer } from "generated";
+import { createTestIndexer } from "envio";
 ```
 
 **If you prefer to keep Mocha:**
@@ -764,7 +1032,8 @@ Update your `tsconfig.json` to support ESM:
     "noEmit": true,
 
     /* Code doesn't run in the DOM: */
-    "lib": ["es2022"]
+    "lib": ["es2022"],
+    "types": ["node"]
   }
 }
 ```
@@ -857,10 +1126,98 @@ ENVIO_API_TOKEN=your_token_here
 
 ### Step 5: Update Handler Code
 
+**Migrate to the unified `indexer` API:**
+
+All contract-specific handler exports (`ERC20.Transfer.handler`, `Greeter.NewGreeting.contractRegister`, etc.) have been removed. Register every handler through `indexer.onEvent`, `indexer.contractRegister`, or `indexer.onBlock`.
+
+```typescript
+// Before
+import { ERC20 } from "generated";
+
+ERC20.Transfer.handler(
+  async ({ event, context }) => {
+    // ...
+  },
+  {
+    wildcard: true,
+    eventFilters: ({ chainId }) => [
+      { from: ZERO_ADDRESS, to: WHITELIST[chainId] },
+    ],
+  }
+);
+
+// After
+import { indexer } from "envio";
+
+indexer.onEvent(
+  {
+    contract: "ERC20",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [{ from: ZERO_ADDRESS, to: WHITELIST[chain.id] }],
+    }),
+  },
+  async ({ event, context }) => {
+    // ...
+  },
+);
+```
+
+**Migrate dynamic contract registration:**
+
+```typescript
+// Before
+UniV3.PoolFactory.contractRegister(async ({ event, context }) => {
+  context.addPool(event.params.poolAddress);
+});
+
+// After
+indexer.contractRegister(
+  { contract: "UniV3", event: "PoolFactory" },
+  async ({ event, context }) => {
+    context.chain.Pool.add(event.params.poolAddress);
+  },
+);
+```
+
+**Migrate block handlers:**
+
+```typescript
+// Before
+import { indexer, onBlock } from "generated";
+
+indexer.chainIds.forEach((chainId) => {
+  onBlock(
+    { name: "EveryBlock", chain: chainId },
+    async ({ block, context }) => {
+      // ...
+    },
+  );
+});
+
+// After
+import { indexer } from "envio";
+
+indexer.onBlock(
+  { name: "EveryBlock" },
+  async ({ block, context }) => {
+    // ...
+  },
+);
+```
+
+For chain-specific handlers or interval/range filters, use the `where` callback (see [Unified Handlers API](#unified-handlers-api)).
+
 **Rename deprecated APIs:**
 
 | V2 (Deprecated)                     | V3                                    |
 | ----------------------------------- | ------------------------------------- |
+| `Contract.Event.handler(...)`       | `indexer.onEvent({ contract, event, ...options }, handler)` |
+| `Contract.Event.contractRegister(...)` | `indexer.contractRegister({ contract, event }, handler)` |
+| `onBlock({ chain, ... }, handler)`  | `indexer.onBlock({ name, where? }, handler)` |
+| `context.add<Contract>(addr)`       | `context.chain.<Contract>.add(addr)`  |
+| `eventFilters` option               | `where` callback returning `{ params: [...] }` |
 | `experimental_createEffect`         | `createEffect`                        |
 | `block.chainId` (in block handlers) | `context.chain.id`                    |
 | `transaction.kind`                  | `transaction.type`                    |
@@ -892,8 +1249,13 @@ const bigTransfers = await context.Transfer.getWhere({ value: { _gt: 1000n } });
 import { transfer, approval } from "generated";
 
 // After
-import { Transfer, Approval } from "generated";
+import { Transfer, Approval } from "envio";
 ```
+
+**CLI behavior changes:**
+
+- `envio dev` no longer auto-resets the database. If you relied on auto-reset, run `envio dev -r` (or `--restart`) explicitly.
+- `envio start` is now production-only — keep using `envio dev` for local development.
 
 ### Step 6: Test Your Migration
 
@@ -918,6 +1280,7 @@ pnpm dev
 - [ ] Update Node.js to >=22
 - [ ] **Add `"type": "module"` to `package.json`** ← Required for V3!
 - [ ] Update `envio` dependency to latest `3.0.0-alpha.x`
+- [ ] Remove the `optionalDependencies.generated` entry from `package.json` (alpha.24+)
 - [ ] Update `engines.node` to `>=22.0.0` in `package.json`
 - [ ] Update `tsconfig.json` for ESM support
 - [ ] Migrate from mocha/chai to vitest (recommended) or replace `ts-mocha`/`ts-node` with `tsx`
@@ -931,6 +1294,8 @@ pnpm dev
 - [ ] Remove `loaders` and `preload_handlers` options
 - [ ] Remove `preRegisterDynamicContracts` option
 - [ ] Remove `event_decoder` option
+- [ ] Remove the `output` option (types are always written to `.envio/`)
+- [ ] If using ClickHouse, add `storage: { postgres: true, clickhouse: true }` (env vars are still required for the connection)
 
 **Environment Variables:**
 
@@ -938,9 +1303,16 @@ pnpm dev
 - [ ] Remove `UNSTABLE__TEMP_UNORDERED_HEAD_MODE`
 - [ ] Remove `UNORDERED_MULTICHAIN_MODE`
 - [ ] Remove `MAX_BATCH_SIZE` (use `full_batch_size` in config.yaml)
+- [ ] Rename `TUI_OFF=true` to `ENVIO_TUI=false` if you set it
 
 **Handler Code:**
 
+- [ ] **Migrate event handlers** from `Contract.Event.handler(...)` to `indexer.onEvent({ contract, event, ...options }, handler)`
+- [ ] **Migrate dynamic contract registration** from `Contract.Event.contractRegister(...)` to `indexer.contractRegister({ contract, event }, handler)`
+- [ ] **Migrate `context.add<Contract>(addr)`** to `context.chain.<Contract>.add(addr)`
+- [ ] **Convert `eventFilters`** to the new `where` callback returning `{ params: [...] }`
+- [ ] **Migrate block handlers** from per-chain `onBlock` loops to a single `indexer.onBlock` call (use `where` for chain-specific or interval filters)
+- [ ] Use the new `where.block.number._gte` to override per-event start blocks if needed
 - [ ] Replace `experimental_createEffect` with `createEffect`
 - [ ] Replace `block.chainId` with `context.chain.id` in block handlers
 - [ ] Replace `transaction.kind` with `transaction.type`
@@ -950,8 +1322,14 @@ pnpm dev
 - [ ] Replace `transaction.chainId` with `context.chain.id` or `event.chainId`
 - [ ] Replace lowercased entity type imports with capitalized versions (e.g., `transfer` → `Transfer`)
 - [ ] Update `getWhere` calls to new GraphQL-style filter syntax (e.g., `getWhere({ field: { _eq: value } })`)
+- [ ] Update any `S.nullable` schema usage — now returns `null` instead of `undefined`
 - [ ] Migrate from `MockDb` to `createTestIndexer()` (see [MockDb Migration Cheat Sheet](#mockdb-migration-cheat-sheet))
 - [ ] Replace contract-specific type exports (`ERC20_Transfer_eventLog`) with generic types (`EvmEvent<"ERC20", "Transfer">`)
+
+**CLI:**
+
+- [ ] If you relied on `envio dev` resetting the database automatically, switch to `envio dev -r`
+- [ ] Use `envio dev` for local development (`envio start` is now production-only)
 
 **Verify:**
 
@@ -965,6 +1343,9 @@ If you encounter any issues during migration, join our [Discord community](https
 
 For detailed release notes, see:
 
+- [v3.0.0-alpha.24](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.24)
+- [v3.0.0-alpha.23](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.23)
+- [v3.0.0-alpha.22](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.22)
 - [v3.0.0-alpha.21](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.21)
 - [v3.0.0-alpha.20](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.20)
 - [v3.0.0-alpha.19](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.19)
