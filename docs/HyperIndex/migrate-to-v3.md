@@ -644,6 +644,14 @@ After switching to a fallback source, HyperIndex now attempts to recover to the 
 
 `envio dev` no longer uses a generated Docker Compose file and manages containers, network, and volumes directly for greater flexibility. For example, disabling Hasura with `ENVIO_HASURA` now prevents `envio dev` from pulling the Hasura image. Use `envio dev --restart` (or `-r`) to forcefully clear the database even if there are no config changes detected.
 
+### Envio Dev Update
+
+`envio dev` no longer automatically resets the database on incompatible config or schema changes. Use `envio dev -r` to explicitly allow this.
+
+### Envio Start Update
+
+`envio start` now has a clear role: to run HyperIndex in the production environment. Use `envio dev` for local development to enable debugging with Dev Console.
+
 ### Optimized `envio codegen`
 
 `envio codegen` is now near-instant. We no longer run `pnpm i` for the `generated` package, and we no longer recompile ReScript every time you change `config.yaml` or `schema.graphql`. The output is also a lot quieter.
