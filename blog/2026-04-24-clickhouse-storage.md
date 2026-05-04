@@ -4,14 +4,14 @@ sidebar_label: Using ClickHouse Storage in HyperIndex V3
 slug: /clickhouse-storage-hyperindex-v3
 tags: ["tutorials"]
 description: "HyperIndex V3 Alpha adds experimental ClickHouse Storage. Postgres stays primary, entity data mirrors to ClickHouse for analytics workloads on billions of onchain events."
-image: /blog-assets/clickhouse-sink.png
+image: /blog-assets/clickhouse-storage.png
 authors: ["nikbhintade", "j_o_r_d_y_s"]
 last_update:
   date: 2026-04-24
   author: Nikhil Bhintade
 ---
 
-![Cover image for the ClickHouse Storage blog](/blog-assets/clickhouse-sink.png)
+![Cover image for the ClickHouse Storage blog](/blog-assets/clickhouse-storage.png)
 
 
 :::info TL;DR
