@@ -324,7 +324,7 @@ const config = {
             label: "v3",
             position: "left",
             items: [
-              { label: "v3 (current)", to: "/docs/HyperIndex/overview" },
+              { label: "v3 (rc)", to: "/docs/HyperIndex/overview" },
               { label: "v2", to: "/docs/v2/HyperIndex/overview" },
             ],
           },
