@@ -27,13 +27,7 @@ pnpx envio init
 Follow the CLI prompts to set up the boilerplate indexer with the same contracts and events as your existing subgraph.
 
 :::caution
-The Claude skills are only available in HyperIndex v3. If the latest stable version is not v3, you need to specify a v3 version explicitly:
-
-```bash
-pnpx envio@3.0.0-alpha.21 init
-```
-
-Replace `3.0.0-alpha.21` with the latest available v3 version. You can find the latest releases [here](https://github.com/enviodev/hyperindex/releases).
+The Claude skills are only available in HyperIndex v3. See the [v3 migration guide](./migrate-to-v3) for current install guidance.
 :::
 
 ## Step 2: Set Up a Monorepo Structure

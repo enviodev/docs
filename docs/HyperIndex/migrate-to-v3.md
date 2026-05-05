@@ -1275,7 +1275,7 @@ pnpm dev
 
 - [ ] Update Node.js to >=22
 - [ ] **Add `"type": "module"` to `package.json`** ← Required for V3!
-- [ ] Update `envio` dependency to latest `3.0.0-alpha.x`
+- [ ] Update `envio` dependency to the latest v3 release
 - [ ] Remove the `optionalDependencies.generated` entry from `package.json` (alpha.24+)
 - [ ] Update `engines.node` to `>=22.0.0` in `package.json`
 - [ ] Update `tsconfig.json` for ESM support
