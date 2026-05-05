@@ -24,11 +24,11 @@ They run several indexers using Envio, spanning multiple chains and contracts. T
 
 <img src="/blog-assets/revert-hyperindex-case-study-1.png" alt="PancakeSwap V3 subgraph on The Graph stuck at 70% sync on BNB Smart Chain" width="100%"/>
 
-The subgraph instance can be viewed here: [https://thegraph.com/explorer/subgraphs/Hv1GncLY5docZoGtXjo4kwbTvxm3MAhVZqBZE4sUT9eZ?view=Query&chain=arbitrum-one](https://thegraph.com/explorer/subgraphs/Hv1GncLY5docZoGtXjo4kwbTvxm3MAhVZqBZE4sUT9eZ?view=Query&chain=arbitrum-one)
+The subgraph instance can be viewed here: [https://thegraph.com/explorer/subgraphs/Hv1GncLY5docZoGtXjo4kwbTvxm3MAhVZqBZE4sUT9eZ?view=Query&chain=bsc](https://thegraph.com/explorer/subgraphs/Hv1GncLY5docZoGtXjo4kwbTvxm3MAhVZqBZE4sUT9eZ?view=Query&chain=bsc)
 
 Envio built a HyperIndex indexer for PancakeSwap V3 on BNB Smart Chain. It synced 1,711,569,200 events to 100% in 10 days.
 
-## The Problem Revert Finance Needed Solved
+## The Problem Revert Finance Needed to Solve
 
 Revert Finance requires real-time PancakeSwap V3 position and liquidity data to power its analytics and tooling for liquidity providers. A public subgraph on The Graph's decentralised network had been stuck at 70% sync on BNB Smart Chain for over 2 years, unable to reach chain head.
 
