@@ -149,7 +149,7 @@ const redirectsList = [
   },
   {
     from: "/docs/example-liquidation-metrics",
-    to: "/docs/HyperIndex/example-liquidation-metrics",
+    to: "/docs/HyperIndex/overview",
   },
   {
     from: "/docs/example-uniswap-v3",
@@ -161,7 +161,7 @@ const redirectsList = [
   },
   {
     from: "/docs/example-ens",
-    to: "/docs/HyperIndex/example-ens",
+    to: "/docs/HyperIndex/overview",
   },
   {
     from: "/docs/logging",
@@ -496,9 +496,7 @@ This file contains links to documentation sections following the llmstxt.org sta
 ### Tutorials & Examples
 
 - [Velodrome & Aerodrome Indexer](https://docs.envio.dev/docs/HyperIndex/example-aerodrome-dex-indexer.md): Explore multi-chain Velodrome & Aerodrome DEX data with real-time tracking of pools, swaps, and liquidity.
-- [ENS Indexer](https://docs.envio.dev/docs/HyperIndex/example-ens.md): Explore the ENS indexer built with Envio.
 - [Cross-Chain Messaging](https://docs.envio.dev/docs/HyperIndex/example-cross-chain-messaging.md): Explore cross-chain messaging and track events across multiple chains efficiently.
-- [Compound V2 Liquidation Metrics](https://docs.envio.dev/docs/HyperIndex/example-liquidation-metrics.md): Explore Compound V2 liquidation metrics across multiple chains with Envio.
 - [Sablier Protocol Indexers](https://docs.envio.dev/docs/HyperIndex/example-sablier.md): Explore Sablier protocol indexers to track token streams and distributions across multiple chains.
 - [Uniswap V4 Multichain indexer](https://docs.envio.dev/docs/HyperIndex/example-uniswap-v4-multi-chain-indexer.md): Explore real-time Uniswap V4 data across multiple chains with Envio.
 - [Indexing Greeter Contract Using Envio](https://docs.envio.dev/docs/HyperIndex/greeter-tutorial.md): Learn how to build and run a multi-chain indexer that tracks Greeter contract events using Envio.

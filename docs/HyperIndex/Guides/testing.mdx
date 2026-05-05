@@ -47,7 +47,6 @@ This section covers how to set up testing for your existing HyperIndex indexer.
 ### Prerequisites
 
 - A functioning indexer setup with schema and event handlers
-- Envio CLI version 0.0.26 or above (verify with `envio -V`)
 
 ### Setup Steps
 
@@ -512,19 +511,13 @@ If you encounter issues with your tests, check the following:
 
 ### Environment and Setup
 
-1. **Verify your Envio version**: The testing library is available in versions `v0.0.26` and above
-
-   ```bash
-   pnpm envio -v
-   ```
-
-2. **Ensure you've generated testing code**: Always run codegen after updating your schema or config
+1. **Ensure you've generated testing code**: Always run codegen after updating your schema or config
 
    ```bash
    pnpm codegen
    ```
 
-3. **Check your imports**: Make sure you're importing the correct files
+2. **Check your imports**: Make sure you're importing the correct files
 
 <Tabs>
    <TabItem value="typescript" label="TypeScript">
