@@ -219,7 +219,7 @@ Now let's build an indexer that compares all three methods when tracking Uniswap
 Create a new Envio indexer project:
 
 ```bash
-pnpx envio init
+pnpx envio@2 init
 ```
 
 ### Step 2: Configure Your Indexer

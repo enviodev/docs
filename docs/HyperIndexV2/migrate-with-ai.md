@@ -21,7 +21,7 @@ HyperIndex v3 includes built-in Claude skills that guide AI programming assistan
 Create a new HyperIndex indexer that indexes the same contracts and events as the subgraph you are migrating. Run the following in a new directory:
 
 ```bash
-pnpx envio init
+pnpx envio@2 init
 ```
 
 Follow the CLI prompts to set up the boilerplate indexer with the same contracts and events as your existing subgraph.
