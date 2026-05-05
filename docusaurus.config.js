@@ -320,6 +320,15 @@ const config = {
             position: "left",
           },
           {
+            type: "dropdown",
+            label: "v3",
+            position: "left",
+            items: [
+              { label: "v3 (current)", to: "/docs/HyperIndex/overview" },
+              { label: "v2", to: "/docs/HyperIndex/v2/overview" },
+            ],
+          },
+          {
             to: "docs/HyperSync/overview",
             label: "HyperSync Docs",
             position: "left",
@@ -597,6 +606,19 @@ This file contains links to documentation sections following the llmstxt.org sta
         id: "HyperIndex",
         path: "docs/HyperIndex",
         routeBasePath: "docs/HyperIndex",
+        sidebarPath: require.resolve("./sidebarsHyperIndex.js"),
+        editUrl: "https://github.com/enviodev/docs/edit/main/",
+        showLastUpdateAuthor: false,
+        showLastUpdateTime: false,
+        disableVersioning: true,
+      },
+    ],
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "HyperIndexV2",
+        path: "docs/HyperIndex",
+        routeBasePath: "docs/HyperIndex/v2",
         sidebarPath: require.resolve("./sidebarsHyperIndex.js"),
         editUrl: "https://github.com/enviodev/docs/edit/main/",
         showLastUpdateAuthor: false,
