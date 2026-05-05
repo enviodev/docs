@@ -24,7 +24,7 @@ export default function LayoutWrapper(props) {
           <p>
             This is the <strong>v3</strong> HyperIndex documentation. Still on
             an older version? Open the{' '}
-            <Link to="/docs/HyperIndex/v2/overview">v2 documentation</Link> and
+            <Link to="/docs/v2/HyperIndex/overview">v2 documentation</Link> and
             consider <Link to="/docs/HyperIndex/migrate-to-v3">migrating to v3</Link>.
           </p>
         </Admonition>
