@@ -60,6 +60,8 @@ ClickHouse Storage writes two things:
 
 Reorgs are handled by a single **`DELETE`** per table that removes all rows above the reorg checkpoint, the append only model makes rollbacks trivial, with no partial state to unwind. Schemas are auto-created on startup from your **`schema.graphql`**, with type mappings handled for you (`BigInt` → `Decimal`, `Date` → `DateTime64`, `enums` → `Enum8`/`Enum16`, and so on). No DDL to write.
 
+Both backends are **restart- and reorg-resistant**, the checkpoints table lets the indexer resume cleanly after a crash, and Prometheus metrics carry a **`storage-name`** label so you can monitor Postgres and ClickHouse write paths separately.
+
 
 :::info[Note]
 During historical backfill, ClickHouse Storage does not store every intermediate entity change. If an entity is modified multiple times within a single batch, only the final state of that batch is written to ClickHouse. Once the indexer reaches the head and is processing live, every change is captured.
@@ -85,7 +87,7 @@ storage:
   clickhouse: true
 ```
 
-From there, enabling ClickHouse on Envio Cloud comes down to setting four environment variables:
+ClickHouse connection is configured via four environment variables, set them in your `.env` file for local development (`envio dev` will spin up a ClickHouse Docker container alongside), or from the Envio Cloud dashboard for hosted deployments:
 
 | Variable | Description |
 | ----- | ----- |
@@ -94,7 +96,7 @@ From there, enabling ClickHouse on Envio Cloud comes down to setting four enviro
 | `ENVIO_CLICKHOUSE_USERNAME` | Username for the ClickHouse connection. |
 | `ENVIO_CLICKHOUSE_PASSWORD` | Password for the ClickHouse connection. |
 
-Once those are set on your Envio Cloud deployment, HyperIndex will replicate the same entity data it writes to Postgres into your ClickHouse database. Every entity in your `schema.graphql` becomes a ClickHouse table with a matching schema, so you can point your analytics queries, BI tools, or dashboards directly at ClickHouse, no extra ETL pipeline needed.
+Once those are set, HyperIndex will replicate the same entity data it writes to Postgres into your ClickHouse database. Every entity in your `schema.graphql` becomes a ClickHouse table with a matching schema, so you can point your analytics queries, BI tools, or dashboards directly at ClickHouse, no extra ETL pipeline needed.
 
 Postgres and GraphQL keep working exactly as they do today. ClickHouse Storage is additive: you get a second read-optimised surface without giving up the one you already have.
 
