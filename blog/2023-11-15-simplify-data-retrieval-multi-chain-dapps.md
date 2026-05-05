@@ -103,7 +103,7 @@ Greeter.NewGreeting.handler(async ({ event, context }) => {
 
 The handler runs identically for events from any network in the config. Chain-specific context (like `event.chainId`) is available if you need it for cross-chain logic.
 
-For the full multichain indexing documentation, see the [Envio docs](https://docs.envio.dev/docs/HyperIndex/multichain-indexing). For a more complex multichain example, see the [Compound V2 Liquidation Metrics indexer](https://docs.envio.dev/docs/HyperIndex/example-liquidation-metrics).
+For the full multichain indexing documentation, see the [Envio docs](https://docs.envio.dev/docs/HyperIndex/multichain-indexing). For a more complex multichain example, see the [Uniswap V4 Multichain Indexer](https://docs.envio.dev/docs/HyperIndex/example-uniswap-v4-multi-chain-indexer).
 
 ## Frequently asked questions
 
@@ -125,7 +125,7 @@ HyperSync natively supports 70+ EVM chains. Any supported chain can be added to 
 
 ### Where can I see a full multichain indexing example?
 
-The [Greeter tutorial](https://docs.envio.dev/docs/greeter-tutorial) in the Envio docs walks through multichain indexing step by step. The [Compound V2 Liquidation Metrics](https://docs.envio.dev/docs/HyperIndex/example-liquidation-metrics) indexer is a more complex real-world example covering 9 forks across 4 chains.
+The [Greeter tutorial](https://docs.envio.dev/docs/greeter-tutorial) in the Envio docs walks through multichain indexing step by step. The [Uniswap V4 Multichain Indexer](https://docs.envio.dev/docs/HyperIndex/example-uniswap-v4-multi-chain-indexer) is a more complex real-world example covering many chains.
 
 ## Build With Envio
 
