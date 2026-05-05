@@ -25,7 +25,7 @@ If you'd rather drive the CLI yourself, see [Getting Started](./getting-started)
 - An AI coding assistant (we recommend **[Claude Code](https://claude.com/claude-code)**)
 
 :::info HyperIndex v3
-Some features below (notably the **built-in Claude skills**) ship with **HyperIndex v3**, which will be released soon. Until v3 is the default stable release, pin to a v3 version explicitly (e.g. `pnpx envio@3.0.0-alpha.21 ...`). See the [v3 migration guide](./migrate-to-v3) for the latest alpha version.
+Some features below (notably the **built-in Claude skills**) ship with **HyperIndex v3**. See the [v3 migration guide](./migrate-to-v3) for current install guidance.
 :::
 
 ---

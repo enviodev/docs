@@ -3,18 +3,14 @@ id: migrate-to-v3
 title: Migrate to HyperIndex V3
 sidebar_label: Migrate to V3
 slug: /migrate-to-v3
-description: Learn how to upgrade from HyperIndex V2 to V3 Alpha, featuring ESM support, top-level await, automatic handler registration, new testing framework, and more.
+description: Learn how to upgrade from HyperIndex V2 to V3, featuring ESM support, top-level await, automatic handler registration, new testing framework, and more.
 ---
-
-:::warning
-HyperIndex V3 is currently in **alpha**. While we don't plan major API changes, some features may still undergo minor breaking changes and developer experience improvements.
-:::
 
 # Migrate to HyperIndex V3
 
 15 full months have passed since the official HyperIndex v2.0.0. Since then, we have shipped [32 minor releases](https://github.com/enviodev/hyperindex/releases) and multiple patches with **zero breaking changes** to the documented API. We also received PRs from 6 external contributors, grew from 1 GitHub star to over 470, and saw many big projects rely on HyperIndex.
 
-HyperIndex V3 Alpha focuses on modernizing the codebase and laying the foundation for many more months of development. This guide walks you through upgrading from V2 to V3.
+HyperIndex V3 focuses on modernizing the codebase and laying the foundation for many more months of development. This guide walks you through upgrading from V2 to V3.
 
 ## New Features
 
@@ -1279,7 +1275,7 @@ pnpm dev
 
 - [ ] Update Node.js to >=22
 - [ ] **Add `"type": "module"` to `package.json`** ← Required for V3!
-- [ ] Update `envio` dependency to latest `3.0.0-alpha.x`
+- [ ] Update `envio` dependency to the latest v3 release
 - [ ] Remove the `optionalDependencies.generated` entry from `package.json` (alpha.24+)
 - [ ] Update `engines.node` to `>=22.0.0` in `package.json`
 - [ ] Update `tsconfig.json` for ESM support

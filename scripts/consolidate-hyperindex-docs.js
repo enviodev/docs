@@ -93,8 +93,13 @@ function fixInternalLinks(content, relativePath) {
   content = content.replace(/\[([^\]]+)\]\(\/docs\/HyperIndex\/[^)]+\)/g, "$1");
   content = content.replace(/\[([^\]]+)\]\(\/docs\/HyperSync\/[^)]+\)/g, "$1");
 
-  // Remove any remaining markdown links (but do not touch markdown images: `![alt](...)`)
-  content = content.replace(/(?<!\!)\[([^\]]+)\]\([^)]+\)/g, "$1");
+  // Remove any remaining markdown links to internal/relative paths.
+  // Preserve external URLs (http/https), anchors (#), and mailto: links.
+  // Also do not touch markdown images: `![alt](...)`.
+  content = content.replace(
+    /(?<!\!)\[([^\]]+)\]\((?!https?:\/\/|mailto:|#)[^)]+\)/g,
+    "$1"
+  );
 
   // Remove image references that cause errors - be more aggressive
   content = content.replace(/!\[([^\]]*)\]\([^)]+\)/g, "");
