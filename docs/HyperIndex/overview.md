@@ -36,7 +36,7 @@ While HyperIndex gives you a complete indexing solution with schema management a
 - **[GraphQL API](/docs/HyperIndex/navigating-hasura)** – Easily query indexed data.
 - **[Cross-platform support](/docs/HyperIndex/supported-networks)** – Index any EVM-, SVM-, or Fuel-compatible blockchain.
 - **[High performance](/docs/HyperIndex/benchmarking)** – Perform historical backfills at 30,000+ events per second.
-- **[Indexer auto-generation](/docs/HyperIndex/contract-import)** – Generate indexers directly from smart contract addresses.
+- **[Indexer auto-generation](/docs/HyperIndex/quickstart)** – Generate indexers directly from smart contract addresses.
 - **[Flexible language support](/docs/HyperIndex/terminology#programming-languages)** – TypeScript, JavaScript, and ReScript.
 - **[Factory contract support](/docs/HyperIndex/dynamic-contracts)** – Index data from over 1M dynamically registered contracts seamlessly.
 - **[On-chain and off-chain data integration](/docs/HyperIndex/contract-state)** – Easily combine multiple data sources.

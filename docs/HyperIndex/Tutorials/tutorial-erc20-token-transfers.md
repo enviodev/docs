@@ -8,7 +8,7 @@ description: Learn how to index and query USDC ERC20 transfers on Base using Env
 
 ## Introduction
 
-In this tutorial, you'll learn how to index ERC20 token transfers on the Base network using Envio HyperIndex. By leveraging the no-code [contract import](https://docs.envio.dev/docs/HyperIndex/contract-import) feature, you'll be able to quickly analyze USDC transfer activity, including identifying the largest transfers.
+In this tutorial, you'll learn how to index ERC20 token transfers on the Base network using Envio HyperIndex. By leveraging the no-code [contract import](https://docs.envio.dev/docs/HyperIndex/quickstart) feature, you'll be able to quickly analyze USDC transfer activity, including identifying the largest transfers.
 
 We'll create an indexer that tracks all USDC token transfers on Base by extracting the `Transfer` events emitted by the USDC contract. The entire process takes less than 5 minutes to set up and start querying data.
 

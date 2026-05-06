@@ -12,7 +12,7 @@ description: Easily migrate your existing subgraph to HyperIndex for up to 100x 
 
 Migrating from Ponder to HyperIndex is straightforward — both frameworks use TypeScript, index EVM events, and expose a GraphQL API. The key differences are the config format, schema syntax, and entity operation API.
 
-If you are new to HyperIndex, start with the [Getting Started](/docs/HyperIndex/getting-started) guide first.
+If you are new to HyperIndex, start with the [Quickstart](/docs/HyperIndex/quickstart) guide first.
 
 :::tip Prefer AI-assisted migration?
 For an assistant-led workflow, see [How to Migrate Using AI](./migrate-with-ai), which includes a shared process for Cursor and Claude Code.

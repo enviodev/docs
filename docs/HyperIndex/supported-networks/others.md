@@ -37,7 +37,7 @@ HyperSync accelerates the synchronization of historical data on the B² Testnet,
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
-To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
+To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/quickstart).
 
 
 ### Defining Network Configurations
@@ -115,7 +115,7 @@ HyperSync accelerates the synchronization of historical data on Base, enabling w
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
-To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
+To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/quickstart).
 
 
 ### Defining Network Configurations
@@ -201,7 +201,7 @@ HyperSync accelerates the synchronization of historical data on Berachain, enabl
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
-To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
+To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/quickstart).
 
 
 ### Defining Network Configurations
@@ -279,7 +279,7 @@ HyperSync accelerates the synchronization of historical data on Blast, enabling 
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
-To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
+To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/quickstart).
 
 
 ### Defining Network Configurations
@@ -364,7 +364,7 @@ HyperSync accelerates the synchronization of historical data on Boba, enabling w
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
-To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
+To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/quickstart).
 
 
 ### Defining Network Configurations
@@ -442,7 +442,7 @@ HyperSync accelerates the synchronization of historical data on BSC, enabling wh
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
-To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
+To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/quickstart).
 
 
 ### Defining Network Configurations
@@ -527,7 +527,7 @@ HyperSync accelerates the synchronization of historical data on Celo, enabling w
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
-To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
+To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/quickstart).
 
 
 ### Defining Network Configurations
@@ -605,7 +605,7 @@ HyperSync accelerates the synchronization of historical data on Chiliz, enabling
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
-To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
+To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/quickstart).
 
 
 ### Defining Network Configurations

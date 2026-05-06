@@ -17,11 +17,19 @@ const redirectsList = [
   },
   {
     from: "/docs/getting-started",
-    to: "/docs/HyperIndex/getting-started",
+    to: "/docs/HyperIndex/quickstart",
   },
   {
     from: "/docs/hyperindex-basics",
-    to: "/docs/HyperIndex/getting-started",
+    to: "/docs/HyperIndex/quickstart",
+  },
+  {
+    from: "/docs/HyperIndex/getting-started",
+    to: "/docs/HyperIndex/quickstart",
+  },
+  {
+    from: "/docs/HyperIndex/contract-import",
+    to: "/docs/HyperIndex/quickstart",
   },
   {
     from: "/docs/contract-import",
@@ -514,7 +522,6 @@ This file contains links to documentation sections following the llmstxt.org sta
 - [HyperIndex Benchmarks](https://docs.envio.dev/docs/HyperIndex/benchmarks.md): Discover HyperIndex benchmarks and see why it's the fastest blockchain data indexer.
 - [HyperIndex Quickstart](https://docs.envio.dev/docs/HyperIndex/contract-import.md): Learn to quickly autogenerate and configure a HyperIndex indexer for any smart contract.
 - [Fuel](https://docs.envio.dev/docs/HyperIndex/fuel.md): Explore how to index and query real-time and historical data on Fuel Network with HyperIndex.
-- [Getting Started with Envio](https://docs.envio.dev/docs/HyperIndex/getting-started.md): Get started with Envio indexer setup, templates, and local or hosted deployment quickly.
 - [Licensing](https://docs.envio.dev/docs/HyperIndex/licensing.md): Learn how Envio's licensing lets developers self-host, use generated code, and stay open while protecting Envio Cloud.
 - [Migrate from Alchemy to Envio](https://docs.envio.dev/docs/HyperIndex/migrate-from-alchemy.md): Easily migrate your existing Alchemy subgraphs to Envio for 143x faster indexing than subgraphs, multichain support, and a better developer experience.
 - [Migrate to HyperIndex V3 Alpha](https://docs.envio.dev/docs/HyperIndex/migrate-to-v3.md): Learn how to upgrade from HyperIndex V2 to V3 Alpha, featuring ESM support, top-level await, automatic handler registration, and more.

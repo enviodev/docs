@@ -38,9 +38,8 @@ const networksSection = {
 module.exports = {
   someSidebar: [
     "overview",
-    "getting-started",
-    "quickstart-with-ai",
     "contract-import",
+    "quickstart-with-ai",
     "benchmarks",
     {
       type: "category",

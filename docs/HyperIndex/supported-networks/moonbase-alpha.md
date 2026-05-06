@@ -30,7 +30,7 @@ HyperSync accelerates the synchronization of historical data on Moonbase Alpha, 
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
-To get started, see our documentation or follow our quickstart [guide](/docs/HyperIndex/contract-import).
+To get started, see our documentation or follow our quickstart [guide](/docs/HyperIndex/quickstart).
 
 ---
 
