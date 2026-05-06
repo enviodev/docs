@@ -320,8 +320,7 @@ const config = {
             position: "left",
           },
           {
-            type: "dropdown",
-            label: "v3",
+            type: "custom-versionDropdown",
             position: "left",
             items: [
               { label: "v3 (rc)", to: "/docs/HyperIndex/overview" },
