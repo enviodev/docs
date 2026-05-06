@@ -114,7 +114,6 @@ Given a contract event in `config.yaml`:
 ```yaml
 contracts:
   - name: PoolManager
-    handler: src/handlers
     events:
       - event: Swap(bytes32 indexed id, address indexed sender, int128 amount0, int128 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick, uint24 fee)
 ```

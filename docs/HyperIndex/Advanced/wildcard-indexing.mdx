@@ -27,7 +27,6 @@ networks:
     start_block: 0
     contracts:
       - name: ERC20
-        handler: ./src/handlers
         events:
           - event: Transfer(address indexed from, address indexed to, uint256 value)
 ```
@@ -334,7 +333,6 @@ networks:
     start_block: 0
     contracts:
       - name: Safe
-        handler: ./src/handlers
         events:
           - event: Transfer(address indexed from, address indexed to, uint256 value)
         address:
@@ -379,13 +377,11 @@ networks:
     start_block: 0
     contracts:
       - name: SafeRegistry
-        handler: ./src/handlers
         events:
           - event: NewSafe(address safe)
         address:
           - 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
       - name: Safe
-        handler: ./src/handlers
         events:
           - event: Transfer(address indexed from, address indexed to, uint256 value)
 ```

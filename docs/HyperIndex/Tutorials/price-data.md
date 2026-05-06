@@ -237,13 +237,11 @@ networks:
       - name: Api3ServerV1
         address:
           - 0x709944a48cAf83535e43471680fDA4905FB3920a
-        handler: src/handlers
         events:
           - event: UpdatedBeaconSetWithBeacons(bytes32 indexed beaconSetId, int224 value, uint32 timestamp)
       - name: UniswapV3Pool
         address:
           - 0xf52B4b69123CbcF07798AE8265642793b2E8990C
-        handler: src/handlers
         events:
           - event: Swap(address indexed sender, address indexed recipient, int256 amount0, int256 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick)
           - event: Mint(address sender, address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)

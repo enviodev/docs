@@ -109,7 +109,6 @@ networks:
     contracts:      
       - name: PositionManager
         address: 0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e
-        handler: src/handlers
         events:        
         - event: Subscription(uint256 indexed tokenId, address indexed subscriber)
         - event: Unsubscription(uint256 indexed tokenId, address indexed subscriber)          

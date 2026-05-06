@@ -82,7 +82,6 @@ name: my-indexer
 contracts:
   - name: MyToken
     abi_file_path: ./abis/MyToken.json
-    handler: ./src/handlers
     events:
       - event: Transfer
       - event: Approval

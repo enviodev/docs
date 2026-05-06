@@ -110,7 +110,6 @@ Example (config.yaml):
 ```yaml
 contracts:
   - name: Greeter
-    handler: src/handlers
     events:
       - event: "NewGreeting(address user, string greeting)"
 ```
@@ -272,7 +271,6 @@ Example (config.yaml):
 ```yaml
 contracts:
   - name: Greeter
-    handler: src/handlers
     events:
       - event: "NewGreeting(address user, string greeting)"
 ```
@@ -292,7 +290,6 @@ Example (config.yaml):
 ```yaml
 contracts:
   - name: Greeter
-    handler: src/handlers
     events:
       - event: "Assigned(address indexed recipientId, uint256 amount, address token)"
         name: Assigned
@@ -469,7 +466,6 @@ networks:
       - name: Greeter
         address:
           - 0x1111111111111111111111111111111111111111
-        handler: src/handlers
         events:
           - event: Transfer(address indexed from, address indexed to, uint256 value)
 ```

@@ -52,7 +52,6 @@ networks:
       - name: BoredApeYachtClub
         address:
           - 0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D
-        handler: src/handlers
         events:
           - event: Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
 ```
