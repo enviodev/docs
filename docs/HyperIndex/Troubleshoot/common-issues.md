@@ -103,20 +103,6 @@ nvm use 22
 # Or download directly from https://nodejs.org/
 ```
 
-### Using the correct version of PNPM
-
-**Problem:** Package management issues or build failures.
-
-**Solution:** Envio requires pnpm v8 or newer. If you're using v7.8 or older, please update:
-
-```bash
-# Update pnpm
-npm install -g pnpm@latest
-
-# Verify version
-pnpm --version
-```
-
 ## Runtime Issues
 
 ### Indexer not starting at the specified start block
