@@ -20,7 +20,7 @@ If you'd rather drive the CLI yourself, see [Getting Started](./getting-started)
 ## Prerequisites
 
 - **[Node.js](https://nodejs.org/en/download/current)** _(v22 or newer)_
-- **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
+- **[pnpm](https://pnpm.io/installation)** _(recommended but not required)_
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(only needed to run the indexer locally)_
 - An AI coding assistant (we recommend **[Claude Code](https://claude.com/claude-code)**)
 

@@ -19,7 +19,7 @@ The Optimism Standard Bridge enables the movement of ETH and ERC-20 tokens betwe
 Before starting, ensure you have the following installed:
 
 - **[Node.js](https://nodejs.org/en/download/current)** _(v22 or newer recommended)_
-- **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
+- **[pnpm](https://pnpm.io/installation)** _(recommended but not required)_
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
 > **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio Cloud.

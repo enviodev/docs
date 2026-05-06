@@ -13,7 +13,7 @@ Learn how to create and run a blockchain indexer with Envio’s HyperIndex, from
 ### Prerequisites
 
 - **[Node.js](https://nodejs.org/en/download/current)** _(v22 or newer recommended)_
-- **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
+- **[pnpm](https://pnpm.io/installation)** _(recommended but not required)_
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
 > **Note:** Docker is required only if you plan to run your indexer locally. You can skip installing Docker if you'll only be using Envio Cloud.
