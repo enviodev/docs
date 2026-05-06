@@ -2,7 +2,7 @@
 title: How Revert Finance Fixed 2 Years of Unsynced PancakeSwap V3 Data with Envio
 sidebar_label: How Revert Finance Fixed 2 Years of Unsynced PancakeSwap V3 Data with Envio
 tags: ["case-studies"]
-slug: /blog/revert-finance-pancakeswap-bnb-hyperindex
+slug: revert-finance-pancakeswap-bnb-hyperindex
 description: "Revert Finance's PancakeSwap V3 subgraph on The Graph had been stuck at 70% sync on BNB Smart Chain for over 2 years. Envio HyperIndex synced it to 100% in 10 days, processing 1.7 billion events."
 image: /blog-assets/revert-hyperindex-case-study.png
 authors: ["j_o_r_d_y_s"]
