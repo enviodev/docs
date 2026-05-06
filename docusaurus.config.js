@@ -320,12 +320,8 @@ const config = {
             position: "left",
           },
           {
-            type: "custom-versionDropdown",
+            type: "custom-hyperIndexVersionDropdown",
             position: "left",
-            items: [
-              { label: "v3 (rc)", to: "/docs/HyperIndex/overview" },
-              { label: "v2", to: "/docs/v2/HyperIndex/overview" },
-            ],
           },
           {
             to: "docs/HyperSync/overview",
