@@ -40,6 +40,7 @@ module.exports = {
     "overview",
     "contract-import",
     "quickstart-with-ai",
+    "whats-new-in-v3",
     "benchmarks",
     {
       type: "category",

@@ -524,7 +524,8 @@ This file contains links to documentation sections following the llmstxt.org sta
 - [Fuel](https://docs.envio.dev/docs/HyperIndex/fuel.md): Explore how to index and query real-time and historical data on Fuel Network with HyperIndex.
 - [Licensing](https://docs.envio.dev/docs/HyperIndex/licensing.md): Learn how Envio's licensing lets developers self-host, use generated code, and stay open while protecting Envio Cloud.
 - [Migrate from Alchemy to Envio](https://docs.envio.dev/docs/HyperIndex/migrate-from-alchemy.md): Easily migrate your existing Alchemy subgraphs to Envio for 143x faster indexing than subgraphs, multichain support, and a better developer experience.
-- [Migrate to HyperIndex V3 Alpha](https://docs.envio.dev/docs/HyperIndex/migrate-to-v3.md): Learn how to upgrade from HyperIndex V2 to V3 Alpha, featuring ESM support, top-level await, automatic handler registration, and more.
+- [Migrate to HyperIndex V3](https://docs.envio.dev/docs/HyperIndex/migrate-to-v3.md): Step-by-step instructions for upgrading an existing HyperIndex V2 project to V3.
+- [What's New in HyperIndex V3](https://docs.envio.dev/docs/HyperIndex/whats-new-in-v3.md): Discover the new features in HyperIndex V3 — unified handlers API, ESM support, top-level await, automatic handler registration, new testing framework, ClickHouse storage, Solana support, and more.
 - [Migrate from The Graph to Envio](https://docs.envio.dev/docs/HyperIndex/migration-guide.md): Easily migrate your existing subgraph to HyperIndex for up to 100x faster indexing speeds, multichain support, and a better developer experience.
 - [HyperIndex: Fast Multichain Blockchain Indexer](https://docs.envio.dev/docs/HyperIndex/overview.md): Explore HyperIndex, a blazing-fast multichain indexer for real-time blockchain data.
 - [Solana](https://docs.envio.dev/docs/HyperIndex/solana.md): Experimental Solana support in HyperIndex. Supports Block Handler, Effect API, and Envio Cloud.
