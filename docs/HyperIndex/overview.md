@@ -60,7 +60,7 @@ Upcoming features on our development roadmap:
 
 ## HyperSync API Token Requirements
 
-HyperSync (the data engine powering HyperIndex) implements rate limits for requests without API tokens, and an API token is now required to use HyperSync. You can generate one in the [Envio Cloud portal](https://envio.dev/app/api-tokens). Here's what you need to know:
+HyperSync (the data engine powering HyperIndex) requires an API token for all requests. You can generate one in the [Envio Cloud portal](https://envio.dev/app/api-tokens). Here's what you need to know:
 
 - **Local Development**: An API token is required. The CLI supports an automatic login flow to make this smoother.
 - **Self-Hosted Deployments**: API tokens are required for HyperSync access in self-hosted deployments. Set the token via the `ENVIO_API_TOKEN` environment variable in your indexer configuration. This can be read from the `.env` file in the root of your HyperIndex project.
