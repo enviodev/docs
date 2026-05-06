@@ -52,11 +52,9 @@ While HyperIndex gives you a complete indexing solution with schema management a
 
 Upcoming features on our development roadmap:
 
-- **ClickHouse Sink**
-- **Solana Slot Handler**
-- **New Testing Framework**
 - **Isolated Multichain Mode**
-- **Top Level Await Support**
+- **Polished Solana Support**
+- **Indexing 1,000,000+ events per second**
 
 ---
 
