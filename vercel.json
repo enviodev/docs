@@ -15,6 +15,11 @@
       "source": "/blog/tags/:tag*",
       "destination": "/blog/tag/:tag*",
       "permanent": true
+    },
+    {
+      "source": "/docs/v2/HyperIndex/:path*",
+      "destination": "/docs/HyperIndex/:path*",
+      "permanent": true
     }
   ]
 }
