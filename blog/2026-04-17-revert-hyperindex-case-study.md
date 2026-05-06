@@ -30,7 +30,7 @@ Envio built a HyperIndex indexer for PancakeSwap V3 on BNB Smart Chain. It synce
 
 ## The Problem Revert Finance Needed to Solve
 
-Revert Finance requires real-time PancakeSwap V3 position and liquidity data to power its analytics and tooling for liquidity providers. A public subgraph on The Graph's decentralised network had been stuck at 70% sync on BNB Smart Chain for over 2 years, unable to reach chain head.
+Revert Finance requires real-time PancakeSwap V3 position and liquidity data to power its analytics and tooling for liquidity providers. A public subgraph on The Graph's decentralized network had been stuck at 70% sync on BNB Smart Chain for over 2 years, unable to reach chain head.
 
 BNB Smart Chain's high throughput has presented well-documented challenges for RPC-based indexing, with teams reporting sync issues going back to 2021. The volume of events per block outpaces what standard indexing infrastructure can sustain, causing subgraphs to fall progressively further behind until they stall entirely.
 
