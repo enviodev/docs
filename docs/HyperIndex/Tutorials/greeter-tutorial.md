@@ -39,7 +39,7 @@ First, let's create a new project using Envio's Greeter template:
 1. Open your terminal and run:
 
 ```bash
-pnpx envio init
+pnpx envio@3.0.0-rc.0 init
 ```
 
 2. When prompted for a directory, you can press Enter to use the current directory or specify another path:

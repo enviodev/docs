@@ -42,7 +42,7 @@ Quickly create an indexer using pre-defined templates:
 Run the following command to initialize using a template:
 
 ```bash
-pnpx envio init
+pnpx envio@3.0.0-rc.0 init
 ```
 
 Select your preferred template from the interactive prompt.

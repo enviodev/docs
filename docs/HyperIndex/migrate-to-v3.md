@@ -349,7 +349,7 @@ pnpx envio@3.0.0-rc.0 init svm
 
 See the [Solana documentation](/docs/HyperIndex/solana) for more details.
 
-### `pnpx envio init` Improvements
+### `pnpx envio@3.0.0-rc.0 init` Improvements
 
 - Removed language selection to prefer TypeScript by default
 - Cleaned up templates to follow the latest good practices

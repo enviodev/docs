@@ -58,12 +58,12 @@ Full setup details in the [MCP Server guide](./mcp-server). If your assistant do
 
 ## Step 2. Initialize the Indexer Non-Interactively
 
-`pnpx envio init` normally walks you through an interactive wizard. When an AI assistant is driving the terminal, it's much easier to skip the prompts with flags so the assistant can run the command end-to-end without blocking on human input.
+`pnpx envio@3.0.0-rc.0 init` normally walks you through an interactive wizard. When an AI assistant is driving the terminal, it's much easier to skip the prompts with flags so the assistant can run the command end-to-end without blocking on human input.
 
 ### Option A: Start from a template
 
 ```bash
-pnpx envio init template \
+pnpx envio@3.0.0-rc.0 init template \
   -t erc20 \
   -l typescript \
   -d ./working-indexer \
@@ -73,7 +73,7 @@ pnpx envio init template \
 ### Option B: Import a verified contract from an explorer
 
 ```bash
-pnpx envio init contract-import explorer \
+pnpx envio@3.0.0-rc.0 init contract-import explorer \
   -n usdc-indexer \
   -c 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48 \
   -b ethereum-mainnet \

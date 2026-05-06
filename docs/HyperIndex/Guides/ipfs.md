@@ -31,7 +31,7 @@ First, let's create a basic indexer that tracks NFT ownership:
 ### Initialize the Indexer
 
 ```bash
-pnpx envio init
+pnpx envio@3.0.0-rc.0 init
 ```
 
 When prompted, enter the Bored Ape Yacht Club contract address: `0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D`
