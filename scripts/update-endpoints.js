@@ -279,7 +279,7 @@ HyperSync accelerates the synchronization of historical data on ${capitalizedTit
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted service.
 
-To get started, see our documentation or follow our quickstart [guide](/docs/HyperIndex/contract-import).
+To get started, see our documentation or follow our quickstart [guide](/docs/HyperIndex/quickstart).
 
 ---
 

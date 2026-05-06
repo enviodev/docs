@@ -12,7 +12,7 @@ Build an Envio HyperIndex indexer end-to-end with an AI coding assistant.
 Most developers now reach for an AI coding assistant before they open a file. This guide walks through an AI-centric flow for creating, developing, and deploying a HyperIndex indexer. It is semi-generic, so any capable AI coding assistant (Cursor, Windsurf, Copilot Agent, Continue, etc.) will work. That said, **we've seen the best results with [Claude Code](https://claude.com/claude-code)** and recommend starting there.
 
 :::tip Prefer the interactive flow?
-If you'd rather drive the CLI yourself, see the [Quickstart](./contract-import).
+If you'd rather drive the CLI yourself, see the [Quickstart](./quickstart).
 :::
 
 ---

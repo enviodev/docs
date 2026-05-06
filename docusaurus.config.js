@@ -33,7 +33,7 @@ const redirectsList = [
   },
   {
     from: "/docs/contract-import",
-    to: "/docs/HyperIndex/contract-import",
+    to: "/docs/HyperIndex/quickstart",
   },
   {
     from: "/docs/configuration-file",

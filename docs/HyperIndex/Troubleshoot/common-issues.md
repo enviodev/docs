@@ -16,7 +16,6 @@ This guide helps you identify and resolve common issues you might encounter when
   - [Module Not Found Errors](#cannot-find-module-errors-on-pnpm-start)
   - [Smart Contract Updates](#smart-contract-updated-after-the-initial-codegen)
   - [Node.js Version Compatibility](#using-the-correct-version-of-nodejs)
-  - [PNPM Version Compatibility](#using-the-correct-version-of-pnpm)
 - [Runtime Issues](#runtime-issues)
   - [Indexer Start Block Issues](#indexer-not-starting-at-the-specified-start-block)
   - [Tables Not Registered in Hasura](#tables-for-entities-are-not-registered-on-hasura)
