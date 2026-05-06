@@ -28,7 +28,7 @@ When running `pnpm dev`, HyperIndex watches for changes to your **event handler*
 
 **What triggers a hot reload:**
 
-- Changes to event handler files (e.g., `src/EventHandlers.ts`)
+- Changes to event handler files (e.g., `src/handlers`)
 
 **What requires a full restart:**
 

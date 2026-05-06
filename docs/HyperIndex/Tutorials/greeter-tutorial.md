@@ -123,7 +123,7 @@ type User {
 }
 ```
 
-### `src/EventHandlers.js` (or `.ts`/`.res`)
+### `src/handlers` (or `.ts`/`.res`)
 
 This file contains the logic to process events emitted by the Greeter contract.
 

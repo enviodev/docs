@@ -126,7 +126,7 @@ This schema defines the data structures for our selected events:
 
 <img src="/docs-assets/tutorial-op-bridge-8.png" alt="GraphQL schema file" width="100%"/>
 
-### 3. `src/EventHandlers.ts`
+### 3. `src/handlers`
 
 This file contains the business logic for processing events:
 

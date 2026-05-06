@@ -52,7 +52,7 @@ networks:
       - name: BoredApeYachtClub
         address:
           - 0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D
-        handler: src/EventHandlers.ts
+        handler: src/handlers
         events:
           - event: Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
 ```
@@ -211,7 +211,7 @@ export const getIpfsMetadata = createEffect(
 Let's modify the event handler to fetch and store metadata using the `getIpfsMetadata` effect:
 
 ```typescript
-// src/EventHandlers.ts
+// src/handlers
 import { BoredApeYachtClub } from "generated";
 import { getIpfsMetadata } from "./utils/ipfs";
 

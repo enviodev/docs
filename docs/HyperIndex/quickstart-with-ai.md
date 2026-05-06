@@ -104,7 +104,7 @@ HyperIndex v3 ships with **Claude skills** that teach AI assistants how HyperInd
 A productive loop with skills + the docs MCP looks like:
 
 1. Describe the behavior you want in plain English.
-2. Let the assistant edit `config.yaml`, `schema.graphql`, and `src/EventHandlers.*`.
+2. Let the assistant edit `config.yaml`, `schema.graphql`, and `src/handlers`.
 3. Ask it to run `pnpm envio codegen` and `pnpm dev` to validate.
 4. Iterate on failures together.
 
@@ -112,7 +112,7 @@ The three files you'll spend most of your time in:
 
 - **[`config.yaml`](./configuration-file)**: networks, contracts, events
 - **[`schema.graphql`](./schema)**: entities and relationships
-- **[`src/EventHandlers.*`](./event-handlers)**: per-event logic
+- **[`src/handlers`](./event-handlers)**: per-event logic
 
 ---
 

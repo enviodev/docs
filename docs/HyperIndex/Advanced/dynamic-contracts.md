@@ -54,14 +54,14 @@ networks:
       - name: NftFactory
         abi_file_path: abis/NftFactory.json
         address: 0x4675a6B115329294e0518A2B7cC12B70987895C4 # Factory address is known
-        handler: src/EventHandlers.ts
+        handler: src/handlers
         events:
           - event: SimpleNftCreated (string name, string symbol, uint256 maxSupply, address contractAddress)
 
       - name: SimpleNft
         abi_file_path: abis/SimpleNft.json
         # No address field - we'll discover these addresses from events
-        handler: src/EventHandlers.ts
+        handler: src/handlers
         events:
           - event: Transfer (address from, address to, uint256 tokenId)
 ```
@@ -73,7 +73,7 @@ Note that:
 
 ### 2. Create the Contract Registration Handler
 
-In your `src/EventHandlers.ts` file:
+In your `src/handlers` file:
 
 ```typescript
 // Register SimpleNft contracts whenever they're created by the factory

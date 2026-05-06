@@ -170,7 +170,7 @@ networks:
         address:
           - 0xf5b08689ada97df7fd2fbd67bee7dea6d219f117c1dc9345245da16fe4e99111
         abi_file_path: abis/swayfarm-abi.json
-        handler: src/EventHandlers.ts
+        handler: src/handlers
         events:
           - name: SellItem
             logId: "11192939610819626128"

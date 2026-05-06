@@ -56,7 +56,7 @@ networks:
       - name: PolygonGreeter
         abi_file_path: abis/greeter-abi.json
         address: 0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c
-        handler: ./src/EventHandlers.bs.js
+        handler: ./src/handlers
         events:
           - event: NewGreeting
           - event: ClearGreeting

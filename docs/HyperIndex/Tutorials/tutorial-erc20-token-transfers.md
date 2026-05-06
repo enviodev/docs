@@ -112,7 +112,7 @@ This schema defines the data structures for the Transfer event:
 
 <img src="/docs-assets/tutorial-base-erc20-transfer-7.png" alt="GraphQL schema file" width="100%"/>
 
-### 3. `src/EventHandlers.*`
+### 3. `src/handlers`
 
 This file contains the business logic for processing events:
 

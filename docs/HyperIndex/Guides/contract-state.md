@@ -75,7 +75,7 @@ networks:
       - name: UniswapV3Factory
         address:
           - 0x1F98431c8aD98523631AE4a59f267346ea31F984
-        handler: src/EventHandlers.ts
+        handler: src/handlers
         events:
           - event: PoolCreated(address indexed token0, address indexed token1, uint24 indexed fee, int24 tickSpacing, address pool)
 ```
@@ -116,7 +116,7 @@ The event handler needs to:
 Learn how Preload Optimization works in a [dedicated guide](/docs/HyperIndex/preload-optimization). It might be a new mental model for you, but this is what can make indexing thousands of times faster.
 
 ```typescript
-// src/EventHandlers.ts
+// src/handlers
 import { UniswapV3Factory } from "generated";
 import { getTokenMetadata } from "./tokenMetadata";
 

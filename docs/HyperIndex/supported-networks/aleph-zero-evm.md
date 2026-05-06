@@ -44,7 +44,7 @@ networks:
         address:
           - "0xYourContractAddress1"
           - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
+        handler: ./src/handlers
         events:
           - event: Event # Specify event
           - event: Event
