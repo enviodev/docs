@@ -129,7 +129,7 @@ Envio Cloud is Envio's managed hosting platform for HyperIndex indexers. It hand
 
 ### What chains does Envio support?
 
-Envio supports any EVM chain. <HyperSyncChainCount /> EVM chains have native HyperSync coverage for maximum speed, including BNB Smart Chain, Polygon, Ethereum, Base, Arbitrum, Optimism, and more. Any EVM chain without native HyperSync support can be indexed via standard RPC.
+Envio supports any EVM chain. <HyperSyncChainCount /> EVM chains have native HyperSync coverage for maximum speed, including BNB Smart Chain, Polygon, Ethereum, Base, Arbitrum, Optimism, and more. Any EVM chain without native HyperSync support can be indexed via standard RPC. See the full list of supported chains at [envio.dev/chains](https://envio.dev/chains).
 
 ### How do I migrate from The Graph to HyperIndex?
 
