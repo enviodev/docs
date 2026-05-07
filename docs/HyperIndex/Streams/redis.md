@@ -24,22 +24,30 @@ export const redis = new Redis(process.env.REDIS_CONNECTION_URI!);
 
 ### Define the effect
 
+Stream name is static — bake it in. `input` is just event data.
+
 ```typescript title="src/effects/redis.ts"
 import { createEffect, S } from "envio";
 import { redis } from "../clients/redis";
 
-export const xaddRedis = createEffect(
+const STREAM = "ethereum_rocketpool_transfer_stream";
+
+export const xaddTransfer = createEffect(
   {
-    name: "xaddRedis",
+    name: "xaddTransfer",
     input: {
-      stream: S.string,
-      payload: S.string, // JSON-encoded
+      from: S.string,
+      to: S.string,
+      value: S.bigint,
+      txHash: S.string,
+      blockNumber: S.number,
     },
     rateLimit: { calls: 500, per: "second" },
     mode: "unorderedAfterCommit",
   },
   async ({ input }) => {
-    await redis.xadd(input.stream, "*", "data", input.payload);
+    const data = JSON.stringify({ ...input, value: input.value.toString() });
+    await redis.xadd(STREAM, "*", "data", data);
   }
 );
 ```
@@ -62,30 +70,30 @@ streams:
 
 …becomes:
 
-```typescript title="src/EventHandlers.ts"
-import { RocketPoolETH } from "generated";
-import { xaddRedis } from "./effects/redis";
+```typescript title="src/handlers/RocketPoolETH.ts"
+import { indexer } from "envio";
+import { xaddTransfer } from "../effects/redis";
 
 const WHALE = "0x0338ce5020c447f7e668dc2ef778025ce3982662";
 const MIN = 2_000_000_000_000_000_000n;
 const MAX = 4_000_000_000_000_000_000n;
 
-RocketPoolETH.Transfer.handler(async ({ event, context }) => {
-  const { from, to, value } = event.params;
+indexer.onEvent(
+  { contract: "RocketPoolETH", event: "Transfer" },
+  async ({ event, context }) => {
+    const { from, to, value } = event.params;
 
-  if (from.toLowerCase() === WHALE && value >= MIN && value <= MAX) {
-    context.effect(xaddRedis, {
-      stream: "ethereum_rocketpool_transfer_stream",
-      payload: JSON.stringify({
+    if (from.toLowerCase() === WHALE && value >= MIN && value <= MAX) {
+      context.effect(xaddTransfer, {
         from,
         to,
-        value: value.toString(),
+        value,
         txHash: event.transaction.hash,
         blockNumber: event.block.number,
-      }),
-    });
-  }
-});
+      });
+    }
+  },
+);
 ```
 
-Redis Streams already give you total ordering per stream (the `*` ID is monotonically increasing), so `unorderedAfterCommit` is fine here — concurrent `XADD`s within a batch will simply interleave by arrival time. Use `orderedAfterCommit` only if downstream consumers expect strict handler-order across the batch.
+Redis Streams already give you total ordering per stream (the `*` ID is monotonically increasing), so `unorderedAfterCommit` is fine here — concurrent `XADD`s within a batch will simply interleave by arrival time. Use `orderedAfterCommit` only if downstream consumers expect strict handler-order across the batch. For lowest latency, switch to `mode: "unordered"` so the `XADD` runs inline within the batch — fastest, but a failed batch can leave entries in the stream that no longer reflect committed state.

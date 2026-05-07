@@ -8,11 +8,18 @@ description: Send on-chain notifications from HyperIndex to Telegram, Discord, S
 
 Chat bots in HyperIndex are just [Effects](/docs/HyperIndex/effect-api) running in `orderedAfterCommit` mode that call a chat platform's API. There is no separate templating language and no separate config file — you build your message string with template literals and decide when to send it with normal `if` statements.
 
-### Why `orderedAfterCommit`?
+### Picking a mode
 
-Chat platforms display messages in arrival order to humans, so you almost always want **ordered** delivery. The runtime preserves the order of `context.effect(...)` calls across the entire batch, then dispatches them sequentially after the DB commit. The `AfterCommit` half guarantees you never message users about a state that was rolled back by a reorg or a failed batch.
+Chat platforms display messages in arrival order to humans, so you almost always want **ordered** delivery. The runtime preserves the order of `context.effect(...)` calls across the entire batch, then dispatches them after the DB commit.
 
-If you don't care about order across events (e.g. one alert per swap, no relation between alerts), you can use `unorderedAfterCommit` for higher throughput.
+| Mode | When to use |
+| --- | --- |
+| `orderedAfterCommit` *(default choice for chat bots)* | Single ordered destination (Telegram chat, Slack channel). Won't message users about state that was rolled back. |
+| `unorderedAfterCommit` | Independent alerts where order doesn't matter (one alert per swap, fan-out to multiple channels). Higher throughput. |
+| `ordered` *(lower latency)* | Need the message out as fast as possible and your operators tolerate the rare duplicate on a failed batch. Inline, sequential, returns a value. |
+| `unordered` *(lower latency)* | Same speed/safety tradeoff as `ordered`, but parallel dispatch. Use when alerts are fully independent. |
+
+Use the after-commit modes by default. Switch to `ordered` / `unordered` only when you measure commit latency as the bottleneck — chat platforms are rate-limited anyway, so the gain is usually small.
 
 ### Comparison with rindexer
 
@@ -32,17 +39,8 @@ If you don't care about order across events (e.g. one alert per swap, no relatio
 - [PagerDuty](/docs/HyperIndex/chatbots/pagerduty)
 - [OpsGenie](/docs/HyperIndex/chatbots/opsgenie)
 
-### Helper: human-readable token amounts
+### Pattern
 
-Most examples below use a small `formatUnits` helper instead of rindexer's `{{format_value(value, 18)}}`:
+Each effect bakes in its own static config (token, channel, rate limit, message template) and accepts only the per-event values that vary in `input`. That keeps call sites tiny, makes deduplication effective, and means switching destinations later is a one-line change.
 
-```typescript title="src/utils/format.ts"
-export const formatUnits = (value: bigint, decimals = 18) => {
-  const base = 10n ** BigInt(decimals);
-  const whole = value / base;
-  const frac = value % base;
-  if (frac === 0n) return whole.toString();
-  const fracStr = frac.toString().padStart(decimals, "0").replace(/0+$/, "");
-  return `${whole}.${fracStr}`;
-};
-```
+The example pages below all use a small `formatUnits` helper inside the effect body to render bigints — equivalent to rindexer's `{{format_value(value, 18)}}`.

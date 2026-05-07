@@ -24,8 +24,14 @@ HyperIndex can publish decoded events to any external system from inside your ha
 
 ### Choosing a mode
 
-- **`unorderedAfterCommit`** — fire-and-forget, parallel dispatch. Best for partitioned destinations (Kafka with a partition key, Redis Streams keyed by tx hash, generic webhooks).
-- **`orderedAfterCommit`** — preserves the order in which `context.effect(...)` was called across the batch. Use for single-stream destinations like a Telegram chat, a Slack channel, or a single Kafka partition.
+Pick by latency vs. delivery semantics:
+
+- **`unorderedAfterCommit`** — fire-and-forget, parallel dispatch, **after** the DB commits. Best for partitioned destinations (Kafka with a partition key, Redis Streams keyed by tx hash, generic webhooks). Highest throughput; messages only fire for state that actually persisted.
+- **`orderedAfterCommit`** — preserves the order in which `context.effect(...)` was called across the batch, dispatched **after** the DB commits. Use for single-stream destinations like a Telegram chat, a Slack channel, or a single Kafka partition.
+- **`unordered`** *(lower latency)* — same as `unorderedAfterCommit` but fires **inline within the batch**, in parallel, returning a value. Skip this if your stream must never see a message for a state that was rolled back; pick it if you need the fastest possible push (no wait for DB commit) and your downstream tolerates duplicates on retry.
+- **`ordered`** *(lower latency)* — same as `orderedAfterCommit` but fires inline, sequentially, returning a value. Useful when a handler needs the response (e.g. a stream-side ID) before continuing, and you're willing to accept that a failed batch may still produce a delivered message.
+
+Rule of thumb: **start with `*AfterCommit`**. Drop down to `unordered` / `ordered` only when you've measured commit latency as the bottleneck and your consumer is idempotent.
 
 ### Supported tools
 

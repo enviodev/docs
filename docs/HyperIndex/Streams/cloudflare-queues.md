@@ -14,30 +14,38 @@ Nothing to install.
 
 ### Define the effect
 
+Account ID, API token, and queue ID are static — bake them in. `input` is just event data.
+
 ```typescript title="src/effects/cloudflare.ts"
 import { createEffect, S } from "envio";
 
-const ENDPOINT = (queueId: string) =>
-  `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/queues/${queueId}/messages`;
+const QUEUE_ID = "blockchain-transfers";
+const ENDPOINT = `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/queues/${QUEUE_ID}/messages`;
 
-export const sendToCloudflareQueue = createEffect(
+export const sendTransfer = createEffect(
   {
-    name: "sendToCloudflareQueue",
+    name: "sendTransfer",
     input: {
-      queueId: S.string,
-      body: S.string, // JSON-encoded
+      from: S.string,
+      to: S.string,
+      value: S.bigint,
+      txHash: S.string,
+      chainId: S.number,
     },
     rateLimit: { calls: 100, per: "second" },
     mode: "unorderedAfterCommit",
   },
   async ({ input, context }) => {
-    const res = await fetch(ENDPOINT(input.queueId), {
+    const res = await fetch(ENDPOINT, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.CLOUDFLARE_API_TOKEN}`,
       },
-      body: JSON.stringify({ body: input.body, content_type: "json" }),
+      body: JSON.stringify({
+        body: { ...input, value: input.value.toString() },
+        content_type: "json",
+      }),
     });
     if (!res.ok) {
       context.log.error(`CF Queues failed: ${res.status} ${await res.text()}`);
@@ -64,28 +72,28 @@ streams:
 
 …becomes:
 
-```typescript title="src/EventHandlers.ts"
-import { RocketPoolETH } from "generated";
-import { sendToCloudflareQueue } from "./effects/cloudflare";
+```typescript title="src/handlers/RocketPoolETH.ts"
+import { indexer } from "envio";
+import { sendTransfer } from "../effects/cloudflare";
 
 const MIN = 2_000_000_000_000_000_000n;
 
-RocketPoolETH.Transfer.handler(async ({ event, context }) => {
-  const { from, to, value } = event.params;
+indexer.onEvent(
+  { contract: "RocketPoolETH", event: "Transfer" },
+  async ({ event, context }) => {
+    const { from, to, value } = event.params;
 
-  if (value >= MIN) {
-    context.effect(sendToCloudflareQueue, {
-      queueId: "blockchain-transfers",
-      body: JSON.stringify({
+    if (value >= MIN) {
+      context.effect(sendTransfer, {
         from,
         to,
-        value: value.toString(),
+        value,
         txHash: event.transaction.hash,
-        chainId: event.chainId,
-      }),
-    });
-  }
-});
+        chainId: context.chain.id,
+      });
+    }
+  },
+);
 ```
 
-Use `orderedAfterCommit` if your queue consumer relies on per-batch ordering.
+Use `orderedAfterCommit` if your queue consumer relies on per-batch ordering. For lower latency at the cost of commit-safe delivery, switch to `mode: "unordered"` (or `"ordered"`) — the message is sent inline within the batch.

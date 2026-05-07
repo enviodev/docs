@@ -41,17 +41,25 @@ export const ensureConnected = () => (connected ??= producer.connect());
 
 ### Define the effect
 
+Topic name is baked into the effect — `input` carries only the partition key and the per-event payload. The effect serialises to JSON internally; the handler passes raw values.
+
 ```typescript title="src/effects/kafka.ts"
 import { createEffect, S } from "envio";
 import { ensureConnected, producer } from "../clients/kafka";
 
-export const publishToKafka = createEffect(
+const TOPIC = "rocketpool.transfers";
+
+export const publishTransfer = createEffect(
   {
-    name: "publishToKafka",
+    name: "publishTransfer",
     input: {
-      topic: S.string,
-      key: S.string,
-      value: S.string,
+      key: S.string, // partition key
+      from: S.string,
+      to: S.string,
+      value: S.bigint,
+      txHash: S.string,
+      blockNumber: S.number,
+      chainId: S.number,
     },
     rateLimit: { calls: 200, per: "second" },
     // unordered = parallel dispatch, partition order preserved by `key`
@@ -59,10 +67,16 @@ export const publishToKafka = createEffect(
   },
   async ({ input }) => {
     await ensureConnected();
+    const { key, value, ...rest } = input;
     await producer.send({
-      topic: input.topic,
+      topic: TOPIC,
       acks: -1, // "all"
-      messages: [{ key: input.key, value: input.value }],
+      messages: [
+        {
+          key,
+          value: JSON.stringify({ ...rest, value: value.toString() }),
+        },
+      ],
     });
   }
 );
@@ -87,31 +101,31 @@ streams:
 
 …becomes:
 
-```typescript title="src/EventHandlers.ts"
-import { RocketPoolETH } from "generated";
-import { publishToKafka } from "./effects/kafka";
+```typescript title="src/handlers/RocketPoolETH.ts"
+import { indexer } from "envio";
+import { publishTransfer } from "../effects/kafka";
 
 const WHALE = "0x0338ce5020c447f7e668dc2ef778025ce3982662";
 const MIN = 2_000_000_000_000_000_000n;
 
-RocketPoolETH.Transfer.handler(async ({ event, context }) => {
-  const { from, to, value } = event.params;
+indexer.onEvent(
+  { contract: "RocketPoolETH", event: "Transfer" },
+  async ({ event, context }) => {
+    const { from, to, value } = event.params;
 
-  if (from.toLowerCase() === WHALE && value >= MIN) {
-    context.effect(publishToKafka, {
-      topic: "rocketpool.transfers",
-      key: from, // partition by sender so per-sender order is preserved
-      value: JSON.stringify({
+    if (from.toLowerCase() === WHALE && value >= MIN) {
+      context.effect(publishTransfer, {
+        key: from, // partition by sender so per-sender order is preserved
         from,
         to,
-        value: value.toString(),
+        value,
         txHash: event.transaction.hash,
         blockNumber: event.block.number,
-        chainId: event.chainId,
-      }),
-    });
-  }
-});
+        chainId: context.chain.id,
+      });
+    }
+  },
+);
 ```
 
 ### Mode picker
@@ -120,6 +134,7 @@ RocketPoolETH.Transfer.handler(async ({ event, context }) => {
 | --- | --- |
 | High throughput, partition by key | `unorderedAfterCommit` |
 | Strict global order across the whole topic | `orderedAfterCommit` (and a single-partition topic) |
+| Lowest latency, idempotent consumer | `unordered` (parallel, inline) or `ordered` (sequential, inline) — fires before the DB commit |
 
 ### Raw `fetch` alternative
 

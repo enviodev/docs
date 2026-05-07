@@ -35,22 +35,35 @@ export const twilioClient = twilio(
 
 ### Define the effect
 
+From/to numbers are baked in. The handler hands the effect raw values; the SMS body is built inside.
+
 ```typescript title="src/effects/twilio.ts"
 import { createEffect, S } from "envio";
 import { twilioClient } from "../clients/twilio";
 
-export const sendSms = createEffect(
+const FROM = process.env.TWILIO_FROM_NUMBER!;
+const TO = process.env.TWILIO_TO_NUMBER!;
+
+const formatUnits = (value: bigint, decimals = 18) => {
+  const base = 10n ** BigInt(decimals);
+  const whole = value / base;
+  const frac = value % base;
+  if (frac === 0n) return whole.toString();
+  return `${whole}.${frac.toString().padStart(decimals, "0").replace(/0+$/, "")}`;
+};
+
+export const notifyTransfer = createEffect(
   {
-    name: "sendSms",
-    input: { to: S.string, body: S.string },
+    name: "notifyTransfer",
+    input: { value: S.bigint },
     rateLimit: { calls: 1, per: "second" }, // Twilio default trial = 1 msg/sec
     mode: "orderedAfterCommit",
   },
   async ({ input }) => {
     await twilioClient.messages.create({
-      from: process.env.TWILIO_FROM_NUMBER!,
-      to: input.to,
-      body: input.body,
+      from: FROM,
+      to: TO,
+      body: `Transfer detected: ${formatUnits(input.value)} RETH`,
     });
   }
 );
@@ -101,22 +114,19 @@ chat:
 
 …becomes:
 
-```typescript title="src/EventHandlers.ts"
-import { RocketPoolETH } from "generated";
-import { sendSms } from "./effects/twilio";
-import { formatUnits } from "./utils/format";
+```typescript title="src/handlers/RocketPoolETH.ts"
+import { indexer } from "envio";
+import { notifyTransfer } from "../effects/twilio";
 
-const TO = process.env.TWILIO_TO_NUMBER!;
+indexer.onEvent(
+  { contract: "RocketPoolETH", event: "Transfer" },
+  async ({ event, context }) => {
+    const { value } = event.params;
+    if (value < 10n) return;
 
-RocketPoolETH.Transfer.handler(async ({ event, context }) => {
-  const { value } = event.params;
-  if (value < 10n) return;
-
-  context.effect(sendSms, {
-    to: TO,
-    body: `Transfer detected: ${formatUnits(value)} RETH`,
-  });
-});
+    context.effect(notifyTransfer, { value });
+  },
+);
 ```
 
-SMS is rate-limited and expensive — keep your conditions strict.
+SMS is rate-limited and expensive — keep your conditions strict. For time-sensitive alerts, switch the effect to `mode: "ordered"` so the SMS is dispatched inline rather than after the DB commit.

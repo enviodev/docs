@@ -65,10 +65,15 @@ After defining an effect, you can use `context.effect` to call it from your hand
 The `context.effect` function accepts an effect as the first argument and the effect's input as the second argument:
 
 ```typescript
-ERC20.Transfer.handler(async ({ event, context }) => {
-  const metadata = await context.effect(getMetadata, event.params.from);
-  // Process the event with the metadata
-});
+import { indexer } from "envio";
+
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    const metadata = await context.effect(getMetadata, event.params.from);
+    // Process the event with the metadata
+  },
+);
 ```
 
 ### Reading On-Chain State (eth_call)
@@ -229,7 +234,7 @@ The `mode` option controls **when** the effect runs, **how** it's ordered relati
 The two `*AfterCommit` modes are the right choice for **outbound messaging** — Redis, Kafka, RabbitMQ, SNS/SQS, Telegram, Discord, Slack, webhooks. They fire only after the batch's database transaction commits, so a downstream consumer never sees a message for a state that didn't actually persist. They also return `void`, so you don't need to `await` the call from your handler — the runtime takes care of dispatching after commit.
 
 ```typescript
-import { createEffect, S } from "envio";
+import { createEffect, indexer, S } from "envio";
 
 const notifyLargeSwap = createEffect(
   {
@@ -249,16 +254,19 @@ const notifyLargeSwap = createEffect(
   }
 );
 
-Pool.Swap.handler(async ({ event, context }) => {
-  const usd = event.params.amount;
-  if (usd > 1_000_000n) {
-    context.effect(notifyLargeSwap, {
-      usd,
-      blockNumber: event.block.number,
-    });
-    // no await — orderedAfterCommit returns void; runtime fires it after the batch's DB commit
-  }
-});
+indexer.onEvent(
+  { contract: "Pool", event: "Swap" },
+  async ({ event, context }) => {
+    const usd = event.params.amount;
+    if (usd > 1_000_000n) {
+      context.effect(notifyLargeSwap, {
+        usd,
+        blockNumber: event.block.number,
+      });
+      // no await — orderedAfterCommit returns void; runtime fires it after the batch's DB commit
+    }
+  },
+);
 ```
 
 #### When to pick which mode
@@ -266,10 +274,12 @@ Pool.Swap.handler(async ({ event, context }) => {
 - **`speculative`** — your call is idempotent, the input may not be final (preloading runs handlers ahead of confirmed state), and you only need a value back. RPC `eth_call`s, `fetch` of IPFS metadata, and any read where retries are cheap belong here.
 - **`unordered`** — you've already verified the input (e.g. derived it from a committed entity) and the work is parallel-safe. Use this for batched reads/writes that don't depend on each other.
 - **`ordered`** — the effect's correctness depends on something written earlier in the same batch. The runtime will run these calls sequentially in handler order.
-- **`unorderedAfterCommit`** — fire-and-forget sends where ordering doesn't matter: partitioned Kafka topics, Redis Streams keyed by tx hash, generic webhooks. Highest throughput.
+- **`unorderedAfterCommit`** — fire-and-forget sends where ordering doesn't matter: partitioned Kafka topics, Redis Streams keyed by tx hash, generic webhooks. Highest throughput, never sends for state that wasn't committed.
 - **`orderedAfterCommit`** — sends to a single ordered destination: a Telegram chat, a Slack channel, a single Kafka partition. The runtime preserves handler order across the batch.
 
-This mode is what makes the Effect API a good fit for **streams and chat bots** — you describe what to send and where, the runtime handles batching, ordering, and at-least-once delivery semantics. See the [Streams](/docs/HyperIndex/streams) and [Chat Bots](/docs/HyperIndex/chatbots) guides for end-to-end examples per provider.
+For outbound messaging, `*AfterCommit` is the safe default. If you've measured commit latency as the bottleneck and your downstream consumer is idempotent, you can also use the inline `unordered` / `ordered` modes for **lower latency** sends — same parallel/sequential semantics, but they fire before the DB commit and return a value. The tradeoff is weaker delivery: a failed batch can still produce a delivered message, so retries on the next run are duplicates rather than first-time sends.
+
+This is what makes the Effect API a good fit for **streams and chat bots** — you describe what to send and where, the runtime handles batching, ordering, and delivery semantics. See the [Streams](/docs/HyperIndex/streams) and [Chat Bots](/docs/HyperIndex/chatbots) guides for end-to-end examples per provider.
 
 ### Sending Notifications (Webhooks)
 
@@ -304,17 +314,22 @@ export const sendWebhook = createEffect(
 Then call it from your handler:
 
 ```typescript
-MyContract.LargeTransfer.handler(async ({ event, context }) => {
-  context.effect(sendWebhook, {
-    event: "large_transfer",
-    data: JSON.stringify({
-      from: event.params.from,
-      to: event.params.to,
-      amount: event.params.value.toString(),
-    }),
-  });
-  // no await — `unorderedAfterCommit` returns void and dispatches after the DB commit
-});
+import { indexer } from "envio";
+
+indexer.onEvent(
+  { contract: "MyContract", event: "LargeTransfer" },
+  async ({ event, context }) => {
+    context.effect(sendWebhook, {
+      event: "large_transfer",
+      data: JSON.stringify({
+        from: event.params.from,
+        to: event.params.to,
+        amount: event.params.value.toString(),
+      }),
+    });
+    // no await — `unorderedAfterCommit` returns void and dispatches after the DB commit
+  },
+);
 ```
 
 Because the effect runs **after** the batch's DB commit, the webhook will only fire for state that actually persisted — a reorg or a failed batch never produces a phantom notification. For send-only effects you typically don't need `cache: true`; the mode itself prevents duplicate sends within a successful run.

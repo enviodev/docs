@@ -16,15 +16,28 @@ Post messages to a Discord channel using either an [incoming webhook](https://su
 
 ### Define the effect
 
+Webhook URL is baked into the effect. The embed is built inside the effect body — `input` is just raw event data.
+
 ```typescript title="src/effects/discord.ts"
 import { createEffect, S } from "envio";
 
-export const sendDiscord = createEffect(
+const formatUnits = (value: bigint, decimals = 18) => {
+  const base = 10n ** BigInt(decimals);
+  const whole = value / base;
+  const frac = value % base;
+  if (frac === 0n) return whole.toString();
+  return `${whole}.${frac.toString().padStart(decimals, "0").replace(/0+$/, "")}`;
+};
+
+export const notifyTransfer = createEffect(
   {
-    name: "sendDiscord",
+    name: "notifyTransfer",
     input: {
-      content: S.string,
-      embedsJson: S.optional(S.string), // JSON-encoded embeds array
+      from: S.string,
+      to: S.string,
+      value: S.bigint,
+      contract: S.string,
+      txHash: S.string,
     },
     rateLimit: { calls: 5, per: "second" }, // Discord webhook limit
     mode: "orderedAfterCommit",
@@ -34,8 +47,18 @@ export const sendDiscord = createEffect(
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        content: input.content,
-        embeds: input.embedsJson ? JSON.parse(input.embedsJson) : undefined,
+        content: "**New RETH Transfer Event**",
+        embeds: [
+          {
+            title: `${formatUnits(input.value)} RETH transferred`,
+            url: `https://etherscan.io/tx/${input.txHash}`,
+            fields: [
+              { name: "From", value: input.from, inline: true },
+              { name: "To", value: input.to, inline: true },
+              { name: "Contract", value: input.contract },
+            ],
+          },
+        ],
         allowed_mentions: { parse: [] },
       }),
     });
@@ -68,31 +91,26 @@ chat:
 
 …becomes:
 
-```typescript title="src/EventHandlers.ts"
-import { RocketPoolETH } from "generated";
-import { sendDiscord } from "./effects/discord";
-import { formatUnits } from "./utils/format";
+```typescript title="src/handlers/RocketPoolETH.ts"
+import { indexer } from "envio";
+import { notifyTransfer } from "../effects/discord";
 
-RocketPoolETH.Transfer.handler(async ({ event, context }) => {
-  const { from, to, value } = event.params;
+indexer.onEvent(
+  { contract: "RocketPoolETH", event: "Transfer" },
+  async ({ event, context }) => {
+    const { from, to, value } = event.params;
 
-  if (value < 10n || value > 2_000_000_000_000_000_000n) return;
+    if (value < 10n || value > 2_000_000_000_000_000_000n) return;
 
-  context.effect(sendDiscord, {
-    content: "**New RETH Transfer Event**",
-    embedsJson: JSON.stringify([
-      {
-        title: `${formatUnits(value)} RETH transferred`,
-        url: `https://etherscan.io/tx/${event.transaction.hash}`,
-        fields: [
-          { name: "From", value: from, inline: true },
-          { name: "To", value: to, inline: true },
-          { name: "Contract", value: event.srcAddress },
-        ],
-      },
-    ]),
-  });
-});
+    context.effect(notifyTransfer, {
+      from,
+      to,
+      value,
+      contract: event.srcAddress,
+      txHash: event.transaction.hash,
+    });
+  },
+);
 ```
 
-Discord embeds give you richer formatting than plain text — fields, colors, thumbnails — without any extra dependency. If you'd rather keep things simple, just send `content` as a markdown string and skip `embeds`.
+Discord embeds give you richer formatting than plain text — fields, colors, thumbnails — without any extra dependency. If you'd rather keep things simple, replace `embeds` with a markdown `content` string. For lower latency, switch the effect to `mode: "ordered"` (or `"unordered"` if order doesn't matter) — Discord is rate-limited so the gain is small, but it skips the wait for the DB commit.

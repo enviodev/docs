@@ -16,20 +16,28 @@ Trigger PagerDuty incidents using the [Events API v2](https://developer.pagerdut
 
 ### Define the effect
 
+Routing key, severity, and the alert template are baked into the effect — `input` is just the raw event data.
+
 ```typescript title="src/effects/pagerduty.ts"
 import { createEffect, S } from "envio";
 
-type Severity = "info" | "warning" | "error" | "critical";
+const formatUnits = (value: bigint, decimals = 18) => {
+  const base = 10n ** BigInt(decimals);
+  const whole = value / base;
+  const frac = value % base;
+  if (frac === 0n) return whole.toString();
+  return `${whole}.${frac.toString().padStart(decimals, "0").replace(/0+$/, "")}`;
+};
 
-export const triggerPagerDuty = createEffect(
+export const whaleAlert = createEffect(
   {
-    name: "triggerPagerDuty",
+    name: "whaleAlert",
     input: {
-      severity: S.string, // Severity
-      summary: S.string,
-      source: S.string,
-      dedupKey: S.optional(S.string),
-      detailsJson: S.optional(S.string), // JSON-encoded custom_details
+      from: S.string,
+      to: S.string,
+      value: S.bigint,
+      contract: S.string,
+      txHash: S.string,
     },
     rateLimit: { calls: 60, per: "minute" },
     mode: "orderedAfterCommit",
@@ -41,14 +49,18 @@ export const triggerPagerDuty = createEffect(
       body: JSON.stringify({
         routing_key: process.env.PAGERDUTY_ROUTING_KEY,
         event_action: "trigger",
-        dedup_key: input.dedupKey,
+        // Stable dedup_key prevents one alert per event from spamming PagerDuty if you re-run.
+        dedup_key: input.txHash,
         payload: {
-          summary: input.summary,
-          source: input.source,
-          severity: input.severity as Severity,
-          custom_details: input.detailsJson
-            ? JSON.parse(input.detailsJson)
-            : undefined,
+          summary: `Whale moved ${formatUnits(input.value)} RETH`,
+          source: input.contract,
+          severity: "critical",
+          custom_details: {
+            from: input.from,
+            to: input.to,
+            value: input.value.toString(),
+            link: `https://etherscan.io/tx/${input.txHash}`,
+          },
         },
       }),
     });
@@ -82,31 +94,27 @@ chat:
 
 …becomes:
 
-```typescript title="src/EventHandlers.ts"
-import { RocketPoolETH } from "generated";
-import { triggerPagerDuty } from "./effects/pagerduty";
-import { formatUnits } from "./utils/format";
+```typescript title="src/handlers/RocketPoolETH.ts"
+import { indexer } from "envio";
+import { whaleAlert } from "../effects/pagerduty";
 
 const WHALE = "0x0338ce5020c447f7e668dc2ef778025ce3982662";
 
-RocketPoolETH.Transfer.handler(async ({ event, context }) => {
-  const { from, to, value } = event.params;
-  if (from.toLowerCase() !== WHALE || value < 10n) return;
+indexer.onEvent(
+  { contract: "RocketPoolETH", event: "Transfer" },
+  async ({ event, context }) => {
+    const { from, to, value } = event.params;
+    if (from.toLowerCase() !== WHALE || value < 10n) return;
 
-  context.effect(triggerPagerDuty, {
-    severity: "critical",
-    summary: `Whale moved ${formatUnits(value)} RETH`,
-    source: event.srcAddress,
-    // dedup_key prevents one alert per event from spamming PagerDuty if you re-run
-    dedupKey: event.transaction.hash,
-    detailsJson: JSON.stringify({
+    context.effect(whaleAlert, {
       from,
       to,
-      value: value.toString(),
-      link: `https://etherscan.io/tx/${event.transaction.hash}`,
-    }),
-  });
-});
+      value,
+      contract: event.srcAddress,
+      txHash: event.transaction.hash,
+    });
+  },
+);
 ```
 
-`dedupKey` is the cleanest way to guarantee at-most-one incident per transaction even across reruns.
+The `dedup_key` baked into the effect (the tx hash) guarantees at-most-one incident per transaction even across reruns. For incidents that need to fire ASAP, switch the effect to `mode: "ordered"` so the trigger runs inline within the batch — the dedup key still protects you from duplicates if the batch later fails and re-runs.

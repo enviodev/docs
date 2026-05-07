@@ -16,20 +16,29 @@ Create OpsGenie alerts using the [Alert API](https://docs.opsgenie.com/docs/aler
 
 ### Define the effect
 
+API key, priority, and the alert template are baked into the effect. `input` is just the raw event data.
+
 ```typescript title="src/effects/opsgenie.ts"
 import { createEffect, S } from "envio";
 
-type Priority = "P1" | "P2" | "P3" | "P4" | "P5";
+const formatUnits = (value: bigint, decimals = 18) => {
+  const base = 10n ** BigInt(decimals);
+  const whole = value / base;
+  const frac = value % base;
+  if (frac === 0n) return whole.toString();
+  return `${whole}.${frac.toString().padStart(decimals, "0").replace(/0+$/, "")}`;
+};
 
-export const createOpsGenieAlert = createEffect(
+export const whaleAlert = createEffect(
   {
-    name: "createOpsGenieAlert",
+    name: "whaleAlert",
     input: {
-      message: S.string,
-      priority: S.string, // Priority
-      alias: S.optional(S.string),
-      description: S.optional(S.string),
-      detailsJson: S.optional(S.string), // JSON-encoded details map
+      from: S.string,
+      to: S.string,
+      value: S.bigint,
+      txHash: S.string,
+      chainId: S.number,
+      blockNumber: S.number,
     },
     rateLimit: { calls: 100, per: "minute" },
     mode: "orderedAfterCommit",
@@ -42,11 +51,20 @@ export const createOpsGenieAlert = createEffect(
         Authorization: `GenieKey ${process.env.OPSGENIE_API_KEY}`,
       },
       body: JSON.stringify({
-        message: input.message,
-        priority: input.priority as Priority,
-        alias: input.alias,
-        description: input.description,
-        details: input.detailsJson ? JSON.parse(input.detailsJson) : undefined,
+        message: `Whale moved ${formatUnits(input.value)} RETH`,
+        priority: "P1",
+        // alias deduplicates alerts in OpsGenie — keep it stable per logical event.
+        alias: input.txHash,
+        description: [
+          `from: ${input.from}`,
+          `to: ${input.to}`,
+          `amount: ${formatUnits(input.value, 18)}`,
+          `etherscan: https://etherscan.io/tx/${input.txHash}`,
+        ].join("\n"),
+        details: {
+          chainId: input.chainId,
+          block: input.blockNumber,
+        },
         source: "hyperindex",
       }),
     });
@@ -80,33 +98,28 @@ chat:
 
 …becomes:
 
-```typescript title="src/EventHandlers.ts"
-import { RocketPoolETH } from "generated";
-import { createOpsGenieAlert } from "./effects/opsgenie";
-import { formatUnits } from "./utils/format";
+```typescript title="src/handlers/RocketPoolETH.ts"
+import { indexer } from "envio";
+import { whaleAlert } from "../effects/opsgenie";
 
 const WHALE = "0x0338ce5020c447f7e668dc2ef778025ce3982662";
 
-RocketPoolETH.Transfer.handler(async ({ event, context }) => {
-  const { from, to, value } = event.params;
-  if (from.toLowerCase() !== WHALE || value < 10n) return;
+indexer.onEvent(
+  { contract: "RocketPoolETH", event: "Transfer" },
+  async ({ event, context }) => {
+    const { from, to, value } = event.params;
+    if (from.toLowerCase() !== WHALE || value < 10n) return;
 
-  context.effect(createOpsGenieAlert, {
-    priority: "P1",
-    message: `Whale moved ${formatUnits(value)} RETH`,
-    alias: event.transaction.hash, // dedup across reruns
-    description: [
-      `from: ${from}`,
-      `to: ${to}`,
-      `amount: ${formatUnits(value, 18)}`,
-      `etherscan: https://etherscan.io/tx/${event.transaction.hash}`,
-    ].join("\n"),
-    detailsJson: JSON.stringify({
-      chainId: event.chainId,
-      block: event.block.number,
-    }),
-  });
-});
+    context.effect(whaleAlert, {
+      from,
+      to,
+      value,
+      txHash: event.transaction.hash,
+      chainId: context.chain.id,
+      blockNumber: event.block.number,
+    });
+  },
+);
 ```
 
-`alias` deduplicates alerts in OpsGenie — keep it stable per logical event (e.g. the tx hash) to avoid duplicate alerts on indexer reruns.
+For time-sensitive alerts, switch the effect to `mode: "ordered"` so the alert is created inline within the batch; the `alias` still protects you from duplicates if the batch later fails.

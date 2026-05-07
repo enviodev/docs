@@ -16,27 +16,46 @@ Post to a Slack channel using either an [incoming webhook](https://api.slack.com
 
 ### Define the effect
 
+Webhook URL is baked in. The message string is built inside the effect — `input` is just raw event data.
+
 ```typescript title="src/effects/slack.ts"
 import { createEffect, S } from "envio";
 
-export const sendSlack = createEffect(
+const formatUnits = (value: bigint, decimals = 18) => {
+  const base = 10n ** BigInt(decimals);
+  const whole = value / base;
+  const frac = value % base;
+  if (frac === 0n) return whole.toString();
+  return `${whole}.${frac.toString().padStart(decimals, "0").replace(/0+$/, "")}`;
+};
+
+export const notifyTransfer = createEffect(
   {
-    name: "sendSlack",
+    name: "notifyTransfer",
     input: {
-      text: S.string,
-      blocksJson: S.optional(S.string), // JSON-encoded Block Kit array
+      from: S.string,
+      to: S.string,
+      value: S.bigint,
+      contract: S.string,
+      txHash: S.string,
     },
     rateLimit: { calls: 1, per: "second" }, // Slack: ~1 msg/sec/channel
     mode: "orderedAfterCommit",
   },
   async ({ input, context }) => {
+    const text = [
+      `*New RETH Transfer Event*`,
+      `from: ${input.from}`,
+      `to: ${input.to}`,
+      `amount: ${formatUnits(input.value, 18)}`,
+      `RETH contract: ${input.contract}`,
+      `<https://etherscan.io/tx/${input.txHash}|etherscan>`,
+    ].join("\n");
+
     const res = await fetch(process.env.SLACK_WEBHOOK_URL!, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        text: input.text,
-        blocks: input.blocksJson ? JSON.parse(input.blocksJson) : undefined,
-      }),
+      body: JSON.stringify({ text }),
     });
     if (!res.ok) {
       context.log.error(`Slack failed: ${res.status} ${await res.text()}`);
@@ -69,27 +88,26 @@ chat:
 
 …becomes:
 
-```typescript title="src/EventHandlers.ts"
-import { RocketPoolETH } from "generated";
-import { sendSlack } from "./effects/slack";
-import { formatUnits } from "./utils/format";
+```typescript title="src/handlers/RocketPoolETH.ts"
+import { indexer } from "envio";
+import { notifyTransfer } from "../effects/slack";
 
-RocketPoolETH.Transfer.handler(async ({ event, context }) => {
-  const { from, to, value } = event.params;
+indexer.onEvent(
+  { contract: "RocketPoolETH", event: "Transfer" },
+  async ({ event, context }) => {
+    const { from, to, value } = event.params;
 
-  if (value < 10n || value > 2_000_000_000_000_000_000n) return;
+    if (value < 10n || value > 2_000_000_000_000_000_000n) return;
 
-  const text = [
-    `*New RETH Transfer Event*`,
-    `from: ${from}`,
-    `to: ${to}`,
-    `amount: ${formatUnits(value, 18)}`,
-    `RETH contract: ${event.srcAddress}`,
-    `<https://etherscan.io/tx/${event.transaction.hash}|etherscan>`,
-  ].join("\n");
-
-  context.effect(sendSlack, { text });
-});
+    context.effect(notifyTransfer, {
+      from,
+      to,
+      value,
+      contract: event.srcAddress,
+      txHash: event.transaction.hash,
+    });
+  },
+);
 ```
 
-For richer layouts (buttons, headers, dividers) build a [Block Kit](https://api.slack.com/block-kit) array and pass it as `blocksJson: JSON.stringify(blocks)`.
+For richer layouts (buttons, headers, dividers) build a [Block Kit](https://api.slack.com/block-kit) array inside the effect body and add it to the request as `blocks`. If you need lower latency, switch the effect to `mode: "ordered"` — the message is posted inline within the batch instead of after the DB commit.

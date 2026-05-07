@@ -33,29 +33,34 @@ export const getChannel = () =>
 
 ### Define the effect
 
+Exchange and routing key are static config — bake them in. `input` is just the per-event values.
+
 ```typescript title="src/effects/rabbitmq.ts"
 import { createEffect, S } from "envio";
 import { getChannel } from "../clients/rabbitmq";
 
-export const publishToRabbit = createEffect(
+const EXCHANGE = "transfer";
+const ROUTING_KEY = "my-routing-key";
+
+export const publishTransfer = createEffect(
   {
-    name: "publishToRabbit",
+    name: "publishTransfer",
     input: {
-      exchange: S.string,
-      routingKey: S.string,
-      body: S.string,
+      from: S.string,
+      to: S.string,
+      value: S.bigint,
+      txHash: S.string,
     },
     rateLimit: { calls: 200, per: "second" },
     mode: "unorderedAfterCommit",
   },
   async ({ input }) => {
     const ch = await getChannel();
-    ch.publish(
-      input.exchange,
-      input.routingKey,
-      Buffer.from(input.body),
-      { contentType: "application/json", persistent: true }
-    );
+    const body = JSON.stringify({ ...input, value: input.value.toString() });
+    ch.publish(EXCHANGE, ROUTING_KEY, Buffer.from(body), {
+      contentType: "application/json",
+      persistent: true,
+    });
   }
 );
 ```
@@ -80,30 +85,29 @@ streams:
 
 …becomes:
 
-```typescript title="src/EventHandlers.ts"
-import { RocketPoolETH } from "generated";
-import { publishToRabbit } from "./effects/rabbitmq";
+```typescript title="src/handlers/RocketPoolETH.ts"
+import { indexer } from "envio";
+import { publishTransfer } from "../effects/rabbitmq";
 
 const WHALE = "0x0338ce5020c447f7e668dc2ef778025ce3982662";
 const MIN = 2_000_000_000_000_000_000n;
 const MAX = 4_000_000_000_000_000_000n;
 
-RocketPoolETH.Transfer.handler(async ({ event, context }) => {
-  const { from, to, value } = event.params;
+indexer.onEvent(
+  { contract: "RocketPoolETH", event: "Transfer" },
+  async ({ event, context }) => {
+    const { from, to, value } = event.params;
 
-  if (from.toLowerCase() === WHALE && value >= MIN && value <= MAX) {
-    context.effect(publishToRabbit, {
-      exchange: "transfer",
-      routingKey: "my-routing-key",
-      body: JSON.stringify({
+    if (from.toLowerCase() === WHALE && value >= MIN && value <= MAX) {
+      context.effect(publishTransfer, {
         from,
         to,
-        value: value.toString(),
+        value,
         txHash: event.transaction.hash,
-      }),
-    });
-  }
-});
+      });
+    }
+  },
+);
 ```
 
-Pick `orderedAfterCommit` if your consumer needs strict per-batch ordering. For `fanout` exchanges, leave `routingKey` as an empty string.
+Pick `orderedAfterCommit` if your consumer needs strict per-batch ordering. For `fanout` exchanges, leave `routingKey` as an empty string. If your consumer is idempotent and you want lower latency, switch the effect to `mode: "unordered"` (or `"ordered"`) to publish inline before the DB commit.
