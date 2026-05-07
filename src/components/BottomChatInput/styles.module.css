@@ -35,7 +35,7 @@
 
 .inputForm {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 0.5rem;
   width: 100%;
 }
@@ -50,6 +50,13 @@
   font-size: 0.875rem;
   outline: none;
   transition: all 0.2s;
+  /* Textarea-specific: prevent manual resize, no scrollbar until max height */
+  resize: none;
+  overflow-y: auto;
+  font-family: inherit;
+  line-height: 1.4;
+  min-height: 1.4em;
+  max-height: 200px;
 }
 
 .input::placeholder {
@@ -403,6 +410,34 @@
   padding-left: 0.75rem;
   border-left: 3px solid var(--ifm-color-emphasis-400);
   color: var(--ifm-color-emphasis-700);
+}
+
+.typingIndicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 0;
+}
+
+.typingIndicator span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ifm-color-emphasis-600);
+  animation: typingBlink 1.2s infinite ease-in-out;
+}
+
+.typingIndicator span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typingIndicator span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typingBlink {
+  0%, 60%, 100% { opacity: 0.25; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-2px); }
 }
 
 @keyframes spin {

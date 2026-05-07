@@ -57,6 +57,7 @@ function BottomChatInput() {
   const inputRef = useRef(null);
   const messagesEndRef = useRef(null);
   const isResizingRef = useRef(false);
+  const abortControllerRef = useRef(null);
 
   // Load persisted sidebar width on mount (client-only)
   useEffect(() => {
@@ -193,15 +194,40 @@ function BottomChatInput() {
     });
   };
 
-  const streamAnswer = async (userQuestion, aiIndex) => {
+  const HISTORY_TURNS = 2;
+  // Client sends generously-capped raw content — the server compresses older
+  // AI responses via summarization so end-of-message content isn't lost.
+  const HISTORY_PAYLOAD_CAP = 6000;
+
+  const buildHistoryPayload = (priorMessages) => {
+    return priorMessages
+      .filter((m) => m && typeof m.text === 'string' && m.text.trim().length > 0)
+      .slice(-HISTORY_TURNS * 2)
+      .map((m) => {
+        const content = m.text.length > HISTORY_PAYLOAD_CAP
+          ? m.text.slice(0, HISTORY_PAYLOAD_CAP) + '…'
+          : m.text;
+        return {
+          role: m.type === 'user' ? 'user' : 'assistant',
+          content,
+        };
+      });
+  };
+
+  const streamAnswer = async (userQuestion, aiIndex, history) => {
+    abortControllerRef.current = new AbortController();
+    const { signal } = abortControllerRef.current;
+
     let response;
     try {
       response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: userQuestion }),
+        body: JSON.stringify({ question: userQuestion, history }),
+        signal,
       });
-    } catch {
+    } catch (err) {
+      if (err?.name === 'AbortError') return; // user clicked stop before headers arrived
       setAiMessage(aiIndex, "Sorry — I couldn't fetch an answer. Please try again.");
       return;
     }
@@ -216,6 +242,7 @@ function BottomChatInput() {
     let buffer = '';
     let received = false;
     let errored = false;
+    let aborted = false;
 
     try {
       while (true) {
@@ -253,8 +280,19 @@ function BottomChatInput() {
           }
         }
       }
-    } catch {
-      errored = true;
+    } catch (err) {
+      if (err?.name === 'AbortError') {
+        aborted = true;
+      } else {
+        errored = true;
+      }
+    }
+
+    if (aborted) {
+      // User stopped — leave whatever was streamed in place; if nothing was
+      // streamed, show a brief "[stopped]" marker so the bubble isn't blank.
+      if (!received) setAiMessage(aiIndex, '_[stopped]_');
+      return;
     }
 
     if (errored && !received) {
@@ -264,12 +302,61 @@ function BottomChatInput() {
     }
   };
 
+  const handleStop = () => {
+    abortControllerRef.current?.abort();
+  };
+
+  // Submit button when idle, Stop button when streaming. Used by both forms.
+  const submitOrStopButton = isStreaming ? (
+    <button
+      type="button"
+      onClick={handleStop}
+      className={styles.submitButton}
+      aria-label="Stop generating"
+      title="Stop"
+    >
+      <svg
+        width="12"
+        height="12"
+        viewBox="0 0 12 12"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect width="12" height="12" rx="2" />
+      </svg>
+    </button>
+  ) : (
+    <button
+      type="submit"
+      className={styles.submitButton}
+      disabled={!question.trim()}
+      aria-label="Send message"
+    >
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M18 2L9 11M18 2L12 18L9 11M18 2L2 8L9 11"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </button>
+  );
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isStreaming) return;
     if (!question.trim()) return;
 
     const userQuestion = question.trim();
+    const history = buildHistoryPayload(messages);
 
     const aiIndex = messages.length + 1;
     setMessages(prev => [
@@ -287,7 +374,7 @@ function BottomChatInput() {
     }, 100);
 
     try {
-      await streamAnswer(userQuestion, aiIndex);
+      await streamAnswer(userQuestion, aiIndex, history);
     } finally {
       setIsStreaming(false);
     }
@@ -331,30 +418,24 @@ function BottomChatInput() {
                 </svg>
               </button>
             )}
-            <input
-              type="text"
+            <textarea
+              rows={1}
               placeholder="Ask a question about Envio..."
               value={question}
-              onChange={(e) => setQuestion(e.target.value)}
+              onChange={(e) => {
+                setQuestion(e.target.value);
+                e.target.style.height = 'auto';
+                e.target.style.height = Math.min(e.target.scrollHeight, 150) + 'px';
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSubmit(e);
+                }
+              }}
               className={styles.input}
             />
-            <button type="submit" className={styles.submitButton} disabled={isStreaming || !question.trim()}>
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M18 2L9 11M18 2L12 18L9 11M18 2L2 8L9 11"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
+            {submitOrStopButton}
           </form>
         </div>
       )}
@@ -406,12 +487,20 @@ function BottomChatInput() {
                     >
                       <div className={styles.messageText}>
                         {message.type === 'ai' ? (
-                          <ReactMarkdown
-                            remarkPlugins={[remarkGfm]}
-                            components={markdownComponents}
-                          >
-                            {message.text}
-                          </ReactMarkdown>
+                          message.text ? (
+                            <ReactMarkdown
+                              remarkPlugins={[remarkGfm]}
+                              components={markdownComponents}
+                            >
+                              {message.text}
+                            </ReactMarkdown>
+                          ) : isStreaming && index === messages.length - 1 ? (
+                            <span className={styles.typingIndicator} aria-label="Loading answer">
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                            </span>
+                          ) : null
                         ) : (
                           message.text
                         )}
@@ -425,31 +514,25 @@ function BottomChatInput() {
             {/* Input at bottom of side panel */}
             <div className={styles.panelInputContainer}>
               <form onSubmit={handleSubmit} className={styles.inputForm}>
-                <input
-                  type="text"
+                <textarea
+                  rows={1}
                   placeholder="Ask a question about Envio..."
                   value={question}
-                  onChange={(e) => setQuestion(e.target.value)}
+                  onChange={(e) => {
+                    setQuestion(e.target.value);
+                    e.target.style.height = 'auto';
+                    e.target.style.height = Math.min(e.target.scrollHeight, 200) + 'px';
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault();
+                      handleSubmit(e);
+                    }
+                  }}
                   className={styles.input}
                   autoFocus
                 />
-                <button type="submit" className={styles.submitButton} disabled={isStreaming || !question.trim()}>
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M18 2L9 11M18 2L12 18L9 11M18 2L2 8L9 11"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
+                {submitOrStopButton}
               </form>
             </div>
           </div>
