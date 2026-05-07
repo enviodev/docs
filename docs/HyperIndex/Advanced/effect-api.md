@@ -244,10 +244,10 @@ const notifyLargeSwap = createEffect(
   },
   async ({ input }) => {
     const text = `Large swap: $${input.usd.toLocaleString()} in block ${input.blockNumber}`;
-    await fetch(`https://api.telegram.org/bot${process.env.TG_BOT_TOKEN}/sendMessage`, {
+    await fetch(`https://api.telegram.org/bot${process.env.ENVIO_TG_BOT_TOKEN}/sendMessage`, {
       method: "POST",
       body: JSON.stringify({
-        chat_id: process.env.TG_CHAT_ID,
+        chat_id: process.env.ENVIO_TG_CHAT_ID,
         text,
       }),
     });

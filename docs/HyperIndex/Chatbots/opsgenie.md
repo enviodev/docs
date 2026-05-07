@@ -11,7 +11,7 @@ Create OpsGenie alerts using the [Alert API](https://docs.opsgenie.com/docs/aler
 ### Integration setup
 
 1. OpsGenie → **Settings → Integrations → API**, then copy the API key.
-2. Set `OPSGENIE_API_KEY` in your `.env`.
+2. Set `ENVIO_OPSGENIE_API_KEY` in your `.env`.
 3. Use `https://api.opsgenie.com` (US) or `https://api.eu.opsgenie.com` (EU) as the host.
 
 ### Define the effect
@@ -48,7 +48,7 @@ export const whaleAlert = createEffect(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `GenieKey ${process.env.OPSGENIE_API_KEY}`,
+        Authorization: `GenieKey ${process.env.ENVIO_OPSGENIE_API_KEY}`,
       },
       body: JSON.stringify({
         message: `Whale moved ${formatUnits(input.value)} RETH`,
@@ -83,7 +83,7 @@ The rindexer config…
 ```yaml
 chat:
   opsgenie:
-    - api_key: ${OPSGENIE_API_KEY}
+    - api_key: ${ENVIO_OPSGENIE_API_KEY}
       priority: P1
       messages:
         - event_name: Transfer

@@ -34,11 +34,11 @@ export const notifyTransfer = createEffect(
     mode: "unorderedAfterCommit",
   },
   async ({ input, context }) => {
-    const res = await fetch(process.env.WEBHOOK_URL!, {
+    const res = await fetch(process.env.ENVIO_WEBHOOK_URL!, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-envio-shared-secret": process.env.WEBHOOK_SHARED_SECRET ?? "",
+        "x-envio-shared-secret": process.env.ENVIO_WEBHOOK_SHARED_SECRET ?? "",
       },
       body: JSON.stringify({
         event: "RocketPoolTransfer",

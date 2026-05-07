@@ -12,7 +12,7 @@ Trigger PagerDuty incidents using the [Events API v2](https://developer.pagerdut
 
 1. PagerDuty → **Services → Service Directory → your service → Integrations → Add → Events API v2**.
 2. Copy the **Integration Key** (a.k.a. routing key).
-3. Set `PAGERDUTY_ROUTING_KEY` in your `.env`.
+3. Set `ENVIO_PAGERDUTY_ROUTING_KEY` in your `.env`.
 
 ### Define the effect
 
@@ -47,7 +47,7 @@ export const whaleAlert = createEffect(
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        routing_key: process.env.PAGERDUTY_ROUTING_KEY,
+        routing_key: process.env.ENVIO_PAGERDUTY_ROUTING_KEY,
         event_action: "trigger",
         // Stable dedup_key prevents one alert per event from spamming PagerDuty if you re-run.
         dedup_key: input.txHash,
@@ -79,7 +79,7 @@ The rindexer config…
 ```yaml
 chat:
   pagerduty:
-    - routing_key: ${PAGERDUTY_ROUTING_KEY}
+    - routing_key: ${ENVIO_PAGERDUTY_ROUTING_KEY}
       severity: critical
       messages:
         - event_name: Transfer

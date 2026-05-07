@@ -12,7 +12,7 @@ Post messages to a Discord channel using either an [incoming webhook](https://su
 
 1. Channel **Settings → Integrations → Webhooks → New Webhook**.
 2. Copy the webhook URL.
-3. Set `DISCORD_WEBHOOK_URL` in your `.env`.
+3. Set `ENVIO_DISCORD_WEBHOOK_URL` in your `.env`.
 
 ### Define the effect
 
@@ -43,7 +43,7 @@ export const notifyTransfer = createEffect(
     mode: "orderedAfterCommit",
   },
   async ({ input, context }) => {
-    const res = await fetch(process.env.DISCORD_WEBHOOK_URL!, {
+    const res = await fetch(process.env.ENVIO_DISCORD_WEBHOOK_URL!, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

@@ -12,7 +12,7 @@ Post to a Slack channel using either an [incoming webhook](https://api.slack.com
 
 1. Create a Slack app and enable **Incoming Webhooks**.
 2. Add a new webhook for the target channel and copy the URL.
-3. Set `SLACK_WEBHOOK_URL` in your `.env`.
+3. Set `ENVIO_SLACK_WEBHOOK_URL` in your `.env`.
 
 ### Define the effect
 
@@ -52,7 +52,7 @@ export const notifyTransfer = createEffect(
       `<https://etherscan.io/tx/${input.txHash}|etherscan>`,
     ].join("\n");
 
-    const res = await fetch(process.env.SLACK_WEBHOOK_URL!, {
+    const res = await fetch(process.env.ENVIO_SLACK_WEBHOOK_URL!, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text }),

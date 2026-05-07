@@ -12,7 +12,7 @@ Send Telegram messages from your handlers via the [Bot API](https://core.telegra
 
 1. Open [@BotFather](https://t.me/BotFather) in Telegram, run `/newbot`, and copy the bot token.
 2. Add the bot to a chat (or DM it) and grab the chat ID. The simplest way is to send any message and visit `https://api.telegram.org/bot<token>/getUpdates` — `chat.id` is in the JSON.
-3. Set `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` in your `.env`.
+3. Set `ENVIO_TELEGRAM_BOT_TOKEN` and `ENVIO_TELEGRAM_CHAT_ID` in your `.env`.
 
 ### Define the effect
 
@@ -21,8 +21,8 @@ Bot token and chat ID are static — bake them in. The handler hands the effect 
 ```typescript title="src/effects/telegram.ts"
 import { createEffect, S } from "envio";
 
-const ENDPOINT = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`;
-const CHAT_ID = process.env.TELEGRAM_CHAT_ID!;
+const ENDPOINT = `https://api.telegram.org/bot${process.env.ENVIO_TELEGRAM_BOT_TOKEN}/sendMessage`;
+const CHAT_ID = process.env.ENVIO_TELEGRAM_CHAT_ID!;
 
 export const notifyTransfer = createEffect(
   {
@@ -80,7 +80,7 @@ The rindexer config…
 ```yaml
 chat:
   telegram:
-    - bot_token: ${TELEGRAM_BOT_TOKEN}
+    - bot_token: ${ENVIO_TELEGRAM_BOT_TOKEN}
       chat_id: -4223616270
       messages:
         - event_name: Transfer
@@ -148,8 +148,8 @@ const sendTo = (chatId: string, label: string) =>
     },
   );
 
-export const whaleAlert = sendTo(process.env.TELEGRAM_WHALE_CHAT_ID!, "🐋 Whale");
-export const notableAlert = sendTo(process.env.TELEGRAM_NOTABLE_CHAT_ID!, "Heads up");
+export const whaleAlert = sendTo(process.env.ENVIO_TELEGRAM_WHALE_CHAT_ID!, "🐋 Whale");
+export const notableAlert = sendTo(process.env.ENVIO_TELEGRAM_NOTABLE_CHAT_ID!, "Heads up");
 ```
 
 ```typescript title="src/handlers/RocketPoolETH.ts"

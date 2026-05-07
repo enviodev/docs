@@ -24,7 +24,7 @@ let chanPromise: Promise<amqp.Channel> | undefined;
 
 export const getChannel = () =>
   (chanPromise ??= (async () => {
-    const conn = await amqp.connect(process.env.RABBITMQ_URL!);
+    const conn = await amqp.connect(process.env.ENVIO_RABBITMQ_URL!);
     const ch = await conn.createChannel();
     await ch.assertExchange("transfer", "direct", { durable: true });
     return ch;

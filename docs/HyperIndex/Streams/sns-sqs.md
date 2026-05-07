@@ -23,12 +23,12 @@ pnpm add @aws-sdk/client-sqs
 import { SNSClient } from "@aws-sdk/client-sns";
 import { SQSClient } from "@aws-sdk/client-sqs";
 
-const region = process.env.AWS_REGION ?? "us-east-1";
+const region = process.env.ENVIO_AWS_REGION ?? "us-east-1";
 const credentials = {
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-  ...(process.env.AWS_SESSION_TOKEN
-    ? { sessionToken: process.env.AWS_SESSION_TOKEN }
+  accessKeyId: process.env.ENVIO_AWS_ACCESS_KEY_ID!,
+  secretAccessKey: process.env.ENVIO_AWS_SECRET_ACCESS_KEY!,
+  ...(process.env.ENVIO_AWS_SESSION_TOKEN
+    ? { sessionToken: process.env.ENVIO_AWS_SESSION_TOKEN }
     : {}),
 };
 
@@ -46,7 +46,7 @@ import { SendMessageCommand } from "@aws-sdk/client-sqs";
 import { createEffect, S } from "envio";
 import { sns, sqs } from "../clients/aws";
 
-const TOPIC_ARN = process.env.SNS_TOPIC_ARN!;
+const TOPIC_ARN = process.env.ENVIO_SNS_TOPIC_ARN!;
 
 export const publishTransferSns = createEffect(
   {
@@ -70,7 +70,7 @@ export const publishTransferSns = createEffect(
   }
 );
 
-const QUEUE_URL = process.env.SQS_QUEUE_URL!;
+const QUEUE_URL = process.env.ENVIO_SQS_QUEUE_URL!;
 
 export const publishTransferSqs = createEffect(
   {

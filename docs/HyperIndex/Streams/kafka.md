@@ -21,12 +21,12 @@ import { Kafka, Partitioners } from "kafkajs";
 
 export const kafka = new Kafka({
   clientId: "envio-indexer",
-  brokers: (process.env.KAFKA_BROKERS ?? "").split(","),
+  brokers: (process.env.ENVIO_KAFKA_BROKERS ?? "").split(","),
   ssl: true,
   sasl: {
     mechanism: "plain",
-    username: process.env.KAFKA_USERNAME!,
-    password: process.env.KAFKA_PASSWORD!,
+    username: process.env.ENVIO_KAFKA_USERNAME!,
+    password: process.env.ENVIO_KAFKA_PASSWORD!,
   },
 });
 

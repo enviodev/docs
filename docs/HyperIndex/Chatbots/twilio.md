@@ -12,9 +12,9 @@ Send SMS messages via [Twilio's Programmable Messaging API](https://www.twilio.c
 
 From the Twilio Console grab:
 
-- `TWILIO_ACCOUNT_SID`
-- `TWILIO_AUTH_TOKEN`
-- `TWILIO_FROM_NUMBER` (in E.164 format, e.g. `+15551234567`)
+- `ENVIO_TWILIO_ACCOUNT_SID`
+- `ENVIO_TWILIO_AUTH_TOKEN`
+- `ENVIO_TWILIO_FROM_NUMBER` (in E.164 format, e.g. `+15551234567`)
 
 ### Installation (SDK)
 
@@ -28,8 +28,8 @@ pnpm add twilio
 import twilio from "twilio";
 
 export const twilioClient = twilio(
-  process.env.TWILIO_ACCOUNT_SID!,
-  process.env.TWILIO_AUTH_TOKEN!
+  process.env.ENVIO_TWILIO_ACCOUNT_SID!,
+  process.env.ENVIO_TWILIO_AUTH_TOKEN!
 );
 ```
 
@@ -41,8 +41,8 @@ From/to numbers are baked in. The handler hands the effect raw values; the SMS b
 import { createEffect, S } from "envio";
 import { twilioClient } from "../clients/twilio";
 
-const FROM = process.env.TWILIO_FROM_NUMBER!;
-const TO = process.env.TWILIO_TO_NUMBER!;
+const FROM = process.env.ENVIO_TWILIO_FROM_NUMBER!;
+const TO = process.env.ENVIO_TWILIO_TO_NUMBER!;
 
 const formatUnits = (value: bigint, decimals = 18) => {
   const base = 10n ** BigInt(decimals);
@@ -75,11 +75,11 @@ If you'd rather skip the SDK:
 
 ```typescript
 const auth = Buffer.from(
-  `${process.env.TWILIO_ACCOUNT_SID}:${process.env.TWILIO_AUTH_TOKEN}`
+  `${process.env.ENVIO_TWILIO_ACCOUNT_SID}:${process.env.ENVIO_TWILIO_AUTH_TOKEN}`
 ).toString("base64");
 
 await fetch(
-  `https://api.twilio.com/2010-04-01/Accounts/${process.env.TWILIO_ACCOUNT_SID}/Messages.json`,
+  `https://api.twilio.com/2010-04-01/Accounts/${process.env.ENVIO_TWILIO_ACCOUNT_SID}/Messages.json`,
   {
     method: "POST",
     headers: {
@@ -87,7 +87,7 @@ await fetch(
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: new URLSearchParams({
-      From: process.env.TWILIO_FROM_NUMBER!,
+      From: process.env.ENVIO_TWILIO_FROM_NUMBER!,
       To: input.to,
       Body: input.body,
     }),
@@ -102,10 +102,10 @@ The rindexer config…
 ```yaml
 chat:
   twilio:
-    - account_sid: ${TWILIO_ACCOUNT_SID}
-      auth_token: ${TWILIO_AUTH_TOKEN}
-      from_number: ${TWILIO_FROM_NUMBER}
-      to_number: ${TWILIO_TO_NUMBER}
+    - account_sid: ${ENVIO_TWILIO_ACCOUNT_SID}
+      auth_token: ${ENVIO_TWILIO_AUTH_TOKEN}
+      from_number: ${ENVIO_TWILIO_FROM_NUMBER}
+      to_number: ${ENVIO_TWILIO_TO_NUMBER}
       messages:
         - event_name: Transfer
           filter_expression: "value >= 10"

@@ -19,7 +19,7 @@ pnpm add ioredis
 ```typescript title="src/clients/redis.ts"
 import Redis from "ioredis";
 
-export const redis = new Redis(process.env.REDIS_CONNECTION_URI!);
+export const redis = new Redis(process.env.ENVIO_REDIS_CONNECTION_URI!);
 ```
 
 ### Define the effect
