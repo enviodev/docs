@@ -28,11 +28,10 @@ if (process.env.DOCS_FOR_LLM === "true") {
 const networksSection = {
   type: "category",
   label: "Supported Networks",
-  link: {
-    type: "doc",
-    id: "supported-networks/index",
-  },
-  items: filteredNetworks,
+  items: [
+    { type: "doc", id: "supported-networks/index", label: "Overview" },
+    ...filteredNetworks,
+  ],
 };
 
 module.exports = {
@@ -77,6 +76,32 @@ module.exports = {
         // "Examples/example-cross-chain-messaging",
         // "Examples/example-liquidation-metrics",
         // "Examples/example-ens",
+      ],
+    },
+    {
+      type: "category",
+      label: "Streams",
+      items: [
+        { type: "doc", id: "Streams/streams", label: "Overview" },
+        "Streams/streams-webhooks",
+        "Streams/streams-kafka",
+        "Streams/streams-rabbitmq",
+        "Streams/streams-sns-sqs",
+        "Streams/streams-redis",
+        "Streams/streams-cloudflare-queues",
+      ],
+    },
+    {
+      type: "category",
+      label: "Chat Bots",
+      items: [
+        { type: "doc", id: "Chatbots/chatbots", label: "Overview" },
+        "Chatbots/chatbots-telegram",
+        "Chatbots/chatbots-discord",
+        "Chatbots/chatbots-slack",
+        "Chatbots/chatbots-twilio",
+        "Chatbots/chatbots-pagerduty",
+        "Chatbots/chatbots-opsgenie",
       ],
     },
     {
