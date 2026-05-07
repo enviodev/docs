@@ -621,7 +621,7 @@ This file contains links to documentation sections following the llmstxt.org sta
         id: "HyperIndexV2",
         path: "docs/HyperIndexV2",
         routeBasePath: "docs/v2/HyperIndex",
-        sidebarPath: require.resolve("./sidebarsHyperIndex.js"),
+        sidebarPath: require.resolve("./sidebarsHyperIndexV2.js"),
         editUrl: "https://github.com/enviodev/docs/edit/main/",
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,
