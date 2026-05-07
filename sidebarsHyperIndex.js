@@ -81,6 +81,32 @@ module.exports = {
     },
     {
       type: "category",
+      label: "Streams",
+      link: { type: "doc", id: "Streams/streams" },
+      items: [
+        "Streams/streams-webhooks",
+        "Streams/streams-kafka",
+        "Streams/streams-rabbitmq",
+        "Streams/streams-sns-sqs",
+        "Streams/streams-redis",
+        "Streams/streams-cloudflare-queues",
+      ],
+    },
+    {
+      type: "category",
+      label: "Chat Bots",
+      link: { type: "doc", id: "Chatbots/chatbots" },
+      items: [
+        "Chatbots/chatbots-telegram",
+        "Chatbots/chatbots-discord",
+        "Chatbots/chatbots-slack",
+        "Chatbots/chatbots-twilio",
+        "Chatbots/chatbots-pagerduty",
+        "Chatbots/chatbots-opsgenie",
+      ],
+    },
+    {
+      type: "category",
       label: "Envio Cloud",
       collapsed: false,
       items: [
