@@ -297,12 +297,6 @@ function BottomChatInput() {
     setIsOpen(false);
   };
 
-  const handleNewChat = () => {
-    if (isStreaming) return;
-    setMessages([]);
-    setQuestion('');
-  };
-
   return (
     <>
       {/* Bottom Input Bar - hidden only when the sidebar is open */}
@@ -312,6 +306,31 @@ function BottomChatInput() {
           className={`${styles.bottomInputContainer} ${!isVisible ? styles.hidden : ''}`}
         >
           <form onSubmit={handleSubmit} className={styles.inputForm}>
+            {messages.length > 0 && (
+              <button
+                type="button"
+                onClick={() => setIsOpen(true)}
+                className={styles.reopenButton}
+                title="Open chat history"
+                aria-label="Open chat history"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3 5h14v9H8l-3 3v-3H3V5z"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            )}
             <input
               type="text"
               placeholder="Ask a question about Envio..."
@@ -353,35 +372,23 @@ function BottomChatInput() {
             />
             <div className={styles.panelHeader}>
               <h3>Ask Envio AI</h3>
-              <div className={styles.panelHeaderActions}>
-                {messages.length > 0 && (
-                  <button
-                    onClick={handleNewChat}
-                    className={styles.newChatButton}
-                    disabled={isStreaming}
-                    title="Start a new chat"
-                  >
-                    New chat
-                  </button>
-                )}
-                <button onClick={handleClose} className={styles.closeButton}>
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M15 5L5 15M5 5L15 15"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              </div>
+              <button onClick={handleClose} className={styles.closeButton}>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M15 5L5 15M5 5L15 15"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
             </div>
             <div className={styles.panelContent}>
               {messages.length === 0 ? (

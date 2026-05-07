@@ -17,7 +17,19 @@ const MAIN_PROVIDERS = [
 
 const SEARCH_LIMIT_PER_QUERY = 4;
 const MAX_REWRITTEN_QUERIES = 3;
-const MAX_DOCS_CONTEXT_CHAR = 14000;
+const MAX_DOCS_CONTEXT_CHAR = 14000;     // overall safety cap on the fused context
+const PER_CHUNK_CHAR_BUDGET = 1800;      // per-URL chunk cap so one page can't dominate
+const MAX_FUSED_CHUNKS = 8;              // how many unique URLs to include after fusion
+
+// Pricing pages live on envio.dev (not in the docs MCP). Fetched on demand for
+// pricing-related questions and cached in-memory for 1h.
+const PRICING_URLS = {
+  hosting:   "https://envio.dev/pricing/hosting",
+  hypersync: "https://envio.dev/pricing/hypersync",
+  hyperrpc:  "https://envio.dev/pricing/hyperrpc",
+};
+const PRICING_TTL_MS = 60 * 60 * 1000;
+const PER_PRICING_PAGE_CHAR = 3500;
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -59,6 +71,142 @@ function extractToolText(response) {
     .filter((c) => c && c.type === "text" && typeof c.text === "string")
     .map((c) => c.text)
     .join("\n");
+}
+
+function extractUrlsFromSearch(searchText) {
+  const urls = [];
+  const seen = new Set();
+  // arabold/docs-mcp-server uses "Result N: <url>"; older format used "URL: <url>".
+  const re = /(?:Result\s*\d+:|URL:)\s*(https?:\/\/\S+)/g;
+  let m;
+  while ((m = re.exec(searchText)) !== null) {
+    const u = m[1].replace(/[).,]+$/, "");
+    if (!seen.has(u)) {
+      seen.add(u);
+      urls.push(u);
+    }
+  }
+  return urls;
+}
+
+// Parse arabold's "Result N: <url>\n\n<content>" format into individual {url, content} entries.
+// Sections are separated by horizontal-rule lines (40+ dashes). Position is preserved.
+function parseSearchResults(text) {
+  if (!text) return [];
+  const sections = text
+    .split(/\n-{20,}\n/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const results = [];
+  for (const section of sections) {
+    const m = section.match(/^Result\s*\d+:\s*(https?:\/\/\S+)\s*\n+([\s\S]*)$/);
+    if (m) {
+      const url = m[1].replace(/[).,]+$/, "");
+      const content = m[2].trim();
+      if (url && content) results.push({ url, content });
+    }
+  }
+  return results;
+}
+
+// Fuse search results across queries. Dedupes by URL, scores by query-consensus
+// (URL appearing in more queries ranks higher), tie-breaks by best position.
+// Returns an array of { url, content, queriesHit, bestPosition } sorted best-first.
+function fuseSearchResults(searchResults) {
+  const urlMap = new Map();
+  searchResults.forEach((sr, qIdx) => {
+    const parsed = parseSearchResults(sr.text);
+    parsed.forEach((r, posIdx) => {
+      if (!urlMap.has(r.url)) {
+        urlMap.set(r.url, {
+          url: r.url,
+          contents: [],
+          queriesHit: new Set(),
+          bestPosition: posIdx,
+        });
+      }
+      const info = urlMap.get(r.url);
+      info.contents.push(r.content);
+      info.queriesHit.add(qIdx);
+      if (posIdx < info.bestPosition) info.bestPosition = posIdx;
+    });
+  });
+
+  return [...urlMap.values()]
+    .map((info) => ({
+      url: info.url,
+      // Pick the longest content snippet for this URL across all queries that returned it.
+      content: info.contents.reduce((a, b) => (a.length > b.length ? a : b), ""),
+      queriesHit: info.queriesHit.size,
+      bestPosition: info.bestPosition,
+    }))
+    .sort((a, b) => {
+      if (b.queriesHit !== a.queriesHit) return b.queriesHit - a.queriesHit;
+      return a.bestPosition - b.bestPosition;
+    });
+}
+
+function detectPricingIntent(question) {
+  const q = question.toLowerCase();
+  return /\b(price|pricing|cost|costs|how much|free tier|tier|plan|plans|subscription|subscribe|billing|paid|expensive|cheap)\b|\$/.test(q);
+}
+
+function detectPricingProducts(question) {
+  const q = question.toLowerCase();
+  const products = [];
+  if (/\bhypersync\b|\bhyper sync\b/.test(q)) products.push("hypersync");
+  if (/\bhyperrpc\b|\bhyper rpc\b|(?<!hyper)\brpc\b/.test(q)) products.push("hyperrpc");
+  if (/\bhosting\b|\bhosted\b|\bcloud\b|\bdeploy\b|\bindex(er|ing)?\b/.test(q)) products.push("hosting");
+  return products.length > 0 ? products : Object.keys(PRICING_URLS);
+}
+
+function stripHtml(html) {
+  let text = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, " ");
+  text = text.replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, " ");
+  text = text.replace(/<noscript\b[^<]*(?:(?!<\/noscript>)<[^<]*)*<\/noscript>/gi, " ");
+  text = text.replace(/<[^>]+>/g, " ");
+  text = text
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+  return text.replace(/\s+/g, " ").trim();
+}
+
+const pricingCache = new Map();
+
+async function fetchPricingPage(url) {
+  const now = Date.now();
+  const cached = pricingCache.get(url);
+  if (cached && cached.expiresAt > now) return cached.text;
+  try {
+    const res = await fetch(url, { headers: { "User-Agent": "envio-docs-chat" } });
+    if (!res.ok) return "";
+    const html = await res.text();
+    const text = stripHtml(html).slice(0, PER_PRICING_PAGE_CHAR);
+    pricingCache.set(url, { text, expiresAt: now + PRICING_TTL_MS });
+    return text;
+  } catch {
+    return "";
+  }
+}
+
+async function retrievePricingContext(question) {
+  const products = detectPricingProducts(question);
+  const fetched = await Promise.all(
+    products.map(async (p) => ({
+      product: p,
+      url: PRICING_URLS[p],
+      text: await fetchPricingPage(PRICING_URLS[p]),
+    }))
+  );
+  const ok = fetched.filter((f) => f.text);
+  if (ok.length === 0) return "";
+  return ok
+    .map((f) => `### ${f.product} pricing — source: ${f.url}\n${f.text}`)
+    .join("\n\n---\n\n");
 }
 
 const QUERY_REWRITE_SYSTEM_PROMPT =
@@ -176,17 +324,36 @@ async function retrieveDocsContext(question, groqKey) {
     )
   );
 
-  const searchSummary = searchResults
-    .filter((sr) => sr.text)
-    .map((sr) => `# Query: "${sr.query}"\n${sr.text}`)
-    .join("\n\n");
+  // Fuse: dedupe by URL across queries, rank by query-consensus, take top N.
+  const fused = fuseSearchResults(searchResults);
+  const top = fused.slice(0, MAX_FUSED_CHUNKS);
 
-  if (!searchSummary) return "No relevant documentation found.";
-
-  if (searchSummary.length > MAX_DOCS_CONTEXT_CHAR) {
-    return searchSummary.slice(0, MAX_DOCS_CONTEXT_CHAR) + "\n\n…[truncated]";
+  let docsBlock;
+  if (top.length === 0) {
+    docsBlock = "No relevant documentation found.";
+  } else {
+    const blocks = top.map((t) => {
+      const tag = t.queriesHit > 1 ? ` (matched ${t.queriesHit} of ${searchResults.length} queries)` : "";
+      const trimmed = t.content.slice(0, PER_CHUNK_CHAR_BUDGET);
+      return `### Source: ${t.url}${tag}\n${trimmed}`;
+    });
+    let assembled = blocks.join("\n\n---\n\n");
+    if (assembled.length > MAX_DOCS_CONTEXT_CHAR) {
+      assembled = assembled.slice(0, MAX_DOCS_CONTEXT_CHAR) + "\n\n…[truncated]";
+    }
+    docsBlock = assembled;
   }
-  return searchSummary;
+
+  // For pricing-related questions, fetch the relevant envio.dev/pricing pages
+  // and append their content (pricing data isn't in the docs MCP).
+  if (detectPricingIntent(question)) {
+    const pricingBlock = await retrievePricingContext(question);
+    if (pricingBlock) {
+      return docsBlock + "\n\n## PRICING INFORMATION (from envio.dev/pricing — authoritative for pricing)\n" + pricingBlock;
+    }
+  }
+
+  return docsBlock;
 }
 
 function writeSseJson(res, data) {
@@ -210,6 +377,15 @@ const SYSTEM_PROMPT_PREAMBLE =
   "## LINKING\n" +
   "- Link inline using markdown wherever you mention a feature, page, or concept that's in the docs. Example: 'use the [Effect API](https://docs.envio.dev/docs/HyperIndex/effect-api) to fetch on-chain state'.\n" +
   "- Place the link on the relevant phrase in the body, NOT as a closing reference.\n\n" +
+  "## PRICING QUESTIONS\n" +
+  "- When the user asks about pricing, plans, costs, or tiers, the documentation content below may include a 'PRICING INFORMATION' block sourced from envio.dev/pricing. That block is the AUTHORITATIVE source for prices — use it instead of the docs content for any price/plan/tier figures.\n" +
+  "- Quote specific tier names, prices, and limits exactly as they appear in the pricing block. Never round, paraphrase, or make up numbers.\n" +
+  "- Link to the relevant pricing page inline (e.g., 'see [hosting pricing](https://envio.dev/pricing/hosting) for current tiers').\n\n" +
+  "## API KEYS / TOKENS\n" +
+  "- API keys (HyperSync tokens, HyperRPC tokens, package tokens, access tokens) are managed in the Envio Cloud UI, not via the docs or CLI. The docs may not cover where to find them.\n" +
+  "- If the user asks how to create, get, view, regenerate, or manage an API key/token, direct them to the **Tokens & Packages** page in their Envio Cloud organization: `https://envio.dev/app/<your-org-id>/~/hypersync/tokens` (they replace `<your-org-id>` with their actual org slug, which they'll see in the URL when logged into https://envio.dev/app).\n" +
+  "- If they haven't logged in or created an org yet, tell them to do that first at https://envio.dev/app.\n" +
+  "- Never invent or guess an org ID. Always show the URL with the `<your-org-id>` placeholder so the user knows to substitute their own.\n\n" +
   "## STRICTLY FORBIDDEN — these will be considered wrong answers\n" +
   "- Adding ANY trailing closing section, regardless of label. This includes: 'Learn more', 'References', 'See also', 'For more information', 'Additional resources', 'Documentation', or any synonym.\n" +
   "- Closing sentences like 'you can refer to the X documentation', 'for more details, see the Y page', 'visit the Z page'. If you want to point at a page, link inline within the body of an explanatory sentence instead.\n" +
