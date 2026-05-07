@@ -30,3 +30,4 @@ yarn-error.log*
 # scripts/generate-blog-og-images.js and scripts/generate-og-images.js)
 /static/blog-assets/og/
 /static/docs-assets/og/
+.env
