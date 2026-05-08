@@ -4,35 +4,37 @@ const MCP_LIBRARY = "envio-docs-no-llm-completes";
 const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions";
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
-const MISTRAL_URL = "https://api.mistral.ai/v1/chat/completions";
 const DEEPSEEK_URL = "https://api.deepseek.com/v1/chat/completions";
 const GROQ_FAST_MODEL = "llama-3.1-8b-instant";
 
-// Built per-request so env changes take effect without restart.
-// Free providers tried first; DeepSeek paid sits at the very end as last-resort.
-// Each line uses an independent quota or load pool — a 429/503 on one rarely
-// affects the next.
+// =============================================================================
+// PROVIDER CHAIN — edit this list to change provider order, add, or remove.
+//
+// Tried top-to-bottom on every request. First success commits.
+// Each line uses an independent quota or load pool, so a 429/503 on one rarely
+// affects the next. A provider is silently skipped if its `keyEnv` env var
+// is unset (handy for optional/paid entries).
+//
+// Fields:
+//   name   — log label
+//   url    — chat-completions endpoint (must be OpenAI-compatible)
+//   model  — provider-specific model identifier
+//   keyEnv — env var holding the API key (or null for no-auth, e.g. local Ollama)
+// =============================================================================
+const MAIN_PROVIDERS = [
+  // --- Free ---
+  { name: "gemini-2.5-flash",      url: GEMINI_URL,     model: "gemini-2.5-flash",            keyEnv: "GOOGLE_API_KEY" },
+  { name: "gemini-2.0-flash",      url: GEMINI_URL,     model: "gemini-2.0-flash",            keyEnv: "GOOGLE_API_KEY" },
+  { name: "gemini-2.0-flash-lite", url: GEMINI_URL,     model: "gemini-2.0-flash-lite",       keyEnv: "GOOGLE_API_KEY" },
+  { name: "openrouter-gpt-oss",    url: OPENROUTER_URL, model: "openai/gpt-oss-120b:free",    keyEnv: "OPENROUTER_API_KEY" },
+  { name: "gemma-4-26b",           url: GEMINI_URL,     model: "gemma-4-26b-a4b-it",          keyEnv: "GOOGLE_API_KEY" },
+  { name: "groq",                  url: GROQ_URL,       model: "llama-3.3-70b-versatile",     keyEnv: "GROQ_API_KEY" },
+  // --- Paid (final fallback) ---
+  { name: "deepseek-paid",         url: DEEPSEEK_URL,   model: "deepseek-chat",               keyEnv: "DEEPSEEK_API_KEY" },
+];
+
 function getMainProviders() {
-  return [
-    // === FREE ===
-    // Gemini chain — Google AI Studio. All share the same key but each model
-    // has independent per-model RPM/TPM/RPD buckets.
-    { name: "gemini-2.5-flash",      url: GEMINI_URL,     model: "gemini-2.5-flash",            keyEnv: "GOOGLE_API_KEY" },
-    { name: "gemini-2.0-flash",      url: GEMINI_URL,     model: "gemini-2.0-flash",            keyEnv: "GOOGLE_API_KEY" },
-    { name: "gemini-2.0-flash-lite", url: GEMINI_URL,     model: "gemini-2.0-flash-lite",       keyEnv: "GOOGLE_API_KEY" },
-    // OpenRouter GPT-OSS — separate provider, separate quota.
-    { name: "openrouter-gpt-oss",    url: OPENROUTER_URL, model: "openai/gpt-oss-120b:free",    keyEnv: "OPENROUTER_API_KEY" },
-    // Mistral — separate provider, generous free experimental tier.
-    { name: "mistral-small",         url: MISTRAL_URL,    model: "mistral-small-latest",        keyEnv: "MISTRAL_API_KEY" },
-    // Gemma 26B MoE — same Google key, separate bucket. May emit reasoning tags;
-    // the server-side stripper handles them.
-    { name: "gemma-4-26b",           url: GEMINI_URL,     model: "gemma-4-26b-a4b-it",          keyEnv: "GOOGLE_API_KEY" },
-    // Groq — separate provider, ~100K TPD on free tier for Llama 3.3 70B.
-    { name: "groq",                  url: GROQ_URL,       model: "llama-3.3-70b-versatile",     keyEnv: "GROQ_API_KEY" },
-    // === PAID (final fallback) ===
-    // DeepSeek API direct — only hit when every free provider above has failed.
-    { name: "deepseek-paid",         url: DEEPSEEK_URL,   model: "deepseek-chat",               keyEnv: "DEEPSEEK_API_KEY" },
-  ];
+  return MAIN_PROVIDERS;
 }
 
 const SEARCH_LIMIT_PER_QUERY = 4;
@@ -148,14 +150,32 @@ const SECTION_AFFINITY_BONUS = 0.25;
 function detectSectionAffinities(question) {
   const q = question.toLowerCase();
   const patterns = [];
+  // Each entry: regex (defaults to +SECTION_AFFINITY_BONUS) OR { pattern, weight }.
 
-  // HyperSync — direct data layer
-  if (/\bhyper\s?sync\b/.test(q)) {
-    patterns.push(/\/docs\/HyperSync\//i);
-  }
-  // HyperRPC
-  if (/\bhyper\s?rpc\b/.test(q)) {
-    patterns.push(/\/docs\/HyperRPC\//i);
+  // Explicit primary-product preference: "using X", "with X", "via X" → strongly
+  // boost that product AND demote the others. Without this, HyperIndex tutorials
+  // tend to win consensus even when the user said "using HyperSync".
+  const explicit =
+    /\b(using|with|via)\s+hyper\s?sync\b/.test(q) ? "hypersync" :
+    /\b(using|with|via)\s+hyper\s?rpc\b/.test(q) ? "hyperrpc" :
+    /\b(using|with|via)\s+hyper\s?index\b/.test(q) ? "hyperindex" :
+    null;
+  if (explicit === "hypersync") {
+    patterns.push({ pattern: /\/docs\/HyperSync\//i,  weight: 0.5 });
+    patterns.push({ pattern: /\/docs\/HyperIndex\//i, weight: -0.4 });
+    patterns.push({ pattern: /\/docs\/HyperRPC\//i,   weight: -0.3 });
+  } else if (explicit === "hyperrpc") {
+    patterns.push({ pattern: /\/docs\/HyperRPC\//i,   weight: 0.5 });
+    patterns.push({ pattern: /\/docs\/HyperIndex\//i, weight: -0.3 });
+    patterns.push({ pattern: /\/docs\/HyperSync\//i,  weight: -0.3 });
+  } else if (explicit === "hyperindex") {
+    patterns.push({ pattern: /\/docs\/HyperIndex\//i, weight: 0.5 });
+    patterns.push({ pattern: /\/docs\/HyperSync\//i,  weight: -0.3 });
+    patterns.push({ pattern: /\/docs\/HyperRPC\//i,   weight: -0.3 });
+  } else {
+    // No explicit "using X" — soft boosts when products are merely mentioned
+    if (/\bhyper\s?sync\b/.test(q)) patterns.push(/\/docs\/HyperSync\//i);
+    if (/\bhyper\s?rpc\b/.test(q))  patterns.push(/\/docs\/HyperRPC\//i);
   }
   // Envio Cloud / hosted service / deployment / org setup
   if (/\b(envio cloud|hosted service|hosted-service|deploy(ment|ing)?|github app|envio app|organisation|organization|cloud cli)\b/.test(q)) {
@@ -226,9 +246,14 @@ function fuseSearchResults(searchResults, originalQuestion) {
         if (slug.includes(probe)) keywordHits += 1;
       }
 
-      let sectionHits = 0;
-      for (const pat of sectionPatterns) {
-        if (pat.test(info.url)) sectionHits += 1;
+      // Each section pattern is either a RegExp (default weight) or { pattern, weight }.
+      let sectionScore = 0;
+      for (const item of sectionPatterns) {
+        if (item instanceof RegExp) {
+          if (item.test(info.url)) sectionScore += SECTION_AFFINITY_BONUS;
+        } else if (item && item.pattern && typeof item.weight === "number") {
+          if (item.pattern.test(info.url)) sectionScore += item.weight;
+        }
       }
 
       return {
@@ -236,10 +261,7 @@ function fuseSearchResults(searchResults, originalQuestion) {
         content: info.contents.reduce((a, b) => (a.length > b.length ? a : b), ""),
         queriesHit: info.queriesHit.size,
         bestPosition: info.bestPosition,
-        score:
-          info.rrf +
-          keywordHits * SLUG_KEYWORD_BONUS +
-          sectionHits * SECTION_AFFINITY_BONUS,
+        score: info.rrf + keywordHits * SLUG_KEYWORD_BONUS + sectionScore,
       };
     })
     .sort((a, b) => b.score - a.score);
@@ -459,6 +481,65 @@ const QUERY_REWRITE_SYSTEM_PROMPT =
   "reorg handling step by step\n\n" +
   "Now generate queries for the user's question. Output ONLY the queries.";
 
+const SPLITTER_PROMPT =
+  "Split a user's question into atomic sub-questions. Each sub-question must be independently answerable.\n\n" +
+  "RULES:\n" +
+  "1. If the input is already a single focused question, output it AS-IS on one line.\n" +
+  "2. If it contains multiple distinct asks (joined by 'also', 'and', 'plus', or separate sentences), split into separate sub-questions.\n" +
+  "3. Preserve key context in each sub-question — write 'how do I deploy a uniswap indexer to envio cloud' not just 'how do I deploy'.\n" +
+  "4. Output one sub-question per line. No numbering, no bullets, no preamble. Don't add or invent topics that weren't in the original.\n\n" +
+  "EXAMPLES:\n\n" +
+  "Input: how do I deploy to envio cloud?\n" +
+  "Output:\n" +
+  "how do I deploy to envio cloud?\n\n" +
+  "Input: how can I create an indexer for uniswap pools and deploy to envio cloud. also what plan should I use\n" +
+  "Output:\n" +
+  "how can I create an indexer for uniswap pools\n" +
+  "how do I deploy a uniswap indexer to envio cloud\n" +
+  "what envio cloud plan should I use\n\n" +
+  "Input: is solana supported, and if not can I use rpc, and what about avalanche, also what about tokens for hypersync\n" +
+  "Output:\n" +
+  "is solana supported by envio\n" +
+  "can I use RPC to index a chain that isn't natively supported\n" +
+  "is avalanche supported by envio\n" +
+  "how do I get a hypersync API token\n\n" +
+  "Now split the user's question. Output ONLY the sub-questions, one per line.";
+
+const MAX_SUB_QUESTIONS = 6; // safety cap
+
+async function splitQuestion(question, groqKey) {
+  try {
+    const res = await fetch(GROQ_URL, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${groqKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: GROQ_FAST_MODEL,
+        stream: false,
+        temperature: 0.2,
+        max_tokens: 400,
+        messages: [
+          { role: "system", content: SPLITTER_PROMPT },
+          { role: "user", content: question },
+        ],
+      }),
+    });
+    if (!res.ok) return [question];
+    const data = await res.json();
+    const text = data?.choices?.[0]?.message?.content || "";
+    const parts = text
+      .split("\n")
+      .map((s) => s.trim().replace(/^[-*\d.)\s"`]+/, ""))
+      .filter((s) => s.length >= 5 && s.length <= 250);
+    if (parts.length === 0) return [question];
+    return parts.slice(0, MAX_SUB_QUESTIONS);
+  } catch {
+    return [question];
+  }
+}
+
 // Detect questions with multiple distinct sub-topics (e.g. "how do I X. also
 // what plan should I use?"). When true, retrieval expands its chunk budget so
 // each sub-topic gets adequate coverage.
@@ -483,6 +564,12 @@ function deterministicQueriesFor(question) {
     extra.push("any EVM with RPC");
     extra.push("HyperSync supported networks");
     extra.push("HyperRPC supported networks");
+  }
+  // Organisation / org questions: ensure organisation-setup page surfaces.
+  if (/\b(organisation|organization|org)\b/.test(q)) {
+    extra.push("organisation setup envio");
+    extra.push("create envio organisation");
+    extra.push("envio app login organization member");
   }
   return extra;
 }
@@ -589,7 +676,11 @@ async function retrieveDocsContext(question, history, groqKey) {
   // Detect section affinities (HyperSync / HyperRPC / hosted-service / troubleshoot / etc.)
   const sectionPatterns = detectSectionAffinities(question);
   if (sectionPatterns.length > 0) {
-    console.log(`[chat] section affinities: ${sectionPatterns.map((p) => p.toString()).join(", ")}`);
+    console.log(`[chat] section affinities: ${sectionPatterns
+      .map((p) => p instanceof RegExp
+        ? p.toString()
+        : `${p.pattern}${p.weight >= 0 ? "+" : ""}${p.weight}`)
+      .join(", ")}`);
   }
 
   // Compound questions need wider context coverage — each sub-topic deserves its own chunks.
@@ -877,6 +968,9 @@ const SYSTEM_PROMPT_PREAMBLE =
   "> \n" +
   "> Learn more: https://docs.envio.dev/docs/HyperIndex/effect-api\n\n" +
   "Why bad: no inline markdown link, raw URL, trailing \"Learn more\", code not fenced.\n\n" +
+  "## ADDITIONAL GUIDANCE\n\n" +
+  "- **Respect explicit product mentions.** If the user names a specific product (HyperIndex, HyperSync, HyperRPC), favor docs from that product's section. E.g. \"using HyperSync\" → prefer the HyperSync client/API approach over the HyperIndex tutorial, even if both are in context.\n" +
+  "- **Multi-part questions:** the documentation context may be split into `## CONTEXT FOR SUB-QUESTION N` blocks. Don't say \"I don't see this covered\" if the answer is in ANY block — the labels are organizational, not authoritative. Use whatever info is available across all blocks to answer each part of the user's question.\n\n" +
   "## SPECIAL CASES\n\n" +
   "- **Pricing**: if a `## PRICING INFORMATION` block appears below, it's the authoritative source for prices, plans, and tiers. Quote names, prices, and limits exactly. Link to `https://envio.dev/pricing/<product>` inline using markdown.\n" +
   "- **API keys / tokens**: API keys (HyperSync tokens, package tokens, access tokens) are managed in the Envio Cloud UI, not via docs or CLI. Direct the user to `https://envio.dev/app/<your-org-id>/~/hypersync/tokens` — keep the `<your-org-id>` placeholder so they substitute their actual slug. Wrap the URL as a markdown link.\n" +
@@ -906,6 +1000,7 @@ async function callMainModelWithFallback(messages) {
           model: p.model,
           stream: true,
           temperature: 0.2,
+          max_tokens: 3000,
           messages,
         }),
       });
@@ -957,18 +1052,43 @@ export default async function handler(req, res) {
     return;
   }
 
-  // Run docs retrieval and history compression in parallel — both take the
-  // same kind of time (~300-700ms) so the total cost is max() not sum().
-  // Rewriter sees the raw history (it only really uses user questions for
-  // pronoun resolution, which are always short).
-  // Main model gets the compressed history (older AI responses summarized).
+  // Step 1: split the question into sub-questions (1 if it's atomic).
+  // For multi-part questions, this lets each sub-topic get focused retrieval
+  // instead of competing in a single shared context.
+  const subQuestions = await splitQuestion(question, groqKey);
+  if (subQuestions.length > 1) {
+    console.log(`[chat] split into ${subQuestions.length} sub-questions:`);
+    subQuestions.forEach((sq, i) => console.log(`  ${i + 1}. ${sq}`));
+  }
+
+  // Step 2: retrieval (per sub-question, in parallel) and history compression.
   let docsContext;
   let compressedHistory = history;
+  const TOTAL_DOCS_CONTEXT_CAP = 30000;
   try {
-    [docsContext, compressedHistory] = await Promise.all([
-      retrieveDocsContext(question, history, groqKey),
+    const tasks = [
+      ...subQuestions.map((sq) => retrieveDocsContext(sq, history, groqKey)),
       compressHistory(history, groqKey),
-    ]);
+    ];
+    const results = await Promise.all(tasks);
+    compressedHistory = results.pop();
+    const subContexts = results;
+
+    if (subContexts.length === 1) {
+      docsContext = subContexts[0];
+    } else {
+      // Combine with sub-question labels so the model knows which docs go with which ask.
+      let combined = subContexts
+        .map((ctx, i) => `## CONTEXT FOR SUB-QUESTION ${i + 1}: "${subQuestions[i]}"\n\n${ctx}`)
+        .join("\n\n=========================\n\n");
+      if (combined.length > TOTAL_DOCS_CONTEXT_CAP) {
+        console.log(`[chat] combined context truncated: ${combined.length} → ${TOTAL_DOCS_CONTEXT_CAP} chars`);
+        combined = combined.slice(0, TOTAL_DOCS_CONTEXT_CAP) + "\n\n…[truncated]";
+      } else {
+        console.log(`[chat] combined context: ${combined.length} chars across ${subContexts.length} sub-questions`);
+      }
+      docsContext = combined;
+    }
   } catch {
     docsContext = "No relevant documentation found.";
   }
