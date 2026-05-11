@@ -296,6 +296,41 @@ Notes:
 - The `where` callback receives `{ chain }` (not `{ chainId }`) and must return `false`, `true`, or `{ params: [...], block?: { number: { _gte, _lte, _every } } }`.
 - The previous array shorthand at the top level is no longer accepted — wrap it in `{ params: [...] }`.
 
+#### Filtering by the contract's own addresses
+
+In V2 the addresses configured (or dynamically registered) for the contract were passed into `eventFilters` as the `addresses` argument. In V3 they live on the chain object as `chain.<ContractName>.addresses`, which also stays in sync with anything registered via `context.chain.<ContractName>.add(...)`.
+
+```typescript
+// Before
+import { Safe } from "generated";
+
+Safe.Transfer.handler(async ({ event, context }) => {}, {
+  wildcard: true,
+  eventFilters: ({ addresses }) => [
+    { from: addresses },
+    { to: addresses },
+  ],
+});
+
+// After
+import { indexer } from "envio";
+
+indexer.onEvent(
+  {
+    contract: "Safe",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [
+        { from: chain.Safe.addresses },
+        { to: chain.Safe.addresses },
+      ],
+    }),
+  },
+  async ({ event, context }) => {},
+);
+```
+
 ### Migrate dynamic contract registration
 
 ```typescript
