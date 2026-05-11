@@ -93,7 +93,7 @@ chains:
 
 ### Per-Contract Start Block Override
 
-By default, contracts use the network `start_block`. Starting from `envio@2.27`, you can set a per-contract `start_block` to override it. Handy when:
+By default, contracts use the chain `start_block`. You can also set a per-contract `start_block` to override it. Handy when:
 
 - Contracts were deployed at different blocks
 - You only need data from a contract starting at a specific block
@@ -199,10 +199,6 @@ field_selection:
 
 Try to use this option sparingly as it can cause redundant Data Source calls and increased credits usage.
 
-:::note
-Field Selection per Event is available from `envio@2.11.0` and above. Please, upgrade your indexer to access this feature.
-:::
-
 ---
 
 ### Multichain Mode
@@ -253,7 +249,7 @@ Be aware of:
 
 ### Environment Variables
 
-Since `envio@2.9.0`, environment variable interpolation is supported for flexibility and security:
+Environment variable interpolation is supported for flexibility and security:
 
 ```yaml
 chains:

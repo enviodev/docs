@@ -144,7 +144,7 @@ chains:
 ```
 
 :::info
-This feature is available starting from version `2.14.0`. The fallback RPC is activated only when a primary data source doesn't receive a new block for more than 20 seconds.
+The fallback RPC is activated only when a primary data source doesn't receive a new block for more than 20 seconds.
 :::
 
 ## Enhanced RPC with eRPC

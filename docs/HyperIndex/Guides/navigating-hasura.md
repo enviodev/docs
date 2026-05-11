@@ -200,7 +200,7 @@ If runtime aggregate queries are a hard requirement for your use case, please re
 
 ## Disable Hasura for Self-Hosted Blockchain Indexers
 
-Starting from `envio@2.26.0` it's possible to disable Hasura integration for self-hosted blockchain indexers. To do so, set the `ENVIO_HASURA` environment variable to `false`.
+Set the `ENVIO_HASURA` environment variable to `false` to disable Hasura integration for self-hosted blockchain indexers.
 
 ---
 

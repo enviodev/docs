@@ -161,7 +161,7 @@ await context.Entity.get(entityId);
 
 It'll return `Entity` object or `undefined` if the entity doesn't exist.
 
-Starting from `envio@2.22.0` you can use `context.Entity.getOrThrow` to conveniently throw an error if the entity doesn't exist:
+Use `context.Entity.getOrThrow` to conveniently throw an error if the entity doesn't exist:
 
 ```typescript
 const pool = await context.Pool.getOrThrow(poolId);

@@ -160,7 +160,7 @@ The Preload Phase is a special phase that runs before the actual event processin
 Key characteristics of the Preload Phase:
 
 - It runs in parallel for all events in the batch
-- Exceptions won't crash the indexer but will silently abort the Preload Phase for that specific event (Starting from `envio@2.23`)
+- Exceptions won't crash the indexer but will silently abort the Preload Phase for that specific event
 - All storage updates are ignored
 - All `context.log` calls are ignored
 
