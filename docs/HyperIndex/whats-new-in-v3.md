@@ -1,7 +1,7 @@
 ---
 id: whats-new-in-v3
 title: What's New in HyperIndex V3
-sidebar_label: ✨ What's New in V3 ✨
+sidebar_label: What's New in V3 ✨
 slug: /whats-new-in-v3
 description: Discover the new features in HyperIndex V3 — the unified handlers API, ESM and top-level await, automatic handler registration, a new testing framework, ClickHouse storage, Solana support, and more.
 ---
