@@ -32,7 +32,7 @@ Maintaining low latency at the chain head is crucial for ensuring timely data up
 
 ### Multi-Chain Indexing
 
-- **Unordered Multi-Chain Mode**: For applications indexing multiple chains, our [unordered multi-chain mode](./multichain-indexing#unordered-multichain-mode) allows each chain to continue syncing independently.
+- **Unordered Multi-Chain Mode**: For applications indexing multiple chains, our [unordered multi-chain mode](./multichain-indexing#multichain-event-ordering) allows each chain to continue syncing independently.
 - **Resilient Design**: With this configuration, even if one chain experiences latency, your other chains will continue syncing normally.
 
 ### Chain Reorganization Support

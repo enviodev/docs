@@ -188,7 +188,7 @@ chains:
 
 Remove these options if present:
 
-- `unordered_multichain_mode` — unordered is now the default. If you need ordered behavior, set `multichain: ordered`.
+- `unordered_multichain_mode` — unordered is now the only mode in V3. The V2 `multichain: ordered` opt-in has also been removed.
 - `loaders` — Preload Optimization is now always enabled.
 - `preload_handlers` — now always enabled.
 - `preRegisterDynamicContracts` — no longer needed.
@@ -553,7 +553,7 @@ Postgres column type changes (`raw_events.event_id`: `NUMERIC` → `BIGINT`, `ra
 - [ ] Rename `networks` → `chains`
 - [ ] Rename `confirmed_block_threshold` → `max_reorg_depth`
 - [ ] Replace `rpc_config` with `rpc`
-- [ ] Remove `unordered_multichain_mode` (now default)
+- [ ] Remove `unordered_multichain_mode` and any `multichain: ordered` opt-in (unordered is now the only mode)
 - [ ] Remove `loaders` and `preload_handlers`
 - [ ] Remove `preRegisterDynamicContracts`
 - [ ] Remove `event_decoder`

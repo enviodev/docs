@@ -79,76 +79,19 @@ chains:
 
 ## Multichain Event Ordering
 
-When indexing multiple chains, you have two approaches for handling event ordering:
+In V3 the indexer always processes multichain events in **unordered** mode. Events from different chains are processed as soon as they're available, without waiting for the other chains, which keeps latency low.
 
-### Unordered Multichain Mode (default)
+- Events are still processed in order within each individual chain.
+- Events across different chains may be processed out of order.
+- Processing happens as soon as events are emitted, so you don't wait for the slowest chain's block time.
 
-:::note
-Unordered mode is the default in V3 and recommended for most applications.
-:::
+This is ideal when:
 
-The indexer processes events as soon as they're available from each chain, without waiting for other chains. This provides better performance and lower latency.
+- Operations on your entities are [commutative](./terminology#commutative-property) (order doesn't matter).
+- Entities from different chains never interact with each other.
+- Processing speed matters more than guaranteed cross-chain ordering.
 
-- Events will still be processed in order within each individual chain
-- Events across different chains may be processed out of order
-- Processing happens as soon as events are emitted, reducing latency
-- You avoid waiting for the slowest chain's block time
-
-This mode is ideal for most applications, especially when:
-
-- Operations on your entities are [commutative](./terminology#commutative-property) (order doesn't matter)
-- Entities from different chains never interact with each other
-- Processing speed is more important than guaranteed cross-chain ordering
-
-In V3 unordered is the default, so no flag is required. The V2 `unordered_multichain_mode` option and the `UNORDERED_MULTICHAIN_MODE` / `UNSTABLE__TEMP_UNORDERED_HEAD_MODE` environment variables have been removed.
-
-### Ordered Mode
-
-If your application requires strict deterministic ordering of events across all chains, you can opt into "Ordered Mode". In this mode, the indexer synchronizes event processing across all chains, ensuring that events are processed in the exact same order in every indexer run, regardless of which chain they came from.
-
-#### How to Enable Ordered Mode
-
-In your `config.yaml`:
-
-```yaml
-multichain: ordered
-chains: ...
-```
-
-#### When to Use Ordered Mode
-
-Use ordered mode only when:
-
-- The exact ordering of operations across different chains is critical to your application logic
-- You need guaranteed deterministic results across all indexer runs
-- You're willing to accept higher latency for cross-chain consistency
-
-Cross-chain ordering is particularly important for applications like:
-
-- **Bridge applications**: Where messages or assets must be processed on one chain before being processed on another chain
-- **Cross-chain governance**: Where decisions made on one chain affect operations on another chain
-- **Multi-chain financial applications**: Where the sequence of transactions across chains affects accounting or risk calculations
-- **Data consistency systems**: Where the state must be consistent across multiple chains in a specific order
-
-#### Technical Details
-
-With ordered mode enabled:
-
-- The indexer needs to wait for all blocks to increment from each chain
-- There is increased latency between when an event is emitted and when it's processed
-- Processing speed is limited by the block interval of the slowest network
-- Events are guaranteed to be processed in the same order in every indexer run
-
-#### Cross-Chain Ordering Preservation
-
-Ordered mode ensures that the temporal relationship between events on different chains is preserved. This is achieved by:
-
-1. **Global timestamp ordering**: Events are ordered based on their block timestamps across all chains
-2. **Deterministic processing**: The same sequence of events will be processed in the same order every time
-
-The primary trade-off is increased latency at the head of the chain. Since the indexer must wait for blocks from all chains to determine the correct ordering, the processing of recent events is delayed by the slowest chain's block time. For example, if Chain A has 2-second blocks and Chain B has 15-second blocks, the indexer will process events at the slower 15-second rate to maintain proper ordering.
-
-This latency is acceptable for applications where correct cross-chain ordering is more important than real-time updates. For bridge applications in particular, this ordering preservation can be critical for security and correctness, as it ensures that deposit events on one chain are always processed before the corresponding withdrawal events on another chain.
+The V2 `unordered_multichain_mode` option, the `multichain: ordered` opt-in, and the `UNORDERED_MULTICHAIN_MODE` / `UNSTABLE__TEMP_UNORDERED_HEAD_MODE` environment variables have all been removed in V3 — there is nothing to configure.
 
 ## Best Practices for Multichain Indexing
 
@@ -168,10 +111,9 @@ Implement robust error handling for chain-specific issues. A failure on one chai
 
 ### 4. Performance Considerations
 
-- Use unordered mode when appropriate for better performance
-- Consider your indexing frequency based on the block times of each chain
-- Monitor resource usage, as indexing multiple chains increases load
-- Adding more chains does **not** linearly degrade performance — chains are indexed in parallel. However, handler logic that writes to shared entities across chains may introduce contention when using ordered mode.
+- Consider your indexing frequency based on the block times of each chain.
+- Monitor resource usage, as indexing multiple chains increases load.
+- Adding more chains does **not** linearly degrade performance — chains are indexed in parallel.
 
 ### 5. Adding a New Chain to an Existing Indexer
 
@@ -186,11 +128,9 @@ On **Envio Cloud**, this creates a new deployment that re-indexes all chains (in
 
 ## Troubleshooting Common Issues
 
-1. **Different Chain Speeds**: If one chain is significantly slower than others, consider using unordered mode to prevent bottlenecks.
+1. **Entity Conflicts**: If you see unexpected entity updates, verify that your entity IDs are properly namespaced with chain IDs.
 
-2. **Entity Conflicts**: If you see unexpected entity updates, verify that your entity IDs are properly namespaced with chain IDs.
-
-3. **Memory Usage**: If your indexer uses excessive memory, consider optimizing your entity structure and implementing pagination in your queries.
+2. **Memory Usage**: If your indexer uses excessive memory, consider optimizing your entity structure and implementing pagination in your queries.
 
 ## Next Steps
 

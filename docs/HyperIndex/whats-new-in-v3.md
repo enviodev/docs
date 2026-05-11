@@ -365,9 +365,9 @@ Now it's possible to create indexers with only block handlers. Previously, it wa
 
 We no longer have restrictions on entity field names, such as `type` and others. Shape your entities any way you want. There are also improvements in generating database columns in the same order as they are defined in the `schema.graphql`.
 
-### Unordered Multichain Mode by Default
+### Unordered Multichain Mode Only
 
-Unordered multichain mode is now available and the default behavior. This provides better performance for most use cases. If you need ordered multichain behavior, you can explicitly set `multichain: ordered` in your config.
+Unordered multichain mode is now the only mode in V3 — events from different chains are processed in parallel without strict cross-chain ordering, which provides better performance for most use cases. The V2 `unordered_multichain_mode` option and the `multichain: ordered` opt-in have been removed.
 
 ### Preload Optimization by Default
 

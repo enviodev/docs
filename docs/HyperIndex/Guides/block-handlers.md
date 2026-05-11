@@ -205,7 +205,6 @@ indexer.onBlock(
 
 ## Current Limitations
 
-- The [Ordered Multichain mode](/docs/HyperIndex/multichain-indexing#ordered-mode) is not supported.
 - Only EVM chains are supported. Currently no support for [Fuel](/docs/HyperIndex/fuel/fuel.md) chains.
 - No [test framework](/docs/HyperIndex/testing) support.
 - Only block number is provided in the block object. We'll definitely add more fields in the future.

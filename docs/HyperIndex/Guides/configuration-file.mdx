@@ -207,15 +207,9 @@ Field Selection per Event is available from `envio@2.11.0` and above. Please, up
 
 ### Multichain Mode
 
-In V3, **unordered** multichain processing is the default — events from different chains are processed in parallel without strictly maintaining cross-chain event ordering. This minimizes indexing latency when indexing at the head.
+In V3, multichain indexing always runs in **unordered** mode — events from different chains are processed in parallel without strictly maintaining cross-chain event ordering, which minimizes indexing latency at the head. The V2 `unordered_multichain_mode` option and the `multichain: ordered` opt-in have been removed.
 
-If you need strict cross-chain ordering instead, opt in with:
-
-```yaml
-multichain: ordered
-```
-
-Learn more about multichain modes [here](./multichain-indexing).
+Learn more about multichain indexing [here](./multichain-indexing).
 
 ---
 

@@ -27,7 +27,6 @@ Static, deep-linkable reference for the V3 `config.yaml` schema.
 - [schema](#schema)
 - [contracts](#contracts)
 - [chains](#chains) (required)
-- [multichain](#multichain)
 - [rollback_on_reorg](#rollbackonreorg)
 - [save_full_history](#savefullhistory)
 - [field_selection](#fieldselection)
@@ -126,19 +125,6 @@ chains:
     contracts:
       - name: Greeter
         address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
-```
-
-### multichain {#multichain}
-
-Controls how events from multiple chains are ordered (default: `unordered`). Set to `ordered` to require deterministic cross-chain ordering at the cost of latency.
-
-- **type**: `string | null`
-
-
-Example (config.yaml):
-
-```yaml
-multichain: ordered
 ```
 
 ### rollback_on_reorg {#rollbackonreorg}
@@ -476,7 +462,7 @@ storage:
 The following V2 options have been removed and are no longer accepted in `config.yaml`:
 
 - `output` — generated types are always emitted to `.envio/`.
-- `unordered_multichain_mode` — unordered is now the default. Use `multichain: ordered` to opt back in to ordered processing.
+- `unordered_multichain_mode` — unordered is now the only mode. The V2 `multichain: ordered` opt-in has also been removed.
 - `event_decoder` — the Rust-based decoder is the only implementation.
 - `loaders` — Preload Optimization is now always on.
 - `preload_handlers` — now always enabled.
