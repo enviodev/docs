@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 106 # Velas Mainnet
-    rpc_config:
-      url: https://evmexplorer.velas.com/rpc 
+    rpc: https://evmexplorer.velas.com/rpc
     # url: https://explorer.velas.com/rpc # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:

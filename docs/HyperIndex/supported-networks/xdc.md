@@ -39,7 +39,7 @@ To get started, see our documentation or follow our quickstart [guide](/docs/Hyp
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 50 # Xdc  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:

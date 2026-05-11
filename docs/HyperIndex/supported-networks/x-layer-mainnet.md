@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 196 # X Layer Mainnet
-    rpc_config:
-      url: https://xlayer.drpc.org 
+    rpc: https://xlayer.drpc.org
     # url: https://endpoints.omniatech.io/v1/xlayer/mainnet/public # alternative,
     # url: https://xlayerrpc.okx.com # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block

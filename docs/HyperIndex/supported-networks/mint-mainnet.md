@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 185 # Mint Mainnet
-    rpc_config:
-      url: https://asia.rpc.mintchain.io 
+    rpc: https://asia.rpc.mintchain.io
     # url: https://global.rpc.mintchain.io # alternative,
     # url: https://rpc.mintchain.io # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block

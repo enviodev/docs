@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 7700 # Canto
-    rpc_config:
-      url: https://canto.dexrouting.com 
+    rpc: https://canto.dexrouting.com
     # url: https://canto.slingshot.finance # alternative,
     # url: https://canto-rpc.ansybl.io # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block

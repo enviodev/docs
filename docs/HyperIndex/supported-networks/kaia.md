@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 8217 # Kaia
-    rpc_config:
-      url: https://kaia.blockpi.network/v1/rpc/public 
+    rpc: https://kaia.blockpi.network/v1/rpc/public
     # url: https://public-en.node.kaia.io # alternative,
     # url: https://klaytn.drpc.org # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block

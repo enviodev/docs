@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 80085 # Berachain Artio Testnet
-    rpc_config:
-      url: https://artio.rpc.berachain.com 
+    rpc: https://artio.rpc.berachain.com
     # url: https://rpc.ankr.com/berachain_testnet # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:

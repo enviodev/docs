@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 40 # Telos EVM Mainnet
-    rpc_config:
-      url: https://rpc.telos.net 
+    rpc: https://rpc.telos.net
     # url: https://telos.drpc.org # alternative,
     # url: https://mainnet.telos.net/evm # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block

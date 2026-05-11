@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 666666666 # Degen Chain
-    rpc_config:
-      url: https://rpc.degen.tips 
+    rpc: https://rpc.degen.tips
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

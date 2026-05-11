@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 23294 # Oasis Sapphire
-    rpc_config:
-      url: https://1rpc.io/oasis/sapphire 
+    rpc: https://1rpc.io/oasis/sapphire
     # url: https://sapphire.oasis.io # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:

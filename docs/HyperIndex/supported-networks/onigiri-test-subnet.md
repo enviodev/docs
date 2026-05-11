@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 5039 # ONIGIRI Test Subnet
-    rpc_config:
-      url: https://subnets.avax.network/onigiri/testnet/rpc 
+    rpc: https://subnets.avax.network/onigiri/testnet/rpc
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 534351 # Scroll Sepolia
-    rpc_config:
-      url: https://rpc.ankr.com/scroll_sepolia_testnet 
+    rpc: https://rpc.ankr.com/scroll_sepolia_testnet
     # url: https://sepolia-rpc.scroll.io # alternative,
     # url: https://scroll-sepolia-rpc.publicnode.com # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block

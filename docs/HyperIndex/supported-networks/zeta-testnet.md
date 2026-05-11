@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 7001 # Zeta Testnet
-    rpc_config:
-      url: https://zetachain-testnet.public.blastapi.io 
+    rpc: https://zetachain-testnet.public.blastapi.io
     # url: https://zeta-chain-testnet.drpc.org # alternative,
     # url: https://zetachain-athens.g.allthatnode.com/archive/evm # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block

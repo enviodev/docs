@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 1625 # Gravity Alpha Mainnet
-    rpc_config:
-      url: https://rpc.gravity.xyz 
+    rpc: https://rpc.gravity.xyz
     # url: https://rpc.ankr.com/gravity # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:

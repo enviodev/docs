@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 1891 # Lightlink Pegasus Testnet
-    rpc_config:
-      url: https://replicator.pegasus.lightlink.io/rpc/v1 
+    rpc: https://replicator.pegasus.lightlink.io/rpc/v1
     # url: https://endpoints.omniatech.io/v1/lightlink/pegasus/public # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:

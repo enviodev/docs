@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 62050 # Optopia
-    rpc_config:
-      url: https://rpc-mainnet.optopia.ai 
+    rpc: https://rpc-mainnet.optopia.ai
     # url: https://rpc-mainnet-2.optopia.ai # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:

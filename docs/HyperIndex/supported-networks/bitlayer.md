@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 200901 # Bitlayer
-    rpc_config:
-      url: https://ws.bitlayer.org 
+    rpc: https://ws.bitlayer.org
     # url: https://ws.bitlayer-rpc.com # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:

@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 3441006 # Manta Pacific Sepolia
-    rpc_config:
-      url: https://pacific-rpc.sepolia-testnet.manta.network/http 
+    rpc: https://pacific-rpc.sepolia-testnet.manta.network/http
     # url: https://endpoints.omniatech.io/v1/manta-pacific/sepolia/public # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:

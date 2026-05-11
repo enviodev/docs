@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 3338 # Peaq
-    rpc_config:
-      url: https://evm.peaq.network 
+    rpc: https://evm.peaq.network
     # url: https://peaq.api.onfinality.io/public # alternative,
     # url: https://peaq-rpc.publicnode.com # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block

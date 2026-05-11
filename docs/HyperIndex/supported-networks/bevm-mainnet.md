@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 11501 # BEVM Mainnet
-    rpc_config:
-      url: https://rpc-mainnet-1.bevm.io 
+    rpc: https://rpc-mainnet-1.bevm.io
     # url: https://rpc-mainnet-2.bevm.io # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:

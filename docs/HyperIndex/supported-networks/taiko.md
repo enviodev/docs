@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 167000 # Taiko
-    rpc_config:
-      url: https://taiko-mainnet.gateway.tenderly.co 
+    rpc: https://taiko-mainnet.gateway.tenderly.co
     # url: https://rpc.ankr.com/taiko # alternative,
     # url: https://taiko.drpc.org # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block

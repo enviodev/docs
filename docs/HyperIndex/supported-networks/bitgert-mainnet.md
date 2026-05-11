@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 32520 # Bitgert Mainnet
-    rpc_config:
-      url: https://rpc-bitgert.icecreamswap.com 
+    rpc: https://rpc-bitgert.icecreamswap.com
     # url: https://serverrpc.com # alternative,
     # url: https://chainrpc.com # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block

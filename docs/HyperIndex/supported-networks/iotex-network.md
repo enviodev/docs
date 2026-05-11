@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 4689 # Iotex Network
-    rpc_config:
-      url: https://rpc.ankr.com/iotex 
+    rpc: https://rpc.ankr.com/iotex
     # url: https://iotex-network.rpc.thirdweb.com # alternative,
     # url: https://babel-api.mainnet.iotex.one # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block

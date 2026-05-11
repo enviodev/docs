@@ -32,10 +32,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 97 # BNB Smart Chain Testnet
-    rpc_config:
-      url: https://bsc-testnet.public.blastapi.io 
+    rpc: https://bsc-testnet.public.blastapi.io
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

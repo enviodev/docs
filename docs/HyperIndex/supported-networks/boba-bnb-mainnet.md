@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 56288 # Boba BNB Mainnet
-    rpc_config:
-      url: https://bnb.boba.network 
+    rpc: https://bnb.boba.network
     # url: https://boba-bnb.drpc.org # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:

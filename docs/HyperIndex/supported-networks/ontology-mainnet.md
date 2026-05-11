@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 58 # Ontology Mainnet
-    rpc_config:
-      url: https://dappnode1.ont.io:10339 
+    rpc: https://dappnode1.ont.io:10339
     # url: https://dappnode2.ont.io:10339 # alternative,
     # url: https://dappnode3.ont.io:10339 # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block

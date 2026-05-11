@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 13473 # Immutable zkEVM Testnet
-    rpc_config:
-      url: https://rpc.testnet.immutable.com 
+    rpc: https://rpc.testnet.immutable.com
     # url: https://immutable-zkevm-testnet.drpc.org # alternative,
     # url: https://immutable-zkevm-testnet.drpc.org # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block

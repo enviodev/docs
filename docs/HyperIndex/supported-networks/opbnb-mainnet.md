@@ -32,10 +32,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 204 # opBNB Mainnet
-    rpc_config:
-      url: https://opbnb-rpc.publicnode.com 
+    rpc: https://opbnb-rpc.publicnode.com
     # url: https://opbnb.drpc.org # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:

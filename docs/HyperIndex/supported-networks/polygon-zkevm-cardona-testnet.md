@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 2442 # Polygon zkEVM Cardona Testnet
-    rpc_config:
-      url: https://rpc.cardona.zkevm-rpc.com 
+    rpc: https://rpc.cardona.zkevm-rpc.com
     # url: https://polygon-zkevm-cardona.blockpi.network/v1/rpc/private # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:

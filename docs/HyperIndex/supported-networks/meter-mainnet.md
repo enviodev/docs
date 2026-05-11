@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 82 # Meter Mainnet
-    rpc_config:
-      url: https://rpc.meter.io 
+    rpc: https://rpc.meter.io
     # url: https://meter.blockpi.network/v1/rpc/public # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:

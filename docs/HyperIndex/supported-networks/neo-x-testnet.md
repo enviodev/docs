@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 12227332 # Neo X Testnet
-    rpc_config:
-      url: https://testnet.rpc.banelabs.org 
+    rpc: https://testnet.rpc.banelabs.org
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

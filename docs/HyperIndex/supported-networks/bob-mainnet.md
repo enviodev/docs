@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 60808 # BOB Mainnet
-    rpc_config:
-      url: https://rpc.gobob.xyz 
+    rpc: https://rpc.gobob.xyz
     # url: https://bob.drpc.org # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:

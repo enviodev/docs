@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 369 # PulseChain
-    rpc_config:
-      url: https://rpc.pulsechain.com 
+    rpc: https://rpc.pulsechain.com
     # url: https://pulsechain-rpc.publicnode.com # alternative,
     # url: https://rpc-pulsechain.g4mm4.io # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block

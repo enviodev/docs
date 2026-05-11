@@ -43,10 +43,10 @@ To get started, see our documentation or follow our quickstart [guide](https://d
 ### Defining Network Configurations
 
 
-```
+```yaml
 name: IndexerName # Specify indexerName name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 1123 # B2 Testnet  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
@@ -120,10 +120,10 @@ To get started, see our documentation or follow our quickstart [guide](https://d
 ### Defining Network Configurations
 
 
-```
+```yaml
 name: IndexerName # Specify indexerName name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 8453 # Base  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
@@ -205,10 +205,10 @@ To get started, see our documentation or follow our quickstart [guide](https://d
 ### Defining Network Configurations
 
 
-```
+```yaml
 name: IndexerName # Specify indexerName name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 80084 # Berachain Bartio  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
@@ -282,10 +282,10 @@ To get started, see our documentation or follow our quickstart [guide](https://d
 ### Defining Network Configurations
 
 
-```
+```yaml
 name: IndexerName # Specify indexerName name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 81457 # Blast  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
@@ -366,10 +366,10 @@ To get started, see our documentation or follow our quickstart [guide](https://d
 ### Defining Network Configurations
 
 
-```
+```yaml
 name: IndexerName # Specify indexerName name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 288 # Boba  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
@@ -443,10 +443,10 @@ To get started, see our documentation or follow our quickstart [guide](https://d
 ### Defining Network Configurations
 
 
-```
+```yaml
 name: IndexerName # Specify indexerName name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 56 # BSC  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
@@ -527,10 +527,10 @@ To get started, see our documentation or follow our quickstart [guide](https://d
 ### Defining Network Configurations
 
 
-```
+```yaml
 name: IndexerName # Specify indexerName name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 42220 # Celo  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
@@ -604,10 +604,10 @@ To get started, see our documentation or follow our quickstart [guide](https://d
 ### Defining Network Configurations
 
 
-```
+```yaml
 name: IndexerName # Specify indexerName name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 8888 # Chiliz  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:

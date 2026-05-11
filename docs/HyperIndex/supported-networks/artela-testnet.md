@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 11822 # Artela Testnet
-    rpc_config:
-      url: https://betanet-rpc1.artela.network 
+    rpc: https://betanet-rpc1.artela.network
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

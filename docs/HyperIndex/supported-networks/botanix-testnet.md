@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 3636 # Botanix Testnet
-    rpc_config:
-      url: https://node.botanixlabs.dev 
+    rpc: https://node.botanixlabs.dev
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 128 # Heco Chain
-    rpc_config:
-      url: https://http-mainnet.hecochain.com 
+    rpc: https://http-mainnet.hecochain.com
     # url: https://heco.drpc.org # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:

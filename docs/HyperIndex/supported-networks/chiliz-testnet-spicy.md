@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 88882 # Chiliz Testnet Spicy
-    rpc_config:
-      url: https://spicy-rpc.chiliz.com 
+    rpc: https://spicy-rpc.chiliz.com
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

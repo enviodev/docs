@@ -32,10 +32,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 50 # XDC Network
-    rpc_config:
-      url: https://rpc.ankr.com/xdc 
+    rpc: https://rpc.ankr.com/xdc
     # url: https://erpc.xdcrpc.com # alternative,
     # url: https://rpc.xdcrpc.com # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block

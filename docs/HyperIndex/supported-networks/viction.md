@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 88 # Viction
-    rpc_config:
-      url: https://rpc.viction.xyz 
+    rpc: https://rpc.viction.xyz
     # url: https://viction.drpc.org # alternative,
     # url: https://viction.drpc.org # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block

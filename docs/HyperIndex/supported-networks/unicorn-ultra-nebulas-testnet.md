@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 2484 # Unicorn Ultra Nebulas Testnet
-    rpc_config:
-      url: https://rpc-nebulas-testnet.uniultra.xyz 
+    rpc: https://rpc-nebulas-testnet.uniultra.xyz
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

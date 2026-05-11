@@ -33,10 +33,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 2000 # Dogechain Mainnet
-    rpc_config:
-      url: https://rpc02-sg.dogechain.dog 
+    rpc: https://rpc02-sg.dogechain.dog
     # url: https://rpc-us.dogechain.dog # alternative,
     # url: https://rpc.dogechain.dog # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
