@@ -213,6 +213,21 @@ Learn more about multichain indexing [here](./multichain-indexing).
 
 ---
 
+### Address Format
+
+Use `address_format` to control how every address surfaced by the indexer (event fields like `event.srcAddress` / `event.transaction.from`, `chain.<Contract>.addresses`, addresses embedded in entity ids, etc.) is formatted.
+
+```yaml
+address_format: lowercase # default: checksum
+```
+
+- `checksum` (default) – [EIP-55](https://eips.ethereum.org/EIPS/eip-55) checksummed mixed-case addresses.
+- `lowercase` – every address is lowercased globally. Useful when joining against another data source that stores addresses in lowercase, or when you want byte-for-byte deterministic ids without per-handler `.toLowerCase()` calls.
+
+You can still call `.toLowerCase()` ad-hoc inside a handler when you only need a single value lowercased.
+
+---
+
 ### Rollback on Reorg
 
 HyperIndex automatically handles blockchain reorganizations by default. To disable or customize this behavior, set the `rollback_on_reorg` flag in your `config.yaml`:

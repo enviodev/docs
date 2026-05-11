@@ -16,10 +16,10 @@ A handler is a function that receives blockchain data, processes it, and inserts
 import { indexer } from "envio";
 
 indexer.onEvent(
-{ contract: "<CONTRACT_NAME>", event: "<EVENT_NAME>" },
-async ({ event, context }) => {
-  // Your logic here
-},
+  { contract: "<CONTRACT_NAME>", event: "<EVENT_NAME>" },
+  async ({ event, context }) => {
+    // Your logic here
+  },
 );
 ```
 
@@ -36,29 +36,29 @@ import { indexer, type User } from "envio";
 
 // Handler for the NewGreeting event
 indexer.onEvent(
-{ contract: "Greeter", event: "NewGreeting" },
-async ({ event, context }) => {
-  const userId = event.params.user; // The id for the User entity
-  const latestGreeting = event.params.greeting; // The greeting string that was added
-  const currentUserEntity = await context.User.get(userId); // Optional user entity that may already exist
+  { contract: "Greeter", event: "NewGreeting" },
+  async ({ event, context }) => {
+    const userId = event.params.user; // The id for the User entity
+    const latestGreeting = event.params.greeting; // The greeting string that was added
+    const currentUserEntity = await context.User.get(userId); // Optional user entity that may already exist
 
-  // Update or create a new User entity
-  const userEntity: User = currentUserEntity
-    ? {
-        id: userId,
-        latestGreeting,
-        numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
-        greetings: [...currentUserEntity.greetings, latestGreeting],
-      }
-    : {
-        id: userId,
-        latestGreeting,
-        numberOfGreetings: 1,
-        greetings: [latestGreeting],
-      };
+    // Update or create a new User entity
+    const userEntity: User = currentUserEntity
+      ? {
+          id: userId,
+          latestGreeting,
+          numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
+          greetings: [...currentUserEntity.greetings, latestGreeting],
+        }
+      : {
+          id: userId,
+          latestGreeting,
+          numberOfGreetings: 1,
+          greetings: [latestGreeting],
+        };
 
-  context.User.set(userEntity); // Set the User entity in the DB
-},
+    context.User.set(userEntity); // Set the User entity in the DB
+  },
 );
 ```
 
@@ -122,9 +122,10 @@ The event object also contains additional metadata:
 - `event.transaction` – Transaction fields (eg `hash`, `gasUsed`, etc. Empty by default).
 
 :::tip
-All addresses returned in the `event` object, such as `event.transaction.from`,
+By default, all addresses returned in the `event` object, such as `event.transaction.from`,
 `event.transaction.to`, and `event.srcAddress`, are [EIP-55](https://eips.ethereum.org/EIPS/eip-55) checksummed.
-Use `.toLowerCase()` if you specifically need lowercase values.
+Use `.toLowerCase()` on a single value if you specifically need it in lowercase, or set
+[`address_format: lowercase`](/docs/HyperIndex/configuration-file#address-format) in `config.yaml` to switch every address that the indexer surfaces (events, `chain.<Contract>.addresses`, entity ids, etc.) to lowercase globally.
 :::
 
 :::note
@@ -392,7 +393,7 @@ indexer.onEvent(
 
 ## Accessing `config.yaml` Data in Handlers
 
-You can access your indexer configuration within handlers via `indexer.chains[chainId]`:
+You can read your indexer configuration and live indexing state from the `indexer` value — either at the top level of a handler file or inside a handler. Use `indexer.chains[chainId]` (or one of the named entries on `indexer.chains`) to inspect a specific chain:
 
 ```typescript
 import { indexer } from "envio";
@@ -400,15 +401,19 @@ import { indexer } from "envio";
 indexer.onEvent(
   { contract: "Greeter", event: "NewGreeting" },
   async ({ event, context }) => {
-    const chainConfig = indexer.chains[event.chainId];
+    const chain = indexer.chains[event.chainId];
+    chain.id;                  // chain id
+    chain.startBlock;          // configured start block
+    chain.endBlock;            // configured end block (or undefined)
+    chain.isRealtime;          // true once this chain has reached the head
+    chain.Greeter.name;        // contract name
+    chain.Greeter.abi;         // parsed ABI
+    chain.Greeter.addresses;   // initial + dynamically registered addresses
   },
 );
 ```
 
-This exposes configuration data such as:
-
-- `syncSource`, `startBlock`, `maxReorgDepth`
-- Contract-specific data (`abi`, `addresses`, `events`)
+Top-level fields like `indexer.name`, `indexer.description`, and `indexer.chainIds` are also available. After restart, addresses on `chain.<Contract>.addresses` include any contracts that were dynamically registered in previous runs, not just those declared in `config.yaml`.
 
 ---
 

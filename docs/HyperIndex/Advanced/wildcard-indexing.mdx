@@ -44,14 +44,14 @@ And the last bit is to register an event handler in the `src/handlers`. Note how
 import { indexer } from "envio";
 
 indexer.onEvent(
-{ contract: "ERC20", event: "Transfer", wildcard: true },
-async ({ event, context }) => {
-  context.Transfer.set({
-    id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-    from: event.params.from,
-    to: event.params.to,
-  });
-},
+  { contract: "ERC20", event: "Transfer", wildcard: true },
+  async ({ event, context }) => {
+    context.Transfer.set({
+      id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+      from: event.params.from,
+      to: event.params.to,
+    });
+  },
 );
 ```
 
@@ -71,15 +71,15 @@ import { indexer } from "envio";
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 indexer.onEvent(
-{
-  contract: "ERC20",
-  event: "Transfer",
-  wildcard: true,
-  where: () => ({ params: [{ from: ZERO_ADDRESS }] }),
-},
-async ({ event, context }) => {
-  //... your handler logic
-},
+  {
+    contract: "ERC20",
+    event: "Transfer",
+    wildcard: true,
+    where: () => ({ params: [{ from: ZERO_ADDRESS }] }),
+  },
+  async ({ event, context }) => {
+    //... your handler logic
+  },
 );
 ```
 
@@ -99,20 +99,20 @@ const WHITELISTED_ADDRESSES = [
 ];
 
 indexer.onEvent(
-{
-  contract: "ERC20",
-  event: "Transfer",
-  wildcard: true,
-  where: () => ({
-    params: [
-      { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES },
-      { from: WHITELISTED_ADDRESSES, to: ZERO_ADDRESS },
-    ],
-  }),
-},
-async ({ event, context }) => {
-  //... your handler logic
-},
+  {
+    contract: "ERC20",
+    event: "Transfer",
+    wildcard: true,
+    where: () => ({
+      params: [
+        { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES },
+        { from: WHITELISTED_ADDRESSES, to: ZERO_ADDRESS },
+      ],
+    }),
+  },
+  async ({ event, context }) => {
+    //... your handler logic
+  },
 );
 ```
 
@@ -134,20 +134,20 @@ const WHITELISTED_ADDRESSES = {
 };
 
 indexer.onEvent(
-{
-  contract: "ERC20",
-  event: "Transfer",
-  wildcard: true,
-  where: ({ chain }) => ({
-    params: [
-      { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chain.id] },
-      { from: WHITELISTED_ADDRESSES[chain.id], to: ZERO_ADDRESS },
-    ],
-  }),
-},
-async ({ event, context }) => {
-  //... your handler logic
-},
+  {
+    contract: "ERC20",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [
+        { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chain.id] },
+        { from: WHITELISTED_ADDRESSES[chain.id], to: ZERO_ADDRESS },
+      ],
+    }),
+  },
+  async ({ event, context }) => {
+    //... your handler logic
+  },
 );
 ```
 
@@ -176,18 +176,18 @@ chains:
 import { indexer } from "envio";
 
 indexer.onEvent(
-{
-  contract: "Safe",
-  event: "Transfer",
-  wildcard: true,
-  where: ({ chain }) => ({
-    params: [
-      { from: chain.Safe.addresses },
-      { to: chain.Safe.addresses },
-    ],
-  }),
-},
-async ({ event, context }) => {},
+  {
+    contract: "Safe",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [
+        { from: chain.Safe.addresses },
+        { to: chain.Safe.addresses },
+      ],
+    }),
+  },
+  async ({ event, context }) => {},
 );
 ```
 
@@ -213,25 +213,25 @@ chains:
 import { indexer } from "envio";
 
 indexer.contractRegister(
-{ contract: "SafeRegistry", event: "NewSafe" },
-async ({ event, context }) => {
-  context.chain.Safe.add(event.params.safe);
-},
+  { contract: "SafeRegistry", event: "NewSafe" },
+  async ({ event, context }) => {
+    context.chain.Safe.add(event.params.safe);
+  },
 );
 
 indexer.onEvent(
-{
-  contract: "Safe",
-  event: "Transfer",
-  wildcard: true,
-  where: ({ chain }) => ({
-    params: [
-      { from: chain.Safe.addresses },
-      { to: chain.Safe.addresses },
-    ],
-  }),
-},
-async ({ event, context }) => {},
+  {
+    contract: "Safe",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [
+        { from: chain.Safe.addresses },
+        { to: chain.Safe.addresses },
+      ],
+    }),
+  },
+  async ({ event, context }) => {},
 );
 ```
 
@@ -248,27 +248,27 @@ const USDC_ADDRESS = {
 };
 
 indexer.onEvent(
-{
-  contract: "Safe",
-  event: "Transfer",
-  wildcard: true,
-  where: ({ chain }) => ({
-    params: [
-      { from: chain.Safe.addresses },
-      { to: chain.Safe.addresses },
-    ],
-  }),
-},
-async ({ event, context }) => {
-  // Filter and store only the USDC transfers that involve a Safe address
-  if (event.srcAddress === USDC_ADDRESS[event.chainId]) {
-    context.Transfer.set({
-      id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-      from: event.params.from,
-      to: event.params.to,
-    });
-  }
-},
+  {
+    contract: "Safe",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [
+        { from: chain.Safe.addresses },
+        { to: chain.Safe.addresses },
+      ],
+    }),
+  },
+  async ({ event, context }) => {
+    // Filter and store only the USDC transfers that involve a Safe address
+    if (event.srcAddress === USDC_ADDRESS[event.chainId]) {
+      context.Transfer.set({
+        id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+        from: event.params.from,
+        to: event.params.to,
+      });
+    }
+  },
 );
 ```
 
@@ -282,17 +282,17 @@ import { indexer } from "envio";
 const DAI_ADDRESS = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
 
 indexer.contractRegister(
-{
-  contract: "UniV3Factory",
-  event: "PoolCreated",
-  where: () => ({
-    params: [{ token0: DAI_ADDRESS }, { token1: DAI_ADDRESS }],
-  }),
-},
-async ({ event, context }) => {
-  const poolAddress = event.params.pool;
-  context.chain.UniV3Pool.add(poolAddress);
-},
+  {
+    contract: "UniV3Factory",
+    event: "PoolCreated",
+    where: () => ({
+      params: [{ token0: DAI_ADDRESS }, { token1: DAI_ADDRESS }],
+    }),
+  },
+  async ({ event, context }) => {
+    const poolAddress = event.params.pool;
+    context.chain.UniV3Pool.add(poolAddress);
+  },
 );
 ```
 
