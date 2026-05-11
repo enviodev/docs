@@ -125,7 +125,9 @@ Update for ESM:
 
 ```json
 {
+  /* For details: https://www.totaltypescript.com/tsconfig-cheat-sheet */
   "compilerOptions": {
+    /* Base Options: */
     "esModuleInterop": true,
     "skipLibCheck": true,
     "target": "es2022",
@@ -135,14 +137,17 @@ Update for ESM:
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
 
+    /* Strictness */
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
 
+    /* For running Envio: */
     "module": "ESNext",
     "moduleResolution": "bundler",
     "noEmit": true,
 
+    /* Code doesn't run in the DOM: */
     "lib": ["es2022"],
     "types": ["node"]
   }
