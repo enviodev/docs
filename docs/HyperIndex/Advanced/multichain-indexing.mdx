@@ -102,7 +102,7 @@ You almost always get better reliability and lower latency by keeping every chai
 A typical pattern for an `A → B` cross-chain message:
 
 ```graphql
-type CrossChainMessage @entity {
+type CrossChainMessage {
   id: ID! # The shared cross-chain message id (e.g. nonce + originChainId)
   sourceChainId: Int
   sourceTxHash: String
