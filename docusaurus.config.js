@@ -441,6 +441,9 @@ const config = {
     [
       require.resolve("./plugins/plugin-generate-llms"),
       {
+        // Only the V3 (HyperIndex) docs should land in llms.txt / llms-full.txt
+        // and the build's .md copies.
+        excludePluginIds: ["HyperIndexV2"],
         filesConfigs: [
           {
             main: true, // this will become llms.txt
