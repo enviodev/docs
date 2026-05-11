@@ -1,29 +1,208 @@
-const v3Sidebar = require("./sidebarsHyperIndex.js");
+var { supportedNetworks } = require("./supported-networks.json");
 
-// Deep-clone the V3 sidebar so we can patch it without mutating the original.
-const sidebar = JSON.parse(JSON.stringify(v3Sidebar.someSidebar));
+// Direct filtering in the sidebar code
+let filteredNetworks = supportedNetworks;
 
-// Replace the `migrate-to-v3` doc reference with an external link to the V3
-// page, wherever it appears in the tree. The V2 plugin would otherwise resolve
-// it to /docs/v2/HyperIndex/migrate-to-v3, but we want users to land on the
-// canonical V3 page.
-function replaceMigrateToV3(items) {
-  for (let i = 0; i < items.length; i++) {
-    const item = items[i];
-    if (item === "migrate-to-v3") {
-      items[i] = {
-        type: "link",
-        label: "Migrate to V3",
-        href: "/docs/HyperIndex/migrate-to-v3",
-      };
-    } else if (item && typeof item === "object" && Array.isArray(item.items)) {
-      replaceMigrateToV3(item.items);
-    }
-  }
+// If in LLM mode, filter the networks directly here
+if (process.env.DOCS_FOR_LLM === "true") {
+  const keyNetworks = [
+    "supported-networks/any-evm-with-rpc",
+    "supported-networks/local-anvil",
+    "supported-networks/local-hardhat",
+    "supported-networks/arbitrum",
+    "supported-networks/polygon",
+    "supported-networks/optimism",
+    "supported-networks/eth",
+  ];
+
+  // Filter to only include key networks that exist in the original list
+  filteredNetworks = supportedNetworks.filter((network) =>
+    keyNetworks.includes(network)
+  );
+
+  console.log(
+    `Sidebar using filtered networks: ${filteredNetworks.length} (from ${supportedNetworks.length})`
+  );
 }
 
-replaceMigrateToV3(sidebar);
+const networksSection = {
+  type: "category",
+  label: "Supported Networks",
+  link: {
+    type: "doc",
+    id: "supported-networks/index",
+  },
+  items: filteredNetworks,
+};
 
 module.exports = {
-  someSidebar: sidebar,
+  someSidebar: [
+    "overview",
+    "contract-import",
+    "quickstart-with-ai",
+    {
+      type: "link",
+      label: "✨ What's New in V3",
+      href: "/docs/HyperIndex/whats-new-in-v3",
+    },
+    "benchmarks",
+    {
+      type: "category",
+      label: "Migrate to Envio",
+      collapsed: false,
+      items: [
+        "migrate-with-ai",
+        "migration-guide",
+        "migrate-from-ponder",
+        "migrate-from-alchemy",
+        {
+          type: "link",
+          label: "Migrate to V3",
+          href: "/docs/HyperIndex/migrate-to-v3",
+        },
+      ],
+    },
+
+    {
+      type: "category",
+      label: "Guides",
+      collapsed: false,
+      items: [
+        "Guides/configuration-file",
+        "Guides/schema-file",
+        "Guides/event-handlers",
+        "Guides/block-handlers",
+        "Advanced/multichain-indexing",
+        // "Guides/subgraph-mPigration",
+        "Guides/testing",
+        "Guides/navigating-hasura",
+        "Guides/environment-variables",
+        "Guides/mcp-server",
+      ],
+    },
+    {
+      type: "category",
+      label: "Examples",
+      collapsed: false,
+      items: [
+        "Examples/example-uniswap-v4",
+        "Examples/example-sablier",
+        "Examples/example-velodrome-aerodrome",
+        // "Examples/example-cross-chain-messaging",
+        // "Examples/example-liquidation-metrics",
+        // "Examples/example-ens",
+      ],
+    },
+    {
+      type: "category",
+      label: "Envio Cloud",
+      collapsed: false,
+      items: [
+        "Hosted_Service/hosted-service",
+        "Hosted_Service/hosted-service-features",
+        "Hosted_Service/hosted-service-deployment",
+        "Hosted_Service/hosted-service-monitoring",
+        "Hosted_Service/envio-cloud-cli",
+        "Hosted_Service/hosted-service-billing",
+        "Hosted_Service/self-hosting",
+        "Hosted_Service/organisation-setup",
+      ],
+    },
+    {
+      type: "category",
+      label: "Tutorials",
+      items: [
+        "Tutorials/tutorial-op-bridge-deposits",
+        "Tutorials/tutorial-erc20-token-transfers",
+        "Tutorials/tutorial-indexing-fuel",
+        "Tutorials/greeter-tutorial",
+        "Tutorials/price-data",
+        "Tutorials/tutorial-scaffold-eth-2",
+      ],
+    },
+    {
+      type: "category",
+      label: "Advanced",
+      items: [
+        "Advanced/dynamic-contracts",
+        "Advanced/wildcard-indexing",
+        "Advanced/preload-optimization",
+        "Advanced/effect-api",
+        "Guides/contract-state",
+        "Guides/ipfs",
+        "Advanced/hypersync",
+        "Advanced/rpc-sync",
+        "Advanced/config-schema-reference",
+        "Guides/cli-commands",
+        "Advanced/reorgs-support",
+        "Advanced/generated-files",
+        "Advanced/metadata-query",
+        "Advanced/terminology",
+        "Advanced/performance/database-performance-optimization",
+        "Advanced/performance/latency-at-head",
+        "Advanced/performance/benchmarking",
+        "Advanced/loaders",
+        "Advanced/websockets",
+        "Advanced/query-conversion",
+        // {
+        //   type: "category",
+        //   label: "Performance",
+        //   link: {
+        //     type: "doc",
+        //     id: "Advanced/performance/index",
+        //   },
+        //   items: [
+        //     "Advanced/performance/database-performance-optimization",
+        //     // "Advanced/performance/historical-sync",
+        //     "Advanced/performance/latency-at-head",
+        //     "Advanced/performance/benchmarking",
+        //   ],
+        // },
+      ],
+    },
+    {
+      type: "category",
+      label: "Troubleshoot",
+      items: [
+        "Troubleshoot/logging",
+        "Troubleshoot/common-issues",
+        "Troubleshoot/error-codes",
+        "Troubleshoot/reserved-words",
+      ],
+    },
+    networksSection,
+    "solana/solana",
+    "fuel/fuel",
+    {
+      type: "link",
+      label: "LLM Documentation",
+      href: "/docs/HyperIndex-LLM/hyperindex-complete",
+    },
+    "licensing",
+    "terms-of-service",
+    "privacy-policy",
+    // {
+    //   type: "category",
+    //   label: "Education",
+    //   items: [
+    //     "what-is-indexer",
+    //     "system-architecture",
+    //     "indexing-process",
+    //     "litepaper",
+    //   ],
+    // },
+    // "working-with-foundry",
+    // "integrating-existing-contract",
+    // "migrating-from-the-graph",
+    // {
+    //   type: "category",
+    //   label: "Advanced",
+    //   items: [
+    //     "runtime",
+    //     "using-as-backend",
+    //     "using-testing-framework",
+    //     "dashboard-alerts",
+    //   ],
+    // },
+  ],
 };
