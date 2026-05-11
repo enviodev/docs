@@ -6,9 +6,6 @@ slug: /wildcard-indexing
 description: Learn how to index events using wildcard indexing feature and topic based filtering.
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
-
 Wildcard indexing is a feature that allows you to index all events matching a specified event signature without requiring the contract address from which the event was emitted. This is useful in cases such as indexing contracts deployed through factories, where the factory contract does not emit any events upon contract creation. It also enables indexing events from all contracts implementing a standard (e.g. all ERC20 transfers).
 
 :::note
@@ -43,44 +40,20 @@ type Transfer {
 
 And the last bit is to register an event handler in the `src/handlers`. Note how we pass the `wildcard: true` option to enable wildcard indexing:
 
-<Tabs groupId="lang" defaultValue="ts">
-  <TabItem value="ts" label="TypeScript">
-
 ```ts
 import { indexer } from "envio";
 
 indexer.onEvent(
-  { contract: "ERC20", event: "Transfer", wildcard: true },
-  async ({ event, context }) => {
-    context.Transfer.set({
-      id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-      from: event.params.from,
-      to: event.params.to,
-    });
-  },
+{ contract: "ERC20", event: "Transfer", wildcard: true },
+async ({ event, context }) => {
+  context.Transfer.set({
+    id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+    from: event.params.from,
+    to: event.params.to,
+  });
+},
 );
 ```
-
-  </TabItem>
-  <TabItem value="js" label="JavaScript">
-
-```js
-const { indexer } = require("envio");
-
-indexer.onEvent(
-  { contract: "ERC20", event: "Transfer", wildcard: true },
-  async ({ event, context }) => {
-    context.Transfer.set({
-      id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-      from: event.params.from,
-      to: event.params.to,
-    });
-  },
-);
-```
-
-  </TabItem>
-</Tabs>
 
 After running your indexer with `pnpm dev` you will have all ERC20 `Transfer` events indexed, regardless of the contract address from which the event was emitted.
 
@@ -92,196 +65,91 @@ When you register an event handler or a contract register you can provide the `w
 
 Let's say you only want to index `Mint` events where the `from` address is equal to `ZERO_ADDRESS`:
 
-<Tabs groupId="lang" defaultValue="ts">
-  <TabItem value="ts" label="TypeScript">
-
 ```ts
 import { indexer } from "envio";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 indexer.onEvent(
-  {
-    contract: "ERC20",
-    event: "Transfer",
-    wildcard: true,
-    where: () => ({ params: [{ from: ZERO_ADDRESS }] }),
-  },
-  async ({ event, context }) => {
-    //... your handler logic
-  },
+{
+  contract: "ERC20",
+  event: "Transfer",
+  wildcard: true,
+  where: () => ({ params: [{ from: ZERO_ADDRESS }] }),
+},
+async ({ event, context }) => {
+  //... your handler logic
+},
 );
 ```
-
-  </TabItem>
-  <TabItem value="js" label="JavaScript">
-
-```js
-const { indexer } = require("envio");
-
-const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
-
-indexer.onEvent(
-  {
-    contract: "ERC20",
-    event: "Transfer",
-    wildcard: true,
-    where: () => ({ params: [{ from: ZERO_ADDRESS }] }),
-  },
-  async ({ event, context }) => {
-    //... your handler logic
-  },
-);
-```
-
-  </TabItem>
-</Tabs>
 
 ## Multiple Filters
 
 If you want to index both `Mint` and `Burn` events you can provide multiple filters as an array. Also, every parameter can accept an array to filter by multiple possible values. We'll use it to filter by a group of whitelisted addresses in the example below:
 
-<Tabs groupId="lang" defaultValue="ts">
-  <TabItem value="ts" label="TypeScript">
-
 ```ts
 import { indexer } from "envio";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 const WHITELISTED_ADDRESSES = [
-  "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-  "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-  "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+"0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+"0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
 ];
 
 indexer.onEvent(
-  {
-    contract: "ERC20",
-    event: "Transfer",
-    wildcard: true,
-    where: () => ({
-      params: [
-        { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES },
-        { from: WHITELISTED_ADDRESSES, to: ZERO_ADDRESS },
-      ],
-    }),
-  },
-  async ({ event, context }) => {
-    //... your handler logic
-  },
+{
+  contract: "ERC20",
+  event: "Transfer",
+  wildcard: true,
+  where: () => ({
+    params: [
+      { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES },
+      { from: WHITELISTED_ADDRESSES, to: ZERO_ADDRESS },
+    ],
+  }),
+},
+async ({ event, context }) => {
+  //... your handler logic
+},
 );
 ```
-
-  </TabItem>
-  <TabItem value="js" label="JavaScript">
-
-```js
-const { indexer } = require("envio");
-
-const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
-
-const WHITELISTED_ADDRESSES = [
-  "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-  "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-  "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
-];
-
-indexer.onEvent(
-  {
-    contract: "ERC20",
-    event: "Transfer",
-    wildcard: true,
-    where: () => ({
-      params: [
-        { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES },
-        { from: WHITELISTED_ADDRESSES, to: ZERO_ADDRESS },
-      ],
-    }),
-  },
-  async ({ event, context }) => {
-    //... your handler logic
-  },
-);
-```
-
-  </TabItem>
-</Tabs>
 
 ## Different Filters per Chain
 
 For [Multichain Indexers](/docs/HyperIndex/multichain-indexing) the `where` callback receives `{ chain }` and you can read `chain.id` to filter by different values per chain:
 
-<Tabs groupId="lang" defaultValue="ts">
-  <TabItem value="ts" label="TypeScript">
-
 ```ts
 import { indexer } from "envio";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 const WHITELISTED_ADDRESSES = {
-  1: ["0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"],
-  137: [
-    "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-    "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
-  ],
+1: ["0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"],
+137: [
+  "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+  "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+],
 };
 
 indexer.onEvent(
-  {
-    contract: "ERC20",
-    event: "Transfer",
-    wildcard: true,
-    where: ({ chain }) => ({
-      params: [
-        { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chain.id] },
-        { from: WHITELISTED_ADDRESSES[chain.id], to: ZERO_ADDRESS },
-      ],
-    }),
-  },
-  async ({ event, context }) => {
-    //... your handler logic
-  },
+{
+  contract: "ERC20",
+  event: "Transfer",
+  wildcard: true,
+  where: ({ chain }) => ({
+    params: [
+      { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chain.id] },
+      { from: WHITELISTED_ADDRESSES[chain.id], to: ZERO_ADDRESS },
+    ],
+  }),
+},
+async ({ event, context }) => {
+  //... your handler logic
+},
 );
 ```
-
-  </TabItem>
-  <TabItem value="js" label="JavaScript">
-
-```js
-const { indexer } = require("envio");
-
-const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
-
-const WHITELISTED_ADDRESSES = {
-  1: ["0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"],
-  137: [
-    "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-    "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
-  ],
-};
-
-indexer.onEvent(
-  {
-    contract: "ERC20",
-    event: "Transfer",
-    wildcard: true,
-    where: ({ chain }) => ({
-      params: [
-        { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chain.id] },
-        { from: WHITELISTED_ADDRESSES[chain.id], to: ZERO_ADDRESS },
-      ],
-    }),
-  },
-  async ({ event, context }) => {
-    //... your handler logic
-  },
-);
-```
-
-  </TabItem>
-</Tabs>
 
 ## Index all ERC20 transfers to your Contract
 
@@ -304,52 +172,24 @@ chains:
           - 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC
 ```
 
-<Tabs groupId="lang" defaultValue="ts">
-  <TabItem value="ts" label="TypeScript">
-
 ```ts
 import { indexer } from "envio";
 
 indexer.onEvent(
-  {
-    contract: "Safe",
-    event: "Transfer",
-    wildcard: true,
-    where: ({ chain }) => ({
-      params: [
-        { from: chain.Safe.addresses },
-        { to: chain.Safe.addresses },
-      ],
-    }),
-  },
-  async ({ event, context }) => {},
+{
+  contract: "Safe",
+  event: "Transfer",
+  wildcard: true,
+  where: ({ chain }) => ({
+    params: [
+      { from: chain.Safe.addresses },
+      { to: chain.Safe.addresses },
+    ],
+  }),
+},
+async ({ event, context }) => {},
 );
 ```
-
-  </TabItem>
-  <TabItem value="js" label="JavaScript">
-
-```js
-const { indexer } = require("envio");
-
-indexer.onEvent(
-  {
-    contract: "Safe",
-    event: "Transfer",
-    wildcard: true,
-    where: ({ chain }) => ({
-      params: [
-        { from: chain.Safe.addresses },
-        { to: chain.Safe.addresses },
-      ],
-    }),
-  },
-  async ({ event, context }) => {},
-);
-```
-
-  </TabItem>
-</Tabs>
 
 This example is not much different from using a `WHITELISTED_ADDRESSES` constant, but this becomes much more powerful when the `Safe` contract addresses are [registered dynamically](/docs/HyperIndex/dynamic-contracts) by a factory contract:
 
@@ -369,198 +209,92 @@ chains:
           - event: Transfer(address indexed from, address indexed to, uint256 value)
 ```
 
-<Tabs groupId="lang" defaultValue="ts">
-  <TabItem value="ts" label="TypeScript">
-
 ```ts
 import { indexer } from "envio";
 
 indexer.contractRegister(
-  { contract: "SafeRegistry", event: "NewSafe" },
-  async ({ event, context }) => {
-    context.chain.Safe.add(event.params.safe);
-  },
+{ contract: "SafeRegistry", event: "NewSafe" },
+async ({ event, context }) => {
+  context.chain.Safe.add(event.params.safe);
+},
 );
 
 indexer.onEvent(
-  {
-    contract: "Safe",
-    event: "Transfer",
-    wildcard: true,
-    where: ({ chain }) => ({
-      params: [
-        { from: chain.Safe.addresses },
-        { to: chain.Safe.addresses },
-      ],
-    }),
-  },
-  async ({ event, context }) => {},
+{
+  contract: "Safe",
+  event: "Transfer",
+  wildcard: true,
+  where: ({ chain }) => ({
+    params: [
+      { from: chain.Safe.addresses },
+      { to: chain.Safe.addresses },
+    ],
+  }),
+},
+async ({ event, context }) => {},
 );
 ```
-
-  </TabItem>
-  <TabItem value="js" label="JavaScript">
-
-```js
-const { indexer } = require("envio");
-
-indexer.contractRegister(
-  { contract: "SafeRegistry", event: "NewSafe" },
-  async ({ event, context }) => {
-    context.chain.Safe.add(event.params.safe);
-  },
-);
-
-indexer.onEvent(
-  {
-    contract: "Safe",
-    event: "Transfer",
-    wildcard: true,
-    where: ({ chain }) => ({
-      params: [
-        { from: chain.Safe.addresses },
-        { to: chain.Safe.addresses },
-      ],
-    }),
-  },
-  async ({ event, context }) => {},
-);
-```
-
-  </TabItem>
-</Tabs>
 
 ### Assert ERC20 Transfers in Handler
 
 After you got all ERC20 Transfers relevant to your contracts, you can additionally filter them in the handler. For example, to get only `USDC` transfers:
 
-<Tabs groupId="lang" defaultValue="ts">
-  <TabItem value="ts" label="TypeScript">
-
 ```ts
 import { indexer } from "envio";
 
 const USDC_ADDRESS = {
-  84532: "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
-  11155111: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+84532: "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+11155111: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
 };
 
 indexer.onEvent(
-  {
-    contract: "Safe",
-    event: "Transfer",
-    wildcard: true,
-    where: ({ chain }) => ({
-      params: [
-        { from: chain.Safe.addresses },
-        { to: chain.Safe.addresses },
-      ],
-    }),
-  },
-  async ({ event, context }) => {
-    // Filter and store only the USDC transfers that involve a Safe address
-    if (event.srcAddress === USDC_ADDRESS[event.chainId]) {
-      context.Transfer.set({
-        id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-        from: event.params.from,
-        to: event.params.to,
-      });
-    }
-  },
+{
+  contract: "Safe",
+  event: "Transfer",
+  wildcard: true,
+  where: ({ chain }) => ({
+    params: [
+      { from: chain.Safe.addresses },
+      { to: chain.Safe.addresses },
+    ],
+  }),
+},
+async ({ event, context }) => {
+  // Filter and store only the USDC transfers that involve a Safe address
+  if (event.srcAddress === USDC_ADDRESS[event.chainId]) {
+    context.Transfer.set({
+      id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+      from: event.params.from,
+      to: event.params.to,
+    });
+  }
+},
 );
 ```
-
-  </TabItem>
-  <TabItem value="js" label="JavaScript">
-
-```js
-const { indexer } = require("envio");
-
-const USDC_ADDRESS = {
-  84532: "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
-  11155111: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
-};
-
-indexer.onEvent(
-  {
-    contract: "Safe",
-    event: "Transfer",
-    wildcard: true,
-    where: ({ chain }) => ({
-      params: [
-        { from: chain.Safe.addresses },
-        { to: chain.Safe.addresses },
-      ],
-    }),
-  },
-  async ({ event, context }) => {
-    // Filter and store only the USDC transfers that involve a Safe address
-    if (event.srcAddress === USDC_ADDRESS[event.chainId]) {
-      context.Transfer.set({
-        id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-        from: event.params.from,
-        to: event.params.to,
-      });
-    }
-  },
-);
-```
-
-  </TabItem>
-</Tabs>
 
 ## Contract Register Example
 
 The same `where` option can be applied to `indexer.contractRegister`. Here is an example where we only register Uniswap pools that contain DAI token:
 
-<Tabs groupId="lang" defaultValue="ts">
-  <TabItem value="ts" label="TypeScript">
-
 ```ts
 import { indexer } from "envio";
 
 const DAI_ADDRESS = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
 
 indexer.contractRegister(
-  {
-    contract: "UniV3Factory",
-    event: "PoolCreated",
-    where: () => ({
-      params: [{ token0: DAI_ADDRESS }, { token1: DAI_ADDRESS }],
-    }),
-  },
-  async ({ event, context }) => {
-    const poolAddress = event.params.pool;
-    context.chain.UniV3Pool.add(poolAddress);
-  },
+{
+  contract: "UniV3Factory",
+  event: "PoolCreated",
+  where: () => ({
+    params: [{ token0: DAI_ADDRESS }, { token1: DAI_ADDRESS }],
+  }),
+},
+async ({ event, context }) => {
+  const poolAddress = event.params.pool;
+  context.chain.UniV3Pool.add(poolAddress);
+},
 );
 ```
-
-  </TabItem>
-  <TabItem value="js" label="JavaScript">
-
-```js
-const { indexer } = require("envio");
-
-const DAI_ADDRESS = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
-
-indexer.contractRegister(
-  {
-    contract: "UniV3Factory",
-    event: "PoolCreated",
-    where: () => ({
-      params: [{ token0: DAI_ADDRESS }, { token1: DAI_ADDRESS }],
-    }),
-  },
-  async ({ event, context }) => {
-    const poolAddress = event.params.pool;
-    context.chain.UniV3Pool.add(poolAddress);
-  },
-);
-```
-
-  </TabItem>
-</Tabs>
 
 ## Limitations
 

@@ -6,9 +6,6 @@ slug: /testing
 description: Learn to test HyperIndex indexers with createTestIndexer, simulated events, and full workflow validation.
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
-
 ## Introduction
 
 Envio comes with a built-in testing library that enables developers to thoroughly validate their indexer behavior without requiring deployment or interaction with actual blockchains. This library is specifically crafted to:
@@ -53,34 +50,9 @@ This section covers how to set up testing for your existing HyperIndex indexer.
 
 1. Install [Vitest](https://vitest.dev/) (recommended):
 
-<Tabs>
-  <TabItem value="typescript" label="TypeScript">
-
 ```bash
 pnpm add -D vitest
 ```
-
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```bash
-pnpm add -D vitest
-```
-
-  </TabItem>
-  <TabItem value="rescript" label="ReScript">
-
-```bash
-pnpm i mocha rescript-mocha
-```
-
-:::note
-Make sure to update your `rescript.json` file to add the test folder as a source
-and add `rescript-mocha` as a `bs-dependency`
-:::
-
-  </TabItem>
-</Tabs>
 
 2. Add a test file (e.g., `src/indexer.test.ts`)
 
@@ -204,142 +176,51 @@ Common assertion patterns include:
 
 This example tests that when a `NewGreeting` event is processed, it correctly creates a new `User` entity:
 
-<Tabs>
-  <TabItem value="typescript" label="TypeScript">
-
 ```typescript
 import { describe, it, expect } from "vitest";
 import { createTestIndexer, type User, TestHelpers } from "envio";
 const { Addresses } = TestHelpers;
 
 it("A NewGreeting event creates a User entity", async () => {
-  // Step 1: Create an in-process indexer
-  const indexer = createTestIndexer();
+// Step 1: Create an in-process indexer
+const indexer = createTestIndexer();
 
-  // Step 2: Define test data
-  const userAddress = Addresses.defaultAddress;
-  const greeting = "Hi there";
+// Step 2: Define test data
+const userAddress = Addresses.defaultAddress;
+const greeting = "Hi there";
 
-  // Step 3: Simulate the event through your handler
-  await indexer.process({
-    chains: {
-      137: {
-        simulate: [
-          {
-            contract: "Greeter",
-            event: "NewGreeting",
-            params: { greeting, user: userAddress },
-          },
-        ],
-      },
+// Step 3: Simulate the event through your handler
+await indexer.process({
+  chains: {
+    137: {
+      simulate: [
+        {
+          contract: "Greeter",
+          event: "NewGreeting",
+          params: { greeting, user: userAddress },
+        },
+      ],
     },
-  });
+  },
+});
 
-  // Step 4: Define what we expect to see in storage
-  const expectedUserEntity: User = {
-    id: userAddress,
-    latestGreeting: greeting,
-    numberOfGreetings: 1,
-    greetings: [greeting],
-  };
+// Step 4: Define what we expect to see in storage
+const expectedUserEntity: User = {
+  id: userAddress,
+  latestGreeting: greeting,
+  numberOfGreetings: 1,
+  greetings: [greeting],
+};
 
-  // Step 5: Verify the indexer state matches what we expect
-  const actualUserEntity = await indexer.User.getOrThrow(userAddress);
-  expect(actualUserEntity).toEqual(expectedUserEntity);
+// Step 5: Verify the indexer state matches what we expect
+const actualUserEntity = await indexer.User.getOrThrow(userAddress);
+expect(actualUserEntity).toEqual(expectedUserEntity);
 });
 ```
-
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
-import { describe, it, expect } from "vitest";
-import { createTestIndexer, TestHelpers } from "envio";
-const { Addresses } = TestHelpers;
-
-it("A NewGreeting event creates a User entity", async () => {
-  // Step 1: Create an in-process indexer
-  const indexer = createTestIndexer();
-
-  // Step 2: Define test data
-  const userAddress = Addresses.defaultAddress;
-  const greeting = "Hi there";
-
-  // Step 3: Simulate the event through your handler
-  await indexer.process({
-    chains: {
-      137: {
-        simulate: [
-          {
-            contract: "Greeter",
-            event: "NewGreeting",
-            params: { greeting, user: userAddress },
-          },
-        ],
-      },
-    },
-  });
-
-  // Step 4: Define what we expect to see in storage
-  const expectedUserEntity = {
-    id: userAddress,
-    latestGreeting: greeting,
-    numberOfGreetings: 1,
-    greetings: [greeting],
-  };
-
-  // Step 5: Verify the indexer state matches what we expect
-  const actualUserEntity = await indexer.User.getOrThrow(userAddress);
-  expect(actualUserEntity).toEqual(expectedUserEntity);
-});
-```
-
-  </TabItem>
-  <TabItem value="rescript" label="ReScript">
-
-```rescript
-it("A NewGreeting event creates a User entity", async () => {
-    // Step 1: Initialize the mock database
-    let mockDb = TestHelpers.MockDb.createMockDb()
-
-    // Step 2: Define test data
-    let userAddress = Ethers.Addresses.defaultAddress
-    let greeting = "Hi there"
-
-    // Step 3: Create a mock event with our test data
-    let mockNewGreetingEvent = TestHelpers.Greeter.NewGreeting.createMockEvent({
-      greeting,
-      user: userAddress,
-    })
-
-    // Step 4: Process the event through the handler
-    let updatedMockDb = await mockDb.processEvents([mockNewGreetingEvent])
-
-    // Step 5: Define what we expect to see in the database
-    let expectedUserEntity: Types.userEntity = {
-      id: userAddress->Ethers.ethAddressToString,
-      latestGreeting: greeting,
-      numberOfGreetings: 1,
-      greetings: [greeting],
-    }
-
-    // Step 6: Verify the database contains what we expect
-    let actualUserEntity =
-      updatedMockDb.entities.user.get(userAddress->Ethers.ethAddressToString)->Option.getExn
-
-    Assert.deep_equal(expectedUserEntity, actualUserEntity)
-  })
-```
-
-  </TabItem>
-</Tabs>
 
 ### Testing Entity Updates: 2 Greetings from the Same User
 
 This example tests that when the same user sends multiple greetings, the counter increments correctly:
-
-<Tabs>
-  <TabItem value="typescript" label="TypeScript">
 
 ```typescript
 import { describe, it, expect } from "vitest";
@@ -347,125 +228,39 @@ import { createTestIndexer, TestHelpers } from "envio";
 const { Addresses } = TestHelpers;
 
 it("2 Greetings from the same users results in that user having a greeter count of 2", async () => {
-  // Step 1: Create an in-process indexer
-  const indexer = createTestIndexer();
+// Step 1: Create an in-process indexer
+const indexer = createTestIndexer();
 
-  // Step 2: Define test data for two events
-  const userAddress = Addresses.defaultAddress;
-  const greeting = "Hi there";
-  const greetingAgain = "Oh hello again";
+// Step 2: Define test data for two events
+const userAddress = Addresses.defaultAddress;
+const greeting = "Hi there";
+const greetingAgain = "Oh hello again";
 
-  // Step 3: Process both events through the handlers
-  await indexer.process({
-    chains: {
-      137: {
-        simulate: [
-          {
-            contract: "Greeter",
-            event: "NewGreeting",
-            params: { greeting, user: userAddress },
-          },
-          {
-            contract: "Greeter",
-            event: "NewGreeting",
-            params: { greeting: greetingAgain, user: userAddress },
-          },
-        ],
-      },
+// Step 3: Process both events through the handlers
+await indexer.process({
+  chains: {
+    137: {
+      simulate: [
+        {
+          contract: "Greeter",
+          event: "NewGreeting",
+          params: { greeting, user: userAddress },
+        },
+        {
+          contract: "Greeter",
+          event: "NewGreeting",
+          params: { greeting: greetingAgain, user: userAddress },
+        },
+      ],
     },
-  });
+  },
+});
 
-  // Step 4: Get the entity and verify the greeting count is 2
-  const actualUserEntity = await indexer.User.getOrThrow(userAddress);
-  expect(actualUserEntity.numberOfGreetings).toBe(2);
+// Step 4: Get the entity and verify the greeting count is 2
+const actualUserEntity = await indexer.User.getOrThrow(userAddress);
+expect(actualUserEntity.numberOfGreetings).toBe(2);
 });
 ```
-
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
-import { describe, it, expect } from "vitest";
-import { createTestIndexer, TestHelpers } from "envio";
-const { Addresses } = TestHelpers;
-
-it("2 Greetings from the same users results in that user having a greeter count of 2", async () => {
-  // Step 1: Create an in-process indexer
-  const indexer = createTestIndexer();
-
-  // Step 2: Define test data for two events
-  const userAddress = Addresses.defaultAddress;
-  const greeting = "Hi there";
-  const greetingAgain = "Oh hello again";
-
-  // Step 3: Process both events through the handlers
-  await indexer.process({
-    chains: {
-      137: {
-        simulate: [
-          {
-            contract: "Greeter",
-            event: "NewGreeting",
-            params: { greeting, user: userAddress },
-          },
-          {
-            contract: "Greeter",
-            event: "NewGreeting",
-            params: { greeting: greetingAgain, user: userAddress },
-          },
-        ],
-      },
-    },
-  });
-
-  // Step 4: Get the entity and verify the greeting count is 2
-  const actualUserEntity = await indexer.User.getOrThrow(userAddress);
-  expect(actualUserEntity.numberOfGreetings).toBe(2);
-});
-```
-
-  </TabItem>
-  <TabItem value="rescript" label="ReScript">
-
-```rescript
-it("2 Greetings from the same users results in that user having a greeter count of 2", async () => {
-    // Step 1: Initialize the mock database
-    let mockDb = TestHelpers.MockDb.createMockDb()
-
-    // Step 2: Define test data for two events
-    let userAddress = Ethers.Addresses.defaultAddress
-    let greeting = "Hi there"
-    let greetingAgain = "Oh hello again"
-
-    // Step 3: Create the first mock event
-    let mockNewGreetingEvent = TestHelpers.Greeter.NewGreeting.createMockEvent({
-      greeting,
-      user: userAddress,
-    })
-
-    // Step 4: Create the second mock event
-    let mockNewGreetingEvent2 = TestHelpers.Greeter.NewGreeting.createMockEvent({
-      greeting: greetingAgain,
-      user: userAddress,
-    })
-
-    // Step 5: Process both events through the handlers
-    let updatedMockDb = await mockDb.processEvents([mockNewGreetingEvent, mockNewGreetingEvent2])
-
-    // Step 6: Set our expected value
-    let expectedGreetingCount = 2
-
-    // Step 7: Get the entity from the mock database
-    let actualUserEntity =
-      updatedMockDb.entities.user.get(userAddress->Ethers.ethAddressToString)->Option.getExn
-
-    // Step 8: Verify the greeting count is 2
-    Assert.equal(actualUserEntity.numberOfGreetings, expectedGreetingCount)
-  })
-```
-
-  </TabItem>
-</Tabs>
 
 ---
 
@@ -489,35 +284,11 @@ If you encounter issues with your tests, check the following:
 
 3. **Check your imports**: Make sure you're importing from `envio`
 
-<Tabs>
-   <TabItem value="typescript" label="TypeScript">
-
 ```typescript
 import { describe, it, expect } from "vitest";
 import { createTestIndexer, type User, TestHelpers } from "envio";
 const { Addresses } = TestHelpers;
 ```
-
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
-import { describe, it, expect } from "vitest";
-import { createTestIndexer, TestHelpers } from "envio";
-const { Addresses } = TestHelpers;
-```
-
-  </TabItem>
-  <TabItem value="rescript" label="ReScript">
-
-```rescript
-open RescriptMocha
-open Mocha
-open Belt
-```
-
-  </TabItem>
-</Tabs>
 
 ### Common Issues and Solutions
 

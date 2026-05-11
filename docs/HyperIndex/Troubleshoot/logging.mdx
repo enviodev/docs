@@ -6,9 +6,6 @@ slug: /logging
 description: Learn how to configure and use Envio HyperIndex logging to monitor performance and troubleshoot efficiently.
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
-
 # Logging in Envio HyperIndex
 
 Effective logging is essential for monitoring your blockchain indexer's performance, diagnosing issues, and gathering insights. The Envio indexer uses [pino](https://github.com/pinojs/pino/), a high-performance logging library for JavaScript. These logs can be integrated with analytics tools such as [Kibana](https://www.elastic.co/what-is/kibana) to generate metrics and visualizations.
@@ -33,13 +30,10 @@ When implementing handlers for your indexer, use the logging functions provided 
 
 ### Examples by Language
 
-<Tabs>
-  <TabItem value="typescript" label="TypeScript">
-
 ```typescript
 // Inside your handler
 context.log.debug(
-  `Processing event with block hash: ${event.blockHash} (debug)`
+`Processing event with block hash: ${event.blockHash} (debug)`
 );
 context.log.info(`Processing event with block hash: ${event.blockHash} (info)`);
 context.log.warn(`Potential issue with event: ${event.blockHash} (warn)`);
@@ -47,73 +41,17 @@ context.log.error(`Failed to process event: ${event.blockHash} (error)`);
 
 // With exception:
 context.log.error(
-  `Failed to process event: ${event.blockHash}`,
-  new Error("Error processing event")
+`Failed to process event: ${event.blockHash}`,
+new Error("Error processing event")
 );
 
 // You can also provide an object as the second argument for structured logging:
 context.log.info("Processing blockchain event", {
-  type: "info",
-  extra: "Additional debugging context",
-  data: { blockHash: event.blockHash },
+type: "info",
+extra: "Additional debugging context",
+data: { blockHash: event.blockHash },
 });
 ```
-
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
-// Inside your handler
-context.log.debug(
-  `Processing event with block hash: ${event.blockHash} (debug)`
-);
-context.log.info(`Processing event with block hash: ${event.blockHash} (info)`);
-context.log.warn(`Potential issue with event: ${event.blockHash} (warn)`);
-context.log.error(`Failed to process event: ${event.blockHash} (error)`);
-
-// With exception:
-context.log.error(
-  `Failed to process event: ${event.blockHash}`,
-  new Error("Error processing event")
-);
-
-// You can also provide an object as the second argument for structured logging:
-context.log.info("Processing blockchain event", {
-  type: "info",
-  extra: "Additional debugging context",
-  data: { blockHash: event.blockHash },
-});
-```
-
-  </TabItem>
-  <TabItem value="rescript" label="ReScript">
-
-```rescript
-// Inside your handler
-exception ExampleException(string) // Example of an exception
-
-// Basic string logging
-context.log.debug(`Processing event with block hash: ${event.blockHash} (debug)`)
-context.log.info(`Processing event with block hash: ${event.blockHash} (info)`)
-context.log.warn(`Potential issue with event: ${event.blockHash} (warn)`)
-context.log.error(`Failed to process event: ${event.blockHash} (error)`)
-
-// With exception:
-context.log.errorWithExn(
-  `Failed to process event: ${event.blockHash}`,
-  ExampleException("Error processing event")
-)
-
-// You can also provide an object as the second argument for structured logging:
-context.log.info("Processing blockchain event", ~params={
-  "type": "info",
-  "extra": "Additional debugging context",
-  "data": { "blockHash": event.blockHash },
-});
-```
-
-  </TabItem>
-</Tabs>
 
 ## Metrics, Debugging, and Troubleshooting
 

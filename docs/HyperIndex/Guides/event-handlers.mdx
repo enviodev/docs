@@ -6,54 +6,22 @@ slug: /event-handlers
 description: Learn how to register and manage event handlers for efficient data indexing.
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
-
 # Event Handlers
 
 ## Registration
 
 A handler is a function that receives blockchain data, processes it, and inserts it into the database. You can register handlers in the file defined in the `handler` field in your `config.yaml` file. By default this is `src/handlers` file.
 
-<Tabs>
-  <TabItem value="typescript" label="TypeScript">
-
 ```typescript
 import { indexer } from "envio";
 
 indexer.onEvent(
-  { contract: "<CONTRACT_NAME>", event: "<EVENT_NAME>" },
-  async ({ event, context }) => {
-    // Your logic here
-  },
-);
-```
-
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
-const { indexer } = require("envio");
-
-indexer.onEvent(
-  { contract: "<CONTRACT_NAME>", event: "<EVENT_NAME>" },
-  async ({ event, context }) => {
-    // Your logic here
-  },
-);
-```
-
-  </TabItem>
-  <TabItem value="rescript" label="ReScript">
-
-```rescript
-Handlers.<CONTRACT_NAME>.<EVENT_NAME>.handler(async ({ event, context }) => {
+{ contract: "<CONTRACT_NAME>", event: "<EVENT_NAME>" },
+async ({ event, context }) => {
   // Your logic here
-});
+},
+);
 ```
-
-  </TabItem>
-</Tabs>
 
 :::note
 The `envio` module exposes the unified `indexer` value along with types based on your `config.yaml` and `schema.graphql` files. Run **`pnpm codegen`** whenever you change these files to regenerate the types in `.envio/`.
@@ -63,108 +31,36 @@ The `envio` module exposes the unified `indexer` value along with types based on
 
 Here's a handler example for the `NewGreeting` event. It belongs to the `Greeter` contract from our beginners [Greeter Tutorial](/docs/HyperIndex/greeter-tutorial):
 
-<Tabs>
-  <TabItem value="typescript" label="TypeScript">
-
 ```typescript
 import { indexer, type User } from "envio";
 
 // Handler for the NewGreeting event
 indexer.onEvent(
-  { contract: "Greeter", event: "NewGreeting" },
-  async ({ event, context }) => {
-    const userId = event.params.user; // The id for the User entity
-    const latestGreeting = event.params.greeting; // The greeting string that was added
-    const currentUserEntity = await context.User.get(userId); // Optional user entity that may already exist
-
-    // Update or create a new User entity
-    const userEntity: User = currentUserEntity
-      ? {
-          id: userId,
-          latestGreeting,
-          numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
-          greetings: [...currentUserEntity.greetings, latestGreeting],
-        }
-      : {
-          id: userId,
-          latestGreeting,
-          numberOfGreetings: 1,
-          greetings: [latestGreeting],
-        };
-
-    context.User.set(userEntity); // Set the User entity in the DB
-  },
-);
-```
-
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
-const { indexer } = require("envio");
-
-// Handler for the NewGreeting event
-indexer.onEvent(
-  { contract: "Greeter", event: "NewGreeting" },
-  async ({ event, context }) => {
-    const userId = event.params.user; // The id for the User entity
-    const latestGreeting = event.params.greeting; // The greeting string that was added
-    const currentUserEntity = await context.User.get(userId); // Optional user entity that may already exist
-
-    // Update or create a new User entity
-    const userEntity = currentUserEntity
-      ? {
-          id: userId,
-          latestGreeting,
-          numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
-          greetings: [...currentUserEntity.greetings, latestGreeting],
-        }
-      : {
-          id: userId,
-          latestGreeting,
-          numberOfGreetings: 1,
-          greetings: [latestGreeting],
-        };
-
-    context.User.set(userEntity); // Set the User entity in the DB
-  },
-);
-```
-
-  </TabItem>
-  <TabItem value="rescript" label="ReScript">
-
-```rescript
-open Types
-
-// Handler for the NewGreeting event
-Handlers.Greeter.NewGreeting.handler(async ({event, context}) => {
-  let userId = event.params.user->Address.toString // The id for the User entity
-  let latestGreeting = event.params.greeting // The greeting string that was added
-  let maybeCurrentUserEntity = await context.user.get(userId) // Optional User entity that may already exist
+{ contract: "Greeter", event: "NewGreeting" },
+async ({ event, context }) => {
+  const userId = event.params.user; // The id for the User entity
+  const latestGreeting = event.params.greeting; // The greeting string that was added
+  const currentUserEntity = await context.User.get(userId); // Optional user entity that may already exist
 
   // Update or create a new User entity
-  let userEntity: Entities.User.t = switch maybeCurrentUserEntity {
-  | Some(existingUserEntity) => {
-      id: userId,
-      latestGreeting,
-      numberOfGreetings: existingUserEntity.numberOfGreetings + 1,
-      greetings: existingUserEntity.greetings->Belt.Array.concat([latestGreeting]),
-    }
-  | None => {
-      id: userId,
-      latestGreeting,
-      numberOfGreetings: 1,
-      greetings: [latestGreeting],
-    }
-  }
+  const userEntity: User = currentUserEntity
+    ? {
+        id: userId,
+        latestGreeting,
+        numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
+        greetings: [...currentUserEntity.greetings, latestGreeting],
+      }
+    : {
+        id: userId,
+        latestGreeting,
+        numberOfGreetings: 1,
+        greetings: [latestGreeting],
+      };
 
-  context.user.set(userEntity) // Set the User entity in the DB
-})
+  context.User.set(userEntity); // Set the User entity in the DB
+},
+);
 ```
-
-  </TabItem>
-</Tabs>
 
 ### Preload Optimization
 
@@ -384,47 +280,15 @@ The `deleteUnsafe` method is experimental and **unsafe**. You need to manually h
 
 Use the following approach to update specific fields in an existing entity:
 
-<Tabs>
-  <TabItem value="typescript" label="TypeScript">
-
 ```typescript
 const pool = await context.Pool.get(poolId);
 if (pool) {
-  context.Pool.set({
-    ...pool,
-    totalValueLockedETH: pool.totalValueLockedETH.plus(newDeposit),
-  });
-}
-```
-
-  </TabItem>
-  <TabItem value="javascript" label="JavaScript">
-
-```javascript
-const pool = await context.Pool.get(poolId);
-if (pool) {
-  context.Pool.set({
-    ...pool,
-    totalValueLockedETH: pool.totalValueLockedETH.plus(newDeposit),
-  });
-}
-```
-
-  </TabItem>
-  <TabItem value="rescript" label="ReScript">
-
-```rescript
-let pool = await context.pool.get(poolId);
-pool->Option.forEach(pool => {
-  context.pool.set({
-    ...pool,
-    totalValueLockedETH: pool.totalValueLockedETH.plus(newDeposit),
-  });
+context.Pool.set({
+  ...pool,
+  totalValueLockedETH: pool.totalValueLockedETH.plus(newDeposit),
 });
+}
 ```
-
-  </TabItem>
-</Tabs>
 
 ### `context.log`
 
