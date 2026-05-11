@@ -319,31 +319,55 @@ indexer.contractRegister(
 
 ### Migrate block handlers
 
+**Behavior change.** In V2, every `onBlock(...)` call ran on the single chain specified by its `chain` option, and you set `interval`, `startBlock`, and `endBlock` as top-level options. In V3, `indexer.onBlock(...)` runs on **every chain by default**. To match the V2 behavior of "this chain only, in this block range, every N blocks", you have to pass an explicit `where` callback that:
+
+- Returns `false` for chains you don't want to run on (recovering V2's single-chain default).
+- Returns `{ block: { number: { _gte, _lte, _every } } }` to express the start block, end block, and interval.
+
 ```typescript
-// Before
-import { indexer, onBlock } from "generated";
+// Before — V2 ran this only on chain 1, every 100 blocks, in a fixed range
+import { onBlock } from "generated";
 
-indexer.chainIds.forEach((chainId) => {
-  onBlock(
-    { name: "EveryBlock", chain: chainId },
-    async ({ block, context }) => {
-      // ...
-    },
-  );
-});
+onBlock(
+  {
+    name: "Ranges",
+    chain: 1,
+    startBlock: 20_000_000,
+    endBlock: 22_000_000,
+    interval: 100,
+  },
+  async ({ block, context }) => {
+    // ...
+  },
+);
 
-// After
+// After — V3 runs on every chain by default; the where callback narrows
+// back down to chain 1 and re-expresses the range/interval via _gte/_lte/_every.
 import { indexer } from "envio";
 
 indexer.onBlock(
-  { name: "EveryBlock" },
+  {
+    name: "Ranges",
+    where: ({ chain }) => {
+      if (chain.id !== 1) return false;
+      return {
+        block: {
+          number: {
+            _gte: 20_000_000,
+            _lte: 22_000_000,
+            _every: 100,
+          },
+        },
+      };
+    },
+  },
   async ({ block, context }) => {
     // ...
   },
 );
 ```
 
-For chain-specific or interval handlers, return `{ block: { number: { _gte, _lte, _every } } }` from `where`, or `false` to skip a chain. Inside a block handler, replace `block.chainId` with `context.chain.id`.
+If you actually want the handler to run on **every** chain (the new default), simply omit `where`. Inside a block handler, replace `block.chainId` with `context.chain.id`.
 
 ### Update the `getWhere` API
 
