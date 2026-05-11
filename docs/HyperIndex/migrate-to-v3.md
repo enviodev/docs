@@ -1,7 +1,7 @@
 ---
 id: migrate-to-v3
 title: Migrate to HyperIndex V3
-sidebar_label: Migrate to V3
+sidebar_label: Migrate to V3 🚀
 slug: /migrate-to-v3
 description: Step-by-step instructions for upgrading an existing HyperIndex V2 project to V3.
 ---

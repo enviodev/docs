@@ -32,7 +32,7 @@ module.exports = {
         "migrate-from-alchemy",
         {
           type: "link",
-          label: "Migrate to V3",
+          label: "Migrate to V3 🚀",
           href: "/docs/HyperIndex/migrate-to-v3",
         },
       ],
