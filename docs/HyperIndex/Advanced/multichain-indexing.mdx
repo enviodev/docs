@@ -93,6 +93,70 @@ This is ideal when:
 
 The V2 `unordered_multichain_mode` option, the `multichain: ordered` opt-in, and the `UNORDERED_MULTICHAIN_MODE` / `UNSTABLE__TEMP_UNORDERED_HEAD_MODE` environment variables have all been removed in V3 — there is nothing to configure.
 
+## What about Ordered Multichain Mode?
+
+HyperIndex V3 doesn't offer an ordered multichain mode, and it's a deliberate choice rather than a feature gap. Ordered mode worked by pausing every chain until events from the slowest chain had caught up, so the moment one chain hiccuped (RPC rate limits, a slow block, a brief reorg) every other chain stalled with it. In practice that meant a multichain indexer was only ever as reliable and as fast as its worst-performing chain, and even healthy chains paid for that coupling with significantly higher latency at the head.
+
+You almost always get better reliability and lower latency by keeping every chain unordered and modeling the cross-chain relationship in your schema instead. Each chain writes a small temporary entity when its side of a cross-chain interaction happens, and the second chain (whichever arrives last) reads those temporary entities and finalizes the unified entity. Because each chain progresses independently, none of them are blocked on each other.
+
+A typical pattern for an `A → B` cross-chain message:
+
+```graphql
+type CrossChainMessage @entity {
+  id: ID! # The shared cross-chain message id (e.g. nonce + originChainId)
+  sourceChainId: Int
+  sourceTxHash: String
+  destinationChainId: Int
+  destinationTxHash: String
+  status: String! # "sent" | "delivered"
+}
+```
+
+```typescript
+import { indexer } from "envio";
+
+// Chain A: the message was emitted. Create or update the entity with the
+// "sent" side of the data. The destination handler may run before or after.
+indexer.onEvent(
+  { contract: "Bridge", event: "MessageSent" },
+  async ({ event, context }) => {
+    const id = `${event.params.originChainId}-${event.params.nonce}`;
+    const existing = await context.CrossChainMessage.get(id);
+    context.CrossChainMessage.set({
+      id,
+      sourceChainId: event.chainId,
+      sourceTxHash: event.transaction.hash,
+      destinationChainId: existing?.destinationChainId,
+      destinationTxHash: existing?.destinationTxHash,
+      status: existing?.destinationTxHash ? "delivered" : "sent",
+    });
+  },
+);
+
+// Chain B: the message was delivered. Read the (maybe-already-existing)
+// entity and fill in the destination side, regardless of which side arrived
+// first.
+indexer.onEvent(
+  { contract: "Bridge", event: "MessageDelivered" },
+  async ({ event, context }) => {
+    const id = `${event.params.originChainId}-${event.params.nonce}`;
+    const existing = await context.CrossChainMessage.get(id);
+    context.CrossChainMessage.set({
+      id,
+      sourceChainId: existing?.sourceChainId,
+      sourceTxHash: existing?.sourceTxHash,
+      destinationChainId: event.chainId,
+      destinationTxHash: event.transaction.hash,
+      status: existing?.sourceTxHash ? "delivered" : "sent",
+    });
+  },
+);
+```
+
+The same shape works for any "rendezvous" where two chains contribute parts of one logical record (bridges, cross-chain governance, multichain user profiles, etc.). The "temporary" entity is just a regular entity that gets progressively completed as each chain's events arrive — there's no special API to learn, and the indexer stays fast and resilient because no chain ever waits on another.
+
+If you have a use case that genuinely cannot be expressed this way, reach out on [Discord](https://discord.gg/envio) — we'd like to hear it.
+
 ## Best Practices for Multichain Indexing
 
 ### 1. Entity ID Namespacing
