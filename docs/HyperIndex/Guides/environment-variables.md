@@ -54,9 +54,6 @@ ENVIO_API_TOKEN=your-secret-token
 # Blockchain RPC URL
 ENVIO_RPC_URL=https://arbitrum.direct.dev/your-api-key
 
-# Starting block number for indexing
-ENVIO_START_BLOCK=12345678
-
 # Coingecko API key
 ENVIO_COINGECKO_API_KEY=api-key
 
@@ -76,7 +73,6 @@ For local development, you can set environment variables in several ways:
 # .env
 ENVIO_API_TOKEN=your-secret-token
 ENVIO_RPC_URL=https://arbitrum.direct.dev/your-api-key
-ENVIO_START_BLOCK=12345678
 ```
 
 2. Directly in your terminal:
