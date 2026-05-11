@@ -12,6 +12,10 @@ description: Easily migrate your existing subgraph to HyperIndex for up to 100x 
 Please reach out to our team on [Discord](https://discord.gg/envio) for personalized migration assistance.
 :::
 
+:::tip Already on HyperIndex V2?
+This page covers migrating from The Graph to Envio. If you are upgrading an existing HyperIndex project from V2 to V3, follow the [Migrate to V3](./migrate-to-v3) guide instead. Some examples below still use the V2 handler syntax (`Contract.Event.handler(...)`, `networks:`); the V3 equivalents (`indexer.onEvent(...)`, `chains:`) are documented in that guide.
+:::
+
 ## Introduction
 
 Migrating your existing subgraph to Envio's HyperIndex is designed to be a developer-friendly process. HyperIndex draws strong inspiration from The Graph’s subgraph architecture, which makes the migration simple, especially with the help of coding assistants like Cursor and AI tools (don't forget to use our [ai friendly docs](/docs/HyperIndex-LLM/hyperindex-complete)).

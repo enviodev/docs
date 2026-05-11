@@ -33,23 +33,31 @@ HyperSync addresses these limitations by providing a streamlined data access lay
 
 ### Default Enablement
 
-**HyperSync is used by default** as the data source for all HyperIndex networks. This means:
+**HyperSync is used by default** as the data source for all HyperIndex chains. This means:
 
 - No additional configuration is required to benefit from its speed
 - No need to worry about RPC rate limiting
 - No management of multiple RPC providers
 - No costs for external RPC services
 
+:::info
+Starting in V3, HyperSync requires an API token. Create a free token at [envio.dev/app/api-tokens](https://envio.dev/app/api-tokens) and expose it to your indexer as `ENVIO_API_TOKEN`:
+
+```bash
+export ENVIO_API_TOKEN=your_token_here
+```
+:::
+
 ## Using HyperSync in Your Projects
 
 ### Configuration
 
-To use HyperSync (the default), simply don't set an RPC for historical sync in your config. HyperIndex will automatically use HyperSync for supported networks:
+To use HyperSync (the default), simply don't set an RPC for historical sync in your config. HyperIndex will automatically use HyperSync for supported chains:
 
 ```yaml
 name: Greeter
 description: Greeter indexer
-networks:
+chains:
   - id: 137 # Polygon
     start_block: 0 # With HyperSync, you can use 0 regardless of contract deployment time
     contracts:
@@ -75,9 +83,9 @@ This feature eliminates the need to manually determine the deployment block of y
 
 HyperSync is maintained and hosted by Envio for all supported networks. We handle the infrastructure, allowing you to focus on building your indexer logic.
 
-### Supported Networks
+### Supported Chains
 
-HyperSync supports numerous EVM networks including Ethereum, Unichain, Arbitrum, Optimism, and more. For a complete and up-to-date list of supported networks, see the [HyperSync Supported Networks](/docs/HyperSync/hypersync-supported-networks) documentation.
+HyperSync supports numerous EVM chains including Ethereum, Unichain, Arbitrum, Optimism, and more. For a complete and up-to-date list of supported chains, see the [HyperSync Supported Networks](/docs/HyperSync/hypersync-supported-networks) documentation.
 
 ### Alternative Data Sources
 

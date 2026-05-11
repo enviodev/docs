@@ -165,28 +165,33 @@ type Token {
 EventHandler.ts
 
 ```typescript
+import { indexer } from "envio";
+
 const globalStateId = "global-state";
 
-NftContract.Mint.handler(async ({event, context}) => {
-  const globalState = await context.GlobalState.get(globalStateId);
+indexer.onEvent(
+  { contract: "NftContract", event: "Mint" },
+  async ({ event, context }) => {
+    const globalState = await context.GlobalState.get(globalStateId);
 
-  if (!globalState) {
-    context.log.error("global state doesn't exist");
-    return;
-  }
+    if (!globalState) {
+      context.log.error("global state doesn't exist");
+      return;
+    }
 
-  const incrementedTokenId = globalState.count + 1;
+    const incrementedTokenId = globalState.count + 1;
 
-  context.Token.set({
-    id: incrementedTokenId,
-    description: event.params.description,
-  });
+    context.Token.set({
+      id: incrementedTokenId,
+      description: event.params.description,
+    });
 
-  context.GlobalState.set({
-    ...globalState,
-    count: incrementedTokenId,
-  });
-});
+    context.GlobalState.set({
+      ...globalState,
+      count: incrementedTokenId,
+    });
+  },
+);
 ```
 
 This pattern scales: you can keep per-entity counters, rolling windows (daily/hourly entities keyed by date), and top-N caches by updating entities as events arrive. Your queries then read these precomputed values directly, avoiding expensive runtime aggregations.

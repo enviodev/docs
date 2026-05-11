@@ -22,15 +22,15 @@ With multichain indexing, events from contracts deployed on multiple chains can 
 
 To implement multichain indexing, you need to:
 
-1. Populate the `networks` section in your `config.yaml` file for each chain
-2. Specify contracts to index from each network
+1. Populate the `chains` section in your `config.yaml` file for each chain
+2. Specify contracts to index from each chain
 3. Create event handlers for the specified contracts
 
 ## Real-World Example: Uniswap V4 Multichain Indexer
 
 For a comprehensive, production-ready example of multichain indexing, we recommend exploring our [Uniswap V4 Multichain Indexer](/docs/HyperIndex/example-uniswap-v4-multi-chain-indexer). This official reference implementation:
 
-- Indexes Uniswap V4 deployments across 10 different blockchain networks
+- Indexes Uniswap V4 deployments across 10 different blockchain chains
 - Powers the official [v4.xyz](https://v4.xyz) interface with real-time data
 - Demonstrates best practices for high-performance multichain indexing
 - Provides a complete, production-grade implementation you can study and adapt
@@ -44,8 +44,8 @@ The Uniswap V4 indexer showcases how to effectively structure a multichain index
 The `config.yaml` file for multichain indexing contains three key sections:
 
 1. **Global contract definitions** - Define contracts, ABIs, and events once
-2. **Network-specific configurations** - Specify chain IDs and starting blocks
-3. **Contract instances** - Reference global contracts with network-specific addresses
+2. **Chain-specific configurations** - Specify chain IDs and starting blocks
+3. **Contract instances** - Reference global contracts with chain-specific addresses
 
 ```yaml
 # Example structure (simplified)
@@ -55,7 +55,7 @@ contracts:
     events:
       - event: ExampleEvent
 
-networks:
+chains:
   - id: 1 # Ethereum Mainnet
     start_block: 0
     contracts:
@@ -71,9 +71,9 @@ networks:
 ### Key Configuration Concepts
 
 - The global `contracts` section defines the contract interface, ABI, handlers, and events once
-- The `networks` section lists each blockchain network you want to index
-- Each network entry references the global contract and provides the network-specific address
-- This structure allows you to reuse the same handler functions and event definitions across networks
+- The `chains` section lists each blockchain chain you want to index
+- Each chain entry references the global contract and provides the chain-specific address
+- This structure allows you to reuse the same handler functions and event definitions across chains
 
 > 📢 **Best Practice**: When developing multichain indexers, append the chain ID to entity IDs to avoid collisions. For example: `user-1` for Ethereum and `user-137` for Polygon.
 
@@ -81,13 +81,13 @@ networks:
 
 When indexing multiple chains, you have two approaches for handling event ordering:
 
-### Unordered Multichain Mode
+### Unordered Multichain Mode (default)
 
 :::note
-Unordered mode is recommended for most applications.
+Unordered mode is the default in V3 and recommended for most applications.
 :::
 
-The indexer processes events as soon as they're available from each chain, without waiting for other chains. This "Unordered Multichain Mode" provides better performance and lower latency.
+The indexer processes events as soon as they're available from each chain, without waiting for other chains. This provides better performance and lower latency.
 
 - Events will still be processed in order within each individual chain
 - Events across different chains may be processed out of order
@@ -97,25 +97,23 @@ The indexer processes events as soon as they're available from each chain, witho
 This mode is ideal for most applications, especially when:
 
 - Operations on your entities are [commutative](./terminology#commutative-property) (order doesn't matter)
-- Entities from different networks never interact with each other
+- Entities from different chains never interact with each other
 - Processing speed is more important than guaranteed cross-chain ordering
 
-#### How to Enable Unordered Mode
-
-In your config.yaml:
-
-```yaml
-unordered_multichain_mode: true
-networks: ...
-```
+In V3 unordered is the default, so no flag is required. The V2 `unordered_multichain_mode` option and the `UNORDERED_MULTICHAIN_MODE` / `UNSTABLE__TEMP_UNORDERED_HEAD_MODE` environment variables have been removed.
 
 ### Ordered Mode
 
-:::note
-Ordered mode is currently the default mode. But it'll be changed to unordered mode in the future. If you don't need strict deterministic ordering of events across all chains, it's recommended to use unordered mode.
-:::
+If your application requires strict deterministic ordering of events across all chains, you can opt into "Ordered Mode". In this mode, the indexer synchronizes event processing across all chains, ensuring that events are processed in the exact same order in every indexer run, regardless of which chain they came from.
 
-If your application requires strict deterministic ordering of events across all chains, you can enable "Ordered Mode". In this mode, the indexer synchronizes event processing across all chains, ensuring that events are processed in the exact same order in every indexer run, regardless of which chain they came from.
+#### How to Enable Ordered Mode
+
+In your `config.yaml`:
+
+```yaml
+multichain: ordered
+chains: ...
+```
 
 #### When to Use Ordered Mode
 
@@ -136,7 +134,7 @@ Cross-chain ordering is particularly important for applications like:
 
 With ordered mode enabled:
 
-- The indexer needs to wait for all blocks to increment from each network
+- The indexer needs to wait for all blocks to increment from each chain
 - There is increased latency between when an event is emitted and when it's processed
 - Processing speed is limited by the block interval of the slowest network
 - Events are guaranteed to be processed in the same order in every indexer run
@@ -156,15 +154,15 @@ This latency is acceptable for applications where correct cross-chain ordering i
 
 ### 1. Entity ID Namespacing
 
-Always namespace your entity IDs with the chain ID to prevent collisions between networks. This ensures that entities from different networks remain distinct.
+Always namespace your entity IDs with the chain ID to prevent collisions between chains. This ensures that entities from different chains remain distinct.
 
 ### 2. Error Handling
 
-Implement robust error handling for network-specific issues. A failure on one chain shouldn't prevent indexing from continuing on other chains.
+Implement robust error handling for chain-specific issues. A failure on one chain shouldn't prevent indexing from continuing on other chains.
 
 ### 3. Testing
 
-- Test your indexer with realistic scenarios across all networks
+- Test your indexer with realistic scenarios across all chains
 - Use testnet deployments for initial validation
 - Verify entity updates work correctly across chains
 
@@ -179,16 +177,16 @@ Implement robust error handling for network-specific issues. A failure on one ch
 
 To add a new chain to a running indexer:
 
-1. Add the new network entry to your `config.yaml` with the appropriate `start_block` and contract addresses
-2. Push the updated code to your deployment branch (for Envio Cloud) or restart locally with `pnpm envio start -r`
+1. Add the new chain entry to your `config.yaml` with the appropriate `start_block` and contract addresses
+2. Push the updated code to your deployment branch (for Envio Cloud) or restart locally with `pnpm envio dev -r`
 
 On **Envio Cloud**, this creates a new deployment that re-indexes all chains (including the new one). Your previous deployment continues serving queries with zero downtime until the new deployment is fully synced. See the [deployment guide](../Hosted_Service/hosted-service-deployment.md#updating-your-deployment) for details.
 
-**Locally**, adding a new chain requires a restart and will re-index all chains from their respective start blocks.
+**Locally**, adding a new chain requires a restart and will re-index all chains from their respective start blocks. Note that in V3, `envio dev` no longer auto-resets the database — pass `-r` (or `--restart`) explicitly when you want a fresh sync. `envio start` is now production-only.
 
 ## Troubleshooting Common Issues
 
-1. **Different Network Speeds**: If one network is significantly slower than others, consider using unordered mode to prevent bottlenecks.
+1. **Different Chain Speeds**: If one chain is significantly slower than others, consider using unordered mode to prevent bottlenecks.
 
 2. **Entity Conflicts**: If you see unexpected entity updates, verify that your entity IDs are properly namespaced with chain IDs.
 

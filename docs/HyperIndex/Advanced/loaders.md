@@ -1,28 +1,31 @@
 ---
 id: loaders
 title: Loaders
-sidebar_label: Loaders (Deprecated)
+sidebar_label: Loaders (Removed)
 slug: /loaders
-description: Learn how Loaders improved database access performance for event handlers.
+description: Historical reference for the V2 Loaders API, replaced by built-in Preload Optimization in V3.
 ---
 
-# Loaders Optimization (Deprecated)
+# Loaders Optimization (Removed in V3)
 
 :::warning
-Loaders are a predecessor of [Preload Optimization](/docs/HyperIndex/preload-optimization). We recommend using [Preload Optimization](/docs/HyperIndex/preload-optimization) instead of loaders. This guide is kept for historical purposes.
+The `handlerWithLoader` API and the `loaders` flag in `config.yaml` were removed in HyperIndex V3. [Preload Optimization](/docs/HyperIndex/preload-optimization) is now always on — there is no flag to enable or disable it. This page is kept for historical context and to help V2 projects migrate.
 :::
 
-## What Are Loaders?
+## What Were Loaders?
 
-Loaders were a feature in early versions of HyperIndex that significantly improved database access performance for event handlers.
+Loaders were a feature in early V2 versions of HyperIndex that significantly improved database access performance for event handlers.
 
 They worked by implementing the [Preload Optimization](/docs/HyperIndex/preload-optimization) - loading required data upfront before processing events.
 
 The preloaded data would then be available to event handlers through a `loaderReturn` object, eliminating the need for individual database queries during event processing.
 
-Compared to the current [Preload Optimization](/docs/HyperIndex/preload-optimization) approach, handlers with loaders didn't have the Preload Phase, and always ran once.
+In V2, handlers with loaders didn't have a Preload Phase and always ran once. In V3, every handler runs through the Preload Phase automatically, so the dedicated `handlerWithLoader` API and the `loaders:` config flag have both been removed.
+
+The V2 shape looked like this (no longer accepted in V3):
 
 ```typescript
+// V2 only — removed in V3
 ContractName.EventName.handlerWithLoader({
   // The loader function runs before event processing starts
   loader: async ({ event, context }) => {
@@ -38,14 +41,14 @@ ContractName.EventName.handlerWithLoader({
 });
 ```
 
-## How It Works?
+## How It Works in V3
 
-Find more information about how Loaders work by reading the [Preload Optimization - How It Works?](/docs/HyperIndex/preload-optimization#how-it-works) guide. Loaders share the same concept, but with a different API.
+In V3 the optimization is built in. See [Preload Optimization - How It Works?](/docs/HyperIndex/preload-optimization#how-it-works) for the full mechanics. The two-phase execution is identical to what loaders provided, just without a separate API.
 
-For example, this is how a loader can be turned into a handler with Preload Optimization enabled:
+For example, this is how a V2 loader is rewritten as a regular V3 handler — the only thing that changed is that the loader code now lives inline at the top of the handler:
 
 ```typescript
-// Before:
+// V2 — removed
 ERC20.Transfer.handlerWithLoader({
   loader: async ({ event, context }) => {
     // Load sender and receiver accounts efficiently
@@ -67,19 +70,26 @@ ERC20.Transfer.handlerWithLoader({
   },
 });
 
-// After:
-ERC20.Transfer.handler(async ({ event, context }) => {
-  // Load sender and receiver accounts efficiently
-  const sender = await context.Account.get(event.params.from);
-  const receiver = await context.Account.get(event.params.to);
+// V3 — Preload Optimization is always on
+import { indexer } from "envio";
 
-  // To imitate the behavior of the loader,
-  // we can use `context.isPreload` to make next code run only once.
-  // Note: This is not required, but might be useful for CPU-intensive operations.
-  if (context.isPreload) {
-    return;
-  }
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    // Load sender and receiver accounts efficiently
+    const sender = await context.Account.get(event.params.from);
+    const receiver = await context.Account.get(event.params.to);
 
-  // Process the transfer with the pre-loaded data
-});
+    // To imitate the behavior of the loader,
+    // we can use `context.isPreload` to make next code run only once.
+    // Note: This is not required, but might be useful for CPU-intensive operations.
+    if (context.isPreload) {
+      return;
+    }
+
+    // Process the transfer with the pre-loaded data
+  },
+);
 ```
+
+If your project still has `loaders: true` or `preload_handlers: true` in `config.yaml`, remove both fields — V3 will reject them.

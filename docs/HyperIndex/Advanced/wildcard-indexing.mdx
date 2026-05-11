@@ -22,7 +22,7 @@ As an example, let's say we want to index all ERC20 `Transfer` events. Start wit
 
 ```yaml
 name: transefer-indexer
-networks:
+chains:
   - id: 1
     start_block: 0
     contracts:
@@ -47,9 +47,10 @@ And the last bit is to register an event handler in the `src/handlers`. Note how
   <TabItem value="ts" label="TypeScript">
 
 ```ts
-import { ERC20 } from "generated";
+import { indexer } from "envio";
 
-ERC20.Transfer.handler(
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer", wildcard: true },
   async ({ event, context }) => {
     context.Transfer.set({
       id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
@@ -57,7 +58,6 @@ ERC20.Transfer.handler(
       to: event.params.to,
     });
   },
-  { wildcard: true }
 );
 ```
 
@@ -65,9 +65,10 @@ ERC20.Transfer.handler(
   <TabItem value="js" label="JavaScript">
 
 ```js
-const { ERC20 } = require("generated");
+const { indexer } = require("envio");
 
-ERC20.Transfer.handler(
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer", wildcard: true },
   async ({ event, context }) => {
     context.Transfer.set({
       id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
@@ -75,24 +76,7 @@ ERC20.Transfer.handler(
       to: event.params.to,
     });
   },
-  { wildcard: true }
 );
-```
-
-  </TabItem>
-  <TabItem value="res" label="ReScript">
-
-```rescript
-Handlers.ERC20.Transfer.handler(
-  async ({ event, context }) => {
-    context.Transfer.set({
-      id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-      from: event.params.from,
-      to: event.params.to,
-    })
-  },
-  ~eventConfig={wildcard: true},
-)
 ```
 
   </TabItem>
@@ -104,7 +88,7 @@ After running your indexer with `pnpm dev` you will have all ERC20 `Transfer` ev
 
 Indexing all ERC20 `Transfer` events is a lot of events, so ideally to reduce it only to the ones you trully need with the Topic Filtering feature.
 
-When you register an event handler or a contract register you can provide the `eventFilters` option. You can filter by each `indexed` parameter on the given event.
+When you register an event handler or a contract register you can provide the `where` option (renamed from V2's `eventFilters`). You can filter by each `indexed` parameter on the given event by returning `{ params: [...] }`.
 
 Let's say you only want to index `Mint` events where the `from` address is equal to `ZERO_ADDRESS`:
 
@@ -112,15 +96,20 @@ Let's say you only want to index `Mint` events where the `from` address is equal
   <TabItem value="ts" label="TypeScript">
 
 ```ts
-import { ERC20 } from "generated";
+import { indexer } from "envio";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
-ERC20.Transfer.handler(
+indexer.onEvent(
+  {
+    contract: "ERC20",
+    event: "Transfer",
+    wildcard: true,
+    where: () => ({ params: [{ from: ZERO_ADDRESS }] }),
+  },
   async ({ event, context }) => {
     //... your handler logic
   },
-  { wildcard: true, eventFilters: { from: ZERO_ADDRESS } }
 );
 ```
 
@@ -128,35 +117,21 @@ ERC20.Transfer.handler(
   <TabItem value="js" label="JavaScript">
 
 ```js
-const { ERC20 } = require("generated");
+const { indexer } = require("envio");
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
-ERC20.Transfer.handler(
-  async ({ event, context }) => {
-    //... your handler logic
-  },
-  { wildcard: true, eventFilters: { from: ZERO_ADDRESS } }
-);
-```
-
-  </TabItem>
-  <TabItem value="res" label="ReScript">
-
-```rescript
-open Types.SingleOrMultiple
-
-let zeroAddress = Address.unsafeFromString("0x0000000000000000000000000000000000000000")
-
-Handlers.ERC20.Transfer.handler(
-  async ({ event, context }) => {
-    //... your handler logic
-  },
-  ~eventConfig={
+indexer.onEvent(
+  {
+    contract: "ERC20",
+    event: "Transfer",
     wildcard: true,
-    eventFilters: Single({from: single(zeroAddress)}),
+    where: () => ({ params: [{ from: ZERO_ADDRESS }] }),
   },
-)
+  async ({ event, context }) => {
+    //... your handler logic
+  },
+);
 ```
 
   </TabItem>
@@ -170,7 +145,7 @@ If you want to index both `Mint` and `Burn` events you can provide multiple filt
   <TabItem value="ts" label="TypeScript">
 
 ```ts
-import { ERC20 } from "generated";
+import { indexer } from "envio";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
@@ -180,17 +155,21 @@ const WHITELISTED_ADDRESSES = [
   "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
 ];
 
-ERC20.Transfer.handler(
+indexer.onEvent(
+  {
+    contract: "ERC20",
+    event: "Transfer",
+    wildcard: true,
+    where: () => ({
+      params: [
+        { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES },
+        { from: WHITELISTED_ADDRESSES, to: ZERO_ADDRESS },
+      ],
+    }),
+  },
   async ({ event, context }) => {
     //... your handler logic
   },
-  {
-    wildcard: true,
-    eventFilters: [
-      { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES },
-      { from: WHITELISTED_ADDRESSES, to: ZERO_ADDRESS },
-    ],
-  }
 );
 ```
 
@@ -198,7 +177,7 @@ ERC20.Transfer.handler(
   <TabItem value="js" label="JavaScript">
 
 ```js
-const { ERC20 } = require("generated");
+const { indexer } = require("envio");
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
@@ -208,60 +187,36 @@ const WHITELISTED_ADDRESSES = [
   "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
 ];
 
-ERC20.Transfer.handler(
-  async ({ event, context }) => {
-    //... your handler logic
-  },
+indexer.onEvent(
   {
+    contract: "ERC20",
+    event: "Transfer",
     wildcard: true,
-    eventFilters: [
-      { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES },
-      { from: WHITELISTED_ADDRESSES, to: ZERO_ADDRESS },
-    ],
-  }
-);
-```
-
-  </TabItem>
-  <TabItem value="res" label="ReScript">
-
-```rescript
-open Types.SingleOrMultiple
-
-let zeroAddress = Address.unsafeFromString("0x0000000000000000000000000000000000000000")
-
-let whitelistedAddresses = [
-  Address.unsafeFromString("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"),
-  Address.unsafeFromString("0x70997970C51812dc3A010C7d01b50e0d17dc79C8"),
-  Address.unsafeFromString("0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC")
-]
-
-Handlers.ERC20.Transfer.handler(
+    where: () => ({
+      params: [
+        { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES },
+        { from: WHITELISTED_ADDRESSES, to: ZERO_ADDRESS },
+      ],
+    }),
+  },
   async ({ event, context }) => {
     //... your handler logic
   },
-  ~eventConfig={
-    wildcard: true,
-    eventFilters: Multiple([
-      { from: single(zeroAddress), to: multiple(whitelistedAddresses) },
-      { from: multiple(whitelistedAddresses), to: single(zeroAddress) }
-    ]),
-  },
-)
+);
 ```
 
   </TabItem>
 </Tabs>
 
-## Different Filters per Network
+## Different Filters per Chain
 
-For [Multichain Indexers](/docs/HyperIndex/multichain-indexing) you can pass a function to `eventFilters` and use `chainId` to filter by different values per network:
+For [Multichain Indexers](/docs/HyperIndex/multichain-indexing) the `where` callback receives `{ chain }` and you can read `chain.id` to filter by different values per chain:
 
 <Tabs groupId="lang" defaultValue="ts">
   <TabItem value="ts" label="TypeScript">
 
 ```ts
-import { ERC20 } from "generated";
+import { indexer } from "envio";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
@@ -273,17 +228,21 @@ const WHITELISTED_ADDRESSES = {
   ],
 };
 
-ERC20.Transfer.handler(
+indexer.onEvent(
+  {
+    contract: "ERC20",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [
+        { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chain.id] },
+        { from: WHITELISTED_ADDRESSES[chain.id], to: ZERO_ADDRESS },
+      ],
+    }),
+  },
   async ({ event, context }) => {
     //... your handler logic
   },
-  {
-    wildcard: true,
-    eventFilters: ({ chainId }) => [
-      { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chainId] },
-      { from: WHITELISTED_ADDRESSES[chainId], to: ZERO_ADDRESS },
-    ],
-  }
 );
 ```
 
@@ -291,7 +250,7 @@ ERC20.Transfer.handler(
   <TabItem value="js" label="JavaScript">
 
 ```js
-const { ERC20 } = require("generated");
+const { indexer } = require("envio");
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
@@ -303,17 +262,21 @@ const WHITELISTED_ADDRESSES = {
   ],
 };
 
-ERC20.Transfer.handler(
+indexer.onEvent(
+  {
+    contract: "ERC20",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [
+        { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chain.id] },
+        { from: WHITELISTED_ADDRESSES[chain.id], to: ZERO_ADDRESS },
+      ],
+    }),
+  },
   async ({ event, context }) => {
     //... your handler logic
   },
-  {
-    wildcard: true,
-    eventFilters: ({ chainId }) => [
-      { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chainId] },
-      { from: WHITELISTED_ADDRESSES[chainId], to: ZERO_ADDRESS },
-    ],
-  }
 );
 ```
 
@@ -322,13 +285,13 @@ ERC20.Transfer.handler(
 
 ## Index all ERC20 transfers to your Contract
 
-Besides `chainId` you can also access the `addresses` value to filter by.
+Besides `chain.id` you can also read the contract's configured (and dynamically registered) addresses from `chain.<ContractName>.addresses`.
 
-For example, if you have a `Safe` contract, you can index all ERC20 transfers sent specifically to/from your `Safe` contracts. The event filter gets addresses belonging to the contract, so we need to define the `Transfer` event on the `Safe` contract:
+For example, if you have a `Safe` contract, you can index all ERC20 transfers sent specifically to/from your `Safe` contracts. The `where` callback can read `chain.Safe.addresses`, so we need to define the `Transfer` event on the `Safe` contract:
 
 ```yaml
 name: locker
-networks:
+chains:
   - id: 1
     start_block: 0
     contracts:
@@ -345,24 +308,44 @@ networks:
   <TabItem value="ts" label="TypeScript">
 
 ```ts
-import { Safe } from "generated";
+import { indexer } from "envio";
 
-Safe.Transfer.handler(async ({ event, context }) => {}, {
-  wildcard: true,
-  eventFilters: ({ addresses }) => [{ from: addresses }, { to: addresses }],
-});
+indexer.onEvent(
+  {
+    contract: "Safe",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [
+        { from: chain.Safe.addresses },
+        { to: chain.Safe.addresses },
+      ],
+    }),
+  },
+  async ({ event, context }) => {},
+);
 ```
 
   </TabItem>
   <TabItem value="js" label="JavaScript">
 
 ```js
-const { Safe } = require("generated");
+const { indexer } = require("envio");
 
-Safe.Transfer.handler(async ({ event, context }) => {}, {
-  wildcard: true,
-  eventFilters: ({ addresses }) => [{ from: addresses }, { to: addresses }],
-});
+indexer.onEvent(
+  {
+    contract: "Safe",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [
+        { from: chain.Safe.addresses },
+        { to: chain.Safe.addresses },
+      ],
+    }),
+  },
+  async ({ event, context }) => {},
+);
 ```
 
   </TabItem>
@@ -372,7 +355,7 @@ This example is not much different from using a `WHITELISTED_ADDRESSES` constant
 
 ```yaml
 name: locker
-networks:
+chains:
   - id: 1
     start_block: 0
     contracts:
@@ -390,32 +373,58 @@ networks:
   <TabItem value="ts" label="TypeScript">
 
 ```ts
-import { SafeRegistry, Safe } from "generated";
+import { indexer } from "envio";
 
-SafeRegistry.NewSafe.contractRegister(async ({ event, context }) => {
-  context.addSafe(event.params.safe);
-});
+indexer.contractRegister(
+  { contract: "SafeRegistry", event: "NewSafe" },
+  async ({ event, context }) => {
+    context.chain.Safe.add(event.params.safe);
+  },
+);
 
-Safe.Transfer.handler(async ({ event, context }) => {}, {
-  wildcard: true,
-  eventFilters: ({ addresses }) => [{ from: addresses }, { to: addresses }],
-});
+indexer.onEvent(
+  {
+    contract: "Safe",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [
+        { from: chain.Safe.addresses },
+        { to: chain.Safe.addresses },
+      ],
+    }),
+  },
+  async ({ event, context }) => {},
+);
 ```
 
   </TabItem>
   <TabItem value="js" label="JavaScript">
 
 ```js
-const { SafeRegistry, Safe } = require("generated");
+const { indexer } = require("envio");
 
-SafeRegistry.NewSafe.contractRegister(async ({ event, context }) => {
-  context.addSafe(event.params.safe);
-});
+indexer.contractRegister(
+  { contract: "SafeRegistry", event: "NewSafe" },
+  async ({ event, context }) => {
+    context.chain.Safe.add(event.params.safe);
+  },
+);
 
-Safe.Transfer.handler(async ({ event, context }) => {}, {
-  wildcard: true,
-  eventFilters: ({ addresses }) => [{ from: addresses }, { to: addresses }],
-});
+indexer.onEvent(
+  {
+    contract: "Safe",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [
+        { from: chain.Safe.addresses },
+        { to: chain.Safe.addresses },
+      ],
+    }),
+  },
+  async ({ event, context }) => {},
+);
 ```
 
   </TabItem>
@@ -429,14 +438,25 @@ After you got all ERC20 Transfers relevant to your contracts, you can additional
   <TabItem value="ts" label="TypeScript">
 
 ```ts
-import { Safe } from "generated";
+import { indexer } from "envio";
 
 const USDC_ADDRESS = {
   84532: "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
   11155111: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
 };
 
-Safe.Transfer.handler(
+indexer.onEvent(
+  {
+    contract: "Safe",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [
+        { from: chain.Safe.addresses },
+        { to: chain.Safe.addresses },
+      ],
+    }),
+  },
   async ({ event, context }) => {
     // Filter and store only the USDC transfers that involve a Safe address
     if (event.srcAddress === USDC_ADDRESS[event.chainId]) {
@@ -447,10 +467,6 @@ Safe.Transfer.handler(
       });
     }
   },
-  {
-    wildcard: true,
-    eventFilters: ({ addresses }) => [{ from: addresses }, { to: addresses }],
-  }
 );
 ```
 
@@ -458,14 +474,25 @@ Safe.Transfer.handler(
   <TabItem value="js" label="JavaScript">
 
 ```js
-const { Safe } = require("generated");
+const { indexer } = require("envio");
 
 const USDC_ADDRESS = {
   84532: "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
   11155111: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
 };
 
-Safe.Transfer.handler(
+indexer.onEvent(
+  {
+    contract: "Safe",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [
+        { from: chain.Safe.addresses },
+        { to: chain.Safe.addresses },
+      ],
+    }),
+  },
   async ({ event, context }) => {
     // Filter and store only the USDC transfers that involve a Safe address
     if (event.srcAddress === USDC_ADDRESS[event.chainId]) {
@@ -476,10 +503,6 @@ Safe.Transfer.handler(
       });
     }
   },
-  {
-    wildcard: true,
-    eventFilters: ({ addresses }) => [{ from: addresses }, { to: addresses }],
-  }
 );
 ```
 
@@ -488,22 +511,28 @@ Safe.Transfer.handler(
 
 ## Contract Register Example
 
-The same `eventFilters` can be applied to `contractRegister` and `handlerWithLoader` APIs. Here is an example where we only register Uniswap pools that contain DAI token:
+The same `where` option can be applied to `indexer.contractRegister`. Here is an example where we only register Uniswap pools that contain DAI token:
 
 <Tabs groupId="lang" defaultValue="ts">
   <TabItem value="ts" label="TypeScript">
 
 ```ts
-import { UniV3Factory } from "generated";
+import { indexer } from "envio";
 
 const DAI_ADDRESS = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
 
-UniV3Factory.PoolCreated.contractRegister(
+indexer.contractRegister(
+  {
+    contract: "UniV3Factory",
+    event: "PoolCreated",
+    where: () => ({
+      params: [{ token0: DAI_ADDRESS }, { token1: DAI_ADDRESS }],
+    }),
+  },
   async ({ event, context }) => {
     const poolAddress = event.params.pool;
-    context.UniV3Pool.add(poolAddress);
+    context.chain.UniV3Pool.add(poolAddress);
   },
-  { eventFilters: [{ token0: DAI_ADDRESS }, { token1: DAI_ADDRESS }] }
 );
 ```
 
@@ -511,61 +540,32 @@ UniV3Factory.PoolCreated.contractRegister(
   <TabItem value="js" label="JavaScript">
 
 ```js
-const { UniV3Factory } = require("generated");
+const { indexer } = require("envio");
 
 const DAI_ADDRESS = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
 
-UniV3Factory.PoolCreated.contractRegister(
+indexer.contractRegister(
+  {
+    contract: "UniV3Factory",
+    event: "PoolCreated",
+    where: () => ({
+      params: [{ token0: DAI_ADDRESS }, { token1: DAI_ADDRESS }],
+    }),
+  },
   async ({ event, context }) => {
     const poolAddress = event.params.pool;
-    context.UniV3Pool.add(poolAddress);
+    context.chain.UniV3Pool.add(poolAddress);
   },
-  { eventFilters: [{ token0: DAI_ADDRESS }, { token1: DAI_ADDRESS }] }
 );
-```
-
-  </TabItem>
-  <TabItem value="res" label="ReScript">
-
-```rescript
-open Types.SingleOrMultiple
-
-let daiAddress = Address.unsafeFromString("0x6B175474E89094C44Da98b954EedeAC495271d0F")
-
-Handlers.UniV3Factory.PoolCreated.contractRegister(
-  async ({ event, context }) => {
-    let poolAddress = event.params.pool
-    context.UniV3Pool.add(poolAddress)
-  },
-  ~eventConfig={
-    eventFilters: Multiple([
-      { token0: single(daiAddress) },
-      { token1: single(daiAddress) }
-    ])
-  },
-)
 ```
 
   </TabItem>
 </Tabs>
 
-## Handler With Loader Example
-
-For `handlerWithLoader` API simply add `wildcard` or `eventFilters` options to the single argument object:
-
-```ts
-ERC20.Transfer.handlerWithLoader({
-  loader: async ({ event, context }) => {},
-  handler: async ({ event, context }) => {},
-  wildcard: ...,
-  eventFilters: ...,
-});
-```
-
 ## Limitations
 
-- For any given network, only one event of a given signature can be indexed using wildcard indexing. This means that if you have multiple contract definitions in your config that contain the same event signature. Only one of them is allowed to be set to `wildcard: true`
+- For any given chain, only one event of a given signature can be indexed using wildcard indexing. This means that if you have multiple contract definitions in your config that contain the same event signature, only one of them is allowed to be set to `wildcard: true`.
 
-- Either the `contractRegister` or the `handler` function can take an event config object (with wildcard/eventFilters fields) but not both.
+- Either the `contractRegister` or the `onEvent` registration for a given event can take a `where` option, but not both.
 
 - The RPC data source currently supports Topic Filtering only applied to a single wildcard event.

@@ -27,9 +27,14 @@ This allows you to easily:
 - Have nested factories which are registered by other factories.
 
 ```typescript
-<contract-name>.<event-name>.contractRegister(({ event, context }) => {
-  context.add<your-contract-name>(<address-of-the-contract>);
-});
+import { indexer } from "envio";
+
+indexer.contractRegister(
+  { contract: "<contract-name>", event: "<event-name>" },
+  ({ event, context }) => {
+    context.chain.<your-contract-name>.add(<address-of-the-contract>);
+  },
+);
 ```
 
 ## Example: NFT Factory Pattern
@@ -47,7 +52,7 @@ Let's look at a complete example using an NFT factory pattern.
 ```yaml
 name: nftindexer
 description: NFT Factory
-networks:
+chains:
   - id: 1337
     start_block: 0
     contracts:
@@ -74,26 +79,34 @@ Note that:
 In your `src/handlers/<ContractName>.ts` file:
 
 ```typescript
-// Register SimpleNft contracts whenever they're created by the factory
-NftFactory.SimpleNftCreated.contractRegister(({ event, context }) => {
-  // Register the new NFT contract using its address from the event
-  context.addSimpleNft(event.params.contractAddress);
+import { indexer } from "envio";
 
-  context.log.info(
-    `Registered new SimpleNft at ${event.params.contractAddress}`
-  );
-});
+// Register SimpleNft contracts whenever they're created by the factory
+indexer.contractRegister(
+  { contract: "NftFactory", event: "SimpleNftCreated" },
+  ({ event, context }) => {
+    // Register the new NFT contract using its address from the event
+    context.chain.SimpleNft.add(event.params.contractAddress);
+
+    context.log.info(
+      `Registered new SimpleNft at ${event.params.contractAddress}`
+    );
+  },
+);
 
 // Handle Transfer events from all SimpleNft contracts
-SimpleNft.Transfer.handler(async ({ event, context }) => {
-  // Your event handling logic here
-  context.log.info(
-    `NFT Transfer at ${event.srcAddress} - Token ID: ${event.params.tokenId}`
-  );
+indexer.onEvent(
+  { contract: "SimpleNft", event: "Transfer" },
+  async ({ event, context }) => {
+    // Your event handling logic here
+    context.log.info(
+      `NFT Transfer at ${event.srcAddress} - Token ID: ${event.params.tokenId}`
+    );
 
-  // Example: Store transfer information in the database
-  // ...
-});
+    // Example: Store transfer information in the database
+    // ...
+  },
+);
 ```
 
 ## Async Contract Register
@@ -103,14 +116,19 @@ As of version `2.21`, you can use async contract registration.
 This is a unique feature of Envio that allows you to perform an external call to determine the address of the contract to register.
 
 ```typescript
-NftFactory.SimpleNftCreated.contractRegister(async ({ event, context }) => {
-  const version = await getContractVersion(event.params.contractAddress);
-  if (version === "v2") {
-    context.addSimpleNftV2(event.params.contractAddress);
-  } else {
-    context.addSimpleNft(event.params.contractAddress);
-  }
-});
+import { indexer } from "envio";
+
+indexer.contractRegister(
+  { contract: "NftFactory", event: "SimpleNftCreated" },
+  async ({ event, context }) => {
+    const version = await getContractVersion(event.params.contractAddress);
+    if (version === "v2") {
+      context.chain.SimpleNftV2.add(event.params.contractAddress);
+    } else {
+      context.chain.SimpleNft.add(event.params.contractAddress);
+    }
+  },
+);
 ```
 
 ## Coming from TheGraph?
@@ -120,7 +138,7 @@ If you're migrating from a subgraph that uses **data source templates** (`DataSo
 | TheGraph | Envio (HyperIndex) |
 |---|---|
 | Define a template in `subgraph.yaml` | Define the contract in `config.yaml` without an `address` |
-| Call `MyTemplate.create(address)` in a mapping | Call `context.addMyContract(address)` in a `contractRegister` handler |
+| Call `MyTemplate.create(address)` in a mapping | Call `context.chain.MyContract.add(address)` in a `contractRegister` handler |
 | Templates are triggered from other mappings | `contractRegister` runs before the event handler, on any event |
 
 The key difference is that Envio's `contractRegister` is more flexible — you can add conditional logic, perform async calls, and register contracts from any event, not just from a dedicated factory mapping.
@@ -141,7 +159,7 @@ Use dynamic contract registration when:
 
 - **Handler Organization**: You can register contracts from any event handler. For example, you might register a token contract when you see it being added to a registry, not just when it's created.
 
-- **Pre-registration**: Pre-registration was a recommended mode to optimize performance. But starting from version `2.19` the option is removed in favor of the default behavior, which got even faster.
+- **Pre-registration**: Pre-registration was a recommended mode in early V2 to optimize performance. The `preRegisterDynamicContracts` option has been removed entirely in V3 — the default registration path is now the fastest, so no flag is needed.
 
 ## Debugging Tips
 

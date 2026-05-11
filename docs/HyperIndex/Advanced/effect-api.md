@@ -64,10 +64,15 @@ After defining an effect, you can use `context.effect` to call it from your hand
 The `context.effect` function accepts an effect as the first argument and the effect's input as the second argument:
 
 ```typescript
-ERC20.Transfer.handler(async ({ event, context }) => {
-  const metadata = await context.effect(getMetadata, event.params.from);
-  // Process the event with the metadata
-});
+import { indexer } from "envio";
+
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    const metadata = await context.effect(getMetadata, event.params.from);
+    // Process the event with the metadata
+  },
+);
 ```
 
 ### Reading On-Chain State (eth_call)
@@ -254,16 +259,21 @@ export const sendWebhook = createEffect(
 Then call it from your handler:
 
 ```typescript
-MyContract.LargeTransfer.handler(async ({ event, context }) => {
-  await context.effect(sendWebhook, {
-    event: "large_transfer",
-    data: JSON.stringify({
-      from: event.params.from,
-      to: event.params.to,
-      amount: event.params.value.toString(),
-    }),
-  });
-});
+import { indexer } from "envio";
+
+indexer.onEvent(
+  { contract: "MyContract", event: "LargeTransfer" },
+  async ({ event, context }) => {
+    await context.effect(sendWebhook, {
+      event: "large_transfer",
+      data: JSON.stringify({
+        from: event.params.from,
+        to: event.params.to,
+        amount: event.params.value.toString(),
+      }),
+    });
+  },
+);
 ```
 
 :::warning

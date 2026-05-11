@@ -230,11 +230,14 @@ ponder.on("MyToken:Transfer", async ({ event, context }) => {
 **HyperIndex**
 
 ```typescript
-import { MyToken } from "generated";
+import { indexer } from "envio";
 
-MyToken.Transfer.handler(async ({ event, context }) => {
-  // ...
-});
+indexer.onEvent(
+  { contract: "MyToken", event: "Transfer" },
+  async ({ event, context }) => {
+    // ...
+  },
+);
 ```
 
 ### Event data access
@@ -281,23 +284,26 @@ ponder.on("MyToken:Transfer", async ({ event, context }) => {
 _HyperIndex_
 
 ```typescript
-import { MyToken } from "generated";
+import { indexer } from "envio";
 
-MyToken.Transfer.handler(async ({ event, context }) => {
-  context.TransferEvent.set({
-    id: `${event.transaction.hash}_${event.logIndex}`,
-    from: event.params.from,
-    to: event.params.to,
-    amount: event.params.amount,
-    timestamp: event.block.timestamp,
-  });
+indexer.onEvent(
+  { contract: "MyToken", event: "Transfer" },
+  async ({ event, context }) => {
+    context.TransferEvent.set({
+      id: `${event.transaction.hash}_${event.logIndex}`,
+      from: event.params.from,
+      to: event.params.to,
+      amount: event.params.amount,
+      timestamp: event.block.timestamp,
+    });
 
-  const token = await context.Token.getOrThrow(event.params.to);
-  context.Token.set({
-    ...token,
-    balance: token.balance + event.params.amount,
-  });
-});
+    const token = await context.Token.getOrThrow(event.params.to);
+    context.Token.set({
+      ...token,
+      balance: token.balance + event.params.amount,
+    });
+  },
+);
 ```
 
 > **Important**: Entity objects from `context.Entity.get()` are read-only. Always spread (`...existing`) and set new fields — never mutate directly.
@@ -312,12 +318,15 @@ See the [Event Handlers](/docs/HyperIndex/event-handlers) docs for the full API 
 Replace Ponder's `factory()` helper in config with a [`contractRegister`](/docs/HyperIndex/dynamic-contracts) handler:
 
 ```typescript
-import { MyFactory } from "generated";
+import { indexer } from "envio";
 
 // Registers each newly deployed contract for indexing
-MyFactory.ContractCreated.contractRegister(({ event, context }) => {
-  context.addMyContract(event.params.contractAddress);
-});
+indexer.contractRegister(
+  { contract: "MyFactory", event: "ContractCreated" },
+  ({ event, context }) => {
+    context.chain.MyContract.add(event.params.contractAddress);
+  },
+);
 ```
 
 In `config.yaml`, omit the `address` field for the dynamically registered contract.

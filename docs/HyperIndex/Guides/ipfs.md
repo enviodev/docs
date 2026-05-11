@@ -43,8 +43,7 @@ Modify the configuration to focus on the Transfer events:
 ```yaml
 # config.yaml
 name: bored-ape-yacht-club-nft-indexer
-preload_handlers: true
-networks:
+chains:
   - id: 1
     start_block: 0
     end_block: 12299114 # Optional: limit blocks for development
@@ -74,26 +73,29 @@ Track ownership changes by handling Transfer events:
 
 ```typescript
 // src/EventHandler.ts
-import { BoredApeYachtClub } from "generated";
+import { indexer } from "envio";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
-BoredApeYachtClub.Transfer.handler(async ({ event, context }) => {
-  if (event.params.from === ZERO_ADDRESS) {
-    // mint
-    context.Nft.set({
-      id: event.params.tokenId.toString(),
-      owner: event.params.to,
-    });
-  } else {
-    // transfer
-    const nft = await context.Nft.getOrThrow(event.params.tokenId.toString());
-    context.Nft.set({
-      ...nft,
-      owner: event.params.to,
-    });
-  }
-});
+indexer.onEvent(
+  { contract: "BoredApeYachtClub", event: "Transfer" },
+  async ({ event, context }) => {
+    if (event.params.from === ZERO_ADDRESS) {
+      // mint
+      context.Nft.set({
+        id: event.params.tokenId.toString(),
+        owner: event.params.to,
+      });
+    } else {
+      // transfer
+      const nft = await context.Nft.getOrThrow(event.params.tokenId.toString());
+      context.Nft.set({
+        ...nft,
+        owner: event.params.to,
+      });
+    }
+  },
+);
 ```
 
 Run your indexer with `pnpm dev` and visit http://localhost:8080 to see the ownership data:
@@ -211,33 +213,36 @@ Let's modify the event handler to fetch and store metadata using the `getIpfsMet
 
 ```typescript
 // src/handlers
-import { BoredApeYachtClub } from "generated";
+import { indexer } from "envio";
 import { getIpfsMetadata } from "./utils/ipfs";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
-BoredApeYachtClub.Transfer.handler(async ({ event, context }) => {
-  if (event.params.from === ZERO_ADDRESS) {
-    // mint
-    const metadata = await context.effect(
-      getIpfsMetadata,
-      event.params.tokenId.toString()
-    );
-    context.Nft.set({
-      id: event.params.tokenId.toString(),
-      owner: event.params.to,
-      image: metadata.image,
-      attributes: metadata.attributes,
-    });
-  } else {
-    // transfer
-    const nft = await context.Nft.getOrThrow(event.params.tokenId.toString());
-    context.Nft.set({
-      ...nft,
-      owner: event.params.to,
-    });
-  }
-});
+indexer.onEvent(
+  { contract: "BoredApeYachtClub", event: "Transfer" },
+  async ({ event, context }) => {
+    if (event.params.from === ZERO_ADDRESS) {
+      // mint
+      const metadata = await context.effect(
+        getIpfsMetadata,
+        event.params.tokenId.toString()
+      );
+      context.Nft.set({
+        id: event.params.tokenId.toString(),
+        owner: event.params.to,
+        image: metadata.image,
+        attributes: metadata.attributes,
+      });
+    } else {
+      // transfer
+      const nft = await context.Nft.getOrThrow(event.params.tokenId.toString());
+      context.Nft.set({
+        ...nft,
+        owner: event.params.to,
+      });
+    }
+  },
+);
 ```
 
 When you run the indexer now, it will populate both ownership data and token metadata:

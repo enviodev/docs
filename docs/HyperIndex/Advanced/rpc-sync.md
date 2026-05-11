@@ -14,23 +14,26 @@ HyperIndex supports indexing any EVM blockchain using RPC (Remote Procedure Call
 
 While [HyperSync](/docs/HyperIndex/hypersync) is the recommended and default data source for optimal performance, there are scenarios where you might need to use RPC instead:
 
-1. **Unsupported Networks**: When indexing a blockchain network that isn't yet supported by HyperSync
+1. **Unsupported Chains**: When indexing a blockchain that isn't yet supported by HyperSync
 2. **Custom Requirements**: When you need specific RPC functionality not available in HyperSync
 3. **Private Chains**: When working with private or development EVM chains
 
-> **Note**: For networks that HyperSync supports, we strongly recommend using HyperSync rather than RPC. HyperSync provides significantly faster indexing performance (up to 100x) and doesn't require managing RPC endpoints or worrying about rate limits.
+> **Note**: For chains that HyperSync supports, we strongly recommend using HyperSync rather than RPC. HyperSync provides significantly faster indexing performance (up to 100x) and doesn't require managing RPC endpoints or worrying about rate limits.
 
 ## Configuring RPC in Your Indexer
 
 ### Basic Configuration
 
-To use RPC as your data source, you need to add an `rpc_config` section to your network configuration in the `config.yaml` file:
+In V3 the V2 `rpc_config` field has been replaced with `rpc`, which accepts a single URL, a single `Rpc` object, or a list of `Rpc` objects. Each entry can declare what it's `for`: `sync` (historical), `realtime` (head, including WebSocket URLs), or `fallback`.
+
+To use RPC as the primary historical data source, add an `rpc` entry with `for: sync` to your chain configuration in `config.yaml`:
 
 ```yaml
-networks:
+chains:
   - id: 1 # Ethereum Mainnet
-    rpc_config:
-      url: https://eth-mainnet.your-rpc-provider.com # Your RPC endpoint
+    rpc:
+      - url: https://eth-mainnet.your-rpc-provider.com # Your RPC endpoint
+        for: sync
     start_block: 15000000
     contracts:
       - name: MyContract
@@ -38,25 +41,36 @@ networks:
         # Additional contract configuration...
 ```
 
-The presence of the `rpc_config` section tells HyperIndex to use RPC instead of HyperSync for this network.
+The presence of an RPC marked `for: sync` tells HyperIndex to use RPC instead of HyperSync for historical sync on this chain. You can also add a `for: realtime` WebSocket endpoint to follow the head:
+
+```yaml
+chains:
+  - id: 1
+    rpc:
+      - url: https://eth-mainnet.your-rpc-provider.com
+        for: sync
+      - url: wss://eth-mainnet.your-rpc-provider.com
+        for: realtime
+```
 
 ### Advanced RPC Configuration
 
 For more control over how your indexer interacts with the RPC endpoint, you can configure additional parameters:
 
 ```yaml
-networks:
+chains:
   - id: 1
-    rpc_config:
-      url: https://eth-mainnet.your-rpc-provider.com
-      initial_block_interval: 10000 # Initial number of blocks to fetch in each request
-      backoff_multiplicative: 0.8 # Factor to scale back block request size after errors
-      acceleration_additive: 2000 # How many more blocks to request when successful
-      interval_ceiling: 10000 # Maximum blocks to request in a single call
-      backoff_millis: 5000 # Milliseconds to wait after an error
-      query_timeout_millis: 20000 # Milliseconds before timing out a request
+    rpc:
+      - url: https://eth-mainnet.your-rpc-provider.com
+        for: sync
+        initial_block_interval: 10000 # Initial number of blocks to fetch in each request
+        backoff_multiplicative: 0.8 # Factor to scale back block request size after errors
+        acceleration_additive: 2000 # How many more blocks to request when successful
+        interval_ceiling: 10000 # Maximum blocks to request in a single call
+        backoff_millis: 5000 # Milliseconds to wait after an error
+        query_timeout_millis: 20000 # Milliseconds before timing out a request
     start_block: 15000000
-    # Additional network configuration...
+    # Additional chain configuration...
 ```
 
 ### Configuration Parameters Explained
@@ -103,12 +117,12 @@ Adding an RPC fallback provides these benefits:
 - **Automatic failover**: The system detects issues and switches to fallback RPC without manual intervention
 - **Operational control**: You can specify which RPC providers to use as fallbacks based on your requirements
 
-Configure a fallback RPC by adding the `rpc` field to your network configuration:
+Configure a fallback RPC by adding the `rpc` field to your chain configuration:
 
 ```diff
 name: Greeter
 description: Greeter indexer
-networks:
+chains:
   - id: 137 # Polygon
 +   # Short and simple
 +   rpc: https://eth-mainnet.your-rpc-provider.com?API_KEY={ENVIO_MAINNET_API_KEY}
@@ -188,12 +202,13 @@ services:
 3. **Configure HyperIndex to use eRPC** in your `config.yaml`:
 
 ```yaml
-networks:
+chains:
   - id: 1
-    rpc_config:
-      url: http://erpc:4000/main/evm/1 # eRPC endpoint for Ethereum Mainnet
+    rpc:
+      - url: http://erpc:4000/main/evm/1 # eRPC endpoint for Ethereum Mainnet
+        for: sync
     start_block: 15000000
-    # Additional network configuration...
+    # Additional chain configuration...
 ```
 
 For more detailed configuration options, refer to the [eRPC documentation](https://docs.erpc.cloud/config/example).
@@ -206,7 +221,7 @@ For more detailed configuration options, refer to the [eRPC documentation](https
 | Configuration   | Minimal                                                            | Requires tuning              |
 | Rate Limits     | None                                                               | Depends on provider          |
 | Cost            | Included with Envio Cloud                                          | Pay per request/subscription |
-| Network Support | [Supported networks](/docs/HyperSync/hypersync-supported-networks) | Any EVM network              |
+| Chain Support   | [Supported chains](/docs/HyperSync/hypersync-supported-networks)   | Any EVM chain                |
 | Maintenance     | Managed by Envio                                                   | Self-managed                 |
 
 ## Summary

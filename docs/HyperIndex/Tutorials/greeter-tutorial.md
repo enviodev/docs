@@ -86,15 +86,15 @@ This configuration file defines which networks and contracts to index:
 ```yaml
 # Partial example
 envio_node:
-  networks:
+  chains:
     - name: polygon
-      # ... Polygon network settings
+      # ... Polygon chain settings
       contracts:
         - name: Greeter
           address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
           # ... contract settings
     - name: linea
-      # ... Linea network settings
+      # ... Linea chain settings
       contracts:
         - name: Greeter
           address: "0xdEe21B97AB77a16B4b236F952e586cf8408CF32A"

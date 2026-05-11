@@ -6,23 +6,22 @@ slug: /block-handlers
 description: Learn how to run custom logic on every blockchain block or at set intervals using onBlock.
 ---
 
-# Block Handlers (new in v2.29)
+# Block Handlers
 
 Run logic on every block or an interval.
 
 ---
 
-Starting from `envio@2.29` we introduced `onBlock` API to be able to run logic on every block or an interval. This is useful for aggregations and time-series logic.
+`indexer.onBlock` lets you run logic on every block or an interval. This is useful for aggregations and time-series logic.
 
-To get started, import the `onBlock` function from `generated` module and call it in one of your handler files.
+To get started, import the `indexer` value from `envio` and call `onBlock` in one of your handler files.
 
 ```typescript
-import { onBlock } from "generated";
+import { indexer } from "envio";
 
-onBlock(
+indexer.onBlock(
   {
     name: "MyBlockHandler",
-    chain: 1,
   },
   async ({ block, context }) => {
     context.log.info(`Processing block ${block.number}`);
@@ -32,68 +31,89 @@ onBlock(
 
 > Block handlers don't require any config changes as well as codegen runs.
 
-In the example above, we'll log the block number for every block happening on the Ethereum mainnet.
+In the example above, the handler runs on **every** chain configured in `config.yaml` (the V3 default). To restrict it to a single chain, pass a `where` callback — see below.
 
 ## Options
 
-The `onBlock` function accepts an options object as the first argument with the following properties:
+`indexer.onBlock` accepts an options object as the first argument with the following properties:
 
-- `name` (required) - The name of the block handler. It's used for logging, debugging and metrics.
-- `chain` (required) - The chain ID of the blockchain to run the block handler on.
-- `interval` - The interval of blocks to run the block handler on. Default is `1` - runs on every block.
-- `startBlock` - The inclusive block number to start the block handler on. Uses the chain start block by default.
-- `endBlock` - The inclusive block number to end the block handler on. Uses the chain end block by default.
+- `name` (required) — The name of the block handler. It's used for logging, debugging and metrics.
+- `where` (optional) — A callback `({ chain }) => false | true | { block: { number: { _gte?, _lte?, _every? } } }` that decides which chains the handler runs on and over which block range/interval. Omit it to run on every chain on every block.
+
+To express the V2-era `chain`, `startBlock`, `endBlock`, and `interval` options, return them from `where`:
+
+```typescript
+import { indexer } from "envio";
+
+indexer.onBlock(
+  {
+    name: "MyBlockHandler",
+    where: ({ chain }) => {
+      if (chain.id !== 1) return false;
+      return {
+        block: {
+          number: {
+            _gte: 19_000_000, // start block (inclusive)
+            _lte: 20_000_000, // end block (inclusive)
+            _every: 100,      // run every Nth block
+          },
+        },
+      };
+    },
+  },
+  async ({ block, context }) => {
+    context.log.info(`Processing block ${block.number}`);
+  }
+);
+```
 
 ## Handler Function
 
 :::note
-Block Handlers require [Preload Optimization](/docs/HyperIndex/preload-optimization) to be enabled. Make sure to enable it in your `config.yaml` file. And don't forget that it makes your handlers run twice.
+Preload Optimization is always enabled in HyperIndex V3 and powers Block Handlers. Don't forget that it makes your handlers run twice.
 :::
 
 The second argument is a handler function that receives the block object and the handler context.
 
-- `block` - The block object.
-  - `number` - The block number.
-  - `chainId` - The chain ID.
+- `block` — The block object.
+  - `number` — The block number.
   - More fields will be added in the future. Let us know in [Discord](https://discord.gg/envio) if you need any specific fields. You can also use [Effect API](/docs/HyperIndex/effect-api) to get the data from RPC.
-- `context` - Exactly the same as the Event Handlers [Context Object](/docs/HyperIndex/event-handlers#context-object).
+- `context` — Exactly the same as the Event Handlers [Context Object](/docs/HyperIndex/event-handlers#context-object). Use `context.chain.id` to read the current chain ID inside the handler.
 
 ## Multichain
 
-Currently there's no special API for multichain block handlers. Although using `forEach` is just as nice.
+By default `indexer.onBlock` runs on every chain in your config. To run different parameters per chain, branch inside the `where` callback:
 
 ```typescript
-import { onBlock } from "generated";
+import { indexer } from "envio";
 
-[
+const perChain = {
+  1: { startBlock: 19783636, interval: (60 * 60) / 12 }, // Every 60 minutes (12s block time)
+  10: { startBlock: 119534316, interval: (60 * 60) / 2 }, // Every 60 minutes (2s block time)
+} as const;
+
+indexer.onBlock(
   {
-    chain: 1 as const,
-    startBlock: 19783636,
-    interval: (60 * 60) / 12, // Every 60 minutes (12s block time)
-  },
-  {
-    chain: 10 as const,
-    startBlock: 119534316,
-    interval: (60 * 60) / 2, // Every 60 minutes (2s block time)
-  },
-].forEach(({ chain, startBlock, interval }) => {
-  onBlock(
-    {
-      name: "HourlyPrice",
-      chain,
-      startBlock,
-      interval,
+    name: "HourlyPrice",
+    where: ({ chain }) => {
+      const cfg = perChain[chain.id as keyof typeof perChain];
+      if (!cfg) return false;
+      return {
+        block: {
+          number: { _gte: cfg.startBlock, _every: cfg.interval },
+        },
+      };
     },
-    async ({ block, context }) => {
-      context.log.info(`Processing block ${block.number}`);
-    }
-  );
-});
+  },
+  async ({ block, context }) => {
+    context.log.info(`Processing block ${block.number} on chain ${context.chain.id}`);
+  }
+);
 ```
 
 ## Time Interval
 
-The `interval` option is a number of blocks. But quite often you want to run some logic on a time interval. To convert time interval to blocks, you can use the following formula:
+The `_every` option is a number of blocks. But quite often you want to run some logic on a time interval. To convert time interval to blocks, you can use the following formula:
 
 ```typescript
 // Every 60 minutes
@@ -106,64 +126,65 @@ const blockInterval = timeIntervalInSeconds / secondsPerBlock;
 
 ## Different Historical and Realtime Intervals
 
-Here's the receipt how to speed up your historical sync, by increasing the interval for historical blocks.
+Here's the recipe to speed up your historical sync by increasing the interval for historical blocks.
 
-You can achieve this by registering multiple block handlers with the same handler, but different `startBlock`, `endBlock` and `interval` options.
+You can achieve this by registering multiple block handlers with the same handler, but different `_gte`, `_lte`, and `_every` values.
 
 ```typescript
-import { onBlock } from "generated";
+import { indexer } from "envio";
 
-[
+const realtimeBlocks = {
+  1: 19783636,
+  10: 119534316,
+} as const;
+
+indexer.onBlock(
   {
-    chain: 1 as const,
-    realtimeBlock: 19783636,
+    name: "HistoricalBlockHandler",
+    where: ({ chain }) => {
+      const realtime = realtimeBlocks[chain.id as keyof typeof realtimeBlocks];
+      if (!realtime) return false;
+      return { block: { number: { _lte: realtime - 1, _every: 1000 } } };
+    },
   },
+  async ({ block, context }) => {
+    context.log.info(`Processing block ${block.number}`);
+  }
+);
+
+indexer.onBlock(
   {
-    chain: 10 as const,
-    realtimeBlock: 119534316,
+    name: "RealtimeBlockHandler",
+    where: ({ chain }) => {
+      const realtime = realtimeBlocks[chain.id as keyof typeof realtimeBlocks];
+      if (!realtime) return false;
+      return { block: { number: { _gte: realtime } } };
+    },
   },
-].forEach(({ chain, realtimeBlock }) => {
-  onBlock(
-    {
-      name: "HistoricalBlockHandler",
-      chain,
-      endBlock: realtimeBlock - 1,
-      interval: 1000,
-    },
-    async ({ block, context }) => {
-      context.log.info(`Processing block ${block.number}`);
-    }
-  );
-  onBlock(
-    {
-      name: "RealtimeBlockHandler",
-      chain,
-      startBlock: realtimeBlock,
-    },
-    async ({ block, context }) => {
-      context.log.info(`Processing block ${block.number}`);
-    }
-  );
-});
+  async ({ block, context }) => {
+    context.log.info(`Processing block ${block.number}`);
+  }
+);
 ```
 
-In this case we'll run the block handler on every 1000 blocks and from the realtime block we'll start running it on every block.
+In this case we'll run the historical handler on every 1000 blocks and from the realtime block we'll start running the second handler on every block.
 
 > We recommend exploring the approach together with [HyperSync](/docs/HyperSync/overview) client to effectively query data for big block ranges.
 
 ## Preset Handler
 
-This is not an official feature, but a creative way to use block handlers. You can define a block handler with the `startBlock` and `endBlock` options equal to the start of the chain and use it to populate the database with the initial data.
+This is not an official feature, but a creative way to use block handlers. You can define a block handler that runs on a single block at the start of the chain and use it to populate the database with the initial data.
 
 ```typescript
-import { onBlock } from "generated";
+import { indexer } from "envio";
 
-onBlock(
+indexer.onBlock(
   {
     name: "Preset",
-    chain: 1,
-    startBlock: 0,
-    endBlock: 0,
+    where: ({ chain }) => {
+      if (chain.id !== 1) return false;
+      return { block: { number: { _gte: 0, _lte: 0 } } };
+    },
   },
   async ({ block, context }) => {
     // You don't need preload optimization here,
@@ -184,7 +205,6 @@ onBlock(
 
 ## Current Limitations
 
-- Block Handlers require [Preload Optimization](/docs/HyperIndex/preload-optimization) to be enabled.
 - The [Ordered Multichain mode](/docs/HyperIndex/multichain-indexing#ordered-mode) is not supported.
 - Only EVM chains are supported. Currently no support for [Fuel](/docs/HyperIndex/fuel/fuel.md) chains.
 - No [test framework](/docs/HyperIndex/testing) support.

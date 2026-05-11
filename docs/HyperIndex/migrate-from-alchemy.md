@@ -96,7 +96,7 @@ HyperIndex - `config.yaml`
 ```yaml
 # yaml-language-server: $schema=./node_modules/envio/evm.schema.json
 name: uni-v4-indexer
-networks:
+chains:
   - id: 1
     start_block: 21689089
     contracts:      
@@ -160,19 +160,23 @@ Here is a code snippet to give you a sense of what these changes look like in pr
     <div className="col col--6">
     HyperIndex - `eventHandler.ts`
     ```typescript
-    PoolManager.Subscription.handler( async (event, context) => {
-    const entity = {
-        id: event.transaction.hash + event.logIndex,
-        tokenId: event.params.tokenId,
-        address: event.params.subscriber,
-        blockNumber: event.block.number,
-        logIndex: event.logIndex,
-        position: event.params.tokenId
-    }
+    import { indexer } from "envio";
 
-    context.Subscription.set(entity);
-    })
+    indexer.onEvent(
+      { contract: "PoolManager", event: "Subscription" },
+      async ({ event, context }) => {
+        const entity = {
+          id: event.transaction.hash + event.logIndex,
+          tokenId: event.params.tokenId,
+          address: event.params.subscriber,
+          blockNumber: event.block.number,
+          logIndex: event.logIndex,
+          position: event.params.tokenId,
+        };
 
+        context.Subscription.set(entity);
+      },
+    );
     ```
     </div>
 </div>

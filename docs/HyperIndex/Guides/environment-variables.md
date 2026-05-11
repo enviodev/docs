@@ -29,23 +29,26 @@ To ensure continued access to HyperSync, set an Envio API token in your environm
 
 The following variables are used by HyperIndex:
 
-- `ENVIO_API_TOKEN`: API token for HyperSync access (required for continued access in self-hosted deployments)
+- `ENVIO_API_TOKEN`: API token for HyperSync access (required when indexing via HyperSync — get one at [envio.dev/app/api-tokens](https://envio.dev/app/api-tokens))
 - `ENVIO_HASURA`: Set to `false` to disable Hasura integration for self-hosted blockchain indexers
-
-- `MAX_BATCH_SIZE`: Size of the in-memory batch before writing to the database. Default: `5000`. Set to `1` to help isolate which event or data save is causing Postgres write errors.
+- `ENVIO_TUI`: Set to `false` to disable the terminal UI (replaces the V2 `TUI_OFF=true` flag; the TUI is also auto-disabled in CI and under AI agents)
 
 - `ENVIO_PG_PORT`: Port for the Postgres service used by HyperIndex during local development
 - `ENVIO_PG_PASSWORD`: Postgres password (self-hosted)
 - `ENVIO_PG_USER`: Postgres username (self-hosted)
 - `ENVIO_PG_DATABASE`: Postgres database name (self-hosted)
-- `ENVIO_PG_PUBLIC_SCHEMA`: Postgres schema name override for the generated/public schema
+- `ENVIO_PG_SCHEMA`: Postgres schema name override for the generated/public schema (replaces `ENVIO_PG_PUBLIC_SCHEMA`; the old name is still accepted until v4)
+
+:::note
+The V2 variables `MAX_BATCH_SIZE`, `ENVIO_INDEXING_BLOCK_LAG`, `UNORDERED_MULTICHAIN_MODE`, and `UNSTABLE__TEMP_UNORDERED_HEAD_MODE` have been removed in V3. Use the `full_batch_size` config option in `config.yaml` instead of `MAX_BATCH_SIZE`, and use the per-chain `block_lag` option instead of `ENVIO_INDEXING_BLOCK_LAG`. Unordered multichain processing is now the default.
+:::
 
 ## Example Environment Variables
 
 Here are some commonly used environment variables:
 
 ```bash
-# Envio API Token (required for continued HyperSync access)
+# Envio API Token (required for HyperSync access)
 ENVIO_API_TOKEN=your-secret-token
 
 # Blockchain RPC URL
@@ -57,8 +60,8 @@ ENVIO_START_BLOCK=12345678
 # Coingecko API key
 ENVIO_COINGECKO_API_KEY=api-key
 
-# In-memory batch size (default 5000)
-MAX_BATCH_SIZE=1
+# Disable the terminal UI
+ENVIO_TUI=false
 ```
 
 ## Setting Environment Variables

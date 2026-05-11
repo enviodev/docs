@@ -19,22 +19,28 @@ A handler is a function that receives blockchain data, processes it, and inserts
   <TabItem value="typescript" label="TypeScript">
 
 ```typescript
-import { <CONTRACT_NAME> } from "generated";
+import { indexer } from "envio";
 
-<CONTRACT_NAME>.<EVENT_NAME>.handler(async ({ event, context }) => {
-  // Your logic here
-});
+indexer.onEvent(
+  { contract: "<CONTRACT_NAME>", event: "<EVENT_NAME>" },
+  async ({ event, context }) => {
+    // Your logic here
+  },
+);
 ```
 
   </TabItem>
   <TabItem value="javascript" label="JavaScript">
 
 ```javascript
-const { <CONTRACT_NAME> } = require("generated");
+const { indexer } = require("envio");
 
-<CONTRACT_NAME>.<EVENT_NAME>.handler(async ({ event, context }) => {
-  // Your logic here
-});
+indexer.onEvent(
+  { contract: "<CONTRACT_NAME>", event: "<EVENT_NAME>" },
+  async ({ event, context }) => {
+    // Your logic here
+  },
+);
 ```
 
   </TabItem>
@@ -50,7 +56,7 @@ Handlers.<CONTRACT_NAME>.<EVENT_NAME>.handler(async ({ event, context }) => {
 </Tabs>
 
 :::note
-The `generated` module contains code and types based on `config.yaml` and `schema.graphql` files. Update it by running **`pnpm codegen`** command whenever you change these files.
+The `envio` module exposes the unified `indexer` value along with types based on your `config.yaml` and `schema.graphql` files. Run **`pnpm codegen`** whenever you change these files to regenerate the types in `.envio/`.
 :::
 
 ### Basic Example
@@ -61,62 +67,68 @@ Here's a handler example for the `NewGreeting` event. It belongs to the `Greeter
   <TabItem value="typescript" label="TypeScript">
 
 ```typescript
-import { Greeter, User } from "generated";
+import { indexer, type User } from "envio";
 
 // Handler for the NewGreeting event
-Greeter.NewGreeting.handler(async ({ event, context }) => {
-  const userId = event.params.user; // The id for the User entity
-  const latestGreeting = event.params.greeting; // The greeting string that was added
-  const currentUserEntity = await context.User.get(userId); // Optional user entity that may already exist
+indexer.onEvent(
+  { contract: "Greeter", event: "NewGreeting" },
+  async ({ event, context }) => {
+    const userId = event.params.user; // The id for the User entity
+    const latestGreeting = event.params.greeting; // The greeting string that was added
+    const currentUserEntity = await context.User.get(userId); // Optional user entity that may already exist
 
-  // Update or create a new User entity
-  const userEntity: User = currentUserEntity
-    ? {
-        id: userId,
-        latestGreeting,
-        numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
-        greetings: [...currentUserEntity.greetings, latestGreeting],
-      }
-    : {
-        id: userId,
-        latestGreeting,
-        numberOfGreetings: 1,
-        greetings: [latestGreeting],
-      };
+    // Update or create a new User entity
+    const userEntity: User = currentUserEntity
+      ? {
+          id: userId,
+          latestGreeting,
+          numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
+          greetings: [...currentUserEntity.greetings, latestGreeting],
+        }
+      : {
+          id: userId,
+          latestGreeting,
+          numberOfGreetings: 1,
+          greetings: [latestGreeting],
+        };
 
-  context.User.set(userEntity); // Set the User entity in the DB
-});
+    context.User.set(userEntity); // Set the User entity in the DB
+  },
+);
 ```
 
   </TabItem>
   <TabItem value="javascript" label="JavaScript">
 
 ```javascript
-const { Greeter } = require("generated");
+const { indexer } = require("envio");
 
 // Handler for the NewGreeting event
-Greeter.NewGreeting.handler(async ({ event, context }) => {
-  const userId = event.params.user; // The id for the User entity
-  const latestGreeting = event.params.greeting; // The greeting string that was added
-  const currentUserEntity = await context.User.get(userId); // Optional user entity that may already exist
+indexer.onEvent(
+  { contract: "Greeter", event: "NewGreeting" },
+  async ({ event, context }) => {
+    const userId = event.params.user; // The id for the User entity
+    const latestGreeting = event.params.greeting; // The greeting string that was added
+    const currentUserEntity = await context.User.get(userId); // Optional user entity that may already exist
 
-  // Update or create a new User entity
-  const userEntity = currentUserEntity
-    ? {
-        id: userId,
-        latestGreeting,
-        numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
-        greetings: [...currentUserEntity.greetings, latestGreeting],
-      }
-    : {
-        id: userId,
-        latestGreeting,
-        numberOfGreetings: 1,
-        greetings: [latestGreeting],
-      };
+    // Update or create a new User entity
+    const userEntity = currentUserEntity
+      ? {
+          id: userId,
+          latestGreeting,
+          numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
+          greetings: [...currentUserEntity.greetings, latestGreeting],
+        }
+      : {
+          id: userId,
+          latestGreeting,
+          numberOfGreetings: 1,
+          greetings: [latestGreeting],
+        };
 
-  context.User.set(userEntity); // Set the User entity in the DB
-});
+    context.User.set(userEntity); // Set the User entity in the DB
+  },
+);
 ```
 
   </TabItem>
@@ -158,7 +170,7 @@ Handlers.Greeter.NewGreeting.handler(async ({event, context}) => {
 
 > **Important!** Preload optimization makes your handlers run **twice**.
 
-Starting from `envio@2.27` all new indexers are created with preload optimization pre-configured by default.
+Preload optimization is always enabled in HyperIndex V3 — there is no config flag to toggle it.
 
 This optimization enables HyperIndex to efficiently preload entities used by handlers through batched database queries, while ensuring events are processed synchronously in their original order. When combined with the [Effect API](/docs/HyperIndex/effect-api) for external calls, this feature delivers performance improvements of multiple orders of magnitude compared to other indexing solutions.
 
@@ -167,7 +179,6 @@ Read more in the dedicated guides:
 - [How Preload Optimization Works](/docs/HyperIndex/preload-optimization)
 - [Double-Run Footgun](/docs/HyperIndex/preload-optimization#double-run-footgun)
 - [Effect API](/docs/HyperIndex/event-handlers#external-calls)
-- [Migrating from Loaders](/docs/HyperIndex/preload-optimization#migrating-from-loaders) (recommended)
 
 ### Advanced Use Cases
 
@@ -230,7 +241,7 @@ Configure block and transaction fields with [`field_selection`](/docs/HyperIndex
 type Event<Params, TransactionFields, BlockFields> = {
   params: Params;
   chainId: 1 | 137;
-  srcAddress: string;
+  srcAddress: `0x${string}`;
   logIndex: number;
   transaction: TransactionFields;
   block: BlockFields;
@@ -288,27 +299,27 @@ if (!pool) {
 ### Retrieving Entities by Field
 
 ```typescript
-ERC20.Approval.handler(async ({ event, context }) => {
-  // Find all approvals for this specific owner
-  const currentOwnerApprovals = await context.Approval.getWhere.owner_id.eq(
-    event.params.owner
-  );
+indexer.onEvent(
+  { contract: "ERC20", event: "Approval" },
+  async ({ event, context }) => {
+    // Find all approvals for this specific owner
+    const currentOwnerApprovals = await context.Approval.getWhere({
+      owner_id: { _eq: event.params.owner },
+    });
 
-  // Process all the owner's approvals efficiently
-  for (const approval of currentOwnerApprovals) {
-    // Process each approval
-  }
-});
+    // Process all the owner's approvals efficiently
+    for (const approval of currentOwnerApprovals) {
+      // Process each approval
+    }
+  },
+);
 ```
 
-You can also use `context.<Entity>.getWhere.<FieldName>.gt` to get all entities where the field value is greater than the given value.
+You can also use comparison operators like `_gt`, `_gte`, `_lt`, `_lte`, and `_in` to filter entities by field value.
 
 **Important:**
 
-- This feature requires [Preload Optimization](/docs/HyperIndex/preload-optimization) to be enabled.
-
-  - Either by `preload_handlers: true` in your `config.yaml` file
-  - Or by using [Loaders](/docs/HyperIndex/loaders) (Deprecated)
+- Preload Optimization is always enabled in V3 and powers `getWhere`. See [How Preload Optimization Works](/docs/HyperIndex/preload-optimization).
 
 - Works with any field that:
 
@@ -426,33 +437,36 @@ Read more in the [Logging Guide](/docs/HyperIndex/logging).
 If you need to skip the preload phase for CPU-intensive operations or to perform certain actions only once per event, you can use `context.isPreload`.
 
 ```typescript
-ERC20.Transfer.handler(async ({ event, context }) => {
-  // Load existing data efficiently
-  const [sender, receiver] = await Promise.all([
-    context.Account.getOrThrow(event.params.from),
-    context.Account.getOrThrow(event.params.to),
-  ]);
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    // Load existing data efficiently
+    const [sender, receiver] = await Promise.all([
+      context.Account.getOrThrow(event.params.from),
+      context.Account.getOrThrow(event.params.to),
+    ]);
 
-  // Skip expensive operations during preload
-  if (context.isPreload) {
-    return;
-  }
+    // Skip expensive operations during preload
+    if (context.isPreload) {
+      return;
+    }
 
-  // CPU-intensive calculations only happen once
-  const complexCalculation = performExpensiveOperation(event.params.value); // Placeholder function for demonstration
+    // CPU-intensive calculations only happen once
+    const complexCalculation = performExpensiveOperation(event.params.value); // Placeholder function for demonstration
 
-  // Create or update sender account
-  context.Account.set({
-    id: event.params.from,
-    balance: sender.balance - event.params.value,
-    computedValue: complexCalculation,
-  });
-  // Create or update receiver account
-  context.Account.set({
-    id: event.params.to,
-    balance: receiver.balance + event.params.value,
-  });
-});
+    // Create or update sender account
+    context.Account.set({
+      id: event.params.from,
+      balance: sender.balance - event.params.value,
+      computedValue: complexCalculation,
+    });
+    // Create or update receiver account
+    context.Account.set({
+      id: event.params.to,
+      balance: receiver.balance + event.params.value,
+    });
+  },
+);
 ```
 
 **Note:** While `context.isPreload` can be useful for bypassing double execution, it's recommended to use the [Effect API](/docs/HyperIndex/effect-api) for external calls instead, as it provides automatic batching and memoization benefits.
@@ -470,8 +484,7 @@ Check out our [IPFS Integration](/docs/HyperIndex/ipfs), [Accessing Contract Sta
 Define an effect and use it in your handler with `context.effect`:
 
 ```typescript
-import { createEffect, S } from "envio";
-import { ERC20 } from "generated";
+import { indexer, createEffect, S } from "envio";
 
 // Define an effect that will be called from the handler.
 const getMetadata = createEffect(
@@ -498,33 +511,39 @@ const getMetadata = createEffect(
   }
 );
 
-ERC20.Transfer.handler(async ({ event, context }) => {
-  // Load metadata for the token.
-  // This will be executed in parallel for all events in the batch.
-  // The call is automatically memoized, so you don't need to worry about duplicate requests.
-  const sender = await context.effect(getMetadata, event.params.from);
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    // Load metadata for the token.
+    // This will be executed in parallel for all events in the batch.
+    // The call is automatically memoized, so you don't need to worry about duplicate requests.
+    const sender = await context.effect(getMetadata, event.params.from);
 
-  // Process the transfer with the pre-loaded data
-});
+    // Process the transfer with the pre-loaded data
+  },
+);
 ```
 
 ---
 
 ## Accessing `config.yaml` Data in Handlers
 
-You can access your indexer configuration within handlers using `getConfigByChainId`:
+You can access your indexer configuration within handlers via `indexer.chains[chainId]`:
 
 ```typescript
-import { getGeneratedByChainId } from "generated/src/ConfigYAML.gen";
+import { indexer } from "envio";
 
-Greeter.NewGreeting.handler(async ({ event, context }) => {
-  const config = getGeneratedByChainId(event.chainId);
-});
+indexer.onEvent(
+  { contract: "Greeter", event: "NewGreeting" },
+  async ({ event, context }) => {
+    const chainConfig = indexer.chains[event.chainId];
+  },
+);
 ```
 
 This exposes configuration data such as:
 
-- `syncSource`, `startBlock`, `confirmedBlockThreshold`
+- `syncSource`, `startBlock`, `maxReorgDepth`
 - Contract-specific data (`abi`, `addresses`, `events`)
 
 ---

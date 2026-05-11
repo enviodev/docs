@@ -229,8 +229,7 @@ Edit your `config.yaml` file to track both the API3 oracle and the Uniswap V3 po
 ```yaml
 # yaml-language-server: $schema=./node_modules/envio/evm.schema.json
 name: envio-indexer
-preload_handlers: true
-networks:
+chains:
   - id: 81457
     start_block: 11000000
     contracts:
@@ -291,85 +290,88 @@ type EthDeposited {
 Create event handlers to process data from all three sources:
 
 ```typescript
-import {
-  Api3ServerV1,
-  OraclePoolPrice,
-  UniswapV3Pool,
-  UniswapV3PoolPrice,
-  EthDeposited,
-} from "generated";
+import { indexer, type Entity } from "envio";
 import fetchEthPriceFromUnix from "./request";
 
 let latestOraclePrice = 0;
 let latestPoolPrice = 0;
 
-Api3ServerV1.UpdatedBeaconSetWithBeacons.handler(async ({ event, context }) => {
-  // Filter out the beacon set for the ETH/USD price
-  if (
-    event.params.beaconSetId !=
-    "0x3efb3990846102448c3ee2e47d22f1e5433cd45fa56901abe7ab3ffa054f70b5"
-  ) {
-    return;
-  }
+indexer.onEvent(
+  { contract: "Api3ServerV1", event: "UpdatedBeaconSetWithBeacons" },
+  async ({ event, context }) => {
+    // Filter out the beacon set for the ETH/USD price
+    if (
+      event.params.beaconSetId !=
+      "0x3efb3990846102448c3ee2e47d22f1e5433cd45fa56901abe7ab3ffa054f70b5"
+    ) {
+      return;
+    }
 
-  const entity: OraclePoolPrice = {
-    id: `${event.chainId}-${event.block.number}-${event.logIndex}`,
-    value: event.params.value,
-    timestamp: event.params.timestamp,
-    block: event.block.number,
-  };
+    const entity: Entity<"OraclePoolPrice"> = {
+      id: `${event.chainId}-${event.block.number}-${event.logIndex}`,
+      value: event.params.value,
+      timestamp: event.params.timestamp,
+      block: event.block.number,
+    };
 
-  latestOraclePrice = Number(event.params.value) / Number(10 ** 18);
+    latestOraclePrice = Number(event.params.value) / Number(10 ** 18);
 
-  context.OraclePoolPrice.set(entity);
-});
+    context.OraclePoolPrice.set(entity);
+  },
+);
 
-UniswapV3Pool.Swap.handler(async ({ event, context }) => {
-  const entity: UniswapV3PoolPrice = {
-    id: `${event.chainId}-${event.block.number}-${event.logIndex}`,
-    sqrtPriceX96: event.params.sqrtPriceX96,
-    timestamp: event.block.timestamp,
-    block: event.block.number,
-  };
+indexer.onEvent(
+  { contract: "UniswapV3Pool", event: "Swap" },
+  async ({ event, context }) => {
+    const entity: Entity<"UniswapV3PoolPrice"> = {
+      id: `${event.chainId}-${event.block.number}-${event.logIndex}`,
+      sqrtPriceX96: event.params.sqrtPriceX96,
+      timestamp: event.block.timestamp,
+      block: event.block.number,
+    };
 
-  latestPoolPrice = Number(
-    BigInt(2 ** 192) /
-      (BigInt(event.params.sqrtPriceX96) * BigInt(event.params.sqrtPriceX96))
-  );
+    latestPoolPrice = Number(
+      BigInt(2 ** 192) /
+        (BigInt(event.params.sqrtPriceX96) * BigInt(event.params.sqrtPriceX96))
+    );
 
-  context.UniswapV3PoolPrice.set(entity);
-});
+    context.UniswapV3PoolPrice.set(entity);
+  },
+);
 
-UniswapV3Pool.Mint.handler(async ({ event, context }) => {
-  const offChainPrice = await fetchEthPriceFromUnix(event.block.timestamp);
+indexer.onEvent(
+  { contract: "UniswapV3Pool", event: "Mint" },
+  async ({ event, context }) => {
+    const offChainPrice = await fetchEthPriceFromUnix(event.block.timestamp);
 
-  const ethDepositedUsdPool =
-    (latestPoolPrice * Number(event.params.amount1)) / 10 ** 18;
-  const ethDepositedUsdOffchain =
-    (offChainPrice * Number(event.params.amount1)) / 10 ** 18;
-  const ethDepositedUsdOrcale =
-    (latestOraclePrice * Number(event.params.amount1)) / 10 ** 18;
+    const ethDepositedUsdPool =
+      (latestPoolPrice * Number(event.params.amount1)) / 10 ** 18;
+    const ethDepositedUsdOffchain =
+      (offChainPrice * Number(event.params.amount1)) / 10 ** 18;
+    const ethDepositedUsdOrcale =
+      (latestOraclePrice * Number(event.params.amount1)) / 10 ** 18;
 
-  const EthDeposited: EthDeposited = {
-    id: `${event.chainId}-${event.block.number}-${event.logIndex}`,
-    timestamp: event.block.timestamp,
-    block: event.block.number,
-    oraclePrice: round(latestOraclePrice),
-    poolPrice: round(latestPoolPrice),
-    offChainPrice: round(offChainPrice),
-    depositedPool: round(ethDepositedUsdPool),
-    depositedOffchain: round(ethDepositedUsdOffchain),
-    depositedOrcale: round(ethDepositedUsdOrcale),
-    offchainOracleDiff: round(
-      ((ethDepositedUsdOffchain - ethDepositedUsdOrcale) /
-        ethDepositedUsdOffchain) *
-        100
-    ),
-    txHash: event.transaction.hash,
-  };
+    const ethDeposited: Entity<"EthDeposited"> = {
+      id: `${event.chainId}-${event.block.number}-${event.logIndex}`,
+      timestamp: event.block.timestamp,
+      block: event.block.number,
+      oraclePrice: round(latestOraclePrice),
+      poolPrice: round(latestPoolPrice),
+      offChainPrice: round(offChainPrice),
+      depositedPool: round(ethDepositedUsdPool),
+      depositedOffchain: round(ethDepositedUsdOffchain),
+      depositedOrcale: round(ethDepositedUsdOrcale),
+      offchainOracleDiff: round(
+        ((ethDepositedUsdOffchain - ethDepositedUsdOrcale) /
+          ethDepositedUsdOffchain) *
+          100
+      ),
+      txHash: event.transaction.hash,
+    };
 
-  context.EthDeposited.set(EthDeposited);
-});
+    context.EthDeposited.set(ethDeposited);
+  },
+);
 
 function round(value: number) {
   return Math.round(value * 100) / 100;

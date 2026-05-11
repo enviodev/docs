@@ -33,15 +33,15 @@ You can control reorg handling through the `rollback_on_reorg` flag in your `con
 ```yaml
 # Enable reorg handling (default)
 rollback_on_reorg: true
-networks:
-  # network configurations...
+chains:
+  # chain configurations...
 
 # OR
 
 # Disable reorg handling (not recommended for production)
 rollback_on_reorg: false
-networks:
-  # network configurations...
+chains:
+  # chain configurations...
 ```
 
 ### Configuring Confirmation Thresholds
@@ -50,22 +50,22 @@ You can customize the number of blocks required before considering a block "conf
 
 ```yaml
 rollback_on_reorg: true
-networks:
+chains:
   - id: 137 # Polygon
-    confirmed_block_threshold: 150
+    max_reorg_depth: 150
   - id: 1 # Ethereum
     # Using default threshold
 ```
 
-The `confirmed_block_threshold` defines how many blocks below the chain head are considered safe from reorganizations. Any reorg deeper than this threshold won't trigger a rollback in your indexer.
+The `max_reorg_depth` field (renamed from V2's `confirmed_block_threshold`) defines how many blocks below the chain head are considered safe from reorganizations. Any reorg deeper than this threshold won't trigger a rollback in your indexer.
 
 ## Default Confirmation Thresholds
 
 Currently, all chains default to a threshold of **200 blocks**. In future releases, these thresholds will be tailored per chain based on their specific characteristics and historical reorg depths.
 
-| Network Type | Default Threshold | Notes                                           |
-| ------------ | ----------------- | ----------------------------------------------- |
-| All Networks | 200 blocks        | Will be customized per chain in future releases |
+| Chain Type | Default Threshold | Notes                                           |
+| ---------- | ----------------- | ----------------------------------------------- |
+| All Chains | 200 blocks        | Will be customized per chain in future releases |
 
 ## Technical Details and Limitations
 
@@ -97,26 +97,26 @@ During a reorg-triggered rollback:
 1. **Keep reorg support enabled** for production indexers
 2. **Use HyperSync** when possible for guaranteed reorg detection
 3. **Avoid external side effects** in your handlers that cannot be rolled back
-4. **Consider higher thresholds** for high-value applications or networks with historically deep reorgs
+4. **Consider higher thresholds** for high-value applications or chains with historically deep reorgs
 
 ## Example Configuration
 
-Here's a complete example showing reorg handling configuration for multiple networks:
+Here's a complete example showing reorg handling configuration for multiple chains:
 
 ```yaml
 rollback_on_reorg: true
-networks:
+chains:
   - id: 1 # Ethereum Mainnet
-    confirmed_block_threshold: 250 # Higher threshold for Ethereum
-    # other network config...
+    max_reorg_depth: 250 # Higher threshold for Ethereum
+    # other chain config...
 
   - id: 137 # Polygon
-    confirmed_block_threshold: 150 # Lower threshold for Polygon
-    # other network config...
+    max_reorg_depth: 150 # Lower threshold for Polygon
+    # other chain config...
 
   - id: 42161 # Arbitrum One
     # Using default threshold (200)
-    # other network config...
+    # other chain config...
 ```
 
 By properly configuring reorg support, you ensure that your indexed data remains consistent with the blockchain, even when the chain reorganizes.

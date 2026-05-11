@@ -67,8 +67,7 @@ Then modify your configuration to focus only on the PoolCreated event:
 ```yaml
 # config.yaml
 name: uniswap-v3-factory-token-indexer
-preload_handlers: true
-networks:
+chains:
   - id: 1
     start_block: 0
     contracts:
@@ -116,64 +115,67 @@ Learn how Preload Optimization works in a [dedicated guide](/docs/HyperIndex/pre
 
 ```typescript
 // src/handlers
-import { UniswapV3Factory } from "generated";
+import { indexer } from "envio";
 import { getTokenMetadata } from "./tokenMetadata";
 
-UniswapV3Factory.PoolCreated.handler(async ({ event, context }) => {
-  // Create Pool entity
-  context.Pool.set({
-    id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-    token0_id: event.params.token0,
-    token1_id: event.params.token1,
-    fee: event.params.fee,
-    tickSpacing: event.params.tickSpacing,
-    pool: event.params.pool,
-  });
-
-  // Fetch and store token0 information
-  try {
-    const tokenMetadata0 = await context.effect(getTokenMetadata, {
-      tokenAddress: event.params.token0,
-      chainId: event.chainId,
-    });
-    context.Token.set({
-      id: event.params.token0,
-      name: tokenMetadata0.name,
-      symbol: tokenMetadata0.symbol,
-      decimals: tokenMetadata0.decimals,
-    });
-  } catch (error) {
-    context.log.error("Failed to fetch token0 metadata", {
-      tokenAddress: event.params.token0,
-      chainId: event.chainId,
+indexer.onEvent(
+  { contract: "UniswapV3Factory", event: "PoolCreated" },
+  async ({ event, context }) => {
+    // Create Pool entity
+    context.Pool.set({
+      id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+      token0_id: event.params.token0,
+      token1_id: event.params.token1,
+      fee: event.params.fee,
+      tickSpacing: event.params.tickSpacing,
       pool: event.params.pool,
-      err: error,
     });
-    return;
-  }
 
-  // Fetch and store token1 information
-  try {
-    const tokenMetadata1 = await context.effect(getTokenMetadata, {
-      tokenAddress: event.params.token1,
-      chainId: event.chainId,
-    });
-    context.Token.set({
-      id: event.params.token1,
-      name: tokenMetadata1.name,
-      symbol: tokenMetadata1.symbol,
-      decimals: tokenMetadata1.decimals,
-    });
-  } catch (error) {
-    context.log.error("Failed to fetch token1 metadata", {
-      tokenAddress: event.params.token1,
-      chainId: event.chainId,
-      pool: event.params.pool,
-      err: error,
-    });
-    return;
-  }
-});
+    // Fetch and store token0 information
+    try {
+      const tokenMetadata0 = await context.effect(getTokenMetadata, {
+        tokenAddress: event.params.token0,
+        chainId: event.chainId,
+      });
+      context.Token.set({
+        id: event.params.token0,
+        name: tokenMetadata0.name,
+        symbol: tokenMetadata0.symbol,
+        decimals: tokenMetadata0.decimals,
+      });
+    } catch (error) {
+      context.log.error("Failed to fetch token0 metadata", {
+        tokenAddress: event.params.token0,
+        chainId: event.chainId,
+        pool: event.params.pool,
+        err: error,
+      });
+      return;
+    }
+
+    // Fetch and store token1 information
+    try {
+      const tokenMetadata1 = await context.effect(getTokenMetadata, {
+        tokenAddress: event.params.token1,
+        chainId: event.chainId,
+      });
+      context.Token.set({
+        id: event.params.token1,
+        name: tokenMetadata1.name,
+        symbol: tokenMetadata1.symbol,
+        decimals: tokenMetadata1.decimals,
+      });
+    } catch (error) {
+      context.log.error("Failed to fetch token1 metadata", {
+        tokenAddress: event.params.token1,
+        chainId: event.chainId,
+        pool: event.params.pool,
+        err: error,
+      });
+      return;
+    }
+  },
+);
 ```
 
 ### Step 4: Create the Token Metadata Effect

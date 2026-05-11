@@ -6,7 +6,7 @@ slug: /configuration-file
 description: Learn how to configure HyperIndex with contracts, events, networks, and advanced indexing options.
 ---
 
-The `config.yaml` file defines your indexer's behavior, including which blockchain events to index, contract addresses, which networks to index, and various advanced indexing options. It is a crucial step in configuring your HyperIndex setup.
+The `config.yaml` file defines your indexer's behavior, including which blockchain events to index, contract addresses, which chains to index, and various advanced indexing options. It is a crucial step in configuring your HyperIndex setup.
 
 After any changes to your `config.yaml` and the [schema](./schema-file.md), run:
 
@@ -33,7 +33,7 @@ contracts:
       - event: "NewGreeting(address user, string greeting)"
       - event: "ClearGreeting(address user)"
 
-networks:
+chains:
   - id: 1 # ethereum-mainnet
     start_block: 12345678
     contracts:
@@ -82,7 +82,7 @@ contracts:
   - name: Greeter
     abi: greeter.json
 
-networks:
+chains:
   - id: ethereum-mainnet
     contracts:
       - name: Greeter
@@ -103,9 +103,9 @@ By default, contracts use the network `start_block`. Starting from `envio@2.27`,
 **Example with optional per-contract start_block override:**
 
 ```yaml
-networks:
+chains:
   - id: 1 # ethereum-mainnet
-    start_block: 18000000 # Default start block for all contracts on this network
+    start_block: 18000000 # Default start block for all contracts on this chain
     contracts:
       - name: ERC20Token
         address:
@@ -114,7 +114,7 @@ networks:
         start_block: 18500000 # Override for this contract
       - name: Greeter
         address: 0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c
-        # Uses network default (18000000)
+        # Uses chain default (18000000)
 ```
 
 ---
@@ -205,17 +205,17 @@ Field Selection per Event is available from `envio@2.11.0` and above. Please, up
 
 ---
 
-### Unordered Multichain Mode
+### Multichain Mode
 
-To improve indexing performance when indexing multiple blockchains, you can enable **Unordered Multichain Mode**. This setting allows parallel processing of events from different networks without strictly maintaining cross-chain event ordering. Useful for minimizing indexing latency when indexing at the head.
+In V3, **unordered** multichain processing is the default — events from different chains are processed in parallel without strictly maintaining cross-chain event ordering. This minimizes indexing latency when indexing at the head.
 
-Activate this by adding to your `config.yaml`:
+If you need strict cross-chain ordering instead, opt in with:
 
 ```yaml
-unordered_multichain_mode: true
+multichain: ordered
 ```
 
-Learn more about when and how to use this feature [here](./multichain-indexing#unordered-multichain-mode).
+Learn more about multichain modes [here](./multichain-indexing).
 
 ---
 
@@ -233,19 +233,12 @@ See detailed configuration options [here](./reorgs-support).
 
 ### Preload Optimization
 
-Enable [Preload Optimization](/docs/HyperIndex/preload-optimization) for your handlers.
-
-This will make most indexers processing much faster without any additional code changes.
-
-```yaml
-preload_handlers: true # default is false
-```
+[Preload Optimization](/docs/HyperIndex/preload-optimization) is always enabled in V3. There is no `preload_handlers` flag — the previous opt-in is now the only behavior.
 
 Be aware of:
 
 - [Double-Run Footgun](/docs/HyperIndex/preload-optimization#double-run-footgun)
 - [Effect API for External Calls](/docs/HyperIndex/effect-api)
-- [Migrating from Loaders](/docs/HyperIndex/preload-optimization#migrating-from-loaders) (recommended)
 
 ---
 
@@ -254,7 +247,7 @@ Be aware of:
 Since `envio@2.9.0`, environment variable interpolation is supported for flexibility and security:
 
 ```yaml
-networks:
+chains:
   - id: ${ENVIO_CHAIN_ID:-ethereum-mainnet}
     contracts:
       - name: Greeter
@@ -288,22 +281,6 @@ By default, the `schema.graphql` is expected to be in the root directory of your
 
 ---
 
-### Output Directory Path
-
-You can customize the path where the generated directory will be placed using the `output` option:
-
-```yaml
-output: ./custom/generated/path
-```
-
-By default, the generated directory is placed in `generated` relative to the current working directory. If set, it will be a path relative to the config file location.
-
-:::warning Advanced Configuration
-This is an advanced configuration option. When using a custom output directory, you'll need to manually adjust your `.gitignore` file and project structure to match the new configuration.
-:::
-
----
-
 ### Memory and Resource Considerations
 
 - **RPC rate limits**: If using RPC sync, your provider's rate limits will cap throughput. Use [HyperSync](../Advanced/hypersync.md) where supported for significantly faster data retrieval.
@@ -320,8 +297,6 @@ This example indexes events from multiple contracts across multiple networks.
 
 ```yaml
 name: envio-indexer
-unordered_multichain_mode: true
-preload_handlers: true
 contracts:
   - name: PoolManager
     events:
@@ -329,7 +304,7 @@ contracts:
   - name: PositionManager
     events:
       - event: Transfer(address indexed from, address indexed to, uint256 indexed id)
-networks:
+chains:
   - id: 1
     # Keep it 0 and HyperSync will automatically find the first block for your contracts
     start_block: 0
