@@ -42,7 +42,7 @@ module.exports = {
     "quickstart-with-ai",
     {
       type: "link",
-      label: "✨ What's New in V3",
+      label: "✨ What's New in V3 ✨",
       href: "/docs/HyperIndex/whats-new-in-v3",
     },
     "benchmarks",
