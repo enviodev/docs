@@ -131,7 +131,7 @@ networks:
     start_block: 0
     contracts:
       - name: Greeter
-        address: 0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c
+        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
 ```
 
 ### unordered_multichain_mode {#unorderedmultichainmode}
@@ -230,6 +230,12 @@ Makes handlers run twice to enable preload optimisations. Removes handlerWithLoa
 
 - **type**: `boolean | null`
 
+
+Example (config.yaml):
+
+```yaml
+preload_handlers: true
+```
 
 ### address_format {#addressformat}
 
@@ -350,7 +356,7 @@ networks:
     end_block: 19000000
     contracts:
       - name: Greeter
-        address: 0x1111111111111111111111111111111111111111
+        address: "0x1111111111111111111111111111111111111111"
 ```
 
 ### RpcConfig {#def-rpcconfig}
@@ -468,7 +474,7 @@ networks:
     contracts:
       - name: Greeter
         address:
-          - 0x1111111111111111111111111111111111111111
+          - "0x1111111111111111111111111111111111111111"
         handler: src/EventHandlers.ts
         events:
           - event: Transfer(address indexed from, address indexed to, uint256 value)
@@ -490,8 +496,8 @@ networks:
     contracts:
       - name: Greeter
         address:
-          - 0x1111111111111111111111111111111111111111
-          - 0x2222222222222222222222222222222222222222
+          - "0x1111111111111111111111111111111111111111"
+          - "0x2222222222222222222222222222222222222222"
 ```
 
 ### EventDecoder {#def-eventdecoder}
