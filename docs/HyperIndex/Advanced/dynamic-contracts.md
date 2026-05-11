@@ -58,7 +58,7 @@ chains:
     contracts:
       - name: NftFactory
         abi_file_path: abis/NftFactory.json
-        address: 0x4675a6B115329294e0518A2B7cC12B70987895C4 # Factory address is known
+        address: "0x4675a6B115329294e0518A2B7cC12B70987895C4" # Factory address is known
         events:
           - event: SimpleNftCreated (string name, string symbol, uint256 maxSupply, address contractAddress)
 

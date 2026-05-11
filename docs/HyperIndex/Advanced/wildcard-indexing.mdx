@@ -40,7 +40,7 @@ type Transfer {
 
 And the last bit is to register an event handler in the `src/handlers`. Note how we pass the `wildcard: true` option to enable wildcard indexing:
 
-```ts
+```typescript
 import { indexer } from "envio";
 
 indexer.onEvent(
@@ -65,7 +65,7 @@ When you register an event handler or a contract register you can provide the `w
 
 Let's say you only want to index `Mint` events where the `from` address is equal to `ZERO_ADDRESS`:
 
-```ts
+```typescript
 import { indexer } from "envio";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
@@ -87,7 +87,7 @@ async ({ event, context }) => {
 
 If you want to index both `Mint` and `Burn` events you can provide multiple filters as an array. Also, every parameter can accept an array to filter by multiple possible values. We'll use it to filter by a group of whitelisted addresses in the example below:
 
-```ts
+```typescript
 import { indexer } from "envio";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
@@ -120,7 +120,7 @@ async ({ event, context }) => {
 
 For [Multichain Indexers](/docs/HyperIndex/multichain-indexing) the `where` callback receives `{ chain }` and you can read `chain.id` to filter by different values per chain:
 
-```ts
+```typescript
 import { indexer } from "envio";
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
@@ -167,12 +167,12 @@ chains:
         events:
           - event: Transfer(address indexed from, address indexed to, uint256 value)
         address:
-          - 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
-          - 0x70997970C51812dc3A010C7d01b50e0d17dc79C8
-          - 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC
+          - "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+          - "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"
+          - "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"
 ```
 
-```ts
+```typescript
 import { indexer } from "envio";
 
 indexer.onEvent(
@@ -203,13 +203,13 @@ chains:
         events:
           - event: NewSafe(address safe)
         address:
-          - 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+          - "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
       - name: Safe
         events:
           - event: Transfer(address indexed from, address indexed to, uint256 value)
 ```
 
-```ts
+```typescript
 import { indexer } from "envio";
 
 indexer.contractRegister(
@@ -239,7 +239,7 @@ async ({ event, context }) => {},
 
 After you got all ERC20 Transfers relevant to your contracts, you can additionally filter them in the handler. For example, to get only `USDC` transfers:
 
-```ts
+```typescript
 import { indexer } from "envio";
 
 const USDC_ADDRESS = {
@@ -276,7 +276,7 @@ async ({ event, context }) => {
 
 The same `where` option can be applied to `indexer.contractRegister`. Here is an example where we only register Uniswap pools that contain DAI token:
 
-```ts
+```typescript
 import { indexer } from "envio";
 
 const DAI_ADDRESS = "0x6B175474E89094C44Da98b954EedeAC495271d0F";

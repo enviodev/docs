@@ -159,7 +159,7 @@ Everything is configured by modifying the 3 files below. Let's walk through each
 
 The `config.yaml` outlines the specifications for the indexer, including details such as network and contract specifications and the event information to be used in the indexing process.
 
-```
+```yaml
 name: sway-farm-indexer
 ecosystem: fuel
 chains:
@@ -168,7 +168,7 @@ chains:
     contracts:
       - name: SwayFarm
         address:
-          - 0xf5b08689ada97df7fd2fbd67bee7dea6d219f117c1dc9345245da16fe4e99111
+          - "0xf5b08689ada97df7fd2fbd67bee7dea6d219f117c1dc9345245da16fe4e99111"
         abi_file_path: abis/swayfarm-abi.json
         events:
           - name: SellItem
@@ -183,7 +183,7 @@ In the tutorial, we don't need to adjust it in any way. But later you can modify
 
 As a nice to have, you can use a [Sway](https://docs.fuel.network/docs/sway/) struct name without specifying a `logId`, like this:
 
-```
+```yaml
 - name: SellItem
 - name: LevelUp
 - name: NewPlayer

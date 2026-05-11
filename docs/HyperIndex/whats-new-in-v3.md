@@ -293,13 +293,13 @@ chains:
     start_block: 0
     contracts:
       - name: UniswapV3Factory
-        address: 0x1F98431c8aD98523631AE4a59f267346ea31F984
+        address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
       # UniswapV3Pool no longer needed here - auto-configured from global contracts
   - id: 10
     start_block: 0
     contracts:
       - name: UniswapV3Factory
-        address: 0x1F98431c8aD98523631AE4a59f267346ea31F984
+        address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
       # UniswapV3Pool no longer needed here - auto-configured from global contracts
 ```
 
@@ -697,7 +697,7 @@ event CreateLockupTranchedStream(
 );
 ```
 
-```ts
+```typescript
 // Before
 event.params.commonParams[5];
 event.params.commonParams[3][0];

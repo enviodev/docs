@@ -3,10 +3,9 @@ id: config-schema-reference
 title: Configuration Schema Reference
 sidebar_label: Config Schema Reference
 slug: /config-schema-reference
-description: Detailed reference for every field and option in the Envio `config.yaml` configuration file used to configure HyperIndex indexers.
 ---
 
-Static, deep-linkable reference for the `config.yaml` Schema.
+Static, deep-linkable reference for the `config.yaml` JSON Schema.
 
 > Tip: Use the Table of Contents to jump to a field or definition.
 
@@ -316,6 +315,7 @@ Properties:
 Example (config.yaml):
 
 ```yaml
+# within a contract
 events:
   - event: "Assigned(address indexed user, uint256 amount)"
     # can be within an event as shown here, or globally for all events
