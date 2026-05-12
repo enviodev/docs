@@ -3,7 +3,7 @@ id: overview
 title: HyperSync
 sidebar_label: Overview
 slug: /overview
-description: Explore HyperSync for ultra-fast blockchain data access and flexible queries across 86+ networks.
+description: Explore HyperSync for ultra-fast blockchain data access and flexible queries across 87+ networks.
 ---
 
 # HyperSync: Ultra-Fast & Flexible Data API

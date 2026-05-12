@@ -3,7 +3,7 @@ id: hyperrpc-complete
 title: HyperRPC Complete Documentation
 sidebar_label: HyperRPC Complete Documentation
 slug: /hyperrpc-complete
-description: Complete reference documentation for HyperRPC — Envio's ultra-fast read-only JSON-RPC endpoint. A drop-in replacement for traditional RPC nodes, powered by HyperSync, supporting 85+ EVM-compatible networks with up to 5x faster performance for data-intensive blockchain operations.
+description: Complete reference documentation for HyperRPC - Envio's ultra-fast read-only JSON-RPC endpoint. A drop-in replacement for traditional RPC nodes, powered by HyperSync, supporting 85+ EVM-compatible networks with up to 5x faster performance for data-intensive blockchain operations.
 keywords: [HyperRPC, JSON-RPC, fast RPC, blockchain RPC, Envio, EVM RPC, eth_getLogs, read-only RPC, HyperSync, blockchain data, RPC alternative, drop-in RPC]
 robots: noindex, nofollow
 ---
@@ -14,38 +14,23 @@ This document contains all HyperRPC documentation consolidated into a single fil
 
 ---
 
-:::info Key Facts
+::::info Key Facts - HyperRPC
 
-- **What it is:** An extremely fast read only JSON RPC endpoint built on HyperSync and a drop in replacement for traditional RPC nodes
+| | |
+|---|---|
+| **What it is** | An extremely fast read-only JSON-RPC endpoint - a drop-in replacement for traditional RPC nodes, built on top of HyperSync |
+| **Performance** | Up to 5x faster than traditional nodes (geth, erigon, reth) for data-intensive operations |
+| **Read-only** | Optimised for data retrieval only - cannot send transactions |
+| **Supported networks** | 85 EVM-compatible networks, with new networks being added regularly |
+| **Endpoint format** | `https://[network].rpc.hypersync.xyz` or `https://[chainid].rpc.hypersync.xyz` |
+| **Supported methods** | `eth_chainId`, `eth_blockNumber`, `eth_getBlockByNumber`, `eth_getBlockByHash`, `eth_getBlockReceipts`, `eth_getTransactionByHash`, `eth_getTransactionByBlockHashAndIndex`, `eth_getTransactionByBlockNumberAndIndex`, `eth_getTransactionReceipt`, `eth_getLogs`, `trace_block` (select chains only) |
+| **API token** | Recommended - rate limiting starts June 2025 |
+| **When to use** | Drop-in replacement for existing RPC-based code; when tools expect standard JSON-RPC interfaces; when you don't have time for a deeper integration |
+| **When to use HyperSync instead** | When performance is critical; for new projects; when you need advanced filtering and field selection |
+| **Development status** | Under active development; not yet formally security audited; read-only only |
+| **Support** | [Discord](https://discord.gg/envio) · [GitHub](https://github.com/enviodev) |
 
-- **Performance:** Up to 5x faster than traditional nodes such as geth, erigon, and reth for data intensive operations
-
-- **Read only:** Optimised for data retrieval only and cannot send transactions
-
-- **Supported networks:** 85+ EVM compatible networks with new networks added regularly
-
-- **Endpoint format:** `https://{network}.rpc.hypersync.xyz` or `https://{chainid}.rpc.hypersync.xyz`
-
-- **Supported methods:** eth_chainId, eth_blockNumber, eth_getBlockByNumber, eth_getBlockByHash, eth_getBlockReceipts, eth_getTransactionByHash and more
-
-- **API token:** Recommended, rate limiting starts June 2025
-
-- **When to use:** Drop in replacement for existing RPC based code when tools expect standard JSON RPC interfaces
-
-- **When to use HyperSync instead:** When performance is critical or when you need advanced filtering and field selection
-
-- **Development status:** Under active development and read only
-
-- **Support:** Discord https://discord.gg/envio and GitHub https://github.com/enviodev
-
-:::
-
-
-# HyperRPC Complete Documentation
-
-This document contains all HyperRPC documentation consolidated into a single file for LLM consumption.
-
----
+::::
 
 ## HyperRPC: Ultra-Fast Read-Only RPC
 
@@ -74,12 +59,12 @@ HyperSync provides significantly faster performance and much greater flexibility
 
 ## Table of Contents
 
-- What is HyperRPC?
-- Performance Advantages
-- Supported Methods
-- Supported Networks
-- Getting Started
-- Development Status
+- [What is HyperRPC?](#what-is-hyperrpc)
+- [Performance Advantages](#performance-advantages)
+- [Supported Methods](#supported-methods)
+- [Supported Networks](#supported-networks)
+- [Getting Started](#getting-started)
+- [Development Status](#development-status)
 
 ## What is HyperRPC?
 
@@ -136,7 +121,7 @@ To start using HyperRPC:
      https://100.rpc.hypersync.xyz/
      ```
 
-   - If you don't have a token yet, you can generate one through the Envio Dashboard.
+   - If you don't have a token yet, you can generate one through the [Envio Dashboard](https://envio.dev/app/api-tokens).
 
 3. **Use Like a Standard RPC**:
 
@@ -161,7 +146,7 @@ To start using HyperRPC:
    ```
 
 4. **Provide Feedback**:
-   Your testing and feedback are incredibly valuable as we continue to improve HyperRPC. Let us know about your experience in our Discord.
+   Your testing and feedback are incredibly valuable as we continue to improve HyperRPC. Let us know about your experience in our [Discord](https://discord.gg/envio).
 
 ## Development Status
 
@@ -170,7 +155,7 @@ To start using HyperRPC:
 - HyperRPC is under active development to further improve performance and stability
 - It is designed for read-only operations and does not support all standard RPC methods
 - It has not yet undergone formal security audits
-- We welcome questions and feedback in our Discord
+- We welcome questions and feedback in our [Discord](https://discord.gg/envio)
   :::
 
 ---
@@ -180,7 +165,7 @@ To start using HyperRPC:
 **File:** `hyperrpc-supported-networks.md`
 
 :::note
-Please note we are rapidly adding new supported networks. If you don't see your network here or would like us to add a network to HyperRPC, pop us a message in Discord.
+Please note we are rapidly adding new supported networks. If you don't see your network here or would like us to add a network to HyperRPC, pop us a message in [Discord](https://discord.gg/envio).
 :::
 
 :::caution API Tokens Recommended
@@ -225,6 +210,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Cyber                     | 7560            | https://cyber.rpc.hypersync.xyz or https://7560.rpc.hypersync.xyz                        |
 | Eth Traces                | 1               | https://eth-traces.rpc.hypersync.xyz or https://1-traces.rpc.hypersync.xyz               |
 | Ethereum Mainnet          | 1               | https://eth.rpc.hypersync.xyz or https://1.rpc.hypersync.xyz                             |
+| Etherlink                 | 42793           | https://etherlink.rpc.hypersync.xyz or https://42793.rpc.hypersync.xyz                   |
 | Fantom                    | 250             | https://fantom.rpc.hypersync.xyz or https://250.rpc.hypersync.xyz                        |
 | Flare                     | 14              | https://flare.rpc.hypersync.xyz or https://14.rpc.hypersync.xyz                          |
 | Fraxtal                   | 252             | https://fraxtal.rpc.hypersync.xyz or https://252.rpc.hypersync.xyz                       |
@@ -237,6 +223,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Hyperliquid               | 999             | https://hyperliquid.rpc.hypersync.xyz or https://999.rpc.hypersync.xyz                   |
 | Injective*                | 1776            | https://injective.rpc.hypersync.xyz or https://1776.rpc.hypersync.xyz                    |
 | Ink                       | 57073           | https://ink.rpc.hypersync.xyz or https://57073.rpc.hypersync.xyz                         |
+| Katana                    | 747474          | https://katana.rpc.hypersync.xyz or https://747474.rpc.hypersync.xyz                     |
 | Kroma                     | 255             | https://kroma.rpc.hypersync.xyz or https://255.rpc.hypersync.xyz                         |
 | Linea                     | 59144           | https://linea.rpc.hypersync.xyz or https://59144.rpc.hypersync.xyz                       |
 | Lisk                      | 1135            | https://lisk.rpc.hypersync.xyz or https://1135.rpc.hypersync.xyz                         |
@@ -267,8 +254,6 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Scroll                    | 534352          | https://scroll.rpc.hypersync.xyz or https://534352.rpc.hypersync.xyz                     |
 | Sei*                      | 1329            | https://sei.rpc.hypersync.xyz or https://1329.rpc.hypersync.xyz                          |
 | Sei Testnet*              | 1328            | https://sei-testnet.rpc.hypersync.xyz or https://1328.rpc.hypersync.xyz                  |
-| Sentient                  | 6767            | https://sentient.rpc.hypersync.xyz or https://6767.rpc.hypersync.xyz                     |
-| Sentient Testnet          | 1184075182      | https://sentient-testnet.rpc.hypersync.xyz or https://1184075182.rpc.hypersync.xyz       |
 | Sepolia                   | 11155111        | https://sepolia.rpc.hypersync.xyz or https://11155111.rpc.hypersync.xyz                  |
 | Shimmer Evm               | 148             | https://shimmer-evm.rpc.hypersync.xyz or https://148.rpc.hypersync.xyz                   |
 | Soneium                   | 1868            | https://soneium.rpc.hypersync.xyz or https://1868.rpc.hypersync.xyz                      |
@@ -298,7 +283,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 - **Sei***: Start block: 79123881 (non-evm before that)
 - **Sei Testnet***: Start block: 186100000 (non-evm before that)
 
-
+---
 
 ## Frequently Asked Questions (FAQ)
 
@@ -353,7 +338,7 @@ HyperRPC is under active development to further improve performance and stabilit
 
 ### Where can I get help?
 
-- **Discord**: [discord.gg/envio](https://discord.gg/envio) — the fastest way to get help from the team and community
-- **Telegram**: [Envio Telegram](https://t.me/+kAIGElzPjApiMjI0) - the official Envio Telegram to get support from the team and community
+- **Discord**: [discord.gg/envio](https://discord.gg/envio) - the fastest way to get help from the team and community
+- **Telegram**: [Envio Telegram](https://t.me/+kAIGElzPjApiMjI0) - the offcial Envio Telegram to get support from the team and community
 - **GitHub**: [github.com/enviodev](https://github.com/enviodev)
 - **Email**: hello@envio.dev

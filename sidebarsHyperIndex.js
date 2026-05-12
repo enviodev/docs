@@ -75,8 +75,6 @@ module.exports = {
         "Examples/example-sablier",
         "Examples/example-velodrome-aerodrome",
         // "Examples/example-cross-chain-messaging",
-        // "Examples/example-liquidation-metrics",
-        // "Examples/example-ens",
       ],
     },
     {
