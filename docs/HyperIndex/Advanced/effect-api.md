@@ -59,7 +59,7 @@ The second argument is a function that will be called with the effect's input.
 
 > **Note:** For type definitions, you should use `S` from the `envio` package, which uses [Sury](https://github.com/DZakh/sury) library under the hood.
 
-After defining an effect, you can use `context.effect` to call it from your handler, loader, or another effect.
+After defining an effect, you can use `context.effect` to call it from your handler or another effect.
 
 The `context.effect` function accepts an effect as the first argument and the effect's input as the second argument:
 

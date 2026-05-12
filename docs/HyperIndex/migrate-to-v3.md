@@ -234,7 +234,7 @@ If your indexer uses HyperSync (the default), set an API token:
 
    Or in a local `.env` file:
 
-   ```
+   ```env
    ENVIO_API_TOKEN=your_token_here
    ```
 

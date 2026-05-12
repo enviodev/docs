@@ -32,7 +32,7 @@ When running `pnpm dev`, HyperIndex watches for changes to your **event handler*
 
 **What requires a full restart:**
 
-- Changes to `config.yaml` (adding contracts, events, or networks)
+- Changes to `config.yaml` (adding contracts, events, or chains)
 - Changes to `schema.graphql` (adding or modifying entities)
 - Changes to ABIs
 

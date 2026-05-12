@@ -89,7 +89,7 @@ During a reorg-triggered rollback:
 ❌ **What is not rolled back:**
 
 - Side effects in your handler code (API calls, external services)
-- Custom caching mechanisms outside of HyperIndex
+- Custom caching mechanisms outside HyperIndex
 - Logs or external files written by your handlers
 
 ## Best Practices

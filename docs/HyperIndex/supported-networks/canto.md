@@ -27,7 +27,7 @@ Envio supports Canto through an RPC-based indexing approach. This method allows 
 To use Canto, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,8 +36,8 @@ description: Indexer Description # Include indexer description
 chains:
   - id: 7700 # Canto
     rpc: https://canto.dexrouting.com
-    # url: https://canto.slingshot.finance # alternative,
-    # url: https://canto-rpc.ansybl.io # alternative
+    # rpc: https://canto.slingshot.finance # alternative
+    # rpc: https://canto-rpc.ansybl.io # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

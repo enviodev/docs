@@ -85,20 +85,19 @@ This configuration file defines which networks and contracts to index:
 
 ```yaml
 # Partial example
-envio_node:
-  chains:
-    - name: polygon
-      # ... Polygon chain settings
-      contracts:
-        - name: Greeter
-          address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
-          # ... contract settings
-    - name: linea
-      # ... Linea chain settings
-      contracts:
-        - name: Greeter
-          address: "0xdEe21B97AB77a16B4b236F952e586cf8408CF32A"
-          # ... contract settings
+chains:
+  - id: 137 # Polygon
+    # ... Polygon chain settings
+    contracts:
+      - name: Greeter
+        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
+        # ... contract settings
+  - id: 59144 # Linea
+    # ... Linea chain settings
+    contracts:
+      - name: Greeter
+        address: "0xdEe21B97AB77a16B4b236F952e586cf8408CF32A"
+        # ... contract settings
 ```
 
 ### `schema.graphql`

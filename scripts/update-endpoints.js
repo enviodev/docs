@@ -277,8 +277,8 @@ ${chainsKey}:
     contracts:
       - name: ContractName
         address:
-         - "0xYourContractAddress1"
-         - "0xYourContractAddress2"
+          - "0xYourContractAddress1"
+          - "0xYourContractAddress2"
         events:
           - event: Event # Specify event
           - event: Event
@@ -308,9 +308,10 @@ const generateRPCMarkdownContent = (network, variant = "v2") => {
   const docsBase =
     variant === "v3" ? "/docs/HyperIndex" : "/docs/v2/HyperIndex";
   const primaryRpc = network.rpcEndpoints[0];
+  const fallbackKey = variant === "v3" ? "rpc" : "url";
   const fallbackComments = network.rpcEndpoints
     .slice(1)
-    .map((url) => `\n    # url: ${url} # alternative`)
+    .map((url) => `\n    # ${fallbackKey}: ${url} # alternative`)
     .join("");
   const rpcBlock =
     variant === "v3"

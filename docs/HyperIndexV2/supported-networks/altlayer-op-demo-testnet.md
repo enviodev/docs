@@ -27,7 +27,7 @@ Envio supports Altlayer OP Demo Testnet through an RPC-based indexing approach. 
 To use Altlayer OP Demo Testnet, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,8 +36,8 @@ description: Indexer Description # Include indexer description
 networks:
   - id: 9997 # Altlayer OP Demo Testnet
     rpc_config:
-      url: https://rpc-altlayer.optestnet.io 
-    # url: https://rpc-testnet-altlayer.com # alternative,
+      url: https://rpc-altlayer.optestnet.io
+    # url: https://rpc-testnet-altlayer.com # alternative
     # url: https://altlayer-rpc.io # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
@@ -45,7 +45,6 @@ networks:
         address:
           - "0xYourContractAddress1"
           - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
         events:
           - event: Event # Specify event
           - event: Event

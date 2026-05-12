@@ -27,7 +27,7 @@ Envio supports Telos EVM Mainnet through an RPC-based indexing approach. This me
 To use Telos EVM Mainnet, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,8 +36,8 @@ description: Indexer Description # Include indexer description
 chains:
   - id: 40 # Telos EVM Mainnet
     rpc: https://rpc.telos.net
-    # url: https://telos.drpc.org # alternative,
-    # url: https://mainnet.telos.net/evm # alternative
+    # rpc: https://telos.drpc.org # alternative
+    # rpc: https://mainnet.telos.net/evm # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

@@ -247,7 +247,7 @@ on the SwayFarm contract and stores the players in the DB
 indexer.onEvent(
   { contract: "SwayFarm", event: "NewPlayer" },
   async ({ event, context }) => {
-    // Set the Player entity in the DB with the intial values
+    // Set the Player entity in the DB with the initial values
     context.Player.set({
       // The address in Sway is a union type of user Address and ContractID. Envio supports most of the Sway types, and the address value was decoded as a discriminated union 100% typesafe
       id: event.params.address.payload.bits,

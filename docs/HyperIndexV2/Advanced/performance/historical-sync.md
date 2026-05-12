@@ -27,6 +27,6 @@ Historical sync is an important aspect of maintaining and populating your databa
 
 ### Future Improvements (v2)
 
-- **preHandlers**: In version 2, we are restructuring the way loaders work into pre-handlers. This change will make loading entities before the handler in batches more ergonomic using preHandler functions, further enhancing the performance and ease of use for historical sync.
+- **preHandlers**: In v2, loaders were restructured into pre-handlers. This change makes loading entities before the handler in batches more ergonomic using preHandler functions, further enhancing the performance and ease of use for historical sync.
 
 By understanding these factors, you can better optimize the performance of your historical sync processes.

@@ -27,7 +27,7 @@ Envio supports Immutable zkEVM through an RPC-based indexing approach. This meth
 To use Immutable zkEVM, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,8 +36,8 @@ description: Indexer Description # Include indexer description
 networks:
   - id: 13371 # Immutable zkEVM
     rpc_config:
-      url: https://immutable-zkevm.drpc.org 
-    # url: https://rpc.immutable.com # alternative,
+      url: https://immutable-zkevm.drpc.org
+    # url: https://rpc.immutable.com # alternative
     # url: https://immutable.gateway.tenderly.co # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
@@ -45,7 +45,6 @@ networks:
         address:
           - "0xYourContractAddress1"
           - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
         events:
           - event: Event # Specify event
           - event: Event

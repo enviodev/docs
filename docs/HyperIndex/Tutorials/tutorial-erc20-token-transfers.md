@@ -114,7 +114,7 @@ This schema defines the data structures for the Transfer event:
 
 ### 3. `src/handlers`
 
-This file contains the business logic for processing events:
+This directory contains the business logic for processing events:
 
 - Functions that execute when Transfer events are detected
 - Data transformation and storage logic

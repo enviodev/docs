@@ -110,8 +110,7 @@ Envio error codes are categorized by their first digits:
   ```yaml
   chains:
     - id: 1
-      rpc:
-        url: "https://eth-mainnet.g.alchemy.com/v2/YOUR_API_KEY"
+      rpc: https://eth-mainnet.g.alchemy.com/v2/YOUR_API_KEY
   ```
 
 #### `EE108`: Invalid Postgres Database Name

@@ -27,7 +27,7 @@ Envio supports Kaia through an RPC-based indexing approach. This method allows y
 To use Kaia, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,8 +36,8 @@ description: Indexer Description # Include indexer description
 chains:
   - id: 8217 # Kaia
     rpc: https://kaia.blockpi.network/v1/rpc/public
-    # url: https://public-en.node.kaia.io # alternative,
-    # url: https://klaytn.drpc.org # alternative
+    # rpc: https://public-en.node.kaia.io # alternative
+    # rpc: https://klaytn.drpc.org # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

@@ -27,7 +27,7 @@ Envio supports Telos EVM Testnet through an RPC-based indexing approach. This me
 To use Telos EVM Testnet, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,7 +36,7 @@ description: Indexer Description # Include indexer description
 chains:
   - id: 41 # Telos EVM Testnet
     rpc: https://testnet.telos.net/evm
-    # url: https://telos-testnet.drpc.org # alternative
+    # rpc: https://telos-testnet.drpc.org # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

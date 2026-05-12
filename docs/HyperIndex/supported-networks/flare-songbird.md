@@ -27,7 +27,7 @@ Envio supports Flare Songbird through an RPC-based indexing approach. This metho
 To use Flare Songbird, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,8 +36,8 @@ description: Indexer Description # Include indexer description
 chains:
   - id: 19 # Flare Songbird
     rpc: https://songbird-api.flare.network/ext/C/rpc
-    # url: https://songbird-api.flare.network/ext/C/rpc # alternative,
-    # url: https://rpc.ftso.au/songbird # alternative
+    # rpc: https://songbird-api.flare.network/ext/C/rpc # alternative
+    # rpc: https://rpc.ftso.au/songbird # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

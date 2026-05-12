@@ -27,7 +27,7 @@ Envio supports X Layer Testnet through an RPC-based indexing approach. This meth
 To use X Layer Testnet, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,8 +36,8 @@ description: Indexer Description # Include indexer description
 chains:
   - id: 195 # X Layer Testnet
     rpc: https://endpoints.omniatech.io/v1/xlayer/testnet/public
-    # url: https://xlayertestrpc.okx.com # alternative,
-    # url: https://testrpc.xlayer.tech # alternative
+    # rpc: https://xlayertestrpc.okx.com # alternative
+    # rpc: https://testrpc.xlayer.tech # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

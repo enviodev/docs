@@ -27,7 +27,7 @@ Envio supports BOB Mainnet through an RPC-based indexing approach. This method a
 To use BOB Mainnet, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,7 +36,7 @@ description: Indexer Description # Include indexer description
 chains:
   - id: 60808 # BOB Mainnet
     rpc: https://rpc.gobob.xyz
-    # url: https://bob.drpc.org # alternative
+    # rpc: https://bob.drpc.org # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

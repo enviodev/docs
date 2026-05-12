@@ -27,7 +27,7 @@ Envio supports Aleph Zero EVM through an RPC-based indexing approach. This metho
 To use Aleph Zero EVM, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,7 +36,7 @@ description: Indexer Description # Include indexer description
 chains:
   - id: 41455 # Aleph Zero EVM
     rpc: https://rpc.alephzero.raas.gelato.cloud
-    # url: https://alephzero.drpc.org # alternative
+    # rpc: https://alephzero.drpc.org # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

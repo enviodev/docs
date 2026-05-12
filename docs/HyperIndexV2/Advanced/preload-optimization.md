@@ -18,7 +18,7 @@ This optimization enables HyperIndex to efficiently preload entities used by han
 
 ## Configure
 
-Currently, you need to explicitly enable the preloaded configuration in your [`config.yaml`](/docs/v2/HyperIndex/configuration-file) file. In the future, this will be enabled by default.
+Indexers created with `envio@2.27` or newer have preload optimization pre-configured. If you scaffolded your indexer with an earlier version, opt in explicitly by adding the flag to your [`config.yaml`](/docs/v2/HyperIndex/configuration-file):
 
 ```yaml
 preload_handlers: true

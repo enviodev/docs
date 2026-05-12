@@ -280,7 +280,7 @@ type EthDeposited {
   offchainOracleDiff: Float!
   depositedPool: Float!
   depositedOffchain: Float!
-  depositedOrcale: Float!
+  depositedOracle: Float!
   txHash: String!
 }
 ```
@@ -331,7 +331,7 @@ indexer.onEvent(
     };
 
     latestPoolPrice = Number(
-      BigInt(2 ** 192) /
+      (2n ** 192n) /
         (BigInt(event.params.sqrtPriceX96) * BigInt(event.params.sqrtPriceX96))
     );
 
@@ -348,7 +348,7 @@ indexer.onEvent(
       (latestPoolPrice * Number(event.params.amount1)) / 10 ** 18;
     const ethDepositedUsdOffchain =
       (offChainPrice * Number(event.params.amount1)) / 10 ** 18;
-    const ethDepositedUsdOrcale =
+    const ethDepositedUsdOracle =
       (latestOraclePrice * Number(event.params.amount1)) / 10 ** 18;
 
     const ethDeposited: Entity<"EthDeposited"> = {
@@ -360,9 +360,9 @@ indexer.onEvent(
       offChainPrice: round(offChainPrice),
       depositedPool: round(ethDepositedUsdPool),
       depositedOffchain: round(ethDepositedUsdOffchain),
-      depositedOrcale: round(ethDepositedUsdOrcale),
+      depositedOracle: round(ethDepositedUsdOracle),
       offchainOracleDiff: round(
-        ((ethDepositedUsdOffchain - ethDepositedUsdOrcale) /
+        ((ethDepositedUsdOffchain - ethDepositedUsdOracle) /
           ethDepositedUsdOffchain) *
           100
       ),
@@ -402,7 +402,7 @@ query ComparePrices {
     offChainPrice
     depositedPool
     depositedOffchain
-    depositedOrcale
+    depositedOracle
     offchainOracleDiff
     txHash
   }

@@ -18,10 +18,6 @@ slug: /taraxa
 
 ---
 
-### Tier
-
-BRONZE 🥉
-
 ### Overview
 
 Envio is a modular hyper-performant data indexing solution for Taraxa, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](/docs/v2/HyperIndex/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
@@ -40,14 +36,13 @@ To get started, see our documentation or follow our quickstart [guide](/docs/v2/
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
 networks:
-  - id: 841 # Taraxa  
+  - id: 841 # Taraxa
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
       - name: ContractName
         address:
-         - "0xYourContractAddress1"
-         - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
+          - "0xYourContractAddress1"
+          - "0xYourContractAddress2"
         events:
           - event: Event # Specify event
           - event: Event

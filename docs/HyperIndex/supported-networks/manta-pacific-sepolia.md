@@ -27,7 +27,7 @@ Envio supports Manta Pacific Sepolia through an RPC-based indexing approach. Thi
 To use Manta Pacific Sepolia, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,7 +36,7 @@ description: Indexer Description # Include indexer description
 chains:
   - id: 3441006 # Manta Pacific Sepolia
     rpc: https://pacific-rpc.sepolia-testnet.manta.network/http
-    # url: https://endpoints.omniatech.io/v1/manta-pacific/sepolia/public # alternative
+    # rpc: https://endpoints.omniatech.io/v1/manta-pacific/sepolia/public # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

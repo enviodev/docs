@@ -27,7 +27,7 @@ Envio supports Optopia through an RPC-based indexing approach. This method allow
 To use Optopia, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,7 +36,7 @@ description: Indexer Description # Include indexer description
 chains:
   - id: 62050 # Optopia
     rpc: https://rpc-mainnet.optopia.ai
-    # url: https://rpc-mainnet-2.optopia.ai # alternative
+    # rpc: https://rpc-mainnet-2.optopia.ai # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

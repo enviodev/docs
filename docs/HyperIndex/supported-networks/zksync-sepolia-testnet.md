@@ -27,7 +27,7 @@ Envio supports ZkSync Sepolia Testnet through an RPC-based indexing approach. Th
 To use ZkSync Sepolia Testnet, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,8 +36,8 @@ description: Indexer Description # Include indexer description
 chains:
   - id: 300 # ZkSync Sepolia Testnet
     rpc: https://zksync-era-sepolia.blockpi.network/v1/rpc/private
-    # url: https://zksync-sepolia.drpc.org # alternative,
-    # url: https://sepolia.era.zksync.dev # alternative
+    # rpc: https://zksync-sepolia.drpc.org # alternative
+    # rpc: https://sepolia.era.zksync.dev # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

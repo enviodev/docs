@@ -58,7 +58,7 @@ After running your indexer with `pnpm dev` you will have all ERC20 `Transfer` ev
 
 ## Topic Filtering
 
-Indexing all ERC20 `Transfer` events is a lot of events, so ideally to reduce it only to the ones you trully need with the Topic Filtering feature.
+Indexing all ERC20 `Transfer` events is a lot of events, so ideally to reduce it only to the ones you truly need with the Topic Filtering feature.
 
 When you register an event handler or a contract register you can provide the `where` option (renamed from V2's `eventFilters`). You can filter by each `indexed` parameter on the given event by returning `{ params: [...] }`.
 

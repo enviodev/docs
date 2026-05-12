@@ -18,10 +18,6 @@ slug: /arbitrum-sepolia
 
 ---
 
-### Tier
-
-TESTNET 🎒
-
 ### Overview
 
 Envio is a modular hyper-performant data indexing solution for Arbitrum Sepolia, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
@@ -40,13 +36,13 @@ To get started, see our documentation or follow our quickstart [guide](/docs/Hyp
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
 chains:
-  - id: 421614 # Arbitrum Sepolia  
+  - id: 421614 # Arbitrum Sepolia
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
       - name: ContractName
         address:
-         - "0xYourContractAddress1"
-         - "0xYourContractAddress2"
+          - "0xYourContractAddress1"
+          - "0xYourContractAddress2"
         events:
           - event: Event # Specify event
           - event: Event

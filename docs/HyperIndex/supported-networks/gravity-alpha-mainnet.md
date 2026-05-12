@@ -27,7 +27,7 @@ Envio supports Gravity Alpha Mainnet through an RPC-based indexing approach. Thi
 To use Gravity Alpha Mainnet, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,7 +36,7 @@ description: Indexer Description # Include indexer description
 chains:
   - id: 1625 # Gravity Alpha Mainnet
     rpc: https://rpc.gravity.xyz
-    # url: https://rpc.ankr.com/gravity # alternative
+    # rpc: https://rpc.ankr.com/gravity # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

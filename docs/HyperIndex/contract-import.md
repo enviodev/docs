@@ -20,7 +20,7 @@ The **Quickstart** enables you to instantly autogenerate a powerful blockchain i
 
 > **Note:** Docker is only required if you plan to run your indexer locally. You can skip installing Docker if you'll only be using Envio Cloud.
 
-#### Additionally for Windows Users:
+### Additionally for Windows Users:
 
 - **[WSL](https://learn.microsoft.com/en-us/windows/wsl/install)** _Windows Subsystem for Linux_
 

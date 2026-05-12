@@ -27,7 +27,7 @@ Envio supports Fantom Testnet through an RPC-based indexing approach. This metho
 To use Fantom Testnet, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,8 +36,8 @@ description: Indexer Description # Include indexer description
 chains:
   - id: 4002 # Fantom Testnet
     rpc: https://rpc.ankr.com/fantom_testnet
-    # url: https://rpc.testnet.fantom.network # alternative,
-    # url: https://fantom-testnet-rpc.publicnode.com # alternative
+    # rpc: https://rpc.testnet.fantom.network # alternative
+    # rpc: https://fantom-testnet-rpc.publicnode.com # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

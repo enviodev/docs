@@ -27,7 +27,7 @@ Envio supports Cronos ZKEVM Testnet through an RPC-based indexing approach. This
 To use Cronos ZKEVM Testnet, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml

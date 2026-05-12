@@ -27,7 +27,7 @@ Envio supports Scroll Sepolia through an RPC-based indexing approach. This metho
 To use Scroll Sepolia, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,8 +36,8 @@ description: Indexer Description # Include indexer description
 chains:
   - id: 534351 # Scroll Sepolia
     rpc: https://rpc.ankr.com/scroll_sepolia_testnet
-    # url: https://sepolia-rpc.scroll.io # alternative,
-    # url: https://scroll-sepolia-rpc.publicnode.com # alternative
+    # rpc: https://sepolia-rpc.scroll.io # alternative
+    # rpc: https://scroll-sepolia-rpc.publicnode.com # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

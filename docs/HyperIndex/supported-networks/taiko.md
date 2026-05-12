@@ -27,7 +27,7 @@ Envio supports Taiko through an RPC-based indexing approach. This method allows 
 To use Taiko, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,8 +36,8 @@ description: Indexer Description # Include indexer description
 chains:
   - id: 167000 # Taiko
     rpc: https://taiko-mainnet.gateway.tenderly.co
-    # url: https://rpc.ankr.com/taiko # alternative,
-    # url: https://taiko.drpc.org # alternative
+    # rpc: https://rpc.ankr.com/taiko # alternative
+    # rpc: https://taiko.drpc.org # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

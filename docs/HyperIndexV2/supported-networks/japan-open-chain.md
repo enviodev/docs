@@ -27,7 +27,7 @@ Envio supports Japan Open Chain through an RPC-based indexing approach. This met
 To use Japan Open Chain, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,8 +36,8 @@ description: Indexer Description # Include indexer description
 networks:
   - id: 81 # Japan Open Chain
     rpc_config:
-      url: https://rpc-1.japanopenchain.org:8545 
-    # url: https://rpc-2.japanopenchain.org:8545 # alternative,
+      url: https://rpc-1.japanopenchain.org:8545
+    # url: https://rpc-2.japanopenchain.org:8545 # alternative
     # url: https://rpc-3.japanopenchain.org # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
@@ -45,7 +45,6 @@ networks:
         address:
           - "0xYourContractAddress1"
           - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
         events:
           - event: Event # Specify event
           - event: Event

@@ -27,7 +27,7 @@ Envio supports Puppynet Shibarium through an RPC-based indexing approach. This m
 To use Puppynet Shibarium, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml

@@ -125,12 +125,12 @@ description: Greeter indexer
 chains:
   - id: 137 # Polygon
 +   # Short and simple
-+   rpc: https://eth-mainnet.your-rpc-provider.com?API_KEY={ENVIO_MAINNET_API_KEY}
++   rpc: https://polygon.your-rpc-provider.com?API_KEY={ENVIO_POLYGON_API_KEY}
 +   # Or provide multiple RPC endpoints with more flexibility
 +   rpc:
-+     - url: https://eth-mainnet.your-rpc-provider.com?API_KEY={ENVIO_MAINNET_API_KEY}
++     - url: https://polygon.your-rpc-provider.com?API_KEY={ENVIO_POLYGON_API_KEY}
 +       for: fallback
-+     - url: https://eth-mainnet.your-free-rpc-provider.com
++     - url: https://polygon.your-free-rpc-provider.com
 +       for: fallback
 +       initial_block_interval: 1000
     start_block: 0 # With HyperSync, you can use 0 regardless of contract deployment time

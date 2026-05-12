@@ -34,25 +34,25 @@ To use WebSockets with your HyperIndex GraphQL endpoint, simply swap the protoco
 
 If your GraphQL endpoint is:
 
-```
+```text
 https://indexer.hyperindex.xyz/123abcd/graphql
 ```
 
 You can connect via WebSocket using:
 
-```
+```text
 wss://indexer.hyperindex.xyz/123abcd/graphql
 ```
 
 Similarly, for HTTP endpoints:
 
-```
+```text
 http://localhost:8080/v1/graphql
 ```
 
 Becomes:
 
-```
+```text
 ws://localhost:8080/v1/graphql
 ```
 

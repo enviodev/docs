@@ -27,7 +27,7 @@ Envio supports Oasis Sapphire through an RPC-based indexing approach. This metho
 To use Oasis Sapphire, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,7 +36,7 @@ description: Indexer Description # Include indexer description
 chains:
   - id: 23294 # Oasis Sapphire
     rpc: https://1rpc.io/oasis/sapphire
-    # url: https://sapphire.oasis.io # alternative
+    # rpc: https://sapphire.oasis.io # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

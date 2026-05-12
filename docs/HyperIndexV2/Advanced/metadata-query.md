@@ -62,7 +62,7 @@ Result:
 
 ## Usage
 
-You can use this query to track the indexing progress for each chain. For example, wait until the block data is ready before querying actuall data, building custom dashboards, health checks or sending notifications.
+You can use this query to track the indexing progress for each chain. For example, wait until the block data is ready before querying actual data, building custom dashboards, health checks or sending notifications.
 
 ## Metadata fields
 
@@ -79,11 +79,11 @@ The fields are populated on the indexer startup and don't change during the inde
 The fields are updated in the batch write transaction, and guaranteed to be written to the Database at the same time. This means that the `progressBlock` and `eventsProcessed` will increase at the same time as the data for the processed events is written to the Database and available for querying.
 
 - `progressBlock` - Block number fully processed and written to the DB
-- `eventsProcessed` - Number of processed events and written to the DB. (not reorg resistant)
+- `eventsProcessed` - Number of processed events and written to the DB. (not reorg-resistant)
 
 ### Throttled
 
-The fields are updated outside of the batch transaction and throttled to avoid performance overhead. There might be a small delay between the event processing and the metadata update.
+The fields are updated outside the batch transaction and throttled to avoid performance overhead. There might be a small delay between the event processing and the metadata update.
 
 - `bufferBlock` - Block number of the latest event ready for processing
 - `firstEventBlock` - Block number of the first processed event for the chain

@@ -27,7 +27,7 @@ Envio supports Mint Mainnet through an RPC-based indexing approach. This method 
 To use Mint Mainnet, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,8 +36,8 @@ description: Indexer Description # Include indexer description
 chains:
   - id: 185 # Mint Mainnet
     rpc: https://asia.rpc.mintchain.io
-    # url: https://global.rpc.mintchain.io # alternative,
-    # url: https://rpc.mintchain.io # alternative
+    # rpc: https://global.rpc.mintchain.io # alternative
+    # rpc: https://rpc.mintchain.io # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

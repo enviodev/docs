@@ -27,7 +27,7 @@ Envio supports Polygon zkEVM Cardona Testnet through an RPC-based indexing appro
 To use Polygon zkEVM Cardona Testnet, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,7 +36,7 @@ description: Indexer Description # Include indexer description
 networks:
   - id: 2442 # Polygon zkEVM Cardona Testnet
     rpc_config:
-      url: https://rpc.cardona.zkevm-rpc.com 
+      url: https://rpc.cardona.zkevm-rpc.com
     # url: https://polygon-zkevm-cardona.blockpi.network/v1/rpc/private # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
@@ -44,7 +44,6 @@ networks:
         address:
           - "0xYourContractAddress1"
           - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
         events:
           - event: Event # Specify event
           - event: Event

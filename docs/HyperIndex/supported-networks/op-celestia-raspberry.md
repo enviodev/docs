@@ -27,7 +27,7 @@ Envio supports OP Celestia Raspberry through an RPC-based indexing approach. Thi
 To use OP Celestia Raspberry, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml

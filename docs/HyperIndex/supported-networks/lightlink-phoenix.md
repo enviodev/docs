@@ -27,7 +27,7 @@ Envio supports Lightlink Phoenix through an RPC-based indexing approach. This me
 To use Lightlink Phoenix, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
@@ -36,7 +36,7 @@ description: Indexer Description # Include indexer description
 chains:
   - id: 1890 # Lightlink Phoenix
     rpc: https://replicator.phoenix.lightlink.io/rpc/v1
-    # url: https://endpoints.omniatech.io/v1/lightlink/phoenix/public # alternative
+    # rpc: https://endpoints.omniatech.io/v1/lightlink/phoenix/public # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName

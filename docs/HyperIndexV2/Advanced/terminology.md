@@ -169,7 +169,7 @@ a + b = b + a
 **Examples of commutative operations:**
 
 1. **Addition**: 2 + 3 = 3 + 2
-2. **Multiplication**: 2 _ 3 = 3 _ 2
+2. **Multiplication**: `2 * 3 = 3 * 2`
 
 **Examples of non-commutative operations:**
 
