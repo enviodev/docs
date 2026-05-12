@@ -1,7 +1,7 @@
 ---
 id: hypersync-curl-examples
 title: Using curl with HyperSync
-sidebar_label: curl Examples ⭐ (Quick to try)
+sidebar_label: curl Examples
 slug: /hypersync-curl-examples
 description: Explore how to quickly fetch blockchain data using curl commands with HyperSync.
 ---

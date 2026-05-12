@@ -8,6 +8,14 @@ description: Learn how to fetch, filter, and decode blockchain data using HyperS
 
 # Getting Started with HyperSync
 
+:::tip Easiest way to get started: the Query Builder
+
+The **[HyperSync Query Builder](https://builder.hypersync.xyz)** lets you construct and run queries directly in your browser — no install, no code required. It's the fastest way to get familiar with HyperSync and see what's possible.
+
+**[Open builder.hypersync.xyz →](https://builder.hypersync.xyz)**
+
+:::
+
 HyperSync is Envio's high-performance blockchain data engine that provides up to 2000x faster access to blockchain data compared to traditional RPC endpoints. This guide will help you understand how to effectively use HyperSync in your applications.
 
 ## Quick Start Video
