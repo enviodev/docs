@@ -137,18 +137,12 @@ indexer.onEvent(
     contract: "ERC20",
     event: "Transfer",
     wildcard: true,
-    where: ({ chain }) => {
-      const addresses = WHITELISTED_ADDRESSES[chain.id];
-      if (!addresses) {
-        throw new Error(`Missing whitelist for chain ${chain.id}`);
-      }
-      return {
-        params: [
-          { from: ZERO_ADDRESS, to: addresses },
-          { from: addresses, to: ZERO_ADDRESS },
-        ],
-      };
-    },
+    where: ({ chain }) => ({
+      params: [
+        { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chain.id] },
+        { from: WHITELISTED_ADDRESSES[chain.id], to: ZERO_ADDRESS },
+      ],
+    }),
   },
   async ({ event, context }) => {
     //... your handler logic
