@@ -548,13 +548,13 @@ chains:
     start_block: 0
     contracts:
       - name: UniswapV3Factory
-        address: 0x1F98431c8aD98523631AE4a59f267346ea31F984
+        address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
       # UniswapV3Pool no longer needed here - auto-configured from global contracts
   - id: 10
     start_block: 0
     contracts:
       - name: UniswapV3Factory
-        address: 0x1F98431c8aD98523631AE4a59f267346ea31F984
+        address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
       # UniswapV3Pool no longer needed here - auto-configured from global contracts
 ```
 
@@ -620,9 +620,9 @@ Now it's possible to create indexers with only block handlers. Previously, it wa
 
 We no longer have restrictions on entity field names, such as `type` and others. Shape your entities any way you want. There are also improvements in generating database columns in the same order as they are defined in the `schema.graphql`.
 
-### Unordered Multichain Mode by Default
+### Unordered Multichain Mode Only
 
-Unordered multichain mode is now available and the default behavior. This provides better performance for most use cases. If you need ordered multichain behavior, you can explicitly set `multichain: ordered` in your config.
+Unordered multichain mode is now the only mode in V3 — events from different chains are processed in parallel without strict cross-chain ordering, which provides better performance for most use cases. The V2 `unordered_multichain_mode` option and the `multichain: ordered` opt-in have been removed.
 
 ### Preload Optimization by Default
 
@@ -949,7 +949,7 @@ event CreateLockupTranchedStream(
 );
 ```
 
-```ts
+```typescript
 // Before
 event.params.commonParams[5];
 event.params.commonParams[3][0];
@@ -1151,6 +1151,10 @@ For a detailed manual migration guide covering the step by step conversion of su
 Please reach out to our team on [Discord](https://discord.gg/envio) for personalized migration assistance.
 :::
 
+:::tip Already on HyperIndex V2?
+This page covers migrating from The Graph to Envio. If you are upgrading an existing HyperIndex project from V2 to V3, follow the Migrate to V3 guide instead. Some examples below still use the V2 handler syntax (`Contract.Event.handler(...)`, `networks:`); the V3 equivalents (`indexer.onEvent(...)`, `chains:`) are documented in that guide.
+:::
+
 ## Introduction
 
 Migrating your existing subgraph to Envio's HyperIndex is designed to be a developer-friendly process. HyperIndex draws strong inspiration from The Graph’s subgraph architecture, which makes the migration simple, especially with the help of coding assistants like Cursor and AI tools (don't forget to use our ai friendly docs).
@@ -1247,7 +1251,7 @@ networks:
     start_block: 21689089
     contracts:      
       - name: PositionManager
-        address: 0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e
+        address: "0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e"
         events:        
         - event: Subscription(uint256 indexed tokenId, address indexed subscriber)
         - event: Unsubscription(uint256 indexed tokenId, address indexed subscriber)          
@@ -1335,7 +1339,7 @@ context.Subscription.set(entity);
 HyperIndex is a powerful tool that can be used to index any contract. There are some features that are especially powerful that go above subgraph implementations and so in some cases you may want to optimise your migration to HyperIndex further to take advantage of these features. Here are some useful tips:
 
 - Use `field_selection` to opt into optional transaction and block fields (e.g. `hash`, `status`, `gasUsed`) that are not included by default, see [Transaction receipts](#transaction-receipts) for a migration-focused example and the field selection docs for the full list.
-- Use the `unordered_multichain_mode` option to enable unordered multichain mode, this is the most common need for multichain indexing. However comes with tradeoffs worth understanding. Doc here: unordered multichain mode
+- Multichain indexing in V3 always runs in unordered mode, which is the most common need and provides better performance — see Multichain Indexing. (In V2 this required setting `unordered_multichain_mode: true`; in V3 there is no opt-in, and the V2 `multichain: ordered` mode has been removed.)
 - Use wildcard indexing to index by event signatures rather than by contract address.
 - HyperIndex uses the standard GraphQL query language, whereas TheGraph uses a custom GraphQL syntax. You can read about the differences and how to convert queries in our Query Conversion Guide. We also provide a query converter tool for backwards compatibility with existing TheGraph queries.
 - Loaders are a powerful feature to optimize historical sync performance. You can read more about them here.
@@ -1608,12 +1612,12 @@ HyperIndex - `config.yaml`
 ```yaml
 # yaml-language-server: $schema=./node_modules/envio/evm.schema.json
 name: uni-v4-indexer
-networks:
+chains:
   - id: 1
     start_block: 21689089
     contracts:      
       - name: PositionManager
-        address: 0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e
+        address: "0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e"
         events:        
         - event: Subscription(uint256 indexed tokenId, address indexed subscriber)
         - event: Unsubscription(uint256 indexed tokenId, address indexed subscriber)          
@@ -1672,19 +1676,23 @@ Here is a code snippet to give you a sense of what these changes look like in pr
     
     HyperIndex - `eventHandler.ts`
     ```typescript
-    PoolManager.Subscription.handler( async (event, context) => {
-    const entity = {
-        id: event.transaction.hash + event.logIndex,
-        tokenId: event.params.tokenId,
-        address: event.params.subscriber,
-        blockNumber: event.block.number,
-        logIndex: event.logIndex,
-        position: event.params.tokenId
-    }
+    import { indexer } from "envio";
 
-    context.Subscription.set(entity);
-    })
+    indexer.onEvent(
+      { contract: "PoolManager", event: "Subscription" },
+      async ({ event, context }) => {
+        const entity = {
+          id: event.transaction.hash + event.logIndex,
+          tokenId: event.params.tokenId,
+          address: event.params.subscriber,
+          blockNumber: event.block.number,
+          logIndex: event.logIndex,
+          position: event.params.tokenId,
+        };
 
+        context.Subscription.set(entity);
+      },
+    );
     ```
     
 
@@ -1821,7 +1829,9 @@ Update for ESM:
 
 ```json
 {
+  /* For details: https://www.totaltypescript.com/tsconfig-cheat-sheet */
   "compilerOptions": {
+    /* Base Options: */
     "esModuleInterop": true,
     "skipLibCheck": true,
     "target": "es2022",
@@ -1831,14 +1841,17 @@ Update for ESM:
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
 
+    /* Strictness */
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
 
+    /* For running Envio: */
     "module": "ESNext",
     "moduleResolution": "bundler",
     "noEmit": true,
 
+    /* Code doesn't run in the DOM: */
     "lib": ["es2022"],
     "types": ["node"]
   }
@@ -1879,7 +1892,7 @@ chains:
 
 Remove these options if present:
 
-- `unordered_multichain_mode` — unordered is now the default. If you need ordered behavior, set `multichain: ordered`.
+- `unordered_multichain_mode` — unordered is now the only mode in V3. The V2 `multichain: ordered` opt-in has also been removed.
 - `loaders` — Preload Optimization is now always enabled.
 - `preload_handlers` — now always enabled.
 - `preRegisterDynamicContracts` — no longer needed.
@@ -1985,6 +1998,39 @@ Notes:
 - The `where` callback receives `{ chain }` (not `{ chainId }`) and must return `false`, `true`, or `{ params: [...], block?: { number: { _gte, _lte, _every } } }`.
 - The previous array shorthand at the top level is no longer accepted — wrap it in `{ params: [...] }`.
 
+#### Filtering by the contract's own addresses
+
+In V2 the addresses configured (or dynamically registered) for the contract were passed into `eventFilters` as the `addresses` argument. In V3 they live on the chain object as `chain..addresses`, which also stays in sync with anything registered via `context.chain..add(...)`.
+
+```typescript
+// Before
+
+Safe.Transfer.handler(async ({ event, context }) => {}, {
+  wildcard: true,
+  eventFilters: ({ addresses }) => [
+    { from: addresses },
+    { to: addresses },
+  ],
+});
+
+// After
+
+indexer.onEvent(
+  {
+    contract: "Safe",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [
+        { from: chain.Safe.addresses },
+        { to: chain.Safe.addresses },
+      ],
+    }),
+  },
+  async ({ event, context }) => {},
+);
+```
+
 ### Migrate dynamic contract registration
 
 ```typescript
@@ -2007,29 +2053,53 @@ indexer.contractRegister(
 
 ### Migrate block handlers
 
+**Behavior change.** In V2, every `onBlock(...)` call ran on the single chain specified by its `chain` option, and you set `interval`, `startBlock`, and `endBlock` as top-level options. In V3, `indexer.onBlock(...)` runs on **every chain by default**. To match the V2 behavior of "this chain only, in this block range, every N blocks", you have to pass an explicit `where` callback that:
+
+- Returns `false` for chains you don't want to run on (recovering V2's single-chain default).
+- Returns `{ block: { number: { _gte, _lte, _every } } }` to express the start block, end block, and interval.
+
 ```typescript
-// Before
+// Before — V2 ran this only on chain 1, every 100 blocks, in a fixed range
 
-indexer.chainIds.forEach((chainId) => {
-  onBlock(
-    { name: "EveryBlock", chain: chainId },
-    async ({ block, context }) => {
-      // ...
-    },
-  );
-});
+onBlock(
+  {
+    name: "Ranges",
+    chain: 1,
+    startBlock: 20_000_000,
+    endBlock: 22_000_000,
+    interval: 100,
+  },
+  async ({ block, context }) => {
+    // ...
+  },
+);
 
-// After
+// After — V3 runs on every chain by default; the where callback narrows
+// back down to chain 1 and re-expresses the range/interval via _gte/_lte/_every.
 
 indexer.onBlock(
-  { name: "EveryBlock" },
+  {
+    name: "Ranges",
+    where: ({ chain }) => {
+      if (chain.id !== 1) return false;
+      return {
+        block: {
+          number: {
+            _gte: 20_000_000,
+            _lte: 22_000_000,
+            _every: 100,
+          },
+        },
+      };
+    },
+  },
   async ({ block, context }) => {
     // ...
   },
 );
 ```
 
-For chain-specific or interval handlers, return `{ block: { number: { _gte, _lte, _every } } }` from `where`, or `false` to skip a chain. Inside a block handler, replace `block.chainId` with `context.chain.id`.
+If you actually want the handler to run on **every** chain (the new default), simply omit `where`. Inside a block handler, replace `block.chainId` with `context.chain.id`.
 
 ### Update the `getWhere` API
 
@@ -2180,7 +2250,7 @@ Postgres column type changes (`raw_events.event_id`: `NUMERIC` → `BIGINT`, `ra
 - [ ] Rename `networks` → `chains`
 - [ ] Rename `confirmed_block_threshold` → `max_reorg_depth`
 - [ ] Replace `rpc_config` with `rpc`
-- [ ] Remove `unordered_multichain_mode` (now default)
+- [ ] Remove `unordered_multichain_mode` and any `multichain: ordered` opt-in (unordered is now the only mode)
 - [ ] Remove `loaders` and `preload_handlers`
 - [ ] Remove `preRegisterDynamicContracts`
 - [ ] Remove `event_decoder`
@@ -2240,7 +2310,7 @@ If you encounter any issues during migration, join our [Discord community](https
 
 **File:** `Guides/configuration-file.mdx`
 
-The `config.yaml` file defines your indexer's behavior, including which blockchain events to index, contract addresses, which networks to index, and various advanced indexing options. It is a crucial step in configuring your HyperIndex setup.
+The `config.yaml` file defines your indexer's behavior, including which blockchain events to index, contract addresses, which chains to index, and various advanced indexing options. It is a crucial step in configuring your HyperIndex setup.
 
 After any changes to your `config.yaml` and the schema, run:
 
@@ -2290,7 +2360,7 @@ contracts:
   - name: Greeter
     abi: greeter.json
 
-networks:
+chains:
   - id: ethereum-mainnet
     contracts:
       - name: Greeter
@@ -2357,61 +2427,40 @@ field_selection:
 
 Try to use this option sparingly as it can cause redundant Data Source calls and increased credits usage.
 
-:::note
-Field Selection per Event is available from `envio@2.11.0` and above. Please, upgrade your indexer to access this feature.
-:::
 
+### Address Format
 
-### Rollback on Reorg
-
-HyperIndex automatically handles blockchain reorganizations by default. To disable or customize this behavior, set the `rollback_on_reorg` flag in your `config.yaml`:
+Use `address_format` to control how every address surfaced by the indexer (event fields like `event.srcAddress` / `event.transaction.from`, `chain..addresses`, addresses embedded in entity ids, etc.) is formatted.
 
 ```yaml
-rollback_on_reorg: true # default is true
+address_format: lowercase # default: checksum
 ```
 
-See detailed configuration options here.
+- `checksum` (default) – [EIP-55](https://eips.ethereum.org/EIPS/eip-55) checksummed mixed-case addresses.
+- `lowercase` – every address is lowercased globally. Useful when joining against another data source that stores addresses in lowercase, or when you want byte-for-byte deterministic ids without per-handler `.toLowerCase()` calls.
+
+You can still call `.toLowerCase()` ad-hoc inside a handler when you only need a single value lowercased.
 
 
-### Environment Variables
+### Preload Optimization
 
-Since `envio@2.9.0`, environment variable interpolation is supported for flexibility and security:
+Preload Optimization is always enabled in V3. There is no `preload_handlers` flag — the previous opt-in is now the only behavior.
+
+Be aware of:
+
+- Double-Run Footgun
+- Effect API for External Calls
+
+
+### Schema File Path
+
+You can customize the path to the schema file using the `schema` option:
 
 ```yaml
-networks:
-  - id: ${ENVIO_CHAIN_ID:-ethereum-mainnet}
-    contracts:
-      - name: Greeter
-        address: ${ENVIO_GREETER_ADDRESS}
+schema: ./path/to/schema.graphql
 ```
 
-Run your indexer with custom environment variables:
-
-```bash
-ENVIO_CHAIN_ID=optimism ENVIO_GREETER_ADDRESS=0xYourContractAddress pnpm dev
-```
-
-**Interpolation syntax:**
-
-- `${ENVIO_VAR}` – Use the value of `ENVIO_VAR`
-- `${ENVIO_VAR:-default}` – Use `ENVIO_VAR` if set, otherwise use `default`
-
-For more detailed information about environment variables, see our Environment Variables Guide.
-
-
-### Output Directory Path
-
-You can customize the path where the generated directory will be placed using the `output` option:
-
-```yaml
-output: ./custom/generated/path
-```
-
-By default, the generated directory is placed in `generated` relative to the current working directory. If set, it will be a path relative to the config file location.
-
-:::warning Advanced Configuration
-This is an advanced configuration option. When using a custom output directory, you'll need to manually adjust your `.gitignore` file and project structure to match the new configuration.
-:::
+By default, the `schema.graphql` is expected to be in the root directory of your project.
 
 
 ## Full config file example
@@ -2420,8 +2469,6 @@ This example indexes events from multiple contracts across multiple networks.
 
 ```yaml
 name: envio-indexer
-unordered_multichain_mode: true
-preload_handlers: true
 contracts:
   - name: PoolManager
     events:
@@ -2429,14 +2476,14 @@ contracts:
   - name: PositionManager
     events:
       - event: Transfer(address indexed from, address indexed to, uint256 indexed id)
-networks:
+chains:
   - id: 1
     # Keep it 0 and HyperSync will automatically find the first block for your contracts
     start_block: 0
     contracts:
       - name: PositionManager
         address:
-          - 0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e
+          - "0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e"
         start_block: 18500000 # OPTIONAL: Override for contract deployed later
       - name: PoolManager
         address:
@@ -2446,19 +2493,19 @@ networks:
     contracts:
       - name: PositionManager
         address:
-          - 0x3C3Ea4B57a46241e54610e5f022e5c45859A1017
+          - "0x3C3Ea4B57a46241e54610e5f022e5c45859A1017"
       - name: PoolManager
         address:
-          - 0x9a13F98Cb987694C9F086b1F5eB990EeA8264Ec3
+          - "0x9a13F98Cb987694C9F086b1F5eB990EeA8264Ec3"
   - id: 42161
     start_block: 0
     contracts:
       - name: PositionManager
         address:
-          - 0xd88f38f930b7952f2db2432cb002e7abbf3dd869
+          - "0xd88f38f930b7952f2db2432cb002e7abbf3dd869"
       - name: PoolManager
         address:
-          - 0x360e68faccca8ca495c1b759fd9eee466db9fb32
+          - "0x360e68faccca8ca495c1b759fd9eee466db9fb32"
 ```
 
 
@@ -2488,7 +2535,7 @@ Scalar types represent basic data types and map directly to JavaScript, TypeScri
 | `BigInt`           | Signed integer (`int256` in Solidity)        | `bigint`                  | `bigint`       |
 | `BigDecimal`       | Arbitrary-size floating-point                | `BigDecimal` (imported)   | `BigDecimal.t` |
 | `Timestamp`        | Timestamp with timezone                      | `Date`                    | `Js.Date.t`    |
-| `Json`             | JSON object (from envio@2.20)                | `Json`                    | `Js.Json.t`    |
+| `Json`             | JSON object                                  | `Json`                    | `Js.Json.t`    |
 
 Learn more about GraphQL scalars [here](https://graphql.org/learn/).
 
@@ -2521,7 +2568,7 @@ Enums translate to string unions (TypeScript/JavaScript) or polymorphic variants
 let user = {
   id: event.params.id,
   balance: event.params.balance,
-  accountType: "USER", // enum as string
+  accountType: "USER" satisfies Enum, // enum as string
 };
 ```
 
@@ -2569,156 +2616,63 @@ You're now ready to define powerful schemas and efficiently query your indexed d
 
 **File:** `Guides/event-handlers.mdx`
 
-
-
-# Event Handlers
-
 ## Registration
 
 A handler is a function that receives blockchain data, processes it, and inserts it into the database. You can register handlers in the file defined in the `handler` field in your `config.yaml` file. By default this is `src/handlers` file.
 
-
-  
-
 ```typescript
 
-..handler(async ({ event, context }) => {
-  // Your logic here
-});
+indexer.onEvent(
+  { contract: "", event: "" },
+  async ({ event, context }) => {
+    // Your logic here
+  },
+);
 ```
-
-  
-  
-
-```javascript
-const {  } = require("generated");
-
-..handler(async ({ event, context }) => {
-  // Your logic here
-});
-```
-
-  
-  
-
-```rescript
-Handlers...handler(async ({ event, context }) => {
-  // Your logic here
-});
-```
-
-  
-
 
 :::note
-The `generated` module contains code and types based on `config.yaml` and `schema.graphql` files. Update it by running **`pnpm codegen`** command whenever you change these files.
+The `envio` module exposes the unified `indexer` value along with types based on your `config.yaml` and `schema.graphql` files. Run **`pnpm codegen`** whenever you change these files to regenerate the types in `.envio/`.
 :::
 
 ### Basic Example
 
 Here's a handler example for the `NewGreeting` event. It belongs to the `Greeter` contract from our beginners Greeter Tutorial:
 
-
-  
-
 ```typescript
 
 // Handler for the NewGreeting event
-Greeter.NewGreeting.handler(async ({ event, context }) => {
-  const userId = event.params.user; // The id for the User entity
-  const latestGreeting = event.params.greeting; // The greeting string that was added
-  const currentUserEntity = await context.User.get(userId); // Optional user entity that may already exist
+indexer.onEvent(
+  { contract: "Greeter", event: "NewGreeting" },
+  async ({ event, context }) => {
+    const userId = event.params.user; // The id for the User entity
+    const latestGreeting = event.params.greeting; // The greeting string that was added
+    const currentUserEntity = await context.User.get(userId); // Optional user entity that may already exist
 
-  // Update or create a new User entity
-  const userEntity: User = currentUserEntity
-    ? {
-        id: userId,
-        latestGreeting,
-        numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
-        greetings: [...currentUserEntity.greetings, latestGreeting],
-      }
-    : {
-        id: userId,
-        latestGreeting,
-        numberOfGreetings: 1,
-        greetings: [latestGreeting],
-      };
+    // Update or create a new User entity
+    const userEntity: User = currentUserEntity
+      ? {
+          id: userId,
+          latestGreeting,
+          numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
+          greetings: [...currentUserEntity.greetings, latestGreeting],
+        }
+      : {
+          id: userId,
+          latestGreeting,
+          numberOfGreetings: 1,
+          greetings: [latestGreeting],
+        };
 
-  context.User.set(userEntity); // Set the User entity in the DB
-});
+    context.User.set(userEntity); // Set the User entity in the DB
+  },
+);
 ```
-
-  
-  
-
-```javascript
-const { Greeter } = require("generated");
-
-// Handler for the NewGreeting event
-Greeter.NewGreeting.handler(async ({ event, context }) => {
-  const userId = event.params.user; // The id for the User entity
-  const latestGreeting = event.params.greeting; // The greeting string that was added
-  const currentUserEntity = await context.User.get(userId); // Optional user entity that may already exist
-
-  // Update or create a new User entity
-  const userEntity = currentUserEntity
-    ? {
-        id: userId,
-        latestGreeting,
-        numberOfGreetings: currentUserEntity.numberOfGreetings + 1,
-        greetings: [...currentUserEntity.greetings, latestGreeting],
-      }
-    : {
-        id: userId,
-        latestGreeting,
-        numberOfGreetings: 1,
-        greetings: [latestGreeting],
-      };
-
-  context.User.set(userEntity); // Set the User entity in the DB
-});
-```
-
-  
-  
-
-```rescript
-open Types
-
-// Handler for the NewGreeting event
-Handlers.Greeter.NewGreeting.handler(async ({event, context}) => {
-  let userId = event.params.user->Address.toString // The id for the User entity
-  let latestGreeting = event.params.greeting // The greeting string that was added
-  let maybeCurrentUserEntity = await context.user.get(userId) // Optional User entity that may already exist
-
-  // Update or create a new User entity
-  let userEntity: Entities.User.t = switch maybeCurrentUserEntity {
-  | Some(existingUserEntity) => {
-      id: userId,
-      latestGreeting,
-      numberOfGreetings: existingUserEntity.numberOfGreetings + 1,
-      greetings: existingUserEntity.greetings->Belt.Array.concat([latestGreeting]),
-    }
-  | None => {
-      id: userId,
-      latestGreeting,
-      numberOfGreetings: 1,
-      greetings: [latestGreeting],
-    }
-  }
-
-  context.user.set(userEntity) // Set the User entity in the DB
-})
-```
-
-  
-
 
 ### Preload Optimization
 
 > **Important!** Preload optimization makes your handlers run **twice**.
 
-Starting from `envio@2.27` all new indexers are created with preload optimization pre-configured by default.
+Preload optimization is always enabled in HyperIndex V3 — there is no config flag to toggle it.
 
 This optimization enables HyperIndex to efficiently preload entities used by handlers through batched database queries, while ensuring events are processed synchronously in their original order. When combined with the Effect API for external calls, this feature delivers performance improvements of multiple orders of magnitude compared to other indexing solutions.
 
@@ -2727,7 +2681,6 @@ Read more in the dedicated guides:
 - How Preload Optimization Works
 - Double-Run Footgun
 - Effect API
-- Migrating from Loaders (recommended)
 
 ### Advanced Use Cases
 
@@ -2738,7 +2691,7 @@ HyperIndex provides many features to help you build more powerful and efficient 
 - Index all ERC20 token transfers with Wildcard Indexing
 - Use Topic Filtering to ignore irrelevant events
   - With multiple filters for single event
-  - With different filters per network
+  - With different filters per chain
   - With filter by dynamicly registered contract addresses (eg Index all ERC20 transfers to/from your Contract)
 - Access Contract State directly from handlers
 - Perform external calls from handlers by following the IPFS Integration guide
@@ -2758,7 +2711,7 @@ await context.Entity.get(entityId);
 
 It'll return `Entity` object or `undefined` if the entity doesn't exist.
 
-Starting from `envio@2.22.0` you can use `context.Entity.getOrThrow` to conveniently throw an error if the entity doesn't exist:
+Use `context.Entity.getOrThrow` to conveniently throw an error if the entity doesn't exist:
 
 ```typescript
 const pool = await context.Pool.getOrThrow(poolId);
@@ -2793,27 +2746,27 @@ if (!pool) {
 ### Retrieving Entities by Field
 
 ```typescript
-ERC20.Approval.handler(async ({ event, context }) => {
-  // Find all approvals for this specific owner
-  const currentOwnerApprovals = await context.Approval.getWhere.owner_id.eq(
-    event.params.owner
-  );
+indexer.onEvent(
+  { contract: "ERC20", event: "Approval" },
+  async ({ event, context }) => {
+    // Find all approvals for this specific owner
+    const currentOwnerApprovals = await context.Approval.getWhere({
+      owner_id: { _eq: event.params.owner },
+    });
 
-  // Process all the owner's approvals efficiently
-  for (const approval of currentOwnerApprovals) {
-    // Process each approval
-  }
-});
+    // Process all the owner's approvals efficiently
+    for (const approval of currentOwnerApprovals) {
+      // Process each approval
+    }
+  },
+);
 ```
 
-You can also use `context..getWhere..gt` to get all entities where the field value is greater than the given value.
+You can also use comparison operators like `_gt`, `_gte`, `_lt`, `_lte`, and `_in` to filter entities by field value.
 
 **Important:**
 
-- This feature requires Preload Optimization to be enabled.
-
-  - Either by `preload_handlers: true` in your `config.yaml` file
-  - Or by using Loaders (Deprecated)
+- Preload Optimization is always enabled in V3 and powers `getWhere`. See How Preload Optimization Works.
 
 - Works with any field that:
 
@@ -2878,47 +2831,15 @@ The `deleteUnsafe` method is experimental and **unsafe**. You need to manually h
 
 Use the following approach to update specific fields in an existing entity:
 
-
-  
-
 ```typescript
 const pool = await context.Pool.get(poolId);
 if (pool) {
-  context.Pool.set({
-    ...pool,
-    totalValueLockedETH: pool.totalValueLockedETH.plus(newDeposit),
-  });
-}
-```
-
-  
-  
-
-```javascript
-const pool = await context.Pool.get(poolId);
-if (pool) {
-  context.Pool.set({
-    ...pool,
-    totalValueLockedETH: pool.totalValueLockedETH.plus(newDeposit),
-  });
-}
-```
-
-  
-  
-
-```rescript
-let pool = await context.pool.get(poolId);
-pool->Option.forEach(pool => {
-  context.pool.set({
-    ...pool,
-    totalValueLockedETH: pool.totalValueLockedETH.plus(newDeposit),
-  });
+context.Pool.set({
+  ...pool,
+  totalValueLockedETH: pool.totalValueLockedETH.plus(newDeposit),
 });
+}
 ```
-
-  
-
 
 ### `context.log`
 
@@ -2931,33 +2852,36 @@ Read more in the Logging Guide.
 If you need to skip the preload phase for CPU-intensive operations or to perform certain actions only once per event, you can use `context.isPreload`.
 
 ```typescript
-ERC20.Transfer.handler(async ({ event, context }) => {
-  // Load existing data efficiently
-  const [sender, receiver] = await Promise.all([
-    context.Account.getOrThrow(event.params.from),
-    context.Account.getOrThrow(event.params.to),
-  ]);
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    // Load existing data efficiently
+    const [sender, receiver] = await Promise.all([
+      context.Account.getOrThrow(event.params.from),
+      context.Account.getOrThrow(event.params.to),
+    ]);
 
-  // Skip expensive operations during preload
-  if (context.isPreload) {
-    return;
-  }
+    // Skip expensive operations during preload
+    if (context.isPreload) {
+      return;
+    }
 
-  // CPU-intensive calculations only happen once
-  const complexCalculation = performExpensiveOperation(event.params.value); // Placeholder function for demonstration
+    // CPU-intensive calculations only happen once
+    const complexCalculation = performExpensiveOperation(event.params.value); // Placeholder function for demonstration
 
-  // Create or update sender account
-  context.Account.set({
-    id: event.params.from,
-    balance: sender.balance - event.params.value,
-    computedValue: complexCalculation,
-  });
-  // Create or update receiver account
-  context.Account.set({
-    id: event.params.to,
-    balance: receiver.balance + event.params.value,
-  });
-});
+    // Create or update sender account
+    context.Account.set({
+      id: event.params.from,
+      balance: sender.balance - event.params.value,
+      computedValue: complexCalculation,
+    });
+    // Create or update receiver account
+    context.Account.set({
+      id: event.params.to,
+      balance: receiver.balance + event.params.value,
+    });
+  },
+);
 ```
 
 **Note:** While `context.isPreload` can be useful for bypassing double execution, it's recommended to use the Effect API for external calls instead, as it provides automatic batching and memoization benefits.
@@ -2975,7 +2899,6 @@ Check out our IPFS Integration, Accessing Contract State and Effect API guides f
 Define an effect and use it in your handler with `context.effect`:
 
 ```typescript
-
 
 // Define an effect that will be called from the handler.
 const getMetadata = createEffect(
@@ -3002,14 +2925,17 @@ const getMetadata = createEffect(
   }
 );
 
-ERC20.Transfer.handler(async ({ event, context }) => {
-  // Load metadata for the token.
-  // This will be executed in parallel for all events in the batch.
-  // The call is automatically memoized, so you don't need to worry about duplicate requests.
-  const sender = await context.effect(getMetadata, event.params.from);
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    // Load metadata for the token.
+    // This will be executed in parallel for all events in the batch.
+    // The call is automatically memoized, so you don't need to worry about duplicate requests.
+    const sender = await context.effect(getMetadata, event.params.from);
 
-  // Process the transfer with the pre-loaded data
-});
+    // Process the transfer with the pre-loaded data
+  },
+);
 ```
 
 
@@ -3024,7 +2950,7 @@ These guides offer detailed recommendations on optimizing entity loading and ind
 
 ---
 
-## Block Handlers (new in v2.29)
+## Block Handlers
 
 **File:** `Guides/block-handlers.md`
 
@@ -3050,15 +2976,15 @@ With multichain indexing, events from contracts deployed on multiple chains can 
 
 To implement multichain indexing, you need to:
 
-1. Populate the `networks` section in your `config.yaml` file for each chain
-2. Specify contracts to index from each network
+1. Populate the `chains` section in your `config.yaml` file for each chain
+2. Specify contracts to index from each chain
 3. Create event handlers for the specified contracts
 
 ## Real-World Example: Uniswap V4 Multichain Indexer
 
 For a comprehensive, production-ready example of multichain indexing, we recommend exploring our Uniswap V4 Multichain Indexer. This official reference implementation:
 
-- Indexes Uniswap V4 deployments across 10 different blockchain networks
+- Indexes Uniswap V4 deployments across 10 different blockchain chains
 - Powers the official [v4.xyz](https://v4.xyz) interface with real-time data
 - Demonstrates best practices for high-performance multichain indexing
 - Provides a complete, production-grade implementation you can study and adapt
@@ -3072,8 +2998,8 @@ The Uniswap V4 indexer showcases how to effectively structure a multichain index
 The `config.yaml` file for multichain indexing contains three key sections:
 
 1. **Global contract definitions** - Define contracts, ABIs, and events once
-2. **Network-specific configurations** - Specify chain IDs and starting blocks
-3. **Contract instances** - Reference global contracts with network-specific addresses
+2. **Chain-specific configurations** - Specify chain IDs and starting blocks
+3. **Contract instances** - Reference global contracts with chain-specific addresses
 
 ```yaml
 # Example structure (simplified)
@@ -3083,7 +3009,7 @@ contracts:
     events:
       - event: ExampleEvent
 
-networks:
+chains:
   - id: 1 # Ethereum Mainnet
     start_block: 0
     contracts:
@@ -3099,128 +3025,129 @@ networks:
 ### Key Configuration Concepts
 
 - The global `contracts` section defines the contract interface, ABI, handlers, and events once
-- The `networks` section lists each blockchain network you want to index
-- Each network entry references the global contract and provides the network-specific address
-- This structure allows you to reuse the same handler functions and event definitions across networks
+- The `chains` section lists each blockchain chain you want to index
+- Each chain entry references the global contract and provides the chain-specific address
+- This structure allows you to reuse the same handler functions and event definitions across chains
 
 > 📢 **Best Practice**: When developing multichain indexers, append the chain ID to entity IDs to avoid collisions. For example: `user-1` for Ethereum and `user-137` for Polygon.
 
 ## Multichain Event Ordering
 
-When indexing multiple chains, you have two approaches for handling event ordering:
+In V3 the indexer always processes multichain events in **unordered** mode. Events from different chains are processed as soon as they're available, without waiting for the other chains, which keeps latency low.
 
-### Unordered Multichain Mode
+- Events are still processed in order within each individual chain.
+- Events across different chains may be processed out of order.
+- Processing happens as soon as events are emitted, so you don't wait for the slowest chain's block time.
 
-:::note
-Unordered mode is recommended for most applications.
-:::
+This is ideal when:
 
-The indexer processes events as soon as they're available from each chain, without waiting for other chains. This "Unordered Multichain Mode" provides better performance and lower latency.
+- Operations on your entities are commutative (order doesn't matter).
+- Entities from different chains never interact with each other.
+- Processing speed matters more than guaranteed cross-chain ordering.
 
-- Events will still be processed in order within each individual chain
-- Events across different chains may be processed out of order
-- Processing happens as soon as events are emitted, reducing latency
-- You avoid waiting for the slowest chain's block time
+The V2 `unordered_multichain_mode` option, the `multichain: ordered` opt-in, and the `UNORDERED_MULTICHAIN_MODE` / `UNSTABLE__TEMP_UNORDERED_HEAD_MODE` environment variables have all been removed in V3 — there is nothing to configure.
 
-This mode is ideal for most applications, especially when:
+## Ordered Multichain Mode
 
-- Operations on your entities are commutative (order doesn't matter)
-- Entities from different networks never interact with each other
-- Processing speed is more important than guaranteed cross-chain ordering
+HyperIndex V3 doesn't offer an ordered multichain mode, and it's a deliberate choice rather than a feature gap. Ordered mode worked by pausing every chain until events from the slowest chain had caught up, so the moment one chain hiccuped (RPC rate limits, a slow block, a brief reorg) every other chain stalled with it. In practice that meant a multichain indexer was only ever as reliable and as fast as its worst-performing chain, and even healthy chains paid for that coupling with significantly higher latency at the head.
 
-#### How to Enable Unordered Mode
+You almost always get better reliability and lower latency by keeping every chain unordered and modeling the cross-chain relationship in your schema instead. Each chain writes a small temporary entity when its side of a cross-chain interaction happens, and the second chain (whichever arrives last) reads those temporary entities and finalizes the unified entity. Because each chain progresses independently, none of them are blocked on each other.
 
-In your config.yaml:
+A typical pattern for an `A → B` cross-chain message:
 
-```yaml
-unordered_multichain_mode: true
-networks: ...
+```graphql
+type CrossChainMessage {
+  id: ID! # The shared cross-chain message id (e.g. nonce + originChainId)
+  sourceChainId: Int
+  sourceTxHash: String
+  destinationChainId: Int
+  destinationTxHash: String
+  status: String! # "sent" | "delivered"
+}
 ```
 
-### Ordered Mode
+```typescript
 
-:::note
-Ordered mode is currently the default mode. But it'll be changed to unordered mode in the future. If you don't need strict deterministic ordering of events across all chains, it's recommended to use unordered mode.
-:::
+// Chain A: the message was emitted. Create or update the entity with the
+// "sent" side of the data. The destination handler may run before or after.
+indexer.onEvent(
+  { contract: "Bridge", event: "MessageSent" },
+  async ({ event, context }) => {
+    const id = `${event.params.originChainId}-${event.params.nonce}`;
+    const existing = await context.CrossChainMessage.get(id);
+    context.CrossChainMessage.set({
+      id,
+      sourceChainId: event.chainId,
+      sourceTxHash: event.transaction.hash,
+      destinationChainId: existing?.destinationChainId,
+      destinationTxHash: existing?.destinationTxHash,
+      status: existing?.destinationTxHash ? "delivered" : "sent",
+    });
+  },
+);
 
-If your application requires strict deterministic ordering of events across all chains, you can enable "Ordered Mode". In this mode, the indexer synchronizes event processing across all chains, ensuring that events are processed in the exact same order in every indexer run, regardless of which chain they came from.
+// Chain B: the message was delivered. Read the (maybe-already-existing)
+// entity and fill in the destination side, regardless of which side arrived
+// first.
+indexer.onEvent(
+  { contract: "Bridge", event: "MessageDelivered" },
+  async ({ event, context }) => {
+    const id = `${event.params.originChainId}-${event.params.nonce}`;
+    const existing = await context.CrossChainMessage.get(id);
+    context.CrossChainMessage.set({
+      id,
+      sourceChainId: existing?.sourceChainId,
+      sourceTxHash: existing?.sourceTxHash,
+      destinationChainId: event.chainId,
+      destinationTxHash: event.transaction.hash,
+      status: existing?.sourceTxHash ? "delivered" : "sent",
+    });
+  },
+);
+```
 
-#### When to Use Ordered Mode
+The same shape works for any "rendezvous" where two chains contribute parts of one logical record (bridges, cross-chain governance, multichain user profiles, etc.). The "temporary" entity is just a regular entity that gets progressively completed as each chain's events arrive — there's no special API to learn, and the indexer stays fast and resilient because no chain ever waits on another.
 
-Use ordered mode only when:
-
-- The exact ordering of operations across different chains is critical to your application logic
-- You need guaranteed deterministic results across all indexer runs
-- You're willing to accept higher latency for cross-chain consistency
-
-Cross-chain ordering is particularly important for applications like:
-
-- **Bridge applications**: Where messages or assets must be processed on one chain before being processed on another chain
-- **Cross-chain governance**: Where decisions made on one chain affect operations on another chain
-- **Multi-chain financial applications**: Where the sequence of transactions across chains affects accounting or risk calculations
-- **Data consistency systems**: Where the state must be consistent across multiple chains in a specific order
-
-#### Technical Details
-
-With ordered mode enabled:
-
-- The indexer needs to wait for all blocks to increment from each network
-- There is increased latency between when an event is emitted and when it's processed
-- Processing speed is limited by the block interval of the slowest network
-- Events are guaranteed to be processed in the same order in every indexer run
-
-#### Cross-Chain Ordering Preservation
-
-Ordered mode ensures that the temporal relationship between events on different chains is preserved. This is achieved by:
-
-1. **Global timestamp ordering**: Events are ordered based on their block timestamps across all chains
-2. **Deterministic processing**: The same sequence of events will be processed in the same order every time
-
-The primary trade-off is increased latency at the head of the chain. Since the indexer must wait for blocks from all chains to determine the correct ordering, the processing of recent events is delayed by the slowest chain's block time. For example, if Chain A has 2-second blocks and Chain B has 15-second blocks, the indexer will process events at the slower 15-second rate to maintain proper ordering.
-
-This latency is acceptable for applications where correct cross-chain ordering is more important than real-time updates. For bridge applications in particular, this ordering preservation can be critical for security and correctness, as it ensures that deposit events on one chain are always processed before the corresponding withdrawal events on another chain.
+If you have a use case that genuinely cannot be expressed this way, reach out on [Discord](https://discord.gg/envio) — we'd like to hear it.
 
 ## Best Practices for Multichain Indexing
 
 ### 1. Entity ID Namespacing
 
-Always namespace your entity IDs with the chain ID to prevent collisions between networks. This ensures that entities from different networks remain distinct.
+Always namespace your entity IDs with the chain ID to prevent collisions between chains. This ensures that entities from different chains remain distinct.
 
 ### 2. Error Handling
 
-Implement robust error handling for network-specific issues. A failure on one chain shouldn't prevent indexing from continuing on other chains.
+Implement robust error handling for chain-specific issues. A failure on one chain shouldn't prevent indexing from continuing on other chains.
 
 ### 3. Testing
 
-- Test your indexer with realistic scenarios across all networks
+- Test your indexer with realistic scenarios across all chains
 - Use testnet deployments for initial validation
 - Verify entity updates work correctly across chains
 
 ### 4. Performance Considerations
 
-- Use unordered mode when appropriate for better performance
-- Consider your indexing frequency based on the block times of each chain
-- Monitor resource usage, as indexing multiple chains increases load
-- Adding more chains does **not** linearly degrade performance — chains are indexed in parallel. However, handler logic that writes to shared entities across chains may introduce contention when using ordered mode.
+- Consider your indexing frequency based on the block times of each chain.
+- Monitor resource usage, as indexing multiple chains increases load.
+- Adding more chains does **not** linearly degrade performance — chains are indexed in parallel.
 
 ### 5. Adding a New Chain to an Existing Indexer
 
 To add a new chain to a running indexer:
 
-1. Add the new network entry to your `config.yaml` with the appropriate `start_block` and contract addresses
-2. Push the updated code to your deployment branch (for Envio Cloud) or restart locally with `pnpm envio start -r`
+1. Add the new chain entry to your `config.yaml` with the appropriate `start_block` and contract addresses
+2. Push the updated code to your deployment branch (for Envio Cloud) or restart locally with `pnpm envio dev -r`
 
 On **Envio Cloud**, this creates a new deployment that re-indexes all chains (including the new one). Your previous deployment continues serving queries with zero downtime until the new deployment is fully synced. See the deployment guide for details.
 
-**Locally**, adding a new chain requires a restart and will re-index all chains from their respective start blocks.
+**Locally**, adding a new chain requires a restart and will re-index all chains from their respective start blocks. Note that in V3, `envio dev` no longer auto-resets the database — pass `-r` (or `--restart`) explicitly when you want a fresh sync. `envio start` is now production-only.
 
 ## Troubleshooting Common Issues
 
-1. **Different Network Speeds**: If one network is significantly slower than others, consider using unordered mode to prevent bottlenecks.
+1. **Entity Conflicts**: If you see unexpected entity updates, verify that your entity IDs are properly namespaced with chain IDs.
 
-2. **Entity Conflicts**: If you see unexpected entity updates, verify that your entity IDs are properly namespaced with chain IDs.
-
-3. **Memory Usage**: If your indexer uses excessive memory, consider optimizing your entity structure and implementing pagination in your queries.
+2. **Memory Usage**: If your indexer uses excessive memory, consider optimizing your entity structure and implementing pagination in your queries.
 
 ## Next Steps
 
@@ -3233,18 +3160,16 @@ On **Envio Cloud**, this creates a new deployment that re-indexes all chains (in
 
 **File:** `Guides/testing.mdx`
 
-
-
 ## Introduction
 
 Envio comes with a built-in testing library that enables developers to thoroughly validate their indexer behavior without requiring deployment or interaction with actual blockchains. This library is specifically crafted to:
 
-- **Mock database states**: Create and manipulate in-memory representations of your database
-- **Simulate blockchain events**: Generate test events that mimic real blockchain activity
+- **Spin up an in-process indexer**: Use `createTestIndexer()` to run your real handlers against an in-memory database
+- **Simulate blockchain events**: Pass event params directly to `indexer.process({ chains: { id: { simulate: [...] } } })`
 - **Assert event handler logic**: Verify that your handlers correctly process events and update entities
 - **Test complete workflows**: Validate the entire process from event creation to database updates
 
-The testing library provides helper functions that integrate with any JavaScript-based testing framework (like Mocha, Jest, or others), giving you flexibility in how you structure and run your tests.
+The testing library integrates well with [Vitest](https://vitest.dev/) (recommended) and any other JavaScript-based testing framework.
 
 ## Learn by doing
 
@@ -3262,7 +3187,7 @@ pnpx envio@3.0.0-rc.0 init template -l typescript -d greeter -t greeter -n greet
 pnpm test
 ```
 
-3. See the `test/test.ts` file to understand how the tests are written.
+3. See the `src/indexer.test.ts` file to understand how the tests are written.
 
 
 ## Writing tests
@@ -3271,103 +3196,31 @@ pnpm test
 
 The testing library follows key design principles that make it effective for testing HyperIndex indexers:
 
-- **Immutable database**: The mock database is immutable, with each operation returning a new instance. This makes it robust and easy to test against previous states.
-- **Chainable operations**: Operations can be chained together to build complex test scenarios.
-- **Realistic simulations**: Mock events closely mirror real blockchain events, allowing you to test your handlers in conditions similar to production.
+- **Real handlers, in-memory storage**: `createTestIndexer()` runs your actual registered handlers against an in-memory store, so tests exercise the same code paths as production.
+- **Batched simulation**: Pass any number of events to `indexer.process({ chains: { id: { simulate: [...] } } })` and they will run through the handler pipeline in order.
+- **Realistic simulations**: Simulated events closely mirror real blockchain events.
 
 ### Typical Test Flow
 
 Most tests will follow this general pattern:
 
-1. Initialize the mock database (empty or with predefined entities)
-2. Create a mock event with test parameters
-3. Process the mock event through your handler(s)
-4. Assert that the resulting database state matches your expectations
+1. Create a test indexer with `createTestIndexer()`
+2. Call `indexer.process({ chains: { id: { simulate: [...] } } })` with one or more events
+3. Read entities back via `await indexer.Entity.getOrThrow(id)` (or `.get(id)`)
+4. Assert that the resulting state matches your expectations
 
 This flow allows you to verify that your event handlers correctly create, update, or modify entities in response to blockchain events.
 
 
 ## Assertions
 
-The testing library works with any JavaScript assertion library. In the examples, we use Node.js's built-in assert module, but you can also use popular alternatives like [chai](https://www.chaijs.com/) or [expect](https://github.com/Automattic/expect.js).
+The testing library works with any JavaScript assertion library. The examples below use Vitest's built-in `expect`, but you can also use Node.js's `assert`, [chai](https://www.chaijs.com/), or any other library.
 
 Common assertion patterns include:
 
-- `assert.deepEqual(expectedEntity, actualEntity)` - Check that entire entities match
-- `assert.equal(expectedValue, actualEntity.property)` - Verify specific property values
-- `assert.ok(updatedMockDb.entities.Entity.get(id))` - Ensure an entity exists
-
-
-## Troubleshooting
-
-If you encounter issues with your tests, check the following:
-
-### Environment and Setup
-
-1. **Ensure you've generated testing code**: Always run codegen after updating your schema or config
-
-   ```bash
-   pnpm codegen
-   ```
-
-2. **Check your imports**: Make sure you're importing the correct files
-
-
-   
-
-```typescript
-
-
-const { MockDb, Greeter, Addresses } = TestHelpers;
-```
-
-  
-  
-
-```javascript
-const assert = require("assert");
-const { UserEntity, TestHelpers } = require("generated");
-const { MockDb, Greeter, Addresses } = TestHelpers;
-```
-
-  
-  
-
-```rescript
-open RescriptMocha
-open Mocha
-open Belt
-```
-
-  
-
-
-### Common Issues and Solutions
-
-- **"Cannot read properties of undefined"**: This usually means an entity wasn't found in the database. Verify your IDs match exactly and that the entity exists before accessing it.
-
-- **"Type mismatch"**: Ensure that your entity structure matches what's defined in your schema. Type issues are common when working with numeric types (like `BigInt` vs `number`).
-
-- **ReScript specific setup**: If using ReScript, remember to update your `rescript.json` file:
-
-  ```json
-  {
-    "sources": [
-      { "dir": "src", "subdirs": true },
-      { "dir": "test", "subdirs": true }
-    ],
-    "bs-dependencies": ["rescript-mocha"]
-  }
-  ```
-
-- **Debug database state**: If you're having trouble with assertions, add a debug log to see the exact state of your entities:
-  ```javascript
-  console.log(
-    JSON.stringify(updatedMockDb.entities.User.get(userAddress), null, 2)
-  );
-  ```
-
-If you encounter any issues or have questions, please reach out to us on [Discord](https://discord.gg/envio)
+- `expect(actualEntity).toEqual(expectedEntity)` — Check that entire entities match
+- `expect(actualEntity.property).toBe(expectedValue)` — Verify specific property values
+- `expect(await indexer.Entity.get(id)).toBeDefined()` — Ensure an entity exists
 
 ---
 
@@ -3468,8 +3321,7 @@ The Data tab provides direct access to your database tables and relationships, a
 To confirm your blockchain indexer is working correctly:
 
 1. Check entity tables to ensure they contain the expected data
-2. Look at the `db_write_timestamp` column values to confirm when data was last updated
-3. Newer timestamps indicate fresh data; older timestamps might indicate stale data from previous runs
+2. Query the `envio_chains` table (or use the Metadata Query API) to see each chain's latest processed block and confirm the indexer is making progress
 
 ## Common Tasks
 
@@ -3478,9 +3330,8 @@ To confirm your blockchain indexer is working correctly:
 To verify your blockchain indexer is actively processing new blocks:
 
 1. Go to the Data tab
-2. Select any entity table
-3. Check the latest `db_write_timestamp` values
-4. Monitor these values over time to ensure they're updating
+2. Select the `envio_chains` table (or query the Metadata Query API) to see each chain's latest processed block
+3. Monitor those values over time to ensure they're advancing
 
 (Note the TUI is also an easy way to monitor this)
 
@@ -3534,28 +3385,32 @@ type Token {
 EventHandler.ts
 
 ```typescript
+
 const globalStateId = "global-state";
 
-NftContract.Mint.handler(async ({event, context}) => {
-  const globalState = await context.GlobalState.get(globalStateId);
+indexer.onEvent(
+  { contract: "NftContract", event: "Mint" },
+  async ({ event, context }) => {
+    const globalState = await context.GlobalState.get(globalStateId);
 
-  if (!globalState) {
-    context.log.error("global state doesn't exist");
-    return;
-  }
+    if (!globalState) {
+      context.log.error("global state doesn't exist");
+      return;
+    }
 
-  const incrementedTokenId = globalState.count + 1;
+    const incrementedTokenId = globalState.count + 1;
 
-  context.Token.set({
-    id: incrementedTokenId,
-    description: event.params.description,
-  });
+    context.Token.set({
+      id: incrementedTokenId,
+      description: event.params.description,
+    });
 
-  context.GlobalState.set({
-    ...globalState,
-    count: incrementedTokenId,
-  });
-});
+    context.GlobalState.set({
+      ...globalState,
+      count: incrementedTokenId,
+    });
+  },
+);
 ```
 
 This pattern scales: you can keep per-entity counters, rolling windows (daily/hourly entities keyed by date), and top-N caches by updating entities as events arrive. Your queries then read these precomputed values directly, avoiding expensive runtime aggregations.
@@ -3566,7 +3421,7 @@ If runtime aggregate queries are a hard requirement for your use case, please re
 
 ## Disable Hasura for Self-Hosted Blockchain Indexers
 
-Starting from `envio@2.26.0` it's possible to disable Hasura integration for self-hosted blockchain indexers. To do so, set the `ENVIO_HASURA` environment variable to `false`.
+Set the `ENVIO_HASURA` environment variable to `false` to disable Hasura integration for self-hosted blockchain indexers.
 
 ---
 
@@ -3595,36 +3450,36 @@ To ensure continued access to HyperSync, set an Envio API token in your environm
 
 The following variables are used by HyperIndex:
 
-- `ENVIO_API_TOKEN`: API token for HyperSync access (required for continued access in self-hosted deployments)
+- `ENVIO_API_TOKEN`: API token for HyperSync access (required when indexing via HyperSync — get one at [envio.dev/app/api-tokens](https://envio.dev/app/api-tokens))
 - `ENVIO_HASURA`: Set to `false` to disable Hasura integration for self-hosted blockchain indexers
-
-- `MAX_BATCH_SIZE`: Size of the in-memory batch before writing to the database. Default: `5000`. Set to `1` to help isolate which event or data save is causing Postgres write errors.
+- `ENVIO_TUI`: Set to `false` to disable the terminal UI (replaces the V2 `TUI_OFF=true` flag; the TUI is also auto-disabled in CI and under AI agents)
 
 - `ENVIO_PG_PORT`: Port for the Postgres service used by HyperIndex during local development
 - `ENVIO_PG_PASSWORD`: Postgres password (self-hosted)
 - `ENVIO_PG_USER`: Postgres username (self-hosted)
 - `ENVIO_PG_DATABASE`: Postgres database name (self-hosted)
-- `ENVIO_PG_PUBLIC_SCHEMA`: Postgres schema name override for the generated/public schema
+- `ENVIO_PG_SCHEMA`: Postgres schema name override for the generated/public schema (replaces `ENVIO_PG_PUBLIC_SCHEMA`; the old name is still accepted until v4)
+
+:::note
+The V2 variables `MAX_BATCH_SIZE`, `ENVIO_INDEXING_BLOCK_LAG`, `UNORDERED_MULTICHAIN_MODE`, and `UNSTABLE__TEMP_UNORDERED_HEAD_MODE` have been removed in V3. Use the `full_batch_size` config option in `config.yaml` instead of `MAX_BATCH_SIZE`, and use the per-chain `block_lag` option instead of `ENVIO_INDEXING_BLOCK_LAG`. Unordered multichain processing is now the default.
+:::
 
 ## Example Environment Variables
 
 Here are some commonly used environment variables:
 
 ```bash
-# Envio API Token (required for continued HyperSync access)
+# Envio API Token (required for HyperSync access)
 ENVIO_API_TOKEN=your-secret-token
 
 # Blockchain RPC URL
 ENVIO_RPC_URL=https://arbitrum.direct.dev/your-api-key
 
-# Starting block number for indexing
-ENVIO_START_BLOCK=12345678
-
 # Coingecko API key
 ENVIO_COINGECKO_API_KEY=api-key
 
-# In-memory batch size (default 5000)
-MAX_BATCH_SIZE=1
+# Disable the terminal UI
+ENVIO_TUI=false
 ```
 
 ## Setting Environment Variables
@@ -3639,7 +3494,6 @@ For local development, you can set environment variables in several ways:
 # .env
 ENVIO_API_TOKEN=your-secret-token
 ENVIO_RPC_URL=https://arbitrum.direct.dev/your-api-key
-ENVIO_START_BLOCK=12345678
 ```
 
 2. Directly in your terminal:
@@ -5552,16 +5406,16 @@ Everything is configured by modifying the 3 files below. Let's walk through each
 
 The `config.yaml` outlines the specifications for the indexer, including details such as network and contract specifications and the event information to be used in the indexing process.
 
-```
+```yaml
 name: sway-farm-indexer
 ecosystem: fuel
-networks:
+chains:
   - id: 0
     start_block: 0
     contracts:
       - name: SwayFarm
         address:
-          - 0xf5b08689ada97df7fd2fbd67bee7dea6d219f117c1dc9345245da16fe4e99111
+          - "0xf5b08689ada97df7fd2fbd67bee7dea6d219f117c1dc9345245da16fe4e99111"
         abi_file_path: abis/swayfarm-abi.json
         events:
           - name: SellItem
@@ -5576,7 +5430,7 @@ In the tutorial, we don't need to adjust it in any way. But later you can modify
 
 As a nice to have, you can use a [Sway](https://docs.fuel.network/docs/sway/) struct name without specifying a `logId`, like this:
 
-```
+```yaml
 - name: SellItem
 - name: LevelUp
 - name: NewPlayer
@@ -5609,13 +5463,16 @@ The event handlers generated by contract import are quite simple and only add an
  * Please refer to https://docs.envio.dev for a thorough guide on all Envio indexer features
  */
 
-SwayFarmContract.SellItem.handler(async ({ event, context }) => {
-  const entity: SwayFarm_SellItemEntity = {
-    id: `${event.chainId}_${event.block.height}_${event.logIndex}`,
-  };
+indexer.onEvent(
+  { contract: "SwayFarm", event: "SellItem" },
+  async ({ event, context }) => {
+    const entity: Entity = {
+      id: `${event.chainId}_${event.block.height}_${event.logIndex}`,
+    };
 
-  context.SwayFarm_SellItem.set(entity);
-});
+    context.SwayFarm_SellItem.set(entity);
+  },
+);
 ```
 
 Let's modify the handlers to update the `Player` entity instead. But before we start, we need to run `pnpm codegen` to generate utility code and types for the `Player` entity we've added.
@@ -5632,34 +5489,43 @@ It's time for a little bit of coding. The indexer is very simple; it requires us
 Registers a handler that processes NewPlayer event
 on the SwayFarm contract and stores the players in the DB
 */
-SwayFarmContract.NewPlayer.handler(async ({ event, context }) => {
-  // Set the Player entity in the DB with the intial values
-  context.Player.set({
-    // The address in Sway is a union type of user Address and ContractID. Envio supports most of the Sway types, and the address value was decoded as a discriminated union 100% typesafe
-    id: event.params.address.payload.bits,
-    // Initial values taken from the contract logic
-    farmingSkill: 1n,
-    totalValueSold: 0n,
-  });
-});
+indexer.onEvent(
+  { contract: "SwayFarm", event: "NewPlayer" },
+  async ({ event, context }) => {
+    // Set the Player entity in the DB with the intial values
+    context.Player.set({
+      // The address in Sway is a union type of user Address and ContractID. Envio supports most of the Sway types, and the address value was decoded as a discriminated union 100% typesafe
+      id: event.params.address.payload.bits,
+      // Initial values taken from the contract logic
+      farmingSkill: 1n,
+      totalValueSold: 0n,
+    });
+  },
+);
 
-SwayFarmContract.LevelUp.handler(async ({ event, context }) => {
-  const playerInfo = event.params.player_info;
-  context.Player.set({
-    id: event.params.address.payload.bits,
-    farmingSkill: playerInfo.farming_skill,
-    totalValueSold: playerInfo.total_value_sold,
-  });
-});
+indexer.onEvent(
+  { contract: "SwayFarm", event: "LevelUp" },
+  async ({ event, context }) => {
+    const playerInfo = event.params.player_info;
+    context.Player.set({
+      id: event.params.address.payload.bits,
+      farmingSkill: playerInfo.farming_skill,
+      totalValueSold: playerInfo.total_value_sold,
+    });
+  },
+);
 
-SwayFarmContract.SellItem.handler(async ({ event, context }) => {
-  const playerInfo = event.params.player_info;
-  context.Player.set({
-    id: event.params.address.payload.bits,
-    farmingSkill: playerInfo.farming_skill,
-    totalValueSold: playerInfo.total_value_sold,
-  });
-});
+indexer.onEvent(
+  { contract: "SwayFarm", event: "SellItem" },
+  async ({ event, context }) => {
+    const playerInfo = event.params.player_info;
+    context.Player.set({
+      id: event.params.address.payload.bits,
+      farmingSkill: playerInfo.farming_skill,
+      totalValueSold: playerInfo.total_value_sold,
+    });
+  },
+);
 ```
 
 Without overengineering, simply set the player data into the database. What's nice is that whenever your ABI or entities in `graphql.schema` change, Envio regenerates types and shows the compilation error.
@@ -5796,15 +5662,15 @@ This configuration file defines which networks and contracts to index:
 ```yaml
 # Partial example
 envio_node:
-  networks:
+  chains:
     - name: polygon
-      # ... Polygon network settings
+      # ... Polygon chain settings
       contracts:
         - name: Greeter
           address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
           # ... contract settings
     - name: linea
-      # ... Linea network settings
+      # ... Linea chain settings
       contracts:
         - name: Greeter
           address: "0xdEe21B97AB77a16B4b236F952e586cf8408CF32A"
@@ -6159,19 +6025,18 @@ Edit your `config.yaml` file to track both the API3 oracle and the Uniswap V3 po
 ```yaml
 # yaml-language-server: $schema=./node_modules/envio/evm.schema.json
 name: envio-indexer
-preload_handlers: true
-networks:
+chains:
   - id: 81457
     start_block: 11000000
     contracts:
       - name: Api3ServerV1
         address:
-          - 0x709944a48cAf83535e43471680fDA4905FB3920a
+          - "0x709944a48cAf83535e43471680fDA4905FB3920a"
         events:
           - event: UpdatedBeaconSetWithBeacons(bytes32 indexed beaconSetId, int224 value, uint32 timestamp)
       - name: UniswapV3Pool
         address:
-          - 0xf52B4b69123CbcF07798AE8265642793b2E8990C
+          - "0xf52B4b69123CbcF07798AE8265642793b2E8990C"
         events:
           - event: Swap(address indexed sender, address indexed recipient, int256 amount0, int256 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick)
           - event: Mint(address sender, address indexed owner, int24 indexed tickLower, int24 indexed tickUpper, uint128 amount, uint256 amount0, uint256 amount1)
@@ -6221,84 +6086,87 @@ type EthDeposited {
 Create event handlers to process data from all three sources:
 
 ```typescript
-import {
-  Api3ServerV1,
-  OraclePoolPrice,
-  UniswapV3Pool,
-  UniswapV3PoolPrice,
-  EthDeposited,
-} from "generated";
+
 
 let latestOraclePrice = 0;
 let latestPoolPrice = 0;
 
-Api3ServerV1.UpdatedBeaconSetWithBeacons.handler(async ({ event, context }) => {
-  // Filter out the beacon set for the ETH/USD price
-  if (
-    event.params.beaconSetId !=
-    "0x3efb3990846102448c3ee2e47d22f1e5433cd45fa56901abe7ab3ffa054f70b5"
-  ) {
-    return;
-  }
+indexer.onEvent(
+  { contract: "Api3ServerV1", event: "UpdatedBeaconSetWithBeacons" },
+  async ({ event, context }) => {
+    // Filter out the beacon set for the ETH/USD price
+    if (
+      event.params.beaconSetId !=
+      "0x3efb3990846102448c3ee2e47d22f1e5433cd45fa56901abe7ab3ffa054f70b5"
+    ) {
+      return;
+    }
 
-  const entity: OraclePoolPrice = {
-    id: `${event.chainId}-${event.block.number}-${event.logIndex}`,
-    value: event.params.value,
-    timestamp: event.params.timestamp,
-    block: event.block.number,
-  };
+    const entity: Entity = {
+      id: `${event.chainId}-${event.block.number}-${event.logIndex}`,
+      value: event.params.value,
+      timestamp: event.params.timestamp,
+      block: event.block.number,
+    };
 
-  latestOraclePrice = Number(event.params.value) / Number(10 ** 18);
+    latestOraclePrice = Number(event.params.value) / Number(10 ** 18);
 
-  context.OraclePoolPrice.set(entity);
-});
+    context.OraclePoolPrice.set(entity);
+  },
+);
 
-UniswapV3Pool.Swap.handler(async ({ event, context }) => {
-  const entity: UniswapV3PoolPrice = {
-    id: `${event.chainId}-${event.block.number}-${event.logIndex}`,
-    sqrtPriceX96: event.params.sqrtPriceX96,
-    timestamp: event.block.timestamp,
-    block: event.block.number,
-  };
+indexer.onEvent(
+  { contract: "UniswapV3Pool", event: "Swap" },
+  async ({ event, context }) => {
+    const entity: Entity = {
+      id: `${event.chainId}-${event.block.number}-${event.logIndex}`,
+      sqrtPriceX96: event.params.sqrtPriceX96,
+      timestamp: event.block.timestamp,
+      block: event.block.number,
+    };
 
-  latestPoolPrice = Number(
-    BigInt(2 ** 192) /
-      (BigInt(event.params.sqrtPriceX96) * BigInt(event.params.sqrtPriceX96))
-  );
+    latestPoolPrice = Number(
+      BigInt(2 ** 192) /
+        (BigInt(event.params.sqrtPriceX96) * BigInt(event.params.sqrtPriceX96))
+    );
 
-  context.UniswapV3PoolPrice.set(entity);
-});
+    context.UniswapV3PoolPrice.set(entity);
+  },
+);
 
-UniswapV3Pool.Mint.handler(async ({ event, context }) => {
-  const offChainPrice = await fetchEthPriceFromUnix(event.block.timestamp);
+indexer.onEvent(
+  { contract: "UniswapV3Pool", event: "Mint" },
+  async ({ event, context }) => {
+    const offChainPrice = await fetchEthPriceFromUnix(event.block.timestamp);
 
-  const ethDepositedUsdPool =
-    (latestPoolPrice * Number(event.params.amount1)) / 10 ** 18;
-  const ethDepositedUsdOffchain =
-    (offChainPrice * Number(event.params.amount1)) / 10 ** 18;
-  const ethDepositedUsdOrcale =
-    (latestOraclePrice * Number(event.params.amount1)) / 10 ** 18;
+    const ethDepositedUsdPool =
+      (latestPoolPrice * Number(event.params.amount1)) / 10 ** 18;
+    const ethDepositedUsdOffchain =
+      (offChainPrice * Number(event.params.amount1)) / 10 ** 18;
+    const ethDepositedUsdOrcale =
+      (latestOraclePrice * Number(event.params.amount1)) / 10 ** 18;
 
-  const EthDeposited: EthDeposited = {
-    id: `${event.chainId}-${event.block.number}-${event.logIndex}`,
-    timestamp: event.block.timestamp,
-    block: event.block.number,
-    oraclePrice: round(latestOraclePrice),
-    poolPrice: round(latestPoolPrice),
-    offChainPrice: round(offChainPrice),
-    depositedPool: round(ethDepositedUsdPool),
-    depositedOffchain: round(ethDepositedUsdOffchain),
-    depositedOrcale: round(ethDepositedUsdOrcale),
-    offchainOracleDiff: round(
-      ((ethDepositedUsdOffchain - ethDepositedUsdOrcale) /
-        ethDepositedUsdOffchain) *
-        100
-    ),
-    txHash: event.transaction.hash,
-  };
+    const ethDeposited: Entity = {
+      id: `${event.chainId}-${event.block.number}-${event.logIndex}`,
+      timestamp: event.block.timestamp,
+      block: event.block.number,
+      oraclePrice: round(latestOraclePrice),
+      poolPrice: round(latestPoolPrice),
+      offChainPrice: round(offChainPrice),
+      depositedPool: round(ethDepositedUsdPool),
+      depositedOffchain: round(ethDepositedUsdOffchain),
+      depositedOrcale: round(ethDepositedUsdOrcale),
+      offchainOracleDiff: round(
+        ((ethDepositedUsdOffchain - ethDepositedUsdOrcale) /
+          ethDepositedUsdOffchain) *
+          100
+      ),
+      txHash: event.transaction.hash,
+    };
 
-  context.EthDeposited.set(EthDeposited);
-});
+    context.EthDeposited.set(ethDeposited);
+  },
+);
 
 function round(value: number) {
   return Math.round(value * 100) / 100;
@@ -6514,9 +6382,13 @@ This allows you to easily:
 - Have nested factories which are registered by other factories.
 
 ```typescript
-..contractRegister(({ event, context }) => {
-  context.add();
-});
+
+indexer.contractRegister(
+  { contract: "", event: "" },
+  ({ event, context }) => {
+    context.chain..add();
+  },
+);
 ```
 
 ## Example: NFT Factory Pattern
@@ -6534,13 +6406,13 @@ Let's look at a complete example using an NFT factory pattern.
 ```yaml
 name: nftindexer
 description: NFT Factory
-networks:
+chains:
   - id: 1337
     start_block: 0
     contracts:
       - name: NftFactory
         abi_file_path: abis/NftFactory.json
-        address: 0x4675a6B115329294e0518A2B7cC12B70987895C4 # Factory address is known
+        address: "0x4675a6B115329294e0518A2B7cC12B70987895C4" # Factory address is known
         events:
           - event: SimpleNftCreated (string name, string symbol, uint256 maxSupply, address contractAddress)
 
@@ -6561,26 +6433,33 @@ Note that:
 In your `src/handlers/.ts` file:
 
 ```typescript
-// Register SimpleNft contracts whenever they're created by the factory
-NftFactory.SimpleNftCreated.contractRegister(({ event, context }) => {
-  // Register the new NFT contract using its address from the event
-  context.addSimpleNft(event.params.contractAddress);
 
-  context.log.info(
-    `Registered new SimpleNft at ${event.params.contractAddress}`
-  );
-});
+// Register SimpleNft contracts whenever they're created by the factory
+indexer.contractRegister(
+  { contract: "NftFactory", event: "SimpleNftCreated" },
+  ({ event, context }) => {
+    // Register the new NFT contract using its address from the event
+    context.chain.SimpleNft.add(event.params.contractAddress);
+
+    context.log.info(
+      `Registered new SimpleNft at ${event.params.contractAddress}`
+    );
+  },
+);
 
 // Handle Transfer events from all SimpleNft contracts
-SimpleNft.Transfer.handler(async ({ event, context }) => {
-  // Your event handling logic here
-  context.log.info(
-    `NFT Transfer at ${event.srcAddress} - Token ID: ${event.params.tokenId}`
-  );
+indexer.onEvent(
+  { contract: "SimpleNft", event: "Transfer" },
+  async ({ event, context }) => {
+    // Your event handling logic here
+    context.log.info(
+      `NFT Transfer at ${event.srcAddress} - Token ID: ${event.params.tokenId}`
+    );
 
-  // Example: Store transfer information in the database
-  // ...
-});
+    // Example: Store transfer information in the database
+    // ...
+  },
+);
 ```
 
 ## Async Contract Register
@@ -6590,14 +6469,18 @@ As of version `2.21`, you can use async contract registration.
 This is a unique feature of Envio that allows you to perform an external call to determine the address of the contract to register.
 
 ```typescript
-NftFactory.SimpleNftCreated.contractRegister(async ({ event, context }) => {
-  const version = await getContractVersion(event.params.contractAddress);
-  if (version === "v2") {
-    context.addSimpleNftV2(event.params.contractAddress);
-  } else {
-    context.addSimpleNft(event.params.contractAddress);
-  }
-});
+
+indexer.contractRegister(
+  { contract: "NftFactory", event: "SimpleNftCreated" },
+  async ({ event, context }) => {
+    const version = await getContractVersion(event.params.contractAddress);
+    if (version === "v2") {
+      context.chain.SimpleNftV2.add(event.params.contractAddress);
+    } else {
+      context.chain.SimpleNft.add(event.params.contractAddress);
+    }
+  },
+);
 ```
 
 ## Coming from TheGraph?
@@ -6607,7 +6490,7 @@ If you're migrating from a subgraph that uses **data source templates** (`DataSo
 | TheGraph | Envio (HyperIndex) |
 |---|---|
 | Define a template in `subgraph.yaml` | Define the contract in `config.yaml` without an `address` |
-| Call `MyTemplate.create(address)` in a mapping | Call `context.addMyContract(address)` in a `contractRegister` handler |
+| Call `MyTemplate.create(address)` in a mapping | Call `context.chain.MyContract.add(address)` in a `contractRegister` handler |
 | Templates are triggered from other mappings | `contractRegister` runs before the event handler, on any event |
 
 The key difference is that Envio's `contractRegister` is more flexible — you can add conditional logic, perform async calls, and register contracts from any event, not just from a dedicated factory mapping.
@@ -6628,7 +6511,7 @@ Use dynamic contract registration when:
 
 - **Handler Organization**: You can register contracts from any event handler. For example, you might register a token contract when you see it being added to a registry, not just when it's created.
 
-- **Pre-registration**: Pre-registration was a recommended mode to optimize performance. But starting from version `2.19` the option is removed in favor of the default behavior, which got even faster.
+- **Pre-registration**: Pre-registration was a recommended mode in early V2 to optimize performance. The `preRegisterDynamicContracts` option has been removed entirely in V3 — the default registration path is now the fastest, so no flag is needed.
 
 ## Debugging Tips
 
@@ -6643,13 +6526,10 @@ For more information on writing event handlers, see the Event Handlers Guide.
 
 **File:** `Advanced/wildcard-indexing.mdx`
 
-
-
 Wildcard indexing is a feature that allows you to index all events matching a specified event signature without requiring the contract address from which the event was emitted. This is useful in cases such as indexing contracts deployed through factories, where the factory contract does not emit any events upon contract creation. It also enables indexing events from all contracts implementing a standard (e.g. all ERC20 transfers).
 
 :::note
-Wildcard Indexing is supported for HyperSync & HyperFuel data sources starting from `v2.3.0`.
-For the RPC data source support added in the `v2.12.0` release.
+Wildcard Indexing is supported on HyperSync, HyperFuel, and RPC data sources.
 :::
 
 ## Index all ERC20 transfers
@@ -6658,7 +6538,7 @@ As an example, let's say we want to index all ERC20 `Transfer` events. Start wit
 
 ```yaml
 name: transefer-indexer
-networks:
+chains:
   - id: 1
     start_block: 0
     contracts:
@@ -6679,12 +6559,10 @@ type Transfer {
 
 And the last bit is to register an event handler in the `src/handlers`. Note how we pass the `wildcard: true` option to enable wildcard indexing:
 
+```typescript
 
-  
-
-```ts
-
-ERC20.Transfer.handler(
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer", wildcard: true },
   async ({ event, context }) => {
     context.Transfer.set({
       id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
@@ -6692,46 +6570,8 @@ ERC20.Transfer.handler(
       to: event.params.to,
     });
   },
-  { wildcard: true }
 );
 ```
-
-  
-  
-
-```js
-const { ERC20 } = require("generated");
-
-ERC20.Transfer.handler(
-  async ({ event, context }) => {
-    context.Transfer.set({
-      id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-      from: event.params.from,
-      to: event.params.to,
-    });
-  },
-  { wildcard: true }
-);
-```
-
-  
-  
-
-```rescript
-Handlers.ERC20.Transfer.handler(
-  async ({ event, context }) => {
-    context.Transfer.set({
-      id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-      from: event.params.from,
-      to: event.params.to,
-    })
-  },
-  ~eventConfig={wildcard: true},
-)
-```
-
-  
-
 
 After running your indexer with `pnpm dev` you will have all ERC20 `Transfer` events indexed, regardless of the contract address from which the event was emitted.
 
@@ -6739,228 +6579,102 @@ After running your indexer with `pnpm dev` you will have all ERC20 `Transfer` ev
 
 Indexing all ERC20 `Transfer` events is a lot of events, so ideally to reduce it only to the ones you trully need with the Topic Filtering feature.
 
-When you register an event handler or a contract register you can provide the `eventFilters` option. You can filter by each `indexed` parameter on the given event.
+When you register an event handler or a contract register you can provide the `where` option (renamed from V2's `eventFilters`). You can filter by each `indexed` parameter on the given event by returning `{ params: [...] }`.
 
 Let's say you only want to index `Mint` events where the `from` address is equal to `ZERO_ADDRESS`:
 
-
-  
-
-```ts
+```typescript
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
-ERC20.Transfer.handler(
-  async ({ event, context }) => {
-    //... your handler logic
-  },
-  { wildcard: true, eventFilters: { from: ZERO_ADDRESS } }
-);
-```
-
-  
-  
-
-```js
-const { ERC20 } = require("generated");
-
-const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
-
-ERC20.Transfer.handler(
-  async ({ event, context }) => {
-    //... your handler logic
-  },
-  { wildcard: true, eventFilters: { from: ZERO_ADDRESS } }
-);
-```
-
-  
-  
-
-```rescript
-open Types.SingleOrMultiple
-
-let zeroAddress = Address.unsafeFromString("0x0000000000000000000000000000000000000000")
-
-Handlers.ERC20.Transfer.handler(
-  async ({ event, context }) => {
-    //... your handler logic
-  },
-  ~eventConfig={
+indexer.onEvent(
+  {
+    contract: "ERC20",
+    event: "Transfer",
     wildcard: true,
-    eventFilters: Single({from: single(zeroAddress)}),
+    where: () => ({ params: [{ from: ZERO_ADDRESS }] }),
   },
-)
+  async ({ event, context }) => {
+    //... your handler logic
+  },
+);
 ```
-
-  
-
 
 ## Multiple Filters
 
 If you want to index both `Mint` and `Burn` events you can provide multiple filters as an array. Also, every parameter can accept an array to filter by multiple possible values. We'll use it to filter by a group of whitelisted addresses in the example below:
 
-
-  
-
-```ts
+```typescript
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 const WHITELISTED_ADDRESSES = [
-  "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-  "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-  "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+"0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+"0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
 ];
 
-ERC20.Transfer.handler(
+indexer.onEvent(
+  {
+    contract: "ERC20",
+    event: "Transfer",
+    wildcard: true,
+    where: () => ({
+      params: [
+        { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES },
+        { from: WHITELISTED_ADDRESSES, to: ZERO_ADDRESS },
+      ],
+    }),
+  },
   async ({ event, context }) => {
     //... your handler logic
   },
-  {
-    wildcard: true,
-    eventFilters: [
-      { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES },
-      { from: WHITELISTED_ADDRESSES, to: ZERO_ADDRESS },
-    ],
-  }
 );
 ```
 
-  
-  
+## Different Filters per Chain
 
-```js
-const { ERC20 } = require("generated");
+For Multichain Indexers the `where` callback receives `{ chain }` and you can read `chain.id` to filter by different values per chain:
 
-const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
-
-const WHITELISTED_ADDRESSES = [
-  "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-  "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-  "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
-];
-
-ERC20.Transfer.handler(
-  async ({ event, context }) => {
-    //... your handler logic
-  },
-  {
-    wildcard: true,
-    eventFilters: [
-      { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES },
-      { from: WHITELISTED_ADDRESSES, to: ZERO_ADDRESS },
-    ],
-  }
-);
-```
-
-  
-  
-
-```rescript
-open Types.SingleOrMultiple
-
-let zeroAddress = Address.unsafeFromString("0x0000000000000000000000000000000000000000")
-
-let whitelistedAddresses = [
-  Address.unsafeFromString("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"),
-  Address.unsafeFromString("0x70997970C51812dc3A010C7d01b50e0d17dc79C8"),
-  Address.unsafeFromString("0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC")
-]
-
-Handlers.ERC20.Transfer.handler(
-  async ({ event, context }) => {
-    //... your handler logic
-  },
-  ~eventConfig={
-    wildcard: true,
-    eventFilters: Multiple([
-      { from: single(zeroAddress), to: multiple(whitelistedAddresses) },
-      { from: multiple(whitelistedAddresses), to: single(zeroAddress) }
-    ]),
-  },
-)
-```
-
-  
-
-
-## Different Filters per Network
-
-For Multichain Indexers you can pass a function to `eventFilters` and use `chainId` to filter by different values per network:
-
-
-  
-
-```ts
+```typescript
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 const WHITELISTED_ADDRESSES = {
-  1: ["0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"],
-  137: [
-    "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-    "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
-  ],
+1: ["0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"],
+137: [
+  "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+  "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+],
 };
 
-ERC20.Transfer.handler(
+indexer.onEvent(
+  {
+    contract: "ERC20",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [
+        { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chain.id] },
+        { from: WHITELISTED_ADDRESSES[chain.id], to: ZERO_ADDRESS },
+      ],
+    }),
+  },
   async ({ event, context }) => {
     //... your handler logic
   },
-  {
-    wildcard: true,
-    eventFilters: ({ chainId }) => [
-      { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chainId] },
-      { from: WHITELISTED_ADDRESSES[chainId], to: ZERO_ADDRESS },
-    ],
-  }
 );
 ```
-
-  
-  
-
-```js
-const { ERC20 } = require("generated");
-
-const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
-
-const WHITELISTED_ADDRESSES = {
-  1: ["0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"],
-  137: [
-    "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-    "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
-  ],
-};
-
-ERC20.Transfer.handler(
-  async ({ event, context }) => {
-    //... your handler logic
-  },
-  {
-    wildcard: true,
-    eventFilters: ({ chainId }) => [
-      { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chainId] },
-      { from: WHITELISTED_ADDRESSES[chainId], to: ZERO_ADDRESS },
-    ],
-  }
-);
-```
-
-  
-
 
 ## Index all ERC20 transfers to your Contract
 
-Besides `chainId` you can also access the `addresses` value to filter by.
+Besides `chain.id` you can also read the contract's configured (and dynamically registered) addresses from `chain..addresses`.
 
-For example, if you have a `Safe` contract, you can index all ERC20 transfers sent specifically to/from your `Safe` contracts. The event filter gets addresses belonging to the contract, so we need to define the `Transfer` event on the `Safe` contract:
+For example, if you have a `Safe` contract, you can index all ERC20 transfers sent specifically to/from your `Safe` contracts. The `where` callback can read `chain.Safe.addresses`, so we need to define the `Transfer` event on the `Safe` contract:
 
 ```yaml
 name: locker
-networks:
+chains:
   - id: 1
     start_block: 0
     contracts:
@@ -6968,42 +6682,34 @@ networks:
         events:
           - event: Transfer(address indexed from, address indexed to, uint256 value)
         address:
-          - 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
-          - 0x70997970C51812dc3A010C7d01b50e0d17dc79C8
-          - 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC
+          - "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+          - "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"
+          - "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"
 ```
 
+```typescript
 
-  
-
-```ts
-
-Safe.Transfer.handler(async ({ event, context }) => {}, {
-  wildcard: true,
-  eventFilters: ({ addresses }) => [{ from: addresses }, { to: addresses }],
-});
+indexer.onEvent(
+  {
+    contract: "Safe",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [
+        { from: chain.Safe.addresses },
+        { to: chain.Safe.addresses },
+      ],
+    }),
+  },
+  async ({ event, context }) => {},
+);
 ```
-
-  
-  
-
-```js
-const { Safe } = require("generated");
-
-Safe.Transfer.handler(async ({ event, context }) => {}, {
-  wildcard: true,
-  eventFilters: ({ addresses }) => [{ from: addresses }, { to: addresses }],
-});
-```
-
-  
-
 
 This example is not much different from using a `WHITELISTED_ADDRESSES` constant, but this becomes much more powerful when the `Safe` contract addresses are registered dynamically by a factory contract:
 
 ```yaml
 name: locker
-networks:
+chains:
   - id: 1
     start_block: 0
     contracts:
@@ -7011,61 +6717,60 @@ networks:
         events:
           - event: NewSafe(address safe)
         address:
-          - 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+          - "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
       - name: Safe
         events:
           - event: Transfer(address indexed from, address indexed to, uint256 value)
 ```
 
+```typescript
 
-  
+indexer.contractRegister(
+  { contract: "SafeRegistry", event: "NewSafe" },
+  async ({ event, context }) => {
+    context.chain.Safe.add(event.params.safe);
+  },
+);
 
-```ts
-
-SafeRegistry.NewSafe.contractRegister(async ({ event, context }) => {
-  context.addSafe(event.params.safe);
-});
-
-Safe.Transfer.handler(async ({ event, context }) => {}, {
-  wildcard: true,
-  eventFilters: ({ addresses }) => [{ from: addresses }, { to: addresses }],
-});
+indexer.onEvent(
+  {
+    contract: "Safe",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [
+        { from: chain.Safe.addresses },
+        { to: chain.Safe.addresses },
+      ],
+    }),
+  },
+  async ({ event, context }) => {},
+);
 ```
-
-  
-  
-
-```js
-const { SafeRegistry, Safe } = require("generated");
-
-SafeRegistry.NewSafe.contractRegister(async ({ event, context }) => {
-  context.addSafe(event.params.safe);
-});
-
-Safe.Transfer.handler(async ({ event, context }) => {}, {
-  wildcard: true,
-  eventFilters: ({ addresses }) => [{ from: addresses }, { to: addresses }],
-});
-```
-
-  
-
 
 ### Assert ERC20 Transfers in Handler
 
 After you got all ERC20 Transfers relevant to your contracts, you can additionally filter them in the handler. For example, to get only `USDC` transfers:
 
-
-  
-
-```ts
+```typescript
 
 const USDC_ADDRESS = {
-  84532: "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
-  11155111: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+84532: "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+11155111: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
 };
 
-Safe.Transfer.handler(
+indexer.onEvent(
+  {
+    contract: "Safe",
+    event: "Transfer",
+    wildcard: true,
+    where: ({ chain }) => ({
+      params: [
+        { from: chain.Safe.addresses },
+        { to: chain.Safe.addresses },
+      ],
+    }),
+  },
   async ({ event, context }) => {
     // Filter and store only the USDC transfers that involve a Safe address
     if (event.srcAddress === USDC_ADDRESS[event.chainId]) {
@@ -7076,125 +6781,37 @@ Safe.Transfer.handler(
       });
     }
   },
-  {
-    wildcard: true,
-    eventFilters: ({ addresses }) => [{ from: addresses }, { to: addresses }],
-  }
 );
 ```
-
-  
-  
-
-```js
-const { Safe } = require("generated");
-
-const USDC_ADDRESS = {
-  84532: "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
-  11155111: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
-};
-
-Safe.Transfer.handler(
-  async ({ event, context }) => {
-    // Filter and store only the USDC transfers that involve a Safe address
-    if (event.srcAddress === USDC_ADDRESS[event.chainId]) {
-      context.Transfer.set({
-        id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-        from: event.params.from,
-        to: event.params.to,
-      });
-    }
-  },
-  {
-    wildcard: true,
-    eventFilters: ({ addresses }) => [{ from: addresses }, { to: addresses }],
-  }
-);
-```
-
-  
-
 
 ## Contract Register Example
 
-The same `eventFilters` can be applied to `contractRegister` and `handlerWithLoader` APIs. Here is an example where we only register Uniswap pools that contain DAI token:
+The same `where` option can be applied to `indexer.contractRegister`. Here is an example where we only register Uniswap pools that contain DAI token:
 
-
-  
-
-```ts
+```typescript
 
 const DAI_ADDRESS = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
 
-UniV3Factory.PoolCreated.contractRegister(
+indexer.contractRegister(
+  {
+    contract: "UniV3Factory",
+    event: "PoolCreated",
+    where: () => ({
+      params: [{ token0: DAI_ADDRESS }, { token1: DAI_ADDRESS }],
+    }),
+  },
   async ({ event, context }) => {
     const poolAddress = event.params.pool;
-    context.UniV3Pool.add(poolAddress);
+    context.chain.UniV3Pool.add(poolAddress);
   },
-  { eventFilters: [{ token0: DAI_ADDRESS }, { token1: DAI_ADDRESS }] }
 );
-```
-
-  
-  
-
-```js
-const { UniV3Factory } = require("generated");
-
-const DAI_ADDRESS = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
-
-UniV3Factory.PoolCreated.contractRegister(
-  async ({ event, context }) => {
-    const poolAddress = event.params.pool;
-    context.UniV3Pool.add(poolAddress);
-  },
-  { eventFilters: [{ token0: DAI_ADDRESS }, { token1: DAI_ADDRESS }] }
-);
-```
-
-  
-  
-
-```rescript
-open Types.SingleOrMultiple
-
-let daiAddress = Address.unsafeFromString("0x6B175474E89094C44Da98b954EedeAC495271d0F")
-
-Handlers.UniV3Factory.PoolCreated.contractRegister(
-  async ({ event, context }) => {
-    let poolAddress = event.params.pool
-    context.UniV3Pool.add(poolAddress)
-  },
-  ~eventConfig={
-    eventFilters: Multiple([
-      { token0: single(daiAddress) },
-      { token1: single(daiAddress) }
-    ])
-  },
-)
-```
-
-  
-
-
-## Handler With Loader Example
-
-For `handlerWithLoader` API simply add `wildcard` or `eventFilters` options to the single argument object:
-
-```ts
-ERC20.Transfer.handlerWithLoader({
-  loader: async ({ event, context }) => {},
-  handler: async ({ event, context }) => {},
-  wildcard: ...,
-  eventFilters: ...,
-});
 ```
 
 ## Limitations
 
-- For any given network, only one event of a given signature can be indexed using wildcard indexing. This means that if you have multiple contract definitions in your config that contain the same event signature. Only one of them is allowed to be set to `wildcard: true`
+- For any given chain, only one event of a given signature can be indexed using wildcard indexing. This means that if you have multiple contract definitions in your config that contain the same event signature, only one of them is allowed to be set to `wildcard: true`.
 
-- Either the `contractRegister` or the `handler` function can take an event config object (with wildcard/eventFilters fields) but not both.
+- Either the `contractRegister` or the `onEvent` registration for a given event can take a `where` option, but not both.
 
 - The RPC data source currently supports Topic Filtering only applied to a single wildcard event.
 
@@ -7206,7 +6823,7 @@ ERC20.Transfer.handlerWithLoader({
 
 > **Important!** Preload optimization makes your handlers run **twice**.
 
-Starting from `envio@2.27` all new indexers are created with preload optimization pre-configured by default.
+In HyperIndex V3, preload optimization is **always on** — there is no flag to enable or disable it.
 
 This optimization enables HyperIndex to efficiently preload entities used by handlers through batched database queries, while ensuring events are processed synchronously in their original order. When combined with the Effect API for external calls, this feature delivers performance improvements of multiple orders of magnitude compared to other indexing solutions.
 
@@ -7214,11 +6831,7 @@ This optimization enables HyperIndex to efficiently preload entities used by han
 
 ## Configure
 
-Currently, you need to explicitly enable the preloaded configuration in your `config.yaml` file. In the future, this will be enabled by default.
-
-```yaml
-preload_handlers: true
-```
+Nothing to configure. Previously, V2 required the `preload_handlers: true` flag in `config.yaml`. In V3 the flag has been removed and the optimization is always active. If your project still has `preload_handlers:` in `config.yaml`, delete it — V3 will reject the field.
 
 ## Why Preload?
 
@@ -7246,11 +6859,15 @@ This double execution pattern ensures that entities created by earlier events in
 Consider this common pattern of getting entities in event handlers:
 
 ```typescript
-ERC20.Transfer.handler(async ({ event, context }) => {
-  const sender = await context.Account.get(event.params.from);
-  const receiver = await context.Account.get(event.params.to);
-  // Process the transfer...
-});
+
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    const sender = await context.Account.get(event.params.from);
+    const receiver = await context.Account.get(event.params.to);
+    // Process the transfer...
+  },
+);
 ```
 
 **Without Preload Optimization:** If you're processing 5,000 transfer events, each with unique `from` and `to` addresses, this results in **10,000 total database roundtrips**—one for each sender and receiver lookup (2 per event × 5,000 events). This creates a significant bottleneck that slows down your entire indexing process.
@@ -7264,14 +6881,18 @@ For our example of 5,000 transfer events, this optimization reduces database rou
 You can further optimize performance by requesting multiple entities concurrently:
 
 ```typescript
-ERC20.Transfer.handler(async ({ event, context }) => {
-  // Request sender and receiver concurrently for maximum efficiency
-  const [sender, receiver] = await Promise.all([
-    context.Account.get(event.params.from),
-    context.Account.get(event.params.to),
-  ]);
-  // Process the transfer...
-});
+
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    // Request sender and receiver concurrently for maximum efficiency
+    const [sender, receiver] = await Promise.all([
+      context.Account.get(event.params.from),
+      context.Account.get(event.params.to),
+    ]);
+    // Process the transfer...
+  },
+);
 ```
 
 This approach can reduce the database roundtrips to just 1 for the entire batch of events!
@@ -7281,14 +6902,18 @@ This approach can reduce the database roundtrips to just 1 for the entire batch 
 Let's say you want to populate your indexer with offchain data:
 
 ```typescript
-ERC20.Transfer.handler(async ({ event, context }) => {
-  // Without Preload: Blocking external calls
-  const metadata = await fetch(
-    `https://api.example.com/metadata/${event.params.from}`
-  );
 
-  // Process the transfer...
-});
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    // Without Preload: Blocking external calls
+    const metadata = await fetch(
+      `https://api.example.com/metadata/${event.params.from}`
+    );
+
+    // Process the transfer...
+  },
+);
 ```
 
 **Without Preload Optimization:** If you're processing 5,000 transfer events, each with an external call, this results in **5,000 sequential external calls**—each waiting for the previous one to complete. This can turn a fast indexing process into a slow, sequential crawl.
@@ -7320,14 +6945,17 @@ const fetchMetadata = createEffect(
   }
 );
 
-ERC20.Transfer.handler(async ({ event, context }) => {
-  // With Preload: Performs the call in parallel
-  const metadata = await context.effect(fetchMetadata, {
-    from: event.params.from,
-  });
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    // With Preload: Performs the call in parallel
+    const metadata = await context.effect(fetchMetadata, {
+      from: event.params.from,
+    });
 
-  // Process the transfer...
-});
+    // Process the transfer...
+  },
+);
 ```
 
 Assuming an average call takes 200ms, this optimization reduces the total processing time for 5,000 events from ~16 minutes to ~200 milliseconds - making it 5,000 times faster!
@@ -7341,7 +6969,7 @@ The Preload Phase is a special phase that runs before the actual event processin
 Key characteristics of the Preload Phase:
 
 - It runs in parallel for all events in the batch
-- Exceptions won't crash the indexer but will silently abort the Preload Phase for that specific event (Starting from `envio@2.23`)
+- Exceptions won't crash the indexer but will silently abort the Preload Phase for that specific event
 - All storage updates are ignored
 - All `context.log` calls are ignored
 
@@ -7368,17 +6996,21 @@ Due to the optimistic nature of the Preload Phase, the Effect API may occasional
 > Note: This will disable the Preload Optimization for the external calls.
 
 ```typescript
-ERC20.Transfer.handler(async ({ event, context }) => {
-  const sender = await context.Account.get(event.params.from);
 
-  if (context.isPreload) {
-    return;
-  }
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    const sender = await context.Account.get(event.params.from);
 
-  const metadata = await fetch(
-    `https://api.example.com/metadata/${sender.metadataId}`
-  );
-});
+    if (context.isPreload) {
+      return;
+    }
+
+    const metadata = await fetch(
+      `https://api.example.com/metadata/${sender.metadataId}`
+    );
+  },
+);
 ```
 
 ## Best Practices
@@ -7389,10 +7021,10 @@ ERC20.Transfer.handler(async ({ event, context }) => {
 
 ## Migrating from Loaders
 
-The Preload Optimization for handlers was born from a concept we had before called Loaders. If you're using loaders, we recommend you to migrate to preload optimization by enabling it in the config and moving all your code to the handler.
+The Preload Optimization for handlers was born from a concept we had before called Loaders. The `handlerWithLoader` API has been removed in V3 — move the loader code into the handler and rely on the always-on Preload Phase.
 
 ```typescript
-// Before:
+// V2 — removed in V3
 ERC20.Transfer.handlerWithLoader({
   loader: async ({ event, context }) => {
     // Load sender and receiver accounts efficiently
@@ -7414,21 +7046,25 @@ ERC20.Transfer.handlerWithLoader({
   },
 });
 
-// After:
-ERC20.Transfer.handler(async ({ event, context }) => {
-  // Load sender and receiver accounts efficiently
-  const sender = await context.Account.get(event.params.from);
-  const receiver = await context.Account.get(event.params.to);
+// V3
 
-  // To imitate the behavior of the loader,
-  // we can use `context.isPreload` to make next code run only once.
-  // Note: This is not required, but might be useful for CPU-intensive operations.
-  if (context.isPreload) {
-    return;
-  }
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    // Load sender and receiver accounts efficiently
+    const sender = await context.Account.get(event.params.from);
+    const receiver = await context.Account.get(event.params.to);
 
-  // Process the transfer with the pre-loaded data
-});
+    // To imitate the behavior of the loader,
+    // we can use `context.isPreload` to make next code run only once.
+    // Note: This is not required, but might be useful for CPU-intensive operations.
+    if (context.isPreload) {
+      return;
+    }
+
+    // Process the transfer with the pre-loaded data
+  },
+);
 ```
 
 ---
@@ -7482,7 +7118,7 @@ The first argument is an options object that describes the effect:
 - `input` (required) - the input type of the effect
 - `output` (required) - the output type of the effect
 - `rateLimit` (required) - the maximum calls allowed per timeframe, or `false` to disable
-- `cache` (optional) - save effect results in the database to prevent duplicate calls (Starting from `envio@2.26.0`)
+- `cache` (optional) - save effect results in the database to prevent duplicate calls
 
 The second argument is a function that will be called with the effect's input.
 
@@ -7493,10 +7129,14 @@ After defining an effect, you can use `context.effect` to call it from your hand
 The `context.effect` function accepts an effect as the first argument and the effect's input as the second argument:
 
 ```typescript
-ERC20.Transfer.handler(async ({ event, context }) => {
-  const metadata = await context.effect(getMetadata, event.params.from);
-  // Process the event with the metadata
-});
+
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    const metadata = await context.effect(getMetadata, event.params.from);
+    // Process the event with the metadata
+  },
+);
 ```
 
 ### Reading On-Chain State (eth_call)
@@ -7682,16 +7322,20 @@ export const sendWebhook = createEffect(
 Then call it from your handler:
 
 ```typescript
-MyContract.LargeTransfer.handler(async ({ event, context }) => {
-  await context.effect(sendWebhook, {
-    event: "large_transfer",
-    data: JSON.stringify({
-      from: event.params.from,
-      to: event.params.to,
-      amount: event.params.value.toString(),
-    }),
-  });
-});
+
+indexer.onEvent(
+  { contract: "MyContract", event: "LargeTransfer" },
+  async ({ event, context }) => {
+    await context.effect(sendWebhook, {
+      event: "large_transfer",
+      data: JSON.stringify({
+        from: event.params.from,
+        to: event.params.to,
+        amount: event.params.value.toString(),
+      }),
+    });
+  },
+);
 ```
 
 :::warning
@@ -7789,14 +7433,13 @@ Then modify your configuration to focus only on the PoolCreated event:
 ```yaml
 # config.yaml
 name: uniswap-v3-factory-token-indexer
-preload_handlers: true
-networks:
+chains:
   - id: 1
     start_block: 0
     contracts:
       - name: UniswapV3Factory
         address:
-          - 0x1F98431c8aD98523631AE4a59f267346ea31F984
+          - "0x1F98431c8aD98523631AE4a59f267346ea31F984"
         events:
           - event: PoolCreated(address indexed token0, address indexed token1, uint24 indexed fee, int24 tickSpacing, address pool)
 ```
@@ -7840,61 +7483,64 @@ Learn how Preload Optimization works in a dedicated guide. It might be a new men
 // src/handlers
 
 
-UniswapV3Factory.PoolCreated.handler(async ({ event, context }) => {
-  // Create Pool entity
-  context.Pool.set({
-    id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
-    token0_id: event.params.token0,
-    token1_id: event.params.token1,
-    fee: event.params.fee,
-    tickSpacing: event.params.tickSpacing,
-    pool: event.params.pool,
-  });
-
-  // Fetch and store token0 information
-  try {
-    const tokenMetadata0 = await context.effect(getTokenMetadata, {
-      tokenAddress: event.params.token0,
-      chainId: event.chainId,
-    });
-    context.Token.set({
-      id: event.params.token0,
-      name: tokenMetadata0.name,
-      symbol: tokenMetadata0.symbol,
-      decimals: tokenMetadata0.decimals,
-    });
-  } catch (error) {
-    context.log.error("Failed to fetch token0 metadata", {
-      tokenAddress: event.params.token0,
-      chainId: event.chainId,
+indexer.onEvent(
+  { contract: "UniswapV3Factory", event: "PoolCreated" },
+  async ({ event, context }) => {
+    // Create Pool entity
+    context.Pool.set({
+      id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
+      token0_id: event.params.token0,
+      token1_id: event.params.token1,
+      fee: event.params.fee,
+      tickSpacing: event.params.tickSpacing,
       pool: event.params.pool,
-      err: error,
     });
-    return;
-  }
 
-  // Fetch and store token1 information
-  try {
-    const tokenMetadata1 = await context.effect(getTokenMetadata, {
-      tokenAddress: event.params.token1,
-      chainId: event.chainId,
-    });
-    context.Token.set({
-      id: event.params.token1,
-      name: tokenMetadata1.name,
-      symbol: tokenMetadata1.symbol,
-      decimals: tokenMetadata1.decimals,
-    });
-  } catch (error) {
-    context.log.error("Failed to fetch token1 metadata", {
-      tokenAddress: event.params.token1,
-      chainId: event.chainId,
-      pool: event.params.pool,
-      err: error,
-    });
-    return;
-  }
-});
+    // Fetch and store token0 information
+    try {
+      const tokenMetadata0 = await context.effect(getTokenMetadata, {
+        tokenAddress: event.params.token0,
+        chainId: event.chainId,
+      });
+      context.Token.set({
+        id: event.params.token0,
+        name: tokenMetadata0.name,
+        symbol: tokenMetadata0.symbol,
+        decimals: tokenMetadata0.decimals,
+      });
+    } catch (error) {
+      context.log.error("Failed to fetch token0 metadata", {
+        tokenAddress: event.params.token0,
+        chainId: event.chainId,
+        pool: event.params.pool,
+        err: error,
+      });
+      return;
+    }
+
+    // Fetch and store token1 information
+    try {
+      const tokenMetadata1 = await context.effect(getTokenMetadata, {
+        tokenAddress: event.params.token1,
+        chainId: event.chainId,
+      });
+      context.Token.set({
+        id: event.params.token1,
+        name: tokenMetadata1.name,
+        symbol: tokenMetadata1.symbol,
+        decimals: tokenMetadata1.decimals,
+      });
+    } catch (error) {
+      context.log.error("Failed to fetch token1 metadata", {
+        tokenAddress: event.params.token1,
+        chainId: event.chainId,
+        pool: event.params.pool,
+        err: error,
+      });
+      return;
+    }
+  },
+);
 ```
 
 ### Step 4: Create the Token Metadata Effect
@@ -8085,15 +7731,14 @@ Modify the configuration to focus on the Transfer events:
 ```yaml
 # config.yaml
 name: bored-ape-yacht-club-nft-indexer
-preload_handlers: true
-networks:
+chains:
   - id: 1
     start_block: 0
     end_block: 12299114 # Optional: limit blocks for development
     contracts:
       - name: BoredApeYachtClub
         address:
-          - 0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D
+          - "0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D"
         events:
           - event: Transfer(address indexed from, address indexed to, uint256 indexed tokenId)
 ```
@@ -8119,22 +7764,25 @@ Track ownership changes by handling Transfer events:
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
-BoredApeYachtClub.Transfer.handler(async ({ event, context }) => {
-  if (event.params.from === ZERO_ADDRESS) {
-    // mint
-    context.Nft.set({
-      id: event.params.tokenId.toString(),
-      owner: event.params.to,
-    });
-  } else {
-    // transfer
-    const nft = await context.Nft.getOrThrow(event.params.tokenId.toString());
-    context.Nft.set({
-      ...nft,
-      owner: event.params.to,
-    });
-  }
-});
+indexer.onEvent(
+  { contract: "BoredApeYachtClub", event: "Transfer" },
+  async ({ event, context }) => {
+    if (event.params.from === ZERO_ADDRESS) {
+      // mint
+      context.Nft.set({
+        id: event.params.tokenId.toString(),
+        owner: event.params.to,
+      });
+    } else {
+      // transfer
+      const nft = await context.Nft.getOrThrow(event.params.tokenId.toString());
+      context.Nft.set({
+        ...nft,
+        owner: event.params.to,
+      });
+    }
+  },
+);
 ```
 
 Run your indexer with `pnpm dev` and visit http://localhost:8080 to see the ownership data:
@@ -8255,28 +7903,31 @@ Let's modify the event handler to fetch and store metadata using the `getIpfsMet
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
-BoredApeYachtClub.Transfer.handler(async ({ event, context }) => {
-  if (event.params.from === ZERO_ADDRESS) {
-    // mint
-    const metadata = await context.effect(
-      getIpfsMetadata,
-      event.params.tokenId.toString()
-    );
-    context.Nft.set({
-      id: event.params.tokenId.toString(),
-      owner: event.params.to,
-      image: metadata.image,
-      attributes: metadata.attributes,
-    });
-  } else {
-    // transfer
-    const nft = await context.Nft.getOrThrow(event.params.tokenId.toString());
-    context.Nft.set({
-      ...nft,
-      owner: event.params.to,
-    });
-  }
-});
+indexer.onEvent(
+  { contract: "BoredApeYachtClub", event: "Transfer" },
+  async ({ event, context }) => {
+    if (event.params.from === ZERO_ADDRESS) {
+      // mint
+      const metadata = await context.effect(
+        getIpfsMetadata,
+        event.params.tokenId.toString()
+      );
+      context.Nft.set({
+        id: event.params.tokenId.toString(),
+        owner: event.params.to,
+        image: metadata.image,
+        attributes: metadata.attributes,
+      });
+    } else {
+      // transfer
+      const nft = await context.Nft.getOrThrow(event.params.tokenId.toString());
+      context.Nft.set({
+        ...nft,
+        owner: event.params.to,
+      });
+    }
+  },
+);
 ```
 
 When you run the indexer now, it will populate both ownership data and token metadata:
@@ -8406,29 +8057,37 @@ HyperSync addresses these limitations by providing a streamlined data access lay
 
 ### Default Enablement
 
-**HyperSync is used by default** as the data source for all HyperIndex networks. This means:
+**HyperSync is used by default** as the data source for all HyperIndex chains. This means:
 
 - No additional configuration is required to benefit from its speed
 - No need to worry about RPC rate limiting
 - No management of multiple RPC providers
 - No costs for external RPC services
 
+:::info
+Starting in V3, HyperSync requires an API token. Create a free token at [envio.dev/app/api-tokens](https://envio.dev/app/api-tokens) and expose it to your indexer as `ENVIO_API_TOKEN`:
+
+```bash
+export ENVIO_API_TOKEN=your_token_here
+```
+:::
+
 ## Using HyperSync in Your Projects
 
 ### Configuration
 
-To use HyperSync (the default), simply don't set an RPC for historical sync in your config. HyperIndex will automatically use HyperSync for supported networks:
+To use HyperSync (the default), simply don't set an RPC for historical sync in your config. HyperIndex will automatically use HyperSync for supported chains:
 
 ```yaml
 name: Greeter
 description: Greeter indexer
-networks:
+chains:
   - id: 137 # Polygon
     start_block: 0 # With HyperSync, you can use 0 regardless of contract deployment time
     contracts:
       - name: PolygonGreeter
         abi_file_path: abis/greeter-abi.json
-        address: 0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c
+        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
         events:
           - event: NewGreeting
           - event: ClearGreeting
@@ -8448,9 +8107,9 @@ This feature eliminates the need to manually determine the deployment block of y
 
 HyperSync is maintained and hosted by Envio for all supported networks. We handle the infrastructure, allowing you to focus on building your indexer logic.
 
-### Supported Networks
+### Supported Chains
 
-HyperSync supports numerous EVM networks including Ethereum, Unichain, Arbitrum, Optimism, and more. For a complete and up-to-date list of supported networks, see the HyperSync Supported Networks documentation.
+HyperSync supports numerous EVM chains including Ethereum, Unichain, Arbitrum, Optimism, and more. For a complete and up-to-date list of supported chains, see the HyperSync Supported Networks documentation.
 
 ### Alternative Data Sources
 
@@ -8493,23 +8152,26 @@ HyperIndex supports indexing any EVM blockchain using RPC (Remote Procedure Call
 
 While HyperSync is the recommended and default data source for optimal performance, there are scenarios where you might need to use RPC instead:
 
-1. **Unsupported Networks**: When indexing a blockchain network that isn't yet supported by HyperSync
+1. **Unsupported Chains**: When indexing a blockchain that isn't yet supported by HyperSync
 2. **Custom Requirements**: When you need specific RPC functionality not available in HyperSync
 3. **Private Chains**: When working with private or development EVM chains
 
-> **Note**: For networks that HyperSync supports, we strongly recommend using HyperSync rather than RPC. HyperSync provides significantly faster indexing performance (up to 100x) and doesn't require managing RPC endpoints or worrying about rate limits.
+> **Note**: For chains that HyperSync supports, we strongly recommend using HyperSync rather than RPC. HyperSync provides significantly faster indexing performance (up to 100x) and doesn't require managing RPC endpoints or worrying about rate limits.
 
 ## Configuring RPC in Your Indexer
 
 ### Basic Configuration
 
-To use RPC as your data source, you need to add an `rpc_config` section to your network configuration in the `config.yaml` file:
+In V3 the V2 `rpc_config` field has been replaced with `rpc`, which accepts a single URL, a single `Rpc` object, or a list of `Rpc` objects. Each entry can declare what it's `for`: `sync` (historical), `realtime` (head, including WebSocket URLs), or `fallback`.
+
+To use RPC as the primary historical data source, add an `rpc` entry with `for: sync` to your chain configuration in `config.yaml`:
 
 ```yaml
-networks:
+chains:
   - id: 1 # Ethereum Mainnet
-    rpc_config:
-      url: https://eth-mainnet.your-rpc-provider.com # Your RPC endpoint
+    rpc:
+      - url: https://eth-mainnet.your-rpc-provider.com # Your RPC endpoint
+        for: sync
     start_block: 15000000
     contracts:
       - name: MyContract
@@ -8517,25 +8179,36 @@ networks:
         # Additional contract configuration...
 ```
 
-The presence of the `rpc_config` section tells HyperIndex to use RPC instead of HyperSync for this network.
+The presence of an RPC marked `for: sync` tells HyperIndex to use RPC instead of HyperSync for historical sync on this chain. You can also add a `for: realtime` WebSocket endpoint to follow the head:
+
+```yaml
+chains:
+  - id: 1
+    rpc:
+      - url: https://eth-mainnet.your-rpc-provider.com
+        for: sync
+      - url: wss://eth-mainnet.your-rpc-provider.com
+        for: realtime
+```
 
 ### Advanced RPC Configuration
 
 For more control over how your indexer interacts with the RPC endpoint, you can configure additional parameters:
 
 ```yaml
-networks:
+chains:
   - id: 1
-    rpc_config:
-      url: https://eth-mainnet.your-rpc-provider.com
-      initial_block_interval: 10000 # Initial number of blocks to fetch in each request
-      backoff_multiplicative: 0.8 # Factor to scale back block request size after errors
-      acceleration_additive: 2000 # How many more blocks to request when successful
-      interval_ceiling: 10000 # Maximum blocks to request in a single call
-      backoff_millis: 5000 # Milliseconds to wait after an error
-      query_timeout_millis: 20000 # Milliseconds before timing out a request
+    rpc:
+      - url: https://eth-mainnet.your-rpc-provider.com
+        for: sync
+        initial_block_interval: 10000 # Initial number of blocks to fetch in each request
+        backoff_multiplicative: 0.8 # Factor to scale back block request size after errors
+        acceleration_additive: 2000 # How many more blocks to request when successful
+        interval_ceiling: 10000 # Maximum blocks to request in a single call
+        backoff_millis: 5000 # Milliseconds to wait after an error
+        query_timeout_millis: 20000 # Milliseconds before timing out a request
     start_block: 15000000
-    # Additional network configuration...
+    # Additional chain configuration...
 ```
 
 ### Configuration Parameters Explained
@@ -8582,12 +8255,12 @@ Adding an RPC fallback provides these benefits:
 - **Automatic failover**: The system detects issues and switches to fallback RPC without manual intervention
 - **Operational control**: You can specify which RPC providers to use as fallbacks based on your requirements
 
-Configure a fallback RPC by adding the `rpc` field to your network configuration:
+Configure a fallback RPC by adding the `rpc` field to your chain configuration:
 
 ```diff
 name: Greeter
 description: Greeter indexer
-networks:
+chains:
   - id: 137 # Polygon
 +   # Short and simple
 +   rpc: https://eth-mainnet.your-rpc-provider.com?API_KEY={ENVIO_MAINNET_API_KEY}
@@ -8609,7 +8282,7 @@ networks:
 ```
 
 :::info
-This feature is available starting from version `2.14.0`. The fallback RPC is activated only when a primary data source doesn't receive a new block for more than 20 seconds.
+The fallback RPC is activated only when a primary data source doesn't receive a new block for more than 20 seconds.
 :::
 
 ## Enhanced RPC with eRPC
@@ -8667,12 +8340,13 @@ services:
 3. **Configure HyperIndex to use eRPC** in your `config.yaml`:
 
 ```yaml
-networks:
+chains:
   - id: 1
-    rpc_config:
-      url: http://erpc:4000/main/evm/1 # eRPC endpoint for Ethereum Mainnet
+    rpc:
+      - url: http://erpc:4000/main/evm/1 # eRPC endpoint for Ethereum Mainnet
+        for: sync
     start_block: 15000000
-    # Additional network configuration...
+    # Additional chain configuration...
 ```
 
 For more detailed configuration options, refer to the [eRPC documentation](https://docs.erpc.cloud/config/example).
@@ -8685,7 +8359,7 @@ For more detailed configuration options, refer to the [eRPC documentation](https
 | Configuration   | Minimal                                                            | Requires tuning              |
 | Rate Limits     | None                                                               | Depends on provider          |
 | Cost            | Included with Envio Cloud                                          | Pay per request/subscription |
-| Network Support | Supported networks | Any EVM network              |
+| Chain Support   | Supported chains   | Any EVM chain                |
 | Maintenance     | Managed by Envio                                                   | Self-managed                 |
 
 ## Summary
@@ -8707,7 +8381,7 @@ For any questions about using RPC with HyperIndex, please contact the Envio team
 
 **File:** `Advanced/config-schema-reference.md`
 
-Static, deep-linkable reference for the `config.yaml` Schema.
+Static, deep-linkable reference for the V3 `config.yaml` schema.
 
 > Tip: Use the Table of Contents to jump to a field or definition.
 
@@ -8718,17 +8392,15 @@ Static, deep-linkable reference for the `config.yaml` Schema.
 - [name](#name) (required)
 - [ecosystem](#ecosystem)
 - [schema](#schema)
-- [output](#output)
 - [contracts](#contracts)
-- [networks](#networks) (required)
-- [unordered_multichain_mode](#unorderedmultichainmode)
-- [event_decoder](#eventdecoder)
+- [chains](#chains) (required)
 - [rollback_on_reorg](#rollbackonreorg)
 - [save_full_history](#savefullhistory)
 - [field_selection](#fieldselection)
 - [raw_events](#rawevents)
-- [preload_handlers](#preloadhandlers)
 - [address_format](#addressformat)
+- [full_batch_size](#fullbatchsize)
+- [storage](#storage)
 
 ### description {#description}
 
@@ -8786,19 +8458,6 @@ Example (config.yaml):
 schema: ./schema.graphql
 ```
 
-### output {#output}
-
-Path where the generated directory will be placed. By default it's 'generated' relative to the current working directory. If set, it'll be a path relative to the config file location.
-
-- **type**: `string | null`
-
-
-Example (config.yaml):
-
-```yaml
-output: ./generated
-```
-
 ### contracts {#contracts}
 
 Global contract definitions that must contain all definitions except addresses. You can share a single handler/abi/event definitions for contracts across multiple chains.
@@ -8815,54 +8474,24 @@ contracts:
       - event: "NewGreeting(address user, string greeting)"
 ```
 
-### networks {#networks}
+### chains {#chains}
 
-Configuration of the blockchain networks that the project is deployed on.
+Configuration of the blockchain chains that the project is deployed on.
 
 - **type**: `array>`
 - **items**: `object`
-- **items ref**: [Network](#def-network)
+- **items ref**: [Chain](#def-chain)
 
 
 Example (config.yaml):
 
 ```yaml
-networks:
+chains:
   - id: 1
     start_block: 0
     contracts:
       - name: Greeter
-        address: 0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c
-```
-
-### unordered_multichain_mode {#unorderedmultichainmode}
-
-A flag to indicate if the indexer should use a single queue for all chains or a queue per chain (default: false)
-
-- **type**: `boolean | null`
-
-
-Example (config.yaml):
-
-```yaml
-unordered_multichain_mode: true
-```
-
-### event_decoder {#eventdecoder}
-
-The event decoder to use for the indexer (default: hypersync-client)
-
-- **type**: `anyOf(object | null)`
-
-Variants:
-- `1`: [EventDecoder](#def-eventdecoder)
-- `2`: `null`
-
-
-Example (config.yaml):
-
-```yaml
-event_decoder: hypersync-client
+        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
 ```
 
 ### rollback_on_reorg {#rollbackonreorg}
@@ -8925,13 +8554,6 @@ Example (config.yaml):
 raw_events: true
 ```
 
-### preload_handlers {#preloadhandlers}
-
-Makes handlers run twice to enable preload optimisations. Removes handlerWithLoader API, since it's not needed. (recommended, default: false)
-
-- **type**: `boolean | null`
-
-
 ### address_format {#addressformat}
 
 Address format for Ethereum addresses: 'checksum' or 'lowercase' (default: checksum)
@@ -8942,6 +8564,39 @@ Variants:
 - `1`: [AddressFormat](#def-addressformat)
 - `2`: `null`
 
+
+### full_batch_size {#fullbatchsize}
+
+Maximum number of events processed per batch. Replaces the V2 `MAX_BATCH_SIZE` environment variable.
+
+- **type**: `integer | null`
+- **bounds**: min: 1, format: `uint32`
+
+
+Example (config.yaml):
+
+```yaml
+full_batch_size: 5000
+```
+
+### storage {#storage}
+
+Configures which storage backends the indexer writes to. Postgres is enabled by default; enable ClickHouse by setting `clickhouse: true`.
+
+- **type**: `anyOf(object | null)`
+
+Variants:
+- `1`: [Storage](#def-storage)
+- `2`: `null`
+
+
+Example (config.yaml):
+
+```yaml
+storage:
+  postgres: true
+  clickhouse: true
+```
 
 ## Definitions
 
@@ -8959,12 +8614,12 @@ ecosystem: evm
 ### GlobalContract_for_ContractConfig {#def-globalcontractforcontractconfig}
 
 - **type**: `object`
-- **required**: `name`, `handler`, `events`
+- **required**: `name`, `events`
 
 Properties:
 - `name`: `string` – A unique project-wide name for this contract (no spaces)
 - `abi_file_path`: `string | null` – Relative path (from config) to a json abi. If this is used then each configured event should simply be referenced by its name
-- `handler`: `string` – The relative path to a file where handlers are registered for the given contract
+- `handler`: `string | null` – Optional explicit path to a handler file. If omitted, handlers are auto-discovered from `src/handlers/`.
 - `events`: `array>` – A list of events that should be indexed on this contract
 
 Example (config.yaml):
@@ -9006,7 +8661,7 @@ contracts:
 Properties:
 - `transaction_fields`: `array | null` – The transaction fields to include in the event, or in all events if applied globally
   - Available values:
-`transactionIndex`, `hash`, `from`, `to`, `gas`, `gasPrice`, `maxPriorityFeePerGas`, `maxFeePerGas`, `cumulativeGasUsed`, `effectiveGasPrice`, `gasUsed`, `input`, `nonce`, `value`, `v`, `r`, `s`, `contractAddress`, `logsBloom`, `root`, `status`, `yParity`, `chainId`, `accessList`, `maxFeePerBlobGas`, `blobVersionedHashes`, `kind`, `l1Fee`, `l1GasPrice`, `l1GasUsed`, `l1FeeScalar`, `gasUsedForL1`, `authorizationList`
+`transactionIndex`, `hash`, `from`, `to`, `gas`, `gasPrice`, `maxPriorityFeePerGas`, `maxFeePerGas`, `cumulativeGasUsed`, `effectiveGasPrice`, `gasUsed`, `input`, `nonce`, `value`, `v`, `r`, `s`, `contractAddress`, `logsBloom`, `root`, `status`, `yParity`, `chainId`, `accessList`, `maxFeePerBlobGas`, `blobVersionedHashes`, `type`, `l1Fee`, `l1GasPrice`, `l1GasUsed`, `l1FeeScalar`, `gasUsedForL1`, `authorizationList`
 - `block_fields`: `array | null` – The block fields to include in the event, or in all events if applied globally
   - Available values:
 `parentHash`, `nonce`, `sha3Uncles`, `logsBloom`, `transactionsRoot`, `stateRoot`, `receiptsRoot`, `miner`, `difficulty`, `totalDifficulty`, `extraData`, `size`, `gasLimit`, `gasUsed`, `uncles`, `baseFeePerGas`, `blobGasUsed`, `excessBlobGas`, `parentBeaconBlockRoot`, `withdrawalsRoot`, `l1BlockNumber`, `sendCount`, `sendRoot`, `mixHash`
@@ -9024,83 +8679,14 @@ events:
         - miner
 ```
 
-### Network {#def-network}
-
-- **type**: `object`
-- **required**: `id`, `start_block`, `contracts`
-
-Properties:
-- `id`: `integer` – The public blockchain network ID.
-- `rpc_config`: `anyOf(object | null)` – RPC configuration for utilizing as the network's data-source. Typically optional for chains with HyperSync support, which is highly recommended. HyperSync dramatically enhances performance, providing up to a 1000x speed boost over traditional RPC.
-- `rpc`: `anyOf(object | null)` – RPC configuration for your indexer. If not specified otherwise, for networks supported by HyperSync, RPC serves as a fallback for added reliability. For others, it acts as the primary data-source. HyperSync offers significant performance improvements, up to a 1000x faster than traditional RPC.
-- `hypersync_config`: `anyOf(object | null)` – Optional HyperSync Config for additional fine-tuning
-- `confirmed_block_threshold`: `integer | null` – The number of blocks from the head that the indexer should account for in case of reorgs.
-- `start_block`: `integer` – The block at which the indexer should start ingesting data
-- `end_block`: `integer | null` – The block at which the indexer should terminate.
-- `contracts`: `array>` – All the contracts that should be indexed on the given network
-
-Example (config.yaml):
-
-```yaml
-networks:
-  - id: 1
-    start_block: 0
-    end_block: 19000000
-    contracts:
-      - name: Greeter
-        address: 0x1111111111111111111111111111111111111111
-```
-
-### RpcConfig {#def-rpcconfig}
-
-- **type**: `object`
-- **required**: `url`
-
-Properties:
-- `url`: `anyOf(string | array)` – URL of the RPC endpoint. Can be a single URL or an array of URLs. If multiple URLs are provided, the first one will be used as the primary RPC endpoint and the rest will be used as fallbacks.
-- `initial_block_interval`: `integer | null` – The starting interval in range of blocks per query
-- `backoff_multiplicative`: `number | null` – After an RPC error, how much to scale back the number of blocks requested at once
-- `acceleration_additive`: `integer | null` – Without RPC errors or timeouts, how much to increase the number of blocks requested by for the next batch
-- `interval_ceiling`: `integer | null` – Do not further increase the block interval past this limit
-- `backoff_millis`: `integer | null` – After an error, how long to wait before retrying
-- `fallback_stall_timeout`: `integer | null` – If a fallback RPC is provided, the amount of time in ms to wait before kicking off the next provider
-- `query_timeout_millis`: `integer | null` – How long to wait before cancelling an RPC request
-
-Example (config.yaml):
-
-```yaml
-networks:
-  - id: 1
-    rpc_config:
-      url: https://eth.llamarpc.com
-      initial_block_interval: 1000
-```
-
-### NetworkRpc {#def-networkrpc}
-
-- **type**: `anyOf(string | object | array>)`
-
-Variants:
-- `1`: `string`
-- `2`: [Rpc](#def-rpc)
-- `3`: `array>`
-
-Example (config.yaml):
-
-```yaml
-networks:
-  - id: 1
-    rpc: https://eth.llamarpc.com
-```
-
 ### Rpc {#def-rpc}
 
 - **type**: `object`
 - **required**: `url`, `for`
 
 Properties:
-- `url`: `string` – The RPC endpoint URL.
-- `for`: `object` – Determines if this RPC is for historical sync, real-time chain indexing, or as a fallback.
+- `url`: `string` – The RPC endpoint URL. WebSocket URLs (`wss://...`) are also supported when paired with `for: realtime`.
+- `for`: `object` – Determines if this RPC is for historical sync (`sync`), realtime head indexing (`realtime`, supports WebSocket), or as a fallback (`fallback`).
 - `initial_block_interval`: `integer | null` – The starting interval in range of blocks per query
 - `backoff_multiplicative`: `number | null` – After an RPC error, how much to scale back the number of blocks requested at once
 - `acceleration_additive`: `integer | null` – Without RPC errors or timeouts, how much to increase the number of blocks requested by for the next batch
@@ -9112,20 +8698,25 @@ Properties:
 Example (config.yaml):
 
 ```yaml
-networks:
+chains:
   - id: 1
     rpc:
       - url: https://eth.llamarpc.com
         for: sync
+      - url: wss://eth.llamarpc.com
+        for: realtime
+      - url: https://fallback.example.com
+        for: fallback
 ```
 
 ### For {#def-for}
 
-- **type**: `oneOf(const sync | const fallback)`
+- **type**: `oneOf(const sync | const realtime | const fallback)`
 
 Variants:
 - `1`: `const sync`
-- `2`: `const fallback`
+- `2`: `const realtime`
+- `3`: `const fallback`
 
 ### HypersyncConfig {#def-hypersyncconfig}
 
@@ -9133,12 +8724,12 @@ Variants:
 - **required**: `url`
 
 Properties:
-- `url`: `string` – URL of the HyperSync endpoint (default: The most performant HyperSync endpoint for the network)
+- `url`: `string` – URL of the HyperSync endpoint (default: The most performant HyperSync endpoint for the chain)
 
 Example (config.yaml):
 
 ```yaml
-networks:
+chains:
   - id: 1
     hypersync_config:
       url: https://eth.hypersync.xyz
@@ -9152,21 +8743,21 @@ networks:
 Properties:
 - `name`: `string` – A unique project-wide name for this contract if events and handler are defined OR a reference to the name of contract defined globally at the top level
 - `address`: `object` – A single address or a list of addresses to be indexed. This can be left as null in the case where this contracts addresses will be registered dynamically.
-- `start_block`: `integer | null` – The block at which the indexer should start ingesting data for this specific contract. If not specified, uses the network start_block. Can be greater than the network start_block for more specific indexing.
+- `start_block`: `integer | null` – The block at which the indexer should start ingesting data for this specific contract. If not specified, uses the chain `start_block`. Can be greater than the chain `start_block` for more specific indexing.
 - `abi_file_path`: `string | null` – Relative path (from config) to a json abi. If this is used then each configured event should simply be referenced by its name
-- `handler`: `string` – The relative path to a file where handlers are registered for the given contract
+- `handler`: `string | null` – Optional explicit path to a handler file. If omitted, handlers are auto-discovered from `src/handlers/`.
 - `events`: `array>` – A list of events that should be indexed on this contract
 
 Example (config.yaml):
 
 ```yaml
-networks:
+chains:
   - id: 1
     start_block: 0
     contracts:
       - name: Greeter
         address:
-          - 0x1111111111111111111111111111111111111111
+          - "0x1111111111111111111111111111111111111111"
         events:
           - event: Transfer(address indexed from, address indexed to, uint256 value)
 ```
@@ -9182,24 +8773,13 @@ Variants:
 Example (config.yaml):
 
 ```yaml
-networks:
+chains:
   - id: 1
     contracts:
       - name: Greeter
         address:
-          - 0x1111111111111111111111111111111111111111
-          - 0x2222222222222222222222222222222222222222
-```
-
-### EventDecoder {#def-eventdecoder}
-
-- **type**: `enum (2 values)`
-- **allowed**: `viem`, `hypersync-client`
-
-Example (config.yaml):
-
-```yaml
-event_decoder: hypersync-client
+          - "0x1111111111111111111111111111111111111111"
+          - "0x2222222222222222222222222222222222222222"
 ```
 
 ### AddressFormat {#def-addressformat}
@@ -9207,17 +8787,77 @@ event_decoder: hypersync-client
 - **type**: `enum (2 values)`
 - **allowed**: `checksum`, `lowercase`
 
+### Chain {#def-chain}
+
+- **type**: `object`
+- **required**: `id`, `start_block`, `contracts`
+
+Properties:
+- `id`: `integer` – The public blockchain chain ID.
+- `rpc`: `anyOf(string | object | array> | null)` – RPC configuration for your indexer. Accepts a single URL, a single Rpc object, or an array of Rpc objects. For chains supported by HyperSync, RPC serves as a fallback for added reliability. For others, it acts as the primary data-source. WebSocket URLs (`wss://...`) are also supported for realtime endpoints.
+- `hypersync_config`: `anyOf(object | null)` – Optional HyperSync Config for additional fine-tuning
+- `start_block`: `integer` – The block at which the indexer should start ingesting data
+- `end_block`: `integer | null` – The block at which the indexer should terminate.
+- `contracts`: `array>` – All the contracts that should be indexed on the given chain
+- `max_reorg_depth`: `integer | null` – The number of blocks from the head that the indexer should account for in case of reorgs. Replaces the V2 `confirmed_block_threshold` field.
+- `block_lag`: `integer | null` – Number of blocks the indexer stays behind the chain head. Replaces the V2 `ENVIO_INDEXING_BLOCK_LAG` environment variable, applied per chain.
+
+Example (config.yaml):
+
+```yaml
+chains:
+  - id: 1
+    start_block: 0
+    end_block: 19000000
+    contracts:
+      - name: Greeter
+        address: "0x1111111111111111111111111111111111111111"
+```
+
+### Storage {#def-storage}
+
+- **type**: `object`
+
+Properties:
+- `postgres`: `boolean | null` – Enable Postgres storage (default: true)
+- `clickhouse`: `boolean | null` – Enable ClickHouse storage in addition to Postgres (default: false). Requires the `ENVIO_CLICKHOUSE_*` environment variables.
+
+Example (config.yaml):
+
+```yaml
+storage:
+  postgres: true
+  clickhouse: true
+```
+
+## Removed in V3
+
+The following V2 options have been removed and are no longer accepted in `config.yaml`:
+
+- `output` — generated types are always emitted to `.envio/`.
+- `unordered_multichain_mode` — unordered is now the only mode. The V2 `multichain: ordered` opt-in has also been removed.
+- `event_decoder` — the Rust-based decoder is the only implementation.
+- `loaders` — Preload Optimization is now always on.
+- `preload_handlers` — now always enabled.
+- `preRegisterDynamicContracts` — no longer needed.
+- `rpc_config` — replaced by `rpc` (see above).
+- `networks` — renamed to `chains`.
+- `confirmed_block_threshold` — renamed to `max_reorg_depth`.
+
 ---
 
 ## Envio Command Line Interface
 
 **File:** `Guides/cli-commands.md`
 
-This comprehensive reference guide covers all available commands and options in the Envio CLI tool. Use this documentation to explore the full capabilities of the `envio` command and its subcommands for managing your blockchain indexing projects.
+This comprehensive reference guide covers all available commands and options in the Envio CLI tool for HyperIndex **V3**. Use this documentation to explore the full capabilities of the `envio` command and its subcommands for managing your blockchain indexing projects.
 
 :::tip Envio Cloud CLI
 Looking to manage your hosted indexers from the command line? See the **Envio Cloud CLI** for deployment, monitoring, and management commands for Envio Cloud.
 :::
+
+
+
 
 ## Getting Started
 
@@ -9235,9 +8875,9 @@ The commands are organized into the following categories:
 
 ### Development Commands
 
-- [`envio dev`](#envio-dev) - Run in development mode with hot reloading
-- [`envio codegen`](#envio-codegen) - Generate code from configuration files
-- [`envio start`](#envio-start) - Start the indexer without code generation
+- [`envio dev`](#envio-dev) - Run in development mode (use for local work)
+- [`envio codegen`](#envio-codegen) - Generate types into `.envio/` from `config.yaml` and `schema.graphql`
+- [`envio start`](#envio-start) - Production-only entrypoint
 
 ### Environment Management
 
@@ -9261,8 +8901,11 @@ The base command that provides access to all Envio functionality.
 ###### **Options:**
 
 - `-d`, `--directory ` — The directory of the project. Defaults to current dir ("./")
-- `-o`, `--output-directory ` — The directory within the project that generated code should output to (Default: `generated`)
 - `--config ` — The file in the project containing config (Default: `config.yaml`)
+
+:::note
+The V2 `-o, --output-directory` option has been removed. In V3, generated types are always emitted to `.envio/` (git-ignored) and wired up via `envio-env.d.ts` at the project root.
+:::
 
 ## Initialization Commands
 
@@ -9391,9 +9034,19 @@ These commands help you develop, test, and run your indexers locally.
 
 ### `envio dev`
 
-Development commands for starting, stopping, and restarting the indexer with automatic codegen for any changed files.
+Run the indexer in development mode against your local database. This is the command you should use for everything except production — `envio start` is production-only in V3.
 
-**Usage:** `envio dev`
+**Usage:** `envio dev [OPTIONS]`
+
+###### **Options:**
+
+- `-r`, `--restart` — Clear the database and restart indexing from scratch. In V3 `envio dev` no longer resets the database automatically, so pass this flag whenever you want a fresh sync (e.g. after changing `start_block` or your schema in incompatible ways).
+- `-b`, `--bench` — Save benchmark data to a file during indexing.
+
+:::note
+- Changes in handler files no longer trigger codegen on `envio dev`. Run `envio codegen` (or `pnpm codegen`) yourself after changing `config.yaml` or `schema.graphql`.
+- `envio dev` continues to regenerate types when config/schema files change.
+:::
 
 ### `envio stop`
 
@@ -9409,14 +9062,17 @@ Generate indexing code from user-defined configuration & schema files.
 
 ### `envio start`
 
-Start the indexer without any automatic codegen.
+Production-only entrypoint. Starts the indexer against the configured database without running codegen, watching files, or any of the developer-experience features in `envio dev`. Use this on Envio Cloud and in your own production deployments; for local development use `envio dev` instead.
 
 **Usage:** `envio start [OPTIONS]`
 
 ###### **Options:**
 
-- `-r`, `--restart` — Clear your database and restart indexing from scratch
-- `-b`, `--bench` — Saves benchmark data to a file during indexing
+- `-b`, `--bench` — Save benchmark data to a file during indexing
+
+:::note
+The V2 `-r, --restart` flag has moved to `envio dev -r`. In V3, `envio start` does not reset databases — production deployments resume from the persisted checkpoint.
+:::
 
 ## Environment Management Commands
 
@@ -9492,21 +9148,22 @@ These commands help you analyze and optimize your indexer's performance.
 
 ### `envio benchmark-summary`
 
-Prints a summary of the benchmark data after running the indexer with envio start --bench flag or setting 'ENVIO_SAVE_BENCHMARK_DATA=true'.
+Prints a summary of the benchmark data after running the indexer with `envio dev --bench` (or `envio start --bench` in production) or with `ENVIO_SAVE_BENCHMARK_DATA=true`.
 
 **Usage:** `envio benchmark-summary`
 
 ## Command Reference Table
 
-| Command                        | Description             | Common Use Case                   |
-| ------------------------------ | ----------------------- | --------------------------------- |
-| `envio init`                   | Create new indexer      | Starting a new project            |
-| `envio dev`                    | Run in development mode | Local development with hot reload |
-| `envio start`                  | Start indexer           | Production or testing runs        |
-| `envio stop`                   | Stop all processes      | Cleaning up environment           |
-| `envio codegen`                | Generate code           | After changing config or schema   |
-| `envio local docker up`        | Start Docker containers | Setting up environment            |
-| `envio local db-migrate setup` | Initialize database     | Before first run                  |
+| Command                        | Description                  | Common Use Case                                    |
+| ------------------------------ | ---------------------------- | -------------------------------------------------- |
+| `envio init`                   | Create new indexer           | Starting a new project                             |
+| `envio dev`                    | Run in development mode      | All local development                              |
+| `envio dev -r`                 | Reset database and re-sync   | After incompatible config/schema changes           |
+| `envio start`                  | Production-only entrypoint   | Envio Cloud / self-hosted production deployments   |
+| `envio stop`                   | Stop all processes           | Cleaning up environment                            |
+| `envio codegen`                | Regenerate types in `.envio/`| After changing `config.yaml` or `schema.graphql`   |
+| `envio local docker up`        | Start Docker containers      | Setting up environment                             |
+| `envio local db-migrate setup` | Initialize database          | Before first run                                   |
 
 ## Complete One-Line Examples
 
@@ -9564,7 +9221,7 @@ pnpx envio@3.0.0-rc.0 init template -n erc20-example -t erc20 -l typescript -d e
 ### Running Benchmarks
 
 ```bash
-envio start --bench
+envio dev --bench
 envio benchmark-summary
 ```
 
@@ -9599,15 +9256,15 @@ You can control reorg handling through the `rollback_on_reorg` flag in your `con
 ```yaml
 # Enable reorg handling (default)
 rollback_on_reorg: true
-networks:
-  # network configurations...
+chains:
+  # chain configurations...
 
 # OR
 
 # Disable reorg handling (not recommended for production)
 rollback_on_reorg: false
-networks:
-  # network configurations...
+chains:
+  # chain configurations...
 ```
 
 ### Configuring Confirmation Thresholds
@@ -9616,22 +9273,22 @@ You can customize the number of blocks required before considering a block "conf
 
 ```yaml
 rollback_on_reorg: true
-networks:
+chains:
   - id: 137 # Polygon
-    confirmed_block_threshold: 150
+    max_reorg_depth: 150
   - id: 1 # Ethereum
     # Using default threshold
 ```
 
-The `confirmed_block_threshold` defines how many blocks below the chain head are considered safe from reorganizations. Any reorg deeper than this threshold won't trigger a rollback in your indexer.
+The `max_reorg_depth` field (renamed from V2's `confirmed_block_threshold`) defines how many blocks below the chain head are considered safe from reorganizations. Any reorg deeper than this threshold won't trigger a rollback in your indexer.
 
 ## Default Confirmation Thresholds
 
 Currently, all chains default to a threshold of **200 blocks**. In future releases, these thresholds will be tailored per chain based on their specific characteristics and historical reorg depths.
 
-| Network Type | Default Threshold | Notes                                           |
-| ------------ | ----------------- | ----------------------------------------------- |
-| All Networks | 200 blocks        | Will be customized per chain in future releases |
+| Chain Type | Default Threshold | Notes                                           |
+| ---------- | ----------------- | ----------------------------------------------- |
+| All Chains | 200 blocks        | Will be customized per chain in future releases |
 
 ## Technical Details and Limitations
 
@@ -9663,26 +9320,26 @@ During a reorg-triggered rollback:
 1. **Keep reorg support enabled** for production indexers
 2. **Use HyperSync** when possible for guaranteed reorg detection
 3. **Avoid external side effects** in your handlers that cannot be rolled back
-4. **Consider higher thresholds** for high-value applications or networks with historically deep reorgs
+4. **Consider higher thresholds** for high-value applications or chains with historically deep reorgs
 
 ## Example Configuration
 
-Here's a complete example showing reorg handling configuration for multiple networks:
+Here's a complete example showing reorg handling configuration for multiple chains:
 
 ```yaml
 rollback_on_reorg: true
-networks:
+chains:
   - id: 1 # Ethereum Mainnet
-    confirmed_block_threshold: 250 # Higher threshold for Ethereum
-    # other network config...
+    max_reorg_depth: 250 # Higher threshold for Ethereum
+    # other chain config...
 
   - id: 137 # Polygon
-    confirmed_block_threshold: 150 # Lower threshold for Polygon
-    # other network config...
+    max_reorg_depth: 150 # Lower threshold for Polygon
+    # other chain config...
 
   - id: 42161 # Arbitrum One
     # Using default threshold (200)
-    # other network config...
+    # other chain config...
 ```
 
 By properly configuring reorg support, you ensure that your indexed data remains consistent with the blockchain, even when the chain reorganizes.
@@ -9707,22 +9364,34 @@ HyperIndex automates all of this: it fetches recent block hashes to pinpoint exa
 
 ## Overview
 
-The `/generated` directory contains files automatically created by Envio's code generation system. These files form the backbone of your blockchain indexer's runtime operations, translating your configuration, schema, and event handlers into executable code that processes blockchain data.
+In V3, the local `generated` package is gone. Code generation now writes a single ambient declaration file at `.envio/types.d.ts` (git-ignored) and wires it into your project through a small `envio-env.d.ts` file at the project root. Everything you used to import from `generated` is now exported from the `envio` package.
 
-> **Important:** Generated files should never be manually edited. Any changes will be overwritten the next time code generation runs.
+These generated declarations form the type-level backbone of your blockchain indexer, translating your configuration, schema, and event handlers into the strongly-typed runtime values exposed by `envio`.
+
+> **Important:** The contents of `.envio/` should never be manually edited. Any changes will be overwritten the next time code generation runs.
+
+## What V3 Emits
+
+| File / location               | Purpose                                                                                          |
+| ----------------------------- | ------------------------------------------------------------------------------------------------ |
+| `.envio/types.d.ts`           | Ambient TypeScript declarations describing your contracts, events, entities, enums, and chains. |
+| `envio-env.d.ts` (root)       | Tiny shim that references `.envio/types.d.ts` so the compiler picks it up.                       |
+| `.envio/cache/` (optional)    | Local cache of Effect API results, populated via the dev console. |
+
+The `generated/` directory used by V2 (with ReScript sources, JS shims, and a per-project `package.json`) is no longer produced.
 
 ## Purpose of Generated Files
 
 Generated files serve several critical functions:
 
-1. **Type-Safe Data Access** - They provide strongly-typed interfaces to interact with your defined entities
-2. **Event Processing** - They contain the logic to decode and process contract events
-3. **Database Interactions** - They manage database operations for storing and retrieving indexed data
-4. **Runtime Orchestration** - They coordinate the indexing workflow
+1. **Type-Safe Data Access** - They provide strongly-typed interfaces to interact with your defined entities through `envio`.
+2. **Event Processing** - They describe each contract's events so `indexer.onEvent({ contract, event }, ...)` is fully type-checked.
+3. **Database Interactions** - They generate the entity types and helper signatures used by `context.` and `indexer.`.
+4. **Runtime Orchestration** - They feed into the `indexer` value (chains, contracts, entities) that orchestrates indexing.
 
 ## Real-World Example: Uniswap V4 Indexer
 
-Let's examine how specific elements from a real Uniswap V4 indexer translate into generated files:
+Let's examine how specific elements from a real Uniswap V4 indexer translate into generated declarations.
 
 ### From Schema to Generated Types
 
@@ -9743,66 +9412,39 @@ type Pool {
 }
 ```
 
-The codegen process generates:
+The codegen process emits a TypeScript type you can import from `envio`:
 
-1. **Type Definition** in `EntityModels.res`:
+```typescript
 
-   ```rescript
-   type pool = {
-     id: string,
-     chainId: BigInt.t,
-     currency0: string,
-     currency1: string,
-     fee: BigInt.t,
-     tickSpacing: BigInt.t,
-     hooks: string,
-     numberOfSwaps: BigInt.t,
-     createdAtTimestamp: BigInt.t,
-     createdAtBlockNumber: BigInt.t,
-   }
-   ```
+// Equivalent to importing the `Pool` named type directly.
+type Pool = Entity;
 
-2. **Constructor Function**:
+// Shape of the generated entity:
+// {
+//   id: string;
+//   chainId: bigint;
+//   currency0: string;
+//   currency1: string;
+//   fee: bigint;
+//   tickSpacing: bigint;
+//   hooks: string;
+//   numberOfSwaps: bigint;
+//   createdAtTimestamp: bigint;
+//   createdAtBlockNumber: bigint;
+// }
+```
 
-   ```rescript
-   let makePool = (
-     ~id: string,
-     ~chainId: BigInt.t,
-     ~currency0: string,
-     ~currency1: string,
-     ~fee: BigInt.t,
-     ~tickSpacing: BigInt.t,
-     ~hooks: string,
-     ~numberOfSwaps: BigInt.t,
-     ~createdAtTimestamp: BigInt.t,
-     ~createdAtBlockNumber: BigInt.t,
-   ) => {
-     {
-       id,
-       chainId,
-       currency0,
-       currency1,
-       fee,
-       tickSpacing,
-       hooks,
-       numberOfSwaps,
-       createdAtTimestamp,
-       createdAtBlockNumber,
-     }
-   }
-   ```
+You read and write `Pool` entities through the type-safe `context` and `indexer` APIs:
 
-3. **Database Functions** in `Queries.res`:
+```typescript
+// Inside a handler
+const pool = await context.Pool.get(id);
+context.Pool.set({ id, chainId, currency0, currency1, fee, tickSpacing, hooks, numberOfSwaps, createdAtTimestamp, createdAtBlockNumber });
 
-   ```rescript
-   let getPoolById = (id: string): option => {
-     // Database retrieval logic
-   }
-
-   let savePool = (entity: EntityModels.pool): unit => {
-     // Database save logic
-   }
-   ```
+// Inside a test or script
+await indexer.Pool.set({ /* ... */ });
+const stored = await indexer.Pool.getOrThrow(id);
+```
 
 ### From Config to Generated Event Handlers
 
@@ -9815,52 +9457,30 @@ contracts:
       - event: Swap(bytes32 indexed id, address indexed sender, int128 amount0, int128 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick, uint24 fee)
 ```
 
-The codegen process generates handler wrappers like:
+Codegen widens the `indexer.onEvent` overloads so that the following call is fully typed end-to-end (event params, return type, `context.chain`, etc.):
 
-```rescript
-// In Handlers.res
-let handlePoolManager_Swap = (
-  ~blockHeader: Types.blockHeader,
-  ~txHash: string,
-  ~logIndex: int,
-  ~id: string,
-  ~sender: string,
-  ~amount0: BigInt.t,
-  ~amount1: BigInt.t,
-  ~sqrtPriceX96: BigInt.t,
-  ~liquidity: BigInt.t,
-  ~tick: BigInt.t,
-  ~fee: BigInt.t,
-): unit => {
-  // Call the user-defined handler
-  let context = makeEventContext(
-    ~blockHeader,
-    ~txHash,
-    ~logIndex,
-    ~eventIdx,
-    ~contractName="PoolManager",
-    ~eventName="Swap"
-  )
-  UserHandlers.handlePoolManager_Swap(
-    ~context,
-    ~id,
-    ~sender,
-    ~amount0,
-    ~amount1,
-    ~sqrtPriceX96,
-    ~liquidity,
-    ~tick,
-    ~fee,
-  )
-}
+```typescript
+
+
+indexer.onEvent(
+  { contract: "PoolManager", event: "Swap" },
+  async ({ event, context }) => {
+    const { id, sender, amount0, amount1, sqrtPriceX96, liquidity, tick, fee } = event.params;
+    // ...
+  },
+);
+
+// The full event payload type is also available as a generic:
+type PoolManagerSwapEvent = EvmEvent;
+type PoolManagerSwapBlock = EvmEvent["block"];
 ```
 
-### From Multi-Network Config to Generated Network Handlers
+### From Multi-Chain Config to Generated Chain Handlers
 
-Your config has multiple networks:
+Your config has multiple chains:
 
 ```yaml
-networks:
+chains:
   - id: 1 # Ethereum Mainnet
     # ...
   - id: 10 # Optimism
@@ -9869,42 +9489,32 @@ networks:
     # ...
 ```
 
-The generated code will include configuration parsing that handles all three networks:
+Codegen turns the chain set into a literal `ChainId` union and exposes per-chain helpers under `indexer.chains`:
 
-```rescript
-// In Config.res
-let networks = [
+```typescript
+
+
+// ChainId is `1 | 10 | 42161`
+const mainnet = indexer.chains[1];
+const optimism = indexer.chains[10];
+const arbitrum = indexer.chains[42161];
+
+// `chain.id` is also typed inside handler/where callbacks:
+indexer.onBlock(
   {
-    id: 1,
-    name: "ethereum-mainnet",
-    startBlock: 0,
-    contracts: [
-      {
-        name: "PositionManager",
-        addresses: ["0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e"],
-        // ...
-      },
-      {
-        name: "PoolManager",
-        addresses: ["0x000000000004444c5dc75cB358380D2e3dE08A90"],
-        // ...
-      },
-    ],
+    name: "Heartbeat",
+    where: ({ chain }) => {
+      // chain.id is narrowed to the configured ChainId union
+      return chain.id === 1;
+    },
   },
-  {
-    id: 10,
-    name: "optimism",
-    startBlock: 0,
-    // Similar contract configuration for Optimism
+  async ({ block, context }) => {
+    // context.chain.id is typed as well
   },
-  {
-    id: 42161,
-    name: "arbitrum-one",
-    startBlock: 0,
-    // Similar contract configuration for Arbitrum
-  },
-]
+);
 ```
+
+`getGeneratedByChainId(...)` from V2 has been replaced by `indexer.chains[chainId]`.
 
 ## When to Run Code Generation
 
@@ -9922,6 +9532,8 @@ Codegen should be run after:
 4. Switching to a new contract or ABI
 5. After pulling changes from version control
 
+> Note: changes to handler files in V3 no longer trigger automatic codegen on `pnpm dev`.
+
 ## Troubleshooting Generation Errors
 
 When code generation fails, the errors typically point to issues in your setup files. Here are common error patterns and their solutions:
@@ -9933,15 +9545,15 @@ Error messages containing `Config validation failed` typically mean there's an i
 - Check for syntax errors in YAML formatting
 - Verify that all required fields are present
 - Ensure contract addresses are in the correct format
-- Confirm that referenced networks are valid
+- Confirm that referenced chains are valid
 
-For example, if you see an error about invalid network IDs, check that all network IDs in your config are valid:
+For example, if you see an error about invalid chain IDs, check that all chain IDs in your config are valid:
 
 ```yaml
-networks:
+chains:
   - id: 1 # Valid Ethereum mainnet
   - id: 10 # Valid Optimism
-  - id: 999 # Might be invalid if this network ID isn't recognized
+  - id: 999 # Might be invalid if this chain ID isn't recognized
 ```
 
 ### Schema Errors
@@ -9968,27 +9580,28 @@ If you see `Handler validation failed` errors:
 
 - Check that handler function signatures match expected patterns
 - Ensure all referenced entities exist in your schema
-- Verify proper import syntax for entities and contract events
+- Verify proper import syntax for entities and contract events (everything comes from `envio`)
 
 ## Relationship with Setup Files
 
-The generated files directly reflect the structure defined in your setup files:
+The generated declarations directly reflect the structure defined in your setup files:
 
-- **config.yaml** → Determines which networks, contracts, and events are indexed
+- **config.yaml** → Determines which chains, contracts, and events are indexed
 - **schema.graphql** → Defines the entities and relationships that are generated
-- **EventHandlers** → Provides the business logic that the generated code wraps
+- **handlers in `src/handlers/`** → Provide the business logic that the generated types describe
 
 ## Best Practices
 
 1. **Never modify generated files directly** - Always change the source files
-2. **Run codegen before starting your indexer** - Ensure all files are up to date
+2. **Run codegen before starting your indexer** - Ensure all declarations are up to date
 3. **Check error messages carefully** - They often pinpoint issues in your setup files
+4. **Commit `envio-env.d.ts` but ignore `.envio/`** - The shim is part of the project; the generated artifacts are not.
 
 ## Summary
 
-Generated files form the critical bridge between your indexing specifications and the actual runtime execution. While you shouldn't modify them directly, understanding their structure and purpose can help you debug issues and optimize your indexing process.
+Generated declarations form the critical bridge between your indexing specifications and the actual runtime execution. While you shouldn't modify them directly, understanding their structure and purpose can help you debug issues and optimize your indexing process.
 
-If you encounter persistent errors in generated files, ensure your configuration, schema, and handlers follow Envio's best practices, or contact support for assistance.
+If you encounter persistent errors related to generated files, ensure your configuration, schema, and handlers follow Envio's best practices, or contact support for assistance.
 
 ---
 
@@ -9996,7 +9609,7 @@ If you encounter persistent errors in generated files, ensure your configuration
 
 **File:** `Advanced/metadata-query.md`
 
-Starting from `envio@2.28` HyperIndex exposes an official `_meta` query to get indexing metadata per chain.
+HyperIndex exposes an official `_meta` query to get indexing metadata per chain.
 
 ```graphql
 {
@@ -10842,25 +10455,28 @@ By regularly benchmarking your indexer and methodically addressing performance b
 
 ---
 
-## Loaders Optimization (Deprecated)
+## Loaders Optimization (Removed in V3)
 
 **File:** `Advanced/loaders.md`
 
 :::warning
-Loaders are a predecessor of Preload Optimization. We recommend using Preload Optimization instead of loaders. This guide is kept for historical purposes.
+The `handlerWithLoader` API and the `loaders` flag in `config.yaml` were removed in HyperIndex V3. Preload Optimization is now always on — there is no flag to enable or disable it. This page is kept for historical context and to help V2 projects migrate.
 :::
 
-## What Are Loaders?
+## What Were Loaders?
 
-Loaders were a feature in early versions of HyperIndex that significantly improved database access performance for event handlers.
+Loaders were a feature in early V2 versions of HyperIndex that significantly improved database access performance for event handlers.
 
 They worked by implementing the Preload Optimization - loading required data upfront before processing events.
 
 The preloaded data would then be available to event handlers through a `loaderReturn` object, eliminating the need for individual database queries during event processing.
 
-Compared to the current Preload Optimization approach, handlers with loaders didn't have the Preload Phase, and always ran once.
+In V2, handlers with loaders didn't have a Preload Phase and always ran once. In V3, every handler runs through the Preload Phase automatically, so the dedicated `handlerWithLoader` API and the `loaders:` config flag have both been removed.
+
+The V2 shape looked like this (no longer accepted in V3):
 
 ```typescript
+// V2 only — removed in V3
 ContractName.EventName.handlerWithLoader({
   // The loader function runs before event processing starts
   loader: async ({ event, context }) => {
@@ -10876,14 +10492,14 @@ ContractName.EventName.handlerWithLoader({
 });
 ```
 
-## How It Works?
+## How It Works in V3
 
-Find more information about how Loaders work by reading the Preload Optimization - How It Works? guide. Loaders share the same concept, but with a different API.
+In V3 the optimization is built in. See Preload Optimization - How It Works? for the full mechanics. The two-phase execution is identical to what loaders provided, just without a separate API.
 
-For example, this is how a loader can be turned into a handler with Preload Optimization enabled:
+For example, this is how a V2 loader is rewritten as a regular V3 handler — the only thing that changed is that the loader code now lives inline at the top of the handler:
 
 ```typescript
-// Before:
+// V2 — removed
 ERC20.Transfer.handlerWithLoader({
   loader: async ({ event, context }) => {
     // Load sender and receiver accounts efficiently
@@ -10905,22 +10521,28 @@ ERC20.Transfer.handlerWithLoader({
   },
 });
 
-// After:
-ERC20.Transfer.handler(async ({ event, context }) => {
-  // Load sender and receiver accounts efficiently
-  const sender = await context.Account.get(event.params.from);
-  const receiver = await context.Account.get(event.params.to);
+// V3 — Preload Optimization is always on
 
-  // To imitate the behavior of the loader,
-  // we can use `context.isPreload` to make next code run only once.
-  // Note: This is not required, but might be useful for CPU-intensive operations.
-  if (context.isPreload) {
-    return;
-  }
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    // Load sender and receiver accounts efficiently
+    const sender = await context.Account.get(event.params.from);
+    const receiver = await context.Account.get(event.params.to);
 
-  // Process the transfer with the pre-loaded data
-});
+    // To imitate the behavior of the loader,
+    // we can use `context.isPreload` to make next code run only once.
+    // Note: This is not required, but might be useful for CPU-intensive operations.
+    if (context.isPreload) {
+      return;
+    }
+
+    // Process the transfer with the pre-loaded data
+  },
+);
 ```
+
+If your project still has `loaders: true` or `preload_handlers: true` in `config.yaml`, remove both fields — V3 will reject them.
 
 ---
 
@@ -11104,13 +10726,9 @@ For production applications, we recommend migrating your queries to Envio's stan
 
 ---
 
-## Logging
+## Logging in Envio HyperIndex
 
 **File:** `Troubleshoot/logging.mdx`
-
-
-
-# Logging in Envio HyperIndex
 
 Effective logging is essential for monitoring your blockchain indexer's performance, diagnosing issues, and gathering insights. The Envio indexer uses [pino](https://github.com/pinojs/pino/), a high-performance logging library for JavaScript. These logs can be integrated with analytics tools such as [Kibana](https://www.elastic.co/what-is/kibana) to generate metrics and visualizations.
 
@@ -11134,13 +10752,10 @@ When implementing handlers for your indexer, use the logging functions provided 
 
 ### Examples by Language
 
-
-  
-
 ```typescript
 // Inside your handler
 context.log.debug(
-  `Processing event with block hash: ${event.blockHash} (debug)`
+`Processing event with block hash: ${event.blockHash} (debug)`
 );
 context.log.info(`Processing event with block hash: ${event.blockHash} (info)`);
 context.log.warn(`Potential issue with event: ${event.blockHash} (warn)`);
@@ -11148,73 +10763,17 @@ context.log.error(`Failed to process event: ${event.blockHash} (error)`);
 
 // With exception:
 context.log.error(
-  `Failed to process event: ${event.blockHash}`,
-  new Error("Error processing event")
+`Failed to process event: ${event.blockHash}`,
+new Error("Error processing event")
 );
 
 // You can also provide an object as the second argument for structured logging:
 context.log.info("Processing blockchain event", {
-  type: "info",
-  extra: "Additional debugging context",
-  data: { blockHash: event.blockHash },
+type: "info",
+extra: "Additional debugging context",
+data: { blockHash: event.blockHash },
 });
 ```
-
-  
-  
-
-```javascript
-// Inside your handler
-context.log.debug(
-  `Processing event with block hash: ${event.blockHash} (debug)`
-);
-context.log.info(`Processing event with block hash: ${event.blockHash} (info)`);
-context.log.warn(`Potential issue with event: ${event.blockHash} (warn)`);
-context.log.error(`Failed to process event: ${event.blockHash} (error)`);
-
-// With exception:
-context.log.error(
-  `Failed to process event: ${event.blockHash}`,
-  new Error("Error processing event")
-);
-
-// You can also provide an object as the second argument for structured logging:
-context.log.info("Processing blockchain event", {
-  type: "info",
-  extra: "Additional debugging context",
-  data: { blockHash: event.blockHash },
-});
-```
-
-  
-  
-
-```rescript
-// Inside your handler
-exception ExampleException(string) // Example of an exception
-
-// Basic string logging
-context.log.debug(`Processing event with block hash: ${event.blockHash} (debug)`)
-context.log.info(`Processing event with block hash: ${event.blockHash} (info)`)
-context.log.warn(`Potential issue with event: ${event.blockHash} (warn)`)
-context.log.error(`Failed to process event: ${event.blockHash} (error)`)
-
-// With exception:
-context.log.errorWithExn(
-  `Failed to process event: ${event.blockHash}`,
-  ExampleException("Error processing event")
-)
-
-// You can also provide an object as the second argument for structured logging:
-context.log.info("Processing blockchain event", ~params={
-  "type": "info",
-  "extra": "Additional debugging context",
-  "data": { "blockHash": event.blockHash },
-});
-```
-
-  
-
 
 ## Metrics, Debugging, and Troubleshooting
 
@@ -11282,7 +10841,7 @@ When debugging issues in development:
 1. **Terminal UI Issues**: The Terminal UI may sometimes hide errors. To disable it:
 
    ```bash
-   export TUI_OFF="true"  # Or use --tui-off flag when starting
+   export ENVIO_TUI="false"  # Or use --tui-off flag when starting
    ```
 
 2. **Log Visibility**: To maintain the Terminal UI while capturing detailed logs:
@@ -11690,18 +11249,18 @@ Envio error codes are categorized by their first digits:
 
 #### `EE106`: Undefined Network Config
 
-**Issue**: No `hypersync_config` or `rpc_config` defined for the network specified in your configuration.
+**Issue**: No `hypersync_config` or `rpc` defined for the chain specified in your configuration.
 
 **Solution**:
 
-- Add either a HyperSync or RPC configuration for your network
+- Add either a HyperSync or RPC configuration for your chain
 - See the HyperSync Data Source or RPC Data Source documentation
 - Example:
   ```yaml
-  network:
-    network_id: 1
-    rpc_config:
-      rpc_url: "https://eth-mainnet.g.alchemy.com/v2/YOUR_API_KEY"
+  chains:
+    - id: 1
+      rpc:
+        url: "https://eth-mainnet.g.alchemy.com/v2/YOUR_API_KEY"
   ```
 
 #### `EE108`: Invalid Postgres Database Name
@@ -12298,7 +11857,7 @@ If you encounter persistent issues with reserved words or need help refactoring 
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 42161 # Arbitrum  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
@@ -12339,7 +11898,7 @@ Can’t find what you’re looking for or need support? Reach out to us on [Disc
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 1 # Eth  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
@@ -12380,7 +11939,7 @@ Can’t find what you’re looking for or need support? Reach out to us on [Disc
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 10 # Optimism  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
@@ -12421,7 +11980,7 @@ Can’t find what you’re looking for or need support? Reach out to us on [Disc
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 137 # Polygon  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
@@ -12601,31 +12160,35 @@ When handling Fuel events, the event object structure differs from EVM:
 
 ```typescript
 // Example Fuel event handler
-SwayContract.NewGreeting.handler(async ({ event, context }) => {
-  // Access event parameters
-  const message = event.params.message;
 
-  // Access block information
-  const blockHeight = event.block.height;
-  const blockTime = event.block.time;
-  const blockId = event.block.id;
+indexer.onEvent(
+  { contract: "SwayContract", event: "NewGreeting" },
+  async ({ event, context }) => {
+    // Access event parameters
+    const message = event.params.message;
 
-  // Access transaction information
-  const txId = event.transaction.id;
+    // Access block information
+    const blockHeight = event.block.height;
+    const blockTime = event.block.time;
+    const blockId = event.block.id;
 
-  // Access source contract address
-  const sourceContract = event.srcAddress;
+    // Access transaction information
+    const txId = event.transaction.id;
 
-  // Access log position
-  const logIndex = event.logIndex;
+    // Access source contract address
+    const sourceContract = event.srcAddress;
 
-  // Store data
-  context.Greeting.set({
-    id: event.transaction.id,
-    message: message,
-    timestamp: blockTime,
-  });
-});
+    // Access log position
+    const logIndex = event.logIndex;
+
+    // Store data
+    context.Greeting.set({
+      id: event.transaction.id,
+      message: message,
+      timestamp: blockTime,
+    });
+  },
+);
 ```
 
 ## HyperFuel
