@@ -31,7 +31,6 @@ const HYPERSYNC_COLUMNS = [
   { name: "Network ID", width: 15 },
   { name: "HyperSync URL", width: 88 },
   { name: "HyperRPC URL", width: 88 },
-  { name: "Tier", width: 4 },
 ];
 
 const HYPERRPC_COLUMNS = [
@@ -79,19 +78,6 @@ const generateTableRow = (columns, values) => {
   );
 };
 
-const emojiTier = (network) => {
-  return (
-    {
-      gold: "🏅",
-      silver: "🥈",
-      bronze: "🥉",
-      stone: "🪨",
-      hidden: "🔒",
-      testnet: "🎒",
-    }[network.tier.toLowerCase()] || "🏗️"
-  );
-};
-
 const generateNotesSection = (data) => {
   const chainsWithNotes = sortAndFilterChains(data).filter(
     (chain) => networkAnnotations[chain.name]
@@ -122,8 +108,6 @@ const generateHyperSyncTable = (data) => {
       networkName += "*";
     }
 
-    const tier = emojiTier(chain);
-
     // Check if this is a traces network and modify the URL accordingly
     const isTracesNetwork = chain.name.toLowerCase().includes("traces");
     const chainIdSuffix = isTracesNetwork ? `-traces` : "";
@@ -135,7 +119,6 @@ const generateHyperSyncTable = (data) => {
       chain.chain_id.toString(),
       hypersyncUrl,
       hyperrpcUrl,
-      tier,
     ];
 
     table += generateTableRow(HYPERSYNC_COLUMNS, rowValues);
@@ -238,7 +221,6 @@ const updateMarkdownFiles = async () => {
 // Function to generate markdown content
 const generateHyperSyncMarkdownContent = (network) => {
   const capitalizedTitle = capitalizeAndSplit(network.name);
-  const tier = emojiTier(network);
 
   const hypersyncUrl = `https://${network.name}.hypersync.xyz`;
   const hyperrpcUrl = `https://${network.name}.rpc.hypersync.xyz`;
@@ -266,10 +248,6 @@ slug: /${network.name}
 | **HyperRPC URL Endpoint**     | [${hyperrpcUrl}](${hyperrpcUrl}) or [https://${network.chain_id}${chainIdSuffix}.rpc.hypersync.xyz](https://${network.chain_id}${chainIdSuffix}.rpc.hypersync.xyz) |
 
 ---
-
-### Tier
-
-${network.tier} ${tier}
 
 ### Overview
 

@@ -18,10 +18,6 @@ slug: /ab
 
 ---
 
-### Tier
-
-STONE 🪨
-
 ### Overview
 
 Envio is a modular hyper-performant data indexing solution for Ab, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
