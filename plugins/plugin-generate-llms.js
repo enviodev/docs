@@ -69,6 +69,7 @@ function GenerateLLMSPlugin(context, options) {
             const { url, plugins } = siteConfig;
 
             const filesConfigs = options.filesConfigs || [];
+            const excludePluginIds = new Set(options.excludePluginIds || []);
 
             let collectedDocs = [];
 
@@ -79,6 +80,9 @@ function GenerateLLMSPlugin(context, options) {
                     plugin[0] === "@docusaurus/plugin-content-docs"
                 ) {
                     const config = plugin[1];
+                    if (config.id && excludePluginIds.has(config.id)) {
+                        continue;
+                    }
                     const docsPath = path.resolve(config.path);
                     const routeBasePath = config.routeBasePath || "";
 

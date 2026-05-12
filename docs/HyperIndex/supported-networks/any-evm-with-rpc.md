@@ -16,17 +16,15 @@ Any EVM-compatible chain can be indexed using an RPC as a source. This means tha
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 1234567890
-    rpc_config:
-      url: https://custom-network-rpc.com # RPC URL for that custom network
+    rpc: https://custom-network-rpc.com # RPC URL for that custom network
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName
         address:
           - "0xYourContractAddress1"
           - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
         events:
           - event: Event # Specify event
           - event: Event

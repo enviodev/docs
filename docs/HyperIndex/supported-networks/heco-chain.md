@@ -22,29 +22,27 @@ Envio supports Heco Chain through an RPC-based indexing approach. This method al
 
 ---
 
-### Defining Network Configurations
+### Defining Chain Configurations
 
-To use Heco Chain, define the RPC configuration in your network configuration file as follows:
+To use Heco Chain, define the RPC configuration in your chain configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](/docs/HyperIndex/rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 128 # Heco Chain
-    rpc_config:
-      url: https://http-mainnet.hecochain.com 
-    # url: https://heco.drpc.org # alternative
+    rpc: https://http-mainnet.hecochain.com
+    # rpc: https://heco.drpc.org # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName
         address:
           - "0xYourContractAddress1"
           - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
         events:
           - event: Event # Specify event
           - event: Event

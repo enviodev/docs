@@ -22,30 +22,28 @@ Envio supports Iotex Network through an RPC-based indexing approach. This method
 
 ---
 
-### Defining Network Configurations
+### Defining Chain Configurations
 
-To use Iotex Network, define the RPC configuration in your network configuration file as follows:
+To use Iotex Network, define the RPC configuration in your chain configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](/docs/HyperIndex/rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 4689 # Iotex Network
-    rpc_config:
-      url: https://rpc.ankr.com/iotex 
-    # url: https://iotex-network.rpc.thirdweb.com # alternative,
-    # url: https://babel-api.mainnet.iotex.one # alternative
+    rpc: https://rpc.ankr.com/iotex
+    # rpc: https://iotex-network.rpc.thirdweb.com # alternative
+    # rpc: https://babel-api.mainnet.iotex.one # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName
         address:
           - "0xYourContractAddress1"
           - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
         events:
           - event: Event # Specify event
           - event: Event

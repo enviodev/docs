@@ -17,6 +17,10 @@ slug: /extrabud
 
 ---
 
+### Tier
+
+INTERNAL 🏗️
+
 ### Overview
 
 Envio is a modular hyper-performant data indexing solution for Extrabud, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
@@ -25,7 +29,7 @@ HyperSync accelerates the synchronization of historical data on Extrabud, enabli
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
-To get started, see our documentation or follow our quickstart [guide](/docs/HyperIndex/contract-import).
+To get started, see our documentation or follow our quickstart [guide](/docs/HyperIndex/quickstart).
 
 ---
 
@@ -34,7 +38,7 @@ To get started, see our documentation or follow our quickstart [guide](/docs/Hyp
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 283027429 # Extrabud  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
@@ -42,7 +46,6 @@ networks:
         address:
          - "0xYourContractAddress1"
          - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
         events:
           - event: Event # Specify event
           - event: Event

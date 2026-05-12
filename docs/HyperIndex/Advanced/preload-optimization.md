@@ -10,7 +10,7 @@ description: Learn how preload optimization improves event handlers with batched
 
 > **Important!** Preload optimization makes your handlers run **twice**.
 
-Starting from `envio@2.27` all new indexers are created with preload optimization pre-configured by default.
+In HyperIndex V3, preload optimization is **always on** — there is no flag to enable or disable it.
 
 This optimization enables HyperIndex to efficiently preload entities used by handlers through batched database queries, while ensuring events are processed synchronously in their original order. When combined with the [Effect API](/docs/HyperIndex/effect-api) for external calls, this feature delivers performance improvements of multiple orders of magnitude compared to other indexing solutions.
 
@@ -18,11 +18,7 @@ This optimization enables HyperIndex to efficiently preload entities used by han
 
 ## Configure
 
-Currently, you need to explicitly enable the preloaded configuration in your [`config.yaml`](/docs/HyperIndex/configuration-file) file. In the future, this will be enabled by default.
-
-```yaml
-preload_handlers: true
-```
+Nothing to configure. Previously, V2 required the `preload_handlers: true` flag in [`config.yaml`](/docs/HyperIndex/configuration-file). In V3 the flag has been removed and the optimization is always active. If your project still has `preload_handlers:` in `config.yaml`, delete it — V3 will reject the field.
 
 ## Why Preload?
 
@@ -50,11 +46,16 @@ This double execution pattern ensures that entities created by earlier events in
 Consider this common pattern of getting entities in event handlers:
 
 ```typescript
-ERC20.Transfer.handler(async ({ event, context }) => {
-  const sender = await context.Account.get(event.params.from);
-  const receiver = await context.Account.get(event.params.to);
-  // Process the transfer...
-});
+import { indexer } from "envio";
+
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    const sender = await context.Account.get(event.params.from);
+    const receiver = await context.Account.get(event.params.to);
+    // Process the transfer...
+  },
+);
 ```
 
 **Without Preload Optimization:** If you're processing 5,000 transfer events, each with unique `from` and `to` addresses, this results in **10,000 total database roundtrips**—one for each sender and receiver lookup (2 per event × 5,000 events). This creates a significant bottleneck that slows down your entire indexing process.
@@ -68,14 +69,19 @@ For our example of 5,000 transfer events, this optimization reduces database rou
 You can further optimize performance by requesting multiple entities concurrently:
 
 ```typescript
-ERC20.Transfer.handler(async ({ event, context }) => {
-  // Request sender and receiver concurrently for maximum efficiency
-  const [sender, receiver] = await Promise.all([
-    context.Account.get(event.params.from),
-    context.Account.get(event.params.to),
-  ]);
-  // Process the transfer...
-});
+import { indexer } from "envio";
+
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    // Request sender and receiver concurrently for maximum efficiency
+    const [sender, receiver] = await Promise.all([
+      context.Account.get(event.params.from),
+      context.Account.get(event.params.to),
+    ]);
+    // Process the transfer...
+  },
+);
 ```
 
 This approach can reduce the database roundtrips to just 1 for the entire batch of events!
@@ -85,14 +91,19 @@ This approach can reduce the database roundtrips to just 1 for the entire batch 
 Let's say you want to populate your indexer with offchain data:
 
 ```typescript
-ERC20.Transfer.handler(async ({ event, context }) => {
-  // Without Preload: Blocking external calls
-  const metadata = await fetch(
-    `https://api.example.com/metadata/${event.params.from}`
-  );
+import { indexer } from "envio";
 
-  // Process the transfer...
-});
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    // Without Preload: Blocking external calls
+    const metadata = await fetch(
+      `https://api.example.com/metadata/${event.params.from}`
+    );
+
+    // Process the transfer...
+  },
+);
 ```
 
 **Without Preload Optimization:** If you're processing 5,000 transfer events, each with an external call, this results in **5,000 sequential external calls**—each waiting for the previous one to complete. This can turn a fast indexing process into a slow, sequential crawl.
@@ -100,7 +111,7 @@ ERC20.Transfer.handler(async ({ event, context }) => {
 **With Preload Optimization:** Since handlers run **twice** for each event, making direct external calls can be problematic. The [Effect API](/docs/HyperIndex/effect-api) provides a solution. During the Preload Phase, it batches all external calls and runs them in parallel. Then during the Processing Phase, it runs the handlers sequentially, retrieving the already requested data from the in-memory store.
 
 ```typescript
-import { S, createEffect } from "envio";
+import { S, createEffect, indexer } from "envio";
 
 const fetchMetadata = createEffect(
   {
@@ -125,14 +136,17 @@ const fetchMetadata = createEffect(
   }
 );
 
-ERC20.Transfer.handler(async ({ event, context }) => {
-  // With Preload: Performs the call in parallel
-  const metadata = await context.effect(fetchMetadata, {
-    from: event.params.from,
-  });
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    // With Preload: Performs the call in parallel
+    const metadata = await context.effect(fetchMetadata, {
+      from: event.params.from,
+    });
 
-  // Process the transfer...
-});
+    // Process the transfer...
+  },
+);
 ```
 
 Assuming an average call takes 200ms, this optimization reduces the total processing time for 5,000 events from ~16 minutes to ~200 milliseconds - making it 5,000 times faster!
@@ -146,7 +160,7 @@ The Preload Phase is a special phase that runs before the actual event processin
 Key characteristics of the Preload Phase:
 
 - It runs in parallel for all events in the batch
-- Exceptions won't crash the indexer but will silently abort the Preload Phase for that specific event (Starting from `envio@2.23`)
+- Exceptions won't crash the indexer but will silently abort the Preload Phase for that specific event
 - All storage updates are ignored
 - All `context.log` calls are ignored
 
@@ -173,17 +187,22 @@ Due to the optimistic nature of the Preload Phase, the Effect API may occasional
 > Note: This will disable the Preload Optimization for the external calls.
 
 ```typescript
-ERC20.Transfer.handler(async ({ event, context }) => {
-  const sender = await context.Account.get(event.params.from);
+import { indexer } from "envio";
 
-  if (context.isPreload) {
-    return;
-  }
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    const sender = await context.Account.get(event.params.from);
 
-  const metadata = await fetch(
-    `https://api.example.com/metadata/${sender.metadataId}`
-  );
-});
+    if (context.isPreload) {
+      return;
+    }
+
+    const metadata = await fetch(
+      `https://api.example.com/metadata/${sender.metadataId}`
+    );
+  },
+);
 ```
 
 ## Best Practices
@@ -194,10 +213,10 @@ ERC20.Transfer.handler(async ({ event, context }) => {
 
 ## Migrating from Loaders
 
-The Preload Optimization for handlers was born from a concept we had before called [Loaders](/docs/HyperIndex/loaders). If you're using loaders, we recommend you to migrate to preload optimization by enabling it in the config and moving all your code to the handler.
+The Preload Optimization for handlers was born from a concept we had before called [Loaders](/docs/HyperIndex/loaders). The `handlerWithLoader` API has been removed in V3 — move the loader code into the handler and rely on the always-on Preload Phase.
 
 ```typescript
-// Before:
+// V2 — removed in V3
 ERC20.Transfer.handlerWithLoader({
   loader: async ({ event, context }) => {
     // Load sender and receiver accounts efficiently
@@ -219,19 +238,24 @@ ERC20.Transfer.handlerWithLoader({
   },
 });
 
-// After:
-ERC20.Transfer.handler(async ({ event, context }) => {
-  // Load sender and receiver accounts efficiently
-  const sender = await context.Account.get(event.params.from);
-  const receiver = await context.Account.get(event.params.to);
+// V3
+import { indexer } from "envio";
 
-  // To imitate the behavior of the loader,
-  // we can use `context.isPreload` to make next code run only once.
-  // Note: This is not required, but might be useful for CPU-intensive operations.
-  if (context.isPreload) {
-    return;
-  }
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    // Load sender and receiver accounts efficiently
+    const sender = await context.Account.get(event.params.from);
+    const receiver = await context.Account.get(event.params.to);
 
-  // Process the transfer with the pre-loaded data
-});
+    // To imitate the behavior of the loader,
+    // we can use `context.isPreload` to make next code run only once.
+    // Note: This is not required, but might be useful for CPU-intensive operations.
+    if (context.isPreload) {
+      return;
+    }
+
+    // Process the transfer with the pre-loaded data
+  },
+);
 ```

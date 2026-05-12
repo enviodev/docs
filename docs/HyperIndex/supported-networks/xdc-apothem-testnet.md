@@ -32,10 +32,9 @@ You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 51 # XDC Apothem Testnet
-    rpc_config:
-      url: https://earpc.apothem.network 
+    rpc: https://earpc.apothem.network
     # url: https://erpc.apothem.network # alternative,
     # url: https://apothem.xdcrpc.com # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
@@ -44,7 +43,6 @@ networks:
         address:
           - "0xYourContractAddress1"
           - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
         events:
           - event: Event # Specify event
           - event: Event

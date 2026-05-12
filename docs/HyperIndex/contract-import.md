@@ -2,13 +2,27 @@
 id: contract-import
 title: HyperIndex Quickstart
 sidebar_label: Quickstart
-slug: /contract-import
+slug: /quickstart
 description: Learn to quickly autogenerate and configure a HyperIndex indexer for any smart contract.
 ---
 
 The **Quickstart** enables you to instantly autogenerate a powerful blockchain indexer and start querying blockchain data in minutes. This is the fastest and easiest way to begin using HyperIndex.
 
-**Example:** Autogenerate an indexer for the Eigenlayer contract and index its entire history in less than 5 minutes by simply running `pnpx envio init` and providing the contract address from [Etherscan](https://etherscan.io/address/0x858646372cc42e1a627fce94aa7a7033e7cf075a).
+**Example:** Autogenerate an indexer for the Eigenlayer contract and index its entire history in less than 5 minutes by simply running `pnpx envio@3.0.0-rc.0 init` and providing the contract address from [Etherscan](https://etherscan.io/address/0x858646372cc42e1a627fce94aa7a7033e7cf075a).
+
+---
+
+## Prerequisites
+
+- **[Node.js](https://nodejs.org/en/download/current)** _(v22 or newer recommended)_
+- **[pnpm](https://pnpm.io/installation)** _(recommended but not required)_
+- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
+
+> **Note:** Docker is only required if you plan to run your indexer locally. You can skip installing Docker if you'll only be using Envio Cloud.
+
+### Additionally for Windows Users:
+
+- **[WSL](https://learn.microsoft.com/en-us/windows/wsl/install)** _Windows Subsystem for Linux_
 
 ---
 
@@ -17,7 +31,7 @@ The **Quickstart** enables you to instantly autogenerate a powerful blockchain i
 Run the following command to initialize your blockchain indexer:
 
 ```bash
-pnpx envio init
+pnpx envio@3.0.0-rc.0 init
 ```
 
 You'll then follow interactive prompts to customize your indexer.
@@ -29,6 +43,8 @@ You'll then follow interactive prompts to customize your indexer.
 <iframe width="560" height="315" src="https://www.youtube.com/embed/zkVlGgf5XAo" title="Quickstart Guide" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/JOiLUysZf-s" title="Indexer Initialization Guide" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/LNhaN-Cikis" title="Envio - Getting Started Guide" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ---
 
@@ -229,3 +245,12 @@ Learn more in the [event handlers guide](./Guides/event-handlers.mdx).
 **Congratulations!** Your HyperIndex indexer is now ready to run and query data!
 
 Next step: [Running your Indexer locally](./running-locally) or [Deploying to Envio Cloud](./hosted-service).
+
+---
+
+## Other Ways to Start
+
+Contract Import is the recommended path, but you can also bootstrap an indexer from:
+
+- **Templates** — pre-built `ERC20` or [Greeter](./greeter-tutorial) projects, selectable from the `pnpx envio@3.0.0-rc.0 init` interactive prompt.
+- **Examples** — copy and adapt an existing indexer from the [Envio Explorer](https://envio.dev/explorer), our [Tutorials](./tutorial-erc20-token-transfers), or the [GitHub repositories](https://github.com/enviodev).

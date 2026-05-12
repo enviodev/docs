@@ -27,7 +27,7 @@ By the end of this tutorial, you'll have:
 Before starting, ensure you have the following installed:
 
 - **[Node.js](https://nodejs.org/en/download/current)** _(v22 or newer recommended)_
-- **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
+- **[pnpm](https://pnpm.io/installation)** _(recommended but not required)_
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
 > **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio Cloud.
@@ -39,7 +39,7 @@ First, let's create a new project using Envio's Greeter template:
 1. Open your terminal and run:
 
 ```bash
-pnpx envio init
+pnpx envio@3.0.0-rc.0 init
 ```
 
 2. When prompted for a directory, you can press Enter to use the current directory or specify another path:
@@ -85,20 +85,19 @@ This configuration file defines which networks and contracts to index:
 
 ```yaml
 # Partial example
-envio_node:
-  networks:
-    - name: polygon
-      # ... Polygon network settings
-      contracts:
-        - name: Greeter
-          address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
-          # ... contract settings
-    - name: linea
-      # ... Linea network settings
-      contracts:
-        - name: Greeter
-          address: "0xdEe21B97AB77a16B4b236F952e586cf8408CF32A"
-          # ... contract settings
+chains:
+  - id: 137 # Polygon
+    # ... Polygon chain settings
+    contracts:
+      - name: Greeter
+        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
+        # ... contract settings
+  - id: 59144 # Linea
+    # ... Linea chain settings
+    contracts:
+      - name: Greeter
+        address: "0xdEe21B97AB77a16B4b236F952e586cf8408CF32A"
+        # ... contract settings
 ```
 
 ### `schema.graphql`
@@ -123,7 +122,7 @@ type User {
 }
 ```
 
-### `src/EventHandlers.js` (or `.ts`/`.res`)
+### `src/handlers` (or `.ts`/`.res`)
 
 This file contains the logic to process events emitted by the Greeter contract.
 

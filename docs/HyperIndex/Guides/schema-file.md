@@ -47,7 +47,7 @@ Scalar types represent basic data types and map directly to JavaScript, TypeScri
 | `BigInt`           | Signed integer (`int256` in Solidity)        | `bigint`                  | `bigint`       |
 | `BigDecimal`       | Arbitrary-size floating-point                | `BigDecimal` (imported)   | `BigDecimal.t` |
 | `Timestamp`        | Timestamp with timezone                      | `Date`                    | `Js.Date.t`    |
-| `Json`             | JSON object (from envio@2.20)                | `Json`                    | `Js.Json.t`    |
+| `Json`             | JSON object                                  | `Json`                    | `Js.Json.t`    |
 
 Learn more about GraphQL scalars [here](https://graphql.org/learn/).
 
@@ -61,7 +61,7 @@ The `BigDecimal` scalar type in HyperIndex is based on the [bignumber.js](https:
 
 ```typescript
 // JavaScript/TypeScript
-import { BigDecimal } from "generated";
+import { BigDecimal } from "envio";
 
 // ReScript
 open BigDecimal;
@@ -263,12 +263,12 @@ Enums translate to string unions (TypeScript/JavaScript) or polymorphic variants
 **TypeScript Example:**
 
 ```typescript
-import { AccountType } from "../generated/src/Enums.gen";
+import { type Enum } from "envio";
 
 let user = {
   id: event.params.id,
   balance: event.params.balance,
-  accountType: "USER", // enum as string
+  accountType: "USER" satisfies Enum<"AccountType">, // enum as string
 };
 ```
 

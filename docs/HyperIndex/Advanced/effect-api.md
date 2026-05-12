@@ -53,21 +53,26 @@ The first argument is an options object that describes the effect:
 - `input` (required) - the input type of the effect
 - `output` (required) - the output type of the effect
 - `rateLimit` (required) - the maximum calls allowed per timeframe, or `false` to disable
-- `cache` (optional) - save effect results in the database to prevent duplicate calls (Starting from `envio@2.26.0`)
+- `cache` (optional) - save effect results in the database to prevent duplicate calls
 
 The second argument is a function that will be called with the effect's input.
 
 > **Note:** For type definitions, you should use `S` from the `envio` package, which uses [Sury](https://github.com/DZakh/sury) library under the hood.
 
-After defining an effect, you can use `context.effect` to call it from your handler, loader, or another effect.
+After defining an effect, you can use `context.effect` to call it from your handler or another effect.
 
 The `context.effect` function accepts an effect as the first argument and the effect's input as the second argument:
 
 ```typescript
-ERC20.Transfer.handler(async ({ event, context }) => {
-  const metadata = await context.effect(getMetadata, event.params.from);
-  // Process the event with the metadata
-});
+import { indexer } from "envio";
+
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer" },
+  async ({ event, context }) => {
+    const metadata = await context.effect(getMetadata, event.params.from);
+    // Process the event with the metadata
+  },
+);
 ```
 
 ### Reading On-Chain State (eth_call)
@@ -254,16 +259,21 @@ export const sendWebhook = createEffect(
 Then call it from your handler:
 
 ```typescript
-MyContract.LargeTransfer.handler(async ({ event, context }) => {
-  await context.effect(sendWebhook, {
-    event: "large_transfer",
-    data: JSON.stringify({
-      from: event.params.from,
-      to: event.params.to,
-      amount: event.params.value.toString(),
-    }),
-  });
-});
+import { indexer } from "envio";
+
+indexer.onEvent(
+  { contract: "MyContract", event: "LargeTransfer" },
+  async ({ event, context }) => {
+    await context.effect(sendWebhook, {
+      event: "large_transfer",
+      data: JSON.stringify({
+        from: event.params.from,
+        to: event.params.to,
+        amount: event.params.value.toString(),
+      }),
+    });
+  },
+);
 ```
 
 :::warning

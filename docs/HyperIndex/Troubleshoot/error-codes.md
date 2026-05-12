@@ -100,18 +100,17 @@ Envio error codes are categorized by their first digits:
 
 #### `EE106`: Undefined Network Config
 
-**Issue**: No `hypersync_config` or `rpc_config` defined for the network specified in your configuration.
+**Issue**: No `hypersync_config` or `rpc` defined for the chain specified in your configuration.
 
 **Solution**:
 
-- Add either a HyperSync or RPC configuration for your network
+- Add either a HyperSync or RPC configuration for your chain
 - See the [HyperSync Data Source](./hypersync) or [RPC Data Source](./rpc-sync) documentation
 - Example:
   ```yaml
-  network:
-    network_id: 1
-    rpc_config:
-      rpc_url: "https://eth-mainnet.g.alchemy.com/v2/YOUR_API_KEY"
+  chains:
+    - id: 1
+      rpc: https://eth-mainnet.g.alchemy.com/v2/YOUR_API_KEY
   ```
 
 #### `EE108`: Invalid Postgres Database Name

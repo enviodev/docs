@@ -133,31 +133,36 @@ When handling Fuel events, the event object structure differs from EVM:
 
 ```typescript
 // Example Fuel event handler
-SwayContract.NewGreeting.handler(async ({ event, context }) => {
-  // Access event parameters
-  const message = event.params.message;
+import { indexer } from "envio";
 
-  // Access block information
-  const blockHeight = event.block.height;
-  const blockTime = event.block.time;
-  const blockId = event.block.id;
+indexer.onEvent(
+  { contract: "SwayContract", event: "NewGreeting" },
+  async ({ event, context }) => {
+    // Access event parameters
+    const message = event.params.message;
 
-  // Access transaction information
-  const txId = event.transaction.id;
+    // Access block information
+    const blockHeight = event.block.height;
+    const blockTime = event.block.time;
+    const blockId = event.block.id;
 
-  // Access source contract address
-  const sourceContract = event.srcAddress;
+    // Access transaction information
+    const txId = event.transaction.id;
 
-  // Access log position
-  const logIndex = event.logIndex;
+    // Access source contract address
+    const sourceContract = event.srcAddress;
 
-  // Store data
-  context.Greeting.set({
-    id: event.transaction.id,
-    message: message,
-    timestamp: blockTime,
-  });
-});
+    // Access log position
+    const logIndex = event.logIndex;
+
+    // Store data
+    context.Greeting.set({
+      id: event.transaction.id,
+      message: message,
+      timestamp: blockTime,
+    });
+  },
+);
 ```
 
 ## HyperFuel

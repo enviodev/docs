@@ -14,7 +14,7 @@ For more info on how you can start your free trial or book migration support, vi
 
 Migrating Alchemy subgraphs to Envio’s HyperIndex is a simple and developer-friendly process. Alchemy subgraphs follow The Graph’s model and HyperIndex uses a very similar structure, so most of your existing setup can carry over cleanly.
 
-If you're familiar with The Graph’s libraries, the migration process should be straightforward. You can also utilize tools like Cursor to speed things up. If you are new to HyperIndex, we strongly recommend starting with our [Getting Started](https://docs.envio.dev/docs/HyperIndex/getting-started) guide before you begin your migration from Alchemy.
+If you're familiar with The Graph’s libraries, the migration process should be straightforward. You can also utilize tools like Cursor to speed things up. If you are new to HyperIndex, we strongly recommend starting with our [Quickstart](/docs/HyperIndex/quickstart) guide before you begin your migration from Alchemy.
 
 ## Why Migrate to Envio’s HyperIndex?
 - **High Speed Performance**: 143x faster than subgraphs
@@ -42,7 +42,7 @@ This Migration consists of 4 major steps:
 Start by spinning up a basic HyperIndex project with this command:
 
 ```bash
-pnpx envio init template --name alchemy-migration --directory alchemy-migration --template  greeter --api-token "YOUR_ENVIO_API_KEY"
+pnpx envio@3.0.0-rc.0 init template --name alchemy-migration --directory alchemy-migration --template  greeter --api-token "YOUR_ENVIO_API_KEY"
 ```
 
 Once the project is created, drop your API key into the .env file and you’re good to go.
@@ -96,13 +96,12 @@ HyperIndex - `config.yaml`
 ```yaml
 # yaml-language-server: $schema=./node_modules/envio/evm.schema.json
 name: uni-v4-indexer
-networks:
+chains:
   - id: 1
     start_block: 21689089
     contracts:      
       - name: PositionManager
-        address: 0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e
-        handler: src/EventHandlers.ts
+        address: "0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e"
         events:        
         - event: Subscription(uint256 indexed tokenId, address indexed subscriber)
         - event: Unsubscription(uint256 indexed tokenId, address indexed subscriber)          
@@ -161,19 +160,23 @@ Here is a code snippet to give you a sense of what these changes look like in pr
     <div className="col col--6">
     HyperIndex - `eventHandler.ts`
     ```typescript
-    PoolManager.Subscription.handler( async (event, context) => {
-    const entity = {
-        id: event.transaction.hash + event.logIndex,
-        tokenId: event.params.tokenId,
-        address: event.params.subscriber,
-        blockNumber: event.block.number,
-        logIndex: event.logIndex,
-        position: event.params.tokenId
-    }
+    import { indexer } from "envio";
 
-    context.Subscription.set(entity);
-    })
+    indexer.onEvent(
+      { contract: "PoolManager", event: "Subscription" },
+      async ({ event, context }) => {
+        const entity = {
+          id: event.transaction.hash + event.logIndex,
+          tokenId: event.params.tokenId,
+          address: event.params.subscriber,
+          blockNumber: event.block.number,
+          logIndex: event.logIndex,
+          position: event.params.tokenId,
+        };
 
+        context.Subscription.set(entity);
+      },
+    );
     ```
     </div>
 </div>

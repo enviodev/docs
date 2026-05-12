@@ -35,8 +35,8 @@ While HyperIndex gives you a complete indexing solution with schema management a
 - **[Reorg support](/docs/HyperIndex/reorgs-support)** – Gracefully handle blockchain reorganizations without sacrificing latency.
 - **[GraphQL API](/docs/HyperIndex/navigating-hasura)** – Easily query indexed data.
 - **[Cross-platform support](/docs/HyperIndex/supported-networks)** – Index any EVM-, SVM-, or Fuel-compatible blockchain.
-- **[High performance](/docs/HyperIndex/benchmarking)** – Perform historical backfills at over 10,000 events per second.
-- **[Indexer auto-generation](/docs/HyperIndex/contract-import)** – Generate indexers directly from smart contract addresses.
+- **[High performance](/docs/HyperIndex/benchmarking)** – Perform historical backfills at 30,000+ events per second.
+- **[Indexer auto-generation](/docs/HyperIndex/quickstart)** – Generate indexers directly from smart contract addresses.
 - **[Flexible language support](/docs/HyperIndex/terminology#programming-languages)** – TypeScript, JavaScript, and ReScript.
 - **[Factory contract support](/docs/HyperIndex/dynamic-contracts)** – Index data from over 1M dynamically registered contracts seamlessly.
 - **[On-chain and off-chain data integration](/docs/HyperIndex/contract-state)** – Easily combine multiple data sources.
@@ -48,28 +48,26 @@ While HyperIndex gives you a complete indexing solution with schema management a
 
 ---
 
-## HyperSync API Token Requirements
-
-HyperSync (the data engine powering HyperIndex) implements rate limits for requests without API tokens. API tokens will be required from **3 November 2025**. Here's what you need to know:
-
-- **Local Development**: An API token will be required. An automatic login feature from the CLI will be available to make this smoother.
-- **Self-Hosted Deployments**: API tokens are required for HyperSync access in self-hosted deployments. The token can be set via the `ENVIO_API_TOKEN` environment variable in your indexer configuration. This can be read from the `.env` file in the root of your HyperIndex project.
-- **Envio Cloud**: Indexers deployed to Envio Cloud will have special access that doesn't require a custom API token.
-- **Future Pricing**: From mid-November 2025 onwards, we will introduce tiered packages for those self-hosting HyperIndex and wishing to use HyperSync. For preferred introductory pricing based on your specific use case, reach out to us on [Discord](https://discord.gg/envio).
-
-For more details about API tokens, including how to generate and implement them, see our [API Tokens documentation](/docs/HyperSync/api-tokens).
-
----
-
 ## Feature Roadmap
 
 Upcoming features on our development roadmap:
 
-- **ClickHouse Sink**
-- **Solana Slot Handler**
-- **New Testing Framework**
 - **Isolated Multichain Mode**
-- **Top Level Await Support**
+- **Polished Solana Support**
+- **Indexing 1,000,000+ events per second**
+
+---
+
+## HyperSync API Token Requirements
+
+HyperSync (the data engine powering HyperIndex) requires an API token for all requests. You can generate one in the [Envio Cloud portal](https://envio.dev/app/api-tokens). Here's what you need to know:
+
+- **Local Development**: An API token is required. The CLI supports an automatic login flow to make this smoother.
+- **Self-Hosted Deployments**: API tokens are required for HyperSync access in self-hosted deployments. Set the token via the `ENVIO_API_TOKEN` environment variable in your indexer configuration. This can be read from the `.env` file in the root of your HyperIndex project.
+- **Envio Cloud**: Indexers deployed to Envio Cloud have special access that doesn't require a custom API token.
+- **Pricing**: Tiered packages are available for those self-hosting HyperIndex and using HyperSync. See the [HyperSync pricing page](https://envio.dev/pricing/hypersync) for details, or reach out to us on [Discord](https://discord.gg/envio) for preferred pricing based on your specific use case.
+
+For more details about API tokens, including how to generate and implement them, see our [API Tokens documentation](/docs/HyperSync/api-tokens).
 
 ---
 

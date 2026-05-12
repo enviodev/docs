@@ -22,30 +22,28 @@ Envio supports Ronin through an RPC-based indexing approach. This method allows 
 
 ---
 
-### Defining Network Configurations
+### Defining Chain Configurations
 
-To use Ronin, define the RPC configuration in your network configuration file as follows:
+To use Ronin, define the RPC configuration in your chain configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](/docs/HyperIndex/rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 2020 # Ronin
-    rpc_config:
-      url: https://ronin.drpc.org 
-    # url: https://ronin.lgns.net/rpc # alternative,
-    # url: https://api.roninchain.com/rpc # alternative
+    rpc: https://ronin.drpc.org
+    # rpc: https://ronin.lgns.net/rpc # alternative
+    # rpc: https://api.roninchain.com/rpc # alternative
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName
         address:
           - "0xYourContractAddress1"
           - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
         events:
           - event: Event # Specify event
           - event: Event

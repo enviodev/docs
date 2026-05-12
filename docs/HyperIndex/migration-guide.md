@@ -12,11 +12,15 @@ description: Easily migrate your existing subgraph to HyperIndex for up to 100x 
 Please reach out to our team on [Discord](https://discord.gg/envio) for personalized migration assistance.
 :::
 
+:::tip Already on HyperIndex V2?
+This page covers migrating from The Graph to Envio. If you are upgrading an existing HyperIndex project from V2 to V3, follow the [Migrate to V3](./migrate-to-v3) guide instead. Some examples below still use the V2 handler syntax (`Contract.Event.handler(...)`, `networks:`); the V3 equivalents (`indexer.onEvent(...)`, `chains:`) are documented in that guide.
+:::
+
 ## Introduction
 
 Migrating your existing subgraph to Envio's HyperIndex is designed to be a developer-friendly process. HyperIndex draws strong inspiration from The Graph’s subgraph architecture, which makes the migration simple, especially with the help of coding assistants like Cursor and AI tools (don't forget to use our [ai friendly docs](/docs/HyperIndex-LLM/hyperindex-complete)).
 
-The process is simple but requires a good understanding of the underlying concepts. If you are new to HyperIndex, we recommend starting with the [Getting Started](../HyperIndex/getting-started) guide.
+The process is simple but requires a good understanding of the underlying concepts. If you are new to HyperIndex, we recommend starting with the [Quickstart](/docs/HyperIndex/quickstart) guide.
 
 :::tip Prefer AI-assisted migration?
 If you want an assistant-led workflow, see [How to Migrate Using AI](./migrate-with-ai) for a guided process that works in both Cursor and Claude Code.
@@ -50,13 +54,13 @@ or run
 
 to verify the indexer is running and indexing correctly.
 
-### 0.5 Use `npx envio init` to generate a boilerplate
+### 0.5 Use `pnpx envio@3.0.0-rc.0 init` to generate a boilerplate
 
-As a first step, we recommend using `npx envio init` to generate a boilerplate for your project. This will handle the creation of the `config.yaml` file and a basic `schema.graphql` file with generic handler functions.
+As a first step, we recommend using `pnpx envio@3.0.0-rc.0 init` to generate a boilerplate for your project. This will handle the creation of the `config.yaml` file and a basic `schema.graphql` file with generic handler functions.
 
 ### 1. `subgraph.yaml` → `config.yaml`
 
-`npx envio init` will generate this for you. It's a simple configuration file conversion. Effectively specifying which contracts to index, which networks to index (multiple networks can be specified with envio) and which events from those contracts to index.
+`pnpx envio@3.0.0-rc.0 init` will generate this for you. It's a simple configuration file conversion. Effectively specifying which contracts to index, which networks to index (multiple networks can be specified with envio) and which events from those contracts to index.
 
 Take the following conversion as an example, where the `subgraph.yaml` file is converted to `config.yaml` the below comparisons is for the Uniswap v4 pool manager subgraph.
 
@@ -108,8 +112,7 @@ networks:
     start_block: 21689089
     contracts:      
       - name: PositionManager
-        address: 0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e
-        handler: src/EventHandlers.ts
+        address: "0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e"
         events:        
         - event: Subscription(uint256 indexed tokenId, address indexed subscriber)
         - event: Unsubscription(uint256 indexed tokenId, address indexed subscriber)          
@@ -197,7 +200,7 @@ context.Subscription.set(entity);
 HyperIndex is a powerful tool that can be used to index any contract. There are some features that are especially powerful that go above subgraph implementations and so in some cases you may want to optimise your migration to HyperIndex further to take advantage of these features. Here are some useful tips:
 
 - Use `field_selection` to opt into optional transaction and block fields (e.g. `hash`, `status`, `gasUsed`) that are not included by default, see [Transaction receipts](#transaction-receipts) for a migration-focused example and the [field selection](../HyperIndex/configuration-file#field-selection) docs for the full list.
-- Use the `unordered_multichain_mode` option to enable unordered multichain mode, this is the most common need for multichain indexing. However comes with tradeoffs worth understanding. Doc here: [unordered multichain mode](../HyperIndex/configuration-file#unordered-multichain-mode)
+- Multichain indexing in V3 always runs in unordered mode, which is the most common need and provides better performance — see [Multichain Indexing](../HyperIndex/multichain-indexing). (In V2 this required setting `unordered_multichain_mode: true`; in V3 there is no opt-in, and the V2 `multichain: ordered` mode has been removed.)
 - Use wildcard indexing to index by event signatures rather than by contract address.
 - HyperIndex uses the standard GraphQL query language, whereas TheGraph uses a custom GraphQL syntax. You can read about the differences and how to convert queries in our [Query Conversion Guide](/docs/HyperIndex/query-conversion). We also provide a query converter tool for backwards compatibility with existing TheGraph queries.
 - Loaders are a powerful feature to optimize historical sync performance. You can read more about them [here](../HyperIndex/loaders).

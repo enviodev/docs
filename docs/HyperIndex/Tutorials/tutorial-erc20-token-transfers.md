@@ -8,7 +8,7 @@ description: Learn how to index and query USDC ERC20 transfers on Base using Env
 
 ## Introduction
 
-In this tutorial, you'll learn how to index ERC20 token transfers on the Base network using Envio HyperIndex. By leveraging the no-code [contract import](https://docs.envio.dev/docs/HyperIndex/contract-import) feature, you'll be able to quickly analyze USDC transfer activity, including identifying the largest transfers.
+In this tutorial, you'll learn how to index ERC20 token transfers on the Base network using Envio HyperIndex. By leveraging the no-code [contract import](https://docs.envio.dev/docs/HyperIndex/quickstart) feature, you'll be able to quickly analyze USDC transfer activity, including identifying the largest transfers.
 
 We'll create an indexer that tracks all USDC token transfers on Base by extracting the `Transfer` events emitted by the USDC contract. The entire process takes less than 5 minutes to set up and start querying data.
 
@@ -19,7 +19,7 @@ We'll create an indexer that tracks all USDC token transfers on Base by extracti
 Before starting, ensure you have the following installed:
 
 - **[Node.js](https://nodejs.org/en/download/current)** _(v22 or newer recommended)_
-- **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
+- **[pnpm](https://pnpm.io/installation)** _(recommended but not required)_
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
 > **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio Cloud.
@@ -29,7 +29,7 @@ Before starting, ensure you have the following installed:
 1. Open your terminal in an empty directory and run:
 
 ```bash
-pnpx envio init
+pnpx envio@3.0.0-rc.0 init
 ```
 
 2. Name your indexer (we'll use "usdc-base-transfer-indexer" in this example):
@@ -112,9 +112,9 @@ This schema defines the data structures for the Transfer event:
 
 <img src="/docs-assets/tutorial-base-erc20-transfer-7.png" alt="GraphQL schema file" width="100%"/>
 
-### 3. `src/EventHandlers.*`
+### 3. `src/handlers`
 
-This file contains the business logic for processing events:
+This directory contains the business logic for processing events:
 
 - Functions that execute when Transfer events are detected
 - Data transformation and storage logic

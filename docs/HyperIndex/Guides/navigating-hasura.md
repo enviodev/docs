@@ -99,8 +99,7 @@ The Data tab provides direct access to your database tables and relationships, a
 To confirm your blockchain indexer is working correctly:
 
 1. Check entity tables to ensure they contain the expected data
-2. Look at the `db_write_timestamp` column values to confirm when data was last updated
-3. Newer timestamps indicate fresh data; older timestamps might indicate stale data from previous runs
+2. Query the `envio_chains` table (or use the [Metadata Query](/docs/HyperIndex/metadata-query) API) to see each chain's latest processed block and confirm the indexer is making progress
 
 ## Common Tasks
 
@@ -109,9 +108,8 @@ To confirm your blockchain indexer is working correctly:
 To verify your blockchain indexer is actively processing new blocks:
 
 1. Go to the Data tab
-2. Select any entity table
-3. Check the latest `db_write_timestamp` values
-4. Monitor these values over time to ensure they're updating
+2. Select the `envio_chains` table (or query the [Metadata Query](/docs/HyperIndex/metadata-query) API) to see each chain's latest processed block
+3. Monitor those values over time to ensure they're advancing
 
 (Note the TUI is also an easy way to monitor this)
 
@@ -165,28 +163,33 @@ type Token {
 EventHandler.ts
 
 ```typescript
+import { indexer } from "envio";
+
 const globalStateId = "global-state";
 
-NftContract.Mint.handler(async ({event, context}) => {
-  const globalState = await context.GlobalState.get(globalStateId);
+indexer.onEvent(
+  { contract: "NftContract", event: "Mint" },
+  async ({ event, context }) => {
+    const globalState = await context.GlobalState.get(globalStateId);
 
-  if (!globalState) {
-    context.log.error("global state doesn't exist");
-    return;
-  }
+    if (!globalState) {
+      context.log.error("global state doesn't exist");
+      return;
+    }
 
-  const incrementedTokenId = globalState.count + 1;
+    const incrementedTokenId = globalState.count + 1;
 
-  context.Token.set({
-    id: incrementedTokenId,
-    description: event.params.description,
-  });
+    context.Token.set({
+      id: incrementedTokenId,
+      description: event.params.description,
+    });
 
-  context.GlobalState.set({
-    ...globalState,
-    count: incrementedTokenId,
-  });
-});
+    context.GlobalState.set({
+      ...globalState,
+      count: incrementedTokenId,
+    });
+  },
+);
 ```
 
 This pattern scales: you can keep per-entity counters, rolling windows (daily/hourly entities keyed by date), and top-N caches by updating entities as events arrive. Your queries then read these precomputed values directly, avoiding expensive runtime aggregations.
@@ -197,7 +200,7 @@ If runtime aggregate queries are a hard requirement for your use case, please re
 
 ## Disable Hasura for Self-Hosted Blockchain Indexers
 
-Starting from `envio@2.26.0` it's possible to disable Hasura integration for self-hosted blockchain indexers. To do so, set the `ENVIO_HASURA` environment variable to `false`.
+Set the `ENVIO_HASURA` environment variable to `false` to disable Hasura integration for self-hosted blockchain indexers.
 
 ---
 

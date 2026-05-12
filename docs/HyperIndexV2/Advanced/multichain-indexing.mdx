@@ -1,0 +1,201 @@
+---
+id: multichain-indexing
+title: Multichain Indexing
+sidebar_label: Multichain Indexing
+slug: /multichain-indexing
+description: Learn how to index and process events across multiple chains with HyperIndex.
+---
+
+# Understanding Multichain Indexing
+
+Multichain indexing allows you to monitor and process events from contracts deployed across multiple blockchain networks within a single indexer instance. This capability is essential for applications that:
+
+- Track the same contract deployed across multiple networks
+- Need to aggregate data from different chains into a unified view
+- Monitor cross-chain interactions or state
+
+## How It Works
+
+With multichain indexing, events from contracts deployed on multiple chains can be used to create and update entities defined in your schema file. Your blockchain indexer will process events from all configured networks, maintaining proper synchronization across chains.
+
+## Configuration Requirements
+
+To implement multichain indexing, you need to:
+
+1. Populate the `networks` section in your `config.yaml` file for each chain
+2. Specify contracts to index from each network
+3. Create event handlers for the specified contracts
+
+## Real-World Example: Uniswap V4 Multichain Indexer
+
+For a comprehensive, production-ready example of multichain indexing, we recommend exploring our [Uniswap V4 Multichain Indexer](/docs/v2/HyperIndex/example-uniswap-v4-multi-chain-indexer). This official reference implementation:
+
+- Indexes Uniswap V4 deployments across 10 different blockchain networks
+- Powers the official [v4.xyz](https://v4.xyz) interface with real-time data
+- Demonstrates best practices for high-performance multichain indexing
+- Provides a complete, production-grade implementation you can study and adapt
+
+![V4 indexer](/img/v4.gif)
+
+The Uniswap V4 indexer showcases how to effectively structure a multichain indexer for a complex DeFi protocol, handling high volumes of data across multiple networks while maintaining performance and reliability.
+
+## Config File Structure for Multichain Indexing
+
+The `config.yaml` file for multichain indexing contains three key sections:
+
+1. **Global contract definitions** - Define contracts, ABIs, and events once
+2. **Network-specific configurations** - Specify chain IDs and starting blocks
+3. **Contract instances** - Reference global contracts with network-specific addresses
+
+```yaml
+# Example structure (simplified)
+contracts:
+  - name: ExampleContract
+    abi_file_path: ./abis/example-abi.json
+    handler: ./src/EventHandlers.js
+    events:
+      - event: ExampleEvent
+
+networks:
+  - id: 1 # Ethereum Mainnet
+    start_block: 0
+    contracts:
+      - name: ExampleContract
+        address: "0x1234..."
+  - id: 137 # Polygon
+    start_block: 0
+    contracts:
+      - name: ExampleContract
+        address: "0x5678..."
+```
+
+### Key Configuration Concepts
+
+- The global `contracts` section defines the contract interface, ABI, handlers, and events once
+- The `networks` section lists each blockchain network you want to index
+- Each network entry references the global contract and provides the network-specific address
+- This structure allows you to reuse the same handler functions and event definitions across networks
+
+> 📢 **Best Practice**: When developing multichain indexers, append the chain ID to entity IDs to avoid collisions. For example: `user-1` for Ethereum and `user-137` for Polygon.
+
+## Multichain Event Ordering
+
+When indexing multiple chains, you have two approaches for handling event ordering:
+
+### Unordered Multichain Mode
+
+:::note
+Unordered mode is recommended for most applications.
+:::
+
+The indexer processes events as soon as they're available from each chain, without waiting for other chains. This "Unordered Multichain Mode" provides better performance and lower latency.
+
+- Events will still be processed in order within each individual chain
+- Events across different chains may be processed out of order
+- Processing happens as soon as events are emitted, reducing latency
+- You avoid waiting for the slowest chain's block time
+
+This mode is ideal for most applications, especially when:
+
+- Operations on your entities are [commutative](./terminology#commutative-property) (order doesn't matter)
+- Entities from different networks never interact with each other
+- Processing speed is more important than guaranteed cross-chain ordering
+
+#### How to Enable Unordered Mode
+
+In your config.yaml:
+
+```yaml
+unordered_multichain_mode: true
+networks: ...
+```
+
+### Ordered Mode
+
+:::note
+Ordered mode is currently the default mode. But it'll be changed to unordered mode in the future. If you don't need strict deterministic ordering of events across all chains, it's recommended to use unordered mode.
+:::
+
+If your application requires strict deterministic ordering of events across all chains, you can enable "Ordered Mode". In this mode, the indexer synchronizes event processing across all chains, ensuring that events are processed in the exact same order in every indexer run, regardless of which chain they came from.
+
+#### When to Use Ordered Mode
+
+Use ordered mode only when:
+
+- The exact ordering of operations across different chains is critical to your application logic
+- You need guaranteed deterministic results across all indexer runs
+- You're willing to accept higher latency for cross-chain consistency
+
+Cross-chain ordering is particularly important for applications like:
+
+- **Bridge applications**: Where messages or assets must be processed on one chain before being processed on another chain
+- **Cross-chain governance**: Where decisions made on one chain affect operations on another chain
+- **Multi-chain financial applications**: Where the sequence of transactions across chains affects accounting or risk calculations
+- **Data consistency systems**: Where the state must be consistent across multiple chains in a specific order
+
+#### Technical Details
+
+With ordered mode enabled:
+
+- The indexer needs to wait for all blocks to increment from each network
+- There is increased latency between when an event is emitted and when it's processed
+- Processing speed is limited by the block interval of the slowest network
+- Events are guaranteed to be processed in the same order in every indexer run
+
+#### Cross-Chain Ordering Preservation
+
+Ordered mode ensures that the temporal relationship between events on different chains is preserved. This is achieved by:
+
+1. **Global timestamp ordering**: Events are ordered based on their block timestamps across all chains
+2. **Deterministic processing**: The same sequence of events will be processed in the same order every time
+
+The primary trade-off is increased latency at the head of the chain. Since the indexer must wait for blocks from all chains to determine the correct ordering, the processing of recent events is delayed by the slowest chain's block time. For example, if Chain A has 2-second blocks and Chain B has 15-second blocks, the indexer will process events at the slower 15-second rate to maintain proper ordering.
+
+This latency is acceptable for applications where correct cross-chain ordering is more important than real-time updates. For bridge applications in particular, this ordering preservation can be critical for security and correctness, as it ensures that deposit events on one chain are always processed before the corresponding withdrawal events on another chain.
+
+## Best Practices for Multichain Indexing
+
+### 1. Entity ID Namespacing
+
+Always namespace your entity IDs with the chain ID to prevent collisions between networks. This ensures that entities from different networks remain distinct.
+
+### 2. Error Handling
+
+Implement robust error handling for network-specific issues. A failure on one chain shouldn't prevent indexing from continuing on other chains.
+
+### 3. Testing
+
+- Test your indexer with realistic scenarios across all networks
+- Use testnet deployments for initial validation
+- Verify entity updates work correctly across chains
+
+### 4. Performance Considerations
+
+- Use unordered mode when appropriate for better performance
+- Consider your indexing frequency based on the block times of each chain
+- Monitor resource usage, as indexing multiple chains increases load
+- Adding more chains does **not** linearly degrade performance — chains are indexed in parallel. However, handler logic that writes to shared entities across chains may introduce contention when using ordered mode.
+
+### 5. Adding a New Chain to an Existing Indexer
+
+To add a new chain to a running indexer:
+
+1. Add the new network entry to your `config.yaml` with the appropriate `start_block` and contract addresses
+2. Push the updated code to your deployment branch (for Envio Cloud) or restart locally with `pnpm envio start -r`
+
+On **Envio Cloud**, this creates a new deployment that re-indexes all chains (including the new one). Your previous deployment continues serving queries with zero downtime until the new deployment is fully synced. See the [deployment guide](../Hosted_Service/hosted-service-deployment.md#updating-your-deployment) for details.
+
+**Locally**, adding a new chain requires a restart and will re-index all chains from their respective start blocks.
+
+## Troubleshooting Common Issues
+
+1. **Different Network Speeds**: If one network is significantly slower than others, consider using unordered mode to prevent bottlenecks.
+
+2. **Entity Conflicts**: If you see unexpected entity updates, verify that your entity IDs are properly namespaced with chain IDs.
+
+3. **Memory Usage**: If your indexer uses excessive memory, consider optimizing your entity structure and implementing pagination in your queries.
+
+## Next Steps
+
+- Explore our [Uniswap V4 Multichain Indexer](/docs/v2/HyperIndex/example-uniswap-v4-multi-chain-indexer) for a complete implementation
+- Review [performance optimization techniques](/docs/v2/HyperIndex/performance) for your indexer

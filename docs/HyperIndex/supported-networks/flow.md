@@ -22,28 +22,26 @@ Envio supports Flow through an RPC-based indexing approach. This method allows y
 
 ---
 
-### Defining Network Configurations
+### Defining Chain Configurations
 
-To use Flow, define the RPC configuration in your network configuration file as follows:
+To use Flow, define the RPC configuration in your chain configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](/docs/HyperIndex/rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 747 # Flow
-    rpc_config:
-      url: https://mainnet.evm.nodes.onflow.org 
+    rpc: https://mainnet.evm.nodes.onflow.org
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName
         address:
           - "0xYourContractAddress1"
           - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
         events:
           - event: Event # Specify event
           - event: Event

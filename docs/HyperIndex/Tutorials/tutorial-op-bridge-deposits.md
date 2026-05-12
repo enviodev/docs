@@ -8,7 +8,7 @@ description: Learn to quickly index Optimism Bridge deposits and explore OP Brid
 
 ## Introduction
 
-This tutorial will guide you through indexing Optimism Standard Bridge deposits in under 5 minutes using Envio HyperIndex's no-code [contract import](https://docs.envio.dev/docs/HyperIndex/contract-import) feature.
+This tutorial will guide you through indexing Optimism Standard Bridge deposits in under 5 minutes using Envio HyperIndex's no-code [contract import](/docs/HyperIndex/quickstart) feature.
 
 The Optimism Standard Bridge enables the movement of ETH and ERC-20 tokens between Ethereum and Optimism. We'll index bridge deposit events by extracting the `DepositFinalized` logs emitted by the bridge contracts on both networks.
 
@@ -19,7 +19,7 @@ The Optimism Standard Bridge enables the movement of ETH and ERC-20 tokens betwe
 Before starting, ensure you have the following installed:
 
 - **[Node.js](https://nodejs.org/en/download/current)** _(v22 or newer recommended)_
-- **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
+- **[pnpm](https://pnpm.io/installation)** _(recommended but not required)_
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
 
 > **Note:** Docker is specifically required to run your blockchain indexer locally. You can skip Docker installation if you plan only to use Envio Cloud.
@@ -29,7 +29,7 @@ Before starting, ensure you have the following installed:
 1. Open your terminal in an empty directory and run:
 
 ```bash
-pnpx envio init
+pnpx envio@3.0.0-rc.0 init
 ```
 
 2. Name your indexer (we'll use "optimism-bridge-indexer" in this example):
@@ -126,7 +126,7 @@ This schema defines the data structures for our selected events:
 
 <img src="/docs-assets/tutorial-op-bridge-8.png" alt="GraphQL schema file" width="100%"/>
 
-### 3. `src/EventHandlers.ts`
+### 3. `src/handlers`
 
 This file contains the business logic for processing events:
 

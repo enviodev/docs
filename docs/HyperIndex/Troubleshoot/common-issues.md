@@ -16,7 +16,6 @@ This guide helps you identify and resolve common issues you might encounter when
   - [Module Not Found Errors](#cannot-find-module-errors-on-pnpm-start)
   - [Smart Contract Updates](#smart-contract-updated-after-the-initial-codegen)
   - [Node.js Version Compatibility](#using-the-correct-version-of-nodejs)
-  - [PNPM Version Compatibility](#using-the-correct-version-of-pnpm)
 - [Runtime Issues](#runtime-issues)
   - [Indexer Start Block Issues](#indexer-not-starting-at-the-specified-start-block)
   - [Tables Not Registered in Hasura](#tables-for-entities-are-not-registered-on-hasura)
@@ -101,20 +100,6 @@ nvm install 22
 nvm use 22
 
 # Or download directly from https://nodejs.org/
-```
-
-### Using the correct version of PNPM
-
-**Problem:** Package management issues or build failures.
-
-**Solution:** Envio requires pnpm v8 or newer. If you're using v7.8 or older, please update:
-
-```bash
-# Update pnpm
-npm install -g pnpm@latest
-
-# Verify version
-pnpm --version
 ```
 
 ## Runtime Issues

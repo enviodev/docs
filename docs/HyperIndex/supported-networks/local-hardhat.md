@@ -16,17 +16,15 @@ A local network can be used as a data source for your indexer. You simply need t
 ```yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 31337 # Local Hardhat network default chainId
-    rpc_config:
-      url: http://localhost:8545 # RPC URL for your local Hardhat network
+    rpc: http://localhost:8545 # RPC URL for your local Hardhat network
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName
         address:
           - "0xYourContractAddress1"
           - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
         events:
           - event: Event # Specify event
           - event: Event

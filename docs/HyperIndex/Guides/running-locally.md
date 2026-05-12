@@ -8,7 +8,7 @@ description: Learn how to start, run, and manage the Envio indexer locally with 
 
 ## Starting the Indexer
 
-Remember to `cd` into your project directory if you have defined one during `pnpx envio init`.
+Remember to `cd` into your project directory if you have defined one during `pnpx envio@3.0.0-rc.0 init`.
 
 Before running the Envio CLI command to start the indexer locally, please make sure you have [Docker](https://www.docker.com/products/docker-desktop/) running.
 
@@ -28,11 +28,11 @@ When running `pnpm dev`, HyperIndex watches for changes to your **event handler*
 
 **What triggers a hot reload:**
 
-- Changes to event handler files (e.g., `src/EventHandlers.ts`)
+- Changes to event handler files (e.g., `src/handlers`)
 
 **What requires a full restart:**
 
-- Changes to `config.yaml` (adding contracts, events, or networks)
+- Changes to `config.yaml` (adding contracts, events, or chains)
 - Changes to `schema.graphql` (adding or modifying entities)
 - Changes to ABIs
 

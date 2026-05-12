@@ -37,16 +37,16 @@ HyperSync accelerates the synchronization of historical data on the B² Testnet,
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
-To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
+To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/quickstart).
 
 
 ### Defining Network Configurations
 
 
-```
+```yaml
 name: IndexerName # Specify indexerName name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 1123 # B2 Testnet  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
@@ -54,7 +54,6 @@ networks:
         address:
          - "0xYourContractAddress1"
          - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
         events:
           - event: Event # Specify event
           - event: Event
@@ -115,16 +114,16 @@ HyperSync accelerates the synchronization of historical data on Base, enabling w
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
-To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
+To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/quickstart).
 
 
 ### Defining Network Configurations
 
 
-```
+```yaml
 name: IndexerName # Specify indexerName name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 8453 # Base  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
@@ -132,7 +131,6 @@ networks:
         address:
          - "0xYourContractAddress1"
          - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
         events:
           - event: Event # Specify event
           - event: Event
@@ -201,16 +199,16 @@ HyperSync accelerates the synchronization of historical data on Berachain, enabl
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
-To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
+To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/quickstart).
 
 
 ### Defining Network Configurations
 
 
-```
+```yaml
 name: IndexerName # Specify indexerName name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 80084 # Berachain Bartio  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
@@ -218,7 +216,6 @@ networks:
         address:
          - "0xYourContractAddress1"
          - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
         events:
           - event: Event # Specify event
           - event: Event
@@ -279,16 +276,16 @@ HyperSync accelerates the synchronization of historical data on Blast, enabling 
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
-To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
+To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/quickstart).
 
 
 ### Defining Network Configurations
 
 
-```
+```yaml
 name: IndexerName # Specify indexerName name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 81457 # Blast  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
@@ -296,7 +293,6 @@ networks:
         address:
          - "0xYourContractAddress1"
          - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
         events:
           - event: Event # Specify event
           - event: Event
@@ -364,16 +360,16 @@ HyperSync accelerates the synchronization of historical data on Boba, enabling w
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
-To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
+To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/quickstart).
 
 
 ### Defining Network Configurations
 
 
-```
+```yaml
 name: IndexerName # Specify indexerName name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 288 # Boba  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
@@ -381,7 +377,6 @@ networks:
         address:
          - "0xYourContractAddress1"
          - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
         events:
           - event: Event # Specify event
           - event: Event
@@ -442,16 +437,16 @@ HyperSync accelerates the synchronization of historical data on BSC, enabling wh
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
-To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
+To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/quickstart).
 
 
 ### Defining Network Configurations
 
 
-```
+```yaml
 name: IndexerName # Specify indexerName name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 56 # BSC  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
@@ -459,7 +454,6 @@ networks:
         address:
          - "0xYourContractAddress1"
          - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
         events:
           - event: Event # Specify event
           - event: Event
@@ -527,16 +521,16 @@ HyperSync accelerates the synchronization of historical data on Celo, enabling w
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
-To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
+To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/quickstart).
 
 
 ### Defining Network Configurations
 
 
-```
+```yaml
 name: IndexerName # Specify indexerName name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 42220 # Celo  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
@@ -544,7 +538,6 @@ networks:
         address:
          - "0xYourContractAddress1"
          - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
         events:
           - event: Event # Specify event
           - event: Event
@@ -605,16 +598,16 @@ HyperSync accelerates the synchronization of historical data on Chiliz, enabling
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted cloud solution.
 
-To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/contract-import).
+To get started, see our documentation or follow our quickstart [guide](https://docs.envio.dev/docs/HyperIndex/quickstart).
 
 
 ### Defining Network Configurations
 
 
-```
+```yaml
 name: IndexerName # Specify indexerName name
 description: Indexer Description # Include indexer description
-networks:
+chains:
   - id: 8888 # Chiliz  
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
@@ -622,7 +615,6 @@ networks:
         address:
          - "0xYourContractAddress1"
          - "0xYourContractAddress2"
-        handler: ./src/EventHandlers.ts
         events:
           - event: Event # Specify event
           - event: Event

@@ -6,7 +6,7 @@ slug: /metadata-query
 description: See indexing progress and metadata per chain using HyperIndex _meta query.
 ---
 
-Starting from `envio@2.28` HyperIndex exposes an official `_meta` query to get indexing metadata per chain.
+HyperIndex exposes an official `_meta` query to get indexing metadata per chain.
 
 ```graphql
 {

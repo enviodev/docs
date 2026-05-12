@@ -12,7 +12,7 @@ description: Easily migrate your existing subgraph to HyperIndex for up to 100x 
 
 Migrating from Ponder to HyperIndex is straightforward — both frameworks use TypeScript, index EVM events, and expose a GraphQL API. The key differences are the config format, schema syntax, and entity operation API.
 
-If you are new to HyperIndex, start with the [Getting Started](/docs/HyperIndex/getting-started) guide first.
+If you are new to HyperIndex, start with the [Quickstart](/docs/HyperIndex/quickstart) guide first.
 
 :::tip Prefer AI-assisted migration?
 For an assistant-led workflow, see [How to Migrate Using AI](./migrate-with-ai), which includes a shared process for Cursor and Claude Code.
@@ -44,7 +44,7 @@ pnpm dev             # run the indexer locally
 ## Step 0: Bootstrap the Project
 
 ```bash
-pnpx envio init
+pnpx envio@3.0.0-rc.0 init
 ```
 
 This generates a `config.yaml`, a starter `schema.graphql`, and handler stubs. Use your Ponder project as the source of truth for contract addresses, ABIs, and events, then fill in the generated files.
@@ -82,7 +82,6 @@ name: my-indexer
 contracts:
   - name: MyToken
     abi_file_path: ./abis/MyToken.json
-    handler: ./src/EventHandlers.ts
     events:
       - event: Transfer
       - event: Approval
@@ -231,11 +230,14 @@ ponder.on("MyToken:Transfer", async ({ event, context }) => {
 **HyperIndex**
 
 ```typescript
-import { MyToken } from "generated";
+import { indexer } from "envio";
 
-MyToken.Transfer.handler(async ({ event, context }) => {
-  // ...
-});
+indexer.onEvent(
+  { contract: "MyToken", event: "Transfer" },
+  async ({ event, context }) => {
+    // ...
+  },
+);
 ```
 
 ### Event data access
@@ -282,23 +284,26 @@ ponder.on("MyToken:Transfer", async ({ event, context }) => {
 _HyperIndex_
 
 ```typescript
-import { MyToken } from "generated";
+import { indexer } from "envio";
 
-MyToken.Transfer.handler(async ({ event, context }) => {
-  context.TransferEvent.set({
-    id: `${event.transaction.hash}_${event.logIndex}`,
-    from: event.params.from,
-    to: event.params.to,
-    amount: event.params.amount,
-    timestamp: event.block.timestamp,
-  });
+indexer.onEvent(
+  { contract: "MyToken", event: "Transfer" },
+  async ({ event, context }) => {
+    context.TransferEvent.set({
+      id: `${event.transaction.hash}_${event.logIndex}`,
+      from: event.params.from,
+      to: event.params.to,
+      amount: event.params.amount,
+      timestamp: event.block.timestamp,
+    });
 
-  const token = await context.Token.getOrThrow(event.params.to);
-  context.Token.set({
-    ...token,
-    balance: token.balance + event.params.amount,
-  });
-});
+    const token = await context.Token.getOrThrow(event.params.to);
+    context.Token.set({
+      ...token,
+      balance: token.balance + event.params.amount,
+    });
+  },
+);
 ```
 
 > **Important**: Entity objects from `context.Entity.get()` are read-only. Always spread (`...existing`) and set new fields — never mutate directly.
@@ -313,12 +318,15 @@ See the [Event Handlers](/docs/HyperIndex/event-handlers) docs for the full API 
 Replace Ponder's `factory()` helper in config with a [`contractRegister`](/docs/HyperIndex/dynamic-contracts) handler:
 
 ```typescript
-import { MyFactory } from "generated";
+import { indexer } from "envio";
 
 // Registers each newly deployed contract for indexing
-MyFactory.ContractCreated.contractRegister(({ event, context }) => {
-  context.addMyContract(event.params.contractAddress);
-});
+indexer.contractRegister(
+  { contract: "MyFactory", event: "ContractCreated" },
+  ({ event, context }) => {
+    context.chain.MyContract.add(event.params.contractAddress);
+  },
+);
 ```
 
 In `config.yaml`, omit the `address` field for the dynamically registered contract.

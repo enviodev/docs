@@ -12,7 +12,7 @@ Build an Envio HyperIndex indexer end-to-end with an AI coding assistant.
 Most developers now reach for an AI coding assistant before they open a file. This guide walks through an AI-centric flow for creating, developing, and deploying a HyperIndex indexer. It is semi-generic, so any capable AI coding assistant (Cursor, Windsurf, Copilot Agent, Continue, etc.) will work. That said, **we've seen the best results with [Claude Code](https://claude.com/claude-code)** and recommend starting there.
 
 :::tip Prefer the interactive flow?
-If you'd rather drive the CLI yourself, see [Getting Started](./getting-started) and the [Quickstart](./contract-import).
+If you'd rather drive the CLI yourself, see the [Quickstart](./quickstart).
 :::
 
 ---
@@ -20,7 +20,7 @@ If you'd rather drive the CLI yourself, see [Getting Started](./getting-started)
 ## Prerequisites
 
 - **[Node.js](https://nodejs.org/en/download/current)** _(v22 or newer)_
-- **[pnpm](https://pnpm.io/installation)** _(v8 or newer)_
+- **[pnpm](https://pnpm.io/installation)** _(recommended but not required)_
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(only needed to run the indexer locally)_
 - An AI coding assistant (we recommend **[Claude Code](https://claude.com/claude-code)**)
 
@@ -58,12 +58,12 @@ Full setup details in the [MCP Server guide](./mcp-server). If your assistant do
 
 ## Step 2. Initialize the Indexer Non-Interactively
 
-`pnpx envio init` normally walks you through an interactive wizard. When an AI assistant is driving the terminal, it's much easier to skip the prompts with flags so the assistant can run the command end-to-end without blocking on human input.
+`pnpx envio@3.0.0-rc.0 init` normally walks you through an interactive wizard. When an AI assistant is driving the terminal, it's much easier to skip the prompts with flags so the assistant can run the command end-to-end without blocking on human input.
 
 ### Option A: Start from a template
 
 ```bash
-pnpx envio init template \
+pnpx envio@3.0.0-rc.0 init template \
   -t erc20 \
   -l typescript \
   -d ./working-indexer \
@@ -73,7 +73,7 @@ pnpx envio init template \
 ### Option B: Import a verified contract from an explorer
 
 ```bash
-pnpx envio init contract-import explorer \
+pnpx envio@3.0.0-rc.0 init contract-import explorer \
   -n usdc-indexer \
   -c 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48 \
   -b ethereum-mainnet \
@@ -104,7 +104,7 @@ HyperIndex v3 ships with **Claude skills** that teach AI assistants how HyperInd
 A productive loop with skills + the docs MCP looks like:
 
 1. Describe the behavior you want in plain English.
-2. Let the assistant edit `config.yaml`, `schema.graphql`, and `src/EventHandlers.*`.
+2. Let the assistant edit `config.yaml`, `schema.graphql`, and `src/handlers`.
 3. Ask it to run `pnpm envio codegen` and `pnpm dev` to validate.
 4. Iterate on failures together.
 
@@ -112,7 +112,7 @@ The three files you'll spend most of your time in:
 
 - **[`config.yaml`](./configuration-file)**: networks, contracts, events
 - **[`schema.graphql`](./schema)**: entities and relationships
-- **[`src/EventHandlers.*`](./event-handlers)**: per-event logic
+- **[`src/handlers`](./event-handlers)**: per-event logic
 
 ---
 
