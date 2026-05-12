@@ -266,7 +266,7 @@ To get started, see our documentation or follow our quickstart [guide](${docsBas
 
 ---
 
-### Defining Network Configurations
+### Defining ${chainsKey === "chains" ? "Chain" : "Network"} Configurations
 
 \`\`\`yaml
 name: IndexerName # Specify indexer name
@@ -343,13 +343,13 @@ Envio supports ${network.name
 
 ---
 
-### Defining Network Configurations
+### Defining ${chainsKey === "chains" ? "Chain" : "Network"} Configurations
 
 To use ${network.name
-    }, define the RPC configuration in your network configuration file as follows:
+    }, define the RPC configuration in your ${chainsKey === "chains" ? "chain" : "network"} configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
+You may need to adjust more parameters of the [rpc configuration](${docsBase}/rpc-sync) to support the specific rpc provider.
 :::
 
 \`\`\`yaml

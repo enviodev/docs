@@ -58,9 +58,9 @@ After running your indexer with `pnpm dev` you will have all ERC20 `Transfer` ev
 
 ## Topic Filtering
 
-Indexing all ERC20 `Transfer` events is a lot of events, so ideally to reduce it only to the ones you truly need with the Topic Filtering feature.
+Indexing all ERC20 `Transfer` events can be noisy. Use Topic Filtering to keep only the events you need.
 
-When you register an event handler or a contract register you can provide the `where` option (renamed from V2's `eventFilters`). You can filter by each `indexed` parameter on the given event by returning `{ params: [...] }`.
+When registering an event handler or a contract registration handler, provide the `where` option (formerly `eventFilters` in V2). Filter by each `indexed` event parameter by returning `{ params: [...] }`.
 
 Let's say you only want to index `Mint` events where the `from` address is equal to `ZERO_ADDRESS`:
 
@@ -137,12 +137,18 @@ indexer.onEvent(
     contract: "ERC20",
     event: "Transfer",
     wildcard: true,
-    where: ({ chain }) => ({
-      params: [
-        { from: ZERO_ADDRESS, to: WHITELISTED_ADDRESSES[chain.id] },
-        { from: WHITELISTED_ADDRESSES[chain.id], to: ZERO_ADDRESS },
-      ],
-    }),
+    where: ({ chain }) => {
+      const addresses = WHITELISTED_ADDRESSES[chain.id];
+      if (!addresses) {
+        throw new Error(`Missing whitelist for chain ${chain.id}`);
+      }
+      return {
+        params: [
+          { from: ZERO_ADDRESS, to: addresses },
+          { from: addresses, to: ZERO_ADDRESS },
+        ],
+      };
+    },
   },
   async ({ event, context }) => {
     //... your handler logic

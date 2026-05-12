@@ -30,7 +30,7 @@ To get started, see our documentation or follow our quickstart [guide](/docs/Hyp
 
 ---
 
-### Defining Network Configurations
+### Defining Chain Configurations
 
 ```yaml
 name: IndexerName # Specify indexer name

@@ -22,12 +22,12 @@ Envio supports Aleph Zero EVM through an RPC-based indexing approach. This metho
 
 ---
 
-### Defining Network Configurations
+### Defining Chain Configurations
 
-To use Aleph Zero EVM, define the RPC configuration in your network configuration file as follows:
+To use Aleph Zero EVM, define the RPC configuration in your chain configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
+You may need to adjust more parameters of the [rpc configuration](/docs/HyperIndex/rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml

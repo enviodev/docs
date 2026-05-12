@@ -27,7 +27,7 @@ Envio supports Chiliz Testnet Spicy through an RPC-based indexing approach. This
 To use Chiliz Testnet Spicy, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
+You may need to adjust more parameters of the [rpc configuration](/docs/v2/HyperIndex/rpc-sync) to support the specific rpc provider.
 :::
 
 ```yaml

@@ -124,7 +124,7 @@ The process of automatically generating code based on a given input. In blockcha
 
 ### Envio CLI
 
-A command line interface tool for building and deploying Envio indexers. The CLI provides commands for initializing, developing, and managing your indexer projects.
+A command-line interface tool for building and deploying Envio indexers. The CLI provides commands for initializing, developing, and managing your indexer projects.
 
 ### SDK
 

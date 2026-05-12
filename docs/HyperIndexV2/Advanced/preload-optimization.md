@@ -162,7 +162,7 @@ If you're using an earlier version of `envio`, we strongly recommend upgrading t
 
 ## Double-Run Footgun
 
-As mentioned above, the Preload Phase gives a lot of benefits for the event processing, but also it means that you must be aware of its table run nature:
+As mentioned above, the Preload Phase gives a lot of benefits for the event processing, but also it means that you must be aware of its double-run nature:
 
 - Never call `fetch` or other external calls directly in the handler.
   - Use the [Effect API](/docs/v2/HyperIndex/effect-api) instead.

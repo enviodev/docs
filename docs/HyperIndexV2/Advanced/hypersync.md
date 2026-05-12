@@ -12,7 +12,7 @@ description: Learn how HyperSync is used in HyperIndex to fetch raw blockchain d
 
 ## What is HyperSync?
 
-HyperSync is a purpose built data-node that helps powers the exceptional performance of HyperIndex. It's a specialized data source optimized for indexing that provides:
+HyperSync is a purpose-built data node that powers the exceptional performance of HyperIndex. It's a specialized data source optimized for indexing that provides:
 
 - **2000x faster sync speeds** compared to traditional RPC methods
 - **Cost-effective data retrieval** with optimized resource usage
