@@ -236,7 +236,7 @@ const updateMarkdownFiles = async () => {
 };
 
 // Function to generate markdown content
-const generateHyperSyncMarkdownContent = (network) => {
+const generateHyperSyncMarkdownContent = (network, variant = "v2") => {
   const capitalizedTitle = capitalizeAndSplit(network.name);
   const tier = emojiTier(network);
 
@@ -246,6 +246,11 @@ const generateHyperSyncMarkdownContent = (network) => {
   // Check if this is a traces network and modify the URL accordingly
   const isTracesNetwork = network.name.toLowerCase().includes("traces");
   const chainIdSuffix = isTracesNetwork ? `-traces` : "";
+
+  const chainsKey = variant === "v3" ? "chains" : "networks";
+  const docsBase =
+    variant === "v3" ? "/docs/HyperIndex" : "/docs/v2/HyperIndex";
+  const quickstartSlug = variant === "v3" ? "quickstart" : "contract-import";
 
   return `---
 id: ${network.name}
@@ -273,13 +278,13 @@ ${network.tier} ${tier}
 
 ### Overview
 
-Envio is a modular hyper-performant data indexing solution for ${capitalizedTitle}, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
+Envio is a modular hyper-performant data indexing solution for ${capitalizedTitle}, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](${docsBase}/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
 
 HyperSync accelerates the synchronization of historical data on ${capitalizedTitle}, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 2000x faster than traditional RPC methods.
 
 Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted service.
 
-To get started, see our documentation or follow our quickstart [guide](/docs/HyperIndex/quickstart).
+To get started, see our documentation or follow our quickstart [guide](${docsBase}/${quickstartSlug}).
 
 ---
 
@@ -288,8 +293,8 @@ To get started, see our documentation or follow our quickstart [guide](/docs/Hyp
 \`\`\`yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
-  - id: ${network.chain_id} # ${capitalizedTitle}  
+${chainsKey}:
+  - id: ${network.chain_id} # ${capitalizedTitle}
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
       - name: ContractName
@@ -303,7 +308,7 @@ networks:
 
 With these steps completed, your application will be set to efficiently index ${capitalizedTitle} data using Envio’s blockchain indexer.
 
-For more information on how to set up your config, define a schema, and write event handlers, refer to the guides section in our [documentation](/docs/HyperIndex/configuration-file).
+For more information on how to set up your config, define a schema, and write event handlers, refer to the guides section in our [documentation](${docsBase}/configuration-file).
 
 ### Support
 
@@ -318,8 +323,21 @@ const sluggifyName = (network) => {
   return network.name.toLowerCase().replace(/\s+/g, "-");
 };
 // Function to generate markdown content for RPC networks
-const generateRPCMarkdownContent = (network) => {
+const generateRPCMarkdownContent = (network, variant = "v2") => {
   let slugFriendlyName = sluggifyName(network);
+
+  const chainsKey = variant === "v3" ? "chains" : "networks";
+  const docsBase =
+    variant === "v3" ? "/docs/HyperIndex" : "/docs/v2/HyperIndex";
+  const primaryRpc = network.rpcEndpoints[0];
+  const fallbackComments = network.rpcEndpoints
+    .slice(1)
+    .map((url) => `\n    # url: ${url} # alternative`)
+    .join("");
+  const rpcBlock =
+    variant === "v3"
+      ? `    rpc: ${primaryRpc}${fallbackComments}`
+      : `    rpc_config:\n      url: ${primaryRpc}${fallbackComments}`;
 
   return `---
 id: ${slugFriendlyName}
@@ -352,21 +370,15 @@ To use ${network.name
     }, define the RPC configuration in your network configuration file as follows:
 
 :::info
-You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider. 
+You may need to adjust more parameters of the [rpc configuration](./rpc-sync) to support the specific rpc provider.
 :::
 
 \`\`\`yaml
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
-networks:
+${chainsKey}:
   - id: ${network.chainId} # ${network.name}
-    rpc_config:
-      url: ${network.rpcEndpoints[0]} ${network.rpcEndpoints.length <= 1
-      ? ""
-      : network.rpcEndpoints
-        .slice(1)
-        .map((url) => `\n    # url: ${url} # alternative`)
-    }
+${rpcBlock}
     start_block: START_BLOCK_NUMBER # Specify the starting block
     contracts:
       - name: ContractName
@@ -389,15 +401,18 @@ const generateMarkdownFiles = async () => {
     const response = await fetch(URL);
     const data = await response.json();
 
-    // Directory where the markdown files will be saved
-    const outputDir = path.join(
-      __dirname,
-      "../docs/HyperIndex/supported-networks"
-    );
+    // Per-version output directories. Each supported-networks page is
+    // written into both V2 and V3 doc trees so the shared
+    // supported-networks.json resolves against both sidebars.
+    const outputDirs = {
+      v2: path.join(__dirname, "../docs/HyperIndexV2/supported-networks"),
+      v3: path.join(__dirname, "../docs/HyperIndex/supported-networks"),
+    };
 
-    // Ensure output directory exists
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir, { recursive: true });
+    for (const dir of Object.values(outputDirs)) {
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
     }
 
     let supportedNetworks = [];
@@ -409,11 +424,13 @@ const generateMarkdownFiles = async () => {
         network.tier.toLowerCase() !== "internal" &&
         !network.name.toLowerCase().includes("traces") // Exclude traces networks from HyperIndex docs
       ) {
-        const content = generateHyperSyncMarkdownContent(network);
-        const filePath = path.join(outputDir, `${network.name}.md`);
-        fs.writeFileSync(filePath, content, "utf8");
+        for (const [variant, dir] of Object.entries(outputDirs)) {
+          const content = generateHyperSyncMarkdownContent(network, variant);
+          const filePath = path.join(dir, `${network.name}.md`);
+          fs.writeFileSync(filePath, content, "utf8");
+          console.log(`Generated file: ${filePath}`);
+        }
         supportedNetworks.push(`"supported-networks/${network.name}"`);
-        console.log(`Generated file: ${filePath}`);
       }
     });
 
@@ -423,11 +440,13 @@ const generateMarkdownFiles = async () => {
       if (data.find((item) => item.chain_id === network.chainId)) {
         return;
       }
-      const content = generateRPCMarkdownContent(network);
-      const filePath = path.join(outputDir, `${sluggifyName(network)}.md`);
-      fs.writeFileSync(filePath, content, "utf8");
+      for (const [variant, dir] of Object.entries(outputDirs)) {
+        const content = generateRPCMarkdownContent(network, variant);
+        const filePath = path.join(dir, `${sluggifyName(network)}.md`);
+        fs.writeFileSync(filePath, content, "utf8");
+        console.log(`Generated file: ${filePath}`);
+      }
       supportedNetworks.push(`"supported-networks/${sluggifyName(network)}"`);
-      console.log(`Generated file: ${filePath}`);
     });
 
     const rootDir = path.join(__dirname, "..");
