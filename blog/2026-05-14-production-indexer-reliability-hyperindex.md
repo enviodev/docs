@@ -214,6 +214,7 @@ Three operational consequences for teams choosing HyperIndex over alternatives:
 - [What's new in v3](https://docs.envio.dev/docs/HyperIndex/whats-new-in-v3)
 - [HyperIndex quickstart](https://docs.envio.dev/docs/HyperIndex/getting-started)
 - [Quickstart with AI](https://docs.envio.dev/docs/HyperIndex/quickstart-with-ai)
+- [Benchmarks](https://docs.envio.dev/docs/HyperIndex/benchmarks)
 - [Reorg handling reference](https://docs.envio.dev/blog/indexing-and-reorgs)
 - [Polymarket reference indexer](https://github.com/enviodev/polymarket-indexer)
 - [Envio Cloud (alerts, hosted reliability)](https://docs.envio.dev/docs/HyperIndex/hosted-service)
