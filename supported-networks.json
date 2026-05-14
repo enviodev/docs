@@ -98,6 +98,7 @@
       "supported-networks/japan-open-chain",
       "supported-networks/kaia",
       "supported-networks/kakarot-starknet-sepolia",
+      "supported-networks/katana",
       "supported-networks/kroma",
       "supported-networks/layeredge-testnet",
       "supported-networks/lightlink-pegasus-testnet",

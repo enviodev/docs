@@ -10,6 +10,23 @@ description: See all networks currently supported by HyperSync, including reliab
 We are rapidly adding new supported networks. If you don't see your network here or would like us to add a network to HyperSync, pop us a message in our [Discord](https://discord.gg/envio).
 :::
 
+:::info
+The Tier is the level of support (and therefore reliability) based on the infrastructure running the chain. We are actively working to make the tier distinctions more clear and transparent to our users.
+
+Currently, tiers relate to various service quality aspects including:
+
+- Allocated resources and compute power
+- Query processing speed
+- Infrastructure redundancy
+- Backup frequency and retention
+- Multi-region availability
+- Priority for upgrades and new features
+- SLA guarantees
+
+While detailed tier specifications are still being finalized, we're committed to providing transparent service level information in the near future.
+
+If you are a network operator or user and would like improved service support or to discuss upgrading a chain's level of support, please reach out to us in [Discord](https://discord.gg/envio).
+:::
 | Network Name              | Network ID      | HyperSync URL                                                                            | HyperRPC URL                                                                             |
 | ------------------------- | --------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | Ab                        | 36888           | https://ab.hypersync.xyz or https://36888.hypersync.xyz                                  | https://ab.rpc.hypersync.xyz or https://36888.rpc.hypersync.xyz                          |
@@ -109,6 +126,5 @@ We are rapidly adding new supported networks. If you don't see your network here
 - **Injective***: Start block: 129846180 (non-evm before that)
 - **Sei***: Start block: 79123881 (non-evm before that)
 - **Sei Testnet***: Start block: 186100000 (non-evm before that)
-
 
 ---

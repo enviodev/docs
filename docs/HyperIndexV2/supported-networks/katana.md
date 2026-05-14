@@ -4,7 +4,6 @@ title: Katana
 description: Start indexing Katana data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
 sidebar_label: Katana
 slug: /katana
-image: /docs-assets/og/HyperIndexV2/supported-networks/katana.png
 ---
 
 # Katana
