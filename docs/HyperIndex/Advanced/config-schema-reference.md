@@ -205,7 +205,13 @@ full_batch_size: 5000
 
 ### storage {#storage}
 
-Configures which storage backends the indexer writes to. Postgres is enabled by default; enable ClickHouse by setting `clickhouse: true`.
+Configures which storage backends the indexer writes to. Postgres is enabled by default; enable ClickHouse by setting `clickhouse: true`. When both backends are enabled, route each entity explicitly via the `@storage` directive in `schema.graphql`:
+
+```graphql
+type Transfer @storage(postgres: true, clickhouse: true) {
+  id: ID!
+}
+```
 
 - **type**: `anyOf(object<Storage> | null)`
 

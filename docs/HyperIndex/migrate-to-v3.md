@@ -207,18 +207,6 @@ full_batch_size: 5000
 
 Move handler files to `src/handlers/` and remove the explicit `handler` paths from `config.yaml`. The explicit `handler` field still works if you'd rather not move files immediately.
 
-### Optional: ClickHouse storage
-
-If using ClickHouse, add:
-
-```yaml
-storage:
-  postgres: true
-  clickhouse: true
-```
-
-The connection environment variables (`ENVIO_CLICKHOUSE_HOST`, `ENVIO_CLICKHOUSE_DATABASE`, `ENVIO_CLICKHOUSE_USERNAME`, `ENVIO_CLICKHOUSE_PASSWORD`) are still required for `envio start`.
-
 ## Step 5: Update Environment Variables
 
 ### Add
@@ -529,6 +517,16 @@ pnpm dev
 
 Postgres column type changes (`raw_events.event_id`: `NUMERIC` → `BIGINT`, `raw_events.serial`: `SERIAL` → `BIGSERIAL`, `envio_chains.events_processed`: `INTEGER` → `BIGINT`, `envio_checkpoints.id`: `INTEGER` → `BIGINT`) are applied automatically — no action required. The deprecated `envio_chains._num_batches_fetched` column always returns `0`.
 
+## Step 10: Update Agent Skills
+
+Once the indexer is running, refresh the agent skills bundled with your project so agent-driven development stays aligned with V3's APIs:
+
+```bash
+pnpx envio skills update
+```
+
+This populates a `.claude/skills` folder in your project. The skills are consumed by Claude, Cursor, and other compatible agentic tooling. Re-run it whenever a new HyperIndex release ships new APIs.
+
 ## Quick Migration Checklist
 
 **Prepare (on V2):**
@@ -558,7 +556,6 @@ Postgres column type changes (`raw_events.event_id`: `NUMERIC` → `BIGINT`, `ra
 - [ ] Remove `preRegisterDynamicContracts`
 - [ ] Remove `event_decoder`
 - [ ] Remove `output` (types always written to `.envio/`)
-- [ ] If using ClickHouse, add `storage: { postgres: true, clickhouse: true }`
 
 **Environment variables:**
 
@@ -602,6 +599,10 @@ Postgres column type changes (`raw_events.event_id`: `NUMERIC` → `BIGINT`, `ra
 **Verify:**
 
 - [ ] Run `pnpm envio codegen` and `pnpm dev`
+
+**Agent skills:**
+
+- [ ] Run `pnpx envio skills update` to refresh Claude/Cursor skills
 
 ## Getting Help
 
