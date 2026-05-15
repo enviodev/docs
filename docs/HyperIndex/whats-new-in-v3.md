@@ -316,6 +316,7 @@ storage:
 ```
 
 ```graphql
+# Stored in both Postgres and ClickHouse
 type Transfer @storage(postgres: true, clickhouse: true) {
   id: ID!
   from: String!
@@ -323,7 +324,8 @@ type Transfer @storage(postgres: true, clickhouse: true) {
   value: BigInt!
 }
 
-type Snapshot @storage(postgres: false, clickhouse: true) {
+# Stored only in ClickHouse
+type Snapshot @storage(clickhouse: true) {
   id: ID!
   blockNumber: BigInt!
 }
@@ -331,9 +333,11 @@ type Snapshot @storage(postgres: false, clickhouse: true) {
 
 Per-entity routing is more verbose but lets you write some entities to Postgres and others to ClickHouse only.
 
-`envio dev` automatically spins up a ClickHouse Docker container for local development with playground-friendly defaults — the Hasura/playground connection works without configuring a password. For `envio start`, provide your own connection via the environment variables `ENVIO_CLICKHOUSE_HOST`, `ENVIO_CLICKHOUSE_DATABASE`, `ENVIO_CLICKHOUSE_USERNAME`, and `ENVIO_CLICKHOUSE_PASSWORD`. Currently supported only on Dedicated Plan.
+`envio dev` automatically spins up a ClickHouse Docker container for local development with playground-friendly defaults so you can connect to it without configuring a password. For `envio start`, provide your own connection via the environment variables `ENVIO_CLICKHOUSE_HOST`, `ENVIO_CLICKHOUSE_DATABASE`, `ENVIO_CLICKHOUSE_USERNAME`, and `ENVIO_CLICKHOUSE_PASSWORD`.
 
-ClickHouse replication is supported via two additional environment variables:
+Envio Cloud currently supports ClickHouse on the Dedicated Plan.
+
+For high-availability ClickHouse setups, HyperIndex supports two additional environment variables:
 
 - `ENVIO_CLICKHOUSE_REPLICATED` — set to `true` to use replicated table engines.
 - `ENVIO_CLICKHOUSE_DATABASE_ENGINE` — override the database engine (for example, `Replicated`).
@@ -768,7 +772,6 @@ For large multichain indexers, HyperIndex now throttles chains that have already
 - Fixed an edge case where a multichain indexer could freeze during a rollback on reorg (also backported to v2.32.10)
 - Fixed external Postgres database support via `ENVIO_PG_HOST`
 - Fixed `S.nullable` schema type to be `T | null` instead of `T | undefined`
-- Fixed `createTestIndexer` `getWhere` filtering by foreign key column names
 
 ## Release Notes
 
