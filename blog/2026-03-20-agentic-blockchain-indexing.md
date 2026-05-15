@@ -55,7 +55,7 @@ Here's the full workflow an agent ran to deploy a live ERC20 indexer for wstETH 
 ### Step 1: Scaffold the indexer
 
 ```
-pnpx envio init template -t erc20 -l typescript -d ./my-indexer --api-token ""
+pnpx envio init template -t erc20 -l typescript -d ./my-indexer
 ```
 
 The `envio` CLI scaffolds a TypeScript ERC20 indexer template. No API token is needed at this stage as authentication is handled through the hosted service at deployment time.
@@ -150,7 +150,7 @@ npm install -g envio-cloud
 Scaffold your first indexer:
 
 ```
-pnpx envio init template -t erc20 -l typescript -d ./my-indexer --api-token ""
+pnpx envio init template -t erc20 -l typescript -d ./my-indexer
 ```
 
 Whether you're building on Monad, Ethereum, or any other EVM compatible network, Envio enables agent driven indexing from first prompt to live deployment. The GitHub-native deployment flow means agents that can commit code can deploy indexers in minutes.
@@ -172,7 +172,7 @@ In independent benchmarks run by Sentio, HyperIndex completed the Uniswap V2 Fac
 Envio supports any EVM-compatible chain. HyperSync natively covers <HyperSyncChainCount /> EVM chains for maximum speed, including Ethereum, Base, Arbitrum, Optimism, Polygon, and Monad. Any EVM chain without native HyperSync support can be indexed via standard RPC.
 
 ### How do I get started with agentic indexing on Envio?
-Install the Envio Cloud CLI with `npm install -g envio-cloud`, then scaffold your first indexer with `pnpx envio init template -t erc20 -l typescript -d ./my-indexer --api-token ""`. Push to GitHub and deploy with the envio-cloud CLI.
+Install the Envio Cloud CLI with `npm install -g envio-cloud`, then scaffold your first indexer with `pnpx envio init template -t erc20 -l typescript -d ./my-indexer`. Push to GitHub and deploy with the envio-cloud CLI.
 
 ## About Envio Cloud
 
