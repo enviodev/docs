@@ -131,6 +131,17 @@ HyperIndex exposes a standard Prometheus `/metrics` endpoint with three properti
 
 For self-hosted deployments, the endpoint plugs into existing Prometheus infrastructure. For Envio Cloud deployments, alerts are exposed through the standard alert channels (Discord, Slack, Telegram, and Email).
 
+## Reliability on Envio Cloud
+
+The four pillars above are framework guarantees: they hold whether you self-host or deploy to [Envio Cloud](https://docs.envio.dev/docs/HyperIndex/hosted-service), Envio's fully managed hosting. Envio Cloud adds the operational layer on top.
+
+- **Zero-downtime deployments.** Each indexer gets a static production endpoint. A new version deploys alongside the running one; "promote to production" switches the endpoint instantly, and rolling back to a previous deployment is one click. Consumers see no endpoint change.
+- **Built-in alerts.** Paid plans surface indexer health, performance warnings, and deployment events through Discord, Slack, Telegram, and Email, so the reorg, failover, and restart events the framework handles stay visible without wiring up your own monitoring.
+- **Built-in monitoring.** Logs, per-chain sync status, and deployment health are tracked in real time from the dashboard.
+- **Region choice.** Dedicated plans can pick a primary deployment region (USA or EU) for latency and data-residency needs. Broader cross-region support is in active development.
+
+Self-hosting keeps all four framework pillars. Envio Cloud removes the hosting and the on-call wiring on top of them.
+
 ## What This Looks Like in a Real Configuration
 
 The Polymarket reference indexer's `config.yaml` is the public production example. The structural pieces below are drawn from [the canonical file](https://github.com/enviodev/polymarket-indexer/blob/main/config.yaml) (selected events shown for brevity):
