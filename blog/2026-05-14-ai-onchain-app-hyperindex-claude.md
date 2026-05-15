@@ -19,7 +19,7 @@ last_update:
 
 - HyperIndex is Envio's multichain blockchain indexing framework for EVM chains. With Claude Code pointed at a HyperIndex project, the agent has the docs (via the docs MCP server) and the patterns (via the auto-discovered `.claude/skills/` directory shipped with every v3 rc project) to scaffold, code, deploy, and run an indexer end to end.
 - The CLI surface is `pnpx envio init` for scaffold, `TUI_OFF=true pnpm dev` for local, and the GitHub-native `envio-cloud indexer add` flow for hosted deployments. Every command is scriptable and agent-friendly.
-- The Polymarket reference at [github.com/enviodev/polymarket-indexer](https://github.com/enviodev/polymarket-indexer) is the public production example. 8 subgraphs replaced with 1; 4,000,000,000 events synced in 6 days.
+- The Polymarket reference at [github.com/enviodev/polymarket-indexer](https://github.com/enviodev/polymarket-indexer) is the public production example. 8 subgraphs replaced with 1; the first 4,000,000,000 events synced in 6 days, over 6,500,000,000 indexed to date.
 - Anything in this blog is reproducible today against the current HyperIndex release tracked at [github.com/enviodev/hyperindex/releases](https://github.com/enviodev/hyperindex/releases).
 
 :::
@@ -268,7 +268,7 @@ TUI_OFF=true pnpm dev # run indexer (TUI_OFF gives AI-friendly stdout)
 
 Source for these exact commands: [polymarket-indexer/AGENTS.md](https://github.com/enviodev/polymarket-indexer/blob/main/AGENTS.md).
 
-The local dev environment spins up a Postgres and a Hasura GraphQL instance. The indexer starts pulling events from both chains via HyperSync. Sync rates of 25,000 events per second on historical backfill are standard. The [Polymarket case study](https://docs.envio.dev/blog/polymarket-hyperindex-case-study) documents 4,000,000,000 events synced in 6 days on Polygon.
+The local dev environment spins up a Postgres and a Hasura GraphQL instance. The indexer starts pulling events from both chains via HyperSync. Sync rates of 25,000 events per second on historical backfill are standard. The [Polymarket case study](https://docs.envio.dev/blog/polymarket-hyperindex-case-study) documents 4,000,000,000 events synced in 6 days on Polygon; the indexer has since indexed over 6,500,000,000 in total.
 
 The Hasura GraphQL endpoint is available locally. Once the indexer is at chain head, queries like:
 
@@ -398,7 +398,7 @@ Any EVM chain. <HyperSyncChainCount /> have native HyperSync coverage for maximu
 
 ### Where can I see a public production reference?
 
-The [Polymarket reference indexer](https://github.com/enviodev/polymarket-indexer). Synced 4,000,000,000 events from block 3,764,531 in 6 days, replacing 8 separate subgraphs. Live at [envio.dev/app/moose-code/polymarket-indexer/7cad3ad](https://envio.dev/app/moose-code/polymarket-indexer/7cad3ad).
+The [Polymarket reference indexer](https://github.com/enviodev/polymarket-indexer). Synced its first 4,000,000,000 events from block 3,764,531 in 6 days, replacing 8 separate subgraphs, and has indexed over 6,500,000,000 to date. Live at [envio.dev/app/moose-code/polymarket-indexer/7cad3ad](https://envio.dev/app/moose-code/polymarket-indexer/7cad3ad).
 
 ## Build With Envio
 
