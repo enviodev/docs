@@ -48,7 +48,7 @@ HyperIndex addresses all four problems by being a blockchain indexing framework 
 
 - **Reorg safety at the framework level.** Entity state history, automatic rollback, no reorg logic required in handlers. Learn more in [Indexing and Reorgs](https://docs.envio.dev/blog/indexing-and-reorgs).
 - **Structured GraphQL output.** Entities, relationships, aggregations, time-windowed views, all queryable from one endpoint. Agents read GraphQL, not raw logs.
-- **HyperSync historical throughput.** Up to 2,000x faster than RPC. The Polymarket reference indexer synced 4,000,000,000 events in 6 days.
+- **HyperSync historical throughput.** Up to 2,000x faster than RPC. The Polymarket reference indexer synced its first 4,000,000,000 events in 6 days and has indexed over 6,500,000,000 to date.
 - **Multichain in one config.** <HyperSyncChainCount /> have native HyperSync coverage, any EVM chain accessible via standard RPC, all in a single `config.yaml`.
 
 That is the read side. The act side is what makes HyperIndex an agent's infrastructure, not just an agent's data layer.
