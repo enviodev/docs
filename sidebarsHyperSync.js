@@ -30,6 +30,16 @@ module.exports = {
       items: ["HyperFuel/hyperfuel", "HyperFuel/hyperfuel-query"],
     },
     {
+      type: "category",
+      label: "Solana",
+      collapsed: false,
+      items: [
+        "Solana/solana",
+        "Solana/solana-query",
+        "Solana/solana-curl-examples",
+      ],
+    },
+    {
       type: "link",
       label: "LLM Documentation",
       href: "/docs/HyperSync-LLM/hypersync-complete",
