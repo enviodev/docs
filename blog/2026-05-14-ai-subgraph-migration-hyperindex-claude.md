@@ -19,7 +19,7 @@ last_update:
 
 - HyperIndex is Envio's multichain blockchain indexing framework for EVM chains. It accepts subgraph YAML and ABIs as input, scaffolds a HyperIndex project, and ships a TypeScript handler skeleton that AssemblyScript handler logic can be ported into.
 - Claude (running with the Envio docs MCP server and the auto-discovered `.claude/skills/` directory, including the dedicated `migrate-from-subgraph` skill) handles the AssemblyScript-to-TypeScript rewrite end to end. Skills auto-discover for Cursor, Claude Code, and Codex.
-- The Polymarket reference indexer is the public production-scale example: 8 subgraphs' worth of logic consolidated into one TypeScript indexer that synced 4,000,000,000 events in 6 days on Polygon.
+- The Polymarket reference indexer is the public production-scale example: 8 subgraphs' worth of logic consolidated into one TypeScript indexer that synced its first 4,000,000,000 events in 6 days on Polygon and has indexed over 6,500,000,000 to date.
 
 :::
 
@@ -274,7 +274,7 @@ The reason teams move off The Graph is performance and developer experience. Fro
 
 Full benchmark comparison at [docs.envio.dev/docs/HyperIndex/benchmarks](https://docs.envio.dev/docs/HyperIndex/benchmarks).
 
-Polymarket's full historical sync, 4,000,000,000 events on Polygon, completed in 6 days. The same workload on a single subgraph in the Polymarket setup would have been measured in months and would still leave eight separate APIs to query.
+Polymarket's full historical sync, 4,000,000,000 events on Polygon, completed in 6 days, and the indexer has since indexed over 6,500,000,000 events in total. The same workload on a single subgraph in the Polymarket setup would have been measured in months and would still leave eight separate APIs to query.
 
 Speed is one half of the story. Developer experience is the other. TypeScript handlers, native npm package use, generated types, real test runners, multichain configuration in a single file, dynamic contract registration without redeployment. Once a team has been on HyperIndex for a sprint, the subgraph workflow stops feeling like a viable alternative.
 
@@ -310,7 +310,7 @@ Single multichain config (subgraphs are single-chain). Native TypeScript handler
 
 ### Where is the production reference for a large subgraph migration?
 
-The [Polymarket HyperIndex reference indexer](https://github.com/enviodev/polymarket-indexer). 8 subgraphs' worth of logic consolidated into one indexer, 4,000,000,000 events synced in 6 days. The full repo is public on GitHub and the case study can be found in [our blog](https://docs.envio.dev/blog/polymarket-hyperindex-case-study).
+The [Polymarket HyperIndex reference indexer](https://github.com/enviodev/polymarket-indexer). 8 subgraphs' worth of logic consolidated into one indexer, with the first 4,000,000,000 events synced in 6 days and over 6,500,000,000 indexed to date. The full repo is public on GitHub and the case study can be found in [our blog](https://docs.envio.dev/blog/polymarket-hyperindex-case-study).
 
 ## Get Started
 
