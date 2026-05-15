@@ -209,7 +209,7 @@ Move handler files to `src/handlers/` and remove the explicit `handler` paths fr
 
 ### Optional: ClickHouse storage
 
-If using ClickHouse, add:
+If using ClickHouse, enable both backends in `config.yaml`:
 
 ```yaml
 storage:
@@ -217,7 +217,23 @@ storage:
   clickhouse: true
 ```
 
-The connection environment variables (`ENVIO_CLICKHOUSE_HOST`, `ENVIO_CLICKHOUSE_DATABASE`, `ENVIO_CLICKHOUSE_USERNAME`, `ENVIO_CLICKHOUSE_PASSWORD`) are still required for `envio start`.
+Then route each entity explicitly in `schema.graphql` via the `@storage` directive — V3 requires per-entity routing when both backends are enabled:
+
+```graphql
+type Transfer @storage(postgres: true, clickhouse: true) {
+  id: ID!
+  from: String!
+  to: String!
+  value: BigInt!
+}
+
+type Snapshot @storage(postgres: false, clickhouse: true) {
+  id: ID!
+  blockNumber: BigInt!
+}
+```
+
+The connection environment variables (`ENVIO_CLICKHOUSE_HOST`, `ENVIO_CLICKHOUSE_DATABASE`, `ENVIO_CLICKHOUSE_USERNAME`, `ENVIO_CLICKHOUSE_PASSWORD`) are still required for `envio start`. To enable replicated table engines, also set `ENVIO_CLICKHOUSE_REPLICATED=true` and optionally `ENVIO_CLICKHOUSE_DATABASE_ENGINE`. For local development, `envio dev` ships with playground-friendly defaults so the Hasura/playground connection works without a password.
 
 ## Step 5: Update Environment Variables
 
@@ -529,6 +545,16 @@ pnpm dev
 
 Postgres column type changes (`raw_events.event_id`: `NUMERIC` → `BIGINT`, `raw_events.serial`: `SERIAL` → `BIGSERIAL`, `envio_chains.events_processed`: `INTEGER` → `BIGINT`, `envio_checkpoints.id`: `INTEGER` → `BIGINT`) are applied automatically — no action required. The deprecated `envio_chains._num_batches_fetched` column always returns `0`.
 
+## Step 10: Update Agent Skills
+
+Once the indexer is running, refresh the Claude/Cursor skills bundled with your project so agent-driven development stays aligned with V3's APIs:
+
+```bash
+pnpx envio skills update
+```
+
+This pulls the latest skill files into your project. Re-run it whenever a new HyperIndex release ships new APIs.
+
 ## Quick Migration Checklist
 
 **Prepare (on V2):**
@@ -558,7 +584,7 @@ Postgres column type changes (`raw_events.event_id`: `NUMERIC` → `BIGINT`, `ra
 - [ ] Remove `preRegisterDynamicContracts`
 - [ ] Remove `event_decoder`
 - [ ] Remove `output` (types always written to `.envio/`)
-- [ ] If using ClickHouse, add `storage: { postgres: true, clickhouse: true }`
+- [ ] If using ClickHouse, add `storage: { postgres: true, clickhouse: true }` and route each entity via `@storage(postgres: ..., clickhouse: ...)` in `schema.graphql`
 
 **Environment variables:**
 
@@ -602,6 +628,10 @@ Postgres column type changes (`raw_events.event_id`: `NUMERIC` → `BIGINT`, `ra
 **Verify:**
 
 - [ ] Run `pnpm envio codegen` and `pnpm dev`
+
+**Agent skills:**
+
+- [ ] Run `pnpx envio skills update` to refresh Claude/Cursor skills
 
 ## Getting Help
 

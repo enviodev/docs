@@ -307,7 +307,7 @@ chains:
 
 HyperIndex can now run with multiple storage backends at the same time. Postgres remains the primary database, and entities can additionally be written to a ClickHouse database that is restart- and reorg-resistant. Prometheus metrics carry a storage-name label so you can distinguish backends.
 
-Enable both backends in `config.yaml`:
+Enable backends in `config.yaml` and route each entity explicitly via the `@storage` directive in `schema.graphql`:
 
 ```yaml
 storage:
@@ -315,7 +315,28 @@ storage:
   clickhouse: true
 ```
 
-`envio dev` automatically spins up a ClickHouse Docker container for local development. For `envio start`, provide your own connection via the environment variables `ENVIO_CLICKHOUSE_HOST`, `ENVIO_CLICKHOUSE_DATABASE`, `ENVIO_CLICKHOUSE_USERNAME`, and `ENVIO_CLICKHOUSE_PASSWORD`. Currently supported only on Dedicated Plan.
+```graphql
+type Transfer @storage(postgres: true, clickhouse: true) {
+  id: ID!
+  from: String!
+  to: String!
+  value: BigInt!
+}
+
+type Snapshot @storage(postgres: false, clickhouse: true) {
+  id: ID!
+  blockNumber: BigInt!
+}
+```
+
+Per-entity routing is more verbose but lets you write some entities to Postgres and others to ClickHouse only.
+
+`envio dev` automatically spins up a ClickHouse Docker container for local development with playground-friendly defaults — the Hasura/playground connection works without configuring a password. For `envio start`, provide your own connection via the environment variables `ENVIO_CLICKHOUSE_HOST`, `ENVIO_CLICKHOUSE_DATABASE`, `ENVIO_CLICKHOUSE_USERNAME`, and `ENVIO_CLICKHOUSE_PASSWORD`. Currently supported only on Dedicated Plan.
+
+ClickHouse replication is supported via two additional environment variables:
+
+- `ENVIO_CLICKHOUSE_REPLICATED` — set to `true` to use replicated table engines.
+- `ENVIO_CLICKHOUSE_DATABASE_ENGINE` — override the database engine (for example, `Replicated`).
 
 :::warning
 Do not run multiple indexers writing to the same ClickHouse database at the same time.
@@ -377,7 +398,9 @@ Preload optimization is now enabled by default, replacing the previous `loaders`
 
 We gave our TUI some love, making it look more beautiful and compact. It also consumes fewer resources, shares a link to the Hasura playground, and dynamically adjusts to the terminal width.
 
-The TUI is now auto-disabled in CI environments and when running under AI agents, so logs stay clean without manual configuration. The legacy `TUI_OFF=true` environment variable was renamed to `ENVIO_TUI=false`.
+The TUI now shows an **events-per-second** indicator during backfill so you can see indexing throughput at a glance.
+
+The TUI is also auto-disabled in CI environments and when running under AI agents, so logs stay clean without manual configuration. The legacy `TUI_OFF=true` environment variable was renamed to `ENVIO_TUI=false`.
 
 ![TUI](/img/sync.gif)
 
@@ -652,6 +675,26 @@ After switching to a fallback source, HyperIndex now attempts to recover to the 
 
 `envio codegen` is now near-instant. We no longer run `pnpm i` for the `generated` package, and we no longer recompile ReScript every time you change `config.yaml` or `schema.graphql`. The output is also a lot quieter.
 
+### `envio skills update` Command
+
+Pull the latest Claude/Cursor skills into your project so agent-driven development stays in sync with the latest HyperIndex APIs:
+
+```bash
+pnpx envio skills update
+```
+
+### `envio config view` Command (Experimental)
+
+Inspect your fully resolved indexer configuration as JSON — useful for debugging configuration issues and for tooling that needs to consume the resolved config:
+
+```bash
+pnpx envio config view
+```
+
+### Improved TypeScript Error Messages
+
+When generated types are missing, the TypeScript error now explicitly suggests running `envio codegen` instead of leaving you to puzzle out the cause.
+
 ### Smaller `envio` Package (-88MB)
 
 By eliminating dynamically generated ReScript code, we no longer need to ship or run a ReScript compiler at runtime. The published npm package shrank from 141MB to 53MB.
@@ -725,12 +768,14 @@ For large multichain indexers, HyperIndex now throttles chains that have already
 - Fixed an edge case where a multichain indexer could freeze during a rollback on reorg (also backported to v2.32.10)
 - Fixed external Postgres database support via `ENVIO_PG_HOST`
 - Fixed `S.nullable` schema type to be `T | null` instead of `T | undefined`
+- Fixed `createTestIndexer` `getWhere` filtering by foreign key column names
 
 ## Release Notes
 
 For detailed release notes, see:
 
 - [v3.0.0](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0)
+- [v3.0.0-rc.1](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-rc.1)
 - [v3.0.0-rc.0](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-rc.0)
 - [v3.0.0-alpha.24](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.24)
 - [v3.0.0-alpha.23](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.23)
