@@ -24,6 +24,7 @@ To ensure continued access to HyperSync, set an Envio API token in your environm
 
 - Use `ENVIO_API_TOKEN` to provide your token at runtime
 - See the API Tokens guide for how to generate a token: [API Tokens](/docs/HyperSync/api-tokens)
+- A token is only required when using Envio as the data provider (HyperSync). Indexers that source data from an external RPC don't need one.
 
 ## Envio-specific environment variables
 

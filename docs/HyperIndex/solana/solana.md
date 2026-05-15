@@ -6,7 +6,7 @@ slug: /solana
 description: Experimental Solana support in HyperIndex. Supports Slot Handler, Effect API, and Envio Cloud.
 ---
 
-> Experimental. Available since 3.0.0.  
+> Experimental.  
 > RPC-only source. HyperSync for Solana is not available yet; we’ll consider it if there’s demand.
 
 ## What’s supported
