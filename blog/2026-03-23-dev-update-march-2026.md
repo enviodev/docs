@@ -103,7 +103,7 @@ As an example, **400,000+ wstETH events were indexed on Monad in ~20 seconds.**
 Use the following command to scaffold your indexer:
 
 ```bash
-pnpx envio@3.0.0-alpha.18 init template -t erc20 -l typescript -d ./my-indexer --api-token ""
+pnpx envio init template -t erc20 -l typescript -d ./my-indexer
 ```
 
 Learn more in our blog and test it yourself here: [https://docs.envio.dev/blog/agentic-blockchain-indexing-envio-hyperindex](https://docs.envio.dev/blog/agentic-blockchain-indexing-envio-hyperindex)

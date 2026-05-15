@@ -52,7 +52,7 @@ Update Node.js to **22 or higher** (24 is recommended). Earlier versions are no 
        "node": ">=22.0.0"
      },
      "dependencies": {
-       "envio": "3.0.0-rc.0"
+       "envio": "3.0.0"
      },
      "devDependencies": {
        "@types/node": "24.12.2",

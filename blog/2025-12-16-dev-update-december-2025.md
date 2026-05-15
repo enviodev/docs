@@ -134,7 +134,7 @@ Try it out with:
 
 
 ```
-pnpx envio@3.0.0-alpha.3 init solana
+pnpx envio init solana
 ```
 
 

@@ -58,22 +58,21 @@ Full setup details in the [MCP Server guide](./mcp-server). If your assistant do
 
 ## Step 2. Initialize the Indexer Non-Interactively
 
-`pnpx envio@3.0.0-rc.0 init` normally walks you through an interactive wizard. When an AI assistant is driving the terminal, it's much easier to skip the prompts with flags so the assistant can run the command end-to-end without blocking on human input.
+`pnpx envio init` normally walks you through an interactive wizard. When an AI assistant is driving the terminal, it's much easier to skip the prompts with flags so the assistant can run the command end-to-end without blocking on human input.
 
 ### Option A: Start from a template
 
 ```bash
-pnpx envio@3.0.0-rc.0 init template \
+pnpx envio init template \
   -t erc20 \
   -l typescript \
-  -d ./working-indexer \
-  --api-token ""
+  -d ./working-indexer
 ```
 
 ### Option B: Import a verified contract from an explorer
 
 ```bash
-pnpx envio@3.0.0-rc.0 init contract-import explorer \
+pnpx envio init contract-import explorer \
   -n usdc-indexer \
   -c 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48 \
   -b ethereum-mainnet \
@@ -87,11 +86,12 @@ All `init` subcommands and flags are documented in the [Envio CLI reference](./c
 
 ### About the `--api-token` flag
 
-`--api-token` is the flag for your **HyperSync API token**. Passing it (even as an empty string, as in Option A above) skips the interactive prompt so the assistant can run `init` unattended. A few things to know:
+`--api-token` is the flag for your **HyperSync API token**. A few things to know:
 
 - The token **can't currently be created programmatically**. You generate one by logging in to [envio.dev/app/api-tokens](https://envio.dev/app/api-tokens) and copying it into `ENVIO_API_TOKEN` in your indexer's `.env`.
 - It's **only required for local development and self-hosted deployments**. Indexers running on **Envio Cloud** get special access and don't need a custom token.
-- If you passed `--api-token ""` during init and want to run `pnpm dev` locally, generate a token from the link above and set `ENVIO_API_TOKEN` in `.env` before starting the indexer.
+- It's **required when using Envio as the data provider (HyperSync)**. If you only use an external RPC as the data source, no token is needed — you can pass an empty string to skip the prompt.
+- To run `pnpm dev` locally, generate a token from the link above and set `ENVIO_API_TOKEN` in `.env` before starting the indexer.
 
 See [API Tokens](/docs/HyperSync/api-tokens) and [Environment Variables](./environment-variables) for full details.
 

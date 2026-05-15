@@ -76,7 +76,7 @@ Do not run multiple indexers writing to the same ClickHouse database at the same
 To scaffold a new V3 alpha indexer, run:
 
 ```bash
-pnpx envio@3.0.0-rc.0 init
+pnpx envio init
 ```
 
 This will set up a fresh project on the latest alpha release. Enable both storage backends in `config.yaml`:

@@ -54,13 +54,13 @@ or run
 
 to verify the indexer is running and indexing correctly.
 
-### 0.5 Use `pnpx envio@3.0.0-rc.0 init` to generate a boilerplate
+### 0.5 Use `pnpx envio init` to generate a boilerplate
 
-As a first step, we recommend using `pnpx envio@3.0.0-rc.0 init` to generate a boilerplate for your project. This will handle the creation of the `config.yaml` file and a basic `schema.graphql` file with generic handler functions.
+As a first step, we recommend using `pnpx envio init` to generate a boilerplate for your project. This will handle the creation of the `config.yaml` file and a basic `schema.graphql` file with generic handler functions.
 
 ### 1. `subgraph.yaml` → `config.yaml`
 
-`pnpx envio@3.0.0-rc.0 init` will generate this for you. It's a simple configuration file conversion. Effectively specifying which contracts to index, which networks to index (multiple networks can be specified with envio) and which events from those contracts to index.
+`pnpx envio init` will generate this for you. It's a simple configuration file conversion. Effectively specifying which contracts to index, which networks to index (multiple networks can be specified with envio) and which events from those contracts to index.
 
 Take the following conversion as an example, where the `subgraph.yaml` file is converted to `config.yaml` the below comparisons is for the Uniswap v4 pool manager subgraph.
 

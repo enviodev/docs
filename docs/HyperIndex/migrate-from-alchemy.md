@@ -42,7 +42,7 @@ This Migration consists of 4 major steps:
 Start by spinning up a basic HyperIndex project with this command:
 
 ```bash
-pnpx envio@3.0.0-rc.0 init template --name alchemy-migration --directory alchemy-migration --template  greeter --api-token "YOUR_ENVIO_API_KEY"
+pnpx envio init template --name alchemy-migration --directory alchemy-migration --template  greeter --api-token "YOUR_ENVIO_API_KEY"
 ```
 
 Once the project is created, drop your API key into the .env file and you’re good to go.
