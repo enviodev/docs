@@ -81,7 +81,7 @@ Upcoming features on our development roadmap:
 
 The **Quickstart** enables you to instantly autogenerate a powerful blockchain indexer and start querying blockchain data in minutes. This is the fastest and easiest way to begin using HyperIndex.
 
-**Example:** Autogenerate an indexer for the Eigenlayer contract and index its entire history in less than 5 minutes by simply running `pnpx envio@3.0.0-rc.0 init` and providing the contract address from [Etherscan](https://etherscan.io/address/0x858646372cc42e1a627fce94aa7a7033e7cf075a).
+**Example:** Autogenerate an indexer for the Eigenlayer contract and index its entire history in less than 5 minutes by simply running `pnpx envio init` and providing the contract address from [Etherscan](https://etherscan.io/address/0x858646372cc42e1a627fce94aa7a7033e7cf075a).
 
 
 ## Getting Started
@@ -89,7 +89,7 @@ The **Quickstart** enables you to instantly autogenerate a powerful blockchain i
 Run the following command to initialize your blockchain indexer:
 
 ```bash
-pnpx envio@3.0.0-rc.0 init
+pnpx envio init
 ```
 
 You'll then follow interactive prompts to customize your indexer.
@@ -599,12 +599,12 @@ HyperIndex now supports Solana with RPC as a source. This feature is experimenta
 To initialize a Solana project:
 
 ```bash
-pnpx envio@3.0.0-rc.0 init svm
+pnpx envio init svm
 ```
 
 See the Solana documentation for more details.
 
-### `pnpx envio@3.0.0-rc.0 init` Improvements
+### `pnpx envio init` Improvements
 
 - Removed language selection to prefer TypeScript by default
 - Cleaned up templates to follow the latest good practices
@@ -982,7 +982,7 @@ For large multichain indexers, HyperIndex now throttles chains that have already
 
 For detailed release notes, see:
 
-- [v3.0.0-rc.0](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-rc.0)
+- [v3.0.0](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0)
 - [v3.0.0-alpha.24](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.24)
 - [v3.0.0-alpha.23](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.23)
 - [v3.0.0-alpha.22](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.22)
@@ -1068,7 +1068,7 @@ HyperIndex v3 includes built-in Claude skills that guide AI programming assistan
 Create a new HyperIndex indexer that indexes the same contracts and events as the subgraph you are migrating. Run the following in a new directory:
 
 ```bash
-pnpx envio@3.0.0-rc.0 init
+pnpx envio init
 ```
 
 Follow the CLI prompts to set up the boilerplate indexer with the same contracts and events as your existing subgraph.
@@ -1193,13 +1193,13 @@ or run
 
 to verify the indexer is running and indexing correctly.
 
-### 0.5 Use `pnpx envio@3.0.0-rc.0 init` to generate a boilerplate
+### 0.5 Use `pnpx envio init` to generate a boilerplate
 
-As a first step, we recommend using `pnpx envio@3.0.0-rc.0 init` to generate a boilerplate for your project. This will handle the creation of the `config.yaml` file and a basic `schema.graphql` file with generic handler functions.
+As a first step, we recommend using `pnpx envio init` to generate a boilerplate for your project. This will handle the creation of the `config.yaml` file and a basic `schema.graphql` file with generic handler functions.
 
 ### 1. `subgraph.yaml` → `config.yaml`
 
-`pnpx envio@3.0.0-rc.0 init` will generate this for you. It's a simple configuration file conversion. Effectively specifying which contracts to index, which networks to index (multiple networks can be specified with envio) and which events from those contracts to index.
+`pnpx envio init` will generate this for you. It's a simple configuration file conversion. Effectively specifying which contracts to index, which networks to index (multiple networks can be specified with envio) and which events from those contracts to index.
 
 Take the following conversion as an example, where the `subgraph.yaml` file is converted to `config.yaml` the below comparisons is for the Uniswap v4 pool manager subgraph.
 
@@ -1558,7 +1558,7 @@ This Migration consists of 4 major steps:
 Start by spinning up a basic HyperIndex project with this command:
 
 ```bash
-pnpx envio@3.0.0-rc.0 init template --name alchemy-migration --directory alchemy-migration --template  greeter --api-token "YOUR_ENVIO_API_KEY"
+pnpx envio init template --name alchemy-migration --directory alchemy-migration --template  greeter --api-token "YOUR_ENVIO_API_KEY"
 ```
 
 Once the project is created, drop your API key into the .env file and you’re good to go.
@@ -1757,7 +1757,7 @@ Update Node.js to **22 or higher** (24 is recommended). Earlier versions are no 
        "node": ">=22.0.0"
      },
      "dependencies": {
-       "envio": "3.0.0-rc.0"
+       "envio": "3.0.0"
      },
      "devDependencies": {
        "@types/node": "24.12.2",
@@ -3178,7 +3178,7 @@ If you prefer to explore by example, the Greeter template includes complete test
 1. Generate `greeter` template in TypeScript using Envio CLI
 
 ```bash
-pnpx envio@3.0.0-rc.0 init template -l typescript -d greeter -t greeter -n greeter
+pnpx envio init template -l typescript -d greeter -t greeter -n greeter
 ```
 
 2. Run tests
@@ -4895,7 +4895,7 @@ Before starting, ensure you have the following installed:
 1. Open your terminal in an empty directory and run:
 
 ```bash
-pnpx envio@3.0.0-rc.0 init
+pnpx envio init
 ```
 
 2. Name your indexer (we'll use "optimism-bridge-indexer" in this example):
@@ -5092,7 +5092,7 @@ Before starting, ensure you have the following installed:
 1. Open your terminal in an empty directory and run:
 
 ```bash
-pnpx envio@3.0.0-rc.0 init
+pnpx envio init
 ```
 
 2. Name your indexer (we'll use "usdc-base-transfer-indexer" in this example):
@@ -5284,7 +5284,7 @@ Now that you have installed the prerequisite packages let's begin the practical 
 Open your terminal in an empty directory and initialize a new indexer by running the command:
 
 ```bash
-pnpx envio@3.0.0-rc.0 init
+pnpx envio init
 ```
 
 In the following prompt, choose the directory where you want to set up your project. The default is the current directory, but in the tutorial, I'll use the indexer name:
@@ -5615,7 +5615,7 @@ First, let's create a new project using Envio's Greeter template:
 1. Open your terminal and run:
 
 ```bash
-pnpx envio@3.0.0-rc.0 init
+pnpx envio init
 ```
 
 2. When prompted for a directory, you can press Enter to use the current directory or specify another path:
@@ -6015,7 +6015,7 @@ Now let's build an indexer that compares all three methods when tracking Uniswap
 Create a new Envio indexer project:
 
 ```bash
-pnpx envio@3.0.0-rc.0 init
+pnpx envio init
 ```
 
 ### Step 2: Configure Your Indexer
@@ -7423,7 +7423,7 @@ For a gentle introduction to viem with a similar example, check out this [medium
 First, create a new indexer:
 
 ```bash
-pnpx envio@3.0.0-rc.0 init
+pnpx envio init
 ```
 
 When prompted, enter the Ethereum mainnet Uniswap V3 Factory address: `0x1F98431c8aD98523631AE4a59f267346ea31F984`
@@ -7719,7 +7719,7 @@ First, let's create a basic indexer that tracks NFT ownership:
 ### Initialize the Indexer
 
 ```bash
-pnpx envio@3.0.0-rc.0 init
+pnpx envio init
 ```
 
 When prompted, enter the Bored Ape Yacht Club contract address: `0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D`
@@ -9174,11 +9174,11 @@ These examples show the full command with all options to initialize and start an
 Create and start a USDC indexer on Ethereum:
 
 ```bash
-pnpx envio@3.0.0-rc.0 init contract-import explorer -n usdc-indexer -c 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48 -b ethereum-mainnet --single-contract --all-events -l typescript -d usdc-indexer --api-token "your-api-token" && cd usdc-indexer && pnpm dev
+pnpx envio init contract-import explorer -n usdc-indexer -c 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48 -b ethereum-mainnet --single-contract --all-events -l typescript -d usdc-indexer --api-token "your-api-token" && cd usdc-indexer && pnpm dev
 ```
 
 **What each part does:**
-- `pnpx envio@3.0.0-rc.0 init contract-import explorer` - Initialize from block explorer
+- `pnpx envio init contract-import explorer` - Initialize from block explorer
 - `-n usdc-indexer` - Project name
 - `-c 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48` - USDC contract address
 - `-b ethereum-mainnet` - Network
@@ -9195,11 +9195,11 @@ pnpx envio@3.0.0-rc.0 init contract-import explorer -n usdc-indexer -c 0xA0b8699
 For unverified contracts or custom networks:
 
 ```bash
-pnpx envio@3.0.0-rc.0 init contract-import local -n my-indexer -a ./abis/MyContract.json -c 0xYourContractAddress -b ethereum-mainnet --contract-name MyContract --single-contract --all-events -l typescript -d my-indexer --api-token "your-api-token" && cd my-indexer && pnpm dev
+pnpx envio init contract-import local -n my-indexer -a ./abis/MyContract.json -c 0xYourContractAddress -b ethereum-mainnet --contract-name MyContract --single-contract --all-events -l typescript -d my-indexer --api-token "your-api-token" && cd my-indexer && pnpm dev
 ```
 
 **What each part does:**
-- `pnpx envio@3.0.0-rc.0 init contract-import local` - Initialize from local ABI file
+- `pnpx envio init contract-import local` - Initialize from local ABI file
 - `-a ./abis/MyContract.json` - Path to ABI file
 - `--contract-name MyContract` - Name for the contract
 - `-b ethereum-mainnet` - Network name (or use chain ID for local import)
@@ -9210,11 +9210,11 @@ pnpx envio@3.0.0-rc.0 init contract-import local -n my-indexer -a ./abis/MyContr
 Quick start with an ERC20 template:
 
 ```bash
-pnpx envio@3.0.0-rc.0 init template -n erc20-example -t erc20 -l typescript -d erc20-indexer --api-token "your-api-token" && cd erc20-indexer && pnpm dev
+pnpx envio init template -n erc20-example -t erc20 -l typescript -d erc20-indexer --api-token "your-api-token" && cd erc20-indexer && pnpm dev
 ```
 
 **What each part does:**
-- `pnpx envio@3.0.0-rc.0 init template` - Initialize from template
+- `pnpx envio init template` - Initialize from template
 - `-t erc20` - Use ERC20 template
 - Other flags same as above
 
@@ -12007,7 +12007,7 @@ Can’t find what you’re looking for or need support? Reach out to us on [Disc
 
 **File:** `solana/solana.md`
 
-> Experimental. Available since 3.0.0-alpha.3.  
+> Experimental. Available since 3.0.0.  
 > RPC-only source. HyperSync for Solana is not available yet; we’ll consider it if there’s demand.
 
 ## What’s supported
@@ -12019,7 +12019,7 @@ Can’t find what you’re looking for or need support? Reach out to us on [Disc
 ## Quickstart
 
 ```bash
-pnpx envio@3.0.0-alpha.14 init svm
+pnpx envio init svm
 ```
 
 ## Notes

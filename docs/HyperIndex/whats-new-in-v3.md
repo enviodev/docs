@@ -344,12 +344,12 @@ HyperIndex now supports Solana with RPC as a source. This feature is experimenta
 To initialize a Solana project:
 
 ```bash
-pnpx envio@3.0.0-rc.0 init svm
+pnpx envio init svm
 ```
 
 See the [Solana documentation](/docs/HyperIndex/solana) for more details.
 
-### `pnpx envio@3.0.0-rc.0 init` Improvements
+### `pnpx envio init` Improvements
 
 - Removed language selection to prefer TypeScript by default
 - Cleaned up templates to follow the latest good practices
@@ -730,7 +730,7 @@ For large multichain indexers, HyperIndex now throttles chains that have already
 
 For detailed release notes, see:
 
-- [v3.0.0-rc.0](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-rc.0)
+- [v3.0.0](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0)
 - [v3.0.0-alpha.24](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.24)
 - [v3.0.0-alpha.23](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.23)
 - [v3.0.0-alpha.22](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-alpha.22)

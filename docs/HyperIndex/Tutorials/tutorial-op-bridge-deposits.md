@@ -29,7 +29,7 @@ Before starting, ensure you have the following installed:
 1. Open your terminal in an empty directory and run:
 
 ```bash
-pnpx envio@3.0.0-rc.0 init
+pnpx envio init
 ```
 
 2. Name your indexer (we'll use "optimism-bridge-indexer" in this example):

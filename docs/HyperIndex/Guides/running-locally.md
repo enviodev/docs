@@ -8,7 +8,7 @@ description: Learn how to start, run, and manage the Envio indexer locally with 
 
 ## Starting the Indexer
 
-Remember to `cd` into your project directory if you have defined one during `pnpx envio@3.0.0-rc.0 init`.
+Remember to `cd` into your project directory if you have defined one during `pnpx envio init`.
 
 Before running the Envio CLI command to start the indexer locally, please make sure you have [Docker](https://www.docker.com/products/docker-desktop/) running.
 

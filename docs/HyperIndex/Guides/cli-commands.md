@@ -339,11 +339,11 @@ These examples show the full command with all options to initialize and start an
 Create and start a USDC indexer on Ethereum:
 
 ```bash
-pnpx envio@3.0.0-rc.0 init contract-import explorer -n usdc-indexer -c 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48 -b ethereum-mainnet --single-contract --all-events -l typescript -d usdc-indexer --api-token "your-api-token" && cd usdc-indexer && pnpm dev
+pnpx envio init contract-import explorer -n usdc-indexer -c 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48 -b ethereum-mainnet --single-contract --all-events -l typescript -d usdc-indexer --api-token "your-api-token" && cd usdc-indexer && pnpm dev
 ```
 
 **What each part does:**
-- `pnpx envio@3.0.0-rc.0 init contract-import explorer` - Initialize from block explorer
+- `pnpx envio init contract-import explorer` - Initialize from block explorer
 - `-n usdc-indexer` - Project name
 - `-c 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48` - USDC contract address
 - `-b ethereum-mainnet` - Network
@@ -360,11 +360,11 @@ pnpx envio@3.0.0-rc.0 init contract-import explorer -n usdc-indexer -c 0xA0b8699
 For unverified contracts or custom networks:
 
 ```bash
-pnpx envio@3.0.0-rc.0 init contract-import local -n my-indexer -a ./abis/MyContract.json -c 0xYourContractAddress -b ethereum-mainnet --contract-name MyContract --single-contract --all-events -l typescript -d my-indexer --api-token "your-api-token" && cd my-indexer && pnpm dev
+pnpx envio init contract-import local -n my-indexer -a ./abis/MyContract.json -c 0xYourContractAddress -b ethereum-mainnet --contract-name MyContract --single-contract --all-events -l typescript -d my-indexer --api-token "your-api-token" && cd my-indexer && pnpm dev
 ```
 
 **What each part does:**
-- `pnpx envio@3.0.0-rc.0 init contract-import local` - Initialize from local ABI file
+- `pnpx envio init contract-import local` - Initialize from local ABI file
 - `-a ./abis/MyContract.json` - Path to ABI file
 - `--contract-name MyContract` - Name for the contract
 - `-b ethereum-mainnet` - Network name (or use chain ID for local import)
@@ -375,11 +375,11 @@ pnpx envio@3.0.0-rc.0 init contract-import local -n my-indexer -a ./abis/MyContr
 Quick start with an ERC20 template:
 
 ```bash
-pnpx envio@3.0.0-rc.0 init template -n erc20-example -t erc20 -l typescript -d erc20-indexer --api-token "your-api-token" && cd erc20-indexer && pnpm dev
+pnpx envio init template -n erc20-example -t erc20 -l typescript -d erc20-indexer --api-token "your-api-token" && cd erc20-indexer && pnpm dev
 ```
 
 **What each part does:**
-- `pnpx envio@3.0.0-rc.0 init template` - Initialize from template
+- `pnpx envio init template` - Initialize from template
 - `-t erc20` - Use ERC20 template
 - Other flags same as above
 
