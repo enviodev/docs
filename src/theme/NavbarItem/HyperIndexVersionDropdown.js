@@ -6,7 +6,7 @@ const V2_PREFIX = '/docs/v2/HyperIndex';
 const V3_PREFIX = '/docs/HyperIndex';
 
 const ITEMS = [
-  { key: 'v3', label: 'v3 (rc)', to: '/docs/HyperIndex/overview' },
+  { key: 'v3', label: 'v3 (latest)', to: '/docs/HyperIndex/overview' },
   { key: 'v2', label: 'v2', to: '/docs/v2/HyperIndex/overview' },
 ];
 
