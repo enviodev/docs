@@ -232,6 +232,35 @@ const redirectsList = [
     from: "/docs/overview-hyperrpc",
     to: "/docs/HyperRPC/overview-hyperrpc",
   },
+  //// V2 → V3 redirects for Solana and migration guides
+  {
+    from: "/docs/v2/HyperIndex/solana",
+    to: "/docs/HyperIndex/solana",
+  },
+  {
+    from: "/docs/v2/HyperIndex/migrate-with-ai",
+    to: "/docs/HyperIndex/migrate-with-ai",
+  },
+  {
+    from: "/docs/v2/HyperIndex/migration-guide",
+    to: "/docs/HyperIndex/migration-guide",
+  },
+  {
+    from: "/docs/v2/HyperIndex/migrate-from-ponder",
+    to: "/docs/HyperIndex/migrate-from-ponder",
+  },
+  {
+    from: "/docs/v2/HyperIndex/migrate-from-alchemy",
+    to: "/docs/HyperIndex/migrate-from-alchemy",
+  },
+  {
+    from: "/docs/v2/HyperIndex/migrate-to-v3",
+    to: "/docs/HyperIndex/migrate-to-v3",
+  },
+  {
+    from: "/docs/v2/HyperIndex/whats-new-in-v3",
+    to: "/docs/HyperIndex/whats-new-in-v3",
+  },
 ];
 // Load build-time generated network count (written by scripts/update-endpoints.js).
 // Falls back to a safe default if the file hasn't been generated yet.
