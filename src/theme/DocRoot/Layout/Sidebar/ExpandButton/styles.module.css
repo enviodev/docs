@@ -10,6 +10,12 @@
     justify-content: center;
     transition: background-color var(--ifm-transition-fast) ease;
     background-color: var(--docusaurus-collapse-button-bg);
+    /* Reset native <button> defaults so the visual matches the prior <div>. */
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
   }
 
   .expandButton:hover,

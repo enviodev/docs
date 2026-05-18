@@ -9,7 +9,8 @@ export default function DocRootLayoutSidebarExpandButton({
   toggleSidebar,
 }: Props): JSX.Element {
   return (
-    <div
+    <button
+      type="button"
       className={styles.expandButton}
       title={translate({
         id: 'theme.docs.sidebar.expandButtonTitle',
@@ -23,11 +24,8 @@ export default function DocRootLayoutSidebarExpandButton({
         description:
           'The ARIA label and title attribute for expand button of doc sidebar',
       })}
-      tabIndex={0}
-      role="button"
-      onKeyDown={toggleSidebar}
       onClick={toggleSidebar}>
       <IconArrow className={styles.expandButtonIcon} />
-    </div>
+    </button>
   );
 }
