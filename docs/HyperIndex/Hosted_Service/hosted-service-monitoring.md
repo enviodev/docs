@@ -81,6 +81,12 @@ Channels are configured at the organisation level via **Settings > Notification 
 
 The webhook channel sends a structured JSON payload via HTTP POST to any URL you provide. This makes it compatible with any service that accepts webhook-based alerts.
 
+**Custom Headers (optional):** When creating a webhook channel, you can add custom HTTP headers that will be sent with every request. This is useful for services that require authentication via API keys or bearer tokens. incident.io does not require custom headers.
+
+:::info
+The webhook channel is a generic HTTP endpoint. It is not guaranteed to work with all third-party services — please see the [integration guides below](#webhook-integrations) for supported setup instructions. If you need help integrating with a specific service, please reach out on the [Envio Discord](https://discord.envio.dev).
+:::
+
 **Webhook Payload Schema:**
 
 ```json
@@ -120,13 +126,15 @@ The `endsAt` field is only included when the alert has resolved. Firing alerts o
 | `alert_id` | Unique key for deduplication: `orgId/projectId/indexerName/alertName` |
 | `metadata` | Additional context including labels, timestamps, and deployment info |
 
-### Setting Up incident.io Integration
+### Webhook Integrations
+
+### incident.io
 
 [incident.io](https://incident.io) can receive Envio alerts via their [Custom HTTP Sources](https://docs.incident.io/alerts/custom-http-sources) feature.
 
 **Step 1: Create a Custom HTTP Source in incident.io**
 
-In the incident.io dashboard, create a new alert source and select **Custom** type.
+In the incident.io dashboard, Follow the incident.io [custom HTTP sources](https://docs.incident.io/alerts/custom-http-sources) guide to setup the webhook integration.
 
 **Step 2: Configure the Transform Expression**
 
@@ -165,7 +173,7 @@ Set the dedup key path to `alert_id`. This ensures alerts are grouped per indexe
 
 1. Go to **Settings > Notification Channels** in the Envio Cloud dashboard
 2. Click **Add Channel** and select **Webhook**
-3. Paste the webhook URL from incident.io
+3. Paste the webhook URL from incident.io (no custom headers are needed — incident.io authenticates via the unique URL)
 4. Subscribe your indexer's alerts to this channel
 
 :::tip Proactive Monitoring
