@@ -16,7 +16,7 @@ Whenever you make changes in `config.yaml` that should affect generated types (e
 
 ## Example
 
-A minimal multichain ERC-20 indexer:
+This is a basic ERC-20 `config.yaml` — it's enough on its own to get an indexer running across Ethereum Mainnet and Gnosis, tracking `Approval` and `Transfer` events on the UNI token.
 
 ```yaml
 # yaml-language-server: $schema=./node_modules/envio/evm.schema.json
@@ -39,6 +39,12 @@ chains:
       - name: ERC20
         address: "0x4537e328Bf7e4eFA29D05CAeA260D7fE26af9D74" # UNI
 ```
+
+**Next steps:**
+
+- Define how each event updates your data → [Event Handlers](./event-handlers.mdx)
+- Shape the entities you'll query → [Schema (`schema.graphql`)](./schema-file.md)
+- Need more than the basics? Keep reading for the full set of configuration options below.
 
 ---
 
