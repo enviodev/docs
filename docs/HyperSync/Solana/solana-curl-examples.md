@@ -8,13 +8,13 @@ description: Copy-paste curl examples for the Solana HyperSync API against real 
 
 # Solana curl Examples
 
-:::warning Experimental
-Solana HyperSync is **highly experimental**. Only **recent** slots are retained—the floor is a **rolling window** (see [Overview](./solana)); use `GET /height` instead of hard-coding how far back you can query.
+:::info Early access
+Solana HyperSync is **early** but the query shape used in these examples is stable enough to build against. Only **recent** slots are retained — the floor is a **rolling window** (see [Overview](./solana)); use `GET /height` instead of hard-coding how far back you can query. Working on something specific? [Ping us on Discord](https://discord.gg/envio) — we can often suggest a tighter query for your use case.
 :::
 
 Copy-paste examples against **`https://solana.hypersync.xyz`**. Use the same [API token](/docs/HyperSync/api-tokens) as EVM HyperSync: pass `Authorization: Bearer <token>` on **`POST /query`** (and on Arrow). `GET /health`, `GET /height`, and `GET /height/sse` are typically usable without a token, but follow whatever your deployment returns.
 
-Curl is great for testing but for production it is more efficient to use one of our official clients. Our client libraries are currently in development, but are able to return and make use of the data the data faster in Arrow format.
+Curl is great for testing; for production, prefer one of our clients. The [Rust client](https://github.com/enviodev/hypersync-client-solana) is the most complete today (and uses Arrow for faster decoding); TypeScript and Python clients are in progress — tell us on Discord which one would unblock you and we'll prioritize accordingly.
 
 ```bash
 export URL=https://solana.hypersync.xyz

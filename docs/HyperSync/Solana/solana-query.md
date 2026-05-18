@@ -8,8 +8,10 @@ description: Solana HyperSync query schema, filters, field selection, pagination
 
 # Query & Response
 
-:::warning Experimental
-Solana HyperSync is **highly experimental**. Data is kept in a **rolling retention window**; the floor moves forward over time. Use `GET /height` instead of hard-coding how far back you can query.
+:::info Early access
+Solana HyperSync is **early** — the query shape, filters, and tables described below are the ones we expect to keep, and they're stable enough to build against today. See [What's stable vs. what's still evolving](./solana#whats-stable-vs-whats-still-evolving) for the current line between the two, and [reach out on Discord](https://discord.gg/envio) if you're planning a real workload — we can usually save you time by suggesting the right query shape for your use case.
+
+Data is kept in a **rolling retention window**; the floor moves forward over time. Use `GET /height` instead of hard-coding how far back you can query.
 :::
 
 A query selects a slot range, optional filters on instructions / transactions / logs, and the columns you want. The server returns matched rows plus a `next_slot` cursor.
