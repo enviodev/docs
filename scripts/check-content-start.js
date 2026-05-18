@@ -46,6 +46,12 @@ function analyze(file) {
   };
 }
 
+if (!fs.existsSync(ROOT)) {
+  console.error(`Build directory not found: ${ROOT}`);
+  console.error('Run the site build first, then re-run this script.');
+  process.exit(1);
+}
+
 const pages = walk(ROOT);
 const results = [];
 for (const f of pages) {
