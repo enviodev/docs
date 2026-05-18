@@ -1,30 +1,5 @@
 var { supportedNetworks } = require("./supported-networks.json");
 
-// Direct filtering in the sidebar code
-let filteredNetworks = supportedNetworks;
-
-// If in LLM mode, filter the networks directly here
-if (process.env.DOCS_FOR_LLM === "true") {
-  const keyNetworks = [
-    "supported-networks/any-evm-with-rpc",
-    "supported-networks/local-anvil",
-    "supported-networks/local-hardhat",
-    "supported-networks/arbitrum",
-    "supported-networks/polygon",
-    "supported-networks/optimism",
-    "supported-networks/eth",
-  ];
-
-  // Filter to only include key networks that exist in the original list
-  filteredNetworks = supportedNetworks.filter((network) =>
-    keyNetworks.includes(network)
-  );
-
-  console.log(
-    `Sidebar using filtered networks: ${filteredNetworks.length} (from ${supportedNetworks.length})`
-  );
-}
-
 const networksSection = {
   type: "category",
   label: "Supported Networks",
@@ -32,7 +7,7 @@ const networksSection = {
     type: "doc",
     id: "supported-networks/index",
   },
-  items: filteredNetworks,
+  items: supportedNetworks,
 };
 
 module.exports = {
