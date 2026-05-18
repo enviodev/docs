@@ -52,7 +52,9 @@ for (const f of pages) {
   try {
     const r = analyze(f);
     if (r) results.push(r);
-  } catch (e) {}
+  } catch (e) {
+    console.warn(`Skipped ${path.relative(ROOT, f)}: ${e.message}`);
+  }
 }
 
 results.sort((a, b) => b.ratio - a.ratio);
