@@ -150,7 +150,7 @@ return {
     source: "envio",
     type: body.metadata.type,
     starts_at: body.metadata.startsAt,
-    ends_at: body.metadata.endsAt,
+    ends_at: body.metadata.endsAt || "",
     labels: JSON.stringify(body.metadata.labels || {}),
     annotations: JSON.stringify(body.metadata.annotations || {})
   }
