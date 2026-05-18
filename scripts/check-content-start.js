@@ -58,7 +58,7 @@ for (const f of pages) {
 results.sort((a, b) => b.ratio - a.ratio);
 
 const fail = results.filter(r => r.ratio > 0.5);
-const warn = results.filter(r => r.ratio > 0.1 && r.ratio <= 0.5);
+const warn = results.filter(r => r.ratio >= 0.1 && r.ratio <= 0.5);
 
 console.log(`Analyzed: ${results.length} pages`);
 console.log(`Fail (>50%): ${fail.length}`);
