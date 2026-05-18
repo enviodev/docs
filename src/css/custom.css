@@ -75,6 +75,24 @@
   --ifm-code-background: #1a1a1a;
 }
 
+/* Source-order shift for agent crawlers: main content renders above the
+   navbar in HTML, so we anchor the navbar with position: fixed and shift
+   the main wrapper down. Without this, navbar text would appear visually
+   beneath the article. See src/theme/Layout/index.tsx. */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--ifm-z-index-fixed);
+}
+.main-wrapper {
+  padding-top: var(--ifm-navbar-height);
+}
+html {
+  scroll-padding-top: var(--ifm-navbar-height);
+}
+
 /* Clean navbar styling */
 .navbar {
   background: rgba(255, 255, 255, 0.95);
