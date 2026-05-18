@@ -14,27 +14,30 @@ Whenever you make changes in `config.yaml` that should affect generated types (e
 
 ---
 
-## Configuration Structure
+## Basic Config Example
 
-Here's an example `config.yaml` file:
+A minimal multichain ERC-20 indexer:
 
 ```yaml
-# yaml-language: $schema=./node_modules/envio/evm.schema.json
-name: Greeter
-description: Greeter Indexer Example
-
+# yaml-language-server: $schema=./node_modules/envio/evm.schema.json
+name: erc20-indexer
+description: ERC-20 Indexer
 contracts:
-  - name: Greeter
-    abi:
-      - event: "NewGreeting(address user, string greeting)"
-      - event: "ClearGreeting(address user)"
-
+  - name: ERC20
+    events:
+      - event: "Approval(address indexed owner, address indexed spender, uint256 value)"
+      - event: "Transfer(address indexed from, address indexed to, uint256 value)"
 chains:
-  - id: 1 # ethereum-mainnet
-    start_block: 12345678
+  - id: 1 # Ethereum Mainnet
+    start_block: 0
     contracts:
-      - name: Greeter
-        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
+      - name: ERC20
+        address: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984" # UNI
+  - id: 100 # Gnosis Mainnet
+    start_block: 0
+    contracts:
+      - name: ERC20
+        address: "0x4537e328Bf7e4eFA29D05CAeA260D7fE26af9D74" # UNI
 ```
 
 ---
