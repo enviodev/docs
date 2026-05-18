@@ -9,7 +9,7 @@ description: HyperSync for Solana - ultra-fast queries over Solana blocks, trans
 # Solana HyperSync
 
 :::info Early access — built in the open
-Solana HyperSync is **early**. The core query path (slots, transactions, instructions, logs, balances, token balances, rewards) is live and ready to test against real workloads — and we're actively shaping it with the teams using it. If you're evaluating it for a real project, **please [say hi on Discord](https://discord.gg/envio)** before you build a lot on top of it: we can tell you which parts are stable, which parts are still moving, and often suggest a better data path for your specific use case (Metaplex, AMMs, compressed NFTs, token flows, etc.).
+Solana HyperSync is **early**. The core query path (slots, transactions, instructions, logs, balances, token balances, rewards) is live and ready to test against real workloads — and we're actively shaping it with the teams using it. If you're evaluating it for a real project, **please [say hi on Discord](https://discord.gg/envio)** before you build a lot on top of it: we can tell you which parts are stable, which parts are still moving, and often suggest a better data path for your specific use case (NFTs, AMMs, token flows, wallet activity, custom programs, etc.).
 
 **Rolling retention window.** Only the most recent chain data is retained — not a fixed history from one slot forever. The current retention floor is roughly slot `391791680`; as new slots are indexed, older slots fall off. Use `GET https://solana.hypersync.xyz/height` for the current synced head and **do not hard-code** historical lower bounds. Need a deeper window for backfill? Tell us — we're prioritizing this based on real use cases.
 :::
@@ -84,5 +84,5 @@ If a piece you need is in the second list, the fastest path is to tell us — mo
 Solana HyperSync is the right time to be a design partner: the foundation is live, the abstractions on top are being shaped now, and your use case can influence what gets prioritized.
 
 - **[Join us on Discord](https://discord.gg/envio)** — fastest way to reach the team building this.
-- Have a specific Solana indexing problem (Metaplex, compressed NFTs, AMM trades, token flows, wallet activity, a custom program)? Share a sample transaction signature or program ID and we'll map it to a concrete query path.
+- Have a specific Solana indexing problem (NFTs, AMM trades, token flows, wallet activity, a custom program)? Share a sample transaction signature or program ID and we'll map it to a concrete query path.
 - Hitting a missing field, a too-shallow retention window, or a filter you wish existed? File it on [GitHub](https://github.com/enviodev/hypersync-client-solana/issues) or tell us on Discord — early feedback shapes what ships next.

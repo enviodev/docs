@@ -7,7 +7,7 @@ description: Early Solana support in HyperIndex. Slot Handler, Effect API, and E
 ---
 
 :::info Early — and the right moment to shape it
-Solana support in HyperIndex is **early**. The slot handler, the Effect API, and Envio Cloud deployment all work today, and teams are using them for real workloads. The higher-level abstractions (instruction-level handlers, IDL-aware decoding, log handlers) are actively being built, and we'd rather help you pick the right path now than have you fight with an early prototype. **If you're evaluating Solana indexing, [reach out on Discord](https://discord.gg/envio)** — we can tell you which pieces are stable, which are still moving, and often suggest a better data path for your specific use case (Metaplex, compressed NFTs, AMMs, token flows, etc.).
+Solana support in HyperIndex is **early**. The slot handler, the Effect API, and Envio Cloud deployment all work today, and teams are using them for real workloads. The higher-level abstractions (instruction-level handlers, IDL-aware decoding, log handlers) are actively being built, and we'd rather help you pick the right path now than have you fight with an early prototype. **If you're evaluating Solana indexing, [reach out on Discord](https://discord.gg/envio)** — we can tell you which pieces are stable, which are still moving, and often suggest a better data path for your specific use case (NFTs, AMMs, token flows, wallet activity, custom programs, etc.).
 :::
 
 ## What's supported today
