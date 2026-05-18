@@ -8,13 +8,9 @@ description: Learn how to configure HyperIndex with contracts, events, networks,
 
 The `config.yaml` file defines your indexer's behavior, including which blockchain events to index, contract addresses, which chains to index, and various advanced indexing options. It is a crucial step in configuring your HyperIndex setup.
 
-After any changes to your `config.yaml` and the [schema](./schema-file.md), run:
-
-```bash
-pnpm codegen
-```
-
-This command generates necessary types and code for your event handlers.
+:::tip
+Whenever you make changes in `config.yaml` that should affect generated types (e.g. adding events, contracts, or chains), run `pnpm codegen` to regenerate types and code for your event handlers.
+:::
 
 ---
 
