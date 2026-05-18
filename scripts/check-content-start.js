@@ -46,7 +46,7 @@ function analyze(file) {
   };
 }
 
-if (!fs.existsSync(ROOT)) {
+if (!fs.existsSync(ROOT) || !fs.statSync(ROOT).isDirectory()) {
   console.error(`Build directory not found: ${ROOT}`);
   console.error('Run the site build first, then re-run this script.');
   process.exit(1);
