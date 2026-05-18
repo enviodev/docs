@@ -427,19 +427,39 @@ function parseSidebarOrder(sidebarPath) {
     const sidebarContent = fs.readFileSync(sidebarPath, "utf8");
 
     // Extract the sidebar configuration by evaluating it
-    // We need to handle the require statement for supported networks
+    // We need to handle the require statement for supported networks.
+    // The sidebar file ships the full network list; the LLM consolidation
+    // only wants a curated subset, so we filter at require-time here
+    // rather than via an environment variable in the sidebar file (the
+    // env-var approach previously leaked into hosted builds and trimmed
+    // the live sidebar to seven entries).
     const supportedNetworksPath = path.join(
       __dirname,
       "../supported-networks.json"
     );
-    const supportedNetworks = JSON.parse(
+    const fullSupportedNetworks = JSON.parse(
       fs.readFileSync(supportedNetworksPath, "utf8")
     );
+    const llmKeyNetworks = new Set([
+      "supported-networks/any-evm-with-rpc",
+      "supported-networks/local-anvil",
+      "supported-networks/local-hardhat",
+      "supported-networks/arbitrum",
+      "supported-networks/polygon",
+      "supported-networks/optimism",
+      "supported-networks/eth",
+    ]);
+    const filteredSupportedNetworks = {
+      ...fullSupportedNetworks,
+      supportedNetworks: fullSupportedNetworks.supportedNetworks.filter((n) =>
+        llmKeyNetworks.has(n)
+      ),
+    };
 
     // Create a mock environment for the sidebar evaluation
     const mockRequire = (modulePath) => {
       if (modulePath === "./supported-networks.json") {
-        return supportedNetworks;
+        return filteredSupportedNetworks;
       }
       throw new Error(`Unexpected require: ${modulePath}`);
     };
@@ -447,7 +467,6 @@ function parseSidebarOrder(sidebarPath) {
     // Evaluate the sidebar configuration
     const sidebarConfig = eval(`(function() {
       const require = arguments[0];
-      const process = { env: { DOCS_FOR_LLM: "true" } };
       ${sidebarContent}
       return module.exports;
     })`)(mockRequire);

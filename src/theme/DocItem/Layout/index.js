@@ -1,16 +1,22 @@
 import React from 'react';
 import Layout from '@theme-original/DocItem/Layout';
 import { useActivePlugin } from '@docusaurus/plugin-content-docs/client';
+import useIsBrowser from '@docusaurus/useIsBrowser';
 import Admonition from '@theme/Admonition';
 import Link from '@docusaurus/Link';
 
 export default function LayoutWrapper(props) {
   const activePlugin = useActivePlugin();
   const pluginId = activePlugin?.pluginId;
+  // Defer the version banner to client-side render so it does not appear
+  // in the SSR HTML stream above the article. This keeps the
+  // content-start-position low for HTML→markdown agent crawlers. Users
+  // still see the banner after hydration.
+  const isBrowser = useIsBrowser();
 
   return (
     <>
-      {pluginId === 'HyperIndexV2' && (
+      {isBrowser && pluginId === 'HyperIndexV2' && (
         <Admonition type="warning" title="You're viewing v2 documentation">
           <p>
             This is the <strong>v2</strong> HyperIndex documentation. We highly
@@ -19,7 +25,7 @@ export default function LayoutWrapper(props) {
           </p>
         </Admonition>
       )}
-      {pluginId === 'HyperIndex' && (
+      {isBrowser && pluginId === 'HyperIndex' && (
         <Admonition type="info" title="You're viewing v3 documentation">
           <p>
             This is the <strong>v3</strong> HyperIndex documentation. Still on
