@@ -56,7 +56,7 @@ Envio accepts both and normalizes them internally.
 **Single address:**
 
 ```yaml
-address: 0xContractAddress
+address: "0xContractAddress"
 ```
 
 **Multiple addresses for the same contract:**
@@ -65,8 +65,8 @@ address: 0xContractAddress
 contracts:
   - name: MyContract
     address:
-      - 0xAddress1
-      - 0xAddress2
+      - "0xAddress1"
+      - "0xAddress2"
 ```
 
 :::tip
@@ -85,7 +85,7 @@ chains:
   - id: ethereum-mainnet
     contracts:
       - name: Greeter
-        address: 0xProxyAddressHere
+        address: "0xProxyAddressHere"
 ```
 
 :::tip Automatic contract configuration
@@ -422,7 +422,7 @@ chains:
   - id: ${ENVIO_CHAIN_ID:-ethereum-mainnet}
     contracts:
       - name: Greeter
-        address: ${ENVIO_GREETER_ADDRESS}
+        address: "${ENVIO_GREETER_ADDRESS}"
 ```
 
 Run your indexer with custom environment variables:
