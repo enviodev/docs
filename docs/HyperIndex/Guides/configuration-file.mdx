@@ -14,7 +14,7 @@ Whenever you make changes in `config.yaml` that should affect generated types (e
 
 ---
 
-## Basic Config Example
+## Example
 
 A minimal multichain ERC-20 indexer:
 
@@ -42,9 +42,7 @@ chains:
 
 ---
 
-## Key Configuration Options
-
-### Contract Addresses
+## Contract Addresses
 
 Set the address of the smart contract you're indexing.
 
@@ -94,7 +92,7 @@ In V3, contracts defined globally at the top level are automatically attached to
 
 ---
 
-### Indexer Without Contracts (Block Handlers Only)
+## Indexer Without Contracts (Block Handlers Only)
 
 The `contracts` field is **optional** in V3. You can run an indexer that only uses block handlers (`indexer.onBlock`) without declaring any contracts:
 
@@ -107,7 +105,7 @@ chains:
 
 ---
 
-### Per-Contract Start Block Override
+## Per-Contract Start Block Override
 
 By default, contracts use the chain `start_block`. You can also set a per-contract `start_block` to override it. Handy when:
 
@@ -139,7 +137,7 @@ For even finer control, you can also specify a start block per event from your h
 
 ---
 
-### End Block
+## End Block
 
 Set `end_block` on a chain to stop indexing at a specific block. Useful for backfills with a known cutoff, snapshots, or deterministic tests.
 
@@ -155,7 +153,7 @@ chains:
 
 ---
 
-### Events Selection
+## Events Selection
 
 Define specific events to index in a human-readable format:
 
@@ -167,7 +165,7 @@ events:
 
 By default, all events defined in the contract are indexed, but you can selectively disable them by removing them from this list.
 
-#### Custom Event Names
+### Custom Event Names
 
 You can assign custom names to events in `config.yaml`. This is handy when
 two events share the same name but have different signatures, or when you want
@@ -182,7 +180,7 @@ events:
 
 ---
 
-### Raw Events Storage
+## Raw Events Storage
 
 By default, HyperIndex doesn't store raw event data in the database to optimize performance and reduce storage requirements. However, you can enable this feature for debugging purposes or if you need to access the original event data.
 
@@ -202,7 +200,7 @@ Note that enabling this option will increase database storage requirements and m
 
 ---
 
-### Field Selection
+## Field Selection
 
 To improve indexing performance and reduce credits usage, the `block` and `transaction` fields on events contain only a subset of the fields available on the blockchain.
 
@@ -220,7 +218,7 @@ events:
 
 See all possible options in the [Config File Reference](/docs/HyperIndex/config-schema-reference#fieldselection) or use IDE autocomplete for your help.
 
-#### Global Field Selection
+### Global Field Selection
 
 You can also specify fields globally for all events in the root of the config file:
 
@@ -237,7 +235,7 @@ Try to use this option sparingly as it can cause redundant Data Source calls and
 
 ---
 
-### Multichain Mode
+## Multichain Mode
 
 In V3, multichain indexing always runs in **unordered** mode — events from different chains are processed in parallel without strictly maintaining cross-chain event ordering, which minimizes indexing latency at the head. The V2 `unordered_multichain_mode` option and the `multichain: ordered` opt-in have been removed.
 
@@ -245,7 +243,7 @@ Learn more about multichain indexing [here](./multichain-indexing).
 
 ---
 
-### RPC Configuration
+## RPC Configuration
 
 The `rpc` option configures an RPC data source per chain. It replaces the V2 `rpc_config` and supports multiple URLs with explicit roles via the `for` field:
 
@@ -285,7 +283,7 @@ See the [Rpc reference](/docs/HyperIndex/config-schema-reference#def-rpc) for ad
 
 ---
 
-### Block Lag
+## Block Lag
 
 Set `block_lag` on a chain to keep the indexer a fixed number of blocks behind the chain head. This replaces the V2 `ENVIO_INDEXING_BLOCK_LAG` environment variable, applied per chain. Defaults to `0`.
 
@@ -305,7 +303,7 @@ Only set `block_lag` if you understand the trade-off — it intentionally trades
 
 ---
 
-### Handler File Path
+## Handler File Path
 
 V3 introduces automatic handler registration. Place your handler files in `src/handlers/` and they'll be picked up automatically — no need to declare a `handler` path for each contract in `config.yaml`. File names are flexible, but one file per contract is recommended.
 
@@ -327,7 +325,7 @@ contracts:
 
 ---
 
-### Storage Backends
+## Storage Backends
 
 By default, HyperIndex writes entities to Postgres. In V3 you can additionally enable **ClickHouse** as a second storage backend (experimental):
 
@@ -365,7 +363,7 @@ Envio Cloud currently supports ClickHouse on the Dedicated Plan.
 
 ---
 
-### Full Batch Size
+## Full Batch Size
 
 Set `full_batch_size` to control how many events are processed in a single batch. This replaces the V2 `MAX_BATCH_SIZE` environment variable.
 
@@ -375,7 +373,7 @@ full_batch_size: 5000
 
 ---
 
-### Address Format
+## Address Format
 
 Use `address_format` to control how every address surfaced by the indexer (event fields like `event.srcAddress` / `event.transaction.from`, `chain.<Contract>.addresses`, addresses embedded in entity ids, etc.) is formatted.
 
@@ -390,7 +388,7 @@ You can still call `.toLowerCase()` ad-hoc inside a handler when you only need a
 
 ---
 
-### Rollback on Reorg
+## Rollback on Reorg
 
 HyperIndex automatically handles blockchain reorganizations by default. To disable or customize this behavior, set the `rollback_on_reorg` flag in your `config.yaml`:
 
@@ -402,7 +400,7 @@ See detailed configuration options [here](./reorgs-support).
 
 ---
 
-### Preload Optimization
+## Preload Optimization
 
 [Preload Optimization](/docs/HyperIndex/preload-optimization) is always enabled in V3. There is no `preload_handlers` flag — the previous opt-in is now the only behavior.
 
@@ -413,7 +411,7 @@ Be aware of:
 
 ---
 
-### Environment Variables
+## Environment Variables
 
 Environment variable interpolation is supported for flexibility and security:
 
@@ -440,7 +438,7 @@ For more detailed information about environment variables, see our [Environment 
 
 ---
 
-### Schema File Path
+## Schema File Path
 
 You can customize the path to the [schema file](./schema-file.md) using the `schema` option:
 
@@ -452,7 +450,7 @@ By default, the `schema.graphql` is expected to be in the root directory of your
 
 ---
 
-### Memory and Resource Considerations
+## Memory and Resource Considerations
 
 - **RPC rate limits**: If using RPC sync, your provider's rate limits will cap throughput. Use [HyperSync](../Advanced/hypersync.md) where supported for significantly faster data retrieval.
 - **Handler complexity**: Expensive operations in handlers (e.g., many `eth_call` via the [Effect API](../Advanced/effect-api.md)) slow down processing. Use caching and batching to mitigate.
