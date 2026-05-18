@@ -8,12 +8,36 @@
     {
       "source": "/mcp",
       "destination": "/api/mcp"
+    },
+    {
+      "source": "/docs/:path((?!.+\\.md$).+)",
+      "has": [
+        { "type": "header", "key": "accept", "value": ".*text/markdown.*" }
+      ],
+      "destination": "/docs/:path.md"
+    },
+    {
+      "source": "/blog/:path((?!.+\\.md$).+)",
+      "has": [
+        { "type": "header", "key": "accept", "value": ".*text/markdown.*" }
+      ],
+      "destination": "/blog/:path.md"
     }
   ],
   "redirects": [
     {
       "source": "/blog/tags/:tag*",
       "destination": "/blog/tag/:tag*",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/contract-import",
+      "destination": "/docs/HyperIndex/quickstart",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/contract-import.md",
+      "destination": "/docs/HyperIndex/quickstart.md",
       "permanent": true
     }
   ]

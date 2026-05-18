@@ -285,6 +285,22 @@ const config = {
           trackingID: "G-J0WZ32ZV5B",
           anonymizeIP: true,
         },
+        sitemap: {
+          // Keep the sitemap focused on the canonical v3 docs + blog. v2 is
+          // legacy and the LLM-consolidated routes duplicate content already
+          // surfaced via llms-full.txt, so they would only deflate llms.txt
+          // coverage metrics for agent discovery tools.
+          ignorePatterns: [
+            "/docs/v2/**",
+            "/docs/HyperIndex-LLM/**",
+            "/docs/HyperSync-LLM/**",
+            "/docs/HyperRPC-LLM/**",
+            "/blog/tag/**",
+            "/blog/author/**",
+            "/blog/archive",
+            "/blog/page/**",
+          ],
+        },
       }),
     ],
   ],
@@ -423,6 +439,7 @@ const config = {
     }),
   plugins: [
     require.resolve('./plugins/plugin-author-pages'),
+    require.resolve('./plugins/plugin-llms-directive'),
     [
       "docusaurus-plugin-mcp-server",
       {
@@ -521,7 +538,7 @@ This file contains links to documentation sections following the llmstxt.org sta
 - [Indexing Optimism Bridge Deposits](https://docs.envio.dev/docs/HyperIndex/tutorial-op-bridge-deposits.md): Learn to quickly index Optimism Bridge deposits and explore OP Bridge event data.
 - [Scaffold-Eth-2 Envio Extension](https://docs.envio.dev/docs/HyperIndex/scaffold-eth-2-extension-tutorial.md): Scaffold-ETH Extension: Get a boilerplate indexer for your deployed smart contracts and start tracking events instantly.
 - [HyperIndex Benchmarks](https://docs.envio.dev/docs/HyperIndex/benchmarks.md): Discover HyperIndex benchmarks and see why it's the fastest blockchain data indexer.
-- [HyperIndex Quickstart](https://docs.envio.dev/docs/HyperIndex/contract-import.md): Learn to quickly autogenerate and configure a HyperIndex indexer for any smart contract.
+- [HyperIndex Quickstart](https://docs.envio.dev/docs/HyperIndex/quickstart.md): Learn to quickly autogenerate and configure a HyperIndex indexer for any smart contract.
 - [Fuel](https://docs.envio.dev/docs/HyperIndex/fuel.md): Explore how to index and query real-time and historical data on Fuel Network with HyperIndex.
 - [Licensing](https://docs.envio.dev/docs/HyperIndex/licensing.md): Learn how Envio's licensing lets developers self-host, use generated code, and stay open while protecting Envio Cloud.
 - [Migrate from Alchemy to Envio](https://docs.envio.dev/docs/HyperIndex/migrate-from-alchemy.md): Easily migrate your existing Alchemy subgraphs to Envio for 143x faster indexing than subgraphs, multichain support, and a better developer experience.

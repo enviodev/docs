@@ -252,6 +252,13 @@ function GenerateLLMSPlugin(context, options) {
                 return parts.join("\n");
             }
 
+            // Blockquote prepended to every .md copy so markdown clients can
+            // discover llms.txt without having to fetch the HTML variant.
+            const MD_LLMS_DIRECTIVE =
+                `> Agent-friendly docs: see [llms.txt](${siteConfig.url.replace(/\/$/, "")}/llms.txt) ` +
+                `for the navigational index, or [llms-full.txt](${siteConfig.url.replace(/\/$/, "")}/llms-full.txt) ` +
+                `for every page concatenated as markdown.\n\n`;
+
             // --- NEW: write .md copies into build folder ---
             function writeMarkdownCopies(docs) {
                 for (const doc of docs) {
@@ -275,8 +282,85 @@ function GenerateLLMSPlugin(context, options) {
                     );
 
                     fs.mkdirSync(path.dirname(targetPath), { recursive: true });
-                    fs.writeFileSync(targetPath, cleanContent, "utf-8");
+                    fs.writeFileSync(
+                        targetPath,
+                        MD_LLMS_DIRECTIVE + cleanContent,
+                        "utf-8"
+                    );
                 }
+            }
+
+            // Build a compact list of every collected doc not already linked
+            // in the supplied static root text. Lets us hit >80% coverage of
+            // the sitemap without manually maintaining 600+ bullet lines.
+            function renderUncoveredIndex(rootText, allDocs) {
+                const linkedUrls = new Set();
+                const urlRegex = /https?:\/\/[^\s)\]]+/g;
+                let m;
+                while ((m = urlRegex.exec(rootText)) !== null) {
+                    // Strip trailing punctuation and a trailing `.md`/`.html`
+                    // so comparison matches the canonical pageUrl form.
+                    let u = m[0].replace(/[.,);\]]+$/, "");
+                    u = u.replace(/\.(md|mdx|html)$/, "");
+                    linkedUrls.add(u);
+                }
+
+                const buckets = {
+                    "HyperIndex Network Pages": [],
+                    "HyperSync Network Pages": [],
+                    "HyperRPC Network Pages": [],
+                    "HyperIndex Reference": [],
+                    "HyperSync Reference": [],
+                    "HyperRPC Reference": [],
+                    "Blog & Case Studies": [],
+                };
+
+                for (const doc of allDocs) {
+                    if (linkedUrls.has(doc.pageUrl)) continue;
+
+                    const url = doc.pageUrl;
+                    let bucket;
+                    if (doc.source === "blog") {
+                        bucket = "Blog & Case Studies";
+                    } else if (
+                        /\/HyperIndex\//.test(url) &&
+                        /\/supported-networks\//.test(doc.filePath)
+                    ) {
+                        bucket = "HyperIndex Network Pages";
+                    } else if (
+                        /\/HyperSync\//.test(url) &&
+                        /\/supported-networks\//.test(doc.filePath)
+                    ) {
+                        bucket = "HyperSync Network Pages";
+                    } else if (
+                        /\/HyperRPC\//.test(url) &&
+                        /\/supported-networks\//.test(doc.filePath)
+                    ) {
+                        bucket = "HyperRPC Network Pages";
+                    } else if (/\/HyperIndex\//.test(url)) {
+                        bucket = "HyperIndex Reference";
+                    } else if (/\/HyperSync\//.test(url)) {
+                        bucket = "HyperSync Reference";
+                    } else if (/\/HyperRPC\//.test(url)) {
+                        bucket = "HyperRPC Reference";
+                    } else {
+                        continue;
+                    }
+                    buckets[bucket].push(doc);
+                }
+
+                const sections = [];
+                for (const [name, docs] of Object.entries(buckets)) {
+                    if (docs.length === 0) continue;
+                    docs.sort((a, b) => a.title.localeCompare(b.title));
+                    sections.push(`## ${name}`);
+                    sections.push("");
+                    for (const d of docs) {
+                        sections.push(`- [${d.title}](${d.pageUrl}.md)`);
+                    }
+                    sections.push("");
+                }
+                return sections.join("\n");
             }
 
             // 2. generate files
@@ -289,7 +373,22 @@ function GenerateLLMSPlugin(context, options) {
                 // Inject "## Table of Contents" after root text
                 const tocRoot = root.trim() + "";
 
-                const output = renderLLMS(tocRoot, orderedDocs);
+                let output = renderLLMS(tocRoot, orderedDocs);
+
+                // Append every doc not already linked in the static root so
+                // sitemap-coverage agent checks see >80% of pages indexed.
+                // Only runs for the main config to keep secondary llms-*.txt
+                // files focused on their topical subset.
+                if (cfg.main) {
+                    const extra = renderUncoveredIndex(tocRoot, collectedDocs);
+                    if (extra.trim().length > 0) {
+                        output =
+                            output.replace(/\s+$/, "") +
+                            "\n\n" +
+                            extra.trimEnd() +
+                            "\n";
+                    }
+                }
 
                 // Use llms.txt for the first/main config, others as llms-<name>.txt
                 const outFileName = cfg.main ? "llms.txt" : `llms-${name}.txt`;
