@@ -48,7 +48,104 @@ chains:
 
 ---
 
-## Contract Addresses
+## Chains
+
+Everything under the top-level `chains` field configures the networks your indexer connects to — data sources, start/end blocks, reorg behavior, and multichain semantics.
+
+### RPC Configuration
+
+The `rpc` option configures an RPC data source per chain. It replaces the V2 `rpc_config` and supports multiple URLs with explicit roles via the `for` field:
+
+- `sync` – use this RPC for historical sync.
+- `realtime` – use this RPC for low-latency head tracking once the indexer enters realtime mode. WebSocket endpoints (`wss://...`) are supported here.
+- `fallback` – use as a fallback when the primary source is unavailable.
+
+For chains with HyperSync, RPC is used as a fallback by default for added reliability. For chains without HyperSync, RPC is the primary data source.
+
+```yaml
+chains:
+  - id: 1
+    rpc:
+      - url: https://eth-mainnet.your-rpc-provider.com
+        for: sync
+      - url: wss://eth-mainnet.your-rpc-provider.com
+        for: realtime
+      - url: https://fallback.example.com
+        for: fallback
+```
+
+A short form is also supported when you only need a single RPC URL:
+
+```yaml
+chains:
+  - id: 1
+    rpc: https://eth-mainnet.your-rpc-provider.com
+```
+
+:::note Experimental: WebSocket support
+WebSocket support for RPC sources is experimental. Pair `wss://` URLs with `for: realtime` to improve head latency. Please open a GitHub issue if you hit any problems.
+:::
+
+After switching to a fallback source, HyperIndex automatically attempts to recover to the primary source 60 seconds later.
+
+See the [Rpc reference](/docs/HyperIndex/config-schema-reference#def-rpc) for advanced tuning options such as `initial_block_interval`, `polling_interval`, `query_timeout_millis`, and backoff parameters.
+
+### End Block
+
+Set `end_block` on a chain to stop indexing at a specific block. Useful for backfills with a known cutoff, snapshots, or deterministic tests.
+
+```yaml
+chains:
+  - id: 1
+    start_block: 18000000
+    end_block: 19000000
+    contracts:
+      - name: Greeter
+        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
+```
+
+### Block Lag
+
+Set `block_lag` on a chain to keep the indexer a fixed number of blocks behind the chain head. This replaces the V2 `ENVIO_INDEXING_BLOCK_LAG` environment variable, applied per chain. Defaults to `0`.
+
+```yaml
+chains:
+  - id: 1
+    start_block: 0
+    block_lag: 5
+    contracts:
+      - name: Greeter
+        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
+```
+
+:::warning Advanced use only
+Only set `block_lag` if you understand the trade-off — it intentionally trades head latency for additional reorg safety.
+:::
+
+### Multichain Mode
+
+In V3, multichain indexing always runs in **unordered** mode — events from different chains are processed in parallel without strictly maintaining cross-chain event ordering, which minimizes indexing latency at the head. The V2 `unordered_multichain_mode` option and the `multichain: ordered` opt-in have been removed.
+
+Learn more about multichain indexing [here](./multichain-indexing).
+
+### Indexer Without Contracts (Block Handlers Only)
+
+The `contracts` field is **optional** in V3. You can run an indexer that only uses block handlers (`indexer.onBlock`) without declaring any contracts:
+
+```yaml
+name: BlockHandlerOnly
+chains:
+  - id: 1
+    start_block: 18000000
+```
+
+---
+
+## Contracts
+
+Top-level `contracts` (and the `contracts` blocks nested inside each chain) describe which smart contracts and which of their events you want to index.
+
+### Contract Addresses
 
 Set the address of the smart contract you're indexing.
 
@@ -96,22 +193,7 @@ chains:
 In V3, contracts defined globally at the top level are automatically attached to every chain — you no longer need to list a global contract under each chain to make `addContract` / `context.chain.<Contract>.add` work. Only list the contract under a chain when you need to supply chain-specific values like an `address` or per-chain `start_block`.
 :::
 
----
-
-## Indexer Without Contracts (Block Handlers Only)
-
-The `contracts` field is **optional** in V3. You can run an indexer that only uses block handlers (`indexer.onBlock`) without declaring any contracts:
-
-```yaml
-name: BlockHandlerOnly
-chains:
-  - id: 1
-    start_block: 18000000
-```
-
----
-
-## Per-Contract Start Block Override
+### Per-Contract Start Block Override
 
 By default, contracts use the chain `start_block`. You can also set a per-contract `start_block` to override it. Handy when:
 
@@ -141,25 +223,7 @@ chains:
 For even finer control, you can also specify a start block per event from your handler using the `where.block.number._gte` filter on `indexer.onEvent`. See [Event Handlers](./event-handlers.mdx) for the full API.
 :::
 
----
-
-## End Block
-
-Set `end_block` on a chain to stop indexing at a specific block. Useful for backfills with a known cutoff, snapshots, or deterministic tests.
-
-```yaml
-chains:
-  - id: 1
-    start_block: 18000000
-    end_block: 19000000
-    contracts:
-      - name: Greeter
-        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
-```
-
----
-
-## Events Selection
+### Events Selection
 
 Define specific events to index in a human-readable format:
 
@@ -171,7 +235,7 @@ events:
 
 By default, all events defined in the contract are indexed, but you can selectively disable them by removing them from this list.
 
-### Custom Event Names
+#### Custom Event Names
 
 You can assign custom names to events in `config.yaml`. This is handy when
 two events share the same name but have different signatures, or when you want
@@ -184,29 +248,7 @@ events:
     name: AssignedWithSender
 ```
 
----
-
-## Raw Events Storage
-
-By default, HyperIndex doesn't store raw event data in the database to optimize performance and reduce storage requirements. However, you can enable this feature for debugging purposes or if you need to access the original event data.
-
-To enable storage of raw events, add the following to your `config.yaml`:
-
-```yaml
-raw_events: true
-```
-
-When enabled, all indexed events will be stored in the `raw_events` table in the database, which you can view through the Hasura interface. This is particularly useful for:
-
-- Debugging event processing issues
-- Verifying that events are being captured correctly
-- Creating custom queries against raw blockchain data
-
-Note that enabling this option will increase database storage requirements and may slightly impact indexing performance.
-
----
-
-## Field Selection
+### Field Selection
 
 To improve indexing performance and reduce credits usage, the `block` and `transaction` fields on events contain only a subset of the fields available on the blockchain.
 
@@ -224,7 +266,7 @@ events:
 
 See all possible options in the [Config File Reference](/docs/HyperIndex/config-schema-reference#fieldselection) or use IDE autocomplete for your help.
 
-### Global Field Selection
+#### Global Field Selection
 
 You can also specify fields globally for all events in the root of the config file:
 
@@ -239,77 +281,7 @@ field_selection:
 
 Try to use this option sparingly as it can cause redundant Data Source calls and increased credits usage.
 
----
-
-## Multichain Mode
-
-In V3, multichain indexing always runs in **unordered** mode — events from different chains are processed in parallel without strictly maintaining cross-chain event ordering, which minimizes indexing latency at the head. The V2 `unordered_multichain_mode` option and the `multichain: ordered` opt-in have been removed.
-
-Learn more about multichain indexing [here](./multichain-indexing).
-
----
-
-## RPC Configuration
-
-The `rpc` option configures an RPC data source per chain. It replaces the V2 `rpc_config` and supports multiple URLs with explicit roles via the `for` field:
-
-- `sync` – use this RPC for historical sync.
-- `realtime` – use this RPC for low-latency head tracking once the indexer enters realtime mode. WebSocket endpoints (`wss://...`) are supported here.
-- `fallback` – use as a fallback when the primary source is unavailable.
-
-For chains with HyperSync, RPC is used as a fallback by default for added reliability. For chains without HyperSync, RPC is the primary data source.
-
-```yaml
-chains:
-  - id: 1
-    rpc:
-      - url: https://eth-mainnet.your-rpc-provider.com
-        for: sync
-      - url: wss://eth-mainnet.your-rpc-provider.com
-        for: realtime
-      - url: https://fallback.example.com
-        for: fallback
-```
-
-A short form is also supported when you only need a single RPC URL:
-
-```yaml
-chains:
-  - id: 1
-    rpc: https://eth-mainnet.your-rpc-provider.com
-```
-
-:::note Experimental: WebSocket support
-WebSocket support for RPC sources is experimental. Pair `wss://` URLs with `for: realtime` to improve head latency. Please open a GitHub issue if you hit any problems.
-:::
-
-After switching to a fallback source, HyperIndex automatically attempts to recover to the primary source 60 seconds later.
-
-See the [Rpc reference](/docs/HyperIndex/config-schema-reference#def-rpc) for advanced tuning options such as `initial_block_interval`, `polling_interval`, `query_timeout_millis`, and backoff parameters.
-
----
-
-## Block Lag
-
-Set `block_lag` on a chain to keep the indexer a fixed number of blocks behind the chain head. This replaces the V2 `ENVIO_INDEXING_BLOCK_LAG` environment variable, applied per chain. Defaults to `0`.
-
-```yaml
-chains:
-  - id: 1
-    start_block: 0
-    block_lag: 5
-    contracts:
-      - name: Greeter
-        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
-```
-
-:::warning Advanced use only
-Only set `block_lag` if you understand the trade-off — it intentionally trades head latency for additional reorg safety.
-:::
-
----
-
-## Handler File Path
+### Handler File Path
 
 V3 introduces automatic handler registration. Place your handler files in `src/handlers/` and they'll be picked up automatically — no need to declare a `handler` path for each contract in `config.yaml`. File names are flexible, but one file per contract is recommended.
 
@@ -331,7 +303,11 @@ contracts:
 
 ---
 
-## Storage Backends
+## Storage
+
+How indexed data is persisted — which backends to use and whether to keep raw event records around.
+
+### Storage Backends
 
 By default, HyperIndex writes entities to Postgres. In V3 you can additionally enable **ClickHouse** as a second storage backend (experimental):
 
@@ -367,19 +343,31 @@ Do not run multiple indexers writing to the same ClickHouse database at the same
 
 Envio Cloud currently supports ClickHouse on the Dedicated Plan.
 
----
+### Raw Events Storage
 
-## Full Batch Size
+By default, HyperIndex doesn't store raw event data in the database to optimize performance and reduce storage requirements. However, you can enable this feature for debugging purposes or if you need to access the original event data.
 
-Set `full_batch_size` to control how many events are processed in a single batch. This replaces the V2 `MAX_BATCH_SIZE` environment variable.
+To enable storage of raw events, add the following to your `config.yaml`:
 
 ```yaml
-full_batch_size: 5000
+raw_events: true
 ```
+
+When enabled, all indexed events will be stored in the `raw_events` table in the database, which you can view through the Hasura interface. This is particularly useful for:
+
+- Debugging event processing issues
+- Verifying that events are being captured correctly
+- Creating custom queries against raw blockchain data
+
+Note that enabling this option will increase database storage requirements and may slightly impact indexing performance.
 
 ---
 
-## Address Format
+## Advanced
+
+Less commonly touched options — formatting, reorg handling, performance tuning, environment variables, and project layout.
+
+### Address Format
 
 Use `address_format` to control how every address surfaced by the indexer (event fields like `event.srcAddress` / `event.transaction.from`, `chain.<Contract>.addresses`, addresses embedded in entity ids, etc.) is formatted.
 
@@ -392,9 +380,7 @@ address_format: lowercase # default: checksum
 
 You can still call `.toLowerCase()` ad-hoc inside a handler when you only need a single value lowercased.
 
----
-
-## Rollback on Reorg
+### Rollback on Reorg
 
 HyperIndex automatically handles blockchain reorganizations by default. To disable or customize this behavior, set the `rollback_on_reorg` flag in your `config.yaml`:
 
@@ -404,9 +390,7 @@ rollback_on_reorg: true # default is true
 
 See detailed configuration options [here](./reorgs-support).
 
----
-
-## Preload Optimization
+### Preload Optimization
 
 [Preload Optimization](/docs/HyperIndex/preload-optimization) is always enabled in V3. There is no `preload_handlers` flag — the previous opt-in is now the only behavior.
 
@@ -415,9 +399,15 @@ Be aware of:
 - [Double-Run Footgun](/docs/HyperIndex/preload-optimization#double-run-footgun)
 - [Effect API for External Calls](/docs/HyperIndex/effect-api)
 
----
+### Full Batch Size
 
-## Environment Variables
+Set `full_batch_size` to control how many events are processed in a single batch. This replaces the V2 `MAX_BATCH_SIZE` environment variable.
+
+```yaml
+full_batch_size: 5000
+```
+
+### Environment Variables
 
 Environment variable interpolation is supported for flexibility and security:
 
@@ -442,9 +432,7 @@ ENVIO_CHAIN_ID=optimism ENVIO_GREETER_ADDRESS=0xYourContractAddress pnpm dev
 
 For more detailed information about environment variables, see our [Environment Variables Guide](./environment-variables).
 
----
-
-## Schema File Path
+### Schema File Path
 
 You can customize the path to the [schema file](./schema-file.md) using the `schema` option:
 
@@ -454,9 +442,7 @@ schema: ./path/to/schema.graphql
 
 By default, the `schema.graphql` is expected to be in the root directory of your project.
 
----
-
-## Memory and Resource Considerations
+### Memory and Resource Considerations
 
 - **RPC rate limits**: If using RPC sync, your provider's rate limits will cap throughput. Use [HyperSync](../Advanced/hypersync.md) where supported for significantly faster data retrieval.
 - **Handler complexity**: Expensive operations in handlers (e.g., many `eth_call` via the [Effect API](../Advanced/effect-api.md)) slow down processing. Use caching and batching to mitigate.
