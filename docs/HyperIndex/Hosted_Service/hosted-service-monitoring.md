@@ -81,7 +81,7 @@ Channels are configured at the organisation level via **Settings > Notification 
 
 The webhook channel sends a structured JSON payload via HTTP POST to any URL you provide. This makes it compatible with any service that accepts webhook-based alerts.
 
-**Custom Headers (optional):** When creating a webhook channel, you can add custom HTTP headers that will be sent with every request. This is useful for services that require authentication via API keys or bearer tokens. incident.io does not require custom headers.
+**Custom Headers (optional):** When creating a webhook channel, you can add custom HTTP headers that will be sent with every request. This is useful for services that require authentication via API keys or bearer tokens — for example, incident.io requires an `Authorization: Bearer <token>` header.
 
 :::warning
 The webhook channel is a generic HTTP endpoint. It is not guaranteed to work with all third-party services — please see the [integration guides below](#webhook-integrations) for supported setup instructions. If you need help integrating with a specific service, please reach out on the [Envio Discord](https://discord.envio.dev).
@@ -91,10 +91,10 @@ The webhook channel is a generic HTTP endpoint. It is not guaranteed to work wit
 
 ```json
 {
-  "title": "IndexerStoppedProcessing",
+  "title": "IndexerStoppedProcessing — my-indexer (abc123)",
   "status": "firing",
   "severity": "warning",
-  "description": "Indexer my-indexer has stopped processing blocks for 10+ minutes",
+  "description": "Indexer my-indexer has stopped processing blocks for 10+ minutes (commit: abc123)",
   "source_url": "https://envio.dev/app/my-org/my-indexer/abc123",
   "alert_id": "my-org/proj456/my-indexer/IndexerStoppedProcessing",
   "metadata": {
@@ -173,8 +173,11 @@ Set the dedup key path to `alert_id`. This ensures alerts are grouped per indexe
 
 1. Go to **Settings > Notification Channels** in the Envio Cloud dashboard
 2. Click **Add Channel** and select **Webhook**
-3. Paste the webhook URL from incident.io (no custom headers are needed — incident.io authenticates via the unique URL)
-4. Subscribe your indexer's alerts to this channel
+3. Paste the webhook URL from incident.io
+4. Expand **Custom Headers** and add the authorization header:
+   - **Header name**: `Authorization`
+   - **Value**: Copy the full `Bearer <token>` value from the incident.io source config
+5. Subscribe your indexer's alerts to this channel
 
 :::tip Proactive Monitoring
 Set up multiple notification channels (**Paid Plans Only**) to ensure you never miss critical alerts about your indexer's health.
