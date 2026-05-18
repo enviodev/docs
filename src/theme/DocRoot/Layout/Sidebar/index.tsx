@@ -49,7 +49,13 @@ export default function DocRootLayoutSidebar({
         hiddenSidebarContainer && styles.docSidebarContainerHidden,
       )}
       onTransitionEnd={(e) => {
-        if (!e.currentTarget.classList.contains(styles.docSidebarContainer!)) {
+        // Guard against bubbled transitions from descendants and unrelated
+        // properties; only the aside's own `width` transition should toggle
+        // the hidden state.
+        if (e.target !== e.currentTarget) {
+          return;
+        }
+        if (e.propertyName !== 'width') {
           return;
         }
 
