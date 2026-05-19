@@ -252,10 +252,6 @@ chains:
         address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
 ```
 
-:::tip Automatic contract attachment
-Contracts defined globally at the top level are automatically attached to every chain — you no longer need to list a global contract under each chain to make `addContract` / `context.chain.<Contract>.add` work. Only list the contract under a chain when you need to supply chain-specific values like an `address` or per-chain `start_block`.
-:::
-
 ### ABI
 
 You can either let Envio infer the ABI from the event signatures listed under `events`, or point to a JSON ABI file via `abi_file_path` (when you only want a subset of events from a larger ABI):
