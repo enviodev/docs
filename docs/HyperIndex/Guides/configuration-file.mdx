@@ -395,6 +395,21 @@ Note that enabling this option will increase database storage requirements and m
 
 ---
 
+## Address Format
+
+Use `address_format` to control how every address surfaced by the indexer (event fields like `event.srcAddress` / `event.transaction.from`, `chain.<Contract>.addresses`, addresses embedded in entity ids, etc.) is formatted.
+
+```yaml
+address_format: lowercase # default: checksum
+```
+
+- `checksum` (default) – [EIP-55](https://eips.ethereum.org/EIPS/eip-55) checksummed mixed-case addresses.
+- `lowercase` – every address is lowercased globally. Useful when joining against another data source that stores addresses in lowercase, or when you want byte-for-byte deterministic ids without per-handler `.toLowerCase()` calls.
+
+You can still call `.toLowerCase()` ad-hoc inside a handler when you only need a single value lowercased.
+
+---
+
 ## Environment Variables
 
 Environment variable interpolation is supported anywhere in `config.yaml`, which is useful for keeping RPC URLs, addresses, or chain IDs out of source control.
@@ -424,20 +439,9 @@ For more detailed information about environment variables, see our [Environment 
 
 ## Advanced
 
-Less commonly touched options — formatting, reorg handling, performance tuning, and project layout.
-
-### Address Format
-
-Use `address_format` to control how every address surfaced by the indexer (event fields like `event.srcAddress` / `event.transaction.from`, `chain.<Contract>.addresses`, addresses embedded in entity ids, etc.) is formatted.
-
-```yaml
-address_format: lowercase # default: checksum
-```
-
-- `checksum` (default) – [EIP-55](https://eips.ethereum.org/EIPS/eip-55) checksummed mixed-case addresses.
-- `lowercase` – every address is lowercased globally. Useful when joining against another data source that stores addresses in lowercase, or when you want byte-for-byte deterministic ids without per-handler `.toLowerCase()` calls.
-
-You can still call `.toLowerCase()` ad-hoc inside a handler when you only need a single value lowercased.
+:::note
+In ~95% of cases you don't need to touch any of these — the defaults are tuned for the common path. Reach for them only when you have a specific reason.
+:::
 
 ### Rollback on Reorg
 
