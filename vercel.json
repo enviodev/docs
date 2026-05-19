@@ -10,7 +10,7 @@
       "destination": "/api/mcp"
     },
     {
-      "source": "/docs/:path*",
+      "source": "/docs/:path+",
       "has": [
         {
           "type": "header",
@@ -18,7 +18,7 @@
           "value": ".*text/markdown.*"
         }
       ],
-      "destination": "/docs/:path*.md"
+      "destination": "/docs/:path+.md"
     },
     {
       "source": "/blog/:slug",
