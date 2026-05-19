@@ -440,6 +440,16 @@ contracts:
     handler: ./src/GreeterHandler.ts # optional per-contract path
 ```
 
+### Schema File Path
+
+You can customize the path to the [schema file](./schema-file.md) using the `schema` option:
+
+```yaml
+schema: ./path/to/schema.graphql
+```
+
+By default, the `schema.graphql` is expected to be in the root directory of your project.
+
 ### Block Lag
 
 Set `block_lag` on a chain to keep the indexer a fixed number of blocks behind the chain head. Defaults to `0`.
@@ -472,16 +482,6 @@ Set `full_batch_size` to control how many events are processed in a single batch
 ```yaml
 full_batch_size: 5000
 ```
-
-### Schema File Path
-
-You can customize the path to the [schema file](./schema-file.md) using the `schema` option:
-
-```yaml
-schema: ./path/to/schema.graphql
-```
-
-By default, the `schema.graphql` is expected to be in the root directory of your project.
 
 ---
 
