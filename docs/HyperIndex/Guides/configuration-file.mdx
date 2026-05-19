@@ -476,14 +476,6 @@ schema: ./path/to/schema.graphql
 
 By default, the `schema.graphql` is expected to be in the root directory of your project.
 
-### Memory and Resource Considerations
-
-- **RPC rate limits**: If using RPC sync, your provider's rate limits will cap throughput. Use [HyperSync](../Advanced/hypersync.md) where supported for significantly faster data retrieval.
-- **Handler complexity**: Expensive operations in handlers (e.g., many `eth_call` via the [Effect API](../Advanced/effect-api.md)) slow down processing. Use caching and batching to mitigate.
-- **Database size**: Large entity tables slow down both writes and queries. Add [database indices](../Advanced/performance/database-performance-optimization.md) for frequently queried fields.
-
-For detailed performance optimization strategies, see the [Performance guide](../Advanced/performance/index.md).
-
 ---
 
 ## Configuration Schema Reference
