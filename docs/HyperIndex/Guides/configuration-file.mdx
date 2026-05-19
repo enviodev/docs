@@ -395,9 +395,36 @@ Note that enabling this option will increase database storage requirements and m
 
 ---
 
+## Environment Variables
+
+Environment variable interpolation is supported anywhere in `config.yaml`, which is useful for keeping RPC URLs, addresses, or chain IDs out of source control.
+
+```yaml
+chains:
+  - id: ${ENVIO_CHAIN_ID:-ethereum-mainnet}
+    contracts:
+      - name: Greeter
+        address: "${ENVIO_GREETER_ADDRESS}"
+```
+
+Run your indexer with custom environment variables:
+
+```bash
+ENVIO_CHAIN_ID=optimism ENVIO_GREETER_ADDRESS=0xYourContractAddress pnpm dev
+```
+
+**Interpolation syntax:**
+
+- `${ENVIO_VAR}` – Use the value of `ENVIO_VAR`
+- `${ENVIO_VAR:-default}` – Use `ENVIO_VAR` if set, otherwise use `default`
+
+For more detailed information about environment variables, see our [Environment Variables Guide](./environment-variables).
+
+---
+
 ## Advanced
 
-Less commonly touched options — formatting, reorg handling, performance tuning, environment variables, and project layout.
+Less commonly touched options — formatting, reorg handling, performance tuning, and project layout.
 
 ### Address Format
 
@@ -439,31 +466,6 @@ Set `full_batch_size` to control how many events are processed in a single batch
 full_batch_size: 5000
 ```
 
-### Environment Variables
-
-Environment variable interpolation is supported for flexibility and security:
-
-```yaml
-chains:
-  - id: ${ENVIO_CHAIN_ID:-ethereum-mainnet}
-    contracts:
-      - name: Greeter
-        address: "${ENVIO_GREETER_ADDRESS}"
-```
-
-Run your indexer with custom environment variables:
-
-```bash
-ENVIO_CHAIN_ID=optimism ENVIO_GREETER_ADDRESS=0xYourContractAddress pnpm dev
-```
-
-**Interpolation syntax:**
-
-- `${ENVIO_VAR}` – Use the value of `ENVIO_VAR`
-- `${ENVIO_VAR:-default}` – Use `ENVIO_VAR` if set, otherwise use `default`
-
-For more detailed information about environment variables, see our [Environment Variables Guide](./environment-variables).
-
 ### Schema File Path
 
 You can customize the path to the [schema file](./schema-file.md) using the `schema` option:
@@ -481,53 +483,6 @@ By default, the `schema.graphql` is expected to be in the root directory of your
 - **Database size**: Large entity tables slow down both writes and queries. Add [database indices](../Advanced/performance/database-performance-optimization.md) for frequently queried fields.
 
 For detailed performance optimization strategies, see the [Performance guide](../Advanced/performance/index.md).
-
----
-
-## Full config file example
-
-This example indexes events from multiple contracts across multiple networks.
-
-```yaml
-name: envio-indexer
-contracts:
-  - name: PoolManager
-    events:
-      - event: Swap(bytes32 indexed id, address indexed sender, int128 amount0, int128 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick, uint24 fee)
-  - name: PositionManager
-    events:
-      - event: Transfer(address indexed from, address indexed to, uint256 indexed id)
-chains:
-  - id: 1
-    # Keep it 0 and HyperSync will automatically find the first block for your contracts
-    start_block: 0
-    contracts:
-      - name: PositionManager
-        address:
-          - "0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e"
-        start_block: 18500000 # OPTIONAL: Override for contract deployed later
-      - name: PoolManager
-        address:
-          - "0x000000000004444c5dc75cB358380D2e3dE08A90"
-  - id: 10
-    start_block: 0
-    contracts:
-      - name: PositionManager
-        address:
-          - "0x3C3Ea4B57a46241e54610e5f022e5c45859A1017"
-      - name: PoolManager
-        address:
-          - "0x9a13F98Cb987694C9F086b1F5eB990EeA8264Ec3"
-  - id: 42161
-    start_block: 0
-    contracts:
-      - name: PositionManager
-        address:
-          - "0xd88f38f930b7952f2db2432cb002e7abbf3dd869"
-      - name: PoolManager
-        address:
-          - "0x360e68faccca8ca495c1b759fd9eee466db9fb32"
-```
 
 ---
 
