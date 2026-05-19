@@ -48,6 +48,120 @@ chains:
 
 ---
 
+## Contracts Definition
+
+The top-level `contracts` block defines each contract once — its events, ABI, and per-event options. Each chain then references these contracts by `name` and supplies chain-specific values like the on-chain address (see [Contracts (per chain)](#contracts-per-chain)).
+
+```yaml
+contracts:
+  - name: Greeter
+    abi: ./abis/greeter.json
+    events:
+      - event: "NewGreeting(address user, string greeting)"
+      - event: "ClearGreeting(address user)"
+
+chains:
+  - id: 1
+    start_block: 0
+    contracts:
+      - name: Greeter
+        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
+```
+
+### ABI
+
+You can either let Envio infer the ABI from the event signatures listed under `events`, or point to a JSON ABI file via `abi_file_path` (when you only want a subset of events from a larger ABI):
+
+```yaml
+contracts:
+  - name: Greeter
+    abi_file_path: ./abis/greeter.json
+    events:
+      - event: NewGreeting # referenced by name; signature comes from the ABI file
+```
+
+### Events Selection
+
+Define specific events to index in a human-readable format:
+
+```yaml
+contracts:
+  - name: Greeter
+    events:
+      - event: "NewGreeting(address user, string greeting)"
+      - event: "ClearGreeting(address user)"
+```
+
+By default, all events listed here are indexed — remove an entry to stop indexing it.
+
+#### Custom Event Names
+
+You can assign custom names to events in `config.yaml`. This is handy when
+two events share the same name but have different signatures, or when you want
+a more descriptive name in your Envio project.
+
+```yaml
+events:
+  - event: Assigned(address indexed recipientId, uint256 amount, address token)
+  - event: Assigned(address indexed recipientId, uint256 amount, address token, address sender)
+    name: AssignedWithSender
+```
+
+### Field Selection
+
+To improve indexing performance and reduce credits usage, the `block` and `transaction` fields on events contain only a subset of the fields available on the blockchain.
+
+To access fields that are not provided by default, specify them using the `field_selection` option for your event:
+
+```yaml
+events:
+  - event: "Assigned(address indexed user, uint256 amount)"
+    field_selection:
+      transaction_fields:
+        - transactionIndex
+      block_fields:
+        - timestamp
+```
+
+See all possible options in the [Config File Reference](/docs/HyperIndex/config-schema-reference#fieldselection) or use IDE autocomplete for your help.
+
+#### Global Field Selection
+
+You can also specify fields globally for all events in the root of the config file:
+
+```yaml
+field_selection:
+  transaction_fields:
+    - hash
+    - gasUsed
+  block_fields:
+    - parentHash
+```
+
+Try to use this option sparingly as it can cause redundant Data Source calls and increased credits usage.
+
+### Handler File Path
+
+V3 introduces automatic handler registration. Place your handler files in `src/handlers/` and they'll be picked up automatically — no need to declare a `handler` path for each contract in `config.yaml`. File names are flexible, but one file per contract is recommended.
+
+To customize the directory, use the top-level `handlers` option:
+
+```yaml
+handlers: ./src/my-handlers
+```
+
+You can also still set an explicit `handler` per contract if you prefer:
+
+```yaml
+contracts:
+  - name: Greeter
+    handler: ./src/GreeterHandler.ts
+    events:
+      - event: "NewGreeting(address user, string greeting)"
+```
+
+---
+
 ## Chains
 
 Everything under the top-level `chains` field configures the networks your indexer connects to — data sources, start/end blocks, reorg behavior, and multichain semantics.
@@ -228,120 +342,6 @@ name: BlockHandlerOnly
 chains:
   - id: 1
     start_block: 18000000
-```
-
----
-
-## Contracts Definition
-
-The top-level `contracts` block defines each contract once — its events, ABI, and per-event options. Each chain then references these contracts by `name` and supplies chain-specific values like the on-chain address (see [Contracts (per chain)](#contracts-per-chain)).
-
-```yaml
-contracts:
-  - name: Greeter
-    abi: ./abis/greeter.json
-    events:
-      - event: "NewGreeting(address user, string greeting)"
-      - event: "ClearGreeting(address user)"
-
-chains:
-  - id: 1
-    start_block: 0
-    contracts:
-      - name: Greeter
-        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
-```
-
-### ABI
-
-You can either let Envio infer the ABI from the event signatures listed under `events`, or point to a JSON ABI file via `abi_file_path` (when you only want a subset of events from a larger ABI):
-
-```yaml
-contracts:
-  - name: Greeter
-    abi_file_path: ./abis/greeter.json
-    events:
-      - event: NewGreeting # referenced by name; signature comes from the ABI file
-```
-
-### Events Selection
-
-Define specific events to index in a human-readable format:
-
-```yaml
-contracts:
-  - name: Greeter
-    events:
-      - event: "NewGreeting(address user, string greeting)"
-      - event: "ClearGreeting(address user)"
-```
-
-By default, all events listed here are indexed — remove an entry to stop indexing it.
-
-#### Custom Event Names
-
-You can assign custom names to events in `config.yaml`. This is handy when
-two events share the same name but have different signatures, or when you want
-a more descriptive name in your Envio project.
-
-```yaml
-events:
-  - event: Assigned(address indexed recipientId, uint256 amount, address token)
-  - event: Assigned(address indexed recipientId, uint256 amount, address token, address sender)
-    name: AssignedWithSender
-```
-
-### Field Selection
-
-To improve indexing performance and reduce credits usage, the `block` and `transaction` fields on events contain only a subset of the fields available on the blockchain.
-
-To access fields that are not provided by default, specify them using the `field_selection` option for your event:
-
-```yaml
-events:
-  - event: "Assigned(address indexed user, uint256 amount)"
-    field_selection:
-      transaction_fields:
-        - transactionIndex
-      block_fields:
-        - timestamp
-```
-
-See all possible options in the [Config File Reference](/docs/HyperIndex/config-schema-reference#fieldselection) or use IDE autocomplete for your help.
-
-#### Global Field Selection
-
-You can also specify fields globally for all events in the root of the config file:
-
-```yaml
-field_selection:
-  transaction_fields:
-    - hash
-    - gasUsed
-  block_fields:
-    - parentHash
-```
-
-Try to use this option sparingly as it can cause redundant Data Source calls and increased credits usage.
-
-### Handler File Path
-
-V3 introduces automatic handler registration. Place your handler files in `src/handlers/` and they'll be picked up automatically — no need to declare a `handler` path for each contract in `config.yaml`. File names are flexible, but one file per contract is recommended.
-
-To customize the directory, use the top-level `handlers` option:
-
-```yaml
-handlers: ./src/my-handlers
-```
-
-You can also still set an explicit `handler` per contract if you prefer:
-
-```yaml
-contracts:
-  - name: Greeter
-    handler: ./src/GreeterHandler.ts
-    events:
-      - event: "NewGreeting(address user, string greeting)"
 ```
 
 ---
