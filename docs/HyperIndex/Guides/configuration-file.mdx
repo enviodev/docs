@@ -54,7 +54,7 @@ Everything under the top-level `chains` field configures the networks your index
 
 ### RPC Configuration
 
-The `rpc` option configures an RPC data source per chain. It replaces the V2 `rpc_config` and supports multiple URLs with explicit roles via the `for` field:
+The `rpc` option configures an RPC data source per chain. It supports multiple URLs with explicit roles via the `for` field:
 
 - `sync` – use this RPC for historical sync.
 - `realtime` – use this RPC for low-latency head tracking once the indexer enters realtime mode. WebSocket endpoints (`wss://...`) are supported here.
@@ -142,12 +142,6 @@ chains:
 :::warning Advanced use only
 Only set `block_lag` if you understand the trade-off — it intentionally trades head latency for additional reorg safety.
 :::
-
-### Multichain Mode
-
-In V3, multichain indexing always runs in **unordered** mode — events from different chains are processed in parallel without strictly maintaining cross-chain event ordering, which minimizes indexing latency at the head. The V2 `unordered_multichain_mode` option and the `multichain: ordered` opt-in have been removed.
-
-Learn more about multichain indexing [here](./multichain-indexing).
 
 ### Indexer Without Contracts (Block Handlers Only)
 
