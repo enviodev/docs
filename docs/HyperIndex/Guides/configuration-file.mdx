@@ -141,17 +141,6 @@ field_selection:
 
 Try to use this option sparingly as it can cause redundant Data Source calls and increased credits usage.
 
-### Handler File Path (advanced)
-
-Handlers are auto-discovered from `src/handlers/`. Override the directory with the top-level `handlers` option, or set a per-contract `handler` path when needed:
-
-```yaml
-handlers: ./src/my-handlers # optional override of src/handlers
-contracts:
-  - name: Greeter
-    handler: ./src/GreeterHandler.ts # optional per-contract path
-```
-
 ---
 
 ## Chains
@@ -318,21 +307,6 @@ chains:
     start_block: 18000000
 ```
 
-### Block Lag (advanced)
-
-Set `block_lag` on a chain to keep the indexer a fixed number of blocks behind the chain head. Defaults to `0`.
-
-```yaml
-chains:
-  - id: 1
-    start_block: 0
-    block_lag: 5
-```
-
-:::warning
-Only set `block_lag` if you understand the trade-off — it intentionally trades head latency for additional reorg safety.
-:::
-
 ---
 
 ## Storage
@@ -453,6 +427,32 @@ For more detailed information about environment variables, see our [Environment 
 
 :::note
 In ~95% of cases you don't need to touch any of these — the defaults are tuned for the common path. Reach for them only when you have a specific reason.
+:::
+
+### Handler File Path
+
+Handlers are auto-discovered from `src/handlers/`. Override the directory with the top-level `handlers` option, or set a per-contract `handler` path when needed:
+
+```yaml
+handlers: ./src/my-handlers # optional override of src/handlers
+contracts:
+  - name: Greeter
+    handler: ./src/GreeterHandler.ts # optional per-contract path
+```
+
+### Block Lag
+
+Set `block_lag` on a chain to keep the indexer a fixed number of blocks behind the chain head. Defaults to `0`.
+
+```yaml
+chains:
+  - id: 1
+    start_block: 0
+    block_lag: 5
+```
+
+:::warning
+Only set `block_lag` if you understand the trade-off — it intentionally trades head latency for additional reorg safety.
 :::
 
 ### Rollback on Reorg
