@@ -62,8 +62,39 @@ const minimatch = typeof _minimatch === "function" ? _minimatch : _minimatch.min
 // - The `.md` copies are saved at the same relative path as the doc's URL.
 
 function GenerateLLMSPlugin(context, options) {
+    const llmsTxtPath = options.llmsTxtPath || "/llms.txt";
+
     return {
         name: "docusaurus-plugin-generate-llms",
+
+        // Inject an agent-facing directive into the HTML of every page so
+        // agents discovering a single page can find the documentation index.
+        // Matches the agentdocsspec "llms-txt-directive-html" check.
+        injectHtmlTags() {
+            return {
+                headTags: [
+                    {
+                        tagName: "link",
+                        attributes: {
+                            rel: "alternate",
+                            type: "text/plain",
+                            href: llmsTxtPath,
+                            title: "Documentation index for AI agents (llms.txt)",
+                        },
+                    },
+                ],
+                preBodyTags: [
+                    {
+                        tagName: "div",
+                        attributes: {
+                            "data-llms-directive": "true",
+                            style: "position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;",
+                        },
+                        innerHTML: `For AI agents: the documentation index is at <a href="${llmsTxtPath}">${llmsTxtPath}</a>. Markdown versions of pages are available by appending <code>.md</code> to the URL.`,
+                    },
+                ],
+            };
+        },
 
         async postBuild({ siteConfig }) {
             const { url, plugins } = siteConfig;
