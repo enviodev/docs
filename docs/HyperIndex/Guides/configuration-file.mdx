@@ -152,72 +152,46 @@ chains:
 Only set `block_lag` if you understand the trade-off — it intentionally trades head latency for additional reorg safety.
 :::
 
-### Indexer Without Contracts (Block Handlers Only)
+### Contracts (per chain)
 
-The `contracts` field is **optional** in V3. You can run an indexer that only uses block handlers (`indexer.onBlock`) without declaring any contracts:
-
-```yaml
-name: BlockHandlerOnly
-chains:
-  - id: 1
-    start_block: 18000000
-```
-
----
-
-## Contracts
-
-Top-level `contracts` (and the `contracts` blocks nested inside each chain) describe which smart contracts and which of their events you want to index.
-
-### Contract Addresses
-
-Set the address of the smart contract you're indexing.
+Inside each chain you list the contracts you want to index on that chain — referenced by `name` from your top-level [Contracts Definition](#contracts-definition). The chain-level entry is where you pin the on-chain `address` (or list of addresses) and, optionally, a per-contract `start_block`.
 
 :::note
 Addresses can be provided in **checksum** format or in **lowercase**.
 Envio accepts both and normalizes them internally.
 :::
 
+#### Addresses
+
 **Single address:**
 
 ```yaml
-address: "0xContractAddress"
+chains:
+  - id: 1
+    start_block: 0
+    contracts:
+      - name: MyContract
+        address: "0xContractAddress"
 ```
 
 **Multiple addresses for the same contract:**
 
 ```yaml
-contracts:
-  - name: MyContract
-    address:
-      - "0xAddress1"
-      - "0xAddress2"
+chains:
+  - id: 1
+    start_block: 0
+    contracts:
+      - name: MyContract
+        address:
+          - "0xAddress1"
+          - "0xAddress2"
 ```
 
 :::tip
 If using a **proxy contract**, always use the **proxy address**, not the implementation address.
 :::
 
-**Global definitions:**  
-You can also avoid repeating addresses by using global contract definitions:
-
-```yaml
-contracts:
-  - name: Greeter
-    abi: greeter.json
-
-chains:
-  - id: ethereum-mainnet
-    contracts:
-      - name: Greeter
-        address: "0xProxyAddressHere"
-```
-
-:::tip Automatic contract configuration
-In V3, contracts defined globally at the top level are automatically attached to every chain — you no longer need to list a global contract under each chain to make `addContract` / `context.chain.<Contract>.add` work. Only list the contract under a chain when you need to supply chain-specific values like an `address` or per-chain `start_block`.
-:::
-
-### Per-Contract Start Block Override
+#### Per-Contract Start Block Override
 
 By default, contracts use the chain `start_block`. You can also set a per-contract `start_block` to override it. Handy when:
 
@@ -225,8 +199,6 @@ By default, contracts use the chain `start_block`. You can also set a per-contra
 - You only need data from a contract starting at a specific block
 - You want to skip unnecessary historical data for some contracts
 - Works nicely with [Dynamic Contract Registration](/docs/HyperIndex/dynamic-contracts)
-
-**Example with optional per-contract start_block override:**
 
 ```yaml
 chains:
@@ -247,17 +219,68 @@ chains:
 For even finer control, you can also specify a start block per event from your handler using the `where.block.number._gte` filter on `indexer.onEvent`. See [Event Handlers](./event-handlers.mdx) for the full API.
 :::
 
+### Indexer Without Contracts (Block Handlers Only)
+
+The `contracts` field is **optional** in V3. You can run an indexer that only uses block handlers (`indexer.onBlock`) without declaring any contracts:
+
+```yaml
+name: BlockHandlerOnly
+chains:
+  - id: 1
+    start_block: 18000000
+```
+
+---
+
+## Contracts Definition
+
+The top-level `contracts` block defines each contract once — its events, ABI, and per-event options. Each chain then references these contracts by `name` and supplies chain-specific values like the on-chain address (see [Contracts (per chain)](#contracts-per-chain)).
+
+```yaml
+contracts:
+  - name: Greeter
+    abi: ./abis/greeter.json
+    events:
+      - event: "NewGreeting(address user, string greeting)"
+      - event: "ClearGreeting(address user)"
+
+chains:
+  - id: 1
+    start_block: 0
+    contracts:
+      - name: Greeter
+        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
+```
+
+:::tip Automatic contract attachment
+Contracts defined globally at the top level are automatically attached to every chain — you no longer need to list a global contract under each chain to make `addContract` / `context.chain.<Contract>.add` work. Only list the contract under a chain when you need to supply chain-specific values like an `address` or per-chain `start_block`.
+:::
+
+### ABI
+
+You can either let Envio infer the ABI from the event signatures listed under `events`, or point to a JSON ABI file via `abi_file_path` (when you only want a subset of events from a larger ABI):
+
+```yaml
+contracts:
+  - name: Greeter
+    abi_file_path: ./abis/greeter.json
+    events:
+      - event: NewGreeting # referenced by name; signature comes from the ABI file
+```
+
 ### Events Selection
 
 Define specific events to index in a human-readable format:
 
 ```yaml
-events:
-  - event: "NewGreeting(address user, string greeting)"
-  - event: "ClearGreeting(address user)"
+contracts:
+  - name: Greeter
+    events:
+      - event: "NewGreeting(address user, string greeting)"
+      - event: "ClearGreeting(address user)"
 ```
 
-By default, all events defined in the contract are indexed, but you can selectively disable them by removing them from this list.
+By default, all events listed here are indexed — remove an entry to stop indexing it.
 
 #### Custom Event Names
 
