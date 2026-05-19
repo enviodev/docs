@@ -409,6 +409,15 @@ function GenerateLLMSPlugin(context, options) {
 
             // --- NEW: write .md copies into build folder ---
             function writeMarkdownCopies(docs) {
+                // Discovery directive prepended to every .md copy so agents
+                // fetching a single page can find the full index.
+                // Matches the agentdocsspec "llms-txt-directive-md" check.
+                const llmsTxtUrl = `${siteConfig.url.replace(
+                    /\/$/,
+                    ""
+                )}/llms.txt`;
+                const directive = `> For the complete documentation index, see [llms.txt](${llmsTxtUrl}).\n\n`;
+
                 for (const doc of docs) {
                     const rawContent = fs.readFileSync(doc.filePath, "utf-8");
 
@@ -430,7 +439,11 @@ function GenerateLLMSPlugin(context, options) {
                     );
 
                     fs.mkdirSync(path.dirname(targetPath), { recursive: true });
-                    fs.writeFileSync(targetPath, cleanContent, "utf-8");
+                    fs.writeFileSync(
+                        targetPath,
+                        directive + cleanContent,
+                        "utf-8"
+                    );
                 }
             }
 
