@@ -465,15 +465,6 @@ rollback_on_reorg: true # default is true
 
 See detailed configuration options [here](./reorgs-support).
 
-### Preload Optimization
-
-[Preload Optimization](/docs/HyperIndex/preload-optimization) is always enabled in V3. There is no `preload_handlers` flag — the previous opt-in is now the only behavior.
-
-Be aware of:
-
-- [Double-Run Footgun](/docs/HyperIndex/preload-optimization#double-run-footgun)
-- [Effect API for External Calls](/docs/HyperIndex/effect-api)
-
 ### Full Batch Size
 
 Set `full_batch_size` to control how many events are processed in a single batch.
