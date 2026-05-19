@@ -25,7 +25,7 @@ If you'd rather drive the CLI yourself, see [Getting Started](./getting-started)
 - An AI coding assistant (we recommend **[Claude Code](https://claude.com/claude-code)**)
 
 :::info HyperIndex v3
-Some features below (notably the **built-in Claude skills**) ship with **HyperIndex v3**. See the [v3 migration guide](./migrate-to-v3) for current install guidance.
+Some features below (notably the **built-in Claude skills**) ship with **HyperIndex v3**. See the [v3 migration guide](/docs/HyperIndex/migrate-to-v3) for current install guidance.
 :::
 
 ---
@@ -120,10 +120,10 @@ The three files you'll spend most of your time in:
 
 If you're porting from The Graph, Ponder, or another indexing framework, start with the AI migration workflow. It scales much better than hand-editing handlers.
 
-- **[Migrate Using AI](./migrate-with-ai)**: the recommended assistant-driven flow. It's written around subgraphs, but the same **monorepo-plus-phased-prompt** pattern works for **Ponder** and other frameworks. Point the assistant at the source project plus a freshly scaffolded HyperIndex indexer and let the skills guide it.
-- [Migrate from The Graph (manual)](./migration-guide)
-- [Migrate from Ponder](./migrate-from-ponder)
-- [Migrate from Alchemy](./migrate-from-alchemy)
+- **[Migrate Using AI](/docs/HyperIndex/migrate-with-ai)**: the recommended assistant-driven flow. It's written around subgraphs, but the same **monorepo-plus-phased-prompt** pattern works for **Ponder** and other frameworks. Point the assistant at the source project plus a freshly scaffolded HyperIndex indexer and let the skills guide it.
+- [Migrate from The Graph (manual)](/docs/HyperIndex/migration-guide)
+- [Migrate from Ponder](/docs/HyperIndex/migrate-from-ponder)
+- [Migrate from Alchemy](/docs/HyperIndex/migrate-from-alchemy)
 
 ---
 
@@ -150,5 +150,5 @@ Every command supports `-o json`, which makes it easy for assistants and scripts
 - [LLM-friendly docs bundle](/docs/HyperIndex-LLM/hyperindex-complete)
 - [Envio CLI reference](./cli-commands)
 - [Envio Cloud CLI](./envio-cloud-cli)
-- [Migrate Using AI](./migrate-with-ai)
-- [HyperIndex v3 migration](./migrate-to-v3)
+- [Migrate Using AI](/docs/HyperIndex/migrate-with-ai)
+- [HyperIndex v3 migration](/docs/HyperIndex/migrate-to-v3)

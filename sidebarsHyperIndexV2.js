@@ -26,10 +26,26 @@ module.exports = {
       label: "Migrate to Envio",
       collapsed: false,
       items: [
-        "migrate-with-ai",
-        "migration-guide",
-        "migrate-from-ponder",
-        "migrate-from-alchemy",
+        {
+          type: "link",
+          label: "How to Migrate Using AI",
+          href: "/docs/HyperIndex/migrate-with-ai",
+        },
+        {
+          type: "link",
+          label: "Migrate from The Graph to Envio",
+          href: "/docs/HyperIndex/migration-guide",
+        },
+        {
+          type: "link",
+          label: "Migrate from Ponder to Envio",
+          href: "/docs/HyperIndex/migrate-from-ponder",
+        },
+        {
+          type: "link",
+          label: "Migrate from Alchemy to Envio",
+          href: "/docs/HyperIndex/migrate-from-alchemy",
+        },
         {
           type: "link",
           label: "Migrate to V3 🚀",
@@ -146,7 +162,11 @@ module.exports = {
       ],
     },
     networksSection,
-    "solana/solana",
+    {
+      type: "link",
+      label: "Solana",
+      href: "/docs/HyperIndex/solana",
+    },
     "fuel/fuel",
     {
       type: "link",

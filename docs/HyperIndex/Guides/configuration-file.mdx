@@ -8,128 +8,78 @@ description: Learn how to configure HyperIndex with contracts, events, networks,
 
 The `config.yaml` file defines your indexer's behavior, including which blockchain events to index, contract addresses, which chains to index, and various advanced indexing options. It is a crucial step in configuring your HyperIndex setup.
 
-After any changes to your `config.yaml` and the [schema](./schema-file.md), run:
-
-```bash
-pnpm codegen
-```
-
-This command generates necessary types and code for your event handlers.
+:::tip
+Whenever you make changes in `config.yaml` that should affect generated types (e.g. adding events, contracts, or chains), run `pnpm codegen` to regenerate types and code for your event handlers.
+:::
 
 ---
 
-## Configuration Structure
+## Example
 
-Here's an example `config.yaml` file:
+This is a basic ERC-20 `config.yaml` — it's enough on its own to get an indexer running across Ethereum Mainnet and Gnosis, tracking `Approval` and `Transfer` events on the UNI token.
 
 ```yaml
-# yaml-language: $schema=./node_modules/envio/evm.schema.json
-name: Greeter
-description: Greeter Indexer Example
+# yaml-language-server: $schema=./node_modules/envio/evm.schema.json
+name: erc20-indexer
+description: ERC-20 Indexer
+contracts:
+  - name: ERC20
+    events:
+      - event: "Approval(address indexed owner, address indexed spender, uint256 value)"
+      - event: "Transfer(address indexed from, address indexed to, uint256 value)"
+chains:
+  - id: 1 # Ethereum Mainnet
+    start_block: 0
+    contracts:
+      - name: ERC20
+        address: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984" # UNI
+  - id: 100 # Gnosis Mainnet
+    start_block: 0
+    contracts:
+      - name: ERC20
+        address: "0x4537e328Bf7e4eFA29D05CAeA260D7fE26af9D74" # UNI
+```
 
+**Next steps:**
+
+- Define how each event updates your data → [`src/handlers`](./event-handlers.mdx)
+- Shape the entities you'll query → [`schema.graphql`](./schema-file.md)
+- Need more than the basics? Keep reading for the full set of configuration options below.
+
+---
+
+## Contracts Definition
+
+The top-level `contracts` block defines each contract once — its events and per-event options. Each chain then references these contracts by `name` and supplies chain-specific values like the on-chain address (see [Contracts (per chain)](#contracts-per-chain)).
+
+```yaml
 contracts:
   - name: Greeter
-    abi:
+    events:
       - event: "NewGreeting(address user, string greeting)"
       - event: "ClearGreeting(address user)"
 
 chains:
-  - id: 1 # ethereum-mainnet
-    start_block: 12345678
+  - id: 1
+    start_block: 0
     contracts:
       - name: Greeter
         address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
 ```
 
----
+### Events Selection
 
-## Key Configuration Options
-
-### Contract Addresses
-
-Set the address of the smart contract you're indexing.
-
-:::note
-Addresses can be provided in **checksum** format or in **lowercase**.
-Envio accepts both and normalizes them internally.
-:::
-
-**Single address:**
-
-```yaml
-address: 0xContractAddress
-```
-
-**Multiple addresses for the same contract:**
-
-```yaml
-contracts:
-  - name: MyContract
-    address:
-      - 0xAddress1
-      - 0xAddress2
-```
-
-:::tip
-If using a **proxy contract**, always use the **proxy address**, not the implementation address.
-:::
-
-**Global definitions:**  
-You can also avoid repeating addresses by using global contract definitions:
+The recommended way to declare events is by their **human-readable signature** directly under `events`:
 
 ```yaml
 contracts:
   - name: Greeter
-    abi: greeter.json
-
-chains:
-  - id: ethereum-mainnet
-    contracts:
-      - name: Greeter
-        address: 0xProxyAddressHere
+    events:
+      - event: "NewGreeting(address user, string greeting)"
+      - event: "ClearGreeting(address user)"
 ```
 
----
-
-### Per-Contract Start Block Override
-
-By default, contracts use the chain `start_block`. You can also set a per-contract `start_block` to override it. Handy when:
-
-- Contracts were deployed at different blocks
-- You only need data from a contract starting at a specific block
-- You want to skip unnecessary historical data for some contracts
-- Works nicely with [Dynamic Contract Registration](/docs/HyperIndex/dynamic-contracts)
-
-**Example with optional per-contract start_block override:**
-
-```yaml
-chains:
-  - id: 1 # ethereum-mainnet
-    start_block: 18000000 # Default start block for all contracts on this chain
-    contracts:
-      - name: ERC20Token
-        address:
-          - "0x1111111111111111111111111111111111111111"
-          - "0x2222222222222222222222222222222222222222"
-        start_block: 18500000 # Override for this contract
-      - name: Greeter
-        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
-        # Uses chain default (18000000)
-```
-
----
-
-### Events Selection
-
-Define specific events to index in a human-readable format:
-
-```yaml
-events:
-  - event: "NewGreeting(address user, string greeting)"
-  - event: "ClearGreeting(address user)"
-```
-
-By default, all events defined in the contract are indexed, but you can selectively disable them by removing them from this list.
+Only the events listed here are indexed. To stop indexing an event, remove its entry.
 
 #### Custom Event Names
 
@@ -144,27 +94,19 @@ events:
     name: AssignedWithSender
 ```
 
----
+#### Using an ABI File
 
-### Raw Events Storage
-
-By default, HyperIndex doesn't store raw event data in the database to optimize performance and reduce storage requirements. However, you can enable this feature for debugging purposes or if you need to access the original event data.
-
-To enable storage of raw events, add the following to your `config.yaml`:
+If you'd rather reference a JSON ABI file (e.g. when you have one already and want to pick a subset of events from it), use `abi_file_path` and refer to events by name:
 
 ```yaml
-raw_events: true
+contracts:
+  - name: Greeter
+    abi_file_path: ./abis/greeter.json
+    events:
+      - event: NewGreeting # signature comes from the ABI file
 ```
 
-When enabled, all indexed events will be stored in the `raw_events` table in the database, which you can view through the Hasura interface. This is particularly useful for:
-
-- Debugging event processing issues
-- Verifying that events are being captured correctly
-- Creating custom queries against raw blockchain data
-
-Note that enabling this option will increase database storage requirements and may slightly impact indexing performance.
-
----
+Event signatures are still the recommended default — they keep `config.yaml` self-contained and easier to review.
 
 ### Field Selection
 
@@ -201,15 +143,215 @@ Try to use this option sparingly as it can cause redundant Data Source calls and
 
 ---
 
-### Multichain Mode
+## Chains
 
-In V3, multichain indexing always runs in **unordered** mode — events from different chains are processed in parallel without strictly maintaining cross-chain event ordering, which minimizes indexing latency at the head. The V2 `unordered_multichain_mode` option and the `multichain: ordered` opt-in have been removed.
+Everything under the top-level `chains` field configures the networks your indexer connects to — data sources, start/end blocks, reorg behavior, and multichain semantics.
 
-Learn more about multichain indexing [here](./multichain-indexing).
+### RPC
+
+The `rpc` option configures an RPC data source per chain. It supports multiple URLs with explicit roles via the `for` field:
+
+- `sync` – use this RPC for historical sync.
+- `realtime` – use this RPC for low-latency head tracking once the indexer enters realtime mode. WebSocket endpoints (`wss://...`) are supported here.
+- `fallback` – use as a fallback when the primary source is unavailable.
+
+:::tip Optional for HyperSync chains
+For chains supported by [HyperSync](../Advanced/hypersync.md), `rpc` is **not required** — HyperSync is used as the primary data source out of the box. You can still add an RPC entry as a fallback for extra reliability. For chains without HyperSync, `rpc` is required and acts as the primary data source.
+:::
+
+```yaml
+chains:
+  - id: 1
+    rpc:
+      - url: https://eth-mainnet.your-rpc-provider.com
+        for: sync
+      - url: wss://eth-mainnet.your-rpc-provider.com
+        for: realtime
+      - url: https://fallback.example.com
+        for: fallback
+```
+
+A short form is also supported when you only need a single RPC URL:
+
+```yaml
+chains:
+  - id: 1
+    rpc: https://eth-mainnet.your-rpc-provider.com
+```
+
+:::note Experimental: WebSocket support
+WebSocket support for RPC sources is experimental. Pair `wss://` URLs with `for: realtime` to improve head latency. Please open a GitHub issue if you hit any problems.
+
+```yaml
+chains:
+  - id: 1
+    rpc:
+      url: ${ENVIO_RPC_ENDPOINT}
+      ws: ${ENVIO_WS_ENDPOINT}
+      for: realtime
+```
+:::
+
+After switching to a fallback source, HyperIndex automatically attempts to recover to the primary source 60 seconds later.
+
+See the [Rpc reference](/docs/HyperIndex/config-schema-reference#def-rpc) for advanced tuning options such as `initial_block_interval`, `polling_interval`, `query_timeout_millis`, and backoff parameters.
+
+### Start Block
+
+Set `start_block` on a chain to control the block at which the indexer begins ingesting data. Setting it to `0` is a safe default for HyperSync — it will automatically skip ahead to the first block that contains data for your configured contracts.
+
+```yaml
+chains:
+  - id: 1
+    start_block: 0 # HyperSync will fast-forward to the first relevant block
+    contracts:
+      - name: Greeter
+        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
+```
+
+For finer-grained control, see [Per-Contract Start Block Override](#per-contract-start-block-override) and the per-event start block tip below it.
+
+### End Block
+
+Set `end_block` on a chain to stop indexing once that block is reached. Useful for backfills with a known cutoff or one-off snapshots.
+
+```yaml
+chains:
+  - id: 1
+    start_block: 18000000
+    end_block: 19000000
+    contracts:
+      - name: Greeter
+        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
+```
+
+:::note Don't use this for tests
+If you're capping the range to make a deterministic test run, prefer the built-in [testing framework](./testing.mdx) instead — it lets you pin block ranges or feed synthetic events without spinning up a real indexer.
+:::
+
+### Contracts (per chain)
+
+Inside each chain you list the contracts you want to index on that chain — referenced by `name` from your top-level [Contracts Definition](#contracts-definition). The chain-level entry is where you pin the on-chain `address` (or list of addresses) and, optionally, a per-contract `start_block`.
+
+:::note
+Addresses can be provided in **checksum** format or in **lowercase**.
+Envio accepts both and normalizes them internally.
+:::
+
+#### Addresses
+
+**Single address:**
+
+```yaml
+chains:
+  - id: 1
+    start_block: 0
+    contracts:
+      - name: MyContract
+        address: "0xContractAddress"
+```
+
+**Multiple addresses for the same contract:**
+
+```yaml
+chains:
+  - id: 1
+    start_block: 0
+    contracts:
+      - name: MyContract
+        address:
+          - "0xAddress1"
+          - "0xAddress2"
+```
+
+:::tip
+If using a **proxy contract**, always use the **proxy address**, not the implementation address.
+:::
+
+#### Per-Contract Start Block Override
+
+By default, contracts use the chain `start_block`. You can also set a per-contract `start_block` to override it. Handy when:
+
+- Contracts were deployed at different blocks
+- You only need data from a contract starting at a specific block
+- You want to skip unnecessary historical data for some contracts
+- Works nicely with [Dynamic Contract Registration](/docs/HyperIndex/dynamic-contracts)
+
+```yaml
+chains:
+  - id: 1 # ethereum-mainnet
+    start_block: 18000000 # Default start block for all contracts on this chain
+    contracts:
+      - name: ERC20Token
+        address:
+          - "0x1111111111111111111111111111111111111111"
+          - "0x2222222222222222222222222222222222222222"
+        start_block: 18500000 # Override for this contract
+      - name: Greeter
+        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
+        # Uses chain default (18000000)
+```
+
+:::tip Per-event start block
+For even finer control, you can also specify a start block per event from your handler using the `where.block.number._gte` filter on `indexer.onEvent`. See [Event Handlers](./event-handlers.mdx) for the full API.
+:::
+
+#### Indexer Without Contracts
+
+The `contracts` field is **optional** in V3. You can run an indexer that only uses block handlers (`indexer.onBlock`) without declaring any contracts:
+
+```yaml
+name: BlockHandlerOnly
+chains:
+  - id: 1
+    start_block: 18000000
+```
 
 ---
 
-### Address Format
+## Storage
+
+How indexed data is persisted — which backends to use and whether to keep raw event records around.
+
+### Storage Backends
+
+By default, HyperIndex writes entities to Postgres. In V3 you can additionally enable **ClickHouse** as a second storage backend (experimental):
+
+```yaml
+storage:
+  postgres: true
+  clickhouse: true
+```
+
+When both backends are enabled, you must route each entity explicitly via the `@storage` directive in `schema.graphql`:
+
+```graphql
+# Stored in both Postgres and ClickHouse
+type Transfer @storage(postgres: true, clickhouse: true) {
+  id: ID!
+  from: String!
+  to: String!
+  value: BigInt!
+}
+
+# Stored only in ClickHouse
+type Snapshot @storage(clickhouse: true) {
+  id: ID!
+  blockNumber: BigInt!
+}
+```
+
+`envio dev` automatically spins up a ClickHouse Docker container for local development. For `envio start`, provide the connection via the environment variables `ENVIO_CLICKHOUSE_HOST`, `ENVIO_CLICKHOUSE_DATABASE`, `ENVIO_CLICKHOUSE_USERNAME`, and `ENVIO_CLICKHOUSE_PASSWORD`.
+
+:::warning
+Do not run multiple indexers writing to the same ClickHouse database at the same time.
+:::
+
+Envio Cloud currently supports ClickHouse on the Dedicated Plan.
+
+---
+
+## Address Format
 
 Use `address_format` to control how every address surfaced by the indexer (event fields like `event.srcAddress` / `event.transaction.from`, `chain.<Contract>.addresses`, addresses embedded in entity ids, etc.) is formatted.
 
@@ -224,39 +366,28 @@ You can still call `.toLowerCase()` ad-hoc inside a handler when you only need a
 
 ---
 
-### Rollback on Reorg
+## Ecosystem
 
-HyperIndex automatically handles blockchain reorganizations by default. To disable or customize this behavior, set the `rollback_on_reorg` flag in your `config.yaml`:
+`ecosystem` selects which chain family your indexer targets. EVM is the default and what every example above assumes, but the same `config.yaml` schema is shared with Fuel and Solana (SVM).
 
 ```yaml
-rollback_on_reorg: true # default is true
+ecosystem: evm # default — also: fuel, svm
 ```
 
-See detailed configuration options [here](./reorgs-support).
+Most projects don't set this field explicitly. Use `pnpx envio init fuel` or `pnpx envio init svm` to scaffold non-EVM indexers — the generated `config.yaml` will already have `ecosystem` set correctly. See the [Fuel](../fuel/fuel.md) and [Solana](../solana/solana.md) guides for the ecosystem-specific options.
 
 ---
 
-### Preload Optimization
+## Environment Variables
 
-[Preload Optimization](/docs/HyperIndex/preload-optimization) is always enabled in V3. There is no `preload_handlers` flag — the previous opt-in is now the only behavior.
-
-Be aware of:
-
-- [Double-Run Footgun](/docs/HyperIndex/preload-optimization#double-run-footgun)
-- [Effect API for External Calls](/docs/HyperIndex/effect-api)
-
----
-
-### Environment Variables
-
-Environment variable interpolation is supported for flexibility and security:
+Environment variable interpolation is supported anywhere in `config.yaml`, which is useful for keeping RPC URLs, addresses, or chain IDs out of source control.
 
 ```yaml
 chains:
   - id: ${ENVIO_CHAIN_ID:-ethereum-mainnet}
     contracts:
       - name: Greeter
-        address: ${ENVIO_GREETER_ADDRESS}
+        address: "${ENVIO_GREETER_ADDRESS}"
 ```
 
 Run your indexer with custom environment variables:
@@ -274,6 +405,23 @@ For more detailed information about environment variables, see our [Environment 
 
 ---
 
+## Advanced
+
+:::note
+In ~95% of cases you don't need to touch any of these — the defaults are tuned for the common path. Reach for them only when you have a specific reason.
+:::
+
+### Handler File Path
+
+Handlers are auto-discovered from `src/handlers/`. Override the directory with the top-level `handlers` option, or set a per-contract `handler` path when needed:
+
+```yaml
+handlers: ./src/my-handlers # optional override of src/handlers
+contracts:
+  - name: Greeter
+    handler: ./src/GreeterHandler.ts # optional per-contract path
+```
+
 ### Schema File Path
 
 You can customize the path to the [schema file](./schema-file.md) using the `schema` option:
@@ -284,62 +432,56 @@ schema: ./path/to/schema.graphql
 
 By default, the `schema.graphql` is expected to be in the root directory of your project.
 
----
+### Block Lag
 
-### Memory and Resource Considerations
-
-- **RPC rate limits**: If using RPC sync, your provider's rate limits will cap throughput. Use [HyperSync](../Advanced/hypersync.md) where supported for significantly faster data retrieval.
-- **Handler complexity**: Expensive operations in handlers (e.g., many `eth_call` via the [Effect API](../Advanced/effect-api.md)) slow down processing. Use caching and batching to mitigate.
-- **Database size**: Large entity tables slow down both writes and queries. Add [database indices](../Advanced/performance/database-performance-optimization.md) for frequently queried fields.
-
-For detailed performance optimization strategies, see the [Performance guide](../Advanced/performance/index.md).
-
----
-
-## Full config file example
-
-This example indexes events from multiple contracts across multiple networks.
+Set `block_lag` on a chain to keep the indexer a fixed number of blocks behind the chain head. Defaults to `0`.
 
 ```yaml
-name: envio-indexer
-contracts:
-  - name: PoolManager
-    events:
-      - event: Swap(bytes32 indexed id, address indexed sender, int128 amount0, int128 amount1, uint160 sqrtPriceX96, uint128 liquidity, int24 tick, uint24 fee)
-  - name: PositionManager
-    events:
-      - event: Transfer(address indexed from, address indexed to, uint256 indexed id)
 chains:
   - id: 1
-    # Keep it 0 and HyperSync will automatically find the first block for your contracts
     start_block: 0
-    contracts:
-      - name: PositionManager
-        address:
-          - "0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e"
-        start_block: 18500000 # OPTIONAL: Override for contract deployed later
-      - name: PoolManager
-        address:
-          - "0x000000000004444c5dc75cB358380D2e3dE08A90"
-  - id: 10
-    start_block: 0
-    contracts:
-      - name: PositionManager
-        address:
-          - "0x3C3Ea4B57a46241e54610e5f022e5c45859A1017"
-      - name: PoolManager
-        address:
-          - "0x9a13F98Cb987694C9F086b1F5eB990EeA8264Ec3"
-  - id: 42161
-    start_block: 0
-    contracts:
-      - name: PositionManager
-        address:
-          - "0xd88f38f930b7952f2db2432cb002e7abbf3dd869"
-      - name: PoolManager
-        address:
-          - "0x360e68faccca8ca495c1b759fd9eee466db9fb32"
+    block_lag: 5
 ```
+
+:::warning
+Only set `block_lag` if you understand the trade-off — it intentionally trades head latency for additional reorg safety.
+:::
+
+### Rollback on Reorg
+
+HyperIndex automatically handles blockchain reorganizations by default. To disable or customize this behavior, set the `rollback_on_reorg` flag in your `config.yaml`:
+
+```yaml
+rollback_on_reorg: true # default is true
+```
+
+See detailed configuration options [here](./reorgs-support).
+
+### Full Batch Size
+
+Set `full_batch_size` to control how many events are processed in a single batch.
+
+```yaml
+full_batch_size: 5000
+```
+
+### Raw Events Storage
+
+By default, HyperIndex doesn't store raw event data in the database to optimize performance and reduce storage requirements. However, you can enable this feature for debugging purposes or if you need to access the original event data.
+
+To enable storage of raw events, add the following to your `config.yaml`:
+
+```yaml
+raw_events: true
+```
+
+When enabled, all indexed events will be stored in the `raw_events` table in the database, which you can view through the Hasura interface. This is particularly useful for:
+
+- Debugging event processing issues
+- Verifying that events are being captured correctly
+- Creating custom queries against raw blockchain data
+
+Note that enabling this option will increase database storage requirements and may slightly impact indexing performance.
 
 ---
 

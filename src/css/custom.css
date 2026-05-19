@@ -576,10 +576,17 @@ table td {
 
 .theme-doc-markdown h2 {
   font-size: 2rem;
+  font-weight: 700;
 }
 
 .theme-doc-markdown h3 {
-  font-size: 2rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #404040;
+}
+
+[data-theme="dark"] .theme-doc-markdown h3 {
+  color: #d4d4d4;
 }
 
 .theme-doc-markdown p {

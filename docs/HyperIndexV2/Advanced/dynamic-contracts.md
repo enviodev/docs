@@ -127,7 +127,7 @@ If you're migrating from a subgraph that uses **data source templates** (`DataSo
 
 The key difference is that Envio's `contractRegister` is more flexible — you can add conditional logic, perform async calls, and register contracts from any event, not just from a dedicated factory mapping.
 
-For a step-by-step migration guide, see [Migrating from a Subgraph](/docs/v2/HyperIndex/migration-guide).
+For a step-by-step migration guide, see [Migrating from a Subgraph](/docs/HyperIndex/migration-guide).
 
 ## When to Use Dynamic Contract Registration
 
