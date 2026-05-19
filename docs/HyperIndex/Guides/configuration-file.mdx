@@ -410,6 +410,18 @@ You can still call `.toLowerCase()` ad-hoc inside a handler when you only need a
 
 ---
 
+## Ecosystem
+
+`ecosystem` selects which chain family your indexer targets. EVM is the default and what every example above assumes, but the same `config.yaml` schema is shared with Fuel and Solana (SVM).
+
+```yaml
+ecosystem: evm # default — also: fuel, svm
+```
+
+Most projects don't set this field explicitly. Use `pnpx envio init fuel` or `pnpx envio init svm` to scaffold non-EVM indexers — the generated `config.yaml` will already have `ecosystem` set correctly. See the [Fuel](../fuel/fuel.md) and [Solana](../solana/solana.md) guides for the ecosystem-specific options.
+
+---
+
 ## Environment Variables
 
 Environment variable interpolation is supported anywhere in `config.yaml`, which is useful for keeping RPC URLs, addresses, or chain IDs out of source control.
