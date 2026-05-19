@@ -60,7 +60,9 @@ The `rpc` option configures an RPC data source per chain. It replaces the V2 `rp
 - `realtime` – use this RPC for low-latency head tracking once the indexer enters realtime mode. WebSocket endpoints (`wss://...`) are supported here.
 - `fallback` – use as a fallback when the primary source is unavailable.
 
-For chains with HyperSync, RPC is used as a fallback by default for added reliability. For chains without HyperSync, RPC is the primary data source.
+:::tip Optional for HyperSync chains
+For chains supported by [HyperSync](../Advanced/hypersync.md), `rpc` is **not required** — HyperSync is used as the primary data source out of the box. You can still add an RPC entry as a fallback for extra reliability. For chains without HyperSync, `rpc` is required and acts as the primary data source.
+:::
 
 ```yaml
 chains:
@@ -90,9 +92,24 @@ After switching to a fallback source, HyperIndex automatically attempts to recov
 
 See the [Rpc reference](/docs/HyperIndex/config-schema-reference#def-rpc) for advanced tuning options such as `initial_block_interval`, `polling_interval`, `query_timeout_millis`, and backoff parameters.
 
+### Start Block
+
+Set `start_block` on a chain to control the block at which the indexer begins ingesting data. Setting it to `0` is a safe default for HyperSync — it will automatically skip ahead to the first block that contains data for your configured contracts.
+
+```yaml
+chains:
+  - id: 1
+    start_block: 0 # HyperSync will fast-forward to the first relevant block
+    contracts:
+      - name: Greeter
+        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
+```
+
+For finer-grained control, see [Per-Contract Start Block Override](#per-contract-start-block-override) and the per-event start block tip below it.
+
 ### End Block
 
-Set `end_block` on a chain to stop indexing at a specific block. Useful for backfills with a known cutoff, snapshots, or deterministic tests.
+Set `end_block` on a chain to stop indexing once that block is reached. Useful for backfills with a known cutoff or one-off snapshots.
 
 ```yaml
 chains:
@@ -103,6 +120,10 @@ chains:
       - name: Greeter
         address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
 ```
+
+:::note Don't use this for tests
+If you're capping the range to make a deterministic test run, prefer the built-in [testing framework](./testing.mdx) instead — it lets you pin block ranges or feed synthetic events without spinning up a real indexer.
+:::
 
 ### Block Lag
 
