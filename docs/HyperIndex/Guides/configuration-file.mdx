@@ -127,7 +127,7 @@ If you're capping the range to make a deterministic test run, prefer the built-i
 
 ### Block Lag
 
-Set `block_lag` on a chain to keep the indexer a fixed number of blocks behind the chain head. This replaces the V2 `ENVIO_INDEXING_BLOCK_LAG` environment variable, applied per chain. Defaults to `0`.
+Set `block_lag` on a chain to keep the indexer a fixed number of blocks behind the chain head. Applied per chain. Defaults to `0`.
 
 ```yaml
 chains:
@@ -416,7 +416,7 @@ Be aware of:
 
 ### Full Batch Size
 
-Set `full_batch_size` to control how many events are processed in a single batch. This replaces the V2 `MAX_BATCH_SIZE` environment variable.
+Set `full_batch_size` to control how many events are processed in a single batch.
 
 ```yaml
 full_batch_size: 5000
