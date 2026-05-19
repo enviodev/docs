@@ -50,12 +50,11 @@ chains:
 
 ## Contracts Definition
 
-The top-level `contracts` block defines each contract once — its events, ABI, and per-event options. Each chain then references these contracts by `name` and supplies chain-specific values like the on-chain address (see [Contracts (per chain)](#contracts-per-chain)).
+The top-level `contracts` block defines each contract once — its events and per-event options. Each chain then references these contracts by `name` and supplies chain-specific values like the on-chain address (see [Contracts (per chain)](#contracts-per-chain)).
 
 ```yaml
 contracts:
   - name: Greeter
-    abi: ./abis/greeter.json
     events:
       - event: "NewGreeting(address user, string greeting)"
       - event: "ClearGreeting(address user)"
@@ -68,21 +67,9 @@ chains:
         address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
 ```
 
-### ABI
-
-You can either let Envio infer the ABI from the event signatures listed under `events`, or point to a JSON ABI file via `abi_file_path` (when you only want a subset of events from a larger ABI):
-
-```yaml
-contracts:
-  - name: Greeter
-    abi_file_path: ./abis/greeter.json
-    events:
-      - event: NewGreeting # referenced by name; signature comes from the ABI file
-```
-
 ### Events Selection
 
-Define specific events to index in a human-readable format:
+The recommended way to declare events is by their **human-readable signature** directly under `events`:
 
 ```yaml
 contracts:
@@ -92,7 +79,7 @@ contracts:
       - event: "ClearGreeting(address user)"
 ```
 
-By default, all events listed here are indexed — remove an entry to stop indexing it.
+Only the events listed here are indexed. To stop indexing an event, remove its entry.
 
 #### Custom Event Names
 
@@ -106,6 +93,20 @@ events:
   - event: Assigned(address indexed recipientId, uint256 amount, address token, address sender)
     name: AssignedWithSender
 ```
+
+#### Using an ABI File
+
+If you'd rather reference a JSON ABI file (e.g. when you have one already and want to pick a subset of events from it), use `abi_file_path` and refer to events by name:
+
+```yaml
+contracts:
+  - name: Greeter
+    abi_file_path: ./abis/greeter.json
+    events:
+      - event: NewGreeting # signature comes from the ABI file
+```
+
+Event signatures are still the recommended default — they keep `config.yaml` self-contained and easier to review.
 
 ### Field Selection
 
@@ -140,24 +141,15 @@ field_selection:
 
 Try to use this option sparingly as it can cause redundant Data Source calls and increased credits usage.
 
-### Handler File Path
+### Handler File Path (advanced)
 
-V3 introduces automatic handler registration. Place your handler files in `src/handlers/` and they'll be picked up automatically — no need to declare a `handler` path for each contract in `config.yaml`. File names are flexible, but one file per contract is recommended.
-
-To customize the directory, use the top-level `handlers` option:
+Handlers are auto-discovered from `src/handlers/`. Override the directory with the top-level `handlers` option, or set a per-contract `handler` path when needed:
 
 ```yaml
-handlers: ./src/my-handlers
-```
-
-You can also still set an explicit `handler` per contract if you prefer:
-
-```yaml
+handlers: ./src/my-handlers # optional override of src/handlers
 contracts:
   - name: Greeter
-    handler: ./src/GreeterHandler.ts
-    events:
-      - event: "NewGreeting(address user, string greeting)"
+    handler: ./src/GreeterHandler.ts # optional per-contract path
 ```
 
 ---
