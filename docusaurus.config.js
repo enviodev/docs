@@ -441,152 +441,238 @@ const config = {
     [
       require.resolve("./plugins/plugin-generate-llms"),
       {
-        // Only the V3 (HyperIndex) docs should land in llms.txt / llms-full.txt
-        // and the build's .md copies.
-        excludePluginIds: ["HyperIndexV2"],
+        // LLM-mirror plugins are bundled re-exports of other docs — skip them
+        // entirely to avoid duplication.
+        excludePluginIds: [
+          "HyperIndex-LLM",
+          "HyperSync-LLM",
+          "HyperRPC-LLM",
+        ],
+        // V2 is listed in llms.txt for discoverability but stays out of
+        // llms-full.txt and the per-page .md copies.
+        excludeFromFullPluginIds: ["HyperIndexV2"],
         filesConfigs: [
           {
-            main: true, // this will become llms.txt
+            main: true, // becomes llms.txt
             name: "envio",
-            root: `
+            header: `
 # Envio: Fast, Multi-Chain Blockchain Indexer
 
 > Envio is a real-time multichain blockchain indexer. HyperIndex is a multichain indexer supporting any EVM chain, plus Solana and Fuel. HyperSync is a high-throughput data layer natively available on 70+ EVM chains and Fuel, and supports any EVM chain via RPC. HyperRPC is a read-only JSON-RPC endpoint powered by HyperSync, up to 5x faster than traditional nodes. Benchmark: Envio 1 min vs The Graph 143 min (Uniswap V2 Factory, [Sentio, May 2025](https://docs.envio.dev/docs/HyperIndex/benchmarks.md)).
 
-This file contains links to documentation sections following the llmstxt.org standard.
-
-## HyperIndex
-
-### Core
-
-- [Configuration Schema Reference](https://docs.envio.dev/docs/HyperIndex/config-schema-reference.md): Detailed reference for every field and option in the Envio \`config.yaml\` configuration file used to configure HyperIndex indexers.
-- [Loading Dynamic Contracts / Factories](https://docs.envio.dev/docs/HyperIndex/dynamic-contracts.md): Learn how to track and index dynamically created contracts from factory contracts.
-- [Effect API](https://docs.envio.dev/docs/HyperIndex/effect-api.md): Learn how to use the Effect API for external calls in handlers.
-- [Generated Indexing Files](https://docs.envio.dev/docs/HyperIndex/generated-files.md): Learn how generated files handle type-safe data access, event processing, and runtime indexing.
-- [HyperSync as Data Source](https://docs.envio.dev/docs/HyperIndex/hypersync.md): Learn how HyperSync is used in HyperIndex to fetch raw blockchain data.
-- [Loaders](https://docs.envio.dev/docs/HyperIndex/loaders.md): Learn how Loaders improved database access performance for event handlers.
-- [Metadata Query](https://docs.envio.dev/docs/HyperIndex/metadata-query.md): See indexing progress and metadata per chain using HyperIndex _meta query.
-- [Multichain Indexing](https://docs.envio.dev/docs/HyperIndex/multichain-indexing.md): Learn how to index and process events across multiple chains with HyperIndex.
-- [Benchmarking Your Indexer](https://docs.envio.dev/docs/HyperIndex/benchmarking.md): Learn how to benchmark your indexer to identify bottlenecks and optimize performance.
-- [Database Performance Optimization](https://docs.envio.dev/docs/HyperIndex/database-performance-optimization.md): Learn how to optimize HyperIndex databases with indices and schema design for faster queries.
-- [Historical Sync](https://docs.envio.dev/docs/HyperIndex/historical-sync.md): Learn how to optimize historical sync with HyperIndex for fast and efficient data retrieval.
-- [Performance Optimization](https://docs.envio.dev/docs/HyperIndex/performance.md): Learn how to optimize HyperIndex performance for syncing, indexing, and querying data.
-- [Understanding Chain Head Latency](https://docs.envio.dev/docs/HyperIndex/latency-at-head.md): Learn how Envio keeps blockchain indexers updated with low latency and reliable multi-chain sync.
-- [Preload Optimization](https://docs.envio.dev/docs/HyperIndex/preload-optimization.md): Learn how preload optimization improves event handlers with batched reads and parallel external calls.
-- [Query Conversion Guide](https://docs.envio.dev/docs/HyperIndex/query-conversion.md): Learn how to convert queries from TheGraph's custom GraphQL syntax to Envio's standard GraphQL syntax.
-- [Chain Reorganization Support](https://docs.envio.dev/docs/HyperIndex/reorgs-support.md): Learn how to handle chain reorgs and keep your indexed data consistent.
-- [RPC as Data Source](https://docs.envio.dev/docs/HyperIndex/rpc-sync.md): Learn how to index any EVM blockchain using RPC and optimize performance with HyperIndex.
-- [Terminology & Key Concepts](https://docs.envio.dev/docs/HyperIndex/terminology.md): Explore key terms for fast reference and blockchain indexer development.
-- [Using WebSockets with GraphQL](https://docs.envio.dev/docs/HyperIndex/websockets.md): Learn how to use WebSocket connections with your HyperIndex GraphQL endpoint.
-- [Wildcard Indexing & Topic Filtering](https://docs.envio.dev/docs/HyperIndex/wildcard-indexing.md): Learn how to index events using wildcard indexing feature and topic based filtering.
-- [Block Handlers](https://docs.envio.dev/docs/HyperIndex/block-handlers.md): Learn how to run custom logic on every blockchain block or at set intervals using onBlock.
-- [Envio CLI Reference](https://docs.envio.dev/docs/HyperIndex/cli-commands.md): Explore and manage indexer projects with Envio CLI, from setup to development and benchmarking.
-- [Configuration File (config.yaml)](https://docs.envio.dev/docs/HyperIndex/configuration-file.md): Learn how to configure HyperIndex with contracts, events, networks, and advanced indexing options.
-- [Accessing Contract State in Event Handlers](https://docs.envio.dev/docs/HyperIndex/contract-state.md): Learn how to efficiently fetch and store token contract data from events using RPC, multicall, and caching.
-- [Environment Variables](https://docs.envio.dev/docs/HyperIndex/environment-variables.md): Learn how to configure and manage Envio environment variables for your blockchain indexer.
-- [Event Handlers (src/EventHandlers.*)](https://docs.envio.dev/docs/HyperIndex/event-handlers.md): Learn how to register and manage event handlers for efficient data indexing.
-- [Using IPFS with Envio Indexers](https://docs.envio.dev/docs/HyperIndex/ipfs.md): Learn how to fetch and index NFT metadata from IPFS using Envio for complete on-chain and off-chain data.
-- [Navigating Hasura](https://docs.envio.dev/docs/HyperIndex/navigating-hasura.md): Explore and interact with your locally indexed blockchain data using Hasura GraphQL.
-- [Running The Indexer Locally](https://docs.envio.dev/docs/HyperIndex/running-locally.md): Learn how to start, run, and manage the Envio indexer locally with Docker and Hasura.
-- [Entities Schema (schema.graphql)](https://docs.envio.dev/docs/HyperIndex/schema.md): Learn how to define GraphQL schemas, manage entities, and handle different types in HyperIndex.
-- [Testing](https://docs.envio.dev/docs/HyperIndex/testing.md): Learn to test HyperIndex indexers with mock databases, simulated events, and full workflow validation.
-
-### Envio Cloud
-
-- [Pricing & Billing](https://docs.envio.dev/docs/HyperIndex/hosted-service-billing.md): Explore Envio's flexible pricing tiers, from free development plans to scalable production options.
-- [Deploying Your Indexer](https://docs.envio.dev/docs/HyperIndex/hosted-service-deployment.md): Learn how to deploy, manage, and version your indexers effortlessly using git workflow.
-- [Features](https://docs.envio.dev/docs/HyperIndex/hosted-service-features.md): Explore production-ready features of the Envio Cloud including monitoring, zero-downtime rollbacks, and deployment management.
-- [Monitoring Your Indexer](https://docs.envio.dev/docs/HyperIndex/hosted-service-monitoring.md): Monitor your deployed indexer health, sync progress, and performance using the Envio Cloud dashboard.
-- [Envio Cloud](https://docs.envio.dev/docs/HyperIndex/hosted-service.md): Explore Envio's fully managed hosting for indexers with easy Git deployments, monitoring, and multi-chain support.
-- [Organisation Setup](https://docs.envio.dev/docs/HyperIndex/organisation-setup.md): Learn how to create an organisation in the Envio Cloud and manage team members.
-- [Self-Hosting Guide](https://docs.envio.dev/docs/HyperIndex/self-hosting.md): Learn how to self-host Envio indexers with Docker, PostgreSQL, and Hasura for full control.
-
-### Troubleshooting
-
-- [Common Issues](https://docs.envio.dev/docs/HyperIndex/common-issues.md): Discover quick fixes and proven solutions for setup, runtime, and configuration issues in Envio.
-- [Error Codes](https://docs.envio.dev/docs/HyperIndex/error-codes.md): Explore Envio HyperIndex error codes with clear explanations and quick fixes for common issues.
-- [Logging](https://docs.envio.dev/docs/HyperIndex/logging.md): Learn how to configure and use Envio HyperIndex logging to monitor performance and troubleshoot efficiently.
-- [Reserved Words](https://docs.envio.dev/docs/HyperIndex/reserved-words.md): Learn which reserved words in Envio cause validation errors and how to rename them safely.
-
-### Tutorials & Examples
-
-- [Velodrome & Aerodrome Indexer](https://docs.envio.dev/docs/HyperIndex/example-aerodrome-dex-indexer.md): Explore multi-chain Velodrome & Aerodrome DEX data with real-time tracking of pools, swaps, and liquidity.
-- [Cross-Chain Messaging](https://docs.envio.dev/docs/HyperIndex/example-cross-chain-messaging.md): Explore cross-chain messaging and track events across multiple chains efficiently.
-- [Sablier Protocol Indexers](https://docs.envio.dev/docs/HyperIndex/example-sablier.md): Explore Sablier protocol indexers to track token streams and distributions across multiple chains.
-- [Uniswap V4 Multichain indexer](https://docs.envio.dev/docs/HyperIndex/example-uniswap-v4-multi-chain-indexer.md): Explore real-time Uniswap V4 data across multiple chains with Envio.
-- [Indexing Greeter Contract Using Envio](https://docs.envio.dev/docs/HyperIndex/greeter-tutorial.md): Learn how to build and run a multi-chain indexer that tracks Greeter contract events using Envio.
-- [Getting Price Data in Your Indexer](https://docs.envio.dev/docs/HyperIndex/price-data.md): Learn how to fetch and integrate token price data in your indexer using oracles, DEX pools, and APIs.
-- [Indexing ERC20 Token Transfers on Base](https://docs.envio.dev/docs/HyperIndex/tutorial-erc20-token-transfers.md): Learn how to index and query USDC ERC20 transfers on Base using Envio.
-- [Indexing Sway Farm on the Fuel Network](https://docs.envio.dev/docs/HyperIndex/tutorial-indexing-fuel.md): Learn how to index Sway Farm on Fuel and track player events with Envio.
-- [Indexing Optimism Bridge Deposits](https://docs.envio.dev/docs/HyperIndex/tutorial-op-bridge-deposits.md): Learn to quickly index Optimism Bridge deposits and explore OP Bridge event data.
-- [Scaffold-Eth-2 Envio Extension](https://docs.envio.dev/docs/HyperIndex/scaffold-eth-2-extension-tutorial.md): Scaffold-ETH Extension: Get a boilerplate indexer for your deployed smart contracts and start tracking events instantly.
-- [HyperIndex Benchmarks](https://docs.envio.dev/docs/HyperIndex/benchmarks.md): Discover HyperIndex benchmarks and see why it's the fastest blockchain data indexer.
-- [HyperIndex Quickstart](https://docs.envio.dev/docs/HyperIndex/contract-import.md): Learn to quickly autogenerate and configure a HyperIndex indexer for any smart contract.
-- [Fuel](https://docs.envio.dev/docs/HyperIndex/fuel.md): Explore how to index and query real-time and historical data on Fuel Network with HyperIndex.
-- [Licensing](https://docs.envio.dev/docs/HyperIndex/licensing.md): Learn how Envio's licensing lets developers self-host, use generated code, and stay open while protecting Envio Cloud.
-- [Migrate from Alchemy to Envio](https://docs.envio.dev/docs/HyperIndex/migrate-from-alchemy.md): Easily migrate your existing Alchemy subgraphs to Envio for 143x faster indexing than subgraphs, multichain support, and a better developer experience.
-- [Migrate to HyperIndex V3](https://docs.envio.dev/docs/HyperIndex/migrate-to-v3.md): Step-by-step instructions for upgrading an existing HyperIndex V2 project to V3.
-- [What's New in HyperIndex V3](https://docs.envio.dev/docs/HyperIndex/whats-new-in-v3.md): Discover the new features in HyperIndex V3 — unified handlers API, ESM support, top-level await, automatic handler registration, new testing framework, ClickHouse storage, Solana support, and more.
-- [Migrate from The Graph to Envio](https://docs.envio.dev/docs/HyperIndex/migration-guide.md): Easily migrate your existing subgraph to HyperIndex for up to 100x faster indexing speeds, multichain support, and a better developer experience.
-- [HyperIndex: Fast Multichain Blockchain Indexer](https://docs.envio.dev/docs/HyperIndex/overview.md): Explore HyperIndex, a blazing-fast multichain indexer for real-time blockchain data.
-- [Solana](https://docs.envio.dev/docs/HyperIndex/solana.md): Experimental Solana support in HyperIndex. Supports Block Handler, Effect API, and Envio Cloud.
-
-## HyperSync
-
-- [HyperSync](https://docs.envio.dev/docs/HyperSync/overview.md): Explore HyperSync for ultra-fast blockchain data access and flexible queries across 70+ networks.
-- [HyperSync Quickstart](https://docs.envio.dev/docs/HyperSync/hypersync-quickstart.md): Get started quickly with HyperSync to stream and filter blockchain events.
-- [Using HyperSync](https://docs.envio.dev/docs/HyperSync/hypersync-usage.md): Learn how to fetch, filter, and decode blockchain data using HyperSync.
-- [HyperSync Clients](https://docs.envio.dev/docs/HyperSync/hypersync-clients.md): Explore HyperSync clients for fast blockchain data access in Node.js, Python, Rust, and Go.
-- [HyperSync Query](https://docs.envio.dev/docs/HyperSync/hypersync-query.md): Explore HyperSync queries to efficiently retrieve, filter, and join blockchain data.
-- [Preset Queries](https://docs.envio.dev/docs/HyperSync/hypersync-presets.md): Explore ready-to-use HyperSync query presets to fetch blocks, transactions, and logs efficiently.
-- [Using curl with HyperSync](https://docs.envio.dev/docs/HyperSync/hypersync-curl-examples.md): Explore how to quickly fetch blockchain data using curl commands with HyperSync.
-- [API Tokens](https://docs.envio.dev/docs/HyperSync/api-tokens.md): Learn how to generate and use HyperSync API tokens for secure access.
-- [Supported Networks](https://docs.envio.dev/docs/HyperSync/hypersync-supported-networks.md): See all networks currently supported by HyperSync, including coverage tiers, reliability notes and the criteria we use when adding new chains.
-- [Analyzing All Transactions To and From an Address](https://docs.envio.dev/docs/HyperSync/tutorial-address-transactions.md): Explore all transactions, token balances, and approvals for any EVM address with HyperSync.
-- [HyperFuel](https://docs.envio.dev/docs/HyperSync/hyperfuel.md): HyperFuel gives you a high performance way to query and sync Fuel network data using HyperSync. Access real-time and historical data with flexible queries across contracts, events and state.
-- [HyperFuel Query](https://docs.envio.dev/docs/HyperSync/hyperfuel-query.md): Explore all fields and parameters for HyperFuel queries.
-
-## HyperRPC
-
-- [HyperRPC](https://docs.envio.dev/docs/HyperRPC/overview-hyperrpc.md): Ultra-fast read-only RPC built on top of HyperSync, offering up to 5x faster performance than traditional nodes for data-intensive operations like eth_getLogs, block queries, and transaction lookups. Use as a drop-in replacement for existing JSON-RPC tooling, no code changes needed. Covers supported methods, API tokens, performance benchmarks, and getting started.
-
-## Supported Networks
-
-- [HyperIndex Supported Networks](https://docs.envio.dev/docs/HyperIndex/supported-networks.md): Full list of networks supported by HyperIndex, including EVM chains, L2s, and testnets. Also covers using any EVM chain via RPC and local development networks.
-- [HyperSync Supported Networks](https://docs.envio.dev/docs/HyperSync/hypersync-supported-networks.md): Full list of networks supported by HyperSync, including coverage tiers, reliability notes, and the criteria used when adding new chains.
-- [HyperRPC Supported Networks](https://docs.envio.dev/docs/HyperRPC/hyperrpc-supported-networks.md): Full list of networks supported by HyperRPC, including endpoints, network IDs, and trace support.
-
-## Case Studies
-
-- [Indexing 4 Billion Polymarket Events](https://docs.envio.dev/blog/polymarket-hyperindex-case-study.md): How Envio HyperIndex replaced 8 Polymarket subgraphs with one TypeScript indexer on Polygon, syncing 4 billion events in 6 days.
-- [Sablier: One Indexer Across 27 Chains](https://docs.envio.dev/blog/case-study-sablier.md): How Sablier replaced 12 separate indexer deployments with one Envio multichain indexer spanning 27 chains, cutting costs and accelerating feature delivery.
-- [Limitless: Real-Time Prediction Market on Base](https://docs.envio.dev/blog/case-study-limitless-prediction-market.md): How Limitless Exchange uses Envio to power a daily prediction market on Base with real-time onchain data, custom GraphQL APIs, and a seamless transaction feed.
-- [Bridgg: 12 OP Superchain Networks, One API](https://docs.envio.dev/blog/case-study-bridgg-op-superchain.md): How Bridgg uses Envio to aggregate deposit and withdrawal data across 12 OP Superchain networks into a single API, indexing 11 million events in one deployment.
-- [zkPass: Multichain ZKP Identity Verification](https://docs.envio.dev/blog/zkpass-shaping-future-of-data-privacy.md): How zkPass uses zero knowledge proofs with Envio to verify identity and transactions across 8 EVM networks while keeping user data private.
-- [GBlast: Eliminating Data Latency on Blast](https://docs.envio.dev/blog/case-study-gblast.md): How GBlast integrated Envio to eliminate real-time data latency, power their points system, and deliver a responsive GambleFi experience on Blast.
-
-## Legal
-
-- [Privacy Policy](https://docs.envio.dev/docs/HyperIndex/privacy-policy.md): Read Envio's Privacy Policy covering how we collect, use, store, and protect your personal data when you use our website and services.
-- [Terms of Service](https://docs.envio.dev/docs/HyperIndex/terms-of-service.md): Read the Terms and Conditions for using Envio services.
-
-## Optional
-
-- [Envio website](https://envio.dev): Product overview and landing page.
-- [Envio root llms.txt](https://envio.dev/llms.txt): Marketing-facing llms.txt summary.
-- [Pricing](https://envio.dev/pricing): Envio Cloud plans and billing.
-- [Supported chains overview](https://envio.dev/chains): Canonical chains page across all products.
-- [GitHub organization](https://github.com/enviodev): Public repositories.
-- [HyperIndex repo](https://github.com/enviodev/hyperindex): Source and issues.
-- [Releases](https://github.com/enviodev/hyperindex/releases): HyperIndex changelog.
-- [Quickstart with AI](https://docs.envio.dev/docs/HyperIndex/quickstart-with-ai.md): End-to-end guide for building an indexer with Claude Code, Cursor, or any MCP-compatible AI coding assistant.
-- [MCP Server](https://docs.envio.dev/docs/HyperIndex/mcp-server.md): Model Context Protocol server for AI coding assistants. Endpoint: https://docs.envio.dev/mcp
-- [X](https://x.com/envio_indexer): Social updates.
-- [Telegram](https://t.me/+5mI61oZibEM5OGQ8): Community chat.
-- [Discord](https://discord.gg/envio): Community support.
-- [LinkedIn](https://www.linkedin.com/company/envio_indexer): Company page.
-- [YouTube](https://www.youtube.com/@envio_indexer): Video content.
+This file is generated from page frontmatter at build time and follows the llmstxt.org standard.
 `,
+            sections: [
+              {
+                heading: "HyperIndex",
+                subsections: [
+                  {
+                    heading: "Core",
+                    include: [
+                      "docs/HyperIndex/Advanced/**/*.{md,mdx}",
+                      "docs/HyperIndex/Guides/**/*.{md,mdx}",
+                    ],
+                    // mcp-server lives under Guides but is more useful in the
+                    // Optional section as an AI-assistant entry point.
+                    exclude: ["**/mcp-server.{md,mdx}"],
+                  },
+                  {
+                    heading: "Envio Cloud",
+                    include: ["docs/HyperIndex/Hosted_Service/**/*.{md,mdx}"],
+                  },
+                  {
+                    heading: "Troubleshooting",
+                    include: ["docs/HyperIndex/Troubleshoot/**/*.{md,mdx}"],
+                  },
+                  {
+                    heading: "Tutorials & Examples",
+                    include: [
+                      "docs/HyperIndex/Examples/**/*.{md,mdx}",
+                      "docs/HyperIndex/Tutorials/**/*.{md,mdx}",
+                      "docs/HyperIndex/overview.{md,mdx}",
+                      "docs/HyperIndex/contract-import.{md,mdx}",
+                      "docs/HyperIndex/benchmarks.{md,mdx}",
+                      "docs/HyperIndex/fuel/**/*.{md,mdx}",
+                      "docs/HyperIndex/solana/**/*.{md,mdx}",
+                      "docs/HyperIndex/licensing.{md,mdx}",
+                      "docs/HyperIndex/whats-new-in-v3.{md,mdx}",
+                      "docs/HyperIndex/migrate-to-v3.{md,mdx}",
+                      "docs/HyperIndex/migrate-from-alchemy.{md,mdx}",
+                      "docs/HyperIndex/migrate-from-ponder.{md,mdx}",
+                      "docs/HyperIndex/migrate-with-ai.{md,mdx}",
+                      "docs/HyperIndex/migration-guide.{md,mdx}",
+                    ],
+                  },
+                ],
+              },
+              {
+                heading: "HyperSync",
+                include: ["docs/HyperSync/**/*.{md,mdx}"],
+                // Supported-networks page is grouped under its own heading.
+                exclude: ["**/hypersync-supported-networks.{md,mdx}"],
+              },
+              {
+                heading: "HyperRPC",
+                include: ["docs/HyperRPC/**/*.{md,mdx}"],
+                exclude: ["**/hyperrpc-supported-networks.{md,mdx}"],
+              },
+              {
+                heading: "Supported Networks",
+                include: [
+                  "docs/HyperIndex/supported-networks/index.{md,mdx}",
+                  "docs/HyperSync/hypersync-supported-networks.{md,mdx}",
+                  "docs/HyperRPC/hyperrpc-supported-networks.{md,mdx}",
+                ],
+              },
+              {
+                heading: "Blog",
+                source: "blog",
+                subsections: [
+                  {
+                    heading: "Case Studies",
+                    source: "blog",
+                    tags: ["case-studies"],
+                  },
+                  {
+                    heading: "Tutorials",
+                    source: "blog",
+                    tags: ["tutorials"],
+                  },
+                  {
+                    heading: "AI",
+                    source: "blog",
+                    tags: ["ai"],
+                  },
+                  {
+                    heading: "Product Updates",
+                    source: "blog",
+                    tags: ["product-updates"],
+                  },
+                  {
+                    heading: "Announcements",
+                    source: "blog",
+                    tags: ["announcements"],
+                  },
+                  {
+                    heading: "Articles",
+                    source: "blog",
+                    catchAll: true,
+                  },
+                ],
+              },
+              {
+                heading: "HyperIndex V2 (legacy)",
+                subsections: [
+                  {
+                    heading: "Core",
+                    include: [
+                      "docs/HyperIndexV2/Advanced/**/*.{md,mdx}",
+                      "docs/HyperIndexV2/Guides/**/*.{md,mdx}",
+                    ],
+                  },
+                  {
+                    heading: "Envio Cloud",
+                    include: [
+                      "docs/HyperIndexV2/Hosted_Service/**/*.{md,mdx}",
+                    ],
+                  },
+                  {
+                    heading: "Troubleshooting",
+                    include: ["docs/HyperIndexV2/Troubleshoot/**/*.{md,mdx}"],
+                  },
+                  {
+                    heading: "Tutorials & Examples",
+                    include: [
+                      "docs/HyperIndexV2/Examples/**/*.{md,mdx}",
+                      "docs/HyperIndexV2/Tutorials/**/*.{md,mdx}",
+                      "docs/HyperIndexV2/*.{md,mdx}",
+                      "docs/HyperIndexV2/fuel/**/*.{md,mdx}",
+                    ],
+                    // Legal/policy pages share a dedicated section.
+                    exclude: [
+                      "**/privacy-policy.{md,mdx}",
+                      "**/terms-of-service.{md,mdx}",
+                    ],
+                  },
+                ],
+              },
+              {
+                heading: "Legal",
+                include: [
+                  "docs/HyperIndex/privacy-policy.{md,mdx}",
+                  "docs/HyperIndex/terms-of-service.{md,mdx}",
+                ],
+              },
+            ],
+            optional: [
+              {
+                label: "Envio website",
+                href: "https://envio.dev",
+                description: "Product overview and landing page.",
+              },
+              {
+                label: "Envio root llms.txt",
+                href: "https://envio.dev/llms.txt",
+                description: "Marketing-facing llms.txt summary.",
+              },
+              {
+                label: "Pricing",
+                href: "https://envio.dev/pricing",
+                description: "Envio Cloud plans and billing.",
+              },
+              {
+                label: "Supported chains overview",
+                href: "https://envio.dev/chains",
+                description: "Canonical chains page across all products.",
+              },
+              {
+                label: "GitHub organization",
+                href: "https://github.com/enviodev",
+                description: "Public repositories.",
+              },
+              {
+                label: "HyperIndex repo",
+                href: "https://github.com/enviodev/hyperindex",
+                description: "Source and issues.",
+              },
+              {
+                label: "Releases",
+                href: "https://github.com/enviodev/hyperindex/releases",
+                description: "HyperIndex changelog.",
+              },
+              {
+                label: "Quickstart with AI",
+                href: "https://docs.envio.dev/docs/HyperIndex/quickstart-with-ai.md",
+                description:
+                  "End-to-end guide for building an indexer with Claude Code, Cursor, or any MCP-compatible AI coding assistant.",
+              },
+              {
+                label: "MCP Server",
+                href: "https://docs.envio.dev/docs/HyperIndex/mcp-server.md",
+                description:
+                  "Model Context Protocol server for AI coding assistants. Endpoint: https://docs.envio.dev/mcp",
+              },
+              {
+                label: "Telegram",
+                href: "https://t.me/+5mI61oZibEM5OGQ8",
+                description: "Community chat.",
+              },
+              {
+                label: "Discord",
+                href: "https://discord.gg/envio",
+                description: "Community support.",
+              },
+              {
+                label: "LinkedIn",
+                href: "https://www.linkedin.com/company/envio_indexer",
+                description: "Company page.",
+              },
+              {
+                label: "YouTube",
+                href: "https://www.youtube.com/@envio_indexer",
+                description: "Video content.",
+              },
+            ],
           },
         ],
         blog: true,

@@ -62,14 +62,50 @@ const minimatch = typeof _minimatch === "function" ? _minimatch : _minimatch.min
 // - The `.md` copies are saved at the same relative path as the doc's URL.
 
 function GenerateLLMSPlugin(context, options) {
+    const llmsTxtPath = options.llmsTxtPath || "/llms.txt";
+
     return {
         name: "docusaurus-plugin-generate-llms",
+
+        // Inject an agent-facing directive into the HTML of every page so
+        // agents discovering a single page can find the documentation index.
+        // Matches the agentdocsspec "llms-txt-directive-html" check.
+        injectHtmlTags() {
+            return {
+                headTags: [
+                    {
+                        tagName: "link",
+                        attributes: {
+                            rel: "alternate",
+                            type: "text/plain",
+                            href: llmsTxtPath,
+                            title: "Documentation index for AI agents (llms.txt)",
+                        },
+                    },
+                ],
+                preBodyTags: [
+                    {
+                        tagName: "div",
+                        attributes: {
+                            "data-llms-directive": "true",
+                            style: "position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;",
+                        },
+                        innerHTML: `For AI agents: the documentation index is at <a href="${llmsTxtPath}">${llmsTxtPath}</a>. Markdown versions of pages are available by appending <code>.md</code> to the URL.`,
+                    },
+                ],
+            };
+        },
 
         async postBuild({ siteConfig }) {
             const { url, plugins } = siteConfig;
 
             const filesConfigs = options.filesConfigs || [];
             const excludePluginIds = new Set(options.excludePluginIds || []);
+            // Plugin IDs collected for the llms.txt index but kept out of
+            // llms-full.txt and the per-page .md copies (e.g. legacy V2 docs).
+            const excludeFromFullPluginIds = new Set(
+                options.excludeFromFullPluginIds || []
+            );
 
             let collectedDocs = [];
 
@@ -109,12 +145,22 @@ function GenerateLLMSPlugin(context, options) {
                             ""
                         )}`;
 
+                        const filePath = path.join(config.path, file);
+                        const relativePath = toPosix(
+                            path.relative(context.siteDir, fullPath)
+                        );
+
                         collectedDocs.push({
-                            filePath: path.join(config.path, file),
+                            filePath,
+                            relativePath,
                             title,
                             description,
                             pageUrl,
                             source: "docs",
+                            pluginId: config.id || "",
+                            tags: Array.isArray(parsed.data.tags)
+                                ? parsed.data.tags
+                                : [],
                         });
                     }
                 }
@@ -175,12 +221,21 @@ function GenerateLLMSPlugin(context, options) {
                             ""
                         )}/${slug.replace(/^\//, "")}`;
 
+                        const relativePath = toPosix(
+                            path.relative(context.siteDir, fullPath)
+                        );
+
                         collectedDocs.push({
                             filePath: fullPath,
+                            relativePath,
                             title,
                             description,
                             pageUrl,
                             source: "blog",
+                            pluginId: "blog",
+                            tags: Array.isArray(parsed.data.tags)
+                                ? parsed.data.tags
+                                : [],
                         });
                     }
                 }
@@ -222,14 +277,145 @@ function GenerateLLMSPlugin(context, options) {
             function renderLLMS(rootText, docs) {
                 let output = rootText.trim() + "\n\n";
                 for (const doc of docs) {
-                    const desc =
-                        doc.description ||
-                        (doc.title.length > 20
-                            ? `${doc.title} section of the docs.`
-                            : "");
-                    output += `- [${doc.title}](${doc.pageUrl}.md): ${desc}\n`;
+                    output += `${formatDocBullet(doc)}\n`;
                 }
                 return output;
+            }
+
+            function formatDocBullet(doc) {
+                const desc =
+                    doc.description ||
+                    (doc.title.length > 20
+                        ? `${doc.title} section of the docs.`
+                        : "");
+                return `- [${doc.title}](${doc.pageUrl}.md): ${desc}`;
+            }
+
+            // Match a doc against a section/subsection node. Returns docs that
+            // match include patterns + tags, minus exclude patterns, with each
+            // doc claimed at most once across the whole file (first match wins).
+            function selectDocs(node, claimed) {
+                const include = node.include || [];
+                const exclude = node.exclude || [];
+                const source = node.source || "docs";
+                const tags = node.tags;
+                const out = [];
+
+                for (const doc of collectedDocs) {
+                    if (claimed.has(doc.relativePath)) continue;
+                    if (doc.source !== source) continue;
+
+                    if (tags && tags.length > 0) {
+                        const docTags = doc.tags || [];
+                        if (!tags.some((t) => docTags.includes(t))) continue;
+                    }
+
+                    if (include.length > 0) {
+                        const matched = include.some((p) =>
+                            minimatch(doc.relativePath, toPosix(p))
+                        );
+                        if (!matched) continue;
+                    } else if (
+                        (!tags || tags.length === 0) &&
+                        !node.catchAll
+                    ) {
+                        // No selectors and not a catch-all → skip rather than
+                        // match every doc of this source.
+                        continue;
+                    }
+
+                    if (
+                        exclude.some((p) =>
+                            minimatch(doc.relativePath, toPosix(p))
+                        )
+                    ) {
+                        continue;
+                    }
+
+                    out.push(doc);
+                    claimed.add(doc.relativePath);
+                }
+
+                // Deterministic order: by include-pattern order, then by title
+                // within each pattern bucket.
+                if (node.include && node.include.length > 0) {
+                    const bucketOf = (doc) => {
+                        for (let i = 0; i < node.include.length; i++) {
+                            if (
+                                minimatch(
+                                    doc.relativePath,
+                                    toPosix(node.include[i])
+                                )
+                            )
+                                return i;
+                        }
+                        return node.include.length;
+                    };
+                    out.sort((a, b) => {
+                        const ba = bucketOf(a);
+                        const bb = bucketOf(b);
+                        if (ba !== bb) return ba - bb;
+                        return a.title.localeCompare(b.title);
+                    });
+                } else if (node.source === "blog") {
+                    // Blog filenames are date-prefixed (YYYY-MM-DD-...). Sort
+                    // by relativePath descending so newest posts surface first.
+                    out.sort((a, b) =>
+                        b.relativePath.localeCompare(a.relativePath)
+                    );
+                } else {
+                    out.sort((a, b) => a.title.localeCompare(b.title));
+                }
+
+                return out;
+            }
+
+            function renderLLMSStructured(cfg) {
+                const {
+                    header = "",
+                    sections = [],
+                    optional = [],
+                } = cfg;
+                const claimed = new Set();
+                const parts = [header.trim(), ""];
+
+                const renderLeaf = (node) => {
+                    const docs = selectDocs(node, claimed);
+                    if (docs.length === 0) {
+                        console.warn(
+                            `[plugin-generate-llms] section "${node.heading}" matched 0 docs`
+                        );
+                    }
+                    return docs.map(formatDocBullet).join("\n");
+                };
+
+                for (const sec of sections) {
+                    parts.push(`## ${sec.heading}`);
+                    parts.push("");
+                    if (sec.subsections && sec.subsections.length > 0) {
+                        for (const sub of sec.subsections) {
+                            parts.push(`### ${sub.heading}`);
+                            parts.push("");
+                            parts.push(renderLeaf(sub));
+                            parts.push("");
+                        }
+                    } else {
+                        parts.push(renderLeaf(sec));
+                        parts.push("");
+                    }
+                }
+
+                if (optional.length > 0) {
+                    parts.push("## Optional");
+                    parts.push("");
+                    for (const o of optional) {
+                        const desc = o.description ? `: ${o.description}` : "";
+                        parts.push(`- [${o.label}](${o.href})${desc}`);
+                    }
+                    parts.push("");
+                }
+
+                return parts.join("\n");
             }
 
             // Concatenate every item's stripped markdown content into a single
@@ -254,6 +440,15 @@ function GenerateLLMSPlugin(context, options) {
 
             // --- NEW: write .md copies into build folder ---
             function writeMarkdownCopies(docs) {
+                // Discovery directive prepended to every .md copy so agents
+                // fetching a single page can find the full index.
+                // Matches the agentdocsspec "llms-txt-directive-md" check.
+                const llmsTxtUrl = `${siteConfig.url.replace(
+                    /\/$/,
+                    ""
+                )}/llms.txt`;
+                const directive = `> For the complete documentation index, see [llms.txt](${llmsTxtUrl}).\n\n`;
+
                 for (const doc of docs) {
                     const rawContent = fs.readFileSync(doc.filePath, "utf-8");
 
@@ -275,21 +470,35 @@ function GenerateLLMSPlugin(context, options) {
                     );
 
                     fs.mkdirSync(path.dirname(targetPath), { recursive: true });
-                    fs.writeFileSync(targetPath, cleanContent, "utf-8");
+                    fs.writeFileSync(
+                        targetPath,
+                        directive + cleanContent,
+                        "utf-8"
+                    );
                 }
             }
 
             // 2. generate files
             for (const cfg of filesConfigs) {
-                const { main, name, root = "", includeOrder = [] } = cfg;
+                const {
+                    main,
+                    name,
+                    root = "",
+                    includeOrder = [],
+                    sections,
+                } = cfg;
 
-                // Order docs based on includeOrder patterns
-                const orderedDocs = orderDocs(includeOrder);
-
-                // Inject "## Table of Contents" after root text
-                const tocRoot = root.trim() + "";
-
-                const output = renderLLMS(tocRoot, orderedDocs);
+                // Structured mode: header + sections + optional. Used when the
+                // config provides explicit section grouping. Falls back to the
+                // legacy flat `root` + `includeOrder` mode otherwise.
+                let output;
+                if (Array.isArray(sections) && sections.length > 0) {
+                    output = renderLLMSStructured(cfg);
+                } else {
+                    const orderedDocs = orderDocs(includeOrder);
+                    const tocRoot = root.trim() + "";
+                    output = renderLLMS(tocRoot, orderedDocs);
+                }
 
                 // Use llms.txt for the first/main config, others as llms-<name>.txt
                 const outFileName = cfg.main ? "llms.txt" : `llms-${name}.txt`;
@@ -301,15 +510,23 @@ function GenerateLLMSPlugin(context, options) {
                 // Write .md copies for ALL collected docs so every link in the
                 // static root text resolves — not just those in includeOrder.
                 if (main) {
+                    // All collected docs get .md copies so every link in
+                    // llms.txt resolves. llms-full.txt is restricted further
+                    // to keep V2 (and similar legacy content) out of the
+                    // concatenated knowledge dump.
                     writeMarkdownCopies(collectedDocs);
+
+                    const fullDocsPool = collectedDocs.filter(
+                        (d) => !excludeFromFullPluginIds.has(d.pluginId)
+                    );
 
                     // Generate llms-full variants: one for docs, one for blog.
                     // Agents that cannot browse mid-conversation (Claude Projects,
                     // Cursor) paste these into their context window for full recall.
-                    const docsItems = collectedDocs.filter(
+                    const docsItems = fullDocsPool.filter(
                         (d) => d.source === "docs"
                     );
-                    const blogItems = collectedDocs.filter(
+                    const blogItems = fullDocsPool.filter(
                         (d) => d.source === "blog"
                     );
 
