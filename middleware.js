@@ -21,6 +21,11 @@ export default function middleware(request) {
 
   const url = new URL(request.url);
   const cleanPath = url.pathname.replace(/\/$/, "");
+  // If the client already asked for the .md URL directly, let it through
+  // unchanged — appending another .md would 404.
+  if (cleanPath.endsWith(".md")) {
+    return;
+  }
   const rewriteUrl = new URL(`${cleanPath}.md`, url);
 
   return new Response(null, {
