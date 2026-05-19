@@ -63,6 +63,122 @@ Configure proactive monitoring through the Alerts tab to receive notifications b
 
 For detailed alert configuration, see the [Deployment Guide](./hosted-service-deployment.md#alerts-tab) and our [Features page](./hosted-service-features.md#built-in-alerts).
 
+### Notification Channels
+
+Envio Cloud supports the following notification channels:
+
+| Channel | Configuration |
+|---------|--------------|
+| **Discord** | Webhook URL, optional bot username |
+| **Slack** | Webhook URL, channel name, optional bot username |
+| **Telegram** | Bot API token, chat ID |
+| **Email** | One or more email addresses |
+| **Webhook** | Any HTTP endpoint URL (works with incident.io, PagerDuty, Opsgenie, etc.) |
+
+Channels are configured at the organisation level via **Settings > Notification Channels**, then subscribed to alerts on individual indexers.
+
+### Webhook Channel
+
+The webhook channel sends a structured JSON payload via HTTP POST to any URL you provide. This makes it compatible with any service that accepts webhook-based alerts.
+
+**Custom Headers (optional):** When creating a webhook channel, you can add custom HTTP headers that will be sent with every request. This is useful for services that require authentication via API keys or bearer tokens — for example, incident.io requires an `Authorization: Bearer <token>` header.
+
+:::warning
+The webhook channel is a generic HTTP endpoint. It is not guaranteed to work with all third-party services — please see the [integration guides below](#webhook-integrations) for supported setup instructions. If you need help integrating with a specific service, please reach out on the [Envio Discord](https://discord.envio.dev).
+:::
+
+**Webhook Payload Schema:**
+
+```json
+{
+  "title": "IndexerStoppedProcessing — my-indexer (abc123)",
+  "status": "firing",
+  "severity": "warning",
+  "description": "Indexer my-indexer has stopped processing blocks for 10+ minutes (commit: abc123)",
+  "source_url": "https://envio.dev/app/my-org/my-indexer/abc123",
+  "alert_id": "my-org/proj456/my-indexer/IndexerStoppedProcessing",
+  "metadata": {
+    "organisationId": "my-org",
+    "indexerName": "my-indexer",
+    "commit": "abc123",
+    "labels": { "envio_alert_name": "IndexerStoppedProcessing", "severity": "warning" },
+    "annotations": {
+      "summary": "Indexer my-indexer has stopped processing blocks for 10+ minutes",
+      "description": "The indexer has not processed any blocks in the last 10 minutes."
+    },
+    "startsAt": "2025-05-15T12:00:00Z",
+    "type": "alert"
+  }
+}
+```
+
+:::note
+The `endsAt` field is only included when the alert has resolved. Firing alerts omit this field.
+:::
+
+| Field | Description |
+|-------|------------|
+| `title` | Alert name (e.g. `IndexerStoppedProcessing`, `ProdEndpointDown`) |
+| `status` | `"firing"` or `"resolved"` |
+| `severity` | `"critical"`, `"warning"`, or `"info"` |
+| `description` | Human-readable summary of the alert |
+| `source_url` | Link to the deployment in the Envio dashboard |
+| `alert_id` | Unique key for deduplication: `orgId/projectId/indexerName/alertName` |
+| `metadata` | Additional context including labels, timestamps, and deployment info |
+
+### Webhook Integrations
+
+### incident.io
+
+[incident.io](https://incident.io) can receive Envio alerts via their [Custom HTTP Sources](https://docs.incident.io/alerts/custom-http-sources) feature.
+
+**Step 1: Create a Custom HTTP Source in incident.io**
+
+In the incident.io dashboard, Follow the incident.io [custom HTTP sources](https://docs.incident.io/alerts/custom-http-sources) guide to setup the webhook integration.
+
+**Step 2: Configure the Transform Expression**
+
+Paste this ES5 JavaScript transform expression to map the Envio payload into incident.io's format:
+
+```javascript
+var severity = body.severity || "info";
+var severityMap = { critical: 1, warning: 2, info: 3 };
+
+return {
+  title: body.title,
+  status: body.status,
+  description: body.description || "",
+  source_url: body.source_url || "",
+  metadata: {
+    severity: severity,
+    severity_rank: severityMap[severity] || 3,
+    organisation_id: body.metadata.organisationId,
+    indexer_name: body.metadata.indexerName,
+    commit: body.metadata.commit,
+    source: "envio",
+    type: body.metadata.type,
+    starts_at: body.metadata.startsAt,
+    ends_at: body.metadata.endsAt || "",
+    labels: JSON.stringify(body.metadata.labels || {}),
+    annotations: JSON.stringify(body.metadata.annotations || {})
+  }
+};
+```
+
+**Step 3: Set the Deduplication Key Path**
+
+Set the dedup key path to `alert_id`. This ensures alerts are grouped per indexer and auto-resolve when the status changes to `"resolved"`.
+
+**Step 4: Add the Webhook Channel in Envio**
+
+1. Go to **Settings > Notification Channels** in the Envio Cloud dashboard
+2. Click **Add Channel** and select **Webhook**
+3. Paste the webhook URL from incident.io
+4. Expand **Custom Headers** and add the authorization header:
+   - **Header name**: `Authorization`
+   - **Value**: Copy the full `Bearer <token>` value from the incident.io source config
+5. Subscribe your indexer's alerts to this channel
+
 :::tip Proactive Monitoring
 Set up multiple notification channels (**Paid Plans Only**) to ensure you never miss critical alerts about your indexer's health.
 :::
