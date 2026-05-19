@@ -282,7 +282,10 @@ function GenerateLLMSPlugin(context, options) {
                 return output;
             }
 
-            function formatDocBullet(doc) {
+            function formatDocBullet(doc, opts = {}) {
+                if (opts.compact) {
+                    return `- [${doc.title}](${doc.pageUrl}.md)`;
+                }
                 const desc =
                     doc.description ||
                     (doc.title.length > 20
@@ -386,7 +389,10 @@ function GenerateLLMSPlugin(context, options) {
                             `[plugin-generate-llms] section "${node.heading}" matched 0 docs`
                         );
                     }
-                    return docs.map(formatDocBullet).join("\n");
+                    const opts = { compact: !!node.compact };
+                    return docs
+                        .map((doc) => formatDocBullet(doc, opts))
+                        .join("\n");
                 };
 
                 for (const sec of sections) {
