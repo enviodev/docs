@@ -518,10 +518,26 @@ This file is generated from page frontmatter at build time and follows the llmst
               },
               {
                 heading: "Supported Networks",
-                include: [
-                  "docs/HyperIndex/supported-networks/index.{md,mdx}",
-                  "docs/HyperSync/hypersync-supported-networks.{md,mdx}",
-                  "docs/HyperRPC/hyperrpc-supported-networks.{md,mdx}",
+                subsections: [
+                  {
+                    heading: "Overview",
+                    include: [
+                      "docs/HyperIndex/supported-networks/index.{md,mdx}",
+                      "docs/HyperSync/hypersync-supported-networks.{md,mdx}",
+                      "docs/HyperRPC/hyperrpc-supported-networks.{md,mdx}",
+                    ],
+                  },
+                  {
+                    // Per-chain reference pages — listed compactly (no
+                    // description) so 200+ entries don't blow the 50 KB
+                    // llms.txt size threshold.
+                    heading: "HyperIndex Chains",
+                    include: [
+                      "docs/HyperIndex/supported-networks/**/*.{md,mdx}",
+                    ],
+                    exclude: ["**/index.{md,mdx}"],
+                    compact: true,
+                  },
                 ],
               },
               {
@@ -587,12 +603,20 @@ This file is generated from page frontmatter at build time and follows the llmst
                       "docs/HyperIndexV2/Tutorials/**/*.{md,mdx}",
                       "docs/HyperIndexV2/*.{md,mdx}",
                       "docs/HyperIndexV2/fuel/**/*.{md,mdx}",
+                      "docs/HyperIndexV2/solana/**/*.{md,mdx}",
                     ],
                     // Legal/policy pages share a dedicated section.
                     exclude: [
                       "**/privacy-policy.{md,mdx}",
                       "**/terms-of-service.{md,mdx}",
                     ],
+                  },
+                  {
+                    heading: "Chains",
+                    include: [
+                      "docs/HyperIndexV2/supported-networks/**/*.{md,mdx}",
+                    ],
+                    compact: true,
                   },
                 ],
               },
