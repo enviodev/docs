@@ -86,6 +86,15 @@ chains:
 
 :::note Experimental: WebSocket support
 WebSocket support for RPC sources is experimental. Pair `wss://` URLs with `for: realtime` to improve head latency. Please open a GitHub issue if you hit any problems.
+
+```yaml
+chains:
+  - id: 1
+    rpc:
+      url: ${ENVIO_RPC_ENDPOINT}
+      ws: ${ENVIO_WS_ENDPOINT}
+      for: realtime
+```
 :::
 
 After switching to a fallback source, HyperIndex automatically attempts to recover to the primary source 60 seconds later.
