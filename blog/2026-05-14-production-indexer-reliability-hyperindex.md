@@ -21,7 +21,7 @@ last_update:
 - The indexer is restart-resistant. State (including dynamically registered contracts) is persisted to the database and restored on reboot. If a handler fails, the framework restarts automatically without data loss, the indexer resumes from the last committed block.
 - HyperSync, Envio's default data engine, ships a robust set of data validation features that RPC does not: block parent hash verification, fork detection, automatic re-sync. The indexer can trust that no events are silently missed, in contrast to raw RPC which only serves whatever the upstream node currently considers canonical.
 - Multi data-source recovery falls back to a secondary source on primary outage and attempts to recover to the primary 60 seconds later. The indexer stays alive through upstream RPC and HyperSync failures.
-- Polymarket's HyperIndex reference indexer synced 4,000,000,000 events in 6 days on Polygon. Public at [github.com/enviodev/polymarket-indexer](https://github.com/enviodev/polymarket-indexer).
+- Polymarket's HyperIndex reference indexer synced its first 4,000,000,000 events in 6 days on Polygon and has indexed over 6,500,000,000 to date. Public at [github.com/enviodev/polymarket-indexer](https://github.com/enviodev/polymarket-indexer).
 
 :::
 
@@ -53,7 +53,7 @@ Learn more in our [Indexing and Reorgs](https://docs.envio.dev/blog/indexing-and
 
 Three architectural details worth knowing about that mechanism:
 
-1. **History is per-entity, not per-block.** The framework persists the prior state of each entity each time a handler writes to it within the unfinalized window. On a reorg, the rollback walks the per-entity history backwards to the pre-reorg state, applies it, and reprocesses forward. This is what lets time-travel queries work against unfinalized blocks.
+1. **History is per-entity, not per-block.** The framework persists the prior state of each entity each time a handler writes to it within the unfinalized window. On a reorg, the rollback walks the per-entity history backwards to the pre-reorg state, applies it, and reprocesses forward.
 
 2. **History is pruned automatically.** Once a block is finalised, its entries in the entity history are no longer needed. The framework prunes them. The unfinalized window is the only window that ever carries history overhead, which keeps the storage cost bounded regardless of total chain length.
 
@@ -71,7 +71,6 @@ Why this matters operationally:
 
 - **No bespoke per-handler logic.** The most common subgraph reliability bug is a handler that does not handle a reorg correctly because the dev forgot to. With HyperIndex that bug class does not exist.
 - **No "wait for N confirmations" delay.** Some indexers paper over reorgs by lagging behind the chain head by N blocks. HyperIndex stays at chain head and rolls back if needed.
-- **Entity state history is queryable.** Time-travel queries against the unfinalized window work because the history is persisted, not discarded.
 - **Multichain stays correct.** A multichain indexer with one chain reorging does not corrupt the cross-chain aggregates. The framework rolls back the dependent state on every other chain too.
 
 ## Multi Data-Source Recovery
@@ -88,9 +87,9 @@ Indexers configured with multiple data sources (a primary plus one or more fallb
 
 When the primary source goes down, the indexer fails over to a fallback within seconds. When the primary comes back, [HyperIndex attempts to recover to it 60 seconds later](https://docs.envio.dev/docs/HyperIndex/whats-new-in-v3#improved-multiple-data-sources-support). The indexer does not need to be restarted to return to its preferred source.
 
-### 3. Live mode enforcement
+### 3. Realtime mode enforcement
 
-Live mode means the indexer is at chain head and processing new blocks as they arrive. HyperIndex enforces live mode strictly: if the indexer's effective progress is stalling on a degraded source, metrics surface it. Operators see the degradation before downstream consumers do.
+Realtime mode means the indexer is at chain head and processing new blocks as they arrive. HyperIndex enforces realtime mode strictly: if the indexer's effective progress is stalling on a degraded source, metrics surface it. Operators see the degradation before downstream consumers do.
 
 This pillar is the one operators feel daily. Most indexer outages in 2025 were not chain outages. They were data-source outages that the indexer did not handle gracefully. Multi data-source recovery removes the operator pager from that loop.
 
@@ -131,6 +130,17 @@ HyperIndex exposes a standard Prometheus `/metrics` endpoint with three properti
 - **Benchmark data points in the standard endpoint.** The data points historically surfaced under a separate benchmark mode are part of the standard `/metrics` output. Continuous benchmarking against a production deployment does not require a separate run mode.
 
 For self-hosted deployments, the endpoint plugs into existing Prometheus infrastructure. For Envio Cloud deployments, alerts are exposed through the standard alert channels (Discord, Slack, Telegram, and Email).
+
+## Reliability on Envio Cloud
+
+The four pillars above are framework guarantees: they hold whether you self-host or deploy to [Envio Cloud](https://docs.envio.dev/docs/HyperIndex/hosted-service), Envio's fully managed hosting. Envio Cloud adds the operational layer on top.
+
+- **Zero-downtime deployments.** Each indexer gets a static production endpoint. A new version deploys alongside the running one; "promote to production" switches the endpoint instantly, and rolling back to a previous deployment is one click. Consumers see no endpoint change.
+- **Built-in alerts.** Paid plans surface indexer health, performance warnings, and deployment events through Discord, Slack, Telegram, and Email, so the reorg, failover, and restart events the framework handles stay visible without wiring up your own monitoring.
+- **Built-in monitoring.** Logs, per-chain sync status, and deployment health are tracked in real time from the dashboard.
+- **Region choice.** Dedicated plans can pick a primary deployment region (USA or EU) for latency and data-residency needs. Broader cross-region support is in active development.
+
+Self-hosting keeps all four framework pillars. Envio Cloud removes the hosting and the on-call wiring on top of them.
 
 ## What This Looks Like in a Real Configuration
 
@@ -203,11 +213,10 @@ Speed is the easier comparison and the one most blog posts lead with. Sentio's i
 
 Reliability is the one that decides whether an indexer stays running for years. The four pillars above (framework reorg handling, restart-resistant operation, HyperSync data validation, and multi data-source recovery) are what separate a production indexer from a benchmark.
 
-Three operational consequences for teams choosing HyperIndex over alternatives:
+Two operational consequences for teams choosing HyperIndex over alternatives:
 
 - **One on-call surface, not three.** The framework handles reorgs, source failover, restart recovery, and observability. The on-call person reads the Prometheus dashboard and the Envio Cloud alerts. They do not also have to maintain custom reorg or checkpoint code.
 - **Source diversity without operator overhead.** Adding a fallback source is a config change. Multi data-source recovery does the runtime work. The operator does not author retry policies.
-- **Time-travel queries on unfinalized state.** Because entity state history is persisted, the indexer can answer "what was this entity at block N" even when N is in the unfinalized window. Most subgraphs cannot.
 
 ## Get Started
 
@@ -235,7 +244,7 @@ On Ethereum mainnet, roughly 1% of blocks undergo reorgs, meaning approximately 
 
 ### What is multi data-source recovery in HyperIndex?
 
-Multi data-source recovery automatically routes between configured data sources. On primary outage, the indexer fails over to a fallback within seconds. When the primary returns, the indexer attempts to recover to it 60 seconds later, no restart required. Selection logic weights source health, not just first-response. Live mode enforcement surfaces through metrics when forward progress slows on a degraded source.
+Multi data-source recovery automatically routes between configured data sources. On primary outage, the indexer fails over to a fallback within seconds. When the primary returns, the indexer attempts to recover to it 60 seconds later, no restart required. Selection logic weights source health, not just first-response. Realtime mode enforcement surfaces through metrics when forward progress slows on a degraded source.
 
 ### What happens to the indexer when the process restarts or a handler fails?
 
