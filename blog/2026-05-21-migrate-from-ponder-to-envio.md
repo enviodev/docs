@@ -15,15 +15,13 @@ last_update:
 
 <!--truncate-->
 
-## TL;DR
-
-Migrating from Ponder to HyperIndex is straightforward. Both frameworks use TypeScript, index EVM events, and expose a GraphQL API.
-
-Three things change. `ponder.config.ts` becomes `config.yaml`. `ponder.schema.ts` becomes `schema.graphql`. Event handlers adapt to the HyperIndex entity API.
-
+:::note TL;DR
+- Migrating from Ponder to HyperIndex is straightforward. Both frameworks use TypeScript, index EVM events, and expose a GraphQL API.
+- Three things change: `ponder.config.ts` becomes `config.yaml`, `ponder.schema.ts` becomes `schema.graphql`, and event handlers adapt to the HyperIndex entity API.
 - Up to 157x faster historical sync via HyperSync (Sentio Uniswap V2 Factory benchmark).
-- Multichain. One config, any number of chains.
-- Full migration reference at [https://docs.envio.dev/docs/HyperIndex/migrate-from-ponder](https://docs.envio.dev/docs/HyperIndex/migrate-from-ponder). AI-assisted migration docs also available for Cursor and Claude Code.
+- Multichain by default. One config, any number of chains.
+- Full migration reference at [docs.envio.dev/docs/HyperIndex/migrate-from-ponder](https://docs.envio.dev/docs/HyperIndex/migrate-from-ponder). AI-assisted migration docs also available for Cursor and Claude Code.
+:::
 
 If you are running a Ponder indexer in production, you already know two things. The framework is TypeScript end-to-end, and historical backfills using RPC are the bottleneck. Envio HyperIndex keeps the TypeScript and removes the bottleneck. Up to 157x faster sync via HyperSync, same GraphQL API on top.
 
