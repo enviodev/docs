@@ -183,9 +183,9 @@ After switching to a fallback source, HyperIndex automatically attempts to recov
 
 See the [Rpc reference](/docs/HyperIndex/config-schema-reference#def-rpc) for advanced tuning options such as `initial_block_interval`, `polling_interval`, `query_timeout_millis`, and backoff parameters.
 
-### WebSocket Support (Experimental)
+### WebSocket Height Streaming
 
-WebSocket support for RPC sources is experimental. Pair `wss://` URLs with `for: realtime` to improve head latency. Please open a GitHub issue if you hit any problems.
+Pair `wss://` URLs with `for: realtime` to improve head latency by streaming new block heights over a WebSocket connection.
 
 ```yaml
 chains:
@@ -195,6 +195,10 @@ chains:
       ws: ${ENVIO_WS_ENDPOINT}
       for: realtime
 ```
+
+:::tip Experimental
+WebSocket support for RPC sources is experimental. Please open a GitHub issue if you hit any problems.
+:::
 
 ### Start Block
 
