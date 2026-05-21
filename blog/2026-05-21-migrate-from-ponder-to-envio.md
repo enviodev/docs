@@ -362,6 +362,8 @@ indexer.onEvent({ contract: "MyToken", event: "Transfer" }, async ({ event, cont
 
 
 
+**Heads up.** The ID above uses `event.transaction.hash`, which is not available by default. Add `transaction_fields: [hash]` under `field_selection` in `config.yaml` as shown in Step 1, or build the ID from fields that are always available (e.g. `${event.chainId}_${event.block.number}_${event.logIndex}`).
+
 **One rule that catches every team.** Entity objects from `context.Entity.get()` are read-only. Always spread (`...existing`) and set new fields. Never mutate directly.
 
 Full event handlers reference at [https://docs.envio.dev/docs/HyperIndex/event-handlers](https://docs.envio.dev/docs/HyperIndex/event-handlers).
