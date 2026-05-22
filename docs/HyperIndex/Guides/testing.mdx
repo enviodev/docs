@@ -154,6 +154,10 @@ You can pass multiple events in a single `simulate` array — they will be proce
 
 You can optionally specify detailed event metadata per simulated event using the same `block` / `transaction` / `srcAddress` / `logIndex` shape that real events expose. See [field_selection](configuration-file#field-selection) for the full list of overridable fields.
 
+### result.changes
+
+`result.changes` is an array of per-block change objects. Each entry has `block`, `chainId`, `eventsProcessed`, plus entity names as keys with `sets` arrays of created/updated entities. Dynamic contract registrations appear under `addresses.sets`.
+
 ---
 
 ## Entity State API
@@ -169,12 +173,6 @@ await indexer.EntityName.get("id");        // returns entity | undefined
 await indexer.EntityName.getOrThrow("id"); // throws if not found
 await indexer.EntityName.getAll();         // returns all entities of this type
 ```
-
----
-
-## result.changes
-
-`result.changes` is an array of per-block change objects. Each entry has `block`, `chainId`, `eventsProcessed`, plus entity names as keys with `sets` arrays of created/updated entities. Dynamic contract registrations appear under `addresses.sets`.
 
 ---
 
@@ -261,9 +259,8 @@ it("A NewGreeting event creates a User entity", async () => {
     greetings: [greeting],
   };
 
-  // Step 5: Verify the indexer state matches what we expect
-  const actualUserEntity = await indexer.User.getOrThrow(userAddress);
-  expect(actualUserEntity).toEqual(expectedUserEntity);
+  // Step 5: Verify the stored entity matches
+  expect(await indexer.User.getOrThrow(userAddress)).toEqual(expectedUserEntity);
 });
 ```
 
@@ -311,41 +308,3 @@ it("2 Greetings from the same users results in that user having a greeter count 
 });
 ```
 
----
-
-## Advanced: Finding Block Ranges with HyperSync
-
-Auto-exit mode eliminates the need for manual block discovery in most cases. Use this when you need specific block ranges for pinned snapshots.
-
-:::tip
-Don't web-search for block ranges. Query HyperSync directly.
-:::
-
-Endpoint pattern: `https://{chainId}.hypersync.xyz` (e.g., chain 1 → `https://1.hypersync.xyz`).
-
-Common chain IDs: 1 (Ethereum), 8453 (Base), 42161 (Arbitrum), 10 (Optimism), 137 (Polygon), 56 (BSC), 43114 (Avalanche), 100 (Gnosis), 59144 (Linea), 534352 (Scroll), 81457 (Blast), 42220 (Celo).
-
-```bash
-curl --request POST \
-  --url https://1.hypersync.xyz/query \
-  --header 'Content-Type: application/json' \
-  --header "Authorization: Bearer $ENVIO_API_TOKEN" \
-  --data '{
-    "from_block": 0,
-    "logs": [
-      {
-        "address": ["0xYOUR_CONTRACT_ADDRESS"],
-        "topics": [
-          ["0xYOUR_EVENT_TOPIC0"]
-        ]
-      }
-    ],
-    "field_selection": {
-      "log": ["block_number"]
-    }
-  }'
-```
-
-Returns the earliest matching blocks. Use `from_block` to paginate forward. Pick a tight range (50–200 blocks) for fast, deterministic tests.
-
-Full HyperSync query reference: [HyperSync docs](/docs/HyperSync-LLM/hypersync-complete)
