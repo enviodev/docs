@@ -206,6 +206,10 @@ t.expect(indexer.chains[1].MyContract.addresses).toContain("0x1234...");
 3. **Capture the snapshot** — run `pnpm test` to fill `toMatchInlineSnapshot`
 4. **Review and commit** the snapshot for regression testing
 
+:::warning
+Do not add tests which simply restate the implementation. These provide zero confidence.
+:::
+
 ### Running Tests
 
 ```bash
