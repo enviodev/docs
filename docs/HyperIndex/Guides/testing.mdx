@@ -3,17 +3,17 @@ id: testing
 title: Testing
 sidebar_label: Testing
 slug: /testing
-description: Learn to test HyperIndex indexers with createTestIndexer, auto-exit mode, simulated events, and snapshot testing.
+description: Test and develop HyperIndex indexers with createTestIndexer — TDD, unit and e2e tests against real blockchain data.
 ---
 
 ## Introduction
 
-Envio ships with a built-in testing library that lets you validate indexer behavior without deploying or connecting to a live chain. It's designed to:
+Envio ships with a built-in testing library that doubles as a development loop. `createTestIndexer()` runs your real handlers in-process, so you can iterate on logic and validate behavior without deploying anywhere. It's designed for:
 
-- **Spin up an in-process indexer**: Use `createTestIndexer()` to run your real handlers against an in-memory store
-- **Process real or simulated events**: Auto-detect the first block with events, pin an explicit block range, or feed synthetic events directly
-- **Assert handler logic**: Inspect entities and per-block change sets after processing
-- **Capture regressions with snapshots**: Use `toMatchInlineSnapshot` to lock in expected output
+- **TDD**: Write a failing test, implement the handler, capture the snapshot, commit
+- **Unit tests**: Feed synthetic events directly into handlers to exercise edge cases in isolation
+- **E2E tests against real blockchain data**: Pin a block range or let the indexer auto-detect the first block with events, and run your full handler pipeline end-to-end
+- **Regression-proof assertions**: Inspect entities and per-block change sets, then lock in expected output with `toMatchInlineSnapshot`
 
 The library integrates well with [Vitest](https://vitest.dev/) (recommended) and any other JavaScript-based testing framework.
 
