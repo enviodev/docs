@@ -463,6 +463,7 @@ const config = {
           "/docs/HyperIndex-LLM/**",
           "/docs/HyperSync-LLM/**",
           "/docs/HyperRPC-LLM/**",
+          "/docs/v2/HyperIndex/**",
         ],
       },
     ],
