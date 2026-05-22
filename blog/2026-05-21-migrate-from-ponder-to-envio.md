@@ -25,8 +25,6 @@ last_update:
 
 If you are running a Ponder indexer in production, you already know two things. The framework is TypeScript end-to-end, and historical backfills using RPC are the bottleneck. Envio HyperIndex keeps the TypeScript and removes the bottleneck. Up to 157x faster sync via HyperSync, same GraphQL API on top.
 
-In February 2026 the Monad Foundation acquired Ponder. The acquisition was not communicated to existing Ponder users ahead of time, causing many teams running production indexers to find out alongside the rest of the industry, without a direct read on what the change meant for their long-term setups.
-
 This blog walks the three-step migration end to end. Every code block is taken directly from the official migration reference in our docs.
 
 ## AI-Assisted Migration
