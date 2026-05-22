@@ -17,61 +17,6 @@ Envio ships with a built-in testing library that doubles as a development loop. 
 
 The library integrates well with [Vitest](https://vitest.dev/) (recommended) and any other JavaScript-based testing framework.
 
-## Learn by doing
-
-If you prefer to explore by example, the Greeter template includes complete tests that demonstrate best practices:
-
-1. Generate `greeter` template in TypeScript using Envio CLI
-
-```bash
-pnpx envio init template -l typescript -d greeter -t greeter -n greeter
-```
-
-2. Run tests
-
-```bash
-pnpm test
-```
-
-3. See the `src/indexer.test.ts` file to understand how the tests are written.
-
----
-
-## Getting Started
-
-This section covers how to set up testing for your existing HyperIndex indexer.
-
-### Prerequisites
-
-- A functioning indexer setup with schema and event handlers
-- Envio CLI v3 (verify with `envio -V`)
-
-### Setup Steps
-
-1. Install [Vitest](https://vitest.dev/) (recommended):
-
-```bash
-pnpm add -D vitest
-```
-
-2. Add a test file (e.g., `src/indexer.test.ts`)
-
-3. Add a test command to your `package.json`
-
-```json
-"test": "vitest run",
-```
-
-4. Generate the testing types by running:
-
-```bash
-pnpm codegen
-```
-
-This regenerates `.envio/types.d.ts` based on your schema and configuration. Always run this command when you make changes to your schema or configuration files.
-
----
-
 ## Quick Start
 
 The simplest way to start is auto-exit mode — no block ranges, no mock events. The indexer automatically finds the first block with events and processes it.
