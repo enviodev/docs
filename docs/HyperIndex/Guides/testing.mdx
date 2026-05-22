@@ -17,7 +17,7 @@ Envio ships with a built-in testing library that doubles as a development loop. 
 
 The library integrates well with [Vitest](https://vitest.dev/) (recommended) and any other JavaScript-based testing framework.
 
-## Quick Start
+## Getting Started
 
 The simplest way to start is auto-exit mode — no block ranges, no mock events. The indexer automatically finds the first block with events and processes it.
 
@@ -158,98 +158,5 @@ Do not add tests which simply restate the implementation. These provide zero con
 ```bash
 pnpm test              # Run all tests
 pnpm test -- -u        # Update snapshots
-```
-
----
-
-## Examples
-
-### A `NewGreeting` Event Creates a User Entity
-
-This example tests that when a `NewGreeting` event is processed, it correctly creates a new `User` entity:
-
-```typescript
-import { describe, it, expect } from "vitest";
-import { createTestIndexer, type User, TestHelpers } from "envio";
-const { Addresses } = TestHelpers;
-
-it("A NewGreeting event creates a User entity", async () => {
-  // Step 1: Create an in-process indexer
-  const indexer = createTestIndexer();
-
-  // Step 2: Define test data
-  const userAddress = Addresses.defaultAddress;
-  const greeting = "Hi there";
-
-  // Step 3: Simulate the event through your handler
-  await indexer.process({
-    chains: {
-      137: {
-        simulate: [
-          {
-            contract: "Greeter",
-            event: "NewGreeting",
-            params: { greeting, user: userAddress },
-          },
-        ],
-      },
-    },
-  });
-
-  // Step 4: Define what we expect to see in storage
-  const expectedUserEntity: User = {
-    id: userAddress,
-    latestGreeting: greeting,
-    numberOfGreetings: 1,
-    greetings: [greeting],
-  };
-
-  // Step 5: Verify the stored entity matches
-  expect(await indexer.User.getOrThrow(userAddress)).toEqual(expectedUserEntity);
-});
-```
-
-### Testing Entity Updates: 2 Greetings from the Same User
-
-This example tests that when the same user sends multiple greetings, the counter increments correctly:
-
-```typescript
-import { describe, it, expect } from "vitest";
-import { createTestIndexer, TestHelpers } from "envio";
-const { Addresses } = TestHelpers;
-
-it("2 greetings from the same user results in a greeting count of 2", async () => {
-  // Step 1: Create an in-process indexer
-  const indexer = createTestIndexer();
-
-  // Step 2: Define test data for two events
-  const userAddress = Addresses.defaultAddress;
-  const greeting = "Hi there";
-  const greetingAgain = "Oh hello again";
-
-  // Step 3: Process both events through the handlers
-  await indexer.process({
-    chains: {
-      137: {
-        simulate: [
-          {
-            contract: "Greeter",
-            event: "NewGreeting",
-            params: { greeting, user: userAddress },
-          },
-          {
-            contract: "Greeter",
-            event: "NewGreeting",
-            params: { greeting: greetingAgain, user: userAddress },
-          },
-        ],
-      },
-    },
-  });
-
-  // Step 4: Get the entity and verify the greeting count is 2
-  const actualUserEntity = await indexer.User.getOrThrow(userAddress);
-  expect(actualUserEntity.numberOfGreetings).toBe(2);
-});
 ```
 
