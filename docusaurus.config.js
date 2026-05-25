@@ -460,6 +460,7 @@ const config = {
           version: "1.0.0",
         },
         excludeRoutes: [
+          "/blog/**",
           "/docs/HyperIndex-LLM/**",
           "/docs/HyperSync-LLM/**",
           "/docs/HyperRPC-LLM/**",
