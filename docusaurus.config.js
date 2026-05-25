@@ -459,6 +459,11 @@ const config = {
           name: "envio-docs",
           version: "1.0.0",
         },
+        excludeSelectors: [
+          "nav", "header", "footer", "aside",
+          '[role="navigation"]', '[role="banner"]', '[role="contentinfo"]',
+          ".hash-link",
+        ],
         excludeRoutes: [
           "/blog/**",
           "/docs/HyperIndex-LLM/**",
