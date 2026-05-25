@@ -465,6 +465,7 @@ const config = {
           ".hash-link",
         ],
         excludeRoutes: [
+          "/blog",
           "/blog/**",
           "/docs/HyperIndex-LLM/**",
           "/docs/HyperSync-LLM/**",
