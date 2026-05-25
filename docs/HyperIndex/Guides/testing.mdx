@@ -3,125 +3,91 @@ id: testing
 title: Testing
 sidebar_label: Testing
 slug: /testing
-description: Learn to test HyperIndex indexers with createTestIndexer, simulated events, and full workflow validation.
+description: Test and develop HyperIndex indexers with createTestIndexer — TDD, unit and e2e tests against real blockchain data.
 ---
 
 ## Introduction
 
-Envio comes with a built-in testing library that enables developers to thoroughly validate their indexer behavior without requiring deployment or interaction with actual blockchains. This library is specifically crafted to:
+Envio ships with a built-in testing library that doubles as a development loop. `createTestIndexer()` runs your real handlers in-process, so you can iterate on logic and validate behavior without deploying anywhere. It's designed for:
 
-- **Spin up an in-process indexer**: Use `createTestIndexer()` to run your real handlers against an in-memory database
-- **Simulate blockchain events**: Pass event params directly to `indexer.process({ chains: { id: { simulate: [...] } } })`
-- **Assert event handler logic**: Verify that your handlers correctly process events and update entities
-- **Test complete workflows**: Validate the entire process from event creation to database updates
+- **TDD**: Write a failing test, implement the handler, capture the snapshot, commit
+- **Unit tests**: Feed synthetic events directly into handlers to exercise edge cases in isolation
+- **E2E tests against real blockchain data**: Pin a block range or let the indexer auto-detect the first block with events, and run your full handler pipeline end-to-end
+- **Regression-proof assertions**: Inspect entities and per-block change sets, then lock in expected output with `toMatchInlineSnapshot`
 
-The testing library integrates well with [Vitest](https://vitest.dev/) (recommended) and any other JavaScript-based testing framework.
-
-## Learn by doing
-
-If you prefer to explore by example, the Greeter template includes complete tests that demonstrate best practices:
-
-1. Generate `greeter` template in TypeScript using Envio CLI
-
-```bash
-pnpx envio init template -l typescript -d greeter -t greeter -n greeter
-```
-
-2. Run tests
-
-```bash
-pnpm test
-```
-
-3. See the `src/indexer.test.ts` file to understand how the tests are written.
-
----
+The library integrates well with [Vitest](https://vitest.dev/) (recommended) and any other JavaScript-based testing framework.
 
 ## Getting Started
 
-This section covers how to set up testing for your existing HyperIndex indexer.
-
-### Prerequisites
-
-- A functioning indexer setup with schema and event handlers
-- Envio CLI v3 (verify with `envio -V`)
-
-### Setup Steps
-
-1. Install [Vitest](https://vitest.dev/) (recommended):
-
-```bash
-pnpm add -D vitest
-```
-
-2. Add a test file (e.g., `src/indexer.test.ts`)
-
-3. Add a test command to your `package.json`
-
-```json
-"test": "vitest run",
-```
-
-4. Generate the testing types by running:
-
-```bash
-pnpm codegen
-```
-
-This regenerates `.envio/types.d.ts` based on your schema and configuration. Always run this command when you make changes to your schema or configuration files.
-
----
-
-## Writing tests
-
-### Test Library Design
-
-The testing library follows key design principles that make it effective for testing HyperIndex indexers:
-
-- **Real handlers, in-memory storage**: `createTestIndexer()` runs your actual registered handlers against an in-memory store, so tests exercise the same code paths as production.
-- **Batched simulation**: Pass any number of events to `indexer.process({ chains: { id: { simulate: [...] } } })` and they will run through the handler pipeline in order.
-- **Realistic simulations**: Simulated events closely mirror real blockchain events.
-
-### Typical Test Flow
-
-Most tests will follow this general pattern:
-
-1. Create a test indexer with `createTestIndexer()`
-2. Call `indexer.process({ chains: { id: { simulate: [...] } } })` with one or more events
-3. Read entities back via `await indexer.Entity.getOrThrow(id)` (or `.get(id)`)
-4. Assert that the resulting state matches your expectations
-
-This flow allows you to verify that your event handlers correctly create, update, or modify entities in response to blockchain events.
-
----
-
-## API
-
-The `envio` package exposes the test entry points directly:
-
-### `createTestIndexer`
-
-Creates a fresh in-process indexer wired up to your registered handlers:
+The simplest way to start is auto-exit mode — no block ranges, no mock events. The indexer automatically finds the first block with events and processes it.
 
 ```typescript
+import { describe, it } from "vitest";
 import { createTestIndexer } from "envio";
 
-const indexer = createTestIndexer();
+describe("Indexer Testing", () => {
+  it("Should process first two blocks with events", async (t) => {
+    const indexer = createTestIndexer();
+
+    t.expect(
+      await indexer.process({ chains: { 1: {} } }),
+      "Should find the first block with an event on chain 1 and process it."
+    ).toMatchInlineSnapshot(``);
+
+    t.expect(
+      await indexer.process({ chains: { 1: {} } }),
+      "Should find the second block with an event on chain 1 and process it."
+    ).toMatchInlineSnapshot(``);
+  });
+});
 ```
 
-### `indexer.process({ chains })`
+Run `pnpm test` — Vitest auto-fills the snapshots on first run. Review and commit them.
 
-Runs one or more simulated events through your handlers. Provide a `chains` map keyed by chain id, with a `simulate` array of `{ contract, event, params }` objects:
+---
+
+## Process API
+
+`indexer.process({ chains })` is the single entry point for driving the indexer. The shape of each chain entry determines the mode.
+
+### Auto-exit (recommended for getting started)
+
+Processes the first block with matching events for each chain, then exits. Each subsequent call continues from where the previous one stopped.
+
+```typescript
+const result = await indexer.process({
+  chains: {
+    1: {},           // auto-detect first block with events on chain 1
+    8453: {},        // same for chain 8453
+  },
+});
+```
+
+### Explicit block range
+
+Process a specific block range. Use when you need deterministic, pinned snapshots.
+
+```typescript
+const result = await indexer.process({
+  chains: {
+    1: { startBlock: 10_000_000, endBlock: 10_000_100 },
+  },
+});
+```
+
+### Simulate (mock events)
+
+Feed synthetic events without hitting the network. Best for unit-testing handler logic.
 
 ```typescript
 await indexer.process({
   chains: {
-    137: {
+    1: {
       simulate: [
         {
-          contract: "Greeter",
-          event: "NewGreeting",
-          params: { greeting: "Hi", user: userAddress },
+          contract: "ERC20",
+          event: "Transfer",
+          params: { from: addr1, to: addr2, value: 100n },
         },
       ],
     },
@@ -133,131 +99,64 @@ You can pass multiple events in a single `simulate` array — they will be proce
 
 You can optionally specify detailed event metadata per simulated event using the same `block` / `transaction` / `srcAddress` / `logIndex` shape that real events expose. See [field_selection](configuration-file#field-selection) for the full list of overridable fields.
 
-### Reading entities
+### result.changes
 
-Entity helpers live directly on the indexer:
+`result.changes` is an array of per-block change objects. Each entry has `block`, `chainId`, `eventsProcessed`, plus entity names as keys with `sets` arrays of created/updated entities. Dynamic contract registrations appear under `addresses.sets`.
 
-```typescript
-// Throw if missing
-const user = await indexer.User.getOrThrow(userAddress);
+---
 
-// Or fall back to undefined
-const maybeUser = await indexer.User.get(userAddress);
-```
+## Entity State API
 
-You can also pre-seed entities before processing:
+Preset state before processing and read entities after.
 
 ```typescript
-indexer.User.set({
-  id: userAddress,
-  latestGreeting: "preexisting",
-  numberOfGreetings: 3,
-  greetings: ["preexisting"],
-});
+// Preset state before processing
+indexer.EntityName.set({ id: "...", field: value });
+
+// Read state after processing
+await indexer.EntityName.get("id");        // returns entity | undefined
+await indexer.EntityName.getOrThrow("id"); // throws if not found
+await indexer.EntityName.getAll();         // returns all entities of this type
 ```
 
 ---
 
 ## Assertions
 
-The testing library works with any JavaScript assertion library. The examples below use Vitest's built-in `expect`, but you can also use Node.js's `assert`, [chai](https://www.chaijs.com/), or any other library.
+The testing library works with any JavaScript assertion library. The examples below use Vitest's built-in `expect`.
 
-Common assertion patterns include:
+```typescript
+// Snapshot (recommended — captures full output, auto-filled on first run)
+t.expect(result.changes).toMatchInlineSnapshot(`...`);
 
-- `expect(actualEntity).toEqual(expectedEntity)` — Check that entire entities match
-- `expect(actualEntity.property).toBe(expectedValue)` — Verify specific property values
-- `expect(await indexer.Entity.get(id)).toBeDefined()` — Ensure an entity exists
+// Entity assertions
+const pool = await indexer.Pool.getOrThrow(poolId);
+t.expect(pool).toEqual({ id: poolId, token0_id: "0xabc..." });
+
+// Count
+t.expect(result.changes[0]?.Pair?.sets).toHaveLength(1);
+
+// Contract addresses (after dynamic registration)
+t.expect(indexer.chains[1].MyContract.addresses).toContain("0x1234...");
+```
 
 ---
 
-## Examples
+## TDD Workflow
 
-### A `NewGreeting` Event Creates a User Entity
+1. **Write a failing test** with expected entity output
+2. **Implement the handler** until the test passes
+3. **Capture the snapshot** — run `pnpm test` to fill `toMatchInlineSnapshot`
+4. **Review and commit** the snapshot for regression testing
 
-This example tests that when a `NewGreeting` event is processed, it correctly creates a new `User` entity:
+:::warning
+Do not add tests which simply restate the implementation. These provide zero confidence.
+:::
 
-```typescript
-import { describe, it, expect } from "vitest";
-import { createTestIndexer, type User, TestHelpers } from "envio";
-const { Addresses } = TestHelpers;
+### Running Tests
 
-it("A NewGreeting event creates a User entity", async () => {
-// Step 1: Create an in-process indexer
-const indexer = createTestIndexer();
-
-// Step 2: Define test data
-const userAddress = Addresses.defaultAddress;
-const greeting = "Hi there";
-
-// Step 3: Simulate the event through your handler
-await indexer.process({
-  chains: {
-    137: {
-      simulate: [
-        {
-          contract: "Greeter",
-          event: "NewGreeting",
-          params: { greeting, user: userAddress },
-        },
-      ],
-    },
-  },
-});
-
-// Step 4: Define what we expect to see in storage
-const expectedUserEntity: User = {
-  id: userAddress,
-  latestGreeting: greeting,
-  numberOfGreetings: 1,
-  greetings: [greeting],
-};
-
-// Step 5: Verify the indexer state matches what we expect
-const actualUserEntity = await indexer.User.getOrThrow(userAddress);
-expect(actualUserEntity).toEqual(expectedUserEntity);
-});
+```bash
+pnpm test              # Run all tests
+pnpm test -- -u        # Update snapshots
 ```
 
-### Testing Entity Updates: 2 Greetings from the Same User
-
-This example tests that when the same user sends multiple greetings, the counter increments correctly:
-
-```typescript
-import { describe, it, expect } from "vitest";
-import { createTestIndexer, TestHelpers } from "envio";
-const { Addresses } = TestHelpers;
-
-it("2 Greetings from the same users results in that user having a greeter count of 2", async () => {
-// Step 1: Create an in-process indexer
-const indexer = createTestIndexer();
-
-// Step 2: Define test data for two events
-const userAddress = Addresses.defaultAddress;
-const greeting = "Hi there";
-const greetingAgain = "Oh hello again";
-
-// Step 3: Process both events through the handlers
-await indexer.process({
-  chains: {
-    137: {
-      simulate: [
-        {
-          contract: "Greeter",
-          event: "NewGreeting",
-          params: { greeting, user: userAddress },
-        },
-        {
-          contract: "Greeter",
-          event: "NewGreeting",
-          params: { greeting: greetingAgain, user: userAddress },
-        },
-      ],
-    },
-  },
-});
-
-// Step 4: Get the entity and verify the greeting count is 2
-const actualUserEntity = await indexer.User.getOrThrow(userAddress);
-expect(actualUserEntity.numberOfGreetings).toBe(2);
-});
-```
