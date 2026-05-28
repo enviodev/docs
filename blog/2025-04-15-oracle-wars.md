@@ -8,7 +8,7 @@ last_update:
   date: 2026-04-15
 ---
 
-Co-authors: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing & Operations, and [Jonjon Clark](https://x.com/jonjonclark), Co-Founder at Envio
+Co-authors: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing, and [Jonjon Clark](https://x.com/jonjonclark), Co-Founder at Envio
 
 <img src="/blog-assets/oracle-wars-1.png" alt="Cover Image Oracle Wars" width="100%"/>
 
