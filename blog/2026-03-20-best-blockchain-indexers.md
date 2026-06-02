@@ -307,9 +307,9 @@ Get started in under 5 minutes: **<code>pnpx envio init</code>**
 ## Frequently asked questions
 
 
-### What is a blockchain indexer?
+### What does a blockchain indexer do that an RPC node can't?
 
-A blockchain indexer is a system that listens to onchain events (transactions, logs, state changes, blocks) and organises them into a structured, queryable database. Developers use indexers to build fast, reliable backends for dApps, DeFi protocols, NFT platforms, and analytics tools without querying slow RPC endpoints directly.
+A blockchain indexer continuously listens to onchain events (transactions, logs, state changes, blocks) and writes them into a structured, queryable database, exposed through a fast API like GraphQL. RPC nodes return raw data per request but cannot aggregate across events, filter efficiently, or serve historical queries at production speed. For dApps, DeFi protocols, NFT platforms, and analytics tools, an indexer replaces direct RPC calls almost entirely.
 
 
 ### What is the fastest blockchain indexer in 2026?
@@ -328,9 +328,9 @@ A custom indexing framework (HyperIndex, The Graph, Ponder, etc.) lets you defin
 
 
 
-### How do I migrate from The Graph to Envio HyperIndex?
+### What's involved in switching from The Graph to Envio HyperIndex?
 
-HyperIndex has a [dedicated migration guide](https://docs.envio.dev/docs/HyperIndex/migration-guide) that walks you through it in 3 simple steps. Envio also offers white glove migration support for teams moving from any stack. Reach out to us via [Discord](https://discord.gg/envio) for support.
+Switching from The Graph involves three main changes: AssemblyScript handlers become TypeScript (most logic carries across since AssemblyScript is a TypeScript subset), the subgraph manifest becomes a single multichain `config.yaml`, and queries move from The Graph's hosted or decentralized endpoint to Envio Cloud or a self-hosted deployment via Docker. Envio publishes a dedicated [migration guide](https://docs.envio.dev/docs/HyperIndex/migration-guide), a CLI validation tool to compare output across endpoints, and white-glove migration support. Reach out via [Discord](https://discord.gg/envio).
 
 
 ### How does HyperSync make HyperIndex the fastest indexer in this comparison?
