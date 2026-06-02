@@ -288,11 +288,6 @@ Docs: [Sei Testnet on Envio](https://docs.envio.dev/docs/HyperSync/hypersync-sup
 
   Use `https://sei-testnet.hypersync.xyz` for testnet (chain `1328`).
 
-## Built with Envio
-
-- [Indexer Explorer](https://envio.dev/explorer) — browse public indexers built on Envio
-- [Case studies](https://docs.envio.dev/blog?tag=case-studies) — real-world deployments and migrations
-
 ## Resources
 
 - [HyperIndex overview](https://docs.envio.dev/docs/HyperIndex/overview)
@@ -304,3 +299,11 @@ Docs: [Sei Testnet on Envio](https://docs.envio.dev/docs/HyperSync/hypersync-sup
 - [Envio CLI reference](https://docs.envio.dev/docs/HyperIndex/cli-commands)
 - [Running locally](https://docs.envio.dev/docs/HyperIndex/running-locally)
 - [USDC on Sei (Sei docs)](https://docs.sei.io/evm/usdc-on-sei)
+
+## Build With Envio
+
+Envio is a real-time multichain blockchain indexer that turns onchain events into a queryable GraphQL API. Supports any EVM chain, plus Solana and Fuel. Use Envio Cloud or self-host. If you're building onchain, come talk to us about your data needs.
+
+[Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post)
+
+[Website](https://envio.dev/) | [X](https://x.com/envio_indexer) | [Discord](https://discord.gg/envio) | [Telegram](https://t.me/+kAIGElzPjApiMjI0) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
