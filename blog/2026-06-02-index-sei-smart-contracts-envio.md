@@ -288,6 +288,11 @@ Docs: [Sei Testnet on Envio](https://docs.envio.dev/docs/HyperSync/hypersync-sup
 
   Use `https://sei-testnet.hypersync.xyz` for testnet (chain `1328`).
 
+## Built with Envio
+
+- [Indexer Explorer](https://envio.dev/explorer) — browse public indexers built on Envio
+- [Case studies](https://docs.envio.dev/blog?tag=case-studies) — real-world deployments and migrations
+
 ## Resources
 
 - [HyperIndex overview](https://docs.envio.dev/docs/HyperIndex/overview)
