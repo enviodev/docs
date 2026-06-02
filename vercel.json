@@ -47,6 +47,96 @@
       "source": "/blog/what-is-a-blockchain-indexer-for-dapp-development.md",
       "destination": "/blog/what-is-a-blockchain-indexer.md",
       "permanent": true
+    },
+    {
+      "source": "/docs/HyperSync/overview-hyperrpc",
+      "destination": "/docs/HyperRPC/overview-hyperrpc",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperSync/overview-hyperrpc.md",
+      "destination": "/docs/HyperRPC/overview-hyperrpc.md",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperSync/hyperrpc-supported-networks",
+      "destination": "/docs/HyperRPC/hyperrpc-supported-networks",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperSync/hyperrpc-supported-networks.md",
+      "destination": "/docs/HyperRPC/hyperrpc-supported-networks.md",
+      "permanent": true
+    },
+    {
+      "source": "/blog/blog/:slug",
+      "destination": "/blog/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/v2/:slug",
+      "destination": "/docs/v2/HyperIndex/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/v1/:slug",
+      "destination": "/docs/v2/HyperIndex/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/blog/navigating-common-challenges-in-blockchain-indexing",
+      "destination": "/blog/common-challenges-in-blockchain-indexing",
+      "permanent": true
+    },
+    {
+      "source": "/blog/navigating-common-challenges-in-blockchain-indexing.md",
+      "destination": "/blog/common-challenges-in-blockchain-indexing.md",
+      "permanent": true
+    },
+    {
+      "source": "/docs/installation",
+      "destination": "/docs/HyperIndex/quickstart",
+      "permanent": true
+    },
+    {
+      "source": "/docs/installation.md",
+      "destination": "/docs/HyperIndex/quickstart.md",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/installation",
+      "destination": "/docs/HyperIndex/quickstart",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/installation.md",
+      "destination": "/docs/HyperIndex/quickstart.md",
+      "permanent": true
+    },
+    {
+      "source": "/docs/privacy-policy",
+      "destination": "/docs/HyperIndex/privacy-policy",
+      "permanent": true
+    },
+    {
+      "source": "/docs/privacy-policy.md",
+      "destination": "/docs/HyperIndex/privacy-policy.md",
+      "permanent": true
+    },
+    {
+      "source": "/docs/terms-of-service",
+      "destination": "/docs/HyperIndex/terms-of-service",
+      "permanent": true
+    },
+    {
+      "source": "/docs/terms-of-service.md",
+      "destination": "/docs/HyperIndex/terms-of-service.md",
+      "permanent": true
+    },
+    {
+      "source": "/blog/page/:n",
+      "destination": "/blog",
+      "permanent": true
     }
   ],
   "headers": [
