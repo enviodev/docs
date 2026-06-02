@@ -5,7 +5,7 @@ tags: ["tutorials"]
 slug: /index-sei-smart-contracts-envio
 description: "A step-by-step guide to indexing a Sei ERC20 contract with Envio HyperIndex. Build a local indexer that streams Sei USDC Transfer and Approval events into Postgres and serves them through a GraphQL API."
 image: /blog-assets/index-sei-smart-contracts-envio.png
-authors: ["j_o_r_d_y_s", "KenauVith32"]
+authors: ["j_o_r_d_y_s"]
 last_update:
   date: 2026-06-02
   author: Jordyn Laurier
