@@ -15,7 +15,7 @@ authors: ["j_o_r_d_y_s"]
 
 :::note TL;DR
 - MegaETH is a high-performance EVM chain with sub-millisecond block times and 100,000+ TPS, purpose-built for real-time applications that demand scale and speed.
-- Envio supports MegaETH with HyperIndex (full GraphQL indexing), HyperSync (up to 10,000x faster than RPC for historical data), and HyperRPC (standard RPC proxy backed by HyperSync).
+- Envio supports MegaETH with HyperIndex (full GraphQL indexing), HyperSync (up to 2000x faster than RPC for historical data), and HyperRPC (standard RPC proxy backed by HyperSync).
 - Oracle Wars, built in under two hours using Envio HyperIndex on MegaETH, demonstrates how quickly developers can build real-time monitoring tools on high-throughput chains.
 :::
 
@@ -49,7 +49,7 @@ A full-featured blockchain indexing framework that transforms onchain events int
 
 ### HyperSync
 
-A high-performance data retrieval layer that gives developers unprecedented access to data on MegaETH. It directly replaces traditional RPC endpoints for raw block data, delivering up to 10,000x faster data access. HyperSync enables rapid and cost-effective retrieval of both real-time and historical blockchain data and can be used directly for custom data pipelines and specialized applications.
+A high-performance data retrieval layer that gives developers unprecedented access to data on MegaETH. It directly replaces traditional RPC endpoints for raw block data, delivering up to 2000x faster data access. HyperSync enables rapid and cost-effective retrieval of both real-time and historical blockchain data and can be used directly for custom data pipelines and specialized applications.
 
 [Learn more](https://docs.envio.dev/docs/HyperSync/overview)
 
@@ -100,7 +100,7 @@ Yes. Envio HyperSync and HyperIndex support both MegaETH mainnet and testnet. Yo
 
 ### How fast is HyperSync on MegaETH compared to standard RPC?
 
-HyperSync can deliver up to 10,000x faster historical data retrieval than standard RPC on MegaETH by bypassing the JSON-RPC layer entirely. This means syncing large datasets that would take hours via RPC completes in minutes.
+HyperSync can deliver up to 2000x faster historical data retrieval than standard RPC on MegaETH by bypassing the JSON-RPC layer entirely. This means syncing large datasets that would take hours via RPC completes in minutes.
 
 ### Can I index MegaETH alongside other chains in a single Envio indexer?
 

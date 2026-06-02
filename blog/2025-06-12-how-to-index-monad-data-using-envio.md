@@ -15,7 +15,7 @@ authors: ["j_o_r_d_y_s"]
 
 :::note TL;DR
 - Monad is a high-performance EVM Layer 1 with 1-second block times, parallel execution, and 10,000+ TPS, purpose-built for data-rich decentralized applications.
-- Envio supports Monad with HyperIndex (full GraphQL indexing), HyperSync (up to 10,000x faster than RPC for historical data), and HyperRPC (drop-in RPC proxy backed by HyperSync).
+- Envio supports Monad with HyperIndex (full GraphQL indexing), HyperSync (up to 2000x faster than RPC for historical data), and HyperRPC (drop-in RPC proxy backed by HyperSync).
 - Compared to The Graph (EVM-only, separate subgraph per chain), Envio's single config covers Monad and all other supported chains through one GraphQL endpoint.
 :::
 
@@ -48,7 +48,7 @@ A full-featured blockchain indexing framework that transforms onchain events int
 
 ### HyperSync
 
-A high-performance data retrieval layer that gives developers unprecedented access to data on Monad. It directly replaces traditional RPC endpoints, delivering up to 10,000x faster data access. HyperSync enables rapid and cost-effective retrieval of both real-time and historical blockchain data and can be used directly for custom data pipelines and specialized applications.
+A high-performance data retrieval layer that gives developers unprecedented access to data on Monad. It directly replaces traditional RPC endpoints, delivering up to 2000x faster data access. HyperSync enables rapid and cost-effective retrieval of both real-time and historical blockchain data and can be used directly for custom data pipelines and specialized applications.
 
 [Learn more](https://docs.envio.dev/docs/HyperSync/overview)
 
@@ -95,7 +95,7 @@ Yes. Envio HyperSync and HyperIndex support both Monad mainnet and testnet. You 
 
 ### How fast is HyperSync on Monad compared to standard RPC?
 
-HyperSync can deliver up to 10,000x faster historical data retrieval than standard RPC on Monad by bypassing the JSON-RPC layer entirely. This means syncing millions of events that would take hours via RPC completes in minutes.
+HyperSync can deliver up to 2000x faster historical data retrieval than standard RPC on Monad by bypassing the JSON-RPC layer entirely. This means syncing millions of events that would take hours via RPC completes in minutes.
 
 ### Can I use Envio to index multiple chains including Monad in a single indexer?
 

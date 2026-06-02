@@ -15,7 +15,7 @@ authors: ["j_o_r_d_y_s", "nikbhintade"]
 
 :::note TL;DR
 - Alchemy sunset Subgraph support on December 8th, 2025. Teams need a migration path that preserves their existing indexing logic and keeps data live without a full rebuild.
-- Envio's HyperIndex accepts your existing schema and mapping logic, adds 143x faster backfills via HyperSync ([Sentio Uniswap V2 Factory benchmark, May 2025](https://github.com/enviodev/open-indexer-benchmark)), and includes 2 months of free hosting for all Alchemy users.
+- Envio's HyperIndex accepts your existing schema and mapping logic, adds 142x faster backfills via HyperSync ([Sentio Uniswap V2 Factory benchmark, May 2025](https://github.com/enviodev/open-indexer-benchmark)), and includes 2 months of free hosting for all Alchemy users.
 - The migration takes four steps: generate a new HyperIndex project, bring over your schema, move your mapping logic, and use migration cursors to avoid replaying from block zero.
 :::
 
@@ -27,7 +27,7 @@ Envio gives you a clean and fast way to migrate your existing Alchemy Subgraphs 
 
 With Alchemy having sunset its Subgraph support, teams need to move quickly. You still rely on your data, you still need your indexers, and rebuilding the entire stack is not realistic in the given timeframe. With Envio, you get:
 
-- 143x faster backfills via HyperIndex
+- 142x faster backfills via HyperIndex
 - Multichain indexing supported out of the box
 - 2 months free hosting for all Alchemy users
 - White-glove migration support tailored for Alchemy Subgraphs
@@ -113,7 +113,7 @@ Queries will be very similar. HyperIndex uses a GraphQL API structure that is fa
 
 ### How does Envio compare to The Graph as an Alchemy Subgraph replacement?
 
-The Graph is the closest architectural equivalent to Alchemy Subgraphs, but it has the same limitations: separate subgraph per chain, slower historical sync, and no native multichain support. Envio delivers 143x faster backfills via HyperSync, supports multichain indexing from a single config, and includes an active team for migration support.
+The Graph is the closest architectural equivalent to Alchemy Subgraphs, but it has the same limitations: separate subgraph per chain, slower historical sync, and no native multichain support. Envio delivers 142x faster backfills via HyperSync, supports multichain indexing from a single config, and includes an active team for migration support.
 
 ### Is there a free tier on Envio Cloud for migrating teams?
 

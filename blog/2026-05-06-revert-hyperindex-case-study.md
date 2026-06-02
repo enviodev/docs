@@ -40,7 +40,7 @@ A subgraph stuck at 70% sync for over 2 years is effectively unusable.
 
 Envio HyperIndex is a real-time multichain blockchain indexing framework for any EVM chain. Developers write event handlers in TypeScript and deploy a single indexer covering multiple contracts and chains simultaneously. It uses HyperSync, Envio's proprietary data engine, which serves filtered event data in bulk directly from a purpose-built data lake, replacing having to poll RPC endpoints block by block. This removes the RPC bottleneck entirely, which is precisely what causes subgraph stalls on BNB Smart Chain.
 
-HyperIndex is independently benchmarked as the fastest blockchain indexer available. In the Uniswap V2 Factory benchmark run by Sentio in May 2025, HyperIndex synced in 1 minute, 143x faster than The Graph and 15x faster than the nearest competitor. BNB Smart Chain is one of <HyperSyncChainCount /> EVM chains with native HyperSync coverage.
+HyperIndex is independently benchmarked as the fastest blockchain indexer available. In the Uniswap V2 Factory benchmark run by Sentio in May 2025, HyperIndex synced in 8 seconds, 142x faster than The Graph and 15x faster than the nearest competitor. BNB Smart Chain is one of <HyperSyncChainCount /> EVM chains with native HyperSync coverage.
 
 For a full benchmark breakdown see the [complete blockchain indexer comparison](https://docs.envio.dev/docs/HyperIndex/benchmarks).
 

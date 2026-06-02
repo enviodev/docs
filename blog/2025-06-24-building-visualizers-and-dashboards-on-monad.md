@@ -135,7 +135,7 @@ A full-featured blockchain indexing framework that transforms onchain events int
 
 ### HyperSync
 
-A high-performance data retrieval layer that gives developers unprecedented access to data on Monad. It directly replaces traditional RPC endpoints, delivering up to 10,000x faster data access. HyperSync enables rapid and cost-effective retrieval of both real-time and historical blockchain data and can be used directly for custom data pipelines and specialized applications.
+A high-performance data retrieval layer that gives developers unprecedented access to data on Monad. It directly replaces traditional RPC endpoints, delivering up to 2000x faster data access. HyperSync enables rapid and cost-effective retrieval of both real-time and historical blockchain data and can be used directly for custom data pipelines and specialized applications.
 
 [Learn more](https://docs.envio.dev/docs/HyperSync/overview)
 

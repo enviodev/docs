@@ -485,7 +485,7 @@ Yes. A single `config.yaml` declares all chains under a `chains:` array. Multich
 
 ### What is HyperSync?
 
-HyperSync is Envio's data engine. Instead of pulling historical data through standard RPC, HyperSync fetches filtered event data in bulk from a purpose-built data lake, delivering up to 2,000x faster data access than RPC. 87+ EVM chains have native HyperSync coverage.
+HyperSync is Envio's data engine. Instead of pulling historical data through standard RPC, HyperSync fetches filtered event data in bulk from a purpose-built data lake, delivering up to 2,000x faster data access than RPC. <HyperSyncChainCount /> EVM chains have native HyperSync coverage.
 
 ### How do I handle reorgs in HyperIndex?
 
