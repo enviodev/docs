@@ -34,7 +34,7 @@ The indexer is fully open source: [github.com/enviodev/polymarket-indexer](https
 
 Envio is a real-time multichain blockchain indexing framework for EVM chains. Developers write event handlers in TypeScript and deploy a single indexer that covers multiple contracts, chains, and domains simultaneously.
 
-HyperIndex is independently benchmarked as the fastest blockchain indexer available. In the Uniswap V2 Factory [benchmark run by Sentio](https://github.com/enviodev/open-indexer-benchmark) in May 2025, HyperIndex completed in 1 minute, 143x faster than The Graph and 15x faster than the nearest competitor. In the LBTC benchmark (April 2025), HyperIndex completed in 3 minutes versus 3 hours 9 minutes for The Graph.
+HyperIndex is independently benchmarked as the fastest blockchain indexer available. In the Uniswap V2 Factory [benchmark run by Sentio](https://github.com/enviodev/open-indexer-benchmark) in May 2025, HyperIndex completed in 8 seconds, 142x faster than The Graph and 15x faster than the nearest competitor. In the LBTC benchmark (April 2025), HyperIndex completed in 3 minutes versus 3 hours 9 minutes for The Graph.
 
 This performance comes from [HyperSync](https://docs.envio.dev/docs/HyperSync/overview), Envio's proprietary data engine. Instead of querying RPC endpoints block by block, HyperSync fetches filtered event data in bulk directly from a purpose-built data lake, delivering up to 2,000x faster data access than standard RPC. Polygon is one of <HyperSyncChainCount /> EVM chains supported with native HyperSync coverage.
 
@@ -42,10 +42,10 @@ See full list of HyperSync supported networks here: [https://docs.envio.dev/docs
 
 | Indexer | Time (Uniswap V2 Factory benchmark, Sentio May 2025) | vs HyperIndex |
 |---------|------------------------------------------------------|---------------|
-| Envio HyperIndex | 1 minute | baseline |
-| Subsquid (SQD) | ~15 minutes | 15x slower |
-| The Graph | ~143 minutes | 143x slower |
-| Ponder | ~158 minutes | 158x slower |
+| Envio HyperIndex | 8 seconds | baseline |
+| Subsquid (SQD) | 2 minutes | 15x slower |
+| The Graph | 19 minutes | 142x slower |
+| Ponder | 21 minutes | 157x slower |
 
 For a full breakdown of how HyperIndex compares across all major blockchain indexers, see the [complete benchmark comparison](https://docs.envio.dev/docs/HyperIndex/benchmarks).
 
@@ -141,7 +141,7 @@ Live deployment: [https://envio.dev/app/moose-code/polymarket-indexer/7cad3ad](h
 
 Polymarket's setup before this migration is a pattern that shows up across the ecosystem: multiple subgraphs, shared contracts, AssemblyScript handlers, fragmented data. Here is what changes when teams move to HyperIndex:
 
-**Speed.** HyperIndex is 143x faster than The Graph on independent benchmarks. For protocols with years of history like Polymarket, that directly translates to days versus months on historical sync.
+**Speed.** HyperIndex is 142x faster than The Graph on independent benchmarks. For protocols with years of history like Polymarket, that directly translates to days versus months on historical sync.
 
 **TypeScript, not AssemblyScript.** Handlers are standard TypeScript with generated types from both the schema and ABIs. Any npm package works. No WebAssembly compilation. No AssemblyScript-specific constraints.
 
@@ -162,7 +162,7 @@ Polymarket is the world's largest decentralized prediction market, built on Poly
 A blockchain indexer is a system that listens to onchain events and organises them into a structured, queryable database. Developers use blockchain indexers to build fast backends for DeFi protocols, trading interfaces, analytics tools, and onchain AI agents without querying slow RPC endpoints directly.
 
 ### What Is the Fastest Blockchain Indexer?
-Envio HyperIndex is independently benchmarked as the fastest blockchain indexer available. In the Uniswap V2 Factory benchmark run by Sentio in May 2025, HyperIndex completed in 1 minute, 143x faster than The Graph and 15x faster than the nearest competitor (Subsquid).
+Envio HyperIndex is independently benchmarked as the fastest blockchain indexer available. In the Uniswap V2 Factory benchmark run by Sentio in May 2025, HyperIndex completed in 8 seconds, 142x faster than The Graph and 15x faster than the nearest competitor (Subsquid).
 
 ### What Is HyperIndex?
 HyperIndex is a multichain blockchain indexing framework for EVM chains built by Envio. Developers write event handlers in TypeScript and deploy a single indexer covering multiple contracts, chains, and domains. It uses HyperSync, Envio's proprietary data engine, for historical sync speeds not achievable through standard RPC polling.
