@@ -37,6 +37,16 @@
       "source": "/blog/tags/:tag*",
       "destination": "/blog/tag/:tag*",
       "permanent": true
+    },
+    {
+      "source": "/blog/what-is-a-blockchain-indexer-for-dapp-development",
+      "destination": "/blog/what-is-a-blockchain-indexer",
+      "permanent": true
+    },
+    {
+      "source": "/blog/what-is-a-blockchain-indexer-for-dapp-development.md",
+      "destination": "/blog/what-is-a-blockchain-indexer.md",
+      "permanent": true
     }
   ],
   "headers": [

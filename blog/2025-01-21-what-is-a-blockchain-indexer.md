@@ -19,7 +19,7 @@ authors: ["j_o_r_d_y_s"]
 - Compared to The Graph (separate subgraph per chain, slower historical sync) and Goldsky, Envio uses a single config for all chains and a single GraphQL endpoint.
 :::
 
-Blockchain data is stored sequentially and is difficult to query directly. Building decentralized apps often involves navigating raw, unstructured blockchain data, which is complex and time-consuming. Blockchain indexers solve this by transforming scattered onchain data into streamlined, structured databases that power fast, efficient apps. This post covers how blockchain indexers work, why they matter, and what to look for when choosing one.
+Blockchain data is stored sequentially and is difficult to query directly. Building decentralized apps often involves navigating raw, unstructured blockchain data, which is complex and time-consuming. A blockchain indexer for dApp development solves this by transforming scattered onchain data into streamlined, structured databases that power fast, efficient apps and give Web3 developers a reliable data retrieval layer. This post covers how blockchain indexers work, why they matter, and what to look for when choosing one.
 
 ## What is a blockchain indexer?
 
@@ -29,7 +29,7 @@ By defining data types and relationships based on your smart contracts, blockcha
 
 Indexers also handle both real-time data retrieval and historical data access. What usually takes days or weeks with traditional methods can be completed in seconds.
 
-## Why are blockchain indexers important?
+## Why dApp developers need a blockchain indexer
 
 ### 1. Simplified data access
 
