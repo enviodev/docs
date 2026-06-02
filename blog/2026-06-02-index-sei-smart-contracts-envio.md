@@ -61,7 +61,7 @@ Make sure you have the following prerequisites installed. Run each check in a te
 
 Create a new HyperIndex project from the ERC20 template, then move into the project folder:
 
-```
+```bash
 pnpx envio init template -t erc20 -d ./sei-indexer
 cd sei-indexer
 ```
@@ -72,7 +72,7 @@ A new `sei-indexer` folder is created with `config.yaml`, `schema.graphql`, a `.
 
 The scaffolded `.env` file ships with three commented lines:
 
-```
+```dotenv
 # To create or update a token visit https://envio.dev/app/api-tokens
 # Uncomment the line below and set a valid token
 # ENVIO_API_TOKEN="<YOUR-API-TOKEN>"
@@ -80,7 +80,7 @@ The scaffolded `.env` file ships with three commented lines:
 
 Uncomment the last line and replace `<YOUR-API-TOKEN>` with your token so it reads:
 
-```
+```dotenv
 ENVIO_API_TOKEN="your-token-here"
 ```
 
@@ -139,7 +139,7 @@ The `@derivedFrom` directive creates a virtual reverse lookup, so each `Account`
 
 The ERC20 template ships a handler and a test file that both reference the template contract. Remove them first:
 
-```
+```bash
 rm -f src/handlers/ERC20.ts src/indexer.test.ts
 ```
 
@@ -202,7 +202,7 @@ Key points about the handler API:
 
 Generate the typed code from your config and schema:
 
-```
+```bash
 pnpm codegen
 ```
 
@@ -212,7 +212,7 @@ The command reads `config.yaml` and `schema.graphql`, writes typed code into `.e
 
 Start the indexer in development mode:
 
-```
+```bash
 pnpm dev
 ```
 
@@ -224,7 +224,7 @@ You can explore the data in the Envio Console.
 
 With the indexer still running, open a new terminal and query the GraphQL API. This asks for the top 3 accounts by USDC balance and the 3 most recent approvals:
 
-```
+```bash
 curl -s -X POST http://localhost:8080/v1/graphql \
   -H "Content-Type: application/json" \
   -d '{"query":"{ Account(limit: 3, order_by: { balance: desc }) { id balance } Approval(limit: 3, order_by: { blockNumber: desc }) { id spender value blockNumber } }"}'
@@ -236,7 +236,7 @@ You will get back JSON with `Account` and `Approval` rows from live Sei USDC act
 
 Stop `pnpm dev` with Ctrl+C in its terminal, then clean up the local environment:
 
-```
+```bash
 pnpm envio stop
 ```
 
