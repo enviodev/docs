@@ -48,7 +48,7 @@ The numbers below are pulled from the [HyperSync overview](https://docs.envio.de
 | Scan Arbitrum for sparse log data | Hours to days | 2 seconds | ~2000x faster |
 | Fetch all Uniswap v3 `PoolCreated` events on Ethereum | Hours | Seconds | ~500x faster |
 
-HyperSync is also the data layer powering HyperIndex, the fastest blockchain indexer available. Sentio's independent Uniswap V2 Factory benchmark (May 2025) measured HyperIndex completing the test in 1 minute, 143x faster than The Graph and 15x faster than the nearest competitor (Subsquid).
+HyperSync is also the data layer powering HyperIndex, the fastest blockchain indexer available. Sentio's independent Uniswap V2 Factory benchmark (May 2025) measured HyperIndex completing the test in 8 seconds, 142x faster than The Graph and 15x faster than the nearest competitor (Subsquid).
 
 In production, that translates into projects like the Polymarket reference indexer, which synced 4 billion events in 6 days and replaced 8 separate subgraphs with a single HyperIndex deployment powered by HyperSync.
 
@@ -226,7 +226,7 @@ HyperSync makes a class of applications practical that traditional RPC cannot re
 
 HyperSync is the data engine underneath a growing set of tools and applications.
 
-**HyperIndex** is Envio's full indexing framework. It uses HyperSync as its primary data source, then layers on schema management, event handlers, multichain support, automatic reorg handling, and a hosted GraphQL API. HyperIndex is the fastest blockchain indexer available, 143x faster than The Graph and 15x faster than Subsquid on the Sentio Uniswap V2 Factory benchmark (May 2025).
+**HyperIndex** is Envio's full indexing framework. It uses HyperSync as its primary data source, then layers on schema management, event handlers, multichain support, automatic reorg handling, and a hosted GraphQL API. HyperIndex is the fastest blockchain indexer available, 142x faster than The Graph and 15x faster than Subsquid on the Sentio Uniswap V2 Factory benchmark (May 2025).
 
 **[ChainDensity.xyz](https://chaindensity.xyz)** uses HyperSync to render transaction and event density across any address on any supported chain. It generates insights in seconds that would take hours over RPC.
 
