@@ -86,7 +86,7 @@ networks:
           - event: Transfer
 ```
 
-HyperSync natively supports 70+ EVM chains, so most multichain setups get full speed across every network without any additional configuration.
+HyperSync natively supports <HyperSyncChainCount /> EVM chains, so most multichain setups get full speed across every network without any additional configuration.
 
 ## Challenge 4: Development and infrastructure overhead
 
@@ -135,7 +135,7 @@ A reorg occurs when the blockchain temporarily forks and resolves to a new canon
 
 ### Can one indexer handle multiple blockchains?
 
-Yes. HyperIndex supports multichain indexing from a single instance. You define all networks in one `config.yaml` file and query all indexed data through one GraphQL endpoint. HyperSync natively supports 70+ EVM chains.
+Yes. HyperIndex supports multichain indexing from a single instance. You define all networks in one `config.yaml` file and query all indexed data through one GraphQL endpoint. HyperSync natively supports <HyperSyncChainCount /> EVM chains.
 
 ### How do I debug a blockchain indexer that is returning incorrect data?
 
