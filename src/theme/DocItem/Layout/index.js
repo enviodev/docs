@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from '@theme-original/DocItem/Layout';
 import { useActivePlugin } from '@docusaurus/plugin-content-docs/client';
 import useIsBrowser from '@docusaurus/useIsBrowser';
+import Head from '@docusaurus/Head';
 import Admonition from '@theme/Admonition';
 import Link from '@docusaurus/Link';
 
@@ -16,6 +17,11 @@ export default function LayoutWrapper(props) {
 
   return (
     <>
+      {pluginId === 'HyperIndexV2' && (
+        <Head>
+          <meta name="robots" content="noindex" />
+        </Head>
+      )}
       {isBrowser && pluginId === 'HyperIndexV2' && (
         <Admonition type="warning" title="You're viewing v2 documentation">
           <p>
