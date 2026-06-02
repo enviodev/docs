@@ -14,7 +14,7 @@ last_update:
 <!--truncate-->
 
 :::note TL;DR
-- Envio HyperIndex is the fastest blockchain indexer in independent benchmarks: 1 minute on the Sentio Uniswap V2 Factory workload (May 2025), 143x faster than The Graph and 15x faster than the nearest competitor.
+- Envio HyperIndex is the fastest blockchain indexer in independent benchmarks: 8 seconds on the Sentio Uniswap V2 Factory workload (May 2025), 142x faster than The Graph and 15x faster than the nearest competitor.
 - It is the only indexer in this comparison with true wildcard indexing, multichain from a single indexer, TypeScript handlers, and a proprietary data engine (HyperSync, up to 2000x faster than standard RPC).
 - If you need non-EVM chains, use SubQuery or Subsquid. If you need access to public subgraphs, use The Graph.
 - Every claim in this article is sourced. Raw benchmark data is open and reproducible: [https://github.com/enviodev/open-indexer-benchmark](https://github.com/enviodev/open-indexer-benchmark)
@@ -82,7 +82,7 @@ Feature lists rarely tell the full story. We evaluated each indexer on six crite
 
 **Best for:** Teams building on EVM chains who need the fastest possible indexing with minimal infrastructure overhead.
 
-Envio is the only indexer in this list powered by a proprietary high-performance data engine. [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) delivers up to 2000x faster data access than traditional RPC. Two independent benchmarks run by Sentio confirm this: in the LBTC benchmark (April 2025), HyperIndex completed in 3 minutes versus 3 hours 9 minutes for The Graph. In the Uniswap V2 Factory benchmark (May 2025), HyperIndex completed in 1 minute, 15x faster than the nearest competitor (Subsquid), 143x faster than The Graph, and 158x faster than Ponder.
+Envio is the only indexer in this list powered by a proprietary high-performance data engine. [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) delivers up to 2000x faster data access than traditional RPC. Two independent benchmarks run by Sentio confirm this: in the LBTC benchmark (April 2025), HyperIndex completed in 3 minutes versus 3 hours 9 minutes for The Graph. In the Uniswap V2 Factory benchmark (May 2025), HyperIndex completed in 8 seconds, 15x faster than the nearest competitor (Subsquid), 142x faster than The Graph, and 157x faster than Ponder.
 
 HyperSync's speed also makes HyperIndex the fastest data source for onchain AI agents, where query latency and data freshness directly impact decision quality.
 
@@ -93,7 +93,7 @@ HyperSync's speed also makes HyperIndex the fastest data source for onchain AI a
 
 
 * Powered by HyperSync, up to 2000x faster than RPC
-* Independently benchmarked as fastest in class: 15x faster than nearest competitor, 158x faster than Ponder, 143x faster than The Graph (Sentio, May 2025, Uniswap V2 Factory benchmark)
+* Independently benchmarked as fastest in class: 15x faster than nearest competitor, 157x faster than Ponder, 142x faster than The Graph (Sentio, May 2025, Uniswap V2 Factory benchmark)
 * Wildcard indexing (only indexer in this list with full support)
 * Single indexer across multiple chains with unordered multichain mode
 * Write handlers in TypeScript or ReScript (no AssemblyScript required)
@@ -268,14 +268,14 @@ There is no official hosted service. You deploy and manage your own infrastructu
 | Hosted service | Yes | Yes (decentralised network) | Yes (fully managed) | Yes (SubQuery Network) | Yes (SQD Network) | Yes (fully managed) | No |
 | Wildcard indexing | Yes | No | Not documented | No | Factory patterns only | No | No |
 | Supported networks | <HyperSyncChainCount /> EVM chains and Fuel via HyperSync, Solana (experimental) and any EVM via RPC | 40+ on network, 90+ total | 150+ chains | 300+ (EVM and non-EVM) | 100+ (EVM and non-EVM) | 70+ EVM | Any EVM via RPC |
-| Independently benchmarked speed | Fastest: 1 min (Sentio Uniswap V2 Factory benchmark, May 2025) | 2h23m (Sentio Uniswap V2 Factory benchmark, May 2025) | Benchmarked (Goldsky_Subgraph, Sentio benchmarks) | Benchmarked (single-contract benchmark) | 15 min (Sentio Uniswap V2 Factory benchmark, May 2025) | Not benchmarked | 2h38m (Sentio Uniswap V2 Factory benchmark, May 2025) |
+| Independently benchmarked speed | Fastest: 8 seconds (Sentio Uniswap V2 Factory benchmark, May 2025) | 19 minutes (Sentio Uniswap V2 Factory benchmark, May 2025) | Benchmarked (Goldsky_Subgraph, Sentio benchmarks) | Benchmarked (single-contract benchmark) | 2 minutes (Sentio Uniswap V2 Factory benchmark, May 2025) | Not benchmarked | 21 minutes (Sentio Uniswap V2 Factory benchmark, May 2025) |
 | White glove migration | Yes | No | No | No | No | Partial | No |
 | AI-assisted development | Yes | Yes | Yes | Yes | Yes | Yes | No |
 
 </div>
 
 
-Across this comparison, Envio is the only indexer with true wildcard indexing, supports multichain from a single indexer, and is independently benchmarked as fastest in class at 143x faster than The Graph on the Sentio Uniswap V2 Factory workload (May 2025). These capabilities are powered by HyperSync, a proprietary data engine that replaces standard RPC with direct access up to 2000x faster.
+Across this comparison, Envio is the only indexer with true wildcard indexing, supports multichain from a single indexer, and is independently benchmarked as fastest in class at 142x faster than The Graph on the Sentio Uniswap V2 Factory workload (May 2025). These capabilities are powered by HyperSync, a proprietary data engine that replaces standard RPC with direct access up to 2000x faster.
 
 
 ## How to choose the right blockchain indexer
@@ -290,7 +290,7 @@ The right indexer depends on what you are building, which chains you need, and h
 
 **If you want to stream raw blockchain data into your own database.** Use Envio HyperSync for custom pipelines, up to 2000x faster than RPC with client libraries for Python, Rust, Node.js, and Go. Or use Goldsky Mirror for automatic streaming to Postgres and other sinks with no code required.
 
-**If you need a self-hosted indexer with maximum performance**. Use Envio. It is self-hostable via Docker, powered by HyperSync, and independently benchmarked as the fastest blockchain indexer available. 143x faster than The Graph on the Uniswap V2 Factory benchmark (Sentio, May 2025).
+**If you need a self-hosted indexer with maximum performance**. Use Envio. It is self-hostable via Docker, powered by HyperSync, and independently benchmarked as the fastest blockchain indexer available. 142x faster than The Graph on the Uniswap V2 Factory benchmark (Sentio, May 2025).
 
 **If you need access to the broadest ecosystem of existing community subgraphs.** Use The Graph. Its decentralised network has the largest collection of publicly maintained subgraphs for major protocols.
 
@@ -314,7 +314,7 @@ A blockchain indexer is a system that listens to onchain events (transactions, l
 
 ### What is the fastest blockchain indexer in 2026?
 
-Based on two independent benchmarks run by Sentio, Envio HyperIndex is the fastest blockchain indexer in independent benchmarks. In the Uniswap V2 Factory benchmark (May 2025), HyperIndex completed in 1 minute, 15x faster than the nearest competitor (Subsquid), 143x faster than The Graph, and 158x faster than Ponder. In a separate LBTC workload (April 2025), HyperIndex completed in 3 minutes versus 3 hours 9 minutes for The Graph. All benchmark data is publicly available. HyperIndex handles both real-time event streaming at chain head and historical backfill in the same indexer, with automatic transition between the two modes.
+Based on two independent benchmarks run by Sentio, Envio HyperIndex is the fastest blockchain indexer in independent benchmarks. In the Uniswap V2 Factory benchmark (May 2025), HyperIndex completed in 8 seconds, 15x faster than the nearest competitor (Subsquid), 142x faster than The Graph, and 157x faster than Ponder. In a separate LBTC workload (April 2025), HyperIndex completed in 3 minutes versus 3 hours 9 minutes for The Graph. All benchmark data is publicly available. HyperIndex handles both real-time event streaming at chain head and historical backfill in the same indexer, with automatic transition between the two modes.
 
 
 ### Which blockchain indexer supports the most chains?
@@ -340,7 +340,7 @@ HyperSync is Envio's high-performance blockchain data engine that powers HyperIn
 
 ### What are the best alternatives to The Graph for production dApps?
 
-Envio HyperIndex is the fastest alternative, with independent benchmarks showing a 143x speed advantage over The Graph on the Uniswap V2 Factory workload (Sentio, May 2025). Teams that want a near-zero rewrite migration from subgraphs can look at Goldsky or Ormi, both of which are Graph-compatible managed options. Teams that need non-EVM coverage alongside EVM should consider Subsquid or SubQuery, which support Polkadot, Cosmos, Bitcoin, and other non-EVM networks. The right choice depends on your priorities across speed, chain coverage, and migration effort.
+Envio HyperIndex is the fastest alternative, with independent benchmarks showing a 142x speed advantage over The Graph on the Uniswap V2 Factory workload (Sentio, May 2025). Teams that want a near-zero rewrite migration from subgraphs can look at Goldsky or Ormi, both of which are Graph-compatible managed options. Teams that need non-EVM coverage alongside EVM should consider Subsquid or SubQuery, which support Polkadot, Cosmos, Bitcoin, and other non-EVM networks. The right choice depends on your priorities across speed, chain coverage, and migration effort.
 
 
 ### What is the best blockchain indexer for Hyperliquid, Monad, or Arbitrum dApps?
