@@ -314,6 +314,13 @@ const config = {
           trackingID: "G-J0WZ32ZV5B",
           anonymizeIP: true,
         },
+        sitemap: {
+          ignorePatterns: [
+            "/docs/HyperIndex-LLM/**",
+            "/docs/HyperSync-LLM/**",
+            "/docs/HyperRPC-LLM/**",
+          ],
+        },
       }),
     ],
   ],
