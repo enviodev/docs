@@ -333,9 +333,9 @@ A custom indexing framework (HyperIndex, The Graph, Ponder, etc.) lets you defin
 HyperIndex has a [dedicated migration guide](https://docs.envio.dev/docs/HyperIndex/migration-guide) that walks you through it in 3 simple steps. Envio also offers white glove migration support for teams moving from any stack. Reach out to us via [Discord](https://discord.gg/envio) for support.
 
 
-### What is HyperSync?
+### How does HyperSync make HyperIndex the fastest indexer in this comparison?
 
-HyperSync is Envio's high-performance blockchain data engine that powers HyperIndex. It provides a low-level data access layer that is up to 2000x faster than traditional JSON-RPC endpoints. HyperSync can also be used directly for custom data pipelines in Python, Rust, Node.js, and Go. It supports <HyperSyncChainCount /> EVM chains and Fuel.
+HyperSync is Envio's proprietary data engine and is the reason HyperIndex tops the Sentio benchmark. The other indexers in this comparison pull historical data through standard JSON-RPC, which is the bottleneck. HyperSync replaces that fetch with a purpose-built data lake, delivering up to 2000x faster data access than traditional JSON-RPC. It is also available as a standalone API for custom data pipelines via client libraries in Python, Rust, Node.js, and Go, and natively covers <HyperSyncChainCount /> EVM chains and Fuel.
 
 
 ### What are the best alternatives to The Graph for production dApps?

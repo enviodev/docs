@@ -55,7 +55,7 @@ Every query has three main parts: `fromBlock`, a filter section (one of `transac
 
 ### Filtering for Native Transfers
 
-Native ETH transfers occur only in traces where `call_type` is `call` — not `staticcall` or `delegatecall`. Filtering on `callType` directly is more efficient than filtering on trace `kind`, since it lets HyperSync skip irrelevant trace types upfront.
+Native ETH transfers occur only in traces where `call_type` is `call`, not `staticcall` or `delegatecall`. Filtering on `callType` directly is more efficient than filtering on trace `kind`, since it lets HyperSync skip irrelevant trace types upfront.
 
 ## Building the Fetcher
 
@@ -188,8 +188,8 @@ See the HyperSync query reference for the full TraceSelection schema and field l
 
 ## Frequently Asked Questions
 
-### What Is HyperSync?
-[HyperSync](https://docs.envio.dev/docs/HyperSync/overview) is Envio's high-performance blockchain data retrieval layer, built as an alternative to traditional JSON-RPC endpoints. It gives developers direct access to onchain data up to 2000x faster than standard RPC methods, with client libraries for Python, Rust, Node.js, and Go across <HyperSyncChainCount /> EVM chains.
+### What Is HyperSync's Traces Query?
+[HyperSync](https://docs.envio.dev/docs/HyperSync/overview)'s traces query exposes EVM execution traces (`call`, `create`, `suicide`, `reward`) directly, rather than just contract event logs. This makes it possible to track operations that don't emit events, like native ETH transfers, by filtering on `call_type` and `value`. The traces feature is currently available on Ethereum, Base, Arbitrum, Gnosis, and Monad. Other queries (logs, transactions, blocks) work across <HyperSyncChainCount /> EVM chains with client libraries for Python, Rust, Node.js, and Go.
 
 ### Why Can't I Track Native ETH Transfers Using Event Logs?
 Native ETH transfers don't emit events. The ERC-20 `Transfer` event is a standard contract event, but native ETH moves at the protocol level and only shows up in transaction traces. To track them, you have to query traces directly.
