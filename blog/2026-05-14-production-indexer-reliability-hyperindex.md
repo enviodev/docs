@@ -266,10 +266,6 @@ Envio Cloud alerts route through the platform's alert channels documented in the
 
 HyperIndex stays at chain head. Reorgs are handled by rollback, not by lag. There is no "wait N confirmations" mode required for correctness.
 
-### Is HyperIndex faster than The Graph in production?
-
-Yes. In the Sentio Uniswap V2 Factory benchmark, HyperIndex completed in 8 seconds. The Graph took 19 minutes on the same workload, 142x slower. Subsquid, the nearest competitor, was 15x slower. Full results on the benchmarks page linked in Get Started.
-
 ## Build With Envio
 
 Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data. If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.

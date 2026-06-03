@@ -384,17 +384,9 @@ Adding a chain requires a config change and a redeploy because the indexer needs
 
 Subgraphs use AssemblyScript handlers, single-chain config per subgraph, and matchstick for testing. HyperIndex uses TypeScript handlers, multichain config in one file, and Vitest for testing. The TypeScript surface is what makes Claude's involvement straightforward. The migration story is covered in [AI-assisted subgraph migration](https://docs.envio.dev/blog/ai-subgraph-migration-hyperindex-claude).
 
-### What are the built-in HyperIndex skills?
-
-HyperIndex projects scaffolded with v3 rc ship a `.claude/skills/` directory pre-populated with 14 skills covering the core indexing patterns: `indexer-configuration`, `indexer-schema`, `indexer-handlers`, `indexer-factory`, `indexer-multichain`, `indexer-external-calls`, `indexer-performance`, `indexer-testing`, `indexer-blocks`, `indexer-filters`, `indexer-traces`, `indexer-transactions`, `indexer-wildcard`, and `migrate-from-subgraph`. Claude Code auto-discovers them at session start.
-
 ### Is HyperIndex faster than other indexers in benchmarks?
 
 In Sentio's independent Uniswap V2 Factory benchmark, HyperIndex completed in 8 seconds, 142x faster than The Graph and 15x faster than the nearest competitor.
-
-### What chains are supported?
-
-Any EVM chain. <HyperSyncChainCount /> have native HyperSync coverage for maximum speed. Any EVM chain without native HyperSync is accessible via standard RPC. The current chain count is published on [envio.dev](https://envio.dev).
 
 ### Where can I see a public production reference?
 
