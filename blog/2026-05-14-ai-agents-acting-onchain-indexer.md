@@ -215,7 +215,7 @@ For analysts: SQL warehouses are the right tool. For agents acting on the data: 
 
 ### Why do AI agents acting onchain need an indexer at all?
 
-Raw RPC has four problems for an agent: reorgs, no schema, low throughput, and per-chain quirks at multichain scale. An indexer addresses all four. HyperIndex addresses them at the framework level, with reorg-safe storage, structured GraphQL output, HyperSync throughput, and a single multichain config.
+Raw RPC has four problems for an agent: reorgs, no schema, low throughput, and per-chain quirks at multichain scale. An indexer addresses all four. HyperIndex addresses them at the framework level, with reorg-safe storage, structured GraphQL output, [HyperSync](/docs/HyperSync/overview) throughput, and a single multichain config.
 
 ### What is the Envio docs MCP server?
 

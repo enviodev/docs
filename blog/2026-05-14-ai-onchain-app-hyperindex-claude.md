@@ -370,7 +370,7 @@ Each layer is a piece you have full control over. None of them require black-box
 
 ### What does an AI-powered onchain app stack look like?
 
-The stack is: Claude Code (or another MCP-aware editor) as the development surface, a HyperIndex project with an auto-discovered `.claude/skills/` directory shipped by v3 rc, the HyperIndex runtime with HyperSync as the data engine, Postgres plus Hasura for GraphQL, and the application or agent on top. Every layer is real and shipping today.
+The stack is: Claude Code (or another MCP-aware editor) as the development surface, a HyperIndex project with an auto-discovered `.claude/skills/` directory shipped by v3 rc, the HyperIndex runtime with [HyperSync](/docs/HyperSync/overview) as the data engine, Postgres plus Hasura for GraphQL, and the application or agent on top. Every layer is real and shipping today.
 
 ### How do I deploy a HyperIndex indexer programmatically?
 
