@@ -4,7 +4,6 @@ title: Migrate from Alchemy to Envio
 sidebar_label: Migrate from Alchemy
 slug: /migrate-from-alchemy
 description: Easily migrate your existing Alchemy subgraphs to Envio for 143x faster indexing than subgraphs, multichain support, and a better developer experience.
-image: /docs-assets/og/HyperIndex/migrate-from-alchemy.png
 ---
 
 :::note

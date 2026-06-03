@@ -4,7 +4,6 @@ title: Overview
 sidebar_label: Overview
 slug: /overview-hyperrpc
 description: Explore HyperRPC, fast read-only RPC for data-heavy blockchain queries and analytics.
-image: /docs-assets/og/HyperRPC/overview-hyperrpc.png
 ---
 
 # HyperRPC: Ultra-Fast Read-Only RPC

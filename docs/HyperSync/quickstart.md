@@ -4,7 +4,6 @@ title: HyperSync Quickstart
 sidebar_label: Quickstart
 slug: /hypersync-quickstart
 description: Get started quickly with HyperSync to stream and filter blockchain events.
-image: /docs-assets/og/HyperSync/quickstart.png
 ---
 
 :::tip Easiest way to get started: the Query Builder

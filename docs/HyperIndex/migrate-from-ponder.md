@@ -4,7 +4,6 @@ title: Migrate from Ponder to Envio
 sidebar_label: Migrate from Ponder
 slug: /migrate-from-ponder
 description: Easily migrate your existing subgraph to HyperIndex for up to 100x faster indexing speeds, multichain support, and a better developer experience.
-image: /docs-assets/og/HyperIndex/migrate-from-ponder.png
 ---
 
 # Migrate from Ponder to HyperIndex
