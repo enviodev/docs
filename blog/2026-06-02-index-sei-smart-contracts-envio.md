@@ -39,14 +39,13 @@ Indexing testnet instead? See the [Indexing on Sei testnet](#indexing-on-sei-tes
 ## Steps at a glance
 
 1. Scaffold the indexer
-2. Add your API token
-3. Configure the indexer for Sei
-4. Define the data schema
-5. Write the event handler
-6. Generate types
-7. Run the indexer
-8. Query your data
-9. Stop the indexer
+2. Configure the indexer for Sei
+3. Define the data schema
+4. Write the event handler
+5. Generate types
+6. Run the indexer
+7. Query your data
+8. Stop the indexer
 
 ## Before you begin
 
@@ -66,27 +65,11 @@ pnpx envio init template -t erc20 -d ./sei-indexer
 cd sei-indexer
 ```
 
+During the init flow you'll be prompted for an Envio API token. Paste an existing one or follow the prompt to create a new one at [envio.dev/app/api-tokens](https://envio.dev/app/api-tokens). The CLI writes it to `.env` for you.
+
 A new `sei-indexer` folder is created with `config.yaml`, `schema.graphql`, a `.env` file, and a `src/handlers/` directory. Every file in `src/handlers/` is registered automatically, so there is no central `EventHandlers.ts` file. Generated types are written to the `.envio/` directory.
 
-## Step 2: Add your API token
-
-The scaffolded `.env` file ships with three commented lines:
-
-```dotenv
-# To create or update a token visit https://envio.dev/app/api-tokens
-# Uncomment the line below and set a valid token
-# ENVIO_API_TOKEN="<YOUR-API-TOKEN>"
-```
-
-Uncomment the last line and replace `<YOUR-API-TOKEN>` with your token so it reads:
-
-```dotenv
-ENVIO_API_TOKEN="your-token-here"
-```
-
-Note: A token is required. Without a valid token, the indexer stops immediately with the error `"An API token is required for using HyperSync as a data-source."`
-
-## Step 3: Configure the indexer for Sei
+## Step 2: Configure the indexer for Sei
 
 Replace the contents of `config.yaml` with the configuration below. This points the indexer at Sei mainnet and the USDC contract, and selects the two events to index:
 
@@ -112,7 +95,7 @@ chains:
 
 Important: `start_block: 79123881` is the first EVM block on Sei mainnet. Earlier blocks are non-EVM and have no Solidity events to index. Setting it to `0` will waste time scanning blocks that can never match. Sei is a supported HyperSync network, so the endpoint resolves automatically from the chain ID. No `hypersync_config` block is needed.
 
-## Step 4: Define the data schema
+## Step 3: Define the data schema
 
 Replace the contents of `schema.graphql` with the schema below. Each type becomes a database table and a GraphQL query:
 
@@ -135,7 +118,7 @@ type Approval {
 
 The `@derivedFrom` directive creates a virtual reverse lookup, so each `Account` exposes its list of approvals without you storing that list explicitly.
 
-## Step 5: Write the event handler
+## Step 4: Write the event handler
 
 The ERC20 template ships a handler and a test file that both reference the template contract. Remove them first:
 
@@ -198,7 +181,7 @@ Key points about the handler API:
 - Linked entities are set with the `<field>_id` convention, so the `owner` relation is written as `owner_id`.
 - Event metadata is available on the `event` object, including `event.block` (`number`, `timestamp`, `hash`), `event.logIndex`, `event.srcAddress`, and more. See the [Event Handlers](https://docs.envio.dev/docs/HyperIndex/event-handlers) docs for the full list.
 
-## Step 6: Generate types
+## Step 5: Generate types
 
 Generate the typed code from your config and schema:
 
@@ -208,7 +191,7 @@ pnpm codegen
 
 The command reads `config.yaml` and `schema.graphql`, writes typed code into `.envio/`, and exits with no errors. Run this again any time you change the config or schema.
 
-## Step 7: Run the indexer
+## Step 6: Run the indexer
 
 Start the indexer in development mode:
 
@@ -220,7 +203,7 @@ Envio starts Postgres and Hasura in Docker, then begins streaming Sei blocks thr
 
 You can explore the data in the Envio Console.
 
-## Step 8: Query your data
+## Step 7: Query your data
 
 With the indexer still running, open a new terminal and query the GraphQL API. This asks for the top 3 accounts by USDC balance and the 3 most recent approvals:
 
@@ -232,7 +215,7 @@ curl -s -X POST http://localhost:8080/v1/graphql \
 
 You will get back JSON with `Account` and `Approval` rows from live Sei USDC activity. If the response is empty, wait a few seconds for the indexer to sync further and run the query again. USDC has six decimals on Sei, so a balance of `1000000` represents 1 USDC.
 
-## Step 9: Stop the indexer
+## Step 8: Stop the indexer
 
 Stop `pnpm dev` with Ctrl+C in its terminal, then clean up the local environment:
 
@@ -268,7 +251,7 @@ Docs: [Sei Testnet on Envio](https://docs.envio.dev/docs/HyperSync/hypersync-sup
 
 ## Troubleshooting
 
-- **"An API token is required for using HyperSync as a data-source"**: set `ENVIO_API_TOKEN` in `.env` (see Step 2: Add your API token above).
+- **"An API token is required for using HyperSync as a data-source"**: set `ENVIO_API_TOKEN` in `.env`. The init flow normally prompts for this; if you skipped it, paste a token from [envio.dev/app/api-tokens](https://envio.dev/app/api-tokens) into `.env`.
 
 - **The indexer resumes but makes no progress (progress shows -1)**: the database holds stale state from an earlier aborted run. Run `pnpm envio dev -r` to wipe the database and re-index from scratch.
 
