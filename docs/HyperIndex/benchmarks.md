@@ -4,6 +4,7 @@ title: HyperIndex Benchmarks
 sidebar_label: Benchmarks
 slug: /benchmarks
 description: Discover HyperIndex benchmarks and see why it's the fastest blockchain data indexer.
+image: /docs-assets/og/HyperIndex/benchmarks.png
 ---
 
 # HyperIndex Performance Benchmarks
@@ -28,6 +29,8 @@ The most comprehensive and up-to-date benchmarks were conducted by Sentio in Apr
 | Uniswap V2 Factory             | Event handling, Pair and swap analysis      | 8s     | 2m - 15x slower (Subsquid)  | 19m - 142x slower   | 21m - 157x slower    |
 
 The independent benchmark results demonstrate that HyperIndex consistently outperforms all competitors across every tested scenario. This includes the most realistic real-world indexing scenario LBTC Token with RPC calls - where HyperIndex was up to 6x faster than the nearest competitor and over 63x faster than The Graph.
+
+For a wider, benchmark-backed comparison across the rest of the category, see [Best Blockchain Indexers in 2026](/blog/best-blockchain-indexers-2026), which covers Envio, The Graph, Goldsky, SubQuery, Subsquid, Ormi, and Ponder side by side.
 
 ## Historical Benchmarking Results
 

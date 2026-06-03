@@ -4,6 +4,7 @@ title: HyperSync Quickstart
 sidebar_label: Quickstart
 slug: /hypersync-quickstart
 description: Get started quickly with HyperSync to stream and filter blockchain events.
+image: /docs-assets/og/HyperSync/quickstart.png
 ---
 
 :::tip Easiest way to get started: the Query Builder
@@ -14,7 +15,7 @@ The **[HyperSync Query Builder](https://builder.hypersync.xyz)** lets you constr
 
 :::
 
-Get up and running with HyperSync in minutes. This guide will help you start accessing blockchain data at unprecedented speeds with minimal setup.
+Get up and running with HyperSync in minutes. This guide will help you start accessing blockchain data at unprecedented speeds with minimal setup. For a conceptual overview before you dive in, see [What is HyperSync?](/blog/what-is-hypersync).
 
 ## Quickest Start: Try LogTUI
 

@@ -4,6 +4,7 @@ title: Migrate from Ponder to Envio
 sidebar_label: Migrate from Ponder
 slug: /migrate-from-ponder
 description: Easily migrate your existing subgraph to HyperIndex for up to 100x faster indexing speeds, multichain support, and a better developer experience.
+image: /docs-assets/og/HyperIndex/migrate-from-ponder.png
 ---
 
 # Migrate from Ponder to HyperIndex
@@ -12,7 +13,7 @@ description: Easily migrate your existing subgraph to HyperIndex for up to 100x 
 
 Migrating from Ponder to HyperIndex is straightforward — both frameworks use TypeScript, index EVM events, and expose a GraphQL API. The key differences are the config format, schema syntax, and entity operation API.
 
-If you are new to HyperIndex, start with the [Quickstart](/docs/HyperIndex/quickstart) guide first.
+If you are new to HyperIndex, start with the [Quickstart](/docs/HyperIndex/quickstart) guide first. If you are new to the category entirely, see [what a blockchain indexer is](/blog/what-is-a-blockchain-indexer) for the wider context.
 
 :::tip Prefer AI-assisted migration?
 For an assistant-led workflow, see [How to Migrate Using AI](./migrate-with-ai), which includes a shared process for Cursor and Claude Code.
@@ -380,5 +381,5 @@ Use the [Indexer Migration Validator](https://github.com/enviodev/indexer-migrat
 ## Getting Help
 
 - **Discord**: [discord.gg/envio](https://discord.gg/envio) — fastest way to get help
-- **Docs**: [docs.envio.dev](/docs/HyperIndex/overview)
+- **Docs**: [the HyperIndex documentation](/docs/HyperIndex/overview)
 - **AI-friendly docs**: [HyperIndex complete reference](/docs/HyperIndex-LLM/hyperindex-complete)

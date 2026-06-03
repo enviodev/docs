@@ -4,6 +4,7 @@ title: HyperSync Clients
 sidebar_label: Clients
 slug: /hypersync-clients
 description: Explore HyperSync clients for fast blockchain data access in Node.js, Python, Rust, and Go.
+image: /docs-assets/og/HyperSync/hypersync-clients.png
 ---
 
 # HyperSync Client Libraries
@@ -167,6 +168,7 @@ Choose the client that best fits your use case:
 - [📝 Query Reference](./hypersync-query)
 - [🧪 cURL Examples](./hypersync-curl-examples)
 - [📊 Supported Networks](./hypersync-supported-networks)
+- [🧱 HyperIndex blockchain indexer](/docs/HyperIndex/overview), the full framework with schema, handlers, and a hosted GraphQL API, powered by HyperSync
 
 ## Support
 

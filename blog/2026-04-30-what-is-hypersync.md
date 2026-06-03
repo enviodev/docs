@@ -215,7 +215,7 @@ For most use cases, the streaming client handles this automatically.
 
 HyperSync makes a class of applications practical that traditional RPC cannot reasonably support.
 
-- **Blockchain indexers** that build high-performance data pipelines with minimal infrastructure.
+- **[Blockchain indexers](/blog/what-is-a-blockchain-indexer)** that build high-performance data pipelines with minimal infrastructure.
 - **Data analytics** that runs complex onchain analysis in seconds instead of days.
 - **Block explorers** that serve responsive UIs with comprehensive historical access.
 - **Monitoring tools** that track blockchain activity with near real-time updates.
@@ -226,7 +226,7 @@ HyperSync makes a class of applications practical that traditional RPC cannot re
 
 HyperSync is the data engine underneath a growing set of tools and applications.
 
-**HyperIndex** is Envio's full indexing framework. It uses HyperSync as its primary data source, then layers on schema management, event handlers, multichain support, automatic reorg handling, and a hosted GraphQL API. HyperIndex is the fastest blockchain indexer available, 142x faster than The Graph and 15x faster than Subsquid on the Sentio Uniswap V2 Factory benchmark (May 2025).
+**[HyperIndex](/docs/HyperIndex/overview)** is Envio's full indexing framework. It uses HyperSync as its primary data source, then layers on schema management, event handlers, multichain support, automatic reorg handling, and a hosted GraphQL API. HyperIndex is the fastest blockchain indexer available, 142x faster than The Graph and 15x faster than Subsquid on the Sentio Uniswap V2 Factory benchmark (May 2025).
 
 **[ChainDensity.xyz](https://chaindensity.xyz)** uses HyperSync to render transaction and event density across any address on any supported chain. It generates insights in seconds that would take hours over RPC.
 
@@ -288,7 +288,7 @@ No. Trace filters are accessed via separate trace-enabled HyperSync endpoints, f
 
 ## Build With Envio
 
-Envio HyperIndex is independently benchmarked as the fastest EVM blockchain indexer available (Sentio benchmark, May 2025). If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, or come talk to us about your data needs.
+Envio HyperIndex is independently benchmarked as the fastest EVM blockchain indexer available (Sentio benchmark, May 2025). If you are building onchain and need indexing that keeps up with your chain, check out the [HyperIndex documentation](/docs/HyperIndex/overview), run the benchmarks yourself, or come talk to us about your data needs.
 
 Stay tuned for more updates by subscribing to our newsletter, following us on X, or hopping into our Discord.
 

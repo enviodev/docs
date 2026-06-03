@@ -4,6 +4,7 @@ title: Migrate from The Graph to Envio
 sidebar_label: Migrate from The Graph
 slug: /migration-guide
 description: Easily migrate your existing subgraph to HyperIndex for up to 100x faster indexing speeds, multichain support, and a better developer experience.
+image: /docs-assets/og/HyperIndex/migration-guide.png
 ---
 
 # Migrate from The Graph to Envio
@@ -33,6 +34,8 @@ If you want an assistant-led workflow, see [How to Migrate Using AI](./migrate-w
 - **Better Developer Experience**: Simplified configuration and deployment
 - **Advanced Features**: Access to capabilities not available in other indexing solutions
 - **Seamless Integration**: Easy integration with existing GraphQL APIs and applications
+
+If you are still deciding, our [comparison of the best blockchain indexers in 2026](/blog/best-blockchain-indexers-2026) covers HyperIndex against The Graph, Goldsky, SubQuery, Subsquid, Ormi, and Ponder with side-by-side benchmarks.
 
 ## Subgraph to HyperIndex Migration Overview
 

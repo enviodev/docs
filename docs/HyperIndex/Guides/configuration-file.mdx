@@ -4,6 +4,7 @@ title: Configuration File (config.yaml)
 sidebar_label: Configuration File (config.yaml)
 slug: /configuration-file
 description: Learn how to configure HyperIndex with contracts, events, networks, and advanced indexing options.
+image: /docs-assets/og/HyperIndex/Guides/configuration-file.png
 ---
 
 The `config.yaml` file defines your indexer's behavior, including which blockchain events to index, contract addresses, which chains to index, and various advanced indexing options. It is a crucial step in configuring your HyperIndex setup.
@@ -145,7 +146,7 @@ Try to use this option sparingly as it can cause redundant Data Source calls and
 
 ## Chains
 
-Everything under the top-level `chains` field configures the networks your indexer connects to — data sources, start/end blocks, reorg behavior, and multichain semantics.
+Everything under the top-level `chains` field configures the networks your indexer connects to — data sources, start/end blocks, reorg behavior, and [multichain indexing](/docs/HyperIndex/multichain-indexing) semantics.
 
 ### RPC
 
