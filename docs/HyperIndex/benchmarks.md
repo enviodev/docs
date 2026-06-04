@@ -29,6 +29,8 @@ The most comprehensive and up-to-date benchmarks were conducted by Sentio in Apr
 
 The independent benchmark results demonstrate that HyperIndex consistently outperforms all competitors across every tested scenario. This includes the most realistic real-world indexing scenario LBTC Token with RPC calls - where HyperIndex was up to 6x faster than the nearest competitor and over 63x faster than The Graph.
 
+For a wider, benchmark-backed comparison across the rest of the category, see [Best Blockchain Indexers in 2026](/blog/best-blockchain-indexers-2026), which covers Envio, The Graph, Goldsky, SubQuery, Subsquid, Ormi, and Ponder side by side.
+
 ## Historical Benchmarking Results
 
 Our internal benchmarking from October 2023 showed similar performance advantages. When indexing the Uniswap V3 ETH-USDC pool contract on Ethereum Mainnet, HyperIndex achieved:

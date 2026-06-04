@@ -167,6 +167,7 @@ Choose the client that best fits your use case:
 - [📝 Query Reference](./hypersync-query)
 - [🧪 cURL Examples](./hypersync-curl-examples)
 - [📊 Supported Networks](./hypersync-supported-networks)
+- [🧱 HyperIndex blockchain indexer](/docs/HyperIndex/overview), the full framework with schema, handlers, and a hosted GraphQL API, powered by HyperSync
 
 ## Support
 

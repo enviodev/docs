@@ -14,7 +14,7 @@ The **[HyperSync Query Builder](https://builder.hypersync.xyz)** lets you constr
 
 :::
 
-Get up and running with HyperSync in minutes. This guide will help you start accessing blockchain data at unprecedented speeds with minimal setup.
+Get up and running with HyperSync in minutes. This guide will help you start accessing blockchain data at unprecedented speeds with minimal setup. For a conceptual overview before you dive in, see [What is HyperSync?](/blog/what-is-hypersync).
 
 ## Quickest Start: Try LogTUI
 

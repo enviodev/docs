@@ -34,6 +34,8 @@ If you want an assistant-led workflow, see [How to Migrate Using AI](./migrate-w
 - **Advanced Features**: Access to capabilities not available in other indexing solutions
 - **Seamless Integration**: Easy integration with existing GraphQL APIs and applications
 
+If you are still deciding, our [comparison of the best blockchain indexers in 2026](/blog/best-blockchain-indexers-2026) covers HyperIndex against The Graph, Goldsky, SubQuery, Subsquid, Ormi, and Ponder with side-by-side benchmarks.
+
 ## Subgraph to HyperIndex Migration Overview
 
 Migration consists of three major steps:

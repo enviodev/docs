@@ -13,7 +13,7 @@ HyperRPC is an extremely fast read-only RPC designed specifically for data-inten
 :::info HyperSync vs. HyperRPC
 **For most use cases, we recommend using [HyperSync](/docs/HyperSync/overview) over HyperRPC.**
 
-HyperSync provides significantly faster performance and much greater flexibility in how you query and filter blockchain data. Behind the scenes, HyperRPC actually uses HyperSync to fulfill requests.
+HyperSync provides significantly faster performance and much greater flexibility in how you query and filter blockchain data. Behind the scenes, HyperRPC actually uses HyperSync to fulfill requests. If you want a full indexing framework with schema management, event handlers, and a hosted GraphQL API on top of HyperSync, see [HyperIndex](/docs/HyperIndex/overview).
 
 **When to use HyperRPC:**
 
