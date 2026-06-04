@@ -1,9 +1,10 @@
 ---
 id: overview
-title: HyperSync
+title: "HyperSync: Ultra-Fast Blockchain Data API"
 sidebar_label: Overview
 slug: /overview
-description: Explore HyperSync for ultra-fast blockchain data access and flexible queries across 87+ networks.
+description: HyperSync is Envio's ultra-fast blockchain data API, a Rust-built alternative to RPC with flexible queries across dozens of EVM chains and Fuel.
+image: /docs-assets/og/HyperSync/overview.png
 ---
 
 # HyperSync: Ultra-Fast & Flexible Data API
