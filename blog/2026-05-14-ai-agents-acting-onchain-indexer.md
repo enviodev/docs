@@ -221,10 +221,6 @@ Raw RPC has four problems for an agent: reorgs, no schema, low throughput, and p
 
 A Model Context Protocol server at `https://docs.envio.dev/mcp` that exposes the Envio docs as two tools, `docs_search` and `docs_fetch`. Configured into Claude Code, Cursor, or VS Code with one setup command. Announcement blog: [Introducing the Envio Docs MCP Server](https://docs.envio.dev/blog/envio-docs-mcp-server).
 
-### What skills ship with HyperIndex?
-
-HyperIndex projects scaffold a `.claude/skills/` directory that auto-discovers for Cursor, Claude Code, and Codex. The canonical templates ship 14 skill definitions covering `indexer-configuration`, `indexer-schema`, `indexer-handlers`, `indexer-factory` (dynamic contracts), `indexer-external-calls` (Effect API), `indexer-multichain`, `indexer-performance`, `indexer-blocks`, `indexer-transactions`, `indexer-traces`, `indexer-filters`, `indexer-wildcard`, `indexer-testing`, and `migrate-from-subgraph`. The full list lives at [the canonical skills directory](https://github.com/enviodev/hyperindex/tree/main/packages/cli/templates/static/shared/.claude/skills).
-
 ### How fast can an AI agent deploy a HyperIndex indexer?
 
 The [agentic indexing blog](https://docs.envio.dev/blog/agentic-blockchain-indexing-envio-hyperindex) documents a single-prompt flow that scaffolds, deploys, and runs an indexer covering 400,000 events on Monad in roughly 20 seconds.
@@ -237,13 +233,13 @@ Yes. The CLI surface includes `envio-cloud login`, `envio-cloud indexer add`, `e
 
 A SQL warehouse is a read-only query layer. HyperIndex is a programmable indexer the agent can own, branch, and deploy. Both have a place. SQL warehouses suit analytical workflows. Indexers suit agents that need to act, not just query.
 
-### What chains does HyperIndex support for AI agents?
+### Can an agent register a new contract mid-session without a redeploy?
 
-Any EVM chain. <HyperSyncChainCount /> have native HyperSync coverage for maximum speed. Any EVM chain without native HyperSync is accessible via standard RPC.
+Yes, when the contract is created by a factory the agent has already configured. HyperIndex's dynamic contract registration is a first-class feature, and the `indexer-factory` skill in `.claude/skills/` is the canonical reference for the pattern. Adding a brand-new chain or an unrelated contract still requires a config change and a redeploy, which the agent can run from the `envio-cloud` CLI in one command.
 
-### How does HyperIndex handle reorgs for agents?
+### Where can I watch an agent run this end-to-end?
 
-At the framework level. Entity state history is persisted for unfinalized blocks. The framework rolls back automatically on reorg. No handler code is required.
+The published [Loom walkthrough](https://www.loom.com/share/09cdac43b18f4143ad78b18c8c8a492b) shows the full wstETH-on-Monad demo, scaffold to live deployment. The [live indexer](https://envio.dev/app/denhampreen/wsteth-monad-indexer-demo/5d55d35) is public.
 
 ## Build With Envio
 

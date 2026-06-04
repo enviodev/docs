@@ -288,10 +288,6 @@ For a single-domain subgraph with one or two contracts, the AI-assisted workflow
 
 Most directives carry across. `@derivedFrom` and ID-based relations have direct HyperIndex equivalents. The biggest difference is decorators: HyperIndex schemas have no `@entity` decorator at all. Per the project's `AGENTS.md`: "Unlike TheGraph, schema types have no decorators." The `indexer-schema` skill knows the translations and the `migrate-from-subgraph` skill applies them. Anything without a direct equivalent gets flagged for manual handling.
 
-### Can I migrate an Alchemy subgraph the same way?
-
-Yes. Alchemy Subgraphs are technically subgraphs, and the same AI-assisted migration flow described in this blog applies, scaffold a HyperIndex project from a template, hand Claude the AssemblyScript mappings, validate locally, and ship.
-
 ### What if my subgraph uses dynamic contracts (factory pattern)?
 
 HyperIndex supports dynamic contract registration as a first-class feature. Polymarket uses it for FPMM pools created by `FPMMFactory`. The `indexer-factory` skill in `.claude/skills/` handles the translation. See the Polymarket reference handler at [github.com/enviodev/polymarket-indexer/blob/main/src/handlers/FPMMFactory.ts](https://github.com/enviodev/polymarket-indexer/blob/main/src/handlers/FPMMFactory.ts).
