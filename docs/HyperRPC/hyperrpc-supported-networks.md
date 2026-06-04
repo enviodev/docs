@@ -1,6 +1,6 @@
 ---
 id: hyperrpc-supported-networks
-title: Supported Networks
+title: HyperRPC Supported Networks
 sidebar_label: Supported Networks
 slug: /hyperrpc-supported-networks
 description: See all networks currently supported by HyperRPC, including their endpoints, network IDs, and trace support. Updated regularly as we add new chains.

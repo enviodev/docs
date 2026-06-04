@@ -3,6 +3,7 @@ id: any-evm-with-rpc
 title: Any EVM with RPC
 sidebar_label: 👉 Any EVM with RPC 👈
 slug: /any-evm-with-rpc
+description: Index any EVM-compatible chain with Envio HyperIndex by pointing at its RPC endpoint. Useful for networks without native HyperSync support.
 ---
 
 # Any EVM with RPC 🐌
