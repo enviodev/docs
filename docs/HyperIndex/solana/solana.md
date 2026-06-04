@@ -1,58 +1,98 @@
 ---
 id: solana
 title: Solana
-sidebar_label: Solana
+sidebar_label: Overview
 slug: /solana
-description: Early Solana support in HyperIndex. Slot Handler, Effect API, and Envio Cloud today; deeper instruction/log-level handlers in progress.
+description: Index Solana programs with HyperIndex — instruction-level handlers, IDL-aware decoding, CPI/inner-instruction support, token balances & balance changes, and slot handlers.
 ---
 
-:::info Early — and the right moment to shape it
-Solana support in HyperIndex is **early**. The slot handler, the Effect API, and Envio Cloud deployment all work today, and teams are using them for real workloads. The higher-level abstractions (instruction-level handlers, IDL-aware decoding, log handlers) are actively being built, and we'd rather help you pick the right path now than have you fight with an early prototype. **If you're evaluating Solana indexing, [reach out on Discord](https://discord.gg/envio)** — we can tell you which pieces are stable, which are still moving, and often suggest a better data path for your specific use case (NFTs, AMMs, token flows, wallet activity, custom programs, etc.).
+# Indexing on Solana
+
+HyperIndex indexes Solana programs at the **instruction level**. You select the
+programs and instructions you care about, HyperIndex decodes them — arguments and
+accounts — using your Anchor IDL or an inline schema, and writes the results to
+Postgres with an auto-generated GraphQL API. Inner instructions (CPIs), **token
+balances and balance changes**, transaction metadata and program logs are all
+available.
+
+It is powered by [HyperSync for Solana](/docs/HyperSync/solana), the same
+high-performance data engine behind EVM indexing, so historical backfills are
+fast and you never touch an RPC node for the bulk of indexing.
+
+:::info Early access — and a good time to shape it
+Solana support is **experimental and pre-release**. The program/instruction
+config surface (`programs_experimental`) may change, indexers are
+**TypeScript-only**, and the indexer tracks **finalized data** (no reorg
+handling — see [below](#what-is-not-supported-yet)). The APIs documented here are
+the latest in active development. If you're building on Solana, say hello on
+[Discord](https://discord.gg/envio) — we can tell you which pieces are stable,
+which are moving, and often suggest a better data path for your use case.
 :::
 
-## What's supported today
+## Two ways to index Solana
 
-- [Slot Handler](/docs/HyperIndex/block-handlers) — `indexer.onSlot` for slot-driven indexing.
-- [Effect API](/docs/HyperIndex/effect-api) — pull additional data on demand from RPC or any source.
-- [Envio Cloud](/docs/HyperIndex/hosted-service) — deploy and host Solana indexers the same way as EVM ones.
-- **Raw Solana data via [HyperSync](/docs/HyperSync/solana)** — slots, transactions, instructions, logs, balances, token balances, rewards. Today HyperSync is consumed directly (Rust client or HTTP); we recommend it as the starting point for any workload that needs more than slot-level orchestration.
+| Approach | API | Data source | Use it for |
+| --- | --- | --- | --- |
+| **Instruction handlers** | [`indexer.onInstruction`](/docs/HyperIndex/solana/instruction-handlers) | HyperSync | The main path — decode and index program instructions (swaps, deposits, mints, transfers…), including inner/CPI instructions, with token balance changes. |
+| **Slot handlers** | [`indexer.onSlot`](/docs/HyperIndex/solana/slot-handlers) | RPC (via the [Effect API](/docs/HyperIndex/effect-api)) | Per-slot orchestration, time-series snapshots, or pulling extra data from RPC on a schedule. |
+
+Most indexers use instruction handlers. Slot handlers are for cases where you
+need to run logic on a slot cadence rather than react to a specific instruction.
+For raw, low-level data you can also query [HyperSync for Solana](/docs/HyperSync/solana) directly.
 
 ## Quickstart
 
 ```bash
-pnpx envio init svm
+pnpx envio init
 ```
 
-## What's stable vs. what's still evolving
+Choose **Solana** when prompted, then pick a starter template (a Metaplex NFT
+instruction indexer, or a minimal slot handler). See
+[Getting Started](/docs/HyperIndex/solana/getting-started) for the full walkthrough.
 
-**Stable enough to build on**
+## Mental model: coming from EVM?
 
-- The `onSlot` handler API and the project layout produced by `envio init svm`.
-- The Effect API for fetching slot data on demand.
-- Envio Cloud deployment for Solana indexers.
-- The underlying HyperSync query shape and table model (see [HyperSync for Solana](/docs/HyperSync/solana#whats-stable-vs-whats-still-evolving)).
+If you've used HyperIndex on EVM, the shift is mostly vocabulary:
 
-**Still evolving — check in if you depend on these**
+| EVM | Solana |
+| --- | --- |
+| Contract + ABI | Program + IDL |
+| Event (`onEvent`) | Instruction (`onInstruction`) |
+| `event.params` | `event.instruction.decoded.args` |
+| Topic0 / event signature | Instruction discriminator |
+| Block (`onBlock`) | Slot (`onSlot`) |
+| Hex addresses `0x…` | Base58 addresses |
+| `start_block` = block number | `start_block` = **slot** number |
 
-- Instruction-level and log-level handlers (today you fetch by slot and decode yourself, or query HyperSync directly).
-- IDL-aware decoding and program-aware helpers inside HyperIndex.
-- Reorg handling — HyperIndex Solana currently tracks **finalized slots only**, resulting in **~20s latency**.
-- HyperSync as a first-class source inside HyperIndex (today the slot handler is RPC-driven; HyperSync is consumed directly).
+See [EVM vs Solana](/docs/HyperIndex/solana/evm-vs-solana) for the full picture.
 
-If the piece you need is in the second list, please talk to us before building around the limitation — there's a good chance we can sequence the work to unblock you, or suggest a HyperSync-direct path that gets you the data you need today.
+## What's supported today
 
-## Recommended path for new projects
+- **Instruction indexing** via [`indexer.onInstruction`](/docs/HyperIndex/solana/instruction-handlers) — match by program + discriminator.
+- **IDL-aware decoding** — point at a standard Anchor IDL (legacy or 0.30+) and HyperIndex derives the argument and account layout. No IDL? Declare an [inline schema](/docs/HyperIndex/solana/decoding#inline-schema-no-idl).
+- **Inner instructions (CPIs)** — decoded the same way as top-level ones, with a full instruction-address path so you can reconstruct the call tree.
+- **Token balances & balance changes** — pre/post SPL Token (and Token-2022) balances per transaction, so you get the net token movement without indexing every transfer. See [token balances](/docs/HyperIndex/solana/instruction-handlers#token-balances-and-balance-changes).
+- **Transaction metadata & logs** — fee payer, fee, compute units, success, signatures, and per-instruction program logs (opt-in via [field selection](/docs/HyperIndex/solana/configuration#field-selection)).
+- **Slot handlers** via [`indexer.onSlot`](/docs/HyperIndex/solana/slot-handlers) + the [Effect API](/docs/HyperIndex/effect-api) for RPC enrichment.
+- **Local dev + GraphQL + Envio Cloud** — the same workflow and hosting as EVM.
 
-For most Solana use cases today, the fastest path to useful data is:
+## What is not supported yet
 
-1. **Start with [HyperSync for Solana](/docs/HyperSync/solana)** to validate that the raw data you need (instructions, accounts, logs, token balances) is available and shaped the way you expect.
-2. **Use the HyperIndex `onSlot` handler + Effect API** for orchestration, state, and derived entities on top of that data.
-3. **Tell us what you're building** — we'll point you at the right primitive and let you know what's about to land.
+- **Reorg handling.** Solana indexers track finalized data only; there is no rollback-on-reorg. Expect a short latency at the head.
+- **Native SOL balance fields on handlers.** Pre/post **token** balances are surfaced today; native SOL (lamport) balances are available via [HyperSync](/docs/HyperSync/solana) directly but not yet as a handler field-selection toggle.
+- **Account-change subscriptions.** There is no `onAccount`/program-account handler. Account *state* is available only as the accounts referenced by an instruction (plus per-transaction token balances).
+- **A separate log handler.** Logs are a field on the instruction event, not their own handler.
+- **No-code contract import.** Solana has no `contract-import` flow — you configure programs/instructions by hand. (IDLs are wired up in `config.yaml`, not auto-imported.)
+- **ReScript.** Solana indexers are TypeScript only.
+- **Per-field selection.** Field-selection toggles accept `true` only, not field name lists (yet).
 
-## Working with us
+If the piece you need is on this list, [tell us on Discord](https://discord.gg/envio) — there's a good chance we can sequence the work to unblock you, or point you at a [HyperSync-direct](/docs/HyperSync/solana) path that gets the data today.
 
-This is genuinely a good time to be a design partner on Solana:
+## In this section
 
-- **[Discord](https://discord.gg/envio)** — fastest way to reach the team.
-- Share a sample program, transaction signature, or the entities you need to index, and we'll map it to a concrete plan.
-- Missing a field, decoder, or handler shape? File it on [GitHub](https://github.com/enviodev/hyperindex/issues) or tell us on Discord — early feedback shapes what ships next.
+- **[Getting Started](/docs/HyperIndex/solana/getting-started)** — scaffold and run your first Solana indexer.
+- **[Configuration](/docs/HyperIndex/solana/configuration)** — the `config.yaml` reference for `ecosystem: svm`.
+- **[Instruction Handlers](/docs/HyperIndex/solana/instruction-handlers)** — `onInstruction`, the event object, token balances, CPIs, testing.
+- **[Decoding & IDLs](/docs/HyperIndex/solana/decoding)** — discriminators, Anchor IDLs, inline schemas, supported types.
+- **[Slot Handlers](/docs/HyperIndex/solana/slot-handlers)** — `onSlot` and RPC enrichment.
+- **[EVM vs Solana](/docs/HyperIndex/solana/evm-vs-solana)** — every difference in one place.
