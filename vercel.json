@@ -137,6 +137,16 @@
       "source": "/blog/page/:n",
       "destination": "/blog",
       "permanent": true
+    },
+    {
+      "source": "/blog/migrating-alchemy-subgraphs-to-envio",
+      "destination": "/docs/HyperIndex/migrate-from-alchemy",
+      "permanent": true
+    },
+    {
+      "source": "/blog/migrating-alchemy-subgraphs-to-envio.md",
+      "destination": "/docs/HyperIndex/migrate-from-alchemy.md",
+      "permanent": true
     }
   ],
   "headers": [
