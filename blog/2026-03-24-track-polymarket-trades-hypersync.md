@@ -411,8 +411,8 @@ pnpx poly-whales
 
 ## Frequently Asked Questions
 
-### What is Envio HyperSync?
-HyperSync is Envio's high-performance blockchain data retrieval layer, built as an alternative to traditional JSON-RPC endpoints. It delivers up to 2,000x faster data access than standard RPC methods. Client libraries are available for TypeScript/Node.js, Python, Rust, and Go, with support for <HyperSyncChainCount /> EVM chains including Polygon.
+### Why use HyperSync for Polymarket trade tracking instead of RPC?
+HyperSync provides up to 2,000x faster data access than standard RPC and exposes a streaming interface tailored to filtered event queries. For Polymarket's high-throughput Exchange contracts on Polygon, this avoids the RPC rate limits and polling overhead that constrain real-time trade trackers built on standard JSON-RPC. Polygon is one of <HyperSyncChainCount /> EVM chains with native HyperSync coverage, and HyperSync client libraries are available for TypeScript/Node.js, Python, Rust, and Go.
 
 ### How do I track Polymarket trades in real time?
 Use the Envio HyperSync Node.js client to stream block heights from Polygon, then query the Exchange contract for OrderFilled events on each new block. Decode the event data with Viem to extract maker, taker, asset IDs, and amounts. A `makerAssetId` of 0 indicates a buy trade.

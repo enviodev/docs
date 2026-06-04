@@ -483,9 +483,9 @@ Yes. HyperIndex handlers are standard TypeScript. Both frameworks share the same
 
 Yes. A single `config.yaml` declares all chains under a `chains:` array. Multichain is the default. Ponder configures chains separately per setup.
 
-### What is HyperSync?
+### What does HyperSync replace in a Ponder setup?
 
-HyperSync is Envio's data engine. Instead of pulling historical data through standard RPC, HyperSync fetches filtered event data in bulk from a purpose-built data lake, delivering up to 2,000x faster data access than RPC. 87+ EVM chains have native HyperSync coverage.
+Ponder pulls historical data through standard RPC, which is the bottleneck for backfills against high-event contracts. HyperSync replaces that RPC fetch with a purpose-built data lake, delivering up to 2,000x faster data access than RPC. <HyperSyncChainCount /> EVM chains have native HyperSync coverage, so most Ponder workloads can migrate without changing data-source configuration.
 
 ### How do I handle reorgs in HyperIndex?
 

@@ -155,35 +155,35 @@ Envio offers white-glove migration support for teams moving from The Graph or an
 
 ## Frequently Asked Questions
 
-### What Is Polymarket?
+### What is Polymarket?
 Polymarket is the world's largest decentralized prediction market, built on Polygon. Users trade outcome shares on real-world events using USDC. All positions, trades, and settlements are handled entirely onchain via smart contracts with no central custodian.
 
-### What Is a Blockchain Indexer?
-A blockchain indexer is a system that listens to onchain events and organises them into a structured, queryable database. Developers use blockchain indexers to build fast backends for DeFi protocols, trading interfaces, analytics tools, and onchain AI agents without querying slow RPC endpoints directly.
+### How many subgraphs did Polymarket use before migrating to HyperIndex?
+Polymarket previously ran 8 independent subgraphs on The Graph, each written in AssemblyScript: fee-module, sports-oracle, wallet, orderbook, open-interest, activity, pnl, and fpmm. All 8 were consolidated into a single Envio HyperIndex indexer written in TypeScript.
 
-### What Is the Fastest Blockchain Indexer?
-Envio HyperIndex is independently benchmarked as the fastest blockchain indexer available. In the Uniswap V2 Factory benchmark run by Sentio in May 2025, HyperIndex completed in 8 seconds, 142x faster than The Graph and 15x faster than the nearest competitor (Subsquid).
+### How did Polymarket migrate 8 subgraphs to HyperIndex?
+The 8 AssemblyScript subgraphs were consolidated into a single TypeScript HyperIndex indexer on Polygon. Because HyperIndex handlers are TypeScript, and AssemblyScript is a subset of TypeScript, most handler logic carried across directly. Envio also provides a [migration guide](https://docs.envio.dev/docs/HyperIndex/migration-guide), a CLI validation tool to compare output between both endpoints, and white-glove migration support.
 
-### What Is HyperIndex?
-HyperIndex is a multichain blockchain indexing framework for EVM chains built by Envio. Developers write event handlers in TypeScript and deploy a single indexer covering multiple contracts, chains, and domains. It uses HyperSync, Envio's proprietary data engine, for historical sync speeds not achievable through standard RPC polling.
+### What is handler merging in the Polymarket indexer?
+Handler merging lets one handler process a shared contract event once and update all relevant entities simultaneously. A `ConditionalTokens.PositionSplit` event previously triggered redundant processing across the open-interest, activity, and pnl subgraphs. In the unified HyperIndex indexer, a single handler fires once and updates open interest, records the split activity, and adjusts user PnL positions in one pass.
 
-### What Is HyperSync?
-HyperSync is Envio's high-performance data engine. Instead of querying RPC endpoints block by block, HyperSync fetches filtered event data in bulk from a purpose-built data lake, delivering up to 2,000x faster data access than traditional RPC. <HyperSyncChainCount /> EVM chains have native HyperSync coverage, with any EVM chain accessible via standard RPC.
+### Which Polymarket contracts does the open-source indexer cover?
+The indexer covers Exchange and NegRiskExchange, ConditionalTokens, NegRiskAdapter, FPMMFactory, FixedProductMarketMaker (dynamically registered), FeeModule and NegRiskFeeModule, UmaSportsOracle, plus USDC, RelayHub, and SafeProxyFactory. The full handler structure and event list is documented in the post.
 
-### How Do I Index Polymarket Data?
-The fastest way to index Polymarket data on Polygon is with Envio HyperIndex and HyperSync. The full open-source reference implementation is available at [github.com/enviodev/polymarket-indexer](https://github.com/enviodev/polymarket-indexer). It covers all 8 domains of Polymarket's onchain activity and syncs the full history in 6 days.
+### Does HyperIndex support dynamic contract registration?
+Yes. The Polymarket indexer uses FPMMFactory to register new Fixed Product Market Maker instances automatically as they are created onchain, without requiring a redeployment.
 
-### How Long Does It Take to Index Polymarket's Full History on Polygon?
+### How long does it take to index Polymarket's full history on Polygon?
 Using Envio HyperIndex with HyperSync, the full historical sync of Polymarket's onchain data on Polygon, over 4,000,000,000 events from block 3,764,531, completed in 6 days.
 
-### How Do I Migrate From The Graph to HyperIndex?
-Because HyperIndex handlers are written in TypeScript, and AssemblyScript is a subset of TypeScript, most handler logic can be carried across directly. Envio also provides a full [migration guide](https://docs.envio.dev/docs/HyperIndex/migration-guide), a CLI validation tool to compare output between both endpoints, and white-glove migration support. The Polymarket indexer is a concrete open-source reference for a large-scale migration from The Graph.
+### Is the Polymarket HyperIndex indexer open source?
+Yes. The full indexer is available at [github.com/enviodev/polymarket-indexer](https://github.com/enviodev/polymarket-indexer), with 29 tests covering all handler phases including a HyperSync integration test. Run it locally with `pnpm dev`.
 
-### Does HyperIndex Support Dynamic Contract Registration?
-Yes. New contract instances created onchain, like Polymarket's FPMM pools, are registered dynamically by a factory handler without requiring a redeployment.
+### Where can I see the live Polymarket indexer deployment?
+The live indexer is deployed at [envio.dev/app/moose-code/polymarket-indexer/7cad3ad](https://envio.dev/app/moose-code/polymarket-indexer/7cad3ad). Polygon Mainnet is one of <HyperSyncChainCount /> EVM chains with native HyperSync coverage.
 
-### What Chains Does Envio Support?
-Envio supports any EVM chain. <HyperSyncChainCount /> EVM chains have native HyperSync coverage for maximum speed, including Polygon, Ethereum, Base, Arbitrum, Optimism, and more. Any EVM chain without native HyperSync support can be indexed via standard RPC.
+### How do I index Polymarket data?
+The fastest way to index Polymarket data on Polygon is with Envio HyperIndex and HyperSync. The full open-source reference implementation is available at [github.com/enviodev/polymarket-indexer](https://github.com/enviodev/polymarket-indexer). It covers all 8 domains of Polymarket's onchain activity and syncs the full history in 6 days.
 
 ## Get Started
 

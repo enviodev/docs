@@ -121,7 +121,7 @@ Yes. A single handler function processes matching events from all networks in yo
 
 ### How many chains does Envio support?
 
-HyperSync natively supports 70+ EVM chains. Any supported chain can be added to your `config.yaml`. For chains not yet covered by HyperSync, you can fall back to an RPC endpoint without changing your handler code.
+HyperSync natively supports <HyperSyncChainCount /> EVM chains. Any supported chain can be added to your `config.yaml`. For chains not yet covered by HyperSync, you can fall back to an RPC endpoint without changing your handler code.
 
 ### Where can I see a full multichain indexing example?
 

@@ -166,7 +166,7 @@ Agentic blockchain indexing is the process of using an AI agent to scaffold, con
 The envio-cloud CLI is the command-line interface for Envio Cloud, the managed infrastructure layer that runs HyperIndex indexers in production. It supports login, indexer registration, deployment monitoring, and promotion, all scriptable with JSON output via the `-o json` flag.
 
 ### How fast is Envio HyperIndex for historical sync?
-In independent benchmarks run by Sentio, HyperIndex completed the Uniswap V2 Factory sync in 1 minute, 143x faster than The Graph. In the agentic deployment demo, 400,000 wstETH events on Monad Mainnet were indexed in approximately 20 seconds.
+In independent benchmarks run by Sentio, HyperIndex completed the Uniswap V2 Factory sync in 8 seconds, 142x faster than The Graph and 15x faster than the nearest competitor (Subsquid). In the agentic deployment demo, 400,000 wstETH events on Monad Mainnet were indexed in approximately 20 seconds.
 
 ### Which chains does Envio support for agentic indexing?
 Envio supports any EVM-compatible chain. HyperSync natively covers <HyperSyncChainCount /> EVM chains for maximum speed, including Ethereum, Base, Arbitrum, Optimism, Polygon, and Monad. Any EVM chain without native HyperSync support can be indexed via standard RPC.

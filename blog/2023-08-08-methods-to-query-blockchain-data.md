@@ -110,9 +110,9 @@ For production dApps and data pipelines, a blockchain indexer is the most effici
 
 An RPC node is the base-level interface to a blockchain. It answers individual data requests but requires many round trips for complex queries and cannot aggregate or filter data efficiently. A blockchain indexer sits above this layer, processing events in bulk, transforming them into a structured database, and exposing the result via a GraphQL API. For most dApp backends, an indexer replaces direct RPC calls almost entirely.
 
-### What is HyperSync?
+### Where does HyperSync fit in the comparison of blockchain query methods?
 
-HyperSync is Envio's high-performance data engine that powers HyperIndex. Unlike standard RPC endpoints, HyperSync is a purpose-built data node that batches and optimises blockchain data retrieval, delivering up to 2000x faster sync speeds. It is enabled by default for all supported networks and requires no additional configuration. Client libraries are available for Python, Rust, Node.js, and Go for use in custom data pipelines.
+HyperSync is a high-performance data engine that sits underneath the indexer method described above. While self-hosted nodes and RPC providers expose data via JSON-RPC, HyperSync exposes a purpose-built data API that powers HyperIndex and can also be queried directly via client libraries in Python, Rust, Node.js, and Go. For applications that need historical sync at production speed, HyperSync delivers up to 2000x faster data retrieval than standard RPC.
 
 ### Can I query data from multiple blockchains in a single indexer?
 

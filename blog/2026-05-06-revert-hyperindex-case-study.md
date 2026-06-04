@@ -40,7 +40,7 @@ A subgraph stuck at 70% sync for over 2 years is effectively unusable.
 
 Envio HyperIndex is a real-time multichain blockchain indexing framework for any EVM chain. Developers write event handlers in TypeScript and deploy a single indexer covering multiple contracts and chains simultaneously. It uses HyperSync, Envio's proprietary data engine, which serves filtered event data in bulk directly from a purpose-built data lake, replacing having to poll RPC endpoints block by block. This removes the RPC bottleneck entirely, which is precisely what causes subgraph stalls on BNB Smart Chain.
 
-HyperIndex is independently benchmarked as the fastest blockchain indexer available. In the Uniswap V2 Factory benchmark run by Sentio in May 2025, HyperIndex synced in 1 minute, 143x faster than The Graph and 15x faster than the nearest competitor. BNB Smart Chain is one of <HyperSyncChainCount /> EVM chains with native HyperSync coverage.
+HyperIndex is independently benchmarked as the fastest blockchain indexer available. In the Uniswap V2 Factory benchmark run by Sentio in May 2025, HyperIndex synced in 8 seconds, 142x faster than The Graph and 15x faster than the nearest competitor. BNB Smart Chain is one of <HyperSyncChainCount /> EVM chains with native HyperSync coverage.
 
 For a full benchmark breakdown see the [complete blockchain indexer comparison](https://docs.envio.dev/docs/HyperIndex/benchmarks).
 
@@ -111,29 +111,33 @@ Revert Finance builds analytics and management tools for liquidity providers in 
 
 PancakeSwap V3 is the concentrated liquidity version of PancakeSwap, the largest decentralized exchange on BNB Smart Chain. V3 introduces capital-efficient liquidity positions represented as NFTs, managed via the Non-Fungible Position Manager contract.
 
-### What is a blockchain indexer?
+### Why was Revert Finance's PancakeSwap V3 subgraph stuck for 2 years?
 
-A blockchain indexer is a system that listens to onchain events and organises them into a structured, queryable database. Developers use blockchain indexers to build fast backends for DeFi protocols, analytics tools, and trading interfaces without querying slow RPC endpoints directly.
+A public PancakeSwap V3 subgraph on The Graph's decentralized network had been stuck at 70% sync on BNB Smart Chain for over 2 years, unable to reach chain head. BNB Smart Chain's high throughput generates more events per block than standard RPC-based indexing can sustain, so subgraphs fall progressively further behind until they stall entirely. Teams have reported similar BNB sync issues going back to 2021.
 
-### What is HyperIndex?
+### How does HyperSync solve the BNB Smart Chain sync problem?
 
-Envio HyperIndex is a real-time multichain blockchain indexing framework for EVM chains. Developers write event handlers in TypeScript and deploy a single indexer covering multiple contracts, chains, and domains. It uses HyperSync, Envio's proprietary data engine, to fetch filtered event data in bulk rather than polling RPC endpoints, enabling historical syncs at speeds not achievable through standard RPC.
+HyperSync removes RPC polling from the historical sync path. Instead of fetching block by block through standard RPC, Envio retrieves event data in bulk from a purpose-built data lake, so sync speed scales with data volume rather than being bottlenecked by RPC rate limits and polling intervals. BNB Smart Chain is one of <HyperSyncChainCount /> EVM chains with native HyperSync coverage.
 
-### What is HyperSync?
+### Which PancakeSwap V3 contracts does the Revert indexer cover?
 
-HyperSync is Envio's high-performance data engine. Instead of querying RPC endpoints block by block, HyperSync fetches and serves filtered event data in bulk from a purpose-built data lake, delivering up to 2,000x faster data access than traditional RPC. BNB Smart Chain is one of <HyperSyncChainCount /> EVM chains with native HyperSync coverage. Any EVM chain can be indexed via standard RPC.
+The indexer covers the full PancakeSwap V3 contract surface on BNB Smart Chain: Factory (`0x0bfbcf9fa4f9c56b0f40a671ad40e0805a091865`) for Pool creation and registry, Pool contracts (dynamically registered as new pools are created by the Factory), and NFPM (`0x46a15b0b27311cedf172ab29e4f4766fbe7f4364`) for NFT position management events.
+
+### Does the Revert indexer use dynamic contract registration?
+
+Yes. Dynamic contract registration handles the Pool contracts. As new PancakeSwap V3 pools are created onchain by the Factory, the indexer registers them automatically without requiring a redeployment.
+
+### How many events did the new HyperIndex indexer process?
+
+The HyperIndex indexer for PancakeSwap V3 on BNB Smart Chain processed 1,711,569,200 events to 100% sync in 10 days. It started from block 26,956,207 and reached chain head at block 88,286,723.
+
+### Why did Revert Finance switch from The Graph to Envio HyperIndex?
+
+Revert's PancakeSwap V3 subgraph on The Graph had been stuck at 70% sync for over 2 years on BNB Smart Chain. As founder Mario Romero put it: "We had a problem with our PancakeSwap V3 data on BNB for over two years. The subgraph just would not catch up, and we'd basically given up on it. Envio synced it in 10 days. Great team, great dev experience!" HyperIndex completed the historical sync in 10 days and now serves real-time data.
 
 ### What is Envio Cloud?
 
 Envio Cloud is Envio's managed hosting platform for HyperIndex indexers. It handles infrastructure, scaling, and monitoring so teams can run production-ready indexers without managing operational overhead. Revert Finance's PancakeSwap V3 indexer runs on Envio Cloud.
-
-### What chains does Envio support?
-
-Envio supports any EVM chain. <HyperSyncChainCount /> EVM chains have native HyperSync coverage for maximum speed, including BNB Smart Chain, Polygon, Ethereum, Base, Arbitrum, Optimism, and more. Any EVM chain without native HyperSync support can be indexed via standard RPC. See the full list of supported chains at [envio.dev/chains](https://envio.dev/chains).
-
-### How do I migrate from The Graph to HyperIndex?
-
-Because HyperIndex handlers are written in TypeScript and AssemblyScript is a subset of TypeScript, most handler logic can be carried across directly. Envio provides a full [migration guide](https://docs.envio.dev/docs/HyperIndex/migration-guide), a CLI validation tool to compare output between both endpoints, and white-glove migration support for teams moving from The Graph.
 
 ## Build With Envio
 
