@@ -3,7 +3,7 @@ id: quickstart-with-ai
 title: Quickstart with AI
 sidebar_label: Quickstart with AI
 slug: /quickstart-with-ai
-description: Build an Envio HyperIndex indexer with an AI coding assistant using the Envio docs MCP server, non-interactive init flags, the envio-cloud CLI, and the built-in Claude skills in HyperIndex v3.
+description: Build an Envio HyperIndex indexer with an AI coding assistant using the Envio CLI, the envio-cloud CLI, and the built-in Claude skills in HyperIndex v3.
 image: /docs-assets/og/HyperIndex/quickstart-with-ai.png
 ---
 
@@ -24,69 +24,23 @@ If you'd rather drive the CLI yourself, see [Getting Started](./getting-started)
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(only needed to run the indexer locally)_
 - An AI coding assistant (we recommend **[Claude Code](https://claude.com/claude-code)**)
 
-:::info HyperIndex v3
-Some features below (notably the **built-in Claude skills**) ship with **HyperIndex v3**. See the [v3 migration guide](/docs/HyperIndex/migrate-to-v3) for current install guidance.
-:::
-
 ---
 
-## Step 1. Give the Assistant Access to the Envio Docs (MCP)
+## Step 1. Initialize The Indexer
 
-Envio ships a [Model Context Protocol](./mcp-server) server so your AI assistant can search and read Envio documentation directly instead of guessing from stale training data.
-
-**Claude Code:**
+Open Claude/Cursor/Codex and prompt:
 
 ```bash
-claude mcp add --transport http envio-docs https://docs.envio.dev/mcp
+pnpx envio@2 init
 ```
 
-**Cursor / VS Code / other MCP clients**, add the endpoint to your MCP config:
-
-```json
-{
-  "mcpServers": {
-    "envio-docs": {
-      "url": "https://docs.envio.dev/mcp"
-    }
-  }
-}
-```
-
-Full setup details in the [MCP Server guide](./mcp-server). If your assistant doesn't support MCP, you can still point it at the [LLM-friendly docs bundle](/docs/HyperIndex-LLM/hyperindex-complete).
-
----
-
-## Step 2. Initialize the Indexer Non-Interactively
-
-`pnpx envio@2 init` normally walks you through an interactive wizard. When an AI assistant is driving the terminal, it's much easier to skip the prompts with flags so the assistant can run the command end-to-end without blocking on human input.
-
-### Option A: Start from a template
-
-```bash
-pnpx envio@2 init template \
-  -t erc20 \
-  -l typescript \
-  -d ./working-indexer
-```
-
-### Option B: Import a verified contract from an explorer
-
-```bash
-pnpx envio@2 init contract-import explorer \
-  -n usdc-indexer \
-  -c 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48 \
-  -b ethereum-mainnet \
-  --single-contract \
-  --all-events \
-  -l typescript \
-  -d usdc-indexer
-```
+AI will automatically be provided with a list of available commands and tools exposed via `envio tools` and follow up with you on additional questions to achieve the desired result.
 
 All `init` subcommands and flags are documented in the [Envio CLI reference](./cli-commands).
 
-### About the `--api-token` flag
+### About Envio API Token
 
-`--api-token` is the flag for your **HyperSync API token**. A few things to know:
+The **Envio API token** is your **HyperSync API token**. A few things to know:
 
 - The token **can't currently be created programmatically**. You generate one by logging in to [envio.dev/app/api-tokens](https://envio.dev/app/api-tokens) and copying it into `ENVIO_API_TOKEN` in your indexer's `.env`.
 - It's **only required for local development and self-hosted deployments**. Indexers running on **Envio Cloud** get special access and don't need a custom token.
@@ -97,11 +51,11 @@ See [API Tokens](/docs/HyperSync/api-tokens) and [Environment Variables](./envir
 
 ---
 
-## Step 3. Develop with the Built-in Claude Skills
+## Step 2. Develop with the Built-in Claude Skills
 
 HyperIndex v3 ships with **Claude skills** that teach AI assistants how HyperIndex works: config, schema, handlers, loaders, dynamic contracts, testing, and migration checklists. When an assistant is attached to a v3 project, it can read these skills directly instead of inventing patterns.
 
-A productive loop with skills + the docs MCP looks like:
+A productive loop with the skills looks like:
 
 1. Describe the behavior you want in plain English.
 2. Let the assistant edit `config.yaml`, `schema.graphql`, and `src/EventHandlers.*`.
@@ -116,7 +70,7 @@ The three files you'll spend most of your time in:
 
 ---
 
-## Step 4. Migrating an Existing Indexer
+## Step 3. Migrating an Existing Indexer
 
 If you're porting from The Graph, Ponder, or another indexing framework, start with the AI migration workflow. It scales much better than hand-editing handlers.
 
@@ -127,7 +81,7 @@ If you're porting from The Graph, Ponder, or another indexing framework, start w
 
 ---
 
-## Step 5. Deploy Programmatically with `envio-cloud`
+## Step 4. Deploy Programmatically with `envio-cloud`
 
 Once your indexer runs locally, the [`envio-cloud` CLI](./envio-cloud-cli) lets an assistant (or a CI job) deploy and manage the hosted indexer without opening the dashboard.
 
