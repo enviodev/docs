@@ -10,7 +10,11 @@ description: Step-by-step instructions for upgrading an existing HyperIndex V2 p
 
 This guide is a plain, step-by-step checklist of every change required to upgrade an existing HyperIndex V2 project to V3. For an overview of new V3 capabilities, see [What's New in V3](./whats-new-in-v3).
 
-Follow the steps in order. Each step is independent enough to skim, but Step 0 (preparation on V2) is strongly recommended before you start touching V3 code.
+The best way to upgrade is to open Claude/Cursor/Codex or any other favorite AI tool and prompt:
+
+```
+Upgrade my indexer to V3 by following the migration instructions step by step https://docs.envio.dev/docs/HyperIndex/migrate-to-v3
+```
 
 ## Step 0: Prepare on V2 (Recommended)
 
@@ -439,7 +443,11 @@ Other type changes:
 - `S.nullable` schema type now returns `T | null` instead of `T | undefined`.
 - The internal `ContractType` enum was removed.
 
-## Step 7: Update Tests
+## Step 7: Remove `generated`
+
+In the new version the `generated` package is no longer needed and should be removed. All imports from the `"generated"` package should now happen from `"envio"` instead. This is allowed thanks to `envio-env.d.ts`, which is linked automatically — there's no need to add it to `tsconfig.json`.
+
+## Step 8: Update Tests
 
 The `MockDb` testing API has been removed. Migrate to `createTestIndexer()` with `simulate`.
 
@@ -502,13 +510,13 @@ The `MockDb` testing API has been removed. Migrate to `createTestIndexer()` with
 | `mockDb.entities.Entity.set({...})`         | `indexer.Entity.set({...})`                                     |
 | Manual handler threading & event chaining   | Automatic — pass multiple events in the `simulate` array        |
 
-## Step 8: Update CLI Usage
+## Step 9: Update CLI Usage
 
 - `envio dev` no longer auto-resets the database. If you relied on this, run `envio dev -r` (or `--restart`) explicitly.
 - `envio start` is now production-only. Continue using `envio dev` for local development.
 - Changes in handler files no longer trigger codegen on `pnpm dev`.
 
-## Step 9: Run Codegen and Verify
+## Step 10: Run Codegen and Verify
 
 ```bash
 pnpm envio codegen
@@ -517,7 +525,7 @@ pnpm dev
 
 Postgres column type changes (`raw_events.event_id`: `NUMERIC` → `BIGINT`, `raw_events.serial`: `SERIAL` → `BIGSERIAL`, `envio_chains.events_processed`: `INTEGER` → `BIGINT`, `envio_checkpoints.id`: `INTEGER` → `BIGINT`) are applied automatically — no action required. The deprecated `envio_chains._num_batches_fetched` column always returns `0`.
 
-## Step 10: Update Agent Skills
+## Step 11: Update Agent Skills
 
 Once the indexer is running, refresh the agent skills bundled with your project so agent-driven development stays aligned with V3's APIs:
 
@@ -526,83 +534,6 @@ pnpx envio skills update
 ```
 
 This populates a `.claude/skills` folder in your project. The skills are consumed by Claude, Cursor, and other compatible agentic tooling. Re-run it whenever a new HyperIndex release ships new APIs.
-
-## Quick Migration Checklist
-
-**Prepare (on V2):**
-
-- [ ] Upgrade to `envio@2.32.6`
-- [ ] Enable `preload_handlers: true` in `config.yaml`
-- [ ] Migrate from loaders if applicable ([guide](/docs/HyperIndex/preload-optimization#migrating-from-loaders))
-- [ ] Verify indexer works with `pnpm dev`
-
-**Dependencies:**
-
-- [ ] Update Node.js to `>=22`
-- [ ] **Add `"type": "module"` to `package.json`** ← Required for V3
-- [ ] Update `envio` dependency to the latest v3 release
-- [ ] Remove `optionalDependencies.generated` from `package.json`
-- [ ] Update `engines.node` to `>=22.0.0`
-- [ ] Update `tsconfig.json` for ESM support
-- [ ] Migrate from mocha/chai to vitest (recommended) or replace `ts-mocha`/`ts-node` with `tsx`
-
-**`config.yaml`:**
-
-- [ ] Rename `networks` → `chains`
-- [ ] Rename `confirmed_block_threshold` → `max_reorg_depth`
-- [ ] Replace `rpc_config` with `rpc`
-- [ ] Remove `unordered_multichain_mode` and any `multichain: ordered` opt-in (unordered is now the only mode)
-- [ ] Remove `loaders` and `preload_handlers`
-- [ ] Remove `preRegisterDynamicContracts`
-- [ ] Remove `event_decoder`
-- [ ] Remove `output` (types always written to `.envio/`)
-
-**Environment variables:**
-
-- [ ] Set `ENVIO_API_TOKEN` if using HyperSync ([get token](https://envio.dev/app/api-tokens))
-- [ ] Remove `UNSTABLE__TEMP_UNORDERED_HEAD_MODE`
-- [ ] Remove `UNORDERED_MULTICHAIN_MODE`
-- [ ] Remove `MAX_BATCH_SIZE` (use `full_batch_size`)
-- [ ] Remove `ENVIO_INDEXING_BLOCK_LAG` (use per-chain `block_lag`)
-- [ ] Rename `TUI_OFF=true` → `ENVIO_TUI=false`
-- [ ] Rename `ENVIO_PG_PUBLIC_SCHEMA` → `ENVIO_PG_SCHEMA`
-
-**Handler code:**
-
-- [ ] Migrate event handlers from `Contract.Event.handler(...)` to `indexer.onEvent({ contract, event, ...options }, handler)`
-- [ ] Migrate dynamic contract registration to `indexer.contractRegister({ contract, event }, handler)`
-- [ ] Replace `context.add<Contract>(addr)` with `context.chain.<Contract>.add(addr)`
-- [ ] Convert `eventFilters` to `where` returning `{ params: [...] }`
-- [ ] Migrate block handlers to a single `indexer.onBlock` call (use `where` for chain-specific or interval filters)
-- [ ] Use `where.block.number._gte` to override per-event start blocks if needed
-- [ ] Replace `experimental_createEffect` with `createEffect`
-- [ ] Replace `block.chainId` with `context.chain.id`
-- [ ] Replace `transaction.kind` with `transaction.type`
-- [ ] Replace `transaction.chainId` with `context.chain.id` or `event.chainId`
-- [ ] Update `chain` type to `ChainId`
-- [ ] Replace `getGeneratedByChainId` with `indexer.chains[chainId]`
-- [ ] Update `Address` consumers — type is now `` `0x${string}` ``
-- [ ] Replace lowercased entity imports with capitalized versions (e.g. `transfer` → `Transfer`)
-- [ ] Update `getWhere` calls to GraphQL-style filter syntax
-- [ ] Update any `S.nullable` usage — now returns `null` instead of `undefined`
-- [ ] Replace contract-specific type exports with generics (`EvmEvent<"ERC20", "Transfer">`)
-
-**Tests:**
-
-- [ ] Migrate from `MockDb` to `createTestIndexer()`
-
-**CLI:**
-
-- [ ] Use `envio dev -r` if you relied on `envio dev` resetting the DB automatically
-- [ ] Use `envio dev` for local development (`envio start` is production-only)
-
-**Verify:**
-
-- [ ] Run `pnpm envio codegen` and `pnpm dev`
-
-**Agent skills:**
-
-- [ ] Run `pnpx envio skills update` to refresh Claude/Cursor skills
 
 ## Getting Help
 
