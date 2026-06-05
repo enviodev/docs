@@ -110,7 +110,7 @@ Learn more in our blog and test it yourself here: [https://docs.envio.dev/blog/a
 
 ## Host your subgraphs on Envio
 
-<img src="/blog-assets/dev-update-march-2026-2.png" alt="Host your subgraphs on Envio" width="100%"/>
+<img src="/blog-assets/dev-update-march-2026-2.png" alt="Envio subgraph hosting page headlined 143x Faster Subgraph Deployments with How it works and What you get checklists" width="100%"/>
 
 Deploy and host your subgraphs with HyperIndex, with a fully subgraph-compatible GraphQL endpoint and no client changes required.
 
@@ -123,7 +123,7 @@ Get started on Discord - open a support ticket: [https://discord.gg/envio](https
 
 ## Heatbook: Polymarket Orderbooks as Heatmaps
 
-<img src="/blog-assets/dev-update-march-2026-3.png" alt="Heatbook" width="100%"/>
+<img src="/blog-assets/dev-update-march-2026-3.png" alt="Heatbook orderbook heatmap for the Polymarket market Will Donald Trump win the 2024 US Presidential Election" width="100%"/>
 
 An interface for visualising Polymarket orderbooks using historical heatmaps. Orderbook heatmaps for prediction markets, with 115M+ fills visualised. View any market and explore activity over time.
 
@@ -134,7 +134,7 @@ See original post: [https://x.com/jonjonclark/status/2031016707309949042?s=20](h
 
 ## EthCC[9]: Sapphire Sponsor
 
-<img src="/blog-assets/dev-update-march-2026-4.png" alt="EthCC sponsorship" width="100%"/>
+<img src="/blog-assets/dev-update-march-2026-4.png" alt="Envio Sapphire Sponsor banner for EthCC[9] at Palais des Festivals Cannes, March 30 to April 2, 2026" width="100%"/>
 
 Envio is a Sapphire sponsor of [EthCC[9]](https://ethcc.io), taking place at Palais des Festivals in Cannes from March 30 to April 2, 2026.
 
@@ -146,7 +146,7 @@ P.S. be sure to get your hands on one of our snazzy Envio caps and stickers.
 
 ## Developer contributions: Uniswap CCA indexer
 
-<img src="/blog-assets/dev-update-march-2026-5.png" alt="Uniswap CCA indexer" width="100%"/>
+<img src="/blog-assets/dev-update-march-2026-5.png" alt="GitHub repo card for dzmbs/uniswap-cca-indexer, an Envio HyperIndex indexer for Uniswap Continuous Clearing Auction contracts" width="100%"/>
 
 Check out this Uniswap CCA indexer built with HyperIndex to index continuous clearing auction contracts across Ethereum, Base, Arbitrum, and Unichain. It tracks auctions, bids, ticks, steps, and checkpoints, using HyperSync for logs and selective RPC reads for derived onchain state.
 
@@ -168,7 +168,7 @@ We're reopening it to benchmark new use cases and warmly welcome all contributio
 
 ## Wonderland CTF
 
-<img src="/blog-assets/dev-update-march-2026-6.png" alt="Wonderland CTF" width="100%"/>
+<img src="/blog-assets/dev-update-march-2026-6.png" alt="Wonderland CTF 2026 sponsor banner listing Grego AI, Envio, runtime verification, and Pashov Audit Group" width="100%"/>
 
 Envio is a proud sponsor of the Wonderland CTF. The event takes place on April 1, 2026, in person at EthCC[9] in Cannes.
 
@@ -223,7 +223,7 @@ Well done, Praveen. Be sure to follow the team on [X](https://x.com/hpmszk) and 
 
 ## Playlist of the Month
 
-<img src="/blog-assets/dev-update-march-2026-10.png" alt="Playlist of the month" width="100%"/>
+<img src="/blog-assets/dev-update-march-2026-10.png" alt="Spotify public playlist Mar 26 by Jordy Baby, 19 songs, 1 hr 14 min" width="100%"/>
 
 ▶ [Open Spotify](https://open.spotify.com/playlist/240pHTCbwvf6kBMdfWGmw9?si=bb40d616e82a49f3)
 

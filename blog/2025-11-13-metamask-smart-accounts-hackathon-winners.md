@@ -10,7 +10,7 @@ last_update:
 authors: ["j_o_r_d_y_s"]
 ---
 
-<img src="/blog-assets/metamask-hackathon-2025.png" alt="Metamask Dev-cook off 2025 Hackathon Winners" width="100%"/>
+<img src="/blog-assets/metamask-hackathon-2025.png" alt="Envio cover banner: Smart Accounts Hackathon Winners, $15,000 prize pool" width="100%"/>
 
 <!--truncate-->
 
@@ -22,7 +22,7 @@ The projects below stood out across innovation, execution quality, and use of En
 
 ## Best use of Envio ($2,000): Last Monad
 
-<img src="/blog-assets/metamask-hackathon-2025-1.png" alt="Last monad" width="100%"/>
+<img src="/blog-assets/metamask-hackathon-2025-1.png" alt="GitHub repo card for jerrymusaga/last-monad, an on-chain multiplayer elimination game on Monad" width="100%"/>
 
 Last Monad built a live network dashboard that showcases activity across Monad in real-time. Using Envio to index contract events with high speed and accuracy, the team delivered an always up to date view of the chain.
 
@@ -30,7 +30,7 @@ The project shows how real-time blockchain indexers like Envio unlock transparen
 
 ## Best Onchain Automation ($1,000): TradeClub
 
-<img src="/blog-assets/metamask-hackathon-2025-2.png" alt="tradeclub" width="100%"/>
+<img src="/blog-assets/metamask-hackathon-2025-2.png" alt="GitHub repo card for DxcMint868/trade-club-liquidator, a social trading degen engine for EVM blockchains" width="100%"/>
 
 TradeClub introduced automated onchain execution powered by smart accounts. The project used Envio to index their data to power intent based triggers and automated flows, allowing users to run actions without managing complex backend logic.
 
@@ -38,7 +38,7 @@ It highlights how real-time data from Envio's blockchain indexing solution can s
 
 ## Best AI Agent ($1,000): ShieldAI
 
-<img src="/blog-assets/metamask-hackathon-2025-3.png" alt="ShieldAi" width="100%"/>
+<img src="/blog-assets/metamask-hackathon-2025-3.png" alt="GitHub repo card for officialcmg/shieldai-monad, an AI-powered autonomous wallet guardian" width="100%"/>
 
 ShieldAI built an onchain monitoring agent that reacts to blockchain events on Monad in real-time. With Envio providing reliable, indexed data, the agent could track contract interactions, detect anomalies, and surface insights efficiently.
 
@@ -46,7 +46,7 @@ It shows how AI agents become significantly more powerful when they can rely on 
 
 ## Best Consumer App ($1,000): Smart Account Explorer
 
-<img src="/blog-assets/metamask-hackathon-2025-4.png" alt="Smart account explorer" width="100%"/>
+<img src="/blog-assets/metamask-hackathon-2025-4.png" alt="GitHub repo card for prevostc/soa-delegation-tracker, the Smart Account Explorer project" width="100%"/>
 
 Smart Account Explorer created a clear interface for viewing and understanding smart account activity. With Envio's real-time blockchain indexing layer handling the heavy lifting, the app delivered fast lookups of permissions, transactions, and account behaviour without any lag. It made smart accounts feel accessible and transparent for everyday users.
 

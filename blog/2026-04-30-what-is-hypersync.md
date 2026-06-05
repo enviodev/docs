@@ -10,7 +10,7 @@ last_update:
   author: Jordyn Laurier
 ---
 
-![Cover image for the What is HyperSync blog](/blog-assets/what-is-hypersync.png)
+!["What is HyperSync? The fastest way to query blockchain data" Envio blog cover](/blog-assets/what-is-hypersync.png)
 
 :::info TL;DR
 

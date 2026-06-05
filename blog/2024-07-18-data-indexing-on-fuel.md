@@ -9,7 +9,7 @@ last_update:
 authors: ["j_o_r_d_y_s"]
 ---
 
-<img src="/blog-assets/fuel-envio.png" alt="Cover Image Data Querying on Fuel" width="100%"/>
+<img src="/blog-assets/fuel-envio.png" alt="Envio cover banner reading 'Real-time Data Indexing on Fuel' with HyperFuel + HyperIndex and the Fuel logo" width="100%"/>
 
 <!--truncate-->
 

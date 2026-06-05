@@ -9,7 +9,7 @@ last_update:
 authors: ["j_o_r_d_y_s"]
 ---
 
-<img src="/blog-assets/cut-aws-cloud-costs1.png" alt="Envio Cover Photo" width="100%"/>
+<img src="/blog-assets/cut-aws-cloud-costs1.png" alt="Envio cover banner reading Optimizing Indexers on AWS: How To Cut AWS Cloud Costs" width="100%"/>
 
 <!--truncate-->
 

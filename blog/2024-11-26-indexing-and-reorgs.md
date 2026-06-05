@@ -11,7 +11,7 @@ last_update:
 Author: [Denham Preen](https://x.com/DenhamPreen), Co-Founder at Envio
 
 
-<img src="/blog-assets/indexing-and-reorgs.png" alt="Envio Cover Photo" width="100%"/>
+<img src="/blog-assets/indexing-and-reorgs.png" alt="Diagram showing a chain reorg with canonical blocks 2 to 5 and orphaned blocks 3 and 4, with the indexer's event handlers writing entities to a DB and orphaned data marked in red" width="100%"/>
 
 <!--truncate-->
 
@@ -79,29 +79,29 @@ In order to understand reorgs, let's break down the fundamental concepts and bui
 
 A container that stores transactions.
 
-<img src="/blog-assets/indexing-and-reorgs-1.png" alt="Indexing & Reorgs" width="100%"/>
+<img src="/blog-assets/indexing-and-reorgs-1.png" alt="Sketch of Block 1 listing example transactions: transfer ETH, swap USDC to USDT on Uniswap, vote on Compound governance" width="100%"/>
 
 ### Chain
 
 A series of sequential blocks.
 
-<img src="/blog-assets/indexing-and-reorgs-2.png" alt="Indexing & Reorgs" width="100%"/>
+<img src="/blog-assets/indexing-and-reorgs-2.png" alt="Diagram of a chain as four sequential blocks linked by arrows from Block 1 to Block 4" width="100%"/>
 
 ### Miners
 
 Actors that try to submit the next valid block.
 
-<img src="/blog-assets/indexing-and-reorgs-3.png" alt="Indexing & Reorgs" width="100%"/>
+<img src="/blog-assets/indexing-and-reorgs-3.png" alt="Diagram of miners Alice, Bob, Charlie, and Den, with blocks 1 to 4 labelled as mined by Alice, Bob, Alice, and Charlie" width="100%"/>
 
 ### Chain fork
 
-<img src="/blog-assets/indexing-and-reorgs-4.png" alt="Indexing & Reorgs" width="100%"/>
+<img src="/blog-assets/indexing-and-reorgs-4.png" alt="Diagram of a chain fork after Block 1, splitting into two parallel branches of Block 2 and Block 3 mined by different miners" width="100%"/>
 
 A chain fork occurs when more than one miner submits a valid block at the same time, causing a split where two valid chains exist simultaneously.
 
 ### Orphaned chain and canonical chain
 
-<img src="/blog-assets/indexing-and-reorgs-5.png" alt="Indexing & Reorgs" width="100%"/>
+<img src="/blog-assets/indexing-and-reorgs-5.png" alt="Diagram showing an orphaned chain branch greyed out above the canonical chain that continues through Block 5" width="100%"/>
 
 When a chain forks, eventually one chain becomes accepted as the valid chain, known as the canonical chain. The forked chain that is not accepted becomes the orphaned chain. Orphaned blocks cease to exist, and transactions that occurred in those blocks cease to exist as well.
 

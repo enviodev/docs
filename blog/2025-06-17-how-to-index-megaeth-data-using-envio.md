@@ -76,7 +76,7 @@ Envio offers a range of advanced capabilities that make it easy to build rich, f
 
 ### Oracle Wars
 
-<img src="/blog-assets/megaeth-oracle-wars.png" alt="orcale wars megaeth" width="100%"/>
+<img src="/blog-assets/megaeth-oracle-wars.png" alt="Oracle Wars dashboard showing live ETH/USD price chart from Redstone on MegaETH, powered by HyperIndex" width="100%"/>
 
 [Oracle Wars](https://www.oraclewars.xyz/) is an experimental dashboard built with Envio's HyperIndex that visualizes real-time oracle behavior on MegaETH. It showcases how push-based oracles like [RedStone Bolt](https://blog.redstone.finance/2025/04/08/introducing-redstone-bolt-the-fastest-blockchain-oracle-to-date/) behave under live market conditions by tracking heartbeat intervals, deviation thresholds, and latency patterns. The project helps developers understand how oracles operate in volatile environments and the potential risks of delayed or unexpected updates. Built in under two hours, Oracle Wars demonstrates how Envio enables rapid development of real-time monitoring tools on high-throughput chains like MegaETH.
 

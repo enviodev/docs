@@ -24,7 +24,7 @@ Happy holidays from all of us at Envio!
 
 ## HyperSync Milestone
 
-<img src="/blog-assets/envio-developer-community-december-2024-1.png" alt="HyperSync Milestone #2" width="100%"/>
+<img src="/blog-assets/envio-developer-community-december-2024-1.png" alt="HyperSync milestone graphic showing 79,514,671,665 all time total requests" width="100%"/>
 
 With nearly 80 billion requests served, [HyperSync](https://docs.envio.dev/docs/HyperSync/overview) is rapidly becoming a top choice as a data source for faster data retrieval than standard RPC. Envio's indexer, HyperIndex, supports both RPC and HyperSync as sources for ingesting blockchain data.
 
@@ -62,7 +62,7 @@ If you love what we're building as much as we do and want to stay updated on our
 
 ## Exciting De-Fi Integration with Blocksquare
 
-<img src="/blog-assets/envio-developer-community-december-2024-2.png" alt="Blocksqaure Integration" width="100%"/>
+<img src="/blog-assets/envio-developer-community-december-2024-2.png" alt="Blocksquare x Envio New Partnership Announcement banner with handshake illustration" width="100%"/>
 
 [Blocksquare](https://blocksquare.io/) has integrated Envio's advanced indexing technology! This integration boosts Blocksquare's RWA platform, providing faster, more efficient access to onchain data.
 
@@ -73,7 +73,7 @@ This collaboration powers [Oceanpoint](https://oceanpoint.fi/) and Blocksquare's
 
 ## Indexing & Reorgs
 
-<img src="/blog-assets/envio-developer-community-december-2024-3.png" alt="Indexing & Reorgs" width="100%"/>
+<img src="/blog-assets/envio-developer-community-december-2024-3.png" alt="Diagram showing a canonical chain branching from an orphaned chain with event handlers writing entities to a database" width="100%"/>
 
 Check out our new article on the impact of chain reorgs on data consumption and aggregation and the challenges of navigating a multichain environment.
 
@@ -84,7 +84,7 @@ Explore the full [blog](https://docs.envio.dev/blog/indexing-and-reorgs).
 
 ## Tokenizing RWAs: How Blockchain is Redefining Real Estate Investment
 
-<img src="/blog-assets/envio-developer-community-december-2024-4.png" alt="Tokenizing RWAs" width="100%"/>
+<img src="/blog-assets/envio-developer-community-december-2024-4.png" alt="Envio and Blocksquare Tokenizing RWAs Revolutionizing Real Estate banner" width="100%"/>
 
 What if you could own real estate without the high costs? Blocksquare's tokenized real-world assets (RWAs) are unlocking new investment opportunities. No barriers - just seamless, borderless access to property markets. Welcome to the future of real estate.
 
@@ -93,7 +93,7 @@ Read the [full case study](https://docs.envio.dev/blog/tokenizing-real-world-ass
 
 ## Dev Tutorial: Indexing Data on Rootstock
 
-<img src="/blog-assets/envio-developer-community-december-2024-5.png" alt="Indexing Data on Rootstock" width="100%"/>
+<img src="/blog-assets/envio-developer-community-december-2024-5.png" alt="Rootstock Educate workshop banner powered by Encode Club" width="100%"/>
 
 Check out our latest Rootstock Educate workshop with Encode Club. Master smart contract indexing on [Rootstock](https://rootstock.io/) in under 5 minutes with live coding and hands-on examples. Learn how to identify key transactions using Envio's powerful blockchain indexing solution to handle millions of events in seconds.
 
@@ -102,7 +102,7 @@ For more developer tutorials check out our [YouTube](https://www.youtube.com/@en
 
 ## Can ZKPs Redefine User Privacy? How zkPass is Shaping the Future of Data Security
 
-<img src="/blog-assets/envio-developer-community-december-2024-6.png" alt="Redefining Privacy with ZKPs" width="100%"/>
+<img src="/blog-assets/envio-developer-community-december-2024-6.png" alt="Envio and zkPass banner reading Redefining User Privacy with ZKPs" width="100%"/>
 
 Can zero-knowledge proofs (ZKPs) redefine user privacy? [zkPass](https://zkpass.org/) is revolutionizing privacy by verifying information without exposing sensitive data. With privacy breaches becoming all too common, the question isn't if your data is exposed, it's when. Can we protect personal information while still verifying key details?
 
@@ -111,7 +111,7 @@ Read the full [blog](https://docs.envio.dev/blog/zkpass-shaping-future-of-data-p
 
 ## Envio Powers BakoID's Handles with Efficient Data Indexing
 
-<img src="/blog-assets/envio-developer-community-december-2024-7.png" alt="Envio Powers Bako" width="100%"/>
+<img src="/blog-assets/envio-developer-community-december-2024-7.png" alt="Bako logo and Envio logo with an X between them on a dark gradient background" width="100%"/>
 
 We're partnering with Bako, the native naming system for the Fuel ecosystem. Envio powers Bako with faster and more reliable data to power their users' handles.
 
@@ -122,7 +122,7 @@ Check it out at app.bako.id
 
 ## Featured Developer
 
-<img src="/blog-assets/envio-developer-community-december-2024-8.png" alt="December Featured Dev" width="100%"/>
+<img src="/blog-assets/envio-developer-community-december-2024-8.png" alt="Envio Featured Developer banner for Simon Kruse with portrait photo" width="100%"/>
 
 This month's Featured Community Member is [Simon Kruse](https://github.com/Simon0x), Head of Web3 Development at Blocksquare. Since 2017, Simon has been active in crypto, specializing in real estate tokenization and DeFi, focusing on borrowing and lending solutions.
 
@@ -135,7 +135,7 @@ Check out Blocksquare on [X](https://x.com/blocksquare_io) for updates and explo
 
 ## Playlist of the Month
 
-<img src="/blog-assets/envio-developer-community-december-2024-9.png" alt="December Playlist" width="100%"/>
+<img src="/blog-assets/envio-developer-community-december-2024-9.png" alt="Spotify Christmas Playlist 2024 cover under Holiday Vibes with 28,788 saves and 121 songs" width="100%"/>
 
 [Open Spotify](https://open.spotify.com/playlist/7awVFZ11ewVYCk0KyMYCka?si=c198409b4f9d43c1)
 

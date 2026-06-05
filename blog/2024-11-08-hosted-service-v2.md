@@ -9,7 +9,7 @@ last_update:
 authors: ["j_o_r_d_y_s"]
 ---
 
-<img src="/blog-assets/hosted-service-v2.png" alt="Envio Cloud Launch" width="100%"/>
+<img src="/blog-assets/hosted-service-v2.png" alt="Envio Cloud launch banner: Introducing Envio Cloud, 10x Faster Indexer Deployments" width="100%"/>
 
 <!--truncate-->
 

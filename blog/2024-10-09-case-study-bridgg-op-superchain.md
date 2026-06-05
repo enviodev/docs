@@ -28,7 +28,7 @@ Created by [OPLabs](https://www.oplabs.co/), the OP Superchain is a movement tha
 
 OPLabs has recognized that standards and tools will also need to be provided to enable app developers to move assets and messages between interoperable chains to achieve this mission. You can read more about this [here](https://blog.oplabs.co/solving-interoperability-for-the-superchain-and-beyond/).
 
-<img src="/blog-assets/case-study-bridgg-op-superchain-1.png" alt="OP Superchain Chains Explorer" width="100%"/>
+<img src="/blog-assets/case-study-bridgg-op-superchain-1.png" alt="OP Superchain leaderboard ranking Base, OP Mainnet, Mode, Fraxtal, Lisk and others by TVL, projects, and accounts" width="100%"/>
 
 The rise in the number of L2s has produced multiple co-existing chains, most of which solve for Ethereum scalability while balancing trade-offs around decentralization and security. In parallel, these networks have created and fostered diverse communities and ecosystems of applications that provide value and increase adoption.
 
@@ -57,7 +57,7 @@ HyperIndex has allowed Brid.gg to supercharge its data retrieval by using [Hyper
 
 The Brid.gg [Indexer](https://envio.dev/app/bridgg/bridgg-indexer) currently indexes its data across 12 chains with a collection of 11 million events across the chains.
 
-<img src="/blog-assets/case-study-bridgg-op-superchain-3.png" alt="Envio Explorer" width="100%"/>
+<img src="/blog-assets/case-study-bridgg-op-superchain-3.png" alt="Bridgg indexer dashboard showing 11,428,854 events processed across Ethereum, OP Mainnet, Base, Mode, Zora, Fraxtal, Lisk, Redstone and testnets, synced in about 2 hours" width="100%"/>
 
 ## How Envio Powers the OP Superchain
 

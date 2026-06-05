@@ -65,7 +65,7 @@ UserContract.Transfer.handler(async ({ event, context }) => {
 V2.17.0 also went live, allowing you to track indexer progress, access the GraphQL Playground, and level up your local dev experience, with plenty more features on the way!
 
 
-<img src="/blog-assets/dev-update-april-2025-1.png" alt="logtui" width="100%"/>
+<img src="/blog-assets/dev-update-april-2025-1.png" alt="Envio Development Console showing indexer info and per-chain sync progress across Ethereum, Optimism, LUKSO, Gnosis, Polygon, Fantom, and zkSync" width="100%"/>
 
 
 ### Logger improvements
@@ -92,7 +92,7 @@ If you love what we're building as much as we do and want to stay updated on our
 
 ## Envio Delivers Modular, Real-Time Indexing for Monad Builders
 
-<img src="/blog-assets/dev-update-april-2025-2.png" alt="logtui" width="100%"/>
+<img src="/blog-assets/dev-update-april-2025-2.png" alt="Envio and Monad partnership banner with both logos side by side on a stylised cliff backdrop" width="100%"/>
 
 Envio's open indexing framework now supports developers building on Monad. [Monad](https://www.monad.xyz/) is pushing the boundaries of performance at the execution layer, and Envio ensures your data pipeline keeps up seamlessly. Instantly index real-time and historical data on Monad using Envio, fast, reliable, and fully customizable. Track complex state changes, power prediction markets, or build whatever you're working on with full control over how your data flows.
 
@@ -101,7 +101,7 @@ We're proud to support Monad developers with the fastest blockchain indexing sol
 
 ## Introducing Snubb: A Multichain Token Approval Scanner for Your Terminal
 
-<img src="/blog-assets/dev-update-april-2025-3.png" alt="logtui" width="100%"/>
+<img src="/blog-assets/dev-update-april-2025-3.png" alt="Snubb terminal UI showing multichain token approval scan progress, per-chain summary, and a list of outstanding unlimited approvals" width="100%"/>
 
 Inspired by [Revoke](https://revoke.cash/), Snubb is an incredibly fast and efficient CLI tool to scan for outstanding token approvals for your address across as many as 70 chains simultaneously.
 
@@ -131,7 +131,7 @@ If you're curious, feel free to check out the original background [post](https:/
 
 ## Introducing Loggregate: A Terminal-Native Tool for Real-Time EVM Event Data Aggregation
 
-<img src="/blog-assets/dev-update-april-2025-4.png" alt="logtui" width="100%"/>
+<img src="/blog-assets/dev-update-april-2025-4.png" alt="Loggregate terminal UI aggregating live Transfer events with stats showing 127,744,424 total events and an average value of 111,727" width="100%"/>
 
 Introducing [Loggregate](https://www.npmjs.com/package/loggregate), inspired by [LogTUI](https://www.npmjs.com/package/logtui). It's a terminal-native tool that lets developers aggregate and analyze EVM event data in real-time. Whether it's token transfers, swaps, or deposits, Loggregate makes it easy to pull meaningful data from Ethereum and other networks.
 
@@ -154,7 +154,7 @@ Feel free to check out the original background [post](https://x.com/DenhamPreen/
 
 ## Oracle Wars: Exploring Real-Time Oracle Behavior and Push-Based Feeds
 
-<img src="/blog-assets/dev-update-april-2025-5.png" alt="logtui" width="100%"/>
+<img src="/blog-assets/dev-update-april-2025-5.png" alt="Oracle Wars dashboard charting the ETH/USD Redstone feed on MegaETH with a current price of $1,796.53" width="100%"/>
 
 Powered by HyperIndex, [Oracle Wars](https://www.oraclewars.xyz/) visualizes how oracle feeds behave onchain, highlighting deviations and helping you design more reliable smart contracts.
 
@@ -163,7 +163,7 @@ Learn more about it in our latest [blog](https://docs.envio.dev/blog/oracle-wars
 
 ## Envio's HyperSync Powers Trading Strategy with Multichain Data Collection
 
-<img src="/blog-assets/dev-update-april-2025-6.png" alt="logtui" width="100%"/>
+<img src="/blog-assets/dev-update-april-2025-6.png" alt="Trading Strategy line chart of 1-month rolling returns by USDC vault from Dec 2024 to Apr 2025, excluding market-making vaults" width="100%"/>
 
 Check out how [Trading Strategy](https://tradingstrategy.ai/) leveraged Envio to collect onchain data across multiple chains and dive into their epic data & research notebook analyzing the performance of 7,000 ERC-4626 vaults across 10 blockchains!
 
@@ -172,7 +172,7 @@ Learn more in this [post](https://x.com/TradingProtocol/status/19103194808879759
 
 ## HyperSync Now Supports 70+ EVM Networks, Enhancing Real-time Data Access Across Web3
 
-<img src="/blog-assets/dev-update-april-2025-7.png" alt="logtui" width="100%"/>
+<img src="/blog-assets/dev-update-april-2025-7.png" alt="Envio HyperSync banner reading '70+ SUPPORTED NETWORKS' surrounded by floating EVM chain logos" width="100%"/>
 
 HyperSync now supports 70+ EVM networks, with many more on the way! Developers and analysts can now access real-time and historical data across various EVM networks with ease. Whether you're tracking activity, analyzing trends, or powering apps, HyperSync makes querying fast, reliable, and effortless.
 
@@ -198,7 +198,7 @@ Missed our XDC Developer Workshop? We got you. Check out this step-by-step walkt
 
 ## Featured Developer
 
-<img src="/blog-assets/dev-update-april-2025-8.png" alt="logtui" width="100%"/>
+<img src="/blog-assets/dev-update-april-2025-8.png" alt="Envio Featured Developer banner for Manu Soman with his profile photo on a circuit-board background" width="100%"/>
 
 This month, we're excited to feature Manu Soman, a talented developer who transitioned from UX design to mastering backend programming in Rust and JavaScript. Manu's work primarily revolves around systems programming and crypto, with a special focus on Solana. Recently, he's been expanding his skill set by exploring Go.
 
@@ -215,7 +215,7 @@ Be sure to follow Manu and his work on [X](https://x.com/manu_221b) for the late
 
 ## Playlist of the Month
 
-<img src="/blog-assets/dev-update-april-2025-9.png" alt="logtui" width="100%"/>
+<img src="/blog-assets/dev-update-april-2025-9.png" alt="Spotify 'Apr 25' public playlist card by Jordy Baby with 22 songs and 1 hr 33 min runtime" width="100%"/>
 
 [Open Spotify](https://open.spotify.com/playlist/5ICzfWy4hkVDOEe0NSOuZy?si=762121a2d366461b)
 

@@ -10,7 +10,7 @@ last_update:
 authors: ["j_o_r_d_y_s"]
 ---
 
-<img src="/blog-assets/monad-hackathon-winners-2025.png" alt="Cover Image Monad Hackathon Winners" width="100%"/>
+<img src="/blog-assets/monad-hackathon-winners-2025.png" alt="Envio cover banner reading Monad Hackathon Winners, EVM/Accathon 2025" width="100%"/>
 
 <!--truncate-->
 

@@ -36,7 +36,7 @@ When the event's outcome is determined, the oracle sends the information to the 
 
 ## Overview of Prediction Markets
 
-<img src="/blog-assets/case-study-limitless-3.png" alt="Cover Image Limitless Prediction Markets Case Study" width="100%"/>
+<img src="/blog-assets/case-study-limitless-3.png" alt="Major Category Players chart grouping generalized prediction markets (Polymarket, Hedgehog, Drift, Doxa, Inertia, Euphoria, Omen, Limitless, Contro, Swaye) and sport-focused ones (Azuro, Monaco, SX Network, Overtime)" width="100%"/>
 
 Currently, Polymarket is the world's largest prediction market. Deployed on Polygon, Polymarket has experienced exponential growth, with elections accounting for 85% of its total volume. In July 2024, the platform generated an impressive $137.3 million in weekly trading volume. Data also suggests that non-election prediction markets have been increasing, such as betting on crypto prices, sports results, or social events.
 
@@ -88,7 +88,7 @@ Limitless Exchange is able to query information such as:
 <img src="/blog-assets/case-study-limitless-7.png" alt="Screenshot of app showing markets" width="100%"/>
 *Screenshot of https://limitless.exchange/ markets overview, powered by Envio.*
 
-<img src="/blog-assets/case-study-limitless-9.png" alt="Screenshot of app showing markets" width="100%"/>
+<img src="/blog-assets/case-study-limitless-9.png" alt="Limitless quick buy panel for the market 'Will BRETT be above $0.091 on Tuesday at 6:00am ET?' with Yes/No share pricing" width="100%"/>
 *A screenshot of https://limitless.exchange/ quick bets, powered by Envio.*
 
 The [Limitless Exchange Indexer](https://envio.dev/app/limitless-labs-group/fork-prod) and other indexers can be viewed in the Explorer of Envio Cloud.

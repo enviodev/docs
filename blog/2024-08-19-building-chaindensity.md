@@ -118,7 +118,7 @@ The true prowess of HyperSync becomes evident when dealing with large-scale data
 
 This translates to an impressive processing rate of 7,761,296 blocks per second and 289,107 events per second. This level of performance is achievable "cold" (without caching) for any address across more than 70 different chains. Such speed and efficiency open up new possibilities for all kinds of applications previously impossible due to data retrieval limitations.
 
-<img src="/blog-assets/aave-v3-pool.png" alt="Aave v3: Pool" width="100%"/>
+<img src="/blog-assets/aave-v3-pool.png" alt="ChainDensity event density chart for Aave V3 Pool on Arbitrum with stats: 244,532,390 blocks, 9,108,786 events, 31.51 seconds elapsed" width="100%"/>
 
 ## Visualizing Blockchain Activity
 
@@ -130,7 +130,7 @@ ChainDensity's visualization capabilities bring blockchain data to life. The den
 
 Consider this interesting event density plot for the [Mutant Ape Yacht Club](https://opensea.io/collection/mutant-ape-yacht-club) collection. One can see a massive initial spike in activity (minting) before relatively little activity as users presumably held their NFTs. One can start to see a second spike in activity as users likely started to sell their NFTs. Today activity is minimal as the collection is less popular.
 
-<img src="/blog-assets/mutant-ape-yacht-club.png" alt="Mutant Ape Yacht Club" width="100%"/>
+<img src="/blog-assets/mutant-ape-yacht-club.png" alt="ChainDensity event density chart for the Mutant Ape Yacht Club collection showing a large initial mint spike followed by a smaller secondary spike" width="100%"/>
 
 ## Future Horizons for ChainDensity
 

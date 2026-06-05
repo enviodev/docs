@@ -9,7 +9,7 @@ last_update:
   author: Jords
 ---
 
-<img src="/blog-assets/best-blockchain-indexers.png" alt="Cover Image Best Blockchain Indexers" width="100%"/>
+<img src="/blog-assets/best-blockchain-indexers.png" alt="Envio cover graphic with a podium and the title Best Blockchain Indexers, Real Benchmark Comparison" width="100%"/>
 
 <!--truncate-->
 

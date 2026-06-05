@@ -27,7 +27,7 @@ Monad's rapid growth has created a strong need for scalable, real-time data infr
 
 By [@monadicoo](https://x.com/monadicoo)
 
-<img src="/blog-assets/monad-visualizer.gif" alt="monad visualizer" width="100%"/>
+<img src="/blog-assets/monad-visualizer.gif" alt="Monad Super-Visualizer dashboard with live data stream of transactions, current block 22,878,361 and live TPS 112.0" width="100%"/>
 
 This immersive dashboard allows users to explore live activity across the entire Monad chain, with deep visibility into data from specific protocols, contracts, or addresses. Envio powers two core functionalities: streaming live, chain-wide activity to the homepage, and offering a filtered data feed for targeted protocol analysis.
 
@@ -37,7 +37,7 @@ Check it out [here](https://monadviewer.vercel.app/)
 
 By [@sifu_lam](https://x.com/sifu_lam)
 
-<img src="/blog-assets/monad-genki.gif" alt="monad genki" width="100%"/>
+<img src="/blog-assets/monad-genki.gif" alt="Monad Genki Dama Dragon Ball Z themed visualizer with Monanimals charging a purple energy ball and a block data panel" width="100%"/>
 
 A Dragon Ball Z-inspired visual experience that depicts each Monad testnet block as energy contributing to a Genki Dama. Monanimals generate power balls representing transaction types, visually charging the Monad mainnet. Envio's HyperSync ensures real-time accuracy and high throughput with minimal latency.
 
@@ -47,7 +47,7 @@ Check it out [here](https://monad-genki-dama.vercel.app/)
 
 By [@bossonormal1](https://x.com/bossonormal1)
 
-<img src="/blog-assets/lendhub.png" alt="lendhub" width="100%"/>
+<img src="/blog-assets/lendhub.png" alt="LendHub Platform Stats page showing Total Completed (wMON) 192.74, 21 Completed Loans, 6 Active Loans, 4 Pending Loans, and an activity feed" width="100%"/>
 
 LendHub's dashboard presents real-time analytics for a peer-to-peer NFT lending protocol. It tracks metrics such as loans listed, funded, repaid, claimed, and withdrawn. Custom-built with Envio's config.yaml, schema.graphql, and event handlers, this tool uses a GraphQL endpoint to update dynamically based on key smart contract events.
 
@@ -57,7 +57,7 @@ Check it out [here](https://www.lendhub.xyz/stats)
 
 By [@velkan_gst](https://x.com/velkan_gst)
 
-<img src="/blog-assets/miris.gif" alt="miris" width="100%"/>
+<img src="/blog-assets/miris.gif" alt="Miris real-time visualizer Chain tab with 100.0 TPS, 1.9 BPS, 0.52s block time, 63% epoch progress, live block stream and network status" width="100%"/>
 
 Miris is a fully featured chain visualizer offering insights into blocks, transactions, and overall network health. Envio handles the indexing of core protocols like Wormhole and Apr Labs, and the Explorer page uncovers activity from additional Monad projects. Built using Apollo Client and Next.js.
 
@@ -67,7 +67,7 @@ Check it out [here](https://miris.vercel.app/)
 
 By [@WagmiArc](https://x.com/WagmiArc)
 
-<img src="/blog-assets/monad-frens.gif" alt="monad frens" width="100%"/>
+<img src="/blog-assets/monad-frens.gif" alt="Monad Frens Testnet Dashboard with 1.8B total transactions, current TPS 55.0, 7-day activity chart and Monad Pizza Madness visual" width="100%"/>
 
 Monad Frens delivers real-time and historical chain insights in a visually engaging format, including a pizza-themed chain status display. Envio's HyperSync feeds accurate block and transaction data, while a custom API calculates cumulative transactions since Block 0. The dashboard filters transactions by timestamp, ensuring comprehensive tracking.
 
@@ -87,7 +87,7 @@ Check it out [here](https://monlake.vercel.app/)
 
 By [@Samruddhi_Krnr](https://x.com/Samruddhi_Krnr)
 
-<img src="/blog-assets/animonad.gif" alt="animonad" width="100%"/>
+<img src="/blog-assets/animonad.gif" alt="Animonad dashboard with TPS vs Categories bar chart, Most Used dApps list led by Curvance and Aprior, and Latest TXs feed" width="100%"/>
 
 Animonad tracks live transactions per second across Monad-based dApps like Magma, PancakeSwap, and Narwhal Finance. Each transaction is categorized by address and function signature. Envio's HyperSync facilitates rapid data retrieval to update the UI every second, powering dynamic graphs and protocol rankings.
 
@@ -97,7 +97,7 @@ Check it out [here](https://animonad.vercel.app/)
 
 By [@yomax75](https://x.com/yomax75)
 
-<img src="/blog-assets/nadmetrics.gif" alt="nadmetrics" width="100%"/>
+<img src="/blog-assets/nadmetrics.gif" alt="NadMetrics Live Statistics with latest block #22,925,334, 602 transactions, 2.24K MON volume, average TPS 120.40, and live TPS chart" width="100%"/>
 
 Built with React, TypeScript, Node.js, and WebSockets, NadMetrics is a robust analytics platform offering real-time and historical data for Monad. The dashboard is ideal for developers and analysts monitoring chain volume, transaction flow, and usage trends. Envio serves as the foundation for its high-speed data ingestion.
 
@@ -107,7 +107,7 @@ Check it out [here](https://nadmetrics.com/live)
 
 By [@gabriell_santi](https://x.com/gabriell_santi)
 
-<img src="/blog-assets/monalytics.gif" alt="monalytics" width="100%"/>
+<img src="/blog-assets/monalytics.gif" alt="Monalytics Network Realtime Analytics on Monad Testnet showing block number, block size, TPS 114, block gas usage 8.64%, and block entropy chart" width="100%"/>
 
 An interactive dashboard for real-time visualization of activity on the Monad testnet. It leverages Envio for continuous onchain event streaming and HyperRPC for fast, low-latency data access. The platform delivers both a global view of the network, including metrics like TPS, gas usage, and block entropy, and protocol-specific panels for apps like MonTools, Castora, Ambient, and more.
 
@@ -117,7 +117,7 @@ Check it out [here](https://analytics.montools.xyz/chain)
 
 By [@Pradeeppilot2k5](https://x.com/Pradeeppilot2k5) and [@vidit_0](https://x.com/vidit_0)
 
-<img src="/blog-assets/monanimals-blast.gif" alt="monanimals blast" width="100%"/>
+<img src="/blog-assets/monanimals-blast.gif" alt="Monanimals Blast Mayhem game with Monanimals labelled with block numbers, a Score of 6, and a Monad Testnet Stats sidebar" width="100%"/>
 
 A gamified dashboard transforming real-time blockchain stats into interactive graphics. Monanimals symbolize block numbers, and animated graphs display key metrics such as gas usage, TPS, and block peers. Envio's HyperRPC ensures seamless data delivery for a high-performance user experience.
 

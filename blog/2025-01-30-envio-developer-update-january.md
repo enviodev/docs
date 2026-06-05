@@ -24,7 +24,7 @@ Learn more about our latest release and new features to make your indexing exper
 Please note: The latest release is V2.12.1.
 
 
-<img src="/blog-assets/envio-developer-community-january-2025-1.png" alt="Version 2.12.0" width="100%"/>
+<img src="/blog-assets/envio-developer-community-january-2025-1.png" alt="GitHub release card for HyperIndex v2.12.0 noting RPC source feature-parity with HyperSync" width="100%"/>
 
 
 
@@ -47,7 +47,7 @@ If you love what we're building as much as we do and want to stay updated on our
 
 ## Indexing Contract Events with Envio HyperSync
 
-<img src="/blog-assets/envio-developer-community-january-2025-2.png" alt="Indexing Conract Events" width="100%"/>
+<img src="/blog-assets/envio-developer-community-january-2025-2.png" alt="Stylised illustration of a Rust crab connected to database servers, representing indexing contract events with HyperSync" width="100%"/>
 
 
 Intuition recently shared their experience using Envio HyperSync to index contract events efficiently with Rust. They highlighted how HyperSync's real-time data extraction, multichain support, and extreme speed - scanning 200M blocks in 10 seconds - enhanced their infrastructure.
@@ -79,7 +79,7 @@ Learn more in our latest [guide](https://docs.envio.dev/docs/HyperIndex/price-da
 
 ## Falcon Gun Integrates Envio to Streamline its Data Retrieval for Enhanced Trading
 
-<img src="/blog-assets/envio-developer-community-january-2025-3.png" alt="Falcon Gun Integrates Envio" width="100%"/>
+<img src="/blog-assets/envio-developer-community-january-2025-3.png" alt="Integration announcement banner showing Falcon Gun and Envio logos side by side" width="100%"/>
 
 
 We're pleased to announce our integration with [Falcon Gun](https://falcongun.com/). Their lightning-fast trading bot terminal now leverages Envio's indexing solution to streamline data retrieval for faster, more reliable trades.
@@ -90,7 +90,7 @@ Learn more [here](https://x.com/FalconGunBot/status/1879860589704745030).
 ## What is a Blockchain Indexer?
 
 
-<img src="/blog-assets/envio-developer-community-january-2025-4.png" alt="What is an indexer" width="100%"/>
+<img src="/blog-assets/envio-developer-community-january-2025-4.png" alt="Envio blog cover titled What is a blockchain indexer? An introduction to indexing, over a blue chain link image" width="100%"/>
 
 
 New to indexing or need a refresher? Check out our latest blog where we explain how blockchain indexers transform complex onchain data into easy-to-query, actionable insights. Learn how Envio's tools like HyperSync and multichain support make data retrieval faster and help you build decentralized apps more efficiently.
@@ -100,7 +100,7 @@ Read the full [blog](https://docs.envio.dev/blog/what-is-a-blockchain-indexer).
 
 ## Envio & ChainDensity: Featured Sponsors in Primo Data's Blockchain Tools Directory
 
-<img src="/blog-assets/envio-developer-community-january-2025-5.png" alt="Envio & ChainDensity Sponsor Primo Data" width="100%"/>
+<img src="/blog-assets/envio-developer-community-january-2025-5.png" alt="Primo Data directory listing showing Envio and ChainDensity entries with supported chains, products, and descriptions" width="100%"/>
 
 
 Envio & [ChainDensity](https://chaindensity.xyz/) are proud to sponsor and be featured alongside 300+ leading tools in Primo Data's [directory](https://www.primodata.org/blockchain-data). Explore the most comprehensive blockchain data resources and discover cutting-edge companies and open-source projects building tools to query, analyze, and visualize blockchain data.
@@ -108,7 +108,7 @@ Envio & [ChainDensity](https://chaindensity.xyz/) are proud to sponsor and be fe
 
 ## Featured Developer
 
-<img src="/blog-assets/envio-developer-community-january-2025-6.png" alt="Jan 2025 Dev of the month" width="100%"/>
+<img src="/blog-assets/envio-developer-community-january-2025-6.png" alt="Envio Featured Developer banner for Luis Eduardo Boiko with his photo" width="100%"/>
 
 
 This month's featured developer and community member of the month is Luis Eduardo Boiko Ferreira!
@@ -125,7 +125,7 @@ Follow Luis on [X](https://x.com/lockpickingtux) for more updates and check them
 
 ## Playlist of the Month
 
-<img src="/blog-assets/envio-developer-community-january-2025-7.png" alt="Jan playlist of the month" width="100%"/>
+<img src="/blog-assets/envio-developer-community-january-2025-7.png" alt="Spotify public playlist by Jordy Baby with 19 songs and 1 hr 17 min runtime" width="100%"/>
 
 
 [Open Spotify](https://open.spotify.com/playlist/6RrIwtSy6PiKOmUHuPtBFc?si=194fb56ca8da4282)

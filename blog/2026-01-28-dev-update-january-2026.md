@@ -116,7 +116,7 @@ The ERC20 template has been updated to be multichain and includes the new testin
 
 The improved init flow can include additional setup options from upcoming releases, such as configured GitHub CI and an [AGENTS.md](http://agents.md/) file to support LLM-based development.
 
-<img src="/blog-assets/dev-update-jan-26-1.png" alt="Envio init improvements" width="100%"/>
+<img src="/blog-assets/dev-update-jan-26-1.png" alt="Terminal output from envio init showing prompts for folder name, blockchain ecosystem, initialization option, and ABI source" width="100%"/>
 
 
 ### Expose Indexer Config & State
@@ -129,7 +129,7 @@ New official types are also introduced:
 
 **<code>Indexer</code>**, **<code>EvmChainId</code>**, **<code>FuelChainId</code>**, **<code>SvmChainId</code>**.
 
-<img src="/blog-assets/dev-update-jan-26-2.png" alt="Expose Indexer Config & State" width="100%"/>
+<img src="/blog-assets/dev-update-jan-26-2.png" alt="Code snippet importing the indexer object from generated and accessing chainIds, chains, startBlock, isLive, and PoolManager contract data" width="100%"/>
 
 ### Automatic Contract Configuration
 
@@ -137,7 +137,7 @@ V3 automatically configures all globally defined contracts.
 
 Globally defined contracts are handled automatically, even when they aren’t linked to a specific chain or address.
 
-<img src="/blog-assets/dev-update-jan-26-3.png" alt="Automatic Contract Configuration" width="100%"/>
+<img src="/blog-assets/dev-update-jan-26-3.png" alt="YAML config diff showing UniswapV3Pool entries removed from per-chain contracts because global contracts are now auto-configured" width="100%"/>
 
 
 ### Conditional Event Handlers
@@ -146,7 +146,7 @@ V3 allows event handlers to be enabled or disabled conditionally.
 
 You can now return a boolean value from the eventFilters function to control whether a handler runs.
 
-<img src="/blog-assets/dev-update-jan-26-4.png" alt="Conditional Event Handlers" width="100%"/>
+<img src="/blog-assets/dev-update-jan-26-4.png" alt="ERC20.Transfer handler code using eventFilters with chainId to skip Polygon, track all on Ethereum Mainnet, and whitelist addresses on other chains" width="100%"/>
 
 ### TUI Love
 
@@ -154,7 +154,7 @@ V3 brings updates to the TUI, making it even more beautiful & compact.
 
 It uses fewer resources, shares a link to the Hasura playground, and adjusts dynamically to the terminal width.
 
-<img src="/blog-assets/dev-update-jan-26-5.png" alt="TUI" width="100%"/>
+<img src="/blog-assets/dev-update-jan-26-5.png" alt="Envio TUI showing pixel art ENVIO logo with per-chain progress bars for chains 1, 143 and 8453, total events and GraphQL and Dev Console links" width="100%"/>
 
 ### Envio API Token Required
 
@@ -177,7 +177,7 @@ For a deeper dive into everything included so far, be sure to check out the full
 
 ## Indexing Data on Injective
 
-<img src="/blog-assets/dev-update-jan-26-6.png" alt="Indexing Data on Injective" width="100%"/>
+<img src="/blog-assets/dev-update-jan-26-6.png" alt="Envio and Injective co-branded banner with both logos on a purple background" width="100%"/>
 
 Envio proudly supports developers and analysts building on [Injective](https://injective.com) by providing efficient access to real-time and historical onchain data to help teams build robust apps on Injective.
 
@@ -186,7 +186,7 @@ With Envio, teams can sync and query Injective data and define fully customizabl
 
 ## Migrating Production Subgraphs: Polymarket Indexer
 
-<img src="/blog-assets/dev-update-jan-26-7.png" alt="Polymarket indexer" width="100%"/>
+<img src="/blog-assets/dev-update-jan-26-7.png" alt="GitHub repo card for enviodev/polymarket-indexer with the tagline Index Polymarket events with HyperIndex" width="100%"/>
 
 A common question we hear is what migrating a real production subgraph setup actually looks like in practice.
 
@@ -201,7 +201,7 @@ The full implementation is available here:
 
 ## Blockchain Indexer For Application Backends
 
-<img src="/blog-assets/blockchain-indexer-backends.png" alt="Blockchain Indexer asset" width="100%"/>
+<img src="/blog-assets/blockchain-indexer-backends.png" alt="Envio cover graphic titled Blockchain Indexer For Application Backends with subtitle A Practical Overview" width="100%"/>
 
 Indexers are a core part of most application backends, sitting between the blockchain and the app. By transforming raw onchain data into structured, queryable state, indexing removes a lot of complexity from backend logic and makes applications easier to build and scale as they grow. Envio fits into this workflow by providing a consistent indexing layer teams can use from local development through production, without changing how their backend logic is defined.
 
@@ -210,7 +210,7 @@ For more details, read the full [blog](https://docs.envio.dev/blog/blockchain-in
 
 ## Envio Powers Funnel with Efficient Data Indexing
 
-<img src="/blog-assets/dev-update-jan-26-9.png" alt="Envio & Funnel" width="100%"/>
+<img src="/blog-assets/dev-update-jan-26-9.png" alt="Envio and Funnel co-branded banner with both logos on a dark blue background" width="100%"/>
 
 [Funnel](https://funnel.markets/) is back after completing a successful backend migration to Envio, which has improved the performance and reliability of the onchain data powering their application heading into 2026.
 
@@ -230,7 +230,7 @@ See this post on [X](https://x.com/funnel_markets/status/2009670839940329711) fo
 
 ## Featured Developer: Zod
 
-<img src="/blog-assets/dev-update-jan-26-10.png" alt="DOTM Jan 2026" width="100%"/>
+<img src="/blog-assets/dev-update-jan-26-10.png" alt="Envio Featured Developer banner for Zod with a portrait photo over a purple developer workstation backdrop" width="100%"/>
 
 This month’s featured developer is Zod. They’ve been building for a few decades and working onchain since 2019. Over the past year, they’ve been actively using tools like Cursor and exploring in-the-loop agentic development.
 
@@ -245,7 +245,7 @@ Well done, Zod. Be sure to check out Scale and follow the team on [X](https://x.
 
 ## Playlist of the Month
 
-<img src="/blog-assets/dev-update-jan-26-11.png" alt="PLOTM Jan 2026" width="100%"/>
+<img src="/blog-assets/dev-update-jan-26-11.png" alt="Spotify public playlist card titled Jan 26 by Jordy Baby with 21 songs and 1 hr 27 min runtime" width="100%"/>
 
 ▶ [Open Spotify](https://open.spotify.com/playlist/3LismooWdej6nDxwY9486d?si=00ab83ef26874d81)
 

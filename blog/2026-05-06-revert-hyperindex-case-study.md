@@ -56,7 +56,7 @@ The indexer covers the full PancakeSwap V3 contract surface on BNB Smart Chain:
 
 Dynamic contract registration handles the Pool contracts. As new PancakeSwap V3 pools are created onchain by the Factory, the indexer registers them automatically without requiring a redeployment.
 
-<img src="/blog-assets/revert-hyperindex-case-study-2.png" alt="Revert Finance PancakeSwap V3 indexer running on Envio" width="100%"/>
+<img src="/blog-assets/revert-hyperindex-case-study-2.png" alt="Envio Cloud GraphQL playground showing a Position query and JSON response for the revert-indexer-2 deployment" width="100%"/>
 
 ## The Results
 

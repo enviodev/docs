@@ -76,7 +76,7 @@ export const getMetadata = createEffect(
 
 The Development Console now shows detailed performance metrics for every Effect API execution. You can see execution time, rate limits, and caching behaviour at a glance, making it much easier to debug and fine tune performance. A simple way to get more visibility and improve your indexer.
 
-<img src="/blog-assets/dev-update-nov-25-1.png" alt="Dev console" width="100%"/>
+<img src="/blog-assets/dev-update-nov-25-1.png" alt="HyperIndex Development Console showing Effects and Storage Reads performance metrics with call counts, batched percentages and execution times" width="100%"/>
 
 
 ### New getWhere.lt Query
@@ -114,7 +114,7 @@ For a full walkthrough on how to migrate, read our guide on [How to Migrate Alch
 
 ## MetaMask x Envio Advanced Permissions Hackathon is Live 
 
-<img src="/blog-assets/dev-update-nov-25-4.png" alt="MetaMask x Envio hackathon" width="100%"/>
+<img src="/blog-assets/dev-update-nov-25-4.png" alt="MetaMask Advanced Permissions Edition hackathon banner with $10,000 prize pool in partnership with Envio" width="100%"/>
 
 We have partnered with MetaMask for the Advanced Permissions Dev Cook-Off hackathon, inviting developers to build with ERC-7715 and ship new agent and automation ideas. The hack is now live with $10,000 in total prizes available.
 
@@ -132,7 +132,7 @@ Check the original post on [X](https://x.com/DenhamPreen/status/1988980819629863
 
 ## How to Monetize HyperSync Queries using x402
 
-<img src="/blog-assets/dev-update-nov-25-6.png" alt="Monetize HyperSync Queries using x402" width="100%"/>
+<img src="/blog-assets/dev-update-nov-25-6.png" alt="GitHub repo card for nikbhintade/x402-hypersync with the description monetize your hypersync queries with x402" width="100%"/>
 
 A new demo went live this month showing how analysts and builders can monetize their HyperSync queries using [x402](https://www.x402.org). The project combines HyperSync's fast querying and filtering across multiple networks with x402's pay per request model to create simple monetizable blockchain APIs. The example lets users fetch token transfer history for any address across all HyperSync supported networks, with optional filtering by token.
 
@@ -141,7 +141,7 @@ Explore the demo or try it yourself on [GitHub](https://github.com/nikbhintade/x
 
 ## Devconnect and Edge City | Argentina 
 
-<img src="/blog-assets/dev-update-nov-25-7.png" alt="Envio at Devconnect & Edge City" width="100%"/>
+<img src="/blog-assets/dev-update-nov-25-7.png" alt="Empty Devconnect Buenos Aires main hall with rows of chairs facing the lit stage and Devconnect signage" width="100%"/>
 
 The team recently attended [Edge City](https://www.edgecity.live/patagonia) in Patagonia, spending time with builders and getting a closer look at what teams are working on across the ecosystem. It was a good mix of conversations, working sessions and meeting new faces.
 
@@ -152,7 +152,7 @@ We wrapped up the month at Devconnect Buenos Aires, taking part in the sessions 
 
 ## Encode Hackathon: Envio's Winners 
 
-<img src="/blog-assets/dev-update-nov-25-8.png" alt="Encode x Envio hackathon" width="100%"/>
+<img src="/blog-assets/dev-update-nov-25-8.png" alt="Envio Hackathon Winners banner for Encode London 2025 with Encode Club logo" width="100%"/>
 
 Envio partnered with Encode Club at Encode London 2025 and awarded $3,000 in bounties for builders using HyperIndex and HyperSync. The winners included:
 
@@ -169,7 +169,7 @@ Congratulations to all the builders who took part and big thanks to the Encode t
 
 ## High Performance Indexing on Sonic with HyperSync
 
-<img src="/blog-assets/dev-update-nov-25-9.png" alt="ComparNodes HyperSync Sonic benchmark" width="100%"/> 
+<img src="/blog-assets/dev-update-nov-25-9.png" alt="Compare Nodes benchmark dashboard for Envio HyperSync on Sonic showing 5.25K req/s peak, 2.67 million total successes and 100% success rate" width="100%"/> 
 
 Building on Sonic? Envio keeps up.
 
@@ -191,7 +191,7 @@ See Rootstock's original post on [X](https://x.com/rootstock_io/status/199144621
 
 ## MetaMask Smart Accounts x Monad x Envio Hackathon Winners
 
-<img src="/blog-assets/dev-update-nov-25-10.png" alt="MetaMask x Envio hack winners #1" width="100%"/>
+<img src="/blog-assets/dev-update-nov-25-10.png" alt="MetaMask Smart Accounts Hackathon Winners banner with $15,000 prize pool in partnership with MetaMask and Monad" width="100%"/>
 
 We partnered with [MetaMask](https://metamask.io/en-GB/developer) and [Monad](https://www.monad.xyz/brand-and-media-kit) for the Smart Accounts hackathon, which featured a total prize pool of $15,000. This hackathon focused on the next generation of wallet and smart account experiences. Builders explored account abstraction, modular execution, AI driven automation and real-time blockchain indexing using Envio.
 
@@ -223,7 +223,7 @@ Be sure to follow them on [X](https://x.com/Slutsky___) and check out their work
 
 ## Playlist of the Month
 
-<img src="/blog-assets/dev-update-nov-25-12.png" alt="PLOTM Nov 2025" width="100%"/> 
+<img src="/blog-assets/dev-update-nov-25-12.png" alt="Spotify public playlist Nov 25 by Jordy Baby with 27 songs and 1 hr 39 min runtime" width="100%"/> 
 
 [Open Spotify](https://open.spotify.com/playlist/5soTYYQq62La4bssYRdwzH?si=d1e1faa2d3bf44bd)
 

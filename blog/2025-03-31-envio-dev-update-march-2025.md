@@ -134,7 +134,7 @@ If you love what we're building as much as we do and want to stay updated on our
 ## Introducing LogTui: Scan Entire Chains for Logs in Seconds
 
 
-<img src="/blog-assets/envio-dev-update-march-2-2025.png" alt="logtui" width="100%"/>
+<img src="/blog-assets/envio-dev-update-march-2-2025.png" alt="Terminal UI streaming Uniswap V3 events from Ethereum Mainnet via HyperSync, with scanning progress, stats, and an event distribution chart" width="100%"/>
 
 [LogTui](https://www.npmjs.com/package/logtui) is a free CLI tool that lets you scan entire chains for onchain events with a single command. It supports 70+ networks and comes with presets for major protocols like ERC-20, ERC-721, Aave, and Chainlink. Designed for speed, it can process millions of events in minutes, powered by HyperSync's efficient filtering to keep data transfer minimal.
 
@@ -145,7 +145,7 @@ For more details check out this [post](https://x.com/jonjonclark/status/19016043
 ## Exciting DeFi Integration V12
 
 
-<img src="/blog-assets/envio-dev-update-march-3-2025.png" alt="v12" width="100%"/>
+<img src="/blog-assets/envio-dev-update-march-3-2025.png" alt="V12 x Envio partnership banner with both logos on a dark background" width="100%"/>
 
 
 Envio's open-indexing framework has been integrated with V12 - an onchain order book that provides high-speed and precise trading.
@@ -156,7 +156,7 @@ With this integration, V12 can seamlessly track key trading metrics, including d
 ## Envio's Blockchain Indexing Framework Supports Developers Building on the XDC Network
 
 
-<img src="/blog-assets/envio-dev-update-march-4-2025.png" alt="xdc" width="100%"/>
+<img src="/blog-assets/envio-dev-update-march-4-2025.png" alt="Envio and XDC Network partnership banner with both logos over a blue particle background" width="100%"/>
 
 
 Envio's open indexing framework supports developers building on the [XDC Network](https://xdc.org/) - an EVM-compatible L1 for secure, scalable global trade with efficient and reliable access to real-time & historical data.
@@ -165,7 +165,7 @@ Envio's open indexing framework supports developers building on the [XDC Network
 ## Envio Powers a Growing Ecosystem on Monad
 
 
-<img src="/blog-assets/envio-dev-update-march-5-2025.png" alt="monad ecosystem" width="100%"/>
+<img src="/blog-assets/envio-dev-update-march-5-2025.png" alt="Envio and Monad partnership banner with both logos over a purple grid background" width="100%"/>
 
 
 Envio is fueling a thriving ecosystem on [Monad](https://www.monad.xyz/), empowering projects with real-time data retrieval and optimized UX as they prepare for mainnet. From [Kuru Exchange](https://www.kuru.io/markets?marketType=trending&timeInterval=5m) and [HaHa Wallet](https://www.haha.me/) to [Nadradar](https://nadradar.com/), [Nad.fun](https://testnet.nad.fun/), [Monorail](https://testnet-preview.monorail.xyz/), [Revoke Cash](https://revoke.cash/), and more - Envio is at the heart of the next wave of high-performance applications.
@@ -177,7 +177,7 @@ Check out this [thread](https://x.com/envio_indexer/status/1900493623784808598) 
 
 
 
-<img src="/blog-assets/envio-dev-update-march-6-2025.png" alt="Envio x Chiliz" width="100%"/>
+<img src="/blog-assets/envio-dev-update-march-6-2025.png" alt="Chiliz x Envio partnership banner with both logos over a purple space background" width="100%"/>
 
 
 Envio's open-indexing framework now supports developers building on [Chiliz](https://www.chiliz.com/), the leading sports-focused blockchain. With seamless access to real-time and historical data, devs can create high-performance applications that bring fan engagement, sports analytics, and Web3 experiences to the next level.
@@ -189,7 +189,7 @@ Envio's open-indexing framework now supports developers building on [Chiliz](htt
 ### Monad Tutorial
 
 
-<img src="/blog-assets/envio-dev-update-march-7-2025.png" alt="monad tutorial" width="100%"/>
+<img src="/blog-assets/envio-dev-update-march-7-2025.png" alt="Telegram message showing a wMonad whale alert for a 20000 wMonad transfer, with a Monad Explorer link preview" width="100%"/>
 
 
 Build a Telegram bot that tracks $WMON token transfers in real-time on the Monad Testnet using Envio's open-indexing framework. This tutorial walks you through setting up an indexer, handling live events, and sending instant notifications - all powered by HyperIndex.
@@ -200,7 +200,7 @@ Learn more by visiting Monad's [documentation](https://docs.monad.xyz/guides/tg-
 ### Chiliz Tutorial
 
 
-<img src="/blog-assets/envio-dev-update-march-8-2025.png" alt="chiliz tutorial" width="100%"/>
+<img src="/blog-assets/envio-dev-update-march-8-2025.png" alt="ERC20 Transfer handler code that sends an FC Barcelona whale alert to Telegram when a transfer exceeds a threshold" width="100%"/>
 
 
 Track major Fan Token transfers with a Telegram bot in just minutes. Our latest Chiliz indexing tutorial shows you how to monitor high-value moves and stay ahead in the sports-focused blockchain ecosystem.
@@ -219,7 +219,7 @@ Watch our hands-on Rootstock indexing tutorial and learn how to seamlessly retri
 ## Powering the next-gen Apps on Fuel
 
 
-<img src="/blog-assets/envio-dev-update-march-9-2025.png" alt="powering apps on fuel" width="100%"/>
+<img src="/blog-assets/envio-dev-update-march-9-2025.png" alt="Envio and Fuel partnership banner with both logos over a green data particle background" width="100%"/>
 
 
 
@@ -230,7 +230,7 @@ For more on the projects we're powering, check out this [thread](https://x.com/e
 
 ## Visualize Any Address Instantly with Chain Density
 
-<img src="/blog-assets/envio-dev-update-march-10-2025.png" alt="chaindensity update" width="100%"/>
+<img src="/blog-assets/envio-dev-update-march-10-2025.png" alt="ChainDensity landing page headline 'Visualize Blockchain Activity Density', powered by HyperSync, with feature pills for spot trends, indexing efforts, contracts, and patterns" width="100%"/>
 
 
 Block explorers show raw data - ChainDensity makes it visual. Instantly track onchain activity for any address and spot trends without complex queries.
@@ -255,7 +255,7 @@ For more details about our winners and prizes, check out this [thread](https://x
 
 ## What is Multichain Indexing?
 
-<img src="/blog-assets/envio-dev-update-march-12-2025.png" alt="what is multichain indexing" width="100%"/>
+<img src="/blog-assets/envio-dev-update-march-12-2025.png" alt="Envio 'Multi-Chain Indexing: Powering Web3 Data Access' banner with floating chain logos on a black background" width="100%"/>
 
 Multichain indexing is the ability to read, organise, and query data from many chains through one unified system so developers can work with onchain activity without managing separate setups for each network.
 
@@ -273,7 +273,7 @@ Web3 is inherently multichain, but navigating networks can be challenging. Learn
 
 ## Featured Developer
 
-<img src="/blog-assets/envio-dev-update-march-13-2025.png" alt="dev of the month march 2025" width="100%"/>
+<img src="/blog-assets/envio-dev-update-march-13-2025.png" alt="Envio Featured Developer banner for Gabriel Stoica with his headshot on a blue network background" width="100%"/>
 
 
 This month, we're excited to feature Gabriel Stoica, a passionate developer focused on decentralization, privacy, and bridging the gap between Web2 and Web3. With years of experience crafting smart contracts and building end-to-end dApps, Gabriel has dedicated his work to making Web3 more accessible for all.
@@ -291,7 +291,7 @@ Make sure to check out Gabriel's [GitHub](https://github.com/gabrielstoica) and 
 
 ## Playlist of the Month
 
-<img src="/blog-assets/envio-dev-update-march-14-2025.png" alt="playlist march 2025" width="100%"/>
+<img src="/blog-assets/envio-dev-update-march-14-2025.png" alt="Spotify public playlist card titled 'Mar 25' by Jordy Baby, 25 songs, 1 hr 36 min" width="100%"/>
 
 
 [Open Spotify](https://open.spotify.com/playlist/0KuEG8cv3T7oNV0rtLKaEP?si=e00c3fc7a6f244ca)

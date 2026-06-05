@@ -10,7 +10,7 @@ last_update:
 
 Co-authors: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing, and [Jonjon Clark](https://x.com/jonjonclark), Co-Founder at Envio
 
-<img src="/blog-assets/oracle-wars-1.png" alt="Cover Image Oracle Wars" width="100%"/>
+<img src="/blog-assets/oracle-wars-1.png" alt="Oracle Wars dashboard showing ETH/USD price chart comparing Redstone and Chainlink oracle feeds over 24 hours" width="100%"/>
 
 <!--truncate-->
 
@@ -47,7 +47,7 @@ Wonder what happens in live conditions during periods of high volatility? That i
 
 You will notice that updates are not always evenly spaced. That is the deviation threshold kicking in: when markets get volatile, updates come in fast. When things are calm, fewer updates appear. This is a valuable pattern to observe if you are designing a protocol that depends on accurate and real-time data.
 
-<img src="/blog-assets/oracle-wars-2.png" alt="Oracle Wars 2" width="100%"/>
+<img src="/blog-assets/oracle-wars-2.png" alt="Oracle Wars price chart showing a sharp ETH/USD drop to around $2,200 with clustered Redstone and Chainlink updates during high volatility" width="100%"/>
 
 ## Understanding the limitations of deviation thresholds in push oracles
 
@@ -69,7 +69,7 @@ With the advent of high-speed chains like MegaETH and Monad, we are starting to 
 
 On Oracle Wars, you can observe how these super-fast push oracles behave in real time, with feeds like the ETH/USD price on MegaETH. The data is continuously updated, providing a new level of insight into how push oracles might evolve to rival the responsiveness of pull models.
 
-<img src="/blog-assets/oracle-wars-3.png" alt="Oracle Wars 2" width="100%"/>
+<img src="/blog-assets/oracle-wars-3.png" alt="Oracle Wars showing Redstone ETH/USD feed on MegaETH with current price $1,641.78 and per-block step updates" width="100%"/>
 
 One aspect that remains intriguing is the frequent occurrence of multiple price updates at the same timestamp. This raises questions about whether these oracles are pushing multiple updates within the same block and the rationale behind this granularity.
 

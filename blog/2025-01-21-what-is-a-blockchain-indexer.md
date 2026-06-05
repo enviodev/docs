@@ -9,7 +9,7 @@ last_update:
 authors: ["j_o_r_d_y_s"]
 ---
 
-<img src="/blog-assets/blockchain-indexer.png" alt="future of blockchain indexing" width="100%"/>
+<img src="/blog-assets/blockchain-indexer.png" alt="Envio blog cover, What is a Blockchain Indexer? An Introduction" width="100%"/>
 
 <!--truncate-->
 

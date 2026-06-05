@@ -86,7 +86,7 @@ Read the [full case study](https://docs.envio.dev/blog/case-study-bridgg-op-supe
 
 ## Encode Hackathon Winner: ModuleScan
 
-<img src="/blog-assets/envio-developer-community-oct-2024-4.png" alt="Encode Club Hackathon Winner Module Scan by Timur" width="100%"/>
+<img src="/blog-assets/envio-developer-community-oct-2024-4.png" alt="ModuleScan dashboard showing recent installations and uninstallations tables with chain ID, account, and module columns" width="100%"/>
 
 Congratulations to [ModuleScan](https://modulescan-ui.vercel.app/) for winning multiple prizes at the Encode hackathon! This innovative indexer tracks historical smart account module activity, showcasing:
 
@@ -110,7 +110,7 @@ Kudos to [Timur Badretdinov](https://x.com/DestinerX)!
 
 ## Highlights from Zebu Live & Encode London
 
-<img src="/blog-assets/envio-developer-community-oct-2024-5.png" alt="Zebu Live JonJon CoFounder Speaker Photo" width="100%"/>
+<img src="/blog-assets/envio-developer-community-oct-2024-5.png" alt="Speaker presenting onstage at Zebu Live in front of a sponsor backdrop with Fabric, Eden Block, Bionic, Cherry, Fidesium logos" width="100%"/>
 
 We had a fantastic time at [Zebu Live](https://www.zebulive.xyz/) and the [Encode London](https://www.encode.club/encodelondon-24/#Prizes) Hackathon & Conference! At both events, we hosted data indexing workshops where blockchain developers could explore faster, smarter ways to access their onchain data, demonstrating how alternative indexers like Envio can improve their data retrieval.
 
@@ -126,7 +126,7 @@ For more upcoming events and where to catch us - be sure to check out our upcomi
 
 ## Featured Developer
 
-<img src="/blog-assets/envio-developer-community-oct-2024-6.png" alt="Developer of the Month" width="100%"/>
+<img src="/blog-assets/envio-developer-community-oct-2024-6.png" alt="Envio Featured Developer banner for Ankush Jha with a photo of him beside a coding workstation" width="100%"/>
 
 This month's featured developer and community member of the month is [Ankush Jha](https://www.noveleader.xyz/), a dedicated developer and crypto native with three years in the space. Known for his sharp research skills and innovative approach, Ankush has made significant contributions to our community as a developer and researcher.
 
@@ -142,7 +142,7 @@ For a full list of deployed indexers visit our [explorer](https://envio.dev/expl
 
 [Open Spotify](https://open.spotify.com/playlist/50pryGy4bfJfqAVKZAojNh?si=19a115a6742e4292)
 
-<img src="/blog-assets/envio-developer-community-oct-2024-7.png" alt="Developer of the Month" width="100%"/>
+<img src="/blog-assets/envio-developer-community-oct-2024-7.png" alt="Spotify public playlist cover for 'Relaxing African Music' by Buddha's Lounge" width="100%"/>
 
 ## Envio Freelancer Network
 

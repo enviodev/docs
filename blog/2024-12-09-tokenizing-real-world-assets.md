@@ -38,7 +38,7 @@ This process allows investors to buy, sell, and trade ownership stakes in real e
 
 At the heart of Blocksquare is [Oceanpoint](https://oceanpoint.fi/), a DeFi platform where users can stake real estate-backed tokens, earn rewards, and participate in a growing ecosystem of tokenized properties. Powered by the BST utility token, Oceanpoint makes property investment more accessible, transparent, and efficient.
 
-<img src="/blog-assets/tokenizing-rwa-1.png" alt="Oceanpoint" width="100%"/>
+<img src="/blog-assets/tokenizing-rwa-1.png" alt="Oceanpoint real estate marketplace listing tokenized properties in Ljubljana, Dubai, and Techpark with APY, valuation, and token holder counts" width="100%"/>
 
 *Screenshot of [Oceanpoint's Real Estate Marketplace](https://marketplace.oceanpoint.fi/oceanpoint/marketplace)*
 
@@ -61,7 +61,7 @@ By leveraging Envio's indexing infrastructure, Blocksquare benefits from real-ti
 
 Envio optimizes performance significantly, enabling the indexing of over 400,000 Ethereum Mainnet events in under 20 minutes, a task that previously took hours with The Graph. This gives web3 developers significantly faster access to onchain data, speeding up development and testing cycles and ensuring scalable data access as applications grow.
 
-<img src="/blog-assets/tokenizing-rwa-2.png" alt="Oceanpoint Marketplace" width="100%"/>
+<img src="/blog-assets/tokenizing-rwa-2.png" alt="Envio CLI terminal showing 400,564 events processed on Chain ID 1 synced to 100% in 16 minutes" width="100%"/>
 
 Envio's integration allows Blocksquare to power its DeFi platform and marketplace with a performant backend that stores important data points such as available liquidity and asset pools, token investment listings, APY calculations, token holders, transaction history, supply information, and any other data points of interest.
 

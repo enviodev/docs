@@ -56,14 +56,14 @@ One of the standout features of Envio's SDK that greatly benefited Sablier was i
 
 Envio's multichain capability provides developers with an efficient way to access fragmented data across multiple chains. Builders can specify their event handler to operate against a common schema. For Sablier, they could collect and transform data from various sources and aggregate it into a single PostgreSQL database. With all cross-chain data consolidated, Sablier could query this data via a unified GraphQL API instead of requesting the same data via multiple endpoints. This streamlined their operations, making it easier to manage and utilize data from multiple blockchain networks.
 
-<img src="/blog-assets/case-study-sablier-2.png" alt="GraphQL Playground for Query Building" width="100%"/>
+<img src="/blog-assets/case-study-sablier-2.png" alt="GraphQL playground showing a Stream query for sender, depositAmount, and chainId with JSON results from multiple chains" width="100%"/>
 
 When indexing multichain, Envio's SDK offers two options:
 
 1. **Default Mode:** This mode preserves ordering across chains and ensures that events from all chains are ingested and processed in sequence. It is essential if you need to maintain the order across chains and are handling the same data from multiple chains.
 2. **Unordered Head Mode:** This mode indexes each chain quickly without preserving order across chains. It is useful if you are indexing at the head and do not want the slow block time of one chain to hinder the optimistic processing of events on other chains.
 
-<img src="/blog-assets/case-study-sablier-3.png" alt="Multichain Indexing Sync Status Progress bars" width="100%"/>
+<img src="/blog-assets/case-study-sablier-3.png" alt="Envio dashboard listing per-chain sync progress for Ethereum, OP, BNB, Gnosis, Polygon, zkSync, Base, Arbitrum, Avalanche, Blast, Scroll, and Sepolia at 100%" width="100%"/>
 
 For more information on Envio's multichain indexing capabilities, view our dev docs [here](https://docs.envio.dev/docs/HyperIndex/multichain-indexing).
 

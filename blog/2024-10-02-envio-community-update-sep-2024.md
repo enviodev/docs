@@ -89,7 +89,7 @@ A big thank you to all the attendees, sponsors, and event organizers for making 
 
 - [How to Index Data on Fuel In Less Than 5 Minutes](https://www.youtube.com/watch?si=bBKbCvBPYiQzOfKs&v=IEgmHAW0S_A&feature=youtu.be)
 
-<img src="/blog-assets/envio-developer-community-sep-2024-4.png" alt="Cover Image Encode Club Indexing On Fuel" width="100%"/>
+<img src="/blog-assets/envio-developer-community-sep-2024-4.png" alt="Fuel x Encode Club hackathon workshop flyer: How to Index Data on Fuel in Less Than 5 Mins Using Envio with Dmitry Zakharov" width="100%"/>
 
 - [How to Index Dat on Citrea in < 5mins](https://www.youtube.com/watch?v=rPPxS6ORaEc)
 
@@ -101,7 +101,7 @@ For more video tutorials visit our [YouTube](https://www.youtube.com/@envio_inde
 
 ## Featured Developer
 
-<img src="/blog-assets/envio-developer-community-sep-2024-6.png" alt="Dev of the Month September" width="100%"/>
+<img src="/blog-assets/envio-developer-community-sep-2024-6.png" alt="Envio Featured Developer banner for Jordan Lesich with rocket illustration" width="100%"/>
 
 We're pleased to announce our featured developer and community member of the month, Jordan Lesich, a highly experienced builder in the DAO ecosystem. With nearly five years of expertise working on DAO platforms like [DAOhaus](https://daohaus.club/), [Nouns.build](https://nouns.build/), and [DAO Masons](https://www.daomasons.com/), Jord brings a full-stack skill set to the table, engaging in every stage of dApp development - from design and contracts to frontend, backend, and indexers. His dedication to refining the DAO landscape makes him a standout contributor to our community.
 
