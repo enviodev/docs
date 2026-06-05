@@ -34,9 +34,13 @@ Open Claude/Cursor/Codex and prompt:
 pnpx envio init
 ```
 
-AI will automatically be provided with the commands to run next and the additional tools the Envio CLI provides. You will be automatically asked additional questions by your AI tool to achieve the desired result.
+Your assistant takes it from there — the Envio CLI is built to be driven by an agent.
 
-All `init` subcommands and flags are documented in the [Envio CLI reference](/docs/HyperIndex/cli-commands).
+### Built for AI Agents
+
+- **Agent-aware CLI**: when Envio detects a command is being run by an agent rather than interactively, it returns an AI-friendly prompt with the available options and step-by-step guidance on what to do next.
+- **Tools for agents**: Envio exposes tools and recommendations that help an agent reach the result on its own — like `envio tools search-docs` — with more coming soon.
+- **Curated skills**: once the project is initialized, Envio ships a set of curated Claude skills that guide an agent through the codebase and, paired with the [testing framework](/docs/HyperIndex/testing), let it iterate quickly on indexer changes while maintaining quality.
 
 ### About Envio API Token
 
@@ -53,9 +57,7 @@ See [API Tokens](/docs/HyperSync/api-tokens) and [Environment Variables](/docs/H
 
 ## Step 2. Develop with the Built-in Claude Skills
 
-HyperIndex v3 ships with **Claude skills** that teach AI assistants how HyperIndex works: config, schema, handlers, loaders, dynamic contracts, testing, and migration checklists. When an assistant is attached to a v3 project, it can read these skills directly instead of inventing patterns.
-
-A productive loop with the skills looks like:
+The curated skills cover config, schema, handlers, loaders, dynamic contracts, testing, and migration checklists, so your agent follows established patterns instead of inventing them. A productive loop looks like:
 
 1. Describe the behavior you want in plain English.
 2. Let the assistant edit `config.yaml`, `schema.graphql`, and `src/handlers`.
