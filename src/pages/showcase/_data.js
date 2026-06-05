@@ -180,6 +180,17 @@ const sites = [
     source: "https://rwaradar.io",
     tags: [tags.hyperindex],
   },
+  {
+    slug: "x402stats",
+    title: "x402stats",
+    description:
+      "A real-time analytics dashboard for the x402 payment protocol on Base — volume, facilitators, services, buyers, and a live payment feed.",
+    longDescription:
+      "x402stats is a real-time analytics dashboard for the x402 payment protocol on Base. Built with Envio's HyperIndex, it tracks total payment volume (in USDC), payment counts, active services, and buyers across configurable time ranges (24h, 7d, 30d, and all-time). A live feed streams payments as they happen, while leaderboards rank the top services accepting x402 and the top facilitators clearing those payments (grouped by brand and aggregated across their operator wallets). The dashboard also breaks data down by facilitator, marketplace of services, individual payments, and buyer wallets, alongside higher-level insights and health metrics such as payment attribution and volume drift. It additionally taps Envio's HyperSync to pull on-chain trace data, enabling a deeper, transaction-level view of x402 flows. Together these give developers, builders, and researchers a single, fast window into the x402 ecosystem on Base.",
+    image: "/img/showcase/x402stats.gif",
+    source: "https://x402stats.ai",
+    tags: [tags.hyperindex, tags.hypersync],
+  },
 ];
 
 export { tags, sites };
