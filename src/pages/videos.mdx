@@ -11,6 +11,29 @@ Concise video recaps of every Envio release. Newest at the top. Skim the highlig
 
 ---
 
+## v3.0.0 — HyperIndex V3 Is Here 🚀
+
+<Video id="iptLiqa8eQ8" title="Envio v3.0.0" />
+
+Links: [What's new in V3](/docs/HyperIndex/whats-new-in-v3) · [GitHub release notes](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0) · [YouTube](https://www.youtube.com/watch?v=iptLiqa8eQ8)
+
+**Highlights**
+
+- 3× faster backfill (and faster still on v3.1 — ~50,000 events/sec on average)
+- New unified handlers API: `indexer.onEvent()` / `indexer.onBlock()` — no more generated package, `envio` package 88 MB smaller
+- Powerful `where` option: conditional event handlers, per-chain filters, and per-event start blocks
+- ESM migration with top-level `await` in handlers
+- Automatic handler registration from `src/handlers` — no more handler paths in config
+- New testing framework: run and snapshot-test your indexer programmatically, no live indexer needed
+- Experimental ClickHouse storage in dual mode with Postgres (supported on Envio Cloud dedicated plans)
+- HyperSync source improvements: server-side events replace polling, query cache (up to 90% egress reduction for self-hosters)
+- RPC source for real-time indexing with experimental WebSocket support
+- Experimental Solana support via slot handlers, plus block-handler-only indexers
+- pnpm no longer required — use npm, yarn, bun, or any package manager
+- Official Prometheus metrics endpoint and a cleaner TUI with live events/sec
+
+---
+
 ## v2.32.0 — Effect API Graduation, Console Insights, New Query
 
 <Video id="yvUVzV1ifig" title="Envio v2.32.0" />
