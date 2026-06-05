@@ -8,9 +8,9 @@ description: Step-by-step instructions for upgrading an existing HyperIndex V2 p
 
 # Migrate to HyperIndex V3
 
-This guide is a plain, step-by-step checklist of every change required to upgrade an existing HyperIndex V2 project to V3. For an overview of new V3 capabilities, see [What's New in V3](./whats-new-in-v3).
+Every change required to upgrade a HyperIndex V2 project to V3. For new V3 capabilities, see [What's New in V3](./whats-new-in-v3).
 
-The best way to upgrade is to open Claude/Cursor/Codex or any other favorite AI tool and prompt:
+Easiest path — prompt your AI tool (Claude/Cursor/Codex):
 
 ```
 Upgrade my indexer to V3 by following the migration instructions step by step https://docs.envio.dev/docs/HyperIndex/migrate-to-v3
@@ -18,85 +18,49 @@ Upgrade my indexer to V3 by following the migration instructions step by step ht
 
 ## Step 0: Prepare on V2 (Recommended)
 
-Before upgrading to V3, prepare your project while still on V2:
+While still on V2:
 
 1. Upgrade to `envio@2.32.6`.
-2. Enable Preload Optimization in `config.yaml`:
-
-   ```yaml
-   preload_handlers: true
-   ```
-
-3. If you were using loaders, migrate them to Preload Optimization following the [Migrating from Loaders](/docs/HyperIndex/preload-optimization#migrating-from-loaders) guide.
-4. Verify your indexer still works with `pnpm dev`.
+2. Set `preload_handlers: true` in `config.yaml`.
+3. If using loaders, migrate them per [Migrating from Loaders](/docs/HyperIndex/preload-optimization#migrating-from-loaders).
+4. Verify with `pnpm dev`.
 
 ## Step 1: Update Node.js
 
-Update Node.js to **22 or higher** (24 is recommended). Earlier versions are no longer supported.
+Use Node.js **22+** (24 recommended). Earlier versions are unsupported.
 
 ## Step 2: Update `package.json`
 
-1. Add `"type": "module"` (required — without it the project will fail to start with ESM import errors).
-2. Set `engines.node` to `>=22.0.0`.
-3. Update the `envio` dependency to the latest v3 release.
-4. Remove the `optionalDependencies.generated` entry — the local `generated` package no longer exists. Types are emitted to `.envio/types.d.ts` (git-ignored) and wired up via a small `envio-env.d.ts` file at the project root. Everything previously imported from `generated` is now exported from `envio`.
+- Add `"type": "module"` (required — without it the project fails to start with ESM errors).
+- Set `engines.node` to `>=22.0.0`.
+- Update `envio` to the latest v3 release.
+- Remove `optionalDependencies.generated` — the local `generated` package no longer exists.
 
-   ```diff
-   -  "optionalDependencies": {
-   -    "generated": "./generated"
-   -  },
-   ```
+```json
+{
+  "type": "module",
+  "engines": { "node": ">=22.0.0" },
+  "dependencies": { "envio": "3.0.0" },
+  "devDependencies": {
+    "@types/node": "24.12.2",
+    "typescript": "6.0.3",
+    "vitest": "4.1.0"
+  }
+}
+```
 
-5. Update dev tooling:
-
-   ```json
-   {
-     "type": "module",
-     "engines": {
-       "node": ">=22.0.0"
-     },
-     "dependencies": {
-       "envio": "3.0.0"
-     },
-     "devDependencies": {
-       "@types/node": "24.12.2",
-       "typescript": "6.0.3",
-       "vitest": "4.1.0"
-     }
-   }
-   ```
-
-6. If you used `ts-node` for the start script, replace it with `envio start`:
-
-   ```json
-   {
-     "scripts": {
-       "start": "envio start"
-     }
-   }
-   ```
+If you used `ts-node` for the start script, replace it with `"start": "envio start"`.
 
 ### Test runner
 
-**Option A — Migrate to Vitest (recommended).**
+**Option A — Vitest (recommended).**
 
 ```bash
 pnpm remove ts-mocha ts-node mocha chai @types/mocha @types/chai
 pnpm add -D vitest@4.0.16
 ```
 
-```json
-{
-  "scripts": {
-    "test": "vitest run"
-  },
-  "devDependencies": {
-    "vitest": "4.0.16"
-  }
-}
-```
-
-Move tests from `test/Test.ts` to `src/indexer.test.ts` and update imports:
+Set `"test": "vitest run"`, then move `test/Test.ts` → `src/indexer.test.ts` and update imports:
 
 ```typescript
 // Before (mocha/chai)
@@ -129,9 +93,7 @@ Update for ESM:
 
 ```json
 {
-  /* For details: https://www.totaltypescript.com/tsconfig-cheat-sheet */
   "compilerOptions": {
-    /* Base Options: */
     "esModuleInterop": true,
     "skipLibCheck": true,
     "target": "es2022",
@@ -140,18 +102,12 @@ Update for ESM:
     "moduleDetection": "force",
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
-
-    /* Strictness */
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
-
-    /* For running Envio: */
     "module": "ESNext",
     "moduleResolution": "bundler",
     "noEmit": true,
-
-    /* Code doesn't run in the DOM: */
     "lib": ["es2022"],
     "types": ["node"]
   }
@@ -159,103 +115,57 @@ Update for ESM:
 ```
 
 :::tip
-`verbatimModuleSyntax` and `noUncheckedIndexedAccess` are extra strictness. You can disable them to simplify the migration.
+`verbatimModuleSyntax` and `noUncheckedIndexedAccess` are optional extra strictness — disable them to simplify migration.
 :::
 
 ## Step 4: Update `config.yaml`
 
-### Renames
+**Renames:**
 
 - `networks` → `chains`
 - `confirmed_block_threshold` → `max_reorg_depth`
-- `rpc_config` → `rpc` (now supports multiple URLs, `for: sync | realtime | fallback`, and WebSocket configuration)
+- `rpc_config` → `rpc` (now supports multiple URLs, `for: sync | realtime | fallback`, and WebSocket config)
 
-```yaml
-# Before
-networks:
-  - id: 1
-    contracts:
-      - name: MyContract
-        events:
-          - event: Transfer(address indexed from, address indexed to, uint256 value)
+**Remove if present:**
 
-# After
-chains:
-  - id: 1
-    contracts:
-      - name: MyContract
-        events:
-          - event: Transfer(address indexed from, address indexed to, uint256 value)
-```
-
-### Removals
-
-Remove these options if present:
-
-- `unordered_multichain_mode` — unordered is now the only mode in V3. The V2 `multichain: ordered` opt-in has also been removed.
-- `loaders` — Preload Optimization is now always enabled.
-- `preload_handlers` — now always enabled.
+- `unordered_multichain_mode` and any `multichain: ordered` — unordered is the only mode in V3.
+- `loaders`, `preload_handlers` — Preload Optimization is always enabled.
 - `preRegisterDynamicContracts` — no longer needed.
-- `event_decoder` — the Rust-based decoder is now the only implementation.
-- `output` — generated types are always emitted to `.envio/`.
+- `event_decoder` — the Rust decoder is the only implementation.
+- `output` — types always emitted to `.envio/`.
 
-### Replacements for environment variables
+**Env var → config:** replace the `MAX_BATCH_SIZE` env var with `full_batch_size: 5000`.
 
-If you were using the `MAX_BATCH_SIZE` environment variable, switch to the config option:
-
-```yaml
-full_batch_size: 5000
-```
-
-### Optional: Automatic handler registration
-
-Move handler files to `src/handlers/` and remove the explicit `handler` paths from `config.yaml`. The explicit `handler` field still works if you'd rather not move files immediately.
+**Optional:** move handler files to `src/handlers/` and drop the explicit `handler` paths (the `handler` field still works).
 
 ## Step 5: Update Environment Variables
 
-### Add
+**Add** — if using HyperSync (the default), set `ENVIO_API_TOKEN` (get a free token at [envio.dev/app/api-tokens](https://envio.dev/app/api-tokens)).
 
-If your indexer uses HyperSync (the default), set an API token:
-
-1. Get a free API token at [envio.dev/app/api-tokens](https://envio.dev/app/api-tokens).
-2. Set it in your environment:
-
-   ```bash
-   export ENVIO_API_TOKEN=your_token_here
-   ```
-
-   Or in a local `.env` file:
-
-   ```env
-   ENVIO_API_TOKEN=your_token_here
-   ```
-
-### Remove
+**Remove:**
 
 - `UNSTABLE__TEMP_UNORDERED_HEAD_MODE`
 - `UNORDERED_MULTICHAIN_MODE`
-- `MAX_BATCH_SIZE` (use `full_batch_size` in `config.yaml` instead)
-- `ENVIO_INDEXING_BLOCK_LAG` (use the per-chain `block_lag` config option instead)
+- `MAX_BATCH_SIZE` (use `full_batch_size` in `config.yaml`)
+- `ENVIO_INDEXING_BLOCK_LAG` (use per-chain `block_lag`)
 
-### Rename
+**Rename:**
 
-- `TUI_OFF=true` → `ENVIO_TUI=false` (TUI is also auto-disabled in CI and under AI agents)
-- `ENVIO_PG_PUBLIC_SCHEMA` → `ENVIO_PG_SCHEMA` (the old name is still supported until v4)
+- `TUI_OFF=true` → `ENVIO_TUI=false` (TUI also auto-disabled in CI and under AI agents)
+- `ENVIO_PG_PUBLIC_SCHEMA` → `ENVIO_PG_SCHEMA` (old name supported until v4)
 
 ## Step 6: Update Handler Code
 
-All contract-specific handler exports have been removed. Register every handler through the unified `indexer` value imported from `envio`.
+Contract-specific exports are removed. Register handlers through the unified `indexer` from `envio`.
 
-### Migrate event handlers
+### Event handlers
 
 ```typescript
 // Before
 import { ERC20 } from "generated";
 
 ERC20.Transfer.handler(
-  async ({ event, context }) => {
-    // ...
-  },
+  async ({ event, context }) => {},
   {
     wildcard: true,
     eventFilters: ({ chainId }) => [
@@ -276,54 +186,37 @@ indexer.onEvent(
       params: [{ from: ZERO_ADDRESS, to: WHITELIST[chain.id] }],
     }),
   },
-  async ({ event, context }) => {
-    // ...
-  },
+  async ({ event, context }) => {},
 );
 ```
 
-Notes:
+- `eventFilters` → `where`. Callback receives `{ chain }` (not `{ chainId }`) and returns `false`, `true`, or `{ params: [...], block?: { number: { _gte, _lte, _every } } }`.
+- The top-level array shorthand is gone — wrap it in `{ params: [...] }`.
 
-- `eventFilters` is renamed to `where`.
-- The `where` callback receives `{ chain }` (not `{ chainId }`) and must return `false`, `true`, or `{ params: [...], block?: { number: { _gte, _lte, _every } } }`.
-- The previous array shorthand at the top level is no longer accepted — wrap it in `{ params: [...] }`.
-
-#### Filtering by the contract's own addresses
-
-In V2 the addresses configured (or dynamically registered) for the contract were passed into `eventFilters` as the `addresses` argument. In V3 they live on the chain object as `chain.<ContractName>.addresses`, which also stays in sync with anything registered via `context.chain.<ContractName>.add(...)`.
+**Filtering by the contract's own addresses** — V2's `eventFilters` `addresses` argument becomes `chain.<ContractName>.addresses` (kept in sync with `context.chain.<ContractName>.add(...)`):
 
 ```typescript
 // Before
-import { Safe } from "generated";
-
 Safe.Transfer.handler(async ({ event, context }) => {}, {
   wildcard: true,
-  eventFilters: ({ addresses }) => [
-    { from: addresses },
-    { to: addresses },
-  ],
+  eventFilters: ({ addresses }) => [{ from: addresses }, { to: addresses }],
 });
 
 // After
-import { indexer } from "envio";
-
 indexer.onEvent(
   {
     contract: "Safe",
     event: "Transfer",
     wildcard: true,
     where: ({ chain }) => ({
-      params: [
-        { from: chain.Safe.addresses },
-        { to: chain.Safe.addresses },
-      ],
+      params: [{ from: chain.Safe.addresses }, { to: chain.Safe.addresses }],
     }),
   },
   async ({ event, context }) => {},
 );
 ```
 
-### Migrate dynamic contract registration
+### Dynamic contract registration
 
 ```typescript
 // Before
@@ -332,8 +225,6 @@ UniV3.PoolFactory.contractRegister(async ({ event, context }) => {
 });
 
 // After
-import { indexer } from "envio";
-
 indexer.contractRegister(
   { contract: "UniV3", event: "PoolFactory" },
   async ({ event, context }) => {
@@ -342,75 +233,47 @@ indexer.contractRegister(
 );
 ```
 
-`context.add<ContractName>(address)` becomes `context.chain.<ContractName>.add(address)`.
+`context.add<ContractName>(addr)` → `context.chain.<ContractName>.add(addr)`.
 
-### Migrate block handlers
+### Block handlers
 
-**Behavior change.** In V2, every `onBlock(...)` call ran on the single chain specified by its `chain` option, and you set `interval`, `startBlock`, and `endBlock` as top-level options. In V3, `indexer.onBlock(...)` runs on **every chain by default**. To match the V2 behavior of "this chain only, in this block range, every N blocks", you have to pass an explicit `where` callback that:
-
-- Returns `false` for chains you don't want to run on (recovering V2's single-chain default).
-- Returns `{ block: { number: { _gte, _lte, _every } } }` to express the start block, end block, and interval.
+**Behavior change.** V2's `onBlock` ran on one chain (its `chain` option) with top-level `interval`/`startBlock`/`endBlock`. V3's `indexer.onBlock` runs on **every chain by default**. To restore V2's single-chain + range + interval behavior, pass a `where` callback that returns `false` for unwanted chains and `{ block: { number: { _gte, _lte, _every } } }` for the range/interval.
 
 ```typescript
-// Before — V2 ran this only on chain 1, every 100 blocks, in a fixed range
-import { onBlock } from "generated";
-
+// Before — only chain 1, every 100 blocks, fixed range
 onBlock(
-  {
-    name: "Ranges",
-    chain: 1,
-    startBlock: 20_000_000,
-    endBlock: 22_000_000,
-    interval: 100,
-  },
-  async ({ block, context }) => {
-    // ...
-  },
+  { name: "Ranges", chain: 1, startBlock: 20_000_000, endBlock: 22_000_000, interval: 100 },
+  async ({ block, context }) => {},
 );
 
-// After — V3 runs on every chain by default; the where callback narrows
-// back down to chain 1 and re-expresses the range/interval via _gte/_lte/_every.
-import { indexer } from "envio";
-
+// After
 indexer.onBlock(
   {
     name: "Ranges",
     where: ({ chain }) => {
       if (chain.id !== 1) return false;
-      return {
-        block: {
-          number: {
-            _gte: 20_000_000,
-            _lte: 22_000_000,
-            _every: 100,
-          },
-        },
-      };
+      return { block: { number: { _gte: 20_000_000, _lte: 22_000_000, _every: 100 } } };
     },
   },
-  async ({ block, context }) => {
-    // ...
-  },
+  async ({ block, context }) => {},
 );
 ```
 
-If you actually want the handler to run on **every** chain (the new default), simply omit `where`. Inside a block handler, replace `block.chainId` with `context.chain.id`.
+To run on **every** chain (the new default), omit `where`. Inside the handler, `block.chainId` → `context.chain.id`.
 
-### Update the `getWhere` API
+### `getWhere` API
 
-Switch to the GraphQL-style filter syntax:
+Switch to GraphQL-style filter syntax (new operators: `_gte`, `_lte`, `_in`):
 
 ```typescript
 // Before
-const transfers   = await context.Transfer.getWhere.from.eq("0x123...");
-const bigTransfers = await context.Transfer.getWhere.value.gt(1000n);
+await context.Transfer.getWhere.from.eq("0x123...");
+await context.Transfer.getWhere.value.gt(1000n);
 
 // After
-const transfers    = await context.Transfer.getWhere({ from: { _eq: "0x123..." } });
-const bigTransfers = await context.Transfer.getWhere({ value: { _gt: 1000n } });
+await context.Transfer.getWhere({ from: { _eq: "0x123..." } });
+await context.Transfer.getWhere({ value: { _gt: 1000n } });
 ```
-
-New operators are also available: `_gte`, `_lte`, `_in`.
 
 ### Rename and removal cheat sheet
 
@@ -436,20 +299,15 @@ New operators are also available: `_gte`, `_lte`, `_in`.
 | `MyEnum` (direct export)                  | `Enum<"MyEnum">`                                            |
 | `MyEntity` (direct export)                | `Entity<"MyEntity">` (preferred; direct still exported)     |
 
-Other type changes:
-
-- `Address` is now `` `0x${string}` `` instead of `string`.
-- Entity array fields are typed as `readonly` — update any code that mutates them.
-- `S.nullable` schema type now returns `T | null` instead of `T | undefined`.
-- The internal `ContractType` enum was removed.
+Other type changes: `Address` is now `` `0x${string}` `` (was `string`); entity array fields are `readonly`; `S.nullable` returns `T | null` (was `T | undefined`); the internal `ContractType` enum was removed.
 
 ## Step 7: Remove `generated`
 
-In the new version the `generated` package is no longer needed and should be removed. All imports from the `"generated"` package should now happen from `"envio"` instead. This is allowed thanks to `envio-env.d.ts`, which is linked automatically — there's no need to add it to `tsconfig.json`.
+The `generated` package is no longer needed — remove it. Import everything from `"envio"` instead. This works via `envio-env.d.ts`, which is linked automatically (no `tsconfig.json` change needed).
 
 ## Step 8: Update Tests
 
-The `MockDb` testing API has been removed. Migrate to `createTestIndexer()` with `simulate`.
+`MockDb` is removed. Use `createTestIndexer()` with `simulate`.
 
 ```diff
 -import { TestHelpers, type User } from "generated";
@@ -476,11 +334,7 @@ The `MockDb` testing API has been removed. Migrate to `createTestIndexer()` with
 +    chains: {
 +      137: {
 +        simulate: [
-+          {
-+            contract: "Greeter",
-+            event: "NewGreeting",
-+            params: { greeting, user: userAddress },
-+          },
++          { contract: "Greeter", event: "NewGreeting", params: { greeting, user: userAddress } },
 +        ],
 +      },
 +    },
@@ -499,22 +353,20 @@ The `MockDb` testing API has been removed. Migrate to `createTestIndexer()` with
  });
 ```
 
-### MockDb migration cheat sheet
-
-| Old (`MockDb`)                              | New (`createTestIndexer`)                                       |
-| ------------------------------------------- | --------------------------------------------------------------- |
-| `MockDb.createMockDb()`                     | `createTestIndexer()`                                           |
-| `Contract.Event.createMockEvent({...})`     | Inline in `simulate: [{ contract, event, params }]`             |
-| `Contract.Event.processEvent({event,mockDb})` | `indexer.process({ chains: { id: { simulate } } })`           |
-| `mockDb.entities.Entity.get(id)`            | `await indexer.Entity.getOrThrow(id)`                           |
-| `mockDb.entities.Entity.set({...})`         | `indexer.Entity.set({...})`                                     |
-| Manual handler threading & event chaining   | Automatic — pass multiple events in the `simulate` array        |
+| Old (`MockDb`)                                | New (`createTestIndexer`)                            |
+| --------------------------------------------- | ---------------------------------------------------- |
+| `MockDb.createMockDb()`                       | `createTestIndexer()`                                |
+| `Contract.Event.createMockEvent({...})`       | Inline in `simulate: [{ contract, event, params }]`  |
+| `Contract.Event.processEvent({event,mockDb})` | `indexer.process({ chains: { id: { simulate } } })`  |
+| `mockDb.entities.Entity.get(id)`              | `await indexer.Entity.getOrThrow(id)`                |
+| `mockDb.entities.Entity.set({...})`           | `indexer.Entity.set({...})`                          |
+| Manual handler threading & event chaining     | Automatic — pass multiple events in `simulate`       |
 
 ## Step 9: Update CLI Usage
 
-- `envio dev` no longer auto-resets the database. If you relied on this, run `envio dev -r` (or `--restart`) explicitly.
-- `envio start` is now production-only. Continue using `envio dev` for local development.
-- Changes in handler files no longer trigger codegen on `pnpm dev`.
+- `envio dev` no longer auto-resets the DB — use `envio dev -r` (`--restart`) if you relied on that.
+- `envio start` is now production-only; use `envio dev` for local development.
+- Handler file changes no longer trigger codegen on `pnpm dev`.
 
 ## Step 10: Run Codegen and Verify
 
@@ -523,18 +375,18 @@ pnpm envio codegen
 pnpm dev
 ```
 
-Postgres column type changes (`raw_events.event_id`: `NUMERIC` → `BIGINT`, `raw_events.serial`: `SERIAL` → `BIGSERIAL`, `envio_chains.events_processed`: `INTEGER` → `BIGINT`, `envio_checkpoints.id`: `INTEGER` → `BIGINT`) are applied automatically — no action required. The deprecated `envio_chains._num_batches_fetched` column always returns `0`.
+Postgres column type changes (`raw_events.event_id`: `NUMERIC`→`BIGINT`, `raw_events.serial`: `SERIAL`→`BIGSERIAL`, `envio_chains.events_processed`: `INTEGER`→`BIGINT`, `envio_checkpoints.id`: `INTEGER`→`BIGINT`) apply automatically. The deprecated `envio_chains._num_batches_fetched` always returns `0`.
 
 ## Step 11: Update Agent Skills
 
-Once the indexer is running, refresh the agent skills bundled with your project so agent-driven development stays aligned with V3's APIs:
+Refresh the bundled agent skills so agent-driven development stays aligned with V3:
 
 ```bash
 pnpx envio skills update
 ```
 
-This populates a `.claude/skills` folder in your project. The skills are consumed by Claude, Cursor, and other compatible agentic tooling. Re-run it whenever a new HyperIndex release ships new APIs.
+This populates `.claude/skills` (consumed by Claude, Cursor, and other agentic tooling). Re-run it on each new HyperIndex release.
 
 ## Getting Help
 
-If you encounter any issues during migration, join our [Discord community](https://discord.gg/envio) for support.
+Issues during migration? Join our [Discord community](https://discord.gg/envio).
