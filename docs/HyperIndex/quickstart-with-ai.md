@@ -12,7 +12,7 @@ Build an Envio HyperIndex indexer end-to-end with an AI coding assistant.
 Most developers now reach for an AI coding assistant before they open a file. This guide walks through an AI-centric flow for creating, developing, and deploying a HyperIndex indexer. It is semi-generic, so any capable AI coding assistant (Cursor, Windsurf, Copilot Agent, Continue, etc.) will work. That said, **we've seen the best results with [Claude Code](https://claude.com/claude-code)** and recommend starting there.
 
 :::tip Prefer the interactive flow?
-If you'd rather drive the CLI yourself, see the [Quickstart](./quickstart).
+If you'd rather drive the CLI yourself, see the [Quickstart](/docs/HyperIndex/quickstart).
 :::
 
 ---
@@ -36,7 +36,7 @@ pnpx envio init
 
 AI will automatically be provided with the commands to run next and the additional tools the Envio CLI provides. You will be automatically asked additional questions by your AI tool to achieve the desired result.
 
-All `init` subcommands and flags are documented in the [Envio CLI reference](./cli-commands).
+All `init` subcommands and flags are documented in the [Envio CLI reference](/docs/HyperIndex/cli-commands).
 
 ### About Envio API Token
 
@@ -47,7 +47,7 @@ The **Envio API token** is your **HyperSync API token**. A few things to know:
 - It's **required when using Envio as the data provider (HyperSync)**. If you only use an external RPC as the data source, no token is needed — you can pass an empty string to skip the prompt.
 - To run `pnpm dev` locally, generate a token from the link above and set `ENVIO_API_TOKEN` in `.env` before starting the indexer.
 
-See [API Tokens](/docs/HyperSync/api-tokens) and [Environment Variables](./environment-variables) for full details.
+See [API Tokens](/docs/HyperSync/api-tokens) and [Environment Variables](/docs/HyperIndex/environment-variables) for full details.
 
 ---
 
@@ -59,14 +59,14 @@ A productive loop with the skills looks like:
 
 1. Describe the behavior you want in plain English.
 2. Let the assistant edit `config.yaml`, `schema.graphql`, and `src/handlers`.
-3. Have it follow a test-driven loop: write a failing test with [`createTestIndexer()`](./testing), implement the handler, then run `pnpm test` to capture and lock in snapshots. See the [Testing guide](./testing) for the full TDD workflow.
+3. Have it follow a test-driven loop: write a failing test with [`createTestIndexer()`](/docs/HyperIndex/testing), implement the handler, then run `pnpm test` to capture and lock in snapshots. See the [Testing guide](/docs/HyperIndex/testing) for the full TDD workflow.
 4. Iterate on failures together.
 
 The three files your agent will spend most of its time in:
 
-- **[`config.yaml`](./configuration-file)**: networks, contracts, events
-- **[`schema.graphql`](./schema)**: entities and relationships
-- **[`src/handlers`](./event-handlers)**: per-event logic
+- **[`config.yaml`](/docs/HyperIndex/configuration-file)**: networks, contracts, events
+- **[`schema.graphql`](/docs/HyperIndex/schema)**: entities and relationships
+- **[`src/handlers`](/docs/HyperIndex/event-handlers)**: per-event logic
 
 ---
 
@@ -74,16 +74,16 @@ The three files your agent will spend most of its time in:
 
 If you're porting from The Graph, Ponder, or another indexing framework, start with the AI migration workflow. It scales much better than hand-editing handlers.
 
-- **[Migrate Using AI](./migrate-with-ai)**: the recommended assistant-driven flow. It's written around subgraphs, but the same **monorepo-plus-phased-prompt** pattern works for **Ponder** and other frameworks. Point the assistant at the source project plus a freshly scaffolded HyperIndex indexer and let the skills guide it.
-- [Migrate from The Graph (manual)](./migration-guide)
-- [Migrate from Ponder](./migrate-from-ponder)
-- [Migrate from Alchemy](./migrate-from-alchemy)
+- **[Migrate Using AI](/docs/HyperIndex/migrate-with-ai)**: the recommended assistant-driven flow. It's written around subgraphs, but the same **monorepo-plus-phased-prompt** pattern works for **Ponder** and other frameworks. Point the assistant at the source project plus a freshly scaffolded HyperIndex indexer and let the skills guide it.
+- [Migrate from The Graph (manual)](/docs/HyperIndex/migration-guide)
+- [Migrate from Ponder](/docs/HyperIndex/migrate-from-ponder)
+- [Migrate from Alchemy](/docs/HyperIndex/migrate-from-alchemy)
 
 ---
 
 ## Step 4. Deploy Programmatically with `envio-cloud`
 
-Once your indexer runs locally, the [`envio-cloud` CLI](./envio-cloud-cli) lets an assistant (or a CI job) deploy and manage the hosted indexer without opening the dashboard.
+Once your indexer runs locally, the [`envio-cloud` CLI](/docs/HyperIndex/envio-cloud-cli) lets an assistant (or a CI job) deploy and manage the hosted indexer without opening the dashboard.
 
 ```bash
 npm install -g envio-cloud
@@ -94,15 +94,15 @@ envio-cloud deployment status my-indexer <commit> --watch-till-synced
 envio-cloud deployment logs my-indexer <commit> --follow
 ```
 
-Every command supports `-o json`, which makes it easy for assistants and scripts to parse results. Full reference: [Envio Cloud CLI](./envio-cloud-cli).
+Every command supports `-o json`, which makes it easy for assistants and scripts to parse results. Full reference: [Envio Cloud CLI](/docs/HyperIndex/envio-cloud-cli).
 
 ---
 
 ## Related Resources
 
-- [MCP Server](./mcp-server)
+- [MCP Server](/docs/HyperIndex/mcp-server)
 - [LLM-friendly docs bundle](/docs/HyperIndex-LLM/hyperindex-complete)
-- [Envio CLI reference](./cli-commands)
-- [Envio Cloud CLI](./envio-cloud-cli)
-- [Migrate Using AI](./migrate-with-ai)
-- [HyperIndex v3 migration](./migrate-to-v3)
+- [Envio CLI reference](/docs/HyperIndex/cli-commands)
+- [Envio Cloud CLI](/docs/HyperIndex/envio-cloud-cli)
+- [Migrate Using AI](/docs/HyperIndex/migrate-with-ai)
+- [HyperIndex v3 migration](/docs/HyperIndex/migrate-to-v3)
