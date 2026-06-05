@@ -34,16 +34,16 @@ Open Claude/Cursor/Codex and prompt:
 pnpx envio init
 ```
 
-Your assistant takes it from there — the Envio CLI is built to be driven by an agent.
-
 ### Built for AI Agents
 
-- **Agent-aware CLI**: when Envio detects a command is being run by an agent rather than interactively, it returns an AI-friendly prompt with the available options and step-by-step guidance on what to do next.
-- **Tools for agents**: Envio exposes tools and recommendations that help an agent reach the result on its own — like `envio tools search-docs` — with more coming soon.
-- **Curated skills**: once the project is initialized, Envio ships a set of curated Claude skills that guide an agent through the codebase and, paired with the [testing framework](/docs/HyperIndex/testing), let it iterate quickly on indexer changes while maintaining quality.
+When we notice a command is run by an agent instead of interactively, we output an AI-friendly prompt with the available options and step-by-step instructions on what to do next.
 
-:::tip Keep your skills fresh
-Upgrading Envio or have stale skills in an existing project? Run `envio skills update` to pull the latest curated skills.
+We also provide tools and recommendations an agent can use to get the result, like `envio tools search-docs`, with more coming soon.
+
+After the project is initialized, we provide a curated set of skills that guide an agent through the codebase. Together with our [testing framework](/docs/HyperIndex/testing), they let it iterate quickly on indexer changes while keeping quality high.
+
+:::tip
+Upgrading Envio or have stale skills? Run `envio skills update` to pull the latest skills into your project.
 :::
 
 ### About Envio API Token
@@ -61,7 +61,7 @@ See [API Tokens](/docs/HyperSync/api-tokens) and [Environment Variables](/docs/H
 
 ## Step 2. The Development Loop
 
-Your agent leans on the curated skills — covering config, schema, handlers, loaders, dynamic contracts, testing, and migration checklists — to follow established patterns instead of inventing them. A productive loop looks like:
+The skills cover config, schema, handlers, loaders, dynamic contracts, testing, and migration checklists, so an agent can read them directly instead of inventing patterns. A productive loop looks like:
 
 1. Describe the behavior you want in plain English.
 2. Let the assistant edit `config.yaml`, `schema.graphql`, and `src/handlers`.
