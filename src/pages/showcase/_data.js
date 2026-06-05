@@ -175,7 +175,7 @@ const sites = [
     description:
       "A real-time analytics dashboard for tracking real-world assets (RWAs) across multiple sectors and chains.",
     longDescription:
-      "RWA Radar is a real-time analytics dashboard that tracks real-world assets (RWAs) on-chain across multiple sectors, including stablecoins, credit, stocks, securities, and more. Built with Envio's HyperIndex, it indexes RWA token activity across multiple blockchain networks, providing sector-level breakdowns, volume metrics, and historical trends. Users can view multichain data for any single asset in one unified view and export dashboard data as CSV, PDF, or XLSX for their own analysis. The platform gives researchers, investors, and DeFi developers a comprehensive window into the growing RWA ecosystem.",
+      "RWA Radar is a real-time analytics dashboard that tracks real-world assets (RWAs) on-chain across multiple sectors, including stablecoins, credit, stocks, securities, and more. Built with Envio's HyperIndex, dashboard shows token activity across multiple blockchain networks, providing sector-level breakdowns, volume metrics, and historical trends. You can view multichain data for any single asset in one unified view and export dashboard data as CSV, PDF, or XLSX for your own analysis. The dashboard gives researchers, investors, and DeFi developers a comprehensive window into the growing RWA ecosystem.",
     video: "/img/showcase/rwaradar.mp4",
     source: "https://rwaradar.io",
     tags: [tags.hyperindex],
