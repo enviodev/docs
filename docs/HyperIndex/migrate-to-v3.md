@@ -8,7 +8,7 @@ description: Step-by-step instructions for upgrading an existing HyperIndex V2 p
 
 # Migrate to HyperIndex V3
 
-Every change required to upgrade a HyperIndex V2 project to V3. For new V3 capabilities, see [What's New in V3](./whats-new-in-v3).
+This guide covers every change required to upgrade a HyperIndex V2 project to V3. For new V3 capabilities, see [What's New in V3](./whats-new-in-v3).
 
 Easiest path — prompt your AI tool (Claude/Cursor/Codex):
 
@@ -20,7 +20,7 @@ Upgrade my indexer to V3 by following the migration instructions step by step ht
 
 While still on V2:
 
-1. Upgrade to `envio@2.32.6`.
+1. Upgrade to `envio@^2.32.6`.
 2. Set `preload_handlers: true` in `config.yaml`.
 3. If using loaders, migrate them per [Migrating from Loaders](/docs/HyperIndex/preload-optimization#migrating-from-loaders).
 4. Verify with `pnpm dev`.
@@ -89,11 +89,13 @@ pnpm add -D tsx@4.21.0
 
 ## Step 3: Update `tsconfig.json`
 
-Update for ESM:
+Update for ESM (copy-paste the file as-is, comments included):
 
 ```json
 {
+  /* For details: https://www.totaltypescript.com/tsconfig-cheat-sheet */
   "compilerOptions": {
+    /* Base Options: */
     "esModuleInterop": true,
     "skipLibCheck": true,
     "target": "es2022",
@@ -102,12 +104,18 @@ Update for ESM:
     "moduleDetection": "force",
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
+
+    /* Strictness */
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
+
+    /* For running Envio: */
     "module": "ESNext",
     "moduleResolution": "bundler",
     "noEmit": true,
+
+    /* Code doesn't run in the DOM: */
     "lib": ["es2022"],
     "types": ["node"]
   }
@@ -136,7 +144,7 @@ Update for ESM:
 
 **Env var → config:** replace the `MAX_BATCH_SIZE` env var with `full_batch_size: 5000`.
 
-**Optional:** move handler files to `src/handlers/` and drop the explicit `handler` paths (the `handler` field still works).
+**Optional (recommended):** move handler files to `src/handlers/` and drop the explicit `handler` paths (the `handler` field still works).
 
 ## Step 5: Update Environment Variables
 
@@ -156,7 +164,7 @@ Update for ESM:
 
 ## Step 6: Update Handler Code
 
-Contract-specific exports are removed. Register handlers through the unified `indexer` from `envio`.
+Contract-specific exports are removed. Register handlers through the unified `indexer` from the `envio` package, which replaces `generated`.
 
 ### Event handlers
 
@@ -197,12 +205,16 @@ indexer.onEvent(
 
 ```typescript
 // Before
+import { Safe } from "generated";
+
 Safe.Transfer.handler(async ({ event, context }) => {}, {
   wildcard: true,
   eventFilters: ({ addresses }) => [{ from: addresses }, { to: addresses }],
 });
 
 // After
+import { indexer } from "envio";
+
 indexer.onEvent(
   {
     contract: "Safe",
@@ -220,11 +232,15 @@ indexer.onEvent(
 
 ```typescript
 // Before
+import { UniV3 } from "generated";
+
 UniV3.PoolFactory.contractRegister(async ({ event, context }) => {
   context.addPool(event.params.poolAddress);
 });
 
 // After
+import { indexer } from "envio";
+
 indexer.contractRegister(
   { contract: "UniV3", event: "PoolFactory" },
   async ({ event, context }) => {
@@ -241,12 +257,16 @@ indexer.contractRegister(
 
 ```typescript
 // Before — only chain 1, every 100 blocks, fixed range
+import { onBlock } from "generated";
+
 onBlock(
   { name: "Ranges", chain: 1, startBlock: 20_000_000, endBlock: 22_000_000, interval: 100 },
   async ({ block, context }) => {},
 );
 
 // After
+import { indexer } from "envio";
+
 indexer.onBlock(
   {
     name: "Ranges",
