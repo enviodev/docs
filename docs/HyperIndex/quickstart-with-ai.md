@@ -42,6 +42,10 @@ Your assistant takes it from there — the Envio CLI is built to be driven by an
 - **Tools for agents**: Envio exposes tools and recommendations that help an agent reach the result on its own — like `envio tools search-docs` — with more coming soon.
 - **Curated skills**: once the project is initialized, Envio ships a set of curated Claude skills that guide an agent through the codebase and, paired with the [testing framework](/docs/HyperIndex/testing), let it iterate quickly on indexer changes while maintaining quality.
 
+:::tip Keep your skills fresh
+Upgrading Envio or have stale skills in an existing project? Run `envio skills update` to pull the latest curated skills.
+:::
+
 ### About Envio API Token
 
 The **Envio API token** is your **HyperSync API token**. A few things to know:
@@ -55,9 +59,9 @@ See [API Tokens](/docs/HyperSync/api-tokens) and [Environment Variables](/docs/H
 
 ---
 
-## Step 2. Develop with the Built-in Claude Skills
+## Step 2. The Development Loop
 
-The curated skills cover config, schema, handlers, loaders, dynamic contracts, testing, and migration checklists, so your agent follows established patterns instead of inventing them. A productive loop looks like:
+Your agent leans on the curated skills — covering config, schema, handlers, loaders, dynamic contracts, testing, and migration checklists — to follow established patterns instead of inventing them. A productive loop looks like:
 
 1. Describe the behavior you want in plain English.
 2. Let the assistant edit `config.yaml`, `schema.graphql`, and `src/handlers`.
