@@ -34,7 +34,7 @@ Open Claude/Cursor/Codex and prompt:
 pnpx envio init
 ```
 
-AI will automatically be provided with a list of available commands and tools exposed via `envio tools` and follow up with you on additional questions to achieve the desired result.
+AI will automatically be provided with the commands to run next and the additional tools the Envio CLI provides. You will be automatically asked additional questions by your AI tool to achieve the desired result.
 
 All `init` subcommands and flags are documented in the [Envio CLI reference](./cli-commands).
 
@@ -59,10 +59,10 @@ A productive loop with the skills looks like:
 
 1. Describe the behavior you want in plain English.
 2. Let the assistant edit `config.yaml`, `schema.graphql`, and `src/handlers`.
-3. Ask it to run `pnpm envio codegen` and `pnpm dev` to validate.
+3. Have it follow a test-driven loop: write a failing test with [`createTestIndexer()`](./testing), implement the handler, then run `pnpm test` to capture and lock in snapshots. See the [Testing guide](./testing) for the full TDD workflow.
 4. Iterate on failures together.
 
-The three files you'll spend most of your time in:
+The three files your agent will spend most of its time in:
 
 - **[`config.yaml`](./configuration-file)**: networks, contracts, events
 - **[`schema.graphql`](./schema)**: entities and relationships
