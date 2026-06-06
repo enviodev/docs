@@ -12,6 +12,8 @@ description: Discover the new features in HyperIndex V3 — the unified handlers
 
 HyperIndex V3 focuses on modernizing the codebase and laying the foundation for many more months of development. This page describes everything that's new. To upgrade an existing project from V2, follow the [Migrate to V3](./migrate-to-v3) guide.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UgyO-G5pDtg" title="What's New in HyperIndex V3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## New Features
 
 ### Unified Handlers API
