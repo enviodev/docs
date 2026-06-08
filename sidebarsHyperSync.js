@@ -9,6 +9,7 @@ module.exports = {
     "hypersync-curl-examples",
     "api-tokens",
     "hypersync-supported-networks",
+    "stream-config-tuning",
     {
       type: "category",
       label: "Tutorials",
