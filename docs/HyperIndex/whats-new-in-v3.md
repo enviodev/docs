@@ -15,7 +15,7 @@ HyperIndex V3 focuses on modernizing the codebase and laying the foundation for 
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/UgyO-G5pDtg" title="What's New in HyperIndex V3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Tv6oY2e1Fjs" title="HyperIndex V3 vs V2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+For a side-by-side V3 vs V2 walkthrough, see the [Migrate to V3](./migrate-to-v3) guide.
 
 ## New Features
 
