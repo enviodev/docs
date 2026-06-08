@@ -4,6 +4,7 @@ title: Migrate to HyperIndex V3
 sidebar_label: Migrate to V3 🚀
 slug: /migrate-to-v3
 description: Step-by-step instructions for upgrading an existing HyperIndex V2 project to V3.
+image: /docs-assets/og/HyperIndex/migrate-to-v3.png
 ---
 
 # Migrate to HyperIndex V3
@@ -15,6 +16,8 @@ Easiest path — prompt your AI tool (Claude/Cursor/Codex):
 ```
 Upgrade my indexer to V3 by following the migration instructions step by step https://docs.envio.dev/docs/HyperIndex/migrate-to-v3
 ```
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Tv6oY2e1Fjs" title="Migrate to HyperIndex V3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Step 0: Prepare on V2 (Recommended)
 
