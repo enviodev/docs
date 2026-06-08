@@ -16,7 +16,7 @@ delivers results to you **in block order**. `StreamConfig` controls that engine.
 **The defaults are good for most workloads, so you usually don't need to touch this.**
 Reach for tuning when you want to squeeze more throughput out of a specific workload, or to
 bound memory. The fastest way to find a good config for *your* query is the
-[`tune_stream` tool](#find-the-best-config-for-your-query), which sweeps configs against your
+[`tune_stream`](#find-the-best-config-for-your-query) tool, which sweeps configs against your
 query and prints a comparison table.
 :::
 
