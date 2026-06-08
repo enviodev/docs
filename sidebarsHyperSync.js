@@ -25,6 +25,7 @@ module.exports = {
     //     "HyperRPC/hyperrpc-supported-networks",
     //   ],
     // },
+    "hypersync-troubleshooting",
     {
       type: "category",
       label: "HyperFuel",
