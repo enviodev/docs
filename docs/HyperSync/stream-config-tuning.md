@@ -222,6 +222,11 @@ The clients handle rate limits for you: when the server signals a limit (HTTP 42
 waits for the window to reset and retries, so a stream slows down rather than failing. If you
 want more headroom or higher throughput, [upgrade your plan](./api-tokens.mdx).
 
+If you need the client to make fewer requests per unit time (for example to fit a fixed
+request budget), `concurrency` is the lever. It trades throughput for request volume: fewer
+requests run in parallel, so fewer go out per unit time. Setting `concurrency = 1` streams
+sequentially, one request at a time.
+
 ## Full default reference
 
 ```text
