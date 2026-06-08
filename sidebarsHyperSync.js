@@ -4,12 +4,12 @@ module.exports = {
     "quickstart",
     "hypersync-usage",
     "hypersync-clients",
-    "stream-config-tuning",
     "hypersync-query",
     "hypersync-presets",
     "hypersync-curl-examples",
     "api-tokens",
     "hypersync-supported-networks",
+    "stream-config-tuning",
     {
       type: "category",
       label: "Tutorials",
