@@ -4,6 +4,7 @@ module.exports = {
     "quickstart",
     "hypersync-usage",
     "hypersync-clients",
+    "stream-config-tuning",
     "hypersync-query",
     "hypersync-presets",
     "hypersync-curl-examples",
