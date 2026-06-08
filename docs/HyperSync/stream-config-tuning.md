@@ -3,7 +3,7 @@ id: stream-config-tuning
 title: Stream Config & Tuning
 sidebar_label: Stream Config & Tuning
 slug: /stream-config-tuning
-description: Configure and tune the HyperSync streaming engine — concurrency, response size targets, batch sizes, and request-rate (RPM) control — and find the optimal config for your query with the built-in observer.
+description: Configure and tune the HyperSync streaming engine (concurrency, response size targets, batch sizes) and find the best config for your query with the built-in observer.
 ---
 
 # Stream Config & Tuning
@@ -13,11 +13,11 @@ range out across many concurrent HTTP requests, sizes each request automatically
 delivers results to you **in block order**. `StreamConfig` controls that engine.
 
 :::tip TL;DR
-**The defaults are good for most workloads — you usually don't need to touch this.**
-Reach for tuning when you want to (a) go faster on a specific workload, (b) **use fewer
-requests / stay under an API rate limit**, or (c) bound memory. The fastest way to find a
-good config for *your* query is the [`tune_stream` tool](#find-the-best-config-for-your-query),
-which sweeps configs against your query and prints a comparison table.
+**The defaults are good for most workloads, so you usually don't need to touch this.**
+Reach for tuning when you want to squeeze more throughput out of a specific workload, or to
+bound memory. The fastest way to find a good config for *your* query is the
+[`tune_stream` tool](#find-the-best-config-for-your-query), which sweeps configs against your
+query and prints a comparison table.
 :::
 
 ## Quick decision guide
@@ -25,64 +25,57 @@ which sweeps configs against your query and prints a comparison table.
 | Your situation | Do this |
 |---|---|
 | Just getting started | Use the defaults. |
-| Hitting API rate limits (429s) | Lower `concurrency`, and/or raise `response_bytes_target`. See [Request-rate control](#request-rate-control-rpm). |
-| Want maximum throughput on a busy contract (lots of logs) | Raise `concurrency` (e.g. 20). |
-| Scanning a wide range for a rare event | Keep `concurrency` moderate (≈10); a larger `batch_size` helps. |
+| Want maximum throughput on a busy contract (lots of logs) | Raise `concurrency` (for example 20). |
+| Scanning a wide range for a rare event | Keep `concurrency` moderate (around 10); a larger `batch_size` helps. |
 | Pulling full blocks + all transactions | Defaults are fine; the adaptive buffer handles the large responses. |
-| Memory-constrained | Set `max_buffered_bytes` to a fixed cap. |
-| Want the lowest possible request rate | Set `concurrency = 1` (a sequential pagination loop). |
+| Memory constrained | Set `max_buffered_bytes` to a fixed cap. |
+| Hitting API rate limits | The client waits out limits and retries automatically. For higher limits, [upgrade your plan](./api-tokens.mdx). |
 | Not sure | Run [`tune_stream`](#find-the-best-config-for-your-query) against your query. |
 
 ## How the engine works (the 30-second model)
 
-Understanding two ideas makes every knob obvious:
+Two ideas make every knob obvious:
 
-1. **One HTTP request = one unit of work.** The engine sizes each request to land near
+1. **One HTTP request is one unit of work.** The engine sizes each request to land near
    `response_bytes_target` bytes, based on the byte-density it has measured so far. If the
-   server returns less than requested (truncates), the leftover range becomes a gap that
-   **any free worker backfills in parallel** — so over-estimating a request size is safe.
+   server returns less than requested (a "truncation"), the leftover range becomes a gap that
+   any free worker backfills in parallel.
 2. **Delivery is in block order.** Results are buffered and handed to you contiguously, so
-   the stream still yields one response per HTTP response in ascending (or `reverse`) block
-   order.
+   the stream yields one response per HTTP response in ascending (or `reverse`) block order.
 
-Consequences:
-
-- **`concurrency`** sets how many requests run in parallel → your throughput *and* your
-  request rate.
-- **`response_bytes_target`** sets how big each response is → bigger target = fewer,
-  larger requests.
-- Over-estimating sizes never causes a slowdown (truncations are backfilled), so being
-  conservative about request count is free.
+So `concurrency` sets how many requests run in parallel, and `response_bytes_target` sets how
+big each response is. Because truncations are backfilled automatically, the engine is
+forgiving: an over-estimated request size corrects itself rather than failing.
 
 ## Configuration options
 
-Field names below are shown in `snake_case` (Rust, Python). **Node/TypeScript uses
-`camelCase`** (e.g. `response_bytes_target` → `responseBytesTarget`).
+Field names below are shown in `snake_case` (Rust, Python). **Node and TypeScript use
+`camelCase`** (for example `response_bytes_target` becomes `responseBytesTarget`).
 
 | Option | Default | What it does |
 |---|---|---|
-| `concurrency` | `10` | Number of requests in flight. `0` is an error, `1` is a sequential pagination loop, `≥2` uses the parallel scheduler. Your main throughput / RPM dial. |
-| `response_bytes_target` | `400_000` | Target size (bytes) for each response. Each request is sized to aim here. Raise it for fewer, larger requests. |
-| `batch_size` | `1_000` | Initial (deliberately over-estimated) block range for the first wave of requests, before any density has been measured. Also the fallback. |
+| `concurrency` | `10` | Number of requests in flight, and your main throughput knob. `0` is an error, `1` streams sequentially, `2` or more uses the parallel scheduler. |
+| `response_bytes_target` | `400_000` | Target size in bytes for each response. Each request is sized to aim here. Raise it for fewer, larger responses. |
+| `batch_size` | `1_000` | Initial block range for the first wave of requests, before any density has been measured. Also the fallback. |
 | `min_batch_size` | `200` | Lower clamp on the projected block count, to avoid tiny ranges. |
-| `max_batch_size` | _unset_ | Optional hard cap on blocks per request. Unset = **no cap** (over-shoot self-corrects via backfill). Set it only if you specifically want to bound blocks/request. |
-| `max_buffered_bytes` | _unset_ | Cap on bytes of fetched-but-undelivered data held for re-ordering (consumer backpressure). Unset = **adaptive** (grows with the largest response seen) so byte-heavy pulls stay pipelined. Set a fixed value to bound memory. |
+| `max_batch_size` | _unset_ | Optional hard cap on blocks per request. Unset means no cap (over-shoot self-corrects via backfill). Set it only if you specifically want to bound blocks per request. |
+| `max_buffered_bytes` | _unset_ | Cap on bytes of fetched-but-undelivered data held for re-ordering (consumer backpressure). Unset means adaptive (it grows with the largest response seen) so byte-heavy pulls stay pipelined. Set a fixed value to bound memory. |
 | `reverse` | `false` | Stream from the top of the range downward. |
-| `max_num_blocks` / `max_num_transactions` / `max_num_logs` / `max_num_traces` | _unset_ | Stop the stream once this many of an entity have been delivered. |
-| `column_mapping`, `event_signature`, `hex_output` | — | Output shaping (decoding, hex formatting). Not performance knobs. |
+| `max_num_blocks`, `max_num_transactions`, `max_num_logs`, `max_num_traces` | _unset_ | Stop the stream once this many of an entity have been delivered. |
+| `column_mapping`, `event_signature`, `hex_output` | none | Output shaping (decoding, hex formatting). Not performance knobs. |
 
 :::info Breaking change in v1.3.0 / streaming v2
 `response_bytes_floor` and `response_bytes_ceiling` were replaced by a single
-`response_bytes_target`. `max_batch_size` became optional (unset = no cap). `max_buffered_bytes`
-was added. If you set the old fields, switch to `response_bytes_target`.
+`response_bytes_target`. `max_batch_size` became optional (unset means no cap).
+`max_buffered_bytes` was added. If you set the old fields, switch to `response_bytes_target`.
 :::
 
 ## Tuning recipes
 
-These are good starting points. Always confirm against your own query with
+These are good starting points. Confirm against your own query with
 [`tune_stream`](#find-the-best-config-for-your-query).
 
-### Dense — busy contracts / all-logs
+### Dense: busy contracts and all-logs
 
 Lots of matching data per block. Throughput scales with parallelism.
 
@@ -95,14 +88,15 @@ config = hypersync.StreamConfig(concurrency=20, response_bytes_target=400_000)
 const config = { concurrency: 20, responseBytesTarget: 400_000 };
 ```
 ```rust
-// Rust — there's a ready-made preset
+// Rust has a ready-made preset
 let config = StreamConfig::dense();
 ```
 
-### Sparse — rare events over a wide range
+### Sparse: rare events over a wide range
 
-Most blocks match nothing. **Don't over-parallelize** — extra workers just fragment the
-empty range into more requests. A larger `batch_size` covers more ground per request.
+Most blocks match nothing. Raising concurrency past the default tends to just fragment the
+empty range into more, smaller requests without adding throughput, so keep it moderate. A
+larger `batch_size` lets the first wave cover more ground.
 
 ```python
 config = hypersync.StreamConfig(concurrency=10, batch_size=20_000)
@@ -114,10 +108,10 @@ const config = { concurrency: 10, batchSize: 20_000 };
 let config = StreamConfig::sparse();
 ```
 
-### Archival — full blocks + all transactions
+### Archival: full blocks and all transactions
 
-Each response is many megabytes; the run is bound by the re-order buffer, not concurrency.
-Leave `max_buffered_bytes` unset so the adaptive buffer keeps the pipeline full.
+Each response is many megabytes, so the run is bound by the re-order buffer rather than
+concurrency. Leave `max_buffered_bytes` unset so the adaptive buffer keeps the pipeline full.
 
 ```python
 config = hypersync.StreamConfig(concurrency=12)
@@ -129,34 +123,12 @@ const config = { concurrency: 12 };
 let config = StreamConfig::archival();
 ```
 
-## Request-rate control (RPM)
-
-If you're on a limited API tier, the goal is fewer requests per minute, not raw speed. The
-streaming engine gives you three levers, and — unlike a naive pagination loop — being
-conservative does **not** tank performance:
-
-- **`concurrency`** is the primary dial. It trades throughput for request rate roughly
-  linearly. Lower it to fit under your limit.
-- **`concurrency = 1`** is a built-in sequential pagination loop — the **lowest possible
-  request rate**. Each request goes straight to the upper block limit and the server sizes
-  the response, so you make the minimum number of (server-max-sized) requests.
-- **`response_bytes_target`** (raise it) → fewer, larger requests for the same data.
-- **`max_batch_size`** can be left unset / set large safely: an over-large request is
-  truncated by the server and the remainder is backfilled in parallel, so a big request
-  size lowers request count without serializing your stream.
-
-:::tip
-The clients also proactively wait out rate limits (HTTP 429) and retry, so a stream won't
-fail on transient limits — it just slows down. To increase your limits, upgrade your plan
-on the [API tokens page](./api-tokens.mdx).
-:::
-
 ## Find the best config for your query
 
 Rather than guess, measure. The Rust client ships a standalone **`tune_stream`** example
-that runs your query under a grid of configs and prints a comparison table — throughput,
-request count, truncation rate, and how close responses land to the target. **It takes a
-query as JSON, so it works for any query regardless of which client language you use.**
+that runs your query under a grid of configs and prints a comparison table: throughput,
+request count, truncation rate, and how close responses land to the target. It takes a query
+as JSON, so it works for any query regardless of which client language you use.
 
 ### 1. Save your query as JSON
 
@@ -188,12 +160,12 @@ cargo run -p tune_stream -- query.json --single
 ```
 
 The table shows, per config: requests, truncation %, blocks/s, MB/s, the mean
-size-vs-target ratio, and the observed buffer/in-flight — so you can pick the config with
-the throughput you want at the request rate you can afford.
+size-vs-target ratio, and the observed buffer and in-flight counts. Pick the config with the
+best throughput for your workload.
 
 ### 3. Apply the winning config
 
-Copy the `response_bytes_target` / `concurrency` (etc.) from the best row into your
+Copy `response_bytes_target`, `concurrency`, and any other fields from the best row into your
 client's `StreamConfig`.
 
 ### Rust: attach an observer in your own code
@@ -224,22 +196,31 @@ println!(
 );
 ```
 
-The plain `stream` / `stream_arrow` methods have **zero** observability overhead — metrics
-are only collected when you attach an observer. (Surfacing this handle in the Node and
-Python clients is a fast-follow; until then, use `tune_stream` for those languages.)
+The plain `stream` and `stream_arrow` methods do no metrics work; `RequestStats` are only
+built when you attach an observer. (Surfacing this handle in the Node and Python clients is a
+fast-follow; until then, use `tune_stream` for those languages.)
 
-## What the metrics mean
+## Reading the metrics
 
-When tuning, aim for:
+When tuning, the two numbers worth watching are:
 
-- **Mean size ratio ≈ 1.0** — responses are landing near `response_bytes_target`. Much
-  below 1.0 means the server is capping responses smaller than your target (raise
-  throughput by raising `concurrency`, not the target). Much above 1.0 means responses are
-  larger than target (byte-heavy query).
-- **Low truncation %** for smooth delivery — though some truncation is normal and harmless
-  (it's backfilled). Persistent truncation with *tiny* responses means the server is
-  hitting a scan/time limit; narrow the query with more selective filters.
-- **Higher blocks/s** at an acceptable **request rate** — the trade-off you're tuning.
+- **Mean size ratio**, which is response size divided by `response_bytes_target`. Around
+  `1.0` means responses are landing on target. Well below `1.0` means the server is returning
+  smaller responses than your target, which is perfectly normal for selective queries or
+  minimal field selections; raising `response_bytes_target` won't change it, and the way to
+  go faster is usually more `concurrency`.
+- **Blocks per second**, which is the throughput you are tuning for.
+
+Truncation is shown too, but you can usually ignore it. Some truncation is normal and
+harmless because the leftover range is backfilled automatically, and a sparse query that
+selects only a few fields will often show small, frequently-truncated responses while still
+streaming quickly. It is only worth a look if throughput is poor.
+
+## Rate limits
+
+The clients handle rate limits for you: when the server signals a limit (HTTP 429) the client
+waits for the window to reset and retries, so a stream slows down rather than failing. If you
+want more headroom or higher throughput, [upgrade your plan](./api-tokens.mdx).
 
 ## Full default reference
 
