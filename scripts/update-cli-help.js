@@ -25,15 +25,22 @@ const OUTPUT_FILE_PATH = path.join(
   "../docs/HyperIndex/Guides/cli-commands.md",
 );
 
-// Drop the upstream preamble (its own H1, the "This document contains…" blurb,
-// and the flat command-overview list) so it doesn't duplicate the curated
-// intro/overview. We keep everything from the first per-command section onward.
+// Drop only the upstream H1 and the "This document contains…" blurb so they
+// don't duplicate the curated intro. We keep everything from the upstream
+// "Command Overview" onward (its overview list + every per-command section),
+// reusing as much of the original CLI help as possible.
 function extractCommandReference(doc) {
+  const overview = doc.indexOf("**Command Overview:**");
+  if (overview !== -1) {
+    return doc.slice(overview).trim();
+  }
+  // Fallback: if upstream drops the overview block, keep from the first
+  // per-command section so we still emit a usable reference.
   const firstSection = doc.indexOf("\n## ");
   if (firstSection === -1) {
     throw new Error(
-      `Could not find a command section ("## ") in the upstream help. ` +
-        `Its format may have changed: ${DOC_URL}`,
+      `Could not find a "Command Overview" or any command section ("## ") ` +
+        `in the upstream help. Its format may have changed: ${DOC_URL}`,
     );
   }
   return doc.slice(firstSection + 1).trim();
