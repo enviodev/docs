@@ -1,6 +1,6 @@
 ---
 id: hypersync-supported-networks
-title: Supported Networks
+title: HyperSync Supported Networks
 sidebar_label: Supported Networks
 slug: /hypersync-supported-networks
 description: See all networks currently supported by HyperSync, including reliability notes and the criteria we use when adding new chains.

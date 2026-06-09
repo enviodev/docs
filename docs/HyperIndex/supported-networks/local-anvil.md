@@ -3,6 +3,7 @@ id: local-anvil
 title: Local network - Anvil
 sidebar_label: 👷 Local network - Anvil 👷
 slug: /local-anvil
+description: Index a local Anvil network (chain ID 31337) with Envio HyperIndex. Includes the config.yaml snippet for pointing at http://localhost:8545.
 ---
 
 # Local network - Anvil

@@ -147,6 +147,76 @@
       "source": "/blog/migrating-alchemy-subgraphs-to-envio.md",
       "destination": "/docs/HyperIndex/migrate-from-alchemy.md",
       "permanent": true
+    },
+    {
+      "source": "/docs/hypersync",
+      "destination": "/docs/HyperIndex/hypersync",
+      "permanent": true
+    },
+    {
+      "source": "/docs/hypersync.md",
+      "destination": "/docs/HyperIndex/hypersync.md",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/getting-started",
+      "destination": "/docs/HyperIndex/quickstart",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/getting-started.md",
+      "destination": "/docs/HyperIndex/quickstart.md",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/contract-import",
+      "destination": "/docs/HyperIndex/quickstart",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/contract-import.md",
+      "destination": "/docs/HyperIndex/quickstart.md",
+      "permanent": true
+    },
+    {
+      "source": "/docs/greeter-tutorial",
+      "destination": "/docs/HyperIndex/greeter-tutorial",
+      "permanent": true
+    },
+    {
+      "source": "/docs/greeter-tutorial.md",
+      "destination": "/docs/HyperIndex/greeter-tutorial.md",
+      "permanent": true
+    },
+    {
+      "source": "/docs/dynamic-contracts",
+      "destination": "/docs/HyperIndex/dynamic-contracts",
+      "permanent": true
+    },
+    {
+      "source": "/docs/dynamic-contracts.md",
+      "destination": "/docs/HyperIndex/dynamic-contracts.md",
+      "permanent": true
+    },
+    {
+      "source": "/docs/tutorial-op-bridge-deposits",
+      "destination": "/docs/HyperIndex/tutorial-op-bridge-deposits",
+      "permanent": true
+    },
+    {
+      "source": "/docs/tutorial-op-bridge-deposits.md",
+      "destination": "/docs/HyperIndex/tutorial-op-bridge-deposits.md",
+      "permanent": true
+    },
+    {
+      "source": "/docs/async-mode",
+      "destination": "/docs/HyperIndex/overview",
+      "permanent": true
+    },
+    {
+      "source": "/docs/async-mode.md",
+      "destination": "/docs/HyperIndex/overview.md",
+      "permanent": true
     }
   ],
   "headers": [

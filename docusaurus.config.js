@@ -24,14 +24,6 @@ const redirectsList = [
     to: "/docs/HyperIndex/quickstart",
   },
   {
-    from: "/docs/HyperIndex/getting-started",
-    to: "/docs/HyperIndex/quickstart",
-  },
-  {
-    from: "/docs/HyperIndex/contract-import",
-    to: "/docs/HyperIndex/quickstart",
-  },
-  {
     from: "/docs/contract-import",
     to: "/docs/HyperIndex/quickstart",
   },
@@ -84,20 +76,12 @@ const redirectsList = [
     to: "/docs/HyperIndex/fuel",
   },
   {
-    from: "/docs/tutorial-op-bridge-deposits",
-    to: "/docs/HyperIndex/tutorial-op-bridge-deposits",
-  },
-  {
     from: "/docs/tutorial-erc20-token-transfers",
     to: "/docs/HyperIndex/tutorial-erc20-token-transfers",
   },
   {
     from: "/docs/tutorial-indexing-fuel",
     to: "/docs/HyperIndex/tutorial-indexing-fuel",
-  },
-  {
-    from: "/docs/greeter-tutorial",
-    to: "/docs/HyperIndex/greeter-tutorial",
   },
   {
     from: "/docs/linked-entity-loaders",
@@ -108,16 +92,8 @@ const redirectsList = [
     to: "/docs/HyperIndex/overview",
   },
   {
-    from: "/docs/dynamic-contracts",
-    to: "/docs/HyperIndex/dynamic-contracts",
-  },
-  {
     from: "/docs/multichain-indexing",
     to: "/docs/HyperIndex/multichain-indexing",
-  },
-  {
-    from: "/docs/hypersync/",
-    to: "/docs/HyperIndex/hypersync",
   },
   {
     from: "/docs/rpc-sync",
@@ -130,10 +106,6 @@ const redirectsList = [
   {
     from: "/docs/terminology",
     to: "/docs/HyperIndex/terminology",
-  },
-  {
-    from: "/docs/async-mode",
-    to: "/docs/HyperIndex/overview",
   },
   {
     from: "/docs/HyperIndex/async-mode",

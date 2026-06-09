@@ -1,6 +1,6 @@
 ---
 id: index
-title: Supported Networks
+title: HyperIndex Supported Networks
 sidebar_label: Supported Networks
 slug: /supported-networks
 ---

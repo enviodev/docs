@@ -3,6 +3,7 @@ id: local-hardhat
 title: Local network - Hardhat
 sidebar_label: 👷 Local network - Hardhat 👷
 slug: /local-hardhat
+description: Index a local Hardhat network (chain ID 31337) with Envio HyperIndex. Includes the config.yaml snippet for pointing at http://localhost:8545.
 ---
 
 # Local network - Hardhat
