@@ -25,6 +25,15 @@ The MCP server exposes two tools:
 | `docs_search` | Full-text search across all documentation. Returns matching pages with titles, URLs, and content snippets. |
 | `docs_fetch` | Retrieves the full content of a documentation page as markdown. |
 
+## Envio CLI Tools
+
+Starting from Envio `3.1`, the same documentation search and retrieval is also available directly through the Envio CLI — no MCP server setup required. AI agents can call these tools out of the box:
+
+| Tool | Description |
+|------|-------------|
+| `envio tools search-docs` | Full-text search across all documentation, equivalent to the `docs_search` MCP tool. |
+| `envio tools fetch-docs` | Retrieves the full content of a documentation page as markdown, equivalent to the `docs_fetch` MCP tool. |
+
 ## Setup
 
 ### Claude Code
