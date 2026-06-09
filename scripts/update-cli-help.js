@@ -7,9 +7,10 @@ const DOC_URL =
 
 const PAGE_HEADER = `---
 id: cli-commands
-title: Envio CLI
+title: Envio CLI Reference
 sidebar_label: Envio CLI
 slug: /cli-commands
+description: Explore and manage indexer projects with Envio CLI, from setup to development and benchmarking.
 ---
 
 `;
