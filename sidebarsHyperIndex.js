@@ -38,7 +38,6 @@ module.exports = {
         "Guides/testing",
         "Guides/navigating-hasura",
         "Guides/environment-variables",
-        "Guides/mcp-server",
       ],
     },
     {
@@ -103,6 +102,7 @@ module.exports = {
         "Advanced/loaders",
         "Advanced/websockets",
         "Advanced/query-conversion",
+        "Advanced/mcp-server",
         // {
         //   type: "category",
         //   label: "Performance",

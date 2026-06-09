@@ -446,6 +446,7 @@ const config = {
         excludeRoutes: [
           "/blog",
           "/blog/**",
+          "/videos",
           "/docs/HyperIndex-LLM/**",
           "/docs/HyperSync-LLM/**",
           "/docs/HyperRPC-LLM/**",
