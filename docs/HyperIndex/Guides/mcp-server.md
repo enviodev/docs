@@ -31,8 +31,8 @@ Starting from Envio `3.1`, the same documentation search and retrieval is also a
 
 | Tool | Description |
 |------|-------------|
-| `envio tools search-docs` | Full-text search across all documentation, equivalent to the `docs_search` MCP tool. |
-| `envio tools fetch-docs` | Retrieves the full content of a documentation page as markdown, equivalent to the `docs_fetch` MCP tool. |
+| `envio tools search-docs <query>` | Full-text search across all documentation, equivalent to the `docs_search` MCP tool. |
+| `envio tools fetch-docs <url>` | Retrieves the full content of a documentation page as markdown, equivalent to the `docs_fetch` MCP tool. |
 
 ## Setup
 
