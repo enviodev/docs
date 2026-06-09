@@ -53,7 +53,7 @@ We've refactored internal tables to focus on a single public entry point: `_meta
 
 If this impacts your setup, reach out, and we'll help you migrate smoothly.
 
-<img src="/blog-assets/sep-update-2025-1.png" alt="query" width="100%"/>
+<img src="/blog-assets/sep-update-2025-1.png" alt="HyperIndex _meta GraphQL query with annotated fields like chainId, progressBlock, eventsProcessed alongside JSON response data" width="100%"/>
 
 ### V2.29.0
 
@@ -102,7 +102,7 @@ Star us on [GitHub](https://github.com/enviodev/hyperindex)
 
 ## Liqo Brings Real-Time Liquidation Insights Across Major DeFi Protocols
 
-<img src="/blog-assets/sep-update-2025-2.png" alt="liqo" width="100%"/>
+<img src="/blog-assets/sep-update-2025-2.png" alt="Liqo dashboard headlined Hub for all onchain liquidations with totals for Aave, Euler, Morpho and a recent liquidations table" width="100%"/>
 
 Track major real-time liquidations in style with [Liqo](https://www.liqo.xyz/), a powerful liquidation leaderboard tool powered by Envio. The new leaderboard gives you a clear view of the most active liquidators across top protocols like [Aave](https://aave.com/), [Morpho](https://morpho.org/), and [Euler](https://euler.finance/), with support for [Twyne](https://twyne.xyz/) coming soon.
 
@@ -115,7 +115,7 @@ Check out the original post on [X](https://x.com/jonjonclark/status/197016444648
 
 ## MetaMask Smart Accounts Hackathon with Monad and Envio
 
-<img src="/blog-assets/sep-update-2025-3.png" alt="metamask hackathon" width="100%"/>
+<img src="/blog-assets/sep-update-2025-3.png" alt="MetaMask Smart Accounts x Monad Dev Cook-Off hackathon banner with a $15,000 prize pool in partnership with Monad and Envio" width="100%"/>
 
 The MetaMask Smart Accounts Hackathon, in collaboration with Monad and Envio, is now live and will run from September 19 to October 20. Builders are invited to create next-level applications on Monad with a focus on account abstraction and user experience.
 
@@ -134,7 +134,7 @@ Missed our kickoff call and want to learn more? Check out the broadcast on [X](h
 
 ## Envio at Pragma and ETHGlobal New Delhi
 
-<img src="/blog-assets/sep-update-2025-4.png" alt="ethglobal new dehli" width="100%"/>
+<img src="/blog-assets/sep-update-2025-4.png" alt="Envio speaker on stage at Pragma in New Delhi with a Pragma logo and frontend slide projected behind" width="100%"/>
 
 The team was in New Delhi for Pragma and ETHGlobal, spending the week with builders, founders, and partners across the ecosystem. Every dapp relies on indexing, but most existing solutions are slow, siloed, and unreliable.
 
@@ -145,7 +145,7 @@ Big thanks to ETHGlobal, the organisers, partners, and everyone who stopped by t
 
 ## Envio Supports MegaETH Builders with Lightning-Fast Onchain Data Access
 
-<img src="/blog-assets/sep-update-2025-5.png" alt="megaeth support" width="100%"/>
+<img src="/blog-assets/sep-update-2025-5.png" alt="Envio and MegaETH co-branded artwork with a hooded figure facing a glowing skyline and lightning sky" width="100%"/>
 
 100k+ TPS, 10+ ggas p/s & less than 10ms blocks? Envio is built for it. Our indexing framework supports developers building on MegaETH with efficient access to both real-time and historical data.
 
@@ -154,7 +154,7 @@ With Envio, you can sync millions of events up to 2000x faster than RPC, making 
 
 ## The State of AI in Blockchain Data: Neon x Envio
 
-<img src="/blog-assets/sep-update-2025-6.png" alt="neonevm ama" width="100%"/>
+<img src="/blog-assets/sep-update-2025-6.png" alt="Neon AMA banner The State of AI in Blockchain Data, Live on X, Thursday 18th September 15:00 CET with speakers @jonjonclark and @0xbeary" width="100%"/>
 
 Blockchain generates endless streams of data, and powerful indexers like Envio make it usable. But what happens when AI steps into the picture?
 
@@ -165,7 +165,7 @@ Missed it live? Catch the full recording of the broadcast on [X](https://x.com/i
 
 ## Join Envio at Encode London This October
 
-<img src="/blog-assets/sep-update-2025-7.png" alt="encode london 2025" width="100%"/>
+<img src="/blog-assets/sep-update-2025-7.png" alt="Encode London 2025 banner with Encode Club and Envio logos and a Partner Sponsor label" width="100%"/>
 
 We're excited to be partners at the Encode London Hackathon and Conference, taking place from 24–26 October at the [Encode Hub](https://hub.encode.club/) in Shoreditch, London. This three-day event brings together builders, researchers, and industry leaders for hands-on hacking, talks, and workshops focused on AI and Web3. Our team will be on the ground all weekend supporting builders, so keep an eye out for us throughout the event.
 
@@ -199,7 +199,7 @@ to follow along and catch every session.
 
 ## Featured Developer
 
-<img src="/blog-assets/sep-update-2025-8.png" alt="DOTM Sep 2025" width="100%"/>
+<img src="/blog-assets/sep-update-2025-8.png" alt="Envio Featured Developer banner for Ryan Holanda with his portrait on a purple particle background" width="100%"/>
 
 This month's featured developer is [Ryan Holanda](https://www.linkedin.com/in/ryan-holanda/), Co-founder and CTO of [Zup Protocol](https://zupprotocol.xyz/). A software engineer since the age of 16, Ryan brings advanced expertise across front-end, mobile, blockchain, and design. Driven by a deep passion for DeFi and the Web3 ecosystem, he has dedicated his career to building innovative solutions that empower users and promote financial freedom.
 
@@ -212,7 +212,7 @@ Be sure to follow them on [X](https://x.com/moo9000) and check out their work on
 
 ## Playlist of the Month
 
-<img src="/blog-assets/sep-update-2025-9.png" alt="PLOTM Sep 2025" width="100%"/>
+<img src="/blog-assets/sep-update-2025-9.png" alt="Spotify public playlist Sept 25 by Jordy Baby, 20 songs, 1 hr 18 min, with a grid of album covers" width="100%"/>
 
 [Open Spotify](https://open.spotify.com/playlist/2lOYVNjlopciZGOUGdPED1?si=34ee9820a0db4494)
 

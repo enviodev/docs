@@ -11,7 +11,7 @@ last_update:
   author: Jordyn Laurier
 ---
 
-<img src="/blog-assets/ai-agents-acting-onchain-indexer.png" alt="Why AI Agents Acting Onchain Need an Indexer" width="100%"/>
+<img src="/blog-assets/ai-agents-acting-onchain-indexer.png" alt="Envio blog cover: 'Why AI Agents Need an Indexer' with subtitle 'The data layer for onchain agents'" width="100%"/>
 
 <!--truncate-->
 

@@ -178,7 +178,7 @@ If you need support reindexing or redeploying after the re-genesis, feel free to
 
 ## Envio at Solana Breakpoint 2025 in Abu Dhabi
 
-<img src="/blog-assets/dev-update-dec-25-2.png" alt="Solana Breakpoint 2025" width="100%"/>
+<img src="/blog-assets/dev-update-dec-25-2.png" alt="Exterior of Etihad Arena in Abu Dhabi, venue for Solana Breakpoint 2025" width="100%"/>
 
 The Envio team attended [Solana Breakpoint](https://solana.com/breakpoint) in Abu Dhabi this month, spending time with teams across the Solana ecosystem and learning more about their data needs and how they're building on Solana.
 
@@ -191,7 +191,7 @@ Big thanks to everyone we met and spoke with at Solana Breakpoint. We're looking
 
 ## Envio Developer Workshops: Decypted Bytes Is Back
 
-<img src="/blog-assets/dev-update-dec-25-3.png" alt="Decrypt Bytes" width="100%"/>
+<img src="/blog-assets/dev-update-dec-25-3.png" alt="YouTube thumbnail grid of Decypted Bytes streams covering the Base-Solana Bridge Indexer, USDT0 Indexer with HyperIndex, and DuckDB Sink for HyperSync" width="100%"/>
 
 Decypted Bytes streams are back and now running daily at 3:00pm UTC, focused on hands-on developer workflows using Envio.
 
@@ -220,7 +220,7 @@ To get started and learn how to index data on Tempo, check out the [setup guide]
 
 ## How to Index Cross-Chain USDT0 Transfers with Envio
 
-<img src="/blog-assets/dev-update-dec-25-5.png" alt="Index USDT0 with Envio" width="100%"/>
+<img src="/blog-assets/dev-update-dec-25-5.png" alt="GitHub repo card for enviodev/usdt0-indexer: Index cross-chain USDT transfers done with USDT0" width="100%"/>
 
 Learn how to build a [USDT0](https://usdt0.to) Indexer using Envio by exploring this example repository, which demonstrates how to track USDT0 transfers across multiple chains.
 
@@ -231,7 +231,7 @@ You can explore the full example, code, and setup instructions in the [GitHub re
 
 ## Envio Powers Slab.cash with Efficient Data Indexing
 
-<img src="/blog-assets/dev-update-dec-25-6.png" alt="Slab Cash" width="100%"/>
+<img src="/blog-assets/dev-update-dec-25-6.png" alt="Metallic Slab.cash logo emblem lit with red and blue neon" width="100%"/>
 
 [Slab.cash](https://slab.cash) recently went live, bringing onchain collectibles to users.
 
@@ -268,7 +268,7 @@ The MetaMask Advanced Permissions Hackathon is live and runs until December 31, 
 
 ## Featured Developer: Port
 
-<img src="/blog-assets/dev-update-dec-25-7.png" alt="DOTM Dec 2025" width="100%"/>
+<img src="/blog-assets/dev-update-dec-25-7.png" alt="Envio Featured Developer banner for Port, with their avatar over a desk setup with multiple monitors" width="100%"/>
 
 This month's featured developer is Port, a builder who loves experimenting with ideas and shipping fast. His journey into development started a few years ago after a health scare, which pushed him to rethink how he wanted to spend his time. Coming from a non-technical background, he began learning web development through The Odin Project and quickly found his way into Web3.
 
@@ -292,7 +292,7 @@ We're wishing many of you a fantastic time over the festive season. The Envio te
 
 ## Playlist of the Month
 
-<img src="/blog-assets/dev-update-dec-25-9.png" alt="PLOTM Dec 2025" width="100%"/>
+<img src="/blog-assets/dev-update-dec-25-9.png" alt="Spotify public playlist 'Dec 25' by Jordy Baby, 21 songs, 1 hr 21 min" width="100%"/>
 
 [Open Spotify](https://open.spotify.com/playlist/757HncfHabgU6rpMv9748b?si=94a19e83ccdc4f0d)
 

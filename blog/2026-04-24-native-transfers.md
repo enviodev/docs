@@ -11,7 +11,7 @@ last_update:
   author: Nikhil Bhintade
 ---
 
-![Cover image for the blog with title](/blog-assets/tracking-native-eth-transfers-hypersync.png)
+![Envio blog cover with title "Tracking Native ETH Transfers Using HyperSync" and a network of linked Ethereum nodes](/blog-assets/tracking-native-eth-transfers-hypersync.png)
 :::info TL;DR
 
 - Tracking native ETH transfers onchain requires parsing traces rather than event logs, which is slow over standard RPC.
@@ -178,7 +178,7 @@ Run it with:
 bun run index.ts
 ```
 
-![Output table showing native transfers](/blog-assets/native-transfers-cli-output.png)
+![Terminal output from `bun run index.ts` showing a table of 10 native ETH transfers with From, To, and Value (ETH) columns](/blog-assets/native-transfers-cli-output.png)
 
 ## Next Steps
 

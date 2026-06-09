@@ -11,7 +11,7 @@ authors: ["j_o_r_d_y_s"]
 ---
 
 
-<img src="/blog-assets/zkpass-casestudy.png" alt="Cover Image How ZKPs help User Privacy" width="100%"/>
+<img src="/blog-assets/zkpass-casestudy.png" alt="Envio case study cover: Redefining User Privacy with ZKPs, Case Study zkPass" width="100%"/>
 
 <!--truncate-->
 
@@ -69,9 +69,9 @@ At zkPass, user empowerment is at the forefront. Web3 users can manage their cre
 
 By offering a versatile solution for proving identity and qualifications, zkPass is leading the charge toward a more secure and privacy-centric future in digital identity management.
 
-<img src="/blog-assets/zkpass-casestudy-1.png" alt="Screenshot of zkPass App" width="100%"/>
+<img src="/blog-assets/zkpass-casestudy-1.png" alt="zkPass Portal Schema Market showing Uber-based ZKP attestations like Rider Account Owner and Trips greater than 1, 10, and 20" width="100%"/>
 
-<img src="/blog-assets/zkpass-casestudy-2.png" alt="Screenshot of zkPass App" width="100%"/>
+<img src="/blog-assets/zkpass-casestudy-2.png" alt="zkPass Portal home with Schema Market, Farming the Internet, and Transgate-JS-SDK product panels" width="100%"/>
 
 ## How Envio Powers zkPass's Privacy Solutions
 
@@ -97,7 +97,7 @@ Envio's multichain architecture consolidates data from multiple blockchains into
 Moreover, by using HyperSync as the data source for HyperIndex (instead of traditional RPC methods), the zkPass engineering team benefits from exceptionally fast indexing performance and reliable data access. This empowers the zkPass team to accelerate their development lifecycle, test product features more rapidly, and drive innovation at a faster pace.
 
 
-<img src="/blog-assets/zkpass-casestudy-4.png" alt="Indexer Hosted Service" width="100%"/>
+<img src="/blog-assets/zkpass-casestudy-4.png" alt="Envio hosted service dashboard showing zkPass indexer synced across OP Mainnet, BNB Smart Chain, X Layer, zkSync, Base, Arbitrum One, Linea, and Scroll" width="100%"/>
 
 ## Conclusion
 

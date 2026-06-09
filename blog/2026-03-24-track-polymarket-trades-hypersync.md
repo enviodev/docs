@@ -79,7 +79,7 @@ If you’re new to HyperSync clients, please start by going through these exampl
 
 Let’s discuss how we are going to structure our script. Instead of streaming events directly, we are going to stream height. When we get a new height, we query HyperSync to fetch the data we need. Here is a visual representation of that:
 
-![Visual representation of the script's data flow](/blog-assets/polymarket-data-flow.png)
+![Sequence diagram showing index.ts streaming new block heights from HyperSync and querying OrderFilled events on each new height](/blog-assets/polymarket-data-flow.png)
 
 ## Stream Height
 
@@ -407,7 +407,7 @@ Run the following command in your terminal:
 pnpx poly-whales
 ```
 
-![poly-whales TUI screenshot](/blog-assets/poly-whales-tui.png)
+![Terminal UI titled "Polymarket Whale Tracker" with a $500 threshold panel, watch addresses panel, and a live trades list of BUY orders with USD amounts, maker addresses, and timestamps](/blog-assets/poly-whales-tui.png)
 
 ## Frequently Asked Questions
 

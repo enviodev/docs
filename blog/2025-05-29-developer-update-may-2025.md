@@ -94,11 +94,11 @@ Big shoutout to one of our leading devs, [Dmitry Zakharov](https://x.com/dzakh_d
 
 Here's a look at the local dev console, a useful way to track indexing speed and progress in real time. In this example, it's tearing through Uniswap V3 data.
 
-<img src="/blog-assets/dev-update-may-2025-1.png" alt="contract indexing" width="100%"/>
+<img src="/blog-assets/dev-update-may-2025-1.png" alt="HyperIndex performance dashboard showing 26,338 events per second while indexing Uniswap V3" width="100%"/>
 
 ## Envio Sponsors DappCon 2025
 
-<img src="/blog-assets/dev-update-may-2025-2.png" alt="dappcon 2025" width="100%"/>
+<img src="/blog-assets/dev-update-may-2025-2.png" alt="DappCon Berliner Mauer banner featuring Envio as a sponsor" width="100%"/>
 
 Envio is one of the proud sponsors of [DappCon](https://dappcon.io/) 2025, joining an incredible lineup of projects pushing Web3 forward.
 
@@ -109,7 +109,7 @@ See you in Berlin!
 
 ## Exciting DeFi Integration With Nad.fun
 
-<img src="/blog-assets/dev-update-may-2025-3.png" alt="nad dot fun" width="100%"/>
+<img src="/blog-assets/dev-update-may-2025-3.png" alt="World heatmap visualising HyperSync request traffic across regions for Nad.fun" width="100%"/>
 
 Envio has been integrated with [Nad.fun](https://testnet.nad.fun/), an onchain trading game built on Monad. We recently developed geographic request visualizations as we began serving HyperSync requests from multiple regions. Check out the awesome graphs showcasing where traffic is coming from.
 
@@ -118,7 +118,7 @@ Learn more in this [post](https://x.com/naddotfun/status/1920483968417177768) on
 
 ## Envio Powers Real-Time Analytics on Monorail
 
-<img src="/blog-assets/dev-update-may-2025-4.png" alt="monorail" width="100%"/>
+<img src="/blog-assets/dev-update-may-2025-4.png" alt="Monorail Analytics Overview dashboard powered by Envio showing total trades, fees, and exchange volumes on Monad" width="100%"/>
 
 [Monorail](https://testnet-preview.monorail.xyz/) is now serving up real-time blockchain analytics, powered by our indexing infrastructure on Monad.
 
@@ -129,7 +129,7 @@ Learn more in this [post](https://x.com/envio_indexer/status/1923323564117156011
 
 ## Sonic Summit Keynote
 
-<img src="/blog-assets/dev-update-may-2025-5.png" alt="sonic summit" width="100%"/>
+<img src="/blog-assets/dev-update-may-2025-5.png" alt="Sonic Summit speaker card for Envio co-founder Denham Preen, talk titled Indexing Millions of Events in Seconds" width="100%"/>
 
 Learn how to index millions of events on Sonic - in seconds.
 
@@ -140,7 +140,7 @@ Watch on [YouTube](https://www.youtube.com/watch?v=DYvzHIRinQQ).
 
 ## Integration Spotlight: Forever Moments
 
-<img src="/blog-assets/dev-update-may-2025-6.png" alt="forever moments" width="100%"/>
+<img src="/blog-assets/dev-update-may-2025-6.png" alt="Forever Moments app interface showing a Top Moments grid of onchain media collections" width="100%"/>
 
 [Forever Moments](https://www.forevermoments.life/) just rolled out a robust new indexing setup using Envio. The result? Faster performance, cleaner data feeds, and expanded features. Even better, they'll be open-sourcing their version soon so others can build on it too.
 
@@ -151,7 +151,7 @@ Learn more in this [post](https://x.com/momentsonchain/status/192727896665978505
 
 ## Monad Evm/Accathon Winners
 
-<img src="/blog-assets/dev-update-may-2025-7.png" alt="monad hackathon" width="100%"/>
+<img src="/blog-assets/dev-update-may-2025-7.png" alt="Envio and Monad banner congratulating winners of the Evm/accathon 2025 hackathon" width="100%"/>
 
 Congratulations to the winners of the first-ever Monad hackathon (evm/accathon). It brought some serious builder energy, and we were proud to support teams with the fastest and most performant data indexing on Monad.
 
@@ -168,7 +168,7 @@ Learn more about the winning projects in our [blog](https://docs.envio.dev/blog/
 
 ## Featured Developer
 
-<img src="/blog-assets/dev-update-may-2025-8.png" alt="dev of the month paul" width="100%"/>
+<img src="/blog-assets/dev-update-may-2025-8.png" alt="Envio Featured Developer banner for Paul Berg, co-founder and CEO of Sablier Labs" width="100%"/>
 
 This month, we're proud to spotlight Paul Berg, co-founder and CEO of Sablier Labs, and a long-time contributor to the open-source Ethereum ecosystem. Known for building tools like [Sablier](https://sablier.com/) and [PRBMath](https://github.com/paulrberg/prb-math), Paul continues to push the space forward with thoughtful, developer-first projects.
 
@@ -180,7 +180,7 @@ We highly recommend exploring Paul's contributions and projects in the space. He
 
 ## Playlist of the Month
 
-<img src="/blog-assets/dev-update-may-2025-9.png" alt="playlist may 2025" width="100%"/>
+<img src="/blog-assets/dev-update-may-2025-9.png" alt="Spotify public playlist titled May 25 by Jordy Baby, 23 songs, 1 hr 27 min" width="100%"/>
 
 [Open Spotify](https://open.spotify.com/playlist/5qpi10IrOQcNv8ixqWPkFB?si=876ddf7528534b2f)
 

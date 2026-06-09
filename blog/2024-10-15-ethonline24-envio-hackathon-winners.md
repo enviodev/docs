@@ -21,7 +21,7 @@ authors: ["j_o_r_d_y_s"]
 
 By [Ifeanyi Ozanu](https://x.com/iphyman).
 
-<img src="/blog-assets/ethonline-hackathon-winners-1.png" alt="Cover Image Grail Market Project Spotlight" width="100%"/>
+<img src="/blog-assets/ethonline-hackathon-winners-1.png" alt="Grail Market BTC/USD prediction market dashboard showing settled, cancelled, and next round cards with higher/lower options" width="100%"/>
 
 ## Best Use of HyperSync: Know Your Co-Signers
 
@@ -29,7 +29,7 @@ By [Ifeanyi Ozanu](https://x.com/iphyman).
 
 By [Germán Martínez](https://x.com/germago).
 
-<img src="/blog-assets/ethonline-hackathon-winners-2.png" alt="Cover Image EthOnline Know Your Co-Singers Project Spotlight" width="100%"/>
+<img src="/blog-assets/ethonline-hackathon-winners-2.png" alt="Know Your Co-Signers landing page with input field prompting users to type a Safe address from Ethereum Mainnet" width="100%"/>
 
 ## Best Runner-Up for Use of HyperIndex & HyperSync: TornadoTrack
 
@@ -37,7 +37,7 @@ By [Germán Martínez](https://x.com/germago).
 
 By [Martin Lettry](https://x.com/MartinLettry)
 
-<img src="/blog-assets/ethonline-hackathon-winners-3.png" alt="Cover Image EthOnline 2024 TornadoTrack Project Spotlight" width="100%"/>
+<img src="/blog-assets/ethonline-hackathon-winners-3.png" alt="TornadoTrack dashboard showing latest deposits, withdrawals, deposit and withdrawal charts, and an ETH amount pie chart" width="100%"/>
 
 ## Most Creative App of Envio's Features: Hypertui
 
@@ -45,7 +45,7 @@ By [Martin Lettry](https://x.com/MartinLettry)
 
 By [Falco Rodenburg](https://x.com/anestha_).
 
-<img src="/blog-assets/ethonline-hackathon-winners-4.png" alt="Cover Image EthOnline 2024 Hypertui Project Spotlight" width="100%"/>
+<img src="/blog-assets/ethonline-hackathon-winners-4.png" alt="Hypertui terminal UI showing regular transfers, ERC20 transfers, and transaction details with onchain stats" width="100%"/>
 
 ## Best Overall Project: ZkDNS
 
@@ -53,7 +53,7 @@ By [Falco Rodenburg](https://x.com/anestha_).
 
 By [Dhananjay Pa](https://x.com/dhananj10181396).
 
-<img src="/blog-assets/ethonline-hackathon-winners-5.png" alt="Cover Image EthOnline 2024 ZkDNS Project Spotlight" width="100%"/>
+<img src="/blog-assets/ethonline-hackathon-winners-5.png" alt="ZkDNS 'Add ENS Record' form with fields for staking, ENS name, ETH address, and expiry date for vitalik.eth" width="100%"/>
 
 A massive thank you to the EthGlobal team for organizing yet another incredible hackathon! The competition was fierce, with so many outstanding entries. We're grateful for all the hackers who participated and can't wait to see what innovative projects will emerge in the future. Stay tuned for our next hackathon.
 

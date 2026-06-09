@@ -97,7 +97,7 @@ Our new [YouTube series](https://www.youtube.com/@envio_indexer/playlists) cover
 
 ## Introducing Chain Pulse
 
-<img src="/blog-assets/chain-pulse.png" alt="chain pulse" width="100%"/>
+<img src="/blog-assets/chain-pulse.png" alt="Chain Pulse terminal dashboard showing live throughput, blocks, logs, and transaction metrics across multiple chains" width="100%"/>
 
 A simple yet powerful tool to quickly check the pulse of multiple blockchains in real time.
 
@@ -123,7 +123,7 @@ Check out the original post on [X](https://x.com/jonjonclark/status/195849712129
 
 ## Envio Powers Zup Protocol 
 
-<img src="/blog-assets/zup-integration.png" alt="zup" width="100%"/>
+<img src="/blog-assets/zup-integration.png" alt="Zup Protocol graphic showing HyperEVM and Base now live, surrounded by DEX and protocol logos" width="100%"/>
 
 
 Easily search millions of pools across multiple DEXs and chains for the best yield per pair.
@@ -137,14 +137,14 @@ Check out Zup Protocol: [app.zupprotocol.xyz](https://app.zupprotocol.xyz)
 
 ## HyperSync is now Globally Distributed
 
-<img src="/blog-assets/k8gb.png" alt="k8gb" width="100%"/>
+<img src="/blog-assets/k8gb.png" alt="K8GB Adopters page highlighting envio.dev as a new entry providing cross region availability of Envio's data engine" width="100%"/>
 
 We've joined the official list of [K8GB adopters](https://k8gb.io/ADOPTERS/). HyperSync is now served from multiple regions, giving builders faster and more reliable access wherever they are.
 
 
 ## Mobil3 Hackathon - Mexico City 
 
-<img src="/blog-assets/mobil3-hackathon.png" alt="mobil3 hackathon" width="100%"/>
+<img src="/blog-assets/mobil3-hackathon.png" alt="Selfie of Denham Preen with hackers at the Mobil3 hackathon in Mexico City" width="100%"/>
 
 
 We had a great time at the [Mobil3](https://mobil3.xyz/) Hackathon in CDMX!
@@ -158,7 +158,7 @@ Big thanks to the Mobil3 organizers, the Monaa Foundation, and all the builders 
 
 ## $943M Frozen 
 
-<img src="/blog-assets/banned-list.png" alt="banned list" width="100%"/>
+<img src="/blog-assets/banned-list.png" alt="Terminal output listing top USDT and USDC blacklisted wallet balances on Ethereum mainnet" width="100%"/>
 
 Say hello to the only list you don't want to be on → [The Banned List](https://thebannedlist.xyz)
 
@@ -171,7 +171,7 @@ Check out the original post on [X](https://x.com/DenhamPreen/status/195603785392
 
 ## Introducing Liquidator
 
-<img src="/blog-assets/liquidator.png" alt="liquidator" width="100%"/>
+<img src="/blog-assets/liquidator.png" alt="Liquidator terminal UI showing live liquidation stats and per-chain activity bars across Scroll, Avalanche, Base, Arbitrum, and more" width="100%"/>
 
 Say hello to Liquidator, a new tool that lets you watch liquidation events unfold live in your terminal.
 
@@ -201,7 +201,7 @@ Check it out on [GitHub](https://github.com/enviodev/telegram-to-notiondb)
 
 ## Featured Developer
 
-<img src="/blog-assets/aug-2025-DOTM.png" alt="Aug 2025 DOTM" width="100%"/>
+<img src="/blog-assets/aug-2025-DOTM.png" alt="Envio Featured Developer banner for Mikko Ohtamaa with portrait photo" width="100%"/>
 
 This month's featured developer is Mikko Ohtamaa, CEO and Co-Founder of [Trading Strategy](https://tradingstrategy.ai/), a Web3 algorithmic trading protocol. Over the past decade, Mikko has served as CTO at leading blockchain companies like LocalBitcoins (one of the first Bitcoin exchanges) and TokenMarket (one of the first ICO platforms), where he helped build infrastructure for more than $1B in digital assets. He's also an active voice in digital rights and open-source communities.
 
@@ -215,7 +215,7 @@ Be sure to follow them on [X](https://x.com/moo9000) and check out their work on
 
 ## Playlist of the Month
 
-<img src="/blog-assets/aug-playlist-2025.png" alt="Aug 2025 Playlist" width="100%"/>
+<img src="/blog-assets/aug-playlist-2025.png" alt="Spotify playlist cover titled 'Aug 25' by Jordy Baby, 20 songs, 1 hr 20 min" width="100%"/>
 
 [Open Spotify](https://open.spotify.com/playlist/3n3qReuChMo6SEgl0Bso3Z?si=23e45edbfde34be1)
 

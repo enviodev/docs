@@ -11,7 +11,7 @@ last_update:
   author: Jordyn Laurier
 ---
 
-<img src="/blog-assets/index-sei-smart-contracts-envio.png" alt="How to Index Sei Smart Contract Data in Minutes using Envio" width="100%"/>
+<img src="/blog-assets/index-sei-smart-contracts-envio.png" alt="Envio cover banner with Sei logo and headline 'Indexing Sei Data in Minutes: A step-by-step guide'" width="100%"/>
 
 <!--truncate-->
 

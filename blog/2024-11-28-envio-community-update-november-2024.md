@@ -62,7 +62,7 @@ If you love what we're building as much as we do and want to stay updated on our
 
 ## Our V2 Hosted Service is Here!
 
-<img src="/blog-assets/envio-developer-community-november-2024-1.png" alt="V2 Hosted Service" width="100%"/>
+<img src="/blog-assets/envio-developer-community-november-2024-1.png" alt="Envio V2 Hosted Service banner with tagline Fast Is For Everyone" width="100%"/>
 
 Our V2 Hosted Service has arrived! It's a significant upgrade that brings you faster build times, enhanced features, and an overall smoother experience.
 
@@ -80,7 +80,7 @@ For more details, check out our [FAQs](https://envio-dev.notion.site/V2-Hosted-S
 
 ## Exciting De-Fi Integration with Swaylend
 
-<img src="/blog-assets/envio-developer-community-november-2024-2.png" alt="Envio Swaylend Integration" width="100%"/>
+<img src="/blog-assets/envio-developer-community-november-2024-2.png" alt="Swaylend x Envio partnership announcement banner" width="100%"/>
 
 Envio's efficient indexing solution has been integrated with Swaylend, a lightning-fast & low-cost lending platform. We're pleased to integrate and power real-time insights for the smoothest crypto lending experience on the Fuel Network.
 
@@ -89,7 +89,7 @@ This integration elevates Swaylend's functionality by delivering efficient acces
 
 ## Lightning-Fast Data Retrieval Now Supported on Tangle & More!
 
-<img src="/blog-assets/envio-developer-community-november-2024-3.png" alt="HyperSync Supported Networks" width="100%"/>
+<img src="/blog-assets/envio-developer-community-november-2024-3.png" alt="Tangle x Envio partnership banner with planets and rings background" width="100%"/>
 
 Build, deploy, and monetize decentralized services effortlessly with Tangle - your gateway to the next era of restaking cloud infrastructure. HyperSync enables applications and data analysts to retrieve data through standard RPC or unlock up to 1000x faster performance with its advanced capabilities. Together, this integration drives innovation, simplifies development, and delivers unmatched performance for users.
 
@@ -108,7 +108,7 @@ View all current HyperSync-supported networks in our [docs](https://docs.envio.d
 
 ## Optimizing AWS for Indexer Performance: Strategies to Lower Cloud Costs
 
-<img src="/blog-assets/envio-developer-community-november-2024-4.png" alt="AWS Cost Optimization" width="100%"/>
+<img src="/blog-assets/envio-developer-community-november-2024-4.png" alt="Envio blog cover with headline How to Cut AWS Cloud Costs over a circuit board" width="100%"/>
 
 
 Reducing AWS costs doesn't have to come at the expense of performance. By optimizing your network and fine-tuning infrastructure, you can maintain smooth indexer operations while staying within budget.
@@ -118,7 +118,7 @@ Explore our tips for smarter, more efficient AWS spending in our latest [blog](h
 
 ## Dev Tutorial: Building Decentralized Applications on Fuel
 
-<img src="/blog-assets/envio-developer-community-november-2024-5.png" alt="Envio Fuel Tutorial" width="100%"/>
+<img src="/blog-assets/envio-developer-community-november-2024-5.png" alt="Video tutorial screenshot showing the Introducing Fuel Ignition page with a presenter in the corner" width="100%"/>
 
 In our new Fuel tutorial, we guide you through the process of building and deploying a smart contract on a testnet, starting with the fundamentals of Fuel. We then dive into Fuel's internals and show you how to use Envio to set up a backend indexer, making your app production-ready.
 
@@ -127,7 +127,7 @@ This tutorial is perfect for devs looking to leverage Fuel and Envio to create s
 
 ## Highlights from DevCon & ZuThailand
 
-<img src="/blog-assets/envio-developer-community-november-2024-6.png" alt="Envio DevCon & ZuThailand" width="100%"/>
+<img src="/blog-assets/envio-developer-community-november-2024-6.png" alt="Crowd of attendees gathered at the Data and Chill Cafe side event in Bangkok" width="100%"/>
 
 We had an incredible time at [Devcon](https://devcon.org/en/) 2024 in Bangkok! Envio had the pleasure of co-hosting the [Data & Chill Café](https://lu.ma/w84y3q08) side event, bringing together top builders from around the world spanning data, analytics, indexing, block explorers, and more.
 
@@ -145,7 +145,7 @@ To stay updated on our upcoming events and where to find us next, check out the 
 
 ## Featured Developer
 
-<img src="/blog-assets/envio-developer-community-november-2024-7.png" alt="Envio Featured Developer" width="100%"/>
+<img src="/blog-assets/envio-developer-community-november-2024-7.png" alt="Envio Featured Developer banner for Chris Koo with avatar over a glowing jar" width="100%"/>
 
 This month's featured developer and community member is Chris Koo, a talented developer and crypto enthusiast known for his contributions to the DeFi space. Chris created the [Salt Dex Indexer](https://v2.envio.dev/app/hashscape/salt-dex-indexer-prod), which indexes Uniswap V2 and V3 across all EVM chains, enabling users to easily access decentralized trading through [Salt](https://saltapp.xyz/) - an all-in-one trading service that connects over 30 chains and all major DEXs, allowing you to trade newly created tokens quickly and securely.
 
@@ -156,7 +156,7 @@ Explore the full list of deployed indexers in our [explorer](https://v2.envio.de
 
 ## Playlist of the Month
 
-<img src="/blog-assets/envio-developer-community-november-2024-8.png" alt="Envio Playlist" width="100%"/>
+<img src="/blog-assets/envio-developer-community-november-2024-8.png" alt="Spotify playlist cover titled 5 by Jordy Baby, 20 songs, 1 hr 26 min, with a duct-taped banana artwork" width="100%"/>
 
 
 [Open Spotify](https://open.spotify.com/playlist/0AWh4ltYv86dIgdw44tCip?si=b2f8de47dba14ca8)

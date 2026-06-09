@@ -79,7 +79,7 @@ describe("ERC20 indexer", () => {
 
 ### Experimental ClickHouse Sink
 
-<img src="/blog-assets/dev-update-april-2026-1.png" alt="Experimental ClickHouse Sink" width="100%"/>
+<img src="/blog-assets/dev-update-april-2026-1.png" alt="Envio banner titled 'Using ClickHouse Sink' with 'HyperIndex V3' subtitle" width="100%"/>
 
 HyperIndex V3 Alpha introduces an experimental ClickHouse Sink. Postgres remains the primary database, with your entity data additionally replicated to ClickHouse for analytics workloads.
 
@@ -101,7 +101,7 @@ Star us on [GitHub](https://github.com/enviodev/hyperindex) ⭐
 
 ## The Top Hundred Polymarket Traders
 
-<img src="/blog-assets/dev-update-april-2026-2.png" alt="The Top Hundred Polymarket Traders" width="100%"/>
+<img src="/blog-assets/dev-update-april-2026-2.png" alt="Table titled 'Polymarket all-time realized PnL distribution' across 2,684,676 users analyzed, broken down by PnL bucket, users, percent of users, and aggregate PnL" width="100%"/>
 
 We released the Polymarket V2 Indexer this month, a drop-in reference for teams wanting to collect all v2 market data. It covers the new v2 markets end-to-end, designed to scale alongside Polymarket's growth.
 
@@ -117,7 +117,7 @@ Read the full breakdown: [https://x.com/jonjonclark/status/2049067586046816561?s
 
 ## Envio Docs MCP Server
 
-<img src="/blog-assets/dev-update-april-2026-3.png" alt="Envio Docs MCP Server" width="100%"/>
+<img src="/blog-assets/dev-update-april-2026-3.png" alt="Envio banner titled 'Introducing Docs MCP Server' with subtitle 'Live docs for your AI assistant' and AI assistant logos linked to a central node" width="100%"/>
 
 Envio docs now speak AI. Plug your AI coding assistant (Claude Code, Cursor, Copilot, and more) straight into our docs with the new Envio Docs MCP Server.
 
@@ -159,7 +159,7 @@ Big thanks to the EthCC team, sponsors, organisers, and volunteers for putting o
 
 ## Monad Traces Live on HyperSync
 
-<img src="/blog-assets/dev-update-april-2026-5.png" alt="Monad Traces Live on HyperSync" width="100%"/>
+<img src="/blog-assets/dev-update-april-2026-5.png" alt="GitHub repo card for enviodev/export-monad-traces with the Envio logo" width="100%"/>
 
 Monad traces are live on HyperSync, with full history from block 0.
 
@@ -207,7 +207,7 @@ More to come.
 
 ## Playlist of the Month
 
-<img src="/blog-assets/dev-update-april-2026-9.png" alt="Playlist of the month" width="100%"/>
+<img src="/blog-assets/dev-update-april-2026-9.png" alt="Spotify public playlist titled 'Apr 26' by Jordy Baby, 21 songs, 1 hr 28 min" width="100%"/>
 
 ▶ [Open Spotify](https://open.spotify.com/playlist/240pHTCbwvf6kBMdfWGmw9?si=bb40d616e82a49f3)
 

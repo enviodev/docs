@@ -133,7 +133,7 @@ The indexer synced Polymarket's full onchain history on Polygon from block 3,764
 
 Run it locally with `pnpm dev` and compare the data with data from Polymarket subgraphs.
 
-<img src="/blog-assets/polymarket-hyperindex-case-study-1.png" alt="Polymarket indexer sync results" width="100%"/>
+<img src="/blog-assets/polymarket-hyperindex-case-study-1.png" alt="Envio dashboard for the Polymarket indexer showing 4,119,162,600 events processed, 6 days historical sync time, and Polygon Mainnet 100% synced" width="100%"/>
 
 Live deployment: [https://envio.dev/app/moose-code/polymarket-indexer/7cad3ad](https://envio.dev/app/moose-code/polymarket-indexer/7cad3ad)
 

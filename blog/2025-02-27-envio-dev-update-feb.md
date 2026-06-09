@@ -19,7 +19,7 @@ Welcome to the Envio monthly developer update. Here is what shipped in February 
 
 ## HyperSync Milestone
 
-<img src="/blog-assets/envio-dev-update-feb-2025-1.png" alt="HyperSync Milestone" width="100%"/>
+<img src="/blog-assets/envio-dev-update-feb-2025-1.png" alt="HyperSync stat showing 115,004,865,332 all time total requests" width="100%"/>
 
 
 Over 115 billion HyperSync requests served across multiple networks. It's becoming the go-to choice for faster data retrieval over standard RPC.
@@ -29,7 +29,7 @@ Huge thanks to all the devs building with Envio.
 
 ## HyperIndex Version 2.13.0 is now available
 
-<img src="/blog-assets/envio-dev-update-feb-2025-2.png" alt="Version 2.13.0" width="100%"/>
+<img src="/blog-assets/envio-dev-update-feb-2025-2.png" alt="GitHub release card for HyperIndex v2.13.0 noting ENVIO_PG_PUBLIC_SCHEMA support" width="100%"/>
 
 
 A major milestone for HyperIndex: the first pull request from an external contributor has been merged.
@@ -45,9 +45,9 @@ If you love what we're building as much as we do and want to stay updated on our
 
 ## V4: Get Real-time Analytics for Uniswap V4 Swaps Across Multiple Networks 
 
-<img src="/blog-assets/envio-dev-update-feb-2025-3.png" alt="V4" width="100%"/>
+<img src="/blog-assets/envio-dev-update-feb-2025-3.png" alt="V4 Uniswap dashboard showing total swaps and pool counts broken down by network" width="100%"/>
 
-<img src="/blog-assets/envio-dev-update-feb-2025-4.png" alt="V4 Hooks" width="100%"/>
+<img src="/blog-assets/envio-dev-update-feb-2025-4.png" alt="Uniswap v4 Leaderboard Hook Information tab listing lending hook projects like Tenor Finance, Solvent network, and Collar" width="100%"/>
 
 
 Check out [V4](https://uniswap-v4-analytics.vercel.app/) - powered by HyperIndex - a hub for Uniswap data and hooks that tracks top swaps, pools, and trends in real-time, all displayed in a unified dashboard.
@@ -57,7 +57,7 @@ In collaboration with [Silvio Busonero](https://x.com/SilvioBusonero) from [Boos
 
 ## Oracle Wars: Visualize Onchain Oracle Performance
 
-<img src="/blog-assets/envio-dev-update-feb-2025-5.png" alt="Oracle Wars" width="100%"/>
+<img src="/blog-assets/envio-dev-update-feb-2025-5.png" alt="Oracle Wars chart comparing ETH/USD price feeds from Redstone and Chainlink on Ethereum" width="100%"/>
 
 
 Introducing [Oracle Wars](https://www.oraclewars.xyz/) - powered by HyperIndex - a live feed showcasing onchain oracle data from multiple providers, including ETH/USD feeds from [RedStone](https://www.redstone.finance/) and [Chainlink](https://chain.link/). This tool helps developers gain insights into how oracles operate in real-world scenarios, especially during periods of market volatility.
@@ -67,7 +67,7 @@ By visualizing real-time updates, Oracle Wars empowers developers to make more i
 
 ## Exciting DeFi Integration With Haha Wallet
 
-<img src="/blog-assets/envio-dev-update-feb-2025-6.png" alt="Haha Wallet" width="100%"/>
+<img src="/blog-assets/envio-dev-update-feb-2025-6.png" alt="Tweet from Keone Hon thanking Envio with a Rohan Kuru reply showing the Haha Wallet indexed in-house at 10k TPS" width="100%"/>
 
 
 Envio's efficient indexing solution has been integrated with [Haha Wallet](https://www.haha.me/) - an innovative smart wallet delivering the best user experience on Monad.
@@ -79,7 +79,7 @@ See it in action on [X](https://x.com/0xtrojan_/status/1891503860713173456).
 
 ## EthDenver: Encode Club Modular DeFi Hackathon & Research Day
 
-<img src="/blog-assets/envio-dev-update-feb-2025-7.png" alt="Encode Hack" width="100%"/>
+<img src="/blog-assets/envio-dev-update-feb-2025-7.png" alt="Jonjon presenting at the Encode Club Modular DeFi Hackathon with the Envio Uniswap v4 indexer running on a screen behind him" width="100%"/>
 
 
 This month, our team attended [EthDenver](https://www.ethdenver.com/), where we hosted a developer workshop led by our Co-founder [Jonjon](https://x.com/jonjonclark), who built a Uniswap V4 dashboard from scratch in under 15 minutes. We also offered several bounties with a total prize pool of $5k for Encode Club's Modular DeFi Hackathon & Research Day.
@@ -89,7 +89,7 @@ A huge thank you to the [Encode](https://www.encode.club/) team for hosting us a
 
 ## EthDenver: Monad Evm/Accathon
 
-<img src="/blog-assets/envio-dev-update-feb-2025-8.png" alt="Monad Hack" width="100%"/>
+<img src="/blog-assets/envio-dev-update-feb-2025-8.png" alt="Monad evm/accathon ETH Denver event banner with the tagline Accelerate the EVM" width="100%"/>
 
 
 This month, we hosted the Envio Bounty Challenge during the first-ever Monad hackathon, the EVM/Accathon, inviting participants to create live analytics dashboards to track Monad's onchain activity using Envio's HyperIndex & HyperSync. The challenge featured a prize of $2,000 USD!
@@ -108,7 +108,7 @@ Check out the recorded version of the discussion below.
 
 ## Envio Supports Developers Building on Monad
 
-<img src="/blog-assets/envio-dev-update-feb-2025-9.png" alt="Monad Support" width="100%"/>
+<img src="/blog-assets/envio-dev-update-feb-2025-9.png" alt="Envio and Monad co-branded banner with both logos on a deep purple background" width="100%"/>
 
 
 Monad's testnet is live and a high-speed chain deserves a high-performance solution.
@@ -121,7 +121,7 @@ Learn more in our [thread](https://x.com/envio_indexer/status/189223005671957319
 
 ## Envio's Open Indexing Framework Supports Devs Building on Berachain
 
-<img src="/blog-assets/envio-dev-update-feb-2025-10.png" alt="Berachain Support" width="100%"/>
+<img src="/blog-assets/envio-dev-update-feb-2025-10.png" alt="Envio and Berachain co-branded banner with the Berachain bear mascot perched in a pine forest" width="100%"/>
 
 
 Envio's open indexing framework supports devs building on Berachain Mainnet with efficient access to real-time & historical data. Developers can utilize Envio's HyperSync to sync millions of events 1000x faster than RPC. Easy, fast, and fully customizable!
@@ -132,7 +132,7 @@ View all current HyperSync-supported networks in our [docs](https://docs.envio.d
 
 ## New Feature Alert: Search Bar Now Live
 
-<img src="/blog-assets/envio-dev-update-feb-2025-11.png" alt="Search Bar" width="100%"/>
+<img src="/blog-assets/envio-dev-update-feb-2025-11.png" alt="Envio Explorer with a new search bar above a grid of indexer cards showing block counts and deploy times" width="100%"/>
 
 
 The much-anticipated search bar is here, allowing you to easily navigate the 100+ indexers deployed on Envio. Stay tuned for upcoming features, and don't hesitate to share your feedback or suggestions in our Discord!
@@ -148,7 +148,7 @@ Test it out yourself in our [Explorer](https://envio.dev/explorer).
 
 ## Featured Developer
 
-<img src="/blog-assets/envio-dev-update-feb-2025-12.png" alt="Search Bar" width="100%"/>
+<img src="/blog-assets/envio-dev-update-feb-2025-12.png" alt="Envio Featured Developer banner for Sergey Potekhin with his portrait beside the title" width="100%"/>
 
 
 This month's featured developer and community member is [Sergey Potekhin](https://www.linkedin.com/in/sergey-potekhin/)!
@@ -160,7 +160,7 @@ Follow Sergey on [GitHub](https://github.com/pavlovdog/) for updates on his late
 
 ## Playlist of the Month
 
-<img src="/blog-assets/envio-dev-update-feb-2025-13.png" alt="Feb Playlist 2025" width="100%"/>
+<img src="/blog-assets/envio-dev-update-feb-2025-13.png" alt="Spotify Feb 25 public playlist by Jordy Baby with 25 songs and 1 hr 38 min runtime" width="100%"/>
 
 
 [Open Spotify](https://open.spotify.com/playlist/0yOOvvkHFIDsi2VRHDIrH0?si=7ad749d44b464830)

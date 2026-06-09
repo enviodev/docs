@@ -9,7 +9,7 @@ last_update:
 authors: ["j_o_r_d_y_s"]
 ---
 
-<img src="/blog-assets/envio-supports-70-networks.png" alt="Cover Image Envio Developer Community Update February 2025" width="100%"/>
+<img src="/blog-assets/envio-supports-70-networks.png" alt="Envio cover banner reading Powering 70+ Blockchains, HyperSync Support, surrounded by chain logos" width="100%"/>
 
 <!--truncate-->
 

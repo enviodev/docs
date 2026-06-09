@@ -8,7 +8,7 @@ image: /blog-assets/katana-sushiswap-case-study.png
 authors: ["j_o_r_d_y_s"]
 ---
 
-<img src="/blog-assets/katana-sushiswap-case-study.png" alt="How Katana Migrated SushiSwap Data from The Graph to Envio" width="100%"/>
+<img src="/blog-assets/katana-sushiswap-case-study.png" alt="Envio case study cover for Katana, headline reads Migrating SushiSwap Data Off The Graph" width="100%"/>
 
 <!--truncate-->
 

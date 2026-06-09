@@ -165,7 +165,7 @@ For information, be sure to check out the full release notes. More updates comin
 
 ## Indexing Data on MegaEth Mainnet
 
-<img src="/blog-assets/dev-update-feb-26-1.gif" alt="MegaEth Mainnet" width="100%"/>
+<img src="/blog-assets/dev-update-feb-26-1.gif" alt="MegaETH mainnet website with animated radar showing live TPS and total transactions counter" width="100%"/>
 
 [MegaETH](https://rabbithole.megaeth.com) launched its public Mainnet on February 9, 2026, marking the transition from testnet experimentation to a live production network. As a performance focused Ethereum Layer 2, MegaETH is built to support high throughput and low latency execution for onchain applications.
 
@@ -189,7 +189,7 @@ Be sure to check out the series on [YouTube](https://www.youtube.com/@decryptedb
 
 ## Tyde Terminal Tide Visualiser
 
-<img src="/blog-assets/dev-update-feb-26-3.gif" alt="Tyde" width="100%"/>
+<img src="/blog-assets/dev-update-feb-26-3.gif" alt="Tyde terminal app rendering an animated ASCII tide scene with a 24-hour tide chart for Cape Town" width="100%"/>
 
 
 Tyde is an open source terminal based tool that visualises real world tide levels directly in the command line. It renders an animated tide scene with waves, sand, and foam, alongside a 24-hour tide chart showing the current position in the cycle. Sunrise and sunset times are also displayed, with support for a day and night cycle.
@@ -219,7 +219,7 @@ For more information, see the original [post](https://x.com/envio_indexer/status
 
 ## Envio Alerts: Uniswap v4 Alert Bots
 
-<img src="/blog-assets/dev-update-feb-26-5.png" alt="Envio alert bots" width="100%"/>
+<img src="/blog-assets/dev-update-feb-26-5.png" alt="Telegram feeds for the Uniswap v4 MEV Alerts and Liquid Token Alerts bots posting $1M TVL pool alerts" width="100%"/>
 
 
 Get automated alerts when a Uniswap v4 pool crosses 1m in TVL, including when an MEV bot trade causes the threshold to be hit.
@@ -244,7 +244,7 @@ Be sure to join the bot groups on Telegram to receive alerts in real-time and st
 
 ## Playlist of the Month
 
-<img src="/blog-assets/dev-update-feb-26-7.png" alt="PLOTM Feb 2026" width="100%"/>
+<img src="/blog-assets/dev-update-feb-26-7.png" alt="Spotify public playlist titled 'Feb 26' by Jordy Baby with 22 songs spanning 1 hr 23 min" width="100%"/>
 
 ▶ [Open Spotify](https://open.spotify.com/playlist/0CNf2YeAWBGUii76h6xilv?si=575e6a3e76c844b5)
 

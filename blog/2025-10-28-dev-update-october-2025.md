@@ -87,7 +87,7 @@ Star us on [GitHub](https://github.com/enviodev/hyperindex)
 
 ## The Uniswap Alert System That Uncovered a MEV Bot Making Millions
 
-<img src="/blog-assets/dev-update-oct-25-1.png" alt="mev bot" width="100%"/>
+<img src="/blog-assets/dev-update-oct-25-1.png" alt="Transactions table highlighting a $1.09M Add and Remove pair, evidence of an MEV sandwich attack on a Uniswap pool" width="100%"/>
 
 While testing a Uniswap alert system, the team accidentally uncovered an active MEV bot that has been making millions every week on mainnet! 
 
@@ -122,7 +122,7 @@ Our bounties can double as a bonus on top of whatever you're already building, s
 
 ## Understanding Stablecoin Flows in Real-time
 
-<img src="/blog-assets/dev-update-oct-25-2.gif" alt="stablecoin flows" width="100%"/>
+<img src="/blog-assets/dev-update-oct-25-2.gif" alt="Stable Volume dashboard powered by Envio showing 14,757 real-time stablecoin transfers per minute across chains" width="100%"/>
 
 Stablecoins move faster than ever, and understanding that flow in real-time opens up new layers of insight, from transaction velocity to how close we are to Visa or Mastercard throughput.
 
@@ -143,7 +143,7 @@ Co-Founder [Denham Preen](https://x.com/DenhamPreen) led a workshop at ETHGlobal
 
 ## Envio Showcase
 
-<img src="/blog-assets/dev-update-oct-25-3.gif" alt="showcase" width="100%"/>
+<img src="/blog-assets/dev-update-oct-25-3.gif" alt="Envio Showcase page featuring live demos built with HyperIndex and HyperSync, including v4.xyz, Stable Volume, and Oracle Wars" width="100%"/>
 
 We launched a new showcase page highlighting live demos built with HyperIndex and HyperSync. From real-time dashboards to onchain visualizations, it's a growing collection of projects built by the community and team to show what's possible with Envio.
 
@@ -152,7 +152,7 @@ Explore the [Showcase](https://docs.envio.dev/showcase) in our documentation.
 
 ## Empowering Builders with Real-Time Indexing | Encode London 2025
 
-<img src="/blog-assets/dev-update-oct-25-4.png" alt="encode london 2025" width="100%"/>
+<img src="/blog-assets/dev-update-oct-25-4.png" alt="Encode London 2025 partner banner announcing Envio's $3,000 bounty" width="100%"/>
 
 Envio joined [Encode London](https://luma.com/Encode-London-25) 2025 as a partner, offering $3K in bounties to support builders throughout the weekend hackathon.
 
@@ -172,7 +172,7 @@ Well done to all the builders and a big shoutout to the Encode team and organize
 
 ## Featured Developer
 
-<img src="/blog-assets/dev-update-oct-25-5.png" alt="DOTM 2025" width="100%"/>
+<img src="/blog-assets/dev-update-oct-25-5.png" alt="Envio Featured Developer banner for Enguerrand with a headshot on a purple circuit board background" width="100%"/>
 
 This month's featured developer is Enguerrand, a builder with a strong focus on low level tech and decentralized solutions to real world problems.
 
@@ -191,7 +191,7 @@ Be sure to follow them on [X](https://x.com/enguerrandpp) and check out their wo
 
 ## Playlist of the Month
 
-<img src="/blog-assets/dev-update-oct-25-6.png" alt="PLOTM Oct 2025" width="100%"/>
+<img src="/blog-assets/dev-update-oct-25-6.png" alt="Spotify public playlist cover for 'Oct 25' by Jordy Baby, 21 songs, 1 hr 19 min" width="100%"/>
 
 
 [Open Spotify](https://open.spotify.com/playlist/01eyMwoIMDEmcDjuFJsuhm?si=0319312d9a2d4499)

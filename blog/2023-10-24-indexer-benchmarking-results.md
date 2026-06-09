@@ -78,7 +78,7 @@ All implementations are publicly available for review and reproduction:
 
 ## Results
 
-<img src="/blog-assets/envio-univ3-benchmark-results.png" alt="Envio benchmark results chart" width="100%"/>
+<img src="/blog-assets/envio-univ3-benchmark-results.png" alt="Bar chart of events indexed per second: Envio v0.0.20 9,299, Subsquid 4,386, Envio v0.0.19 4,282, Ponder 115, theGraph 90, Substreams-powered Subgraph 59" width="100%"/>
 
 Total sync times in minutes, sorted fastest to slowest:
 

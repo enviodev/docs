@@ -127,7 +127,7 @@ Check the live deployment from this demo here:
 
 **400,000 events indexed. ~20 seconds**
 
-<img src="/blog-assets/agentic-blockchain-indexing-1.png" alt="Cover Image Agentic Blockchain Indexing" width="100%"/>
+<img src="/blog-assets/agentic-blockchain-indexing-1.png" alt="Envio Cloud deployment dashboard showing the wstETH Monad indexer live, 463,275 events processed and 100% synced in 1 minute" width="100%"/>
 
 See the full walkthrough on [Loom](https://www.loom.com/share/09cdac43b18f4143ad78b18c8c8a492b), covering the complete agent driven workflow from scaffold to deployment.
 

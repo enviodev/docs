@@ -102,7 +102,7 @@ If you love what we're building as much as we do and want to stay updated on our
 
 ## Mission 4: Building Visualizers & Dashboards on Monad
 
-<img src="/blog-assets/visualizers-and-dash-monad.png" alt="mission 4" width="100%"/>
+<img src="/blog-assets/visualizers-and-dash-monad.png" alt="Envio x Monad Mission 4 banner: Building Visualizers and Dashboards on Monad" width="100%"/>
 
 As part of Mission 4 with the Monad Developer community, we invited builders to push the limits of real-time dashboards and visualizers on Monad, powered by Envio. The outcome? A wave of standout projects that combined sharp design with serious indexing performance.
 
@@ -111,7 +111,7 @@ Catch the highlights in our [blog](https://docs.envio.dev/blog/how-to-build-visu
 
 ## Exploring Cross-Chain Arbitrage on Uniswap V4
 
-<img src="/blog-assets/arbitrage-v4.png" alt="v4 arbitrage" width="100%"/>
+<img src="/blog-assets/arbitrage-v4.png" alt="V4.xyz Multi-Chain ETH/USDC Price Arbitrage dashboard comparing prices across Ethereum, Unichain, Arbitrum, Base, and Optimism" width="100%"/>
 
 Curious how much prices diverge across the same Uniswap V4 pools deployed on different chains? One builder tracked ETH/USDC across Ethereum, Base, Arbitrum, and Unichain, building a real-time dashboard that surfaces price discrepancies, trade sizes, and cross-chain spread opportunities as they appear.
 
@@ -129,7 +129,7 @@ Take a look at what we shipped by reading this [thread](https://x.com/envio_inde
 
 ## How to Index Data on MegaEth Using Envio
 
-<img src="/blog-assets/megaeth.png" alt="index megaeth data" width="100%"/>
+<img src="/blog-assets/megaeth.png" alt="Envio cover graphic: How to Index Real-Time Data on MegaETH" width="100%"/>
 
 Envio proudly supports developers and data analysts building on MegaEth with the most performant real-time indexing stack designed for high-throughput environments. Get fast, reliable access to both real-time and historical data without the usual bottlenecks. 
 
@@ -138,7 +138,7 @@ Learn more about how to efficiently index data on MegaEth in our [blog](https://
 
 ## Join Us at Pragma Cannes
 
-<img src="/blog-assets/pragma-jonjon.png" alt="pragma jonjon" width="100%"/>
+<img src="/blog-assets/pragma-jonjon.png" alt="Pragma Cannes speaker banner for JonJon Clark, Co-founder of envio.dev, Thu, Jul 3, 2025" width="100%"/>
 
 We're heading to EthGlobal's Pragma in Cannes and running a hands-on workshop built for developers. Learn how to easily access, index, and query multichain data with Envio.
 
@@ -147,7 +147,7 @@ Still need a ticket? Grab $70 off with our [referral link]( https://ethglobal.co
 
 ## Analyzing Safe Data in Real-time Using HyperIndex
 
-<img src="/blog-assets/analyzing-safe-data.png" alt="safe data" width="100%"/>
+<img src="/blog-assets/analyzing-safe-data.png" alt="Envio x Safe workshop banner: Analyzing Safe Data in Real-time, Execution Layer Workshop Room, 17th June 2pm GMT+2" width="100%"/>
 
 
 Missed our speaking slot at DappCon? Check out this session. Learn how Envio's HyperIndex unlocks instant visibility into [Safe](https://safe.global/) transactions, from multisig behavior to governance and fund flows in our [developer workshop](https://www.youtube.com/live/3_5__fpQjKM?t=18381s).
@@ -156,7 +156,7 @@ Missed our speaking slot at DappCon? Check out this session. Learn how Envio's H
 
 ## How to Index Data on Monad Using Envio
 
-<img src="/blog-assets/index-data-on-monad.png" alt="indexing monad" width="100%"/>
+<img src="/blog-assets/index-data-on-monad.png" alt="Envio cover graphic: How to Index Data on Monad Quickstart Guide" width="100%"/>
 
 Envio is proud to support developers and data analysts building on [Monad](https://www.monad.xyz/) by providing the most efficient and reliable access to real-time and historical data on the Monad network through our modular indexing stack.
 
@@ -172,7 +172,7 @@ Learn more about how to efficiently index data on Monad in our [blog](https://do
 
 ## Featured Developer
 
-<img src="/blog-assets/dev-of-the-month-june-2025.png" alt="DOTM June" width="100%"/>
+<img src="/blog-assets/dev-of-the-month-june-2025.png" alt="Envio Featured Developer banner for Thalles Passos" width="100%"/>
 
 This month's featured developer is Thalles Passos. He's a full-stack developer from Brazil who started building professionally at just 17. Thalles began his journey with [Notus Labs](https://notus.team/) and is now working on [Notus API](https://docs.notus.team/docs/guides), where the team is creating a complete suite for account abstraction.
 
@@ -189,7 +189,7 @@ Be sure to follow Thalles on [X](https://x.com/thallescomumh) and check out his 
 
 ## Playlist of the Month
 
-<img src="/blog-assets/june-playlist.png" alt="june playlist" width="100%"/>
+<img src="/blog-assets/june-playlist.png" alt="Spotify public playlist cover titled June 25 by Jordy Baby, 17 songs, 1 hr 8 min" width="100%"/>
 
 [Open Spotify](https://open.spotify.com/playlist/0YkXxUDzOrUSh2h0eznxu6?si=192e7f80b18e478a)
 
