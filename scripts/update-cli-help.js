@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require("fs");
 
 const DOC_URL =
-  "https://raw.githubusercontent.com/enviodev/hyperindex/main/codegenerator/cli/CommandLineHelp.md";
+  "https://raw.githubusercontent.com/enviodev/hyperindex/main/CommandLineHelp.md";
 
 const PAGE_HEADER = `---
 id: cli-commands
@@ -24,10 +24,18 @@ const OUTPUT_FILE_PATH = path.join(
 
 const main = async () => {
   const response = await fetch(DOC_URL);
+  if (!response.ok) {
+    throw new Error(
+      `Failed to fetch CLI help from ${DOC_URL}: ${response.status} ${response.statusText}`,
+    );
+  }
   const doc = await response.text();
   const combinedContent = PAGE_HEADER + doc;
   await fs.promises.writeFile(OUTPUT_FILE_PATH, combinedContent);
   console.log(`Combined content has been written to ${OUTPUT_FILE_PATH}`);
 };
 
-main();
+main().catch((error) => {
+  console.error(error.message);
+  process.exit(1);
+});
