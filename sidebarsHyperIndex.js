@@ -102,7 +102,7 @@ module.exports = {
         "Advanced/loaders",
         "Advanced/websockets",
         "Advanced/query-conversion",
-        "Guides/mcp-server",
+        "Advanced/mcp-server",
         // {
         //   type: "category",
         //   label: "Performance",

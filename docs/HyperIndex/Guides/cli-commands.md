@@ -55,11 +55,6 @@ The commands are organized into the following categories:
 
 - [`envio benchmark-summary`](#envio-benchmark-summary) - View performance data
 
-### Documentation Tools
-
-- [`envio tools search-docs`](#envio-tools-search-docs) - Search the Envio documentation
-- [`envio tools fetch-docs`](#envio-tools-fetch-docs) - Fetch a documentation page as markdown
-
 ## Global Command
 
 ### `envio`
@@ -322,41 +317,6 @@ Prints a summary of the benchmark data after running the indexer with `envio dev
 
 **Usage:** `envio benchmark-summary`
 
-## Documentation Tools
-
-Available from Envio `3.1`, these commands let AI coding assistants (and you) search and retrieve the Envio documentation directly from the CLI — the same capability exposed by the [MCP server](/docs/HyperIndex/mcp-server), with no separate setup required.
-
-### `envio tools`
-
-Utilities for AI agents to interact with the Envio documentation.
-
-**Usage:** `envio tools <COMMAND>`
-
-###### **Subcommands:**
-
-- `search-docs` — Full-text search across the Envio documentation
-- `fetch-docs` — Fetch the full markdown content of a documentation page
-
-### `envio tools search-docs`
-
-Full-text search across all Envio documentation. Returns matching pages with titles, URLs, and content snippets.
-
-**Usage:** `envio tools search-docs <QUERY>`
-
-###### **Arguments:**
-
-- `<QUERY>` — The text to search for across the documentation
-
-### `envio tools fetch-docs`
-
-Retrieve the full content of a documentation page as markdown.
-
-**Usage:** `envio tools fetch-docs <URL>`
-
-###### **Arguments:**
-
-- `<URL>` — The documentation page URL to fetch (e.g. `https://docs.envio.dev/docs/HyperIndex/overview`)
-
 ## Command Reference Table
 
 | Command                        | Description                  | Common Use Case                                    |
@@ -369,8 +329,6 @@ Retrieve the full content of a documentation page as markdown.
 | `envio codegen`                | Regenerate types in `.envio/`| After changing `config.yaml` or `schema.graphql`   |
 | `envio local docker up`        | Start Docker containers      | Setting up environment                             |
 | `envio local db-migrate setup` | Initialize database          | Before first run                                   |
-| `envio tools search-docs`      | Search the Envio docs        | Letting an AI agent find relevant documentation    |
-| `envio tools fetch-docs`       | Fetch a doc page as markdown | Pulling full page content into an AI agent         |
 
 ## Complete One-Line Examples
 
