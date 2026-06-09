@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require("fs");
 
 const DOC_URL =
-  "https://raw.githubusercontent.com/enviodev/hyperindex/main/CommandLineHelp.md";
+  "https://raw.githubusercontent.com/enviodev/hyperindex/main/packages/cli/CommandLineHelp.md";
 
 const PAGE_HEADER = `---
 id: cli-commands

@@ -36,6 +36,15 @@ This document contains the help content for the `envio` command-line program.
 * [`envio local db-migrate down`↴](#envio-local-db-migrate-down)
 * [`envio local db-migrate setup`↴](#envio-local-db-migrate-setup)
 * [`envio start`↴](#envio-start)
+* [`envio metrics`↴](#envio-metrics)
+* [`envio metrics runtime`↴](#envio-metrics-runtime)
+* [`envio skills`↴](#envio-skills)
+* [`envio skills update`↴](#envio-skills-update)
+* [`envio tools`↴](#envio-tools)
+* [`envio tools search-docs`↴](#envio-tools-search-docs)
+* [`envio tools fetch-docs`↴](#envio-tools-fetch-docs)
+* [`envio config`↴](#envio-config)
+* [`envio config view`↴](#envio-config-view)
 
 ## `envio`
 
@@ -49,6 +58,10 @@ This document contains the help content for the `envio` command-line program.
 * `codegen` — Generate indexing code from user-defined configuration & schema files
 * `local` — Prepare local environment for envio testing
 * `start` — Start the indexer. Runs codegen automatically before launching so the on-disk types stay in sync with `config.yaml` and `schema.graphql`
+* `metrics` — Fetch raw Prometheus metrics from the running indexer's /metrics endpoint
+* `skills` — Manage Envio-provided Claude Code skills under `.claude/skills/`
+* `tools` — Tools for people and AI agents (search-docs, fetch-docs). Run `envio tools help` for details
+* `config` — Inspect the indexer config
 
 ###### **Options:**
 
@@ -83,7 +96,7 @@ Initialize an indexer with one of the initialization options
 
   Possible values: `pnpm`, `npm`, `yarn`, `bun`
 
-* `--api-token <API_TOKEN>` — The hypersync API key to be initialized in your templates .env file
+* `--api-token <API_TOKEN>` — The hypersync API key to be initialized in your templates .env file. Falls back to the `ENVIO_API_TOKEN` environment variable
 
 
 
@@ -116,7 +129,7 @@ Initialize by pulling the contract ABI from a block explorer
 
 * `-b`, `--blockchain <BLOCKCHAIN>` — Network to import the contract from
 
-  Possible values: `abstract`, `amoy`, `arbitrum-nova`, `arbitrum-one`, `arbitrum-sepolia`, `arbitrum-testnet`, `aurora`, `aurora-testnet`, `avalanche`, `b2-testnet`, `base`, `base-sepolia`, `berachain`, `blast`, `blast-sepolia`, `boba`, `bsc`, `bsc-testnet`, `celo`, `celo-alfajores`, `celo-baklava`, `citrea-testnet`, `crab`, `curtis`, `ethereum-mainnet`, `evmos`, `fantom`, `fantom-testnet`, `fhenix-helium`, `flare`, `fraxtal`, `fuji`, `galadriel-devnet`, `gnosis`, `gnosis-chiado`, `goerli`, `harmony`, `holesky`, `hoodi`, `hyperliquid`, `kroma`, `linea`, `linea-sepolia`, `lisk`, `lukso`, `lukso-testnet`, `manta`, `mantle`, `mantle-testnet`, `megaeth-testnet`, `megaeth-testnet2`, `metis`, `mode`, `mode-sepolia`, `monad`, `monad-testnet`, `moonbase-alpha`, `moonbeam`, `moonriver`, `morph`, `morph-testnet`, `neon-evm`, `opbnb`, `optimism`, `optimism-sepolia`, `plasma`, `poa-core`, `poa-sokol`, `polygon`, `polygon-zkevm`, `polygon-zkevm-testnet`, `rsk`, `saakuru`, `scroll`, `scroll-sepolia`, `sei`, `sei-testnet`, `sepolia`, `shimmer-evm`, `sonic`, `sonic-testnet`, `sophon`, `sophon-testnet`, `swell`, `taiko`, `tangle`, `unichain`, `unichain-sepolia`, `worldchain`, `xdc`, `xdc-testnet`, `zeta`, `zksync-era`, `zora`, `zora-sepolia`
+  Possible values: `abstract`, `amoy`, `arbitrum-nova`, `arbitrum-one`, `arbitrum-sepolia`, `arbitrum-testnet`, `aurora`, `aurora-testnet`, `avalanche`, `b2-testnet`, `base`, `base-sepolia`, `berachain`, `blast`, `blast-sepolia`, `boba`, `bsc`, `bsc-testnet`, `celo`, `celo-alfajores`, `celo-baklava`, `citrea-testnet`, `crab`, `curtis`, `ethereum-mainnet`, `evmos`, `fantom`, `fantom-testnet`, `fhenix-helium`, `flare`, `fraxtal`, `fuji`, `galadriel-devnet`, `gnosis`, `gnosis-chiado`, `goerli`, `harmony`, `holesky`, `hoodi`, `hyperliquid`, `kroma`, `linea`, `linea-sepolia`, `lisk`, `lukso`, `lukso-testnet`, `manta`, `mantle`, `mantle-testnet`, `megaeth-testnet2`, `metis`, `mode`, `mode-sepolia`, `monad`, `monad-testnet`, `moonbase-alpha`, `moonbeam`, `moonriver`, `morph`, `morph-testnet`, `neon-evm`, `opbnb`, `optimism`, `optimism-sepolia`, `plasma`, `poa-core`, `poa-sokol`, `polygon`, `polygon-zkevm`, `polygon-zkevm-testnet`, `rsk`, `saakuru`, `scroll`, `scroll-sepolia`, `sei`, `sei-testnet`, `sepolia`, `shimmer-evm`, `sonic`, `sonic-testnet`, `sophon`, `sophon-testnet`, `swell`, `taiko`, `tangle`, `unichain`, `unichain-sepolia`, `worldchain`, `xdc`, `xdc-testnet`, `zeta`, `zksync-era`, `zora`, `zora-sepolia`
 
 * `--api-token <API_TOKEN>` — API token for the block explorer
 * `--single-contract` — If selected, prompt will not ask for additional contracts/addresses/chains
@@ -366,6 +379,103 @@ Start the indexer. Runs codegen automatically before launching so the on-disk ty
 ###### **Options:**
 
 * `-r`, `--restart` — Clear your database and restart indexing from scratch
+
+
+
+## `envio metrics`
+
+Fetch raw Prometheus metrics from the running indexer's /metrics endpoint
+
+**Usage:** `envio metrics [COMMAND]`
+
+###### **Subcommands:**
+
+* `runtime` — Fetch runtime metrics from the running indexer's /metrics/runtime endpoint
+
+
+
+## `envio metrics runtime`
+
+Fetch runtime metrics from the running indexer's /metrics/runtime endpoint
+
+**Usage:** `envio metrics runtime`
+
+
+
+## `envio skills`
+
+Manage Envio-provided Claude Code skills under `.claude/skills/`
+
+**Usage:** `envio skills <COMMAND>`
+
+###### **Subcommands:**
+
+* `update` — Re-extract every skill shipped by this CLI version, overwriting the matching directories under `<cwd>/.claude/skills/`. Skills not shipped by envio are left untouched
+
+
+
+## `envio skills update`
+
+Re-extract every skill shipped by this CLI version, overwriting the matching directories under `<cwd>/.claude/skills/`. Skills not shipped by envio are left untouched
+
+**Usage:** `envio skills update`
+
+
+
+## `envio tools`
+
+Tools for people and AI agents (search-docs, fetch-docs). Run `envio tools help` for details
+
+**Usage:** `envio tools <COMMAND>`
+
+###### **Subcommands:**
+
+* `search-docs` — Full-text search over Envio docs; prints matching titles, URLs, and snippets. Pair with `fetch-docs` to read a hit in full
+* `fetch-docs` — Print the full markdown of a docs page by URL. Use a URL returned by `search-docs`
+
+
+
+## `envio tools search-docs`
+
+Full-text search over Envio docs; prints matching titles, URLs, and snippets. Pair with `fetch-docs` to read a hit in full
+
+**Usage:** `envio tools search-docs <QUERY>`
+
+###### **Arguments:**
+
+* `<QUERY>` — The search query
+
+
+
+## `envio tools fetch-docs`
+
+Print the full markdown of a docs page by URL. Use a URL returned by `search-docs`
+
+**Usage:** `envio tools fetch-docs <URL>`
+
+###### **Arguments:**
+
+* `<URL>` — The full URL of the documentation page to fetch
+
+
+
+## `envio config`
+
+Inspect the indexer config
+
+**Usage:** `envio config <COMMAND>`
+
+###### **Subcommands:**
+
+* `view` — Print the resolved indexer config as JSON
+
+
+
+## `envio config view`
+
+Print the resolved indexer config as JSON
+
+**Usage:** `envio config view`
 
 
 
