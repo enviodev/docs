@@ -28,7 +28,7 @@ Some slots have **no block**; the `blocks` array can be sparse across the reques
   "instructions": [ ... ],
   "transactions": [ ... ],
   "logs": [ ... ],
-  "fields": { ... }
+  "field_selection": { ... }
 }
 ```
 
@@ -47,10 +47,8 @@ Some slots have **no block**; the `blocks` array can be sparse across the reques
 | `d1` / `d2` / `d4` / `d8` | First _N_ bytes of instruction data, as hex. **`0x` prefix is optional** (`"0x03"` and `"03"` are equivalent). |
 | `a0` - `a9` | Account pubkey at that **index in the instruction's account metas** (`a0` = first account, `a2` = third). Which account is "the mint", "the pool", etc. is **defined by the program's IDL / instruction layout**, not by Solana globally. |
 | `is_inner` | `true` = inner only, `false` = outer only, **omitted** = both. |
-| `include_transaction` | Also return the parent transaction row(s). |
-| `include_logs` | Also return log rows tied to matched instructions. |
 
-**`instruction_address`:** When you join logs or instructions, this array encodes **where** the instruction sits in the transaction: outer-only indices use one element, e.g. `[2]` = third top-level instruction; inner instructions append an index, e.g. `[2, 0]` = first inner instruction inside that outer instruction.
+**`instruction_address`:** This array encodes **where** the instruction sits in the transaction: outer-only indices use one element, e.g. `[2]` = third top-level instruction; inner instructions append an index, e.g. `[2, 0]` = first inner instruction inside that outer instruction.
 
 ### TransactionSelection
 
@@ -58,7 +56,6 @@ Some slots have **no block**; the `blocks` array can be sparse across the reques
 |---|---|
 | `fee_payer` | Match fee payer pubkey. |
 | `success` | `true` = succeeded only, `false` = failed only, **omitted** = both (same pattern as `is_inner`). |
-| `include_instructions` | Also return all instructions in matched transactions. |
 
 ### LogSelection
 
@@ -66,8 +63,6 @@ Some slots have **no block**; the `blocks` array can be sparse across the reques
 |---|---|
 | `program_id` | Match log emitter program. |
 | `kind` | Parsed log line category (see below). |
-| `include_transaction` | Also return parent transaction. |
-| `include_instruction` | Also return related instruction rows. |
 
 #### Log `kind` values
 
@@ -84,11 +79,11 @@ These mirror the usual Solana runtime log line shapes (see the [transactions](ht
 
 ## Field selection
 
-Use `fields` to choose columns per logical table. Omit a table key to receive **all** columns for that table (when rows are returned).
+Use `field_selection` to choose columns per logical table. Omit a table key to receive **all** columns for that table (when rows are returned).
 
 ```json
 {
-  "fields": {
+  "field_selection": {
     "block": ["slot", "blockhash", "block_time"],
     "instruction": ["slot", "program_id", "data", "d8"],
     "transaction": ["slot", "fee_payer", "success"]
@@ -110,6 +105,16 @@ Use `fields` to choose columns per logical table. Omit a table key to receive **
 
 **`is_committed` (instruction):** Whether this instruction row is part of the **executed** instruction trace for the landed transaction (as opposed to being present only for structural / edge cases). Always interpret next to `transaction.success` and `transaction.err`: failed transactions can still include instructions up to the failure point.
 
+## Join behavior
+
+The server automatically joins related rows based on which tables you include in `field_selection`. For example, if your query filters on `instructions` and you also select `transaction` fields, the server returns the parent transaction for each matched instruction — no extra flags needed.
+
+:::note Join modes not yet available
+Solana HyperSync currently operates on a single default join mode. More granular control — for example fetching only the directly matched rows with no joins, or fetching all rows belonging to matched transactions — is planned but not yet exposed.
+
+If you have specific join or filtering requirements that the current API cannot satisfy, we would love to hear about your use case. Reach out on [Discord](https://discord.gg/envio) or open an issue on [GitHub](https://github.com/enviodev/hypersync-client-solana/issues).
+:::
+
 ## Limits (optional)
 
 Advanced knobs (defaults are usually fine):
@@ -123,7 +128,7 @@ Advanced knobs (defaults are usually fine):
 
 ## Response
 
-Top-level keys include `next_slot`, `total_execution_time_ms`, optional `rollback_guard`, and one array per table when present: `blocks`, `transactions`, `instructions`, `logs`, `balances`, `token_balances`, `rewards`—each holds **row objects** shaped by your `fields` selection.
+Top-level keys include `next_slot`, `total_execution_time_ms`, optional `rollback_guard`, and one array per table when present: `blocks`, `transactions`, `instructions`, `logs`, `balances`, `token_balances`, `rewards`—each holds **row objects** shaped by your `field_selection`.
 
 ### Example fragment (illustrative)
 
