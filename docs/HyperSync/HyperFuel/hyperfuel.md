@@ -29,7 +29,7 @@ Testnet: https://fuel-testnet.hypersync.xyz
 :::
 
 :::note
-HyperFuel requires an API token. Generate one from the [Envio Dashboard](https://envio.dev/app/api-tokens) and pass it to the client via the `api_token` config field (the examples below read it from the `ENVIO_API_TOKEN` environment variable). See [API Tokens](/docs/HyperSync/api-tokens) for more details.
+HyperFuel requires an API token. Generate one from the [Envio Dashboard](https://envio.dev/app/api-tokens) and pass it to the client when you initialize it. For example, the Rust client below reads it from the `ENVIO_API_TOKEN` environment variable and passes it via the `api_token` config field. See [API Tokens](/docs/HyperSync/api-tokens) for more details.
 :::
 
 

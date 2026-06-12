@@ -859,18 +859,8 @@ storage:
     column_name_format: snake_case
 ```
 
-### More Experimental Solana Features (v3.2)
-
-Added HyperSync-powered instruction handler support for Solana. This is experimental and we're looking for early testers — see the [Solana documentation](/docs/HyperIndex/solana) to get started.
-
 ## Fixes
 
-- Fixed indexer crashes introduced in v3.1, including in-flight batch write flushing before rollback computation and duplicate history rows from concurrent batch writes (v3.2)
-- Improved handling of missing transaction data by treating it as a retryable RPC error (v3.2)
-- Fixed config path root-relative behavior in the `start` command (v3.2)
-- Added duplicate address validation at config parse time (v3.2)
-- Fixed indexer startup with 4.5M+ contracts (v3.1)
-- Eliminated unnecessary height polling when the buffer reaches the chain head, also resolving related DDoS issues from stale SSE connections (v3.1)
 - Fixed an issue where the indexer stops progressing without any error (PostgreSQL client update)
 - Fixed checksum for addresses returned by RPC in lowercase
 - Fixed incorrect validation of transactions `to` field returned by RPC
