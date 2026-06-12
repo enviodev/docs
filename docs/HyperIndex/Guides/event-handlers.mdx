@@ -212,9 +212,9 @@ indexer.onEvent(
 );
 ```
 
-You can also use comparison operators like `_gt`, `_gte`, `_lt`, `_lte`, and `_in` to filter entities by field value.
+Beyond `_eq`, you can filter by value using comparison operators like `_gt`, `_gte`, `_lt`, `_lte`, and `_in`.
 
-You can filter by multiple fields at once by passing several conditions in the same object. They are combined with an `AND` relationship:
+To narrow results further, combine several conditions in a single call — they all have to match (`AND`):
 
 ```typescript
 // Find accounts matching a specific id AND a balance within a range
@@ -225,7 +225,7 @@ const accounts = await context.Account.getWhere({
 ```
 
 :::note
-Multi-field filtering with `getWhere` was added in HyperIndex v3.2. Single `_eq` or `_in` filters are also optimized to reduce database round trips.
+Multi-field filtering with `getWhere` was added in HyperIndex v3.2.
 :::
 
 **Important:**

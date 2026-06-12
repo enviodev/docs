@@ -233,29 +233,6 @@ chains:
 If you're capping the range to make a deterministic test run, prefer the built-in [testing framework](./testing.mdx) instead — it lets you pin block ranges or feed synthetic events without spinning up a real indexer.
 :::
 
-### Skip Chain
-
-Set `skip: true` on a chain to exclude it from indexing and database migrations without removing it from your config. This is handy for temporarily disabling a chain while keeping its configuration around.
-
-```yaml
-chains:
-  - id: 1
-    start_block: 0
-    contracts:
-      - name: Greeter
-        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
-  - id: 137
-    skip: true # excluded from indexing and migrations
-    start_block: 0
-    contracts:
-      - name: Greeter
-        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
-```
-
-:::note
-The `skip` field was added in HyperIndex v3.1.
-:::
-
 ### Contracts (per chain)
 
 Inside each chain you list the contracts you want to index on that chain — referenced by `name` from your top-level [Contracts Definition](#contracts-definition). The chain-level entry is where you pin the on-chain `address` (or list of addresses) and, optionally, a per-contract `start_block`.
@@ -368,17 +345,7 @@ type Snapshot @storage(clickhouse: true) {
 }
 ```
 
-`envio dev` automatically spins up a ClickHouse Docker container for local development. For `envio start`, provide the connection via the environment variables `ENVIO_CLICKHOUSE_HOST`, `ENVIO_CLICKHOUSE_DATABASE`, `ENVIO_CLICKHOUSE_USERNAME`, and `ENVIO_CLICKHOUSE_PASSWORD`.
-
-:::warning
-Do not run multiple indexers writing to the same ClickHouse database at the same time.
-:::
-
-Envio Cloud currently supports ClickHouse on the Dedicated Plan.
-
-### Default Storage
-
-Instead of routing every entity with an explicit `@storage` directive, you can mark a backend as `default` using the expanded object form. Entities without a `@storage` directive in `schema.graphql` are then automatically assigned to every backend marked `default: true`:
+Alternatively, mark one or both backends as `default` so every entity is written there automatically, and reach for the `@storage` directive only when you need to override routing for a specific entity:
 
 ```yaml
 storage:
@@ -388,24 +355,32 @@ storage:
     default: true
 ```
 
-Use the `@storage` directive in `schema.graphql` only when you need to override this for a specific entity.
-
 :::note
 The `default` storage option was added in HyperIndex v3.2.
 :::
 
+`envio dev` automatically spins up a ClickHouse Docker container for local development. For `envio start`, provide the connection via the environment variables `ENVIO_CLICKHOUSE_HOST`, `ENVIO_CLICKHOUSE_DATABASE`, `ENVIO_CLICKHOUSE_USERNAME`, and `ENVIO_CLICKHOUSE_PASSWORD`.
+
+:::warning
+Do not run multiple indexers writing to the same ClickHouse database at the same time.
+:::
+
+Envio Cloud currently supports ClickHouse on the Dedicated Plan.
+
 ### Column Name Format
 
-By default, database column names match the field names from your `schema.graphql`. Set `column_name_format: snake_case` on the Postgres backend to automatically convert column names to `snake_case` in the database, while keeping the original names in the GraphQL API and your handler types:
+Set `column_name_format: snake_case` on a backend to store column names in `snake_case` while keeping the original names in the GraphQL API and your handler types. It works for both Postgres and ClickHouse:
 
 ```yaml
 storage:
   postgres:
     column_name_format: snake_case
+  clickhouse:
+    column_name_format: snake_case
 ```
 
 :::note
-`column_name_format` was added in HyperIndex v3.2.
+Added in HyperIndex v3.2.
 :::
 
 ---
@@ -541,6 +516,21 @@ When enabled, all indexed events will be stored in the `raw_events` table in the
 - Creating custom queries against raw blockchain data
 
 Note that enabling this option will increase database storage requirements and may slightly impact indexing performance.
+
+### Skip Chain
+
+Set `skip: true` on a chain to exclude it from indexing and migrations without removing it from your config — handy for temporarily disabling a chain.
+
+```yaml
+chains:
+  - id: 137
+    skip: true
+    start_block: 0
+```
+
+:::note
+Added in HyperIndex v3.1.
+:::
 
 ---
 
