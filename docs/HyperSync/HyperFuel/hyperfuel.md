@@ -28,6 +28,10 @@ Mainnet: https://fuel.hypersync.xyz <br></br>
 Testnet: https://fuel-testnet.hypersync.xyz
 :::
 
+:::note
+HyperFuel requires an API token. Generate one from the [Envio Dashboard](https://envio.dev/app/api-tokens) and pass it to the client via the `api_token` config field (the examples below read it from the `ENVIO_API_TOKEN` environment variable). See [API Tokens](/docs/HyperSync/api-tokens) for more details.
+:::
+
 
 ## Example usage
 
@@ -36,18 +40,17 @@ Below is an example of a Hyperfuel query in each of our clients searching the fi
 ## Rust ([repo](https://github.com/enviodev/hyperfuel-client-rust/tree/main/examples/asset-id))
 
 ```rust
-use std::num::NonZeroU64;
-
-use hyperfuel_client::{Client, Config};
+use hyperfuel_client::{Client, ClientConfig};
 use hyperfuel_net_types::Query;
 use url::Url;
 
 #[tokio::main]
 async fn main() {
-    let client_config = Config {
-        url: Url::parse("https://fuel-testnet.hypersync.xyz").unwrap(),
-        bearer_token: None,
-        http_req_timeout_millis: NonZeroU64::new(30000).unwrap(),
+    let client_config = ClientConfig {
+        url: Some(Url::parse("https://fuel-testnet.hypersync.xyz").unwrap()),
+        api_token: std::env::var("ENVIO_API_TOKEN")
+            .expect("ENVIO_API_TOKEN env var is required, get a token from https://envio.dev/app/api-tokens"),
+        ..Default::default()
     };
     let client = Client::new(client_config).unwrap();
 

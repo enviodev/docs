@@ -768,8 +768,109 @@ For large multichain indexers, HyperIndex now throttles chains that have already
 - ReScript upgraded from v11 to v12 (internally and in `envio init` templates)
 - TypeScript upgraded from v5 to v6 (internally and in `envio init` templates)
 
+### 2x Cheaper and 2.5x Faster (v3.1)
+
+HyperIndex now requires up to **2x fewer HyperSync queries** during backfill and is **2.5x faster** in many indexing cases. If you had data fetching as a bottleneck, this comes for free on upgrade.
+
+### Descriptions on Entities, Fields, and Relationships (v3.1)
+
+You can now document your entities, fields, and relationships directly in `schema.graphql` using string descriptions. These are exposed through the GraphQL API and appear in introspection:
+
+```graphql
+"""
+A token transfer between two accounts
+"""
+type Transfer {
+  id: ID!
+  "The address the tokens were sent from"
+  from: String!
+  "The address the tokens were sent to"
+  to: String!
+  "The amount transferred, in wei"
+  value: BigInt!
+}
+```
+
+Only string descriptions (`"""..."""` or `"..."`) are exposed. Hash (`#`) comments are ignored by the GraphQL parser and do **not** appear in introspection.
+
+### Skip Chains From Indexing (v3.1)
+
+A new `skip` field in `config.yaml` lets you exclude a specific chain from indexing and database migrations without removing it from your config:
+
+```yaml
+chains:
+  - id: 1
+    start_block: 0
+    contracts: # ...
+  - id: 137
+    skip: true
+    start_block: 0
+    contracts: # ...
+```
+
+### Improved Agentic Indexer Development (v3.1)
+
+New CLI subcommands make it easier to build indexers with AI agents:
+
+```bash
+envio tools search-docs <query>  # Search the HyperIndex documentation
+envio tools fetch-docs <url>     # Fetch documentation from a URL
+envio metrics runtime            # Fetch runtime metrics of a local indexer
+```
+
+The skills shipped by `envio init` and `envio skills update` were also cleaned up.
+
+### Rate-Limit Info in TUI and Logs (v3.1)
+
+HyperSync rate-limit handling was improved, and rate-limit information is now surfaced in the TUI and logs so you can see when you're being throttled.
+
+### Filter by Multiple Fields with `getWhere` (v3.2)
+
+`getWhere` now supports filtering by multiple fields simultaneously in a single call:
+
+```typescript
+await context.Account.getWhere({
+  id: { _eq: "0x123..." },
+  balance: { _gte: 1_000_000n, _lte: 10_000_000n },
+});
+```
+
+Single `_eq` or `_in` filters were also optimized to reduce database round trips.
+
+### Default Storage (v3.2)
+
+When running with multiple storage backends, you can now mark a storage as `default` so entities are automatically assigned to it without needing a `@storage` attribute on every entity:
+
+```yaml
+storage:
+  postgres:
+    default: true
+  clickhouse:
+    default: true
+```
+
+### Configurable Column Name Format (v3.2)
+
+You can configure HyperIndex to automatically convert database column names to `snake_case` while keeping the original names in GraphQL and your handler types:
+
+```yaml
+storage:
+  postgres:
+    column_name_format: snake_case
+```
+
+### More Experimental Solana Features (v3.2)
+
+Added HyperSync-powered instruction handler support for Solana. This is experimental and we're looking for early testers — see the [Solana documentation](/docs/HyperIndex/solana) to get started.
+
 ## Fixes
 
+- Fixed indexer crashes introduced in v3.1, including in-flight batch write flushing before rollback computation and duplicate history rows from concurrent batch writes (v3.2)
+- Improved handling of missing transaction data by treating it as a retryable RPC error (v3.2)
+- Fixed config path root-relative behavior in the `start` command (v3.2)
+- Added duplicate address validation at config parse time (v3.2)
+- Fixed indexer startup with 4.5M+ contracts (v3.1)
+- Eliminated unnecessary height polling when the buffer reaches the chain head, also resolving related DDoS issues from stale SSE connections (v3.1)
 - Fixed an issue where the indexer stops progressing without any error (PostgreSQL client update)
 - Fixed checksum for addresses returned by RPC in lowercase
 - Fixed incorrect validation of transactions `to` field returned by RPC
@@ -782,6 +883,8 @@ For large multichain indexers, HyperIndex now throttles chains that have already
 
 For detailed release notes, see:
 
+- [v3.2.0](https://github.com/enviodev/hyperindex/releases/tag/v3.2.0)
+- [v3.1.0](https://github.com/enviodev/hyperindex/releases/tag/v3.1.0)
 - [v3.0.0](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0)
 - [v3.0.0-rc.1](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-rc.1)
 - [v3.0.0-rc.0](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0-rc.0)
