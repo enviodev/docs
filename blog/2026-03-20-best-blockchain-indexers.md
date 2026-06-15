@@ -355,7 +355,7 @@ Indexing speed and query latency are two different problems. Indexing speed is h
 
 ## Build With Envio
 
-Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data. If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), run the benchmarks yourself, and come talk to us about your data needs.
+Envio is the fastest independently benchmarked EVM blockchain indexer for querying real-time and historical data. If you are building onchain and need indexing that keeps up with your chain, check out the [docs](https://docs.envio.dev/docs/HyperIndex/overview), [run the benchmarks yourself](/docs/HyperIndex/benchmarks), and come talk to us about your data needs.
 
 Stay tuned for more updates by subscribing to our newsletter, following us on X, or hopping into our Discord.
 
