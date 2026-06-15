@@ -17,7 +17,7 @@ Migrating Alchemy subgraphs to Envio’s HyperIndex is a simple and developer-fr
 If you're familiar with The Graph’s libraries, the migration process should be straightforward. You can also utilize tools like Cursor to speed things up. If you are new to HyperIndex, we strongly recommend starting with our [Quickstart](/docs/HyperIndex/quickstart) guide before you begin your migration from Alchemy. If you are new to the category entirely, see [what a blockchain indexer is](/blog/what-is-a-blockchain-indexer) for the wider context.
 
 ## Why Migrate to Envio’s HyperIndex?
-- **High Speed Performance**: 142x faster than subgraphs
+- **High-Speed Performance**: 142x faster than subgraphs
 - **Lower Costs**: Reduced infrastructure requirements and operational expenses
 - **Better Developer Experience**: Simplified configuration and deployment
 - **Multichain Native**: Index data across multiple EVM chains through a single HyperIndex project
