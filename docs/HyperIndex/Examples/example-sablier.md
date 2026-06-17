@@ -12,27 +12,23 @@ The following blockchain indexers serve as exceptional reference implementations
 
 ## Overview
 
-[Sablier](https://sablier.com/) is a token streaming protocol that enables real-time finance on the blockchain, allowing tokens to be streamed continuously over time. These official Sablier indexers track streaming activity across 18 different EVM-compatible chains, providing comprehensive data through a unified GraphQL API.
+[Sablier](https://sablier.com/) is a token streaming protocol that enables real-time finance on the blockchain, allowing tokens to be streamed continuously over time. These official Sablier indexers track streaming activity across many EVM-compatible chains, providing comprehensive data through a unified GraphQL API.
 
 ## Professional Indexer Suite
 
-Sablier maintains three specialized indexers, each targeting a specific part of their protocol:
+Sablier maintains two public indexers, each targeting a specific part of their protocol:
 
-### 1. [Lockup Indexer](https://github.com/sablier-labs/indexers/tree/main/envio/lockup)
+### 1. [Streams Indexer](https://github.com/sablier-labs/indexers/tree/main/envio/streams)
 
-Tracks the core Sablier lockup contracts, which handle the streaming of tokens with fixed durations and amounts. This indexer provides data about stream creation, cancellation, and withdrawal events. Used primarily for the vesting functionality of Sablier.
+Tracks Sablier's payment-stream data across both the Lockup and Flow products. Lockup covers streams with fixed durations and amounts (creation, cancellation, and withdrawal events), while Flow covers open-ended streaming with dynamic flow rates. For more detail, see the [Lockup indexer docs](https://docs.sablier.com/api/lockup/indexers) and the [Flow indexer docs](https://docs.sablier.com/api/flow/indexers).
 
-### 2. [Flow Indexer](https://github.com/sablier-labs/indexers/tree/main/envio/flow)
+### 2. [Airdrops Indexer](https://github.com/sablier-labs/indexers/tree/main/envio/airdrops)
 
-Monitors Sablier's advanced streaming functionality, allowing for dynamic flow rates and more complex streaming scenarios. This indexer captures stream modifications, batch operations, and other flow-specific events. Powers the payments side of the Sablier application.
-
-### 3. [Airdrops Indexer](https://github.com/sablier-labs/indexers/tree/main/envio/airdrops)
-
-Tracks Sablier's Merkle Airdrops, which enables efficient batch stream creation using cryptographic proofs. This indexer captures data about batch creations, claims, and related activities. Used for both Airstreams and Instant Airdrops functionality.
+Tracks Sablier's Merkle airdrop campaigns, which enable efficient batch stream creation using cryptographic proofs. This indexer captures data about campaign creation, claims, and related activity, powering both Airstreams and Instant Airdrops. For more detail, see the [Airdrops indexer docs](https://docs.sablier.com/api/airdrops/indexers).
 
 ## Key Features
 
-- **Comprehensive Multichain Support**: Indexes data across 18 different EVM chains
+- **Comprehensive Multichain Support**: Indexes data across many EVM-compatible chains
 - **Professionally Maintained**: Used in production by the Sablier team and their partners
 - **Extensive Test Coverage**: Includes comprehensive testing to ensure data accuracy
 - **Optimized Performance**: Implements efficient data processing techniques
@@ -50,16 +46,15 @@ These blockchain indexers demonstrate several development best practices:
 - **Comprehensive Entity Relationships**: Well-designed data model with proper relationships
 - **Thorough Input Validation**: Robust error handling and input validation
 - **Detailed Changelogs**: Documentation of breaking changes and migrations
-- **Handler/Loader Pattern**: Envio indexers use an optimized pattern with loaders to pre-fetch entities and handlers to process them
+- **Preload Optimization**: Envio indexers benefit from always-on [Preload Optimization](/docs/HyperIndex/preload-optimization), which batches entity reads and runs external calls in parallel through the Effect API
 
 ## Getting Started
 
 To use these indexers as a reference for your own development:
 
-1. Clone the specific repository based on your needs:
-   - [Lockup Indexer](https://github.com/sablier-labs/subgraphs/tree/main/apps/lockup-envio)
-   - [Flow Indexer](https://github.com/sablier-labs/subgraphs/tree/main/apps/flow-envio)
-   - [Merkle Indexer](https://github.com/sablier-labs/subgraphs/tree/main/apps/merkle-envio)
+1. Clone the indexer that matches your needs:
+   - [Streams Indexer](https://github.com/sablier-labs/indexers/tree/main/envio/streams)
+   - [Airdrops Indexer](https://github.com/sablier-labs/indexers/tree/main/envio/airdrops)
 2. Review the file structure and implementation patterns
 3. Examine the event handlers for efficient data processing techniques
 4. Study the schema design for effective entity modeling

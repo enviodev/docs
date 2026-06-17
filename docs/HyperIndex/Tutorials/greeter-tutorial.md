@@ -217,7 +217,7 @@ Now that you've mastered the basics, you can:
 - Try the [Contract Import](../contract-import.md) feature to index any deployed contract
 - Customize the event handlers to implement more complex indexing logic
 - Add relationships between entities in your schema
-- Explore the [Advanced Querying](../Advanced/loaders.md) features
+- Explore [Preload Optimization](../Advanced/preload-optimization.md) for faster handlers
 - Create aggregated statistics from your indexed data
 
 For more tutorials and examples, visit the [Envio Documentation](https://docs.envio.dev/) or join our [Discord community](https://discord.gg/envio) for support.

@@ -14,7 +14,7 @@ This [official Uniswap V4 indexer](https://github.com/enviodev/uniswap-v4-indexe
 
 ## Key Features
 
-- **Multichain Support**: Indexes Uniswap V4 deployments across 10 different blockchain networks in real-time
+- **Multichain Support**: Indexes Uniswap V4 deployments across 15 different blockchain networks in real-time
 - **Complete Pool Metrics**: Tracks pool statistics including volume, TVL, fees, and other critical metrics
 - **Swap Analysis**: Monitors swap events and liquidity changes with high precision
 - **Hook Integration**: In-progress support for Uniswap V4 hooks and their events
