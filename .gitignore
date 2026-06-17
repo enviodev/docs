@@ -27,6 +27,9 @@ yarn-error.log*
 .vercel
 
 # Auto-generated OG social preview images (regenerated on every build by
-# scripts/generate-blog-og-images.js and scripts/generate-og-images.js)
+# scripts/generate-blog-og-images.js, scripts/generate-og-images.js and
+# scripts/generate-showcase-og-images.js)
 /static/blog-assets/og/
 /static/docs-assets/og/
+/static/img/showcase/og/
+/static/showcase-og-preview.png
