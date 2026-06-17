@@ -14,7 +14,7 @@ Use this guide to set up an organisation in Envio Cloud and grant access to your
 
 ## Creating an Organisation
 
-To create a new organisation, navigate to [https://envio.dev](https://envio.dev) and click the **Cloud** button in the top right corner. Log in with GitHub, then in the top-left menu, select **Install App**. This action redirects you to GitHub, where you can install the **Envio Deployments** app for the relevant GitHub organisation.
+To create a new organisation, navigate to [https://envio.dev](https://envio.dev) and click the **Login** button in the top right corner. Log in with GitHub, then in the drop down next to your username, select **Install App**. This action redirects you to GitHub, where you can install the **Envio Deployments** app for the relevant GitHub organisation.
 
 <div style={{textAlign: 'center'}}>
 
