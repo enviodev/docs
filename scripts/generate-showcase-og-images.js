@@ -231,7 +231,17 @@ async function main() {
     errors = 0;
 
   for (const site of sites) {
-    const outPath = path.join(OUT_DIR, `${site.slug}.png`);
+    // The slug becomes both the output filename and the og:image URL used by
+    // _detail.js, so it must be a plain lowercase-hyphen token — reject anything
+    // else rather than write outside OUT_DIR or break the slug→card contract.
+    const slug = String(site.slug || "");
+    if (!/^[a-z0-9-]+$/.test(slug)) {
+      console.error(`  ERROR: invalid slug "${site.slug}" — skipping`);
+      errors++;
+      continue;
+    }
+
+    const outPath = path.join(OUT_DIR, `${slug}.png`);
     const staticUrl = "/" + path.relative(STATIC_DIR, outPath);
 
     if (fs.existsSync(outPath) && !FORCE) {
