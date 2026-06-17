@@ -57,9 +57,9 @@ const LOGO_H = 54;
 const LOGO_X = 90;
 const LOGO_Y = 60;
 
-const SECTION_FONT_SIZE = 28;
-const SECTION_X = 90;
-const SECTION_Y = 280;
+const CONTENT_X = 90;
+
+const SECTION_FONT_SIZE = 26;
 
 const TITLE_SIZE_STEPS = [
   [72, 86],
@@ -68,23 +68,20 @@ const TITLE_SIZE_STEPS = [
   [44, 54],
 ];
 
-const TITLE_START_Y = 358;
-const TITLE_DESC_GAP = 18;
+const DESC_FONT_SIZE = 30;
+const DESC_LINE_HEIGHT = 42;
+const DESC_MAX_LINES = 3;
+
+// Top-anchored layout, matching the docs/blog OG cards: small section label,
+// then the title, then the description. Multi-line titles are capped at 52px
+// (see titleLayout) so even a two-line title plus a three-line description
+// stays within the 630px canvas.
+const SECTION_Y = 278;
+const TITLE_START_Y = 356;
+const TITLE_DESC_GAP = 2; // extra gap below the title block, before the description
 
 const GLOW_LARGE_OPACITY = 0.18;
 const GLOW_SMALL_OPACITY = 0.05;
-
-const DESC_X = 90;
-const DESC_FONT_SIZE = 30;
-const DESC_LINE_HEIGHT = 40;
-
-// Tag pills sit below the description (their Y is computed per card so they
-// never collide with a title or description that wraps to two lines).
-const TAG_GAP_ABOVE = 46;
-const TAG_FONT_SIZE = 24;
-const TAG_PAD_X = 18;
-const TAG_PAD_Y = 10;
-const TAG_GAP = 14;
 
 function escXml(str) {
   return String(str)
@@ -114,8 +111,8 @@ function wrapText(text, maxChars) {
 function titleLayout(title) {
   const avail = 1020;
   // Short titles render large on a single line. Anything that needs two lines is
-  // capped at <= 52px so section label + title + description + tags all fit the
-  // 630px canvas without colliding.
+  // capped at <= 52px so the centred section + title + description group always
+  // fits the 630px canvas.
   for (const [fontSize, lineHeight] of TITLE_SIZE_STEPS) {
     const charsPerLine = Math.floor(avail / (fontSize * 0.58));
     const all = wrapText(title, charsPerLine);
@@ -134,51 +131,35 @@ function titleLayout(title) {
   return { lines: [title.slice(0, 24) + "…"], fontSize: 44, lineHeight: 54 };
 }
 
-function buildSvg({ title, description, tags }) {
+function buildSvg({ title, description }) {
   const { lines: titleLines, fontSize: TITLE_FONT_SIZE, lineHeight: TITLE_LINE_HEIGHT } =
     titleLayout(title);
 
   const DESC_CHARS = Math.floor(1020 / (DESC_FONT_SIZE * 0.52));
-  const descLines = description ? wrapText(description, DESC_CHARS).slice(0, 2) : [];
-  if (descLines.length === 2 && description && wrapText(description, DESC_CHARS).length > 2) {
-    descLines[1] =
-      descLines[1].length >= DESC_CHARS - 1
-        ? descLines[1].slice(0, DESC_CHARS - 1) + "…"
-        : descLines[1] + "…";
+  const descLines = description ? wrapText(description, DESC_CHARS).slice(0, DESC_MAX_LINES) : [];
+  const last = descLines.length - 1;
+  if (descLines.length === DESC_MAX_LINES && description && wrapText(description, DESC_CHARS).length > DESC_MAX_LINES) {
+    descLines[last] =
+      descLines[last].length >= DESC_CHARS - 1
+        ? descLines[last].slice(0, DESC_CHARS - 1) + "…"
+        : descLines[last] + "…";
   }
 
-  const DESC_START_Y = TITLE_START_Y + titleLines.length * TITLE_LINE_HEIGHT + TITLE_DESC_GAP;
-  const blockEndY = descLines.length
-    ? DESC_START_Y + (descLines.length - 1) * DESC_LINE_HEIGHT
-    : TITLE_START_Y + (titleLines.length - 1) * TITLE_LINE_HEIGHT;
-  const TAG_Y = blockEndY + TAG_GAP_ABOVE;
+  const descStartY =
+    TITLE_START_Y + titleLines.length * TITLE_LINE_HEIGHT + TITLE_DESC_GAP;
 
   const titleSvg = titleLines
     .map(
       (line, i) =>
-        `<text x="90" y="${TITLE_START_Y + i * TITLE_LINE_HEIGHT}" font-family="DejaVu Sans, Arial, sans-serif" font-size="${TITLE_FONT_SIZE}" font-weight="bold" fill="${COLOR_WHITE}">${escXml(line)}</text>`
+        `<text x="${CONTENT_X}" y="${TITLE_START_Y + i * TITLE_LINE_HEIGHT}" font-family="DejaVu Sans, Arial, sans-serif" font-size="${TITLE_FONT_SIZE}" font-weight="bold" fill="${COLOR_WHITE}">${escXml(line)}</text>`
     )
     .join("\n    ");
 
   const descSvg = descLines
     .map(
       (line, i) =>
-        `<text x="${DESC_X}" y="${DESC_START_Y + i * DESC_LINE_HEIGHT}" font-family="DejaVu Sans, Arial, sans-serif" font-size="${DESC_FONT_SIZE}" fill="${COLOR_GRAY}">${escXml(line)}</text>`
+        `<text x="${CONTENT_X}" y="${descStartY + i * DESC_LINE_HEIGHT}" font-family="DejaVu Sans, Arial, sans-serif" font-size="${DESC_FONT_SIZE}" fill="${COLOR_GRAY}">${escXml(line)}</text>`
     )
-    .join("\n    ");
-
-  // Tag pills: approximate width from char count so they line up left-to-right.
-  let tagX = 90;
-  const tagSvg = (tags || [])
-    .map((tag) => {
-      const textW = tag.length * TAG_FONT_SIZE * 0.56;
-      const boxW = textW + TAG_PAD_X * 2;
-      const boxH = TAG_FONT_SIZE + TAG_PAD_Y * 2;
-      const rect = `<rect x="${Math.round(tagX)}" y="${TAG_Y - TAG_FONT_SIZE - TAG_PAD_Y}" width="${Math.round(boxW)}" height="${Math.round(boxH)}" rx="${Math.round(boxH / 2)}" fill="rgba(255,130,103,0.12)" stroke="${COLOR_ACCENT}" stroke-opacity="0.4"/>`;
-      const text = `<text x="${Math.round(tagX + TAG_PAD_X)}" y="${TAG_Y - TAG_PAD_Y + 2}" font-family="DejaVu Sans, Arial, sans-serif" font-size="${TAG_FONT_SIZE}" fill="${COLOR_ACCENT}">${escXml(tag)}</text>`;
-      tagX += boxW + TAG_GAP;
-      return rect + "\n    " + text;
-    })
     .join("\n    ");
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -200,13 +181,11 @@ function buildSvg({ title, description, tags }) {
 
   <image xlink:href="${logoDataUri}" x="${LOGO_X}" y="${LOGO_Y}" width="${LOGO_W}" height="${LOGO_H}"/>
 
-  <text x="${SECTION_X}" y="${SECTION_Y}" font-family="DejaVu Sans, Arial, sans-serif" font-size="${SECTION_FONT_SIZE}" fill="${COLOR_ACCENT}">Showcase</text>
+  <text x="${CONTENT_X}" y="${SECTION_Y}" font-family="DejaVu Sans, Arial, sans-serif" font-size="${SECTION_FONT_SIZE}" fill="${COLOR_ACCENT}">Showcase</text>
 
   ${titleSvg}
 
   ${descSvg}
-
-  ${tagSvg}
 </svg>`;
 }
 
@@ -236,7 +215,7 @@ async function main() {
   if (PREVIEW) {
     const previewOut = path.join(STATIC_DIR, "showcase-og-preview.png");
     const s = sites[0];
-    const svg = buildSvg({ title: s.title, description: s.description, tags: s.tags });
+    const svg = buildSvg({ title: s.title, description: s.description });
     await sharp(Buffer.from(svg)).png().toFile(previewOut);
     console.log(`Preview written to: ${path.relative(REPO_ROOT, previewOut)} (source: ${s.slug})`);
     return;
@@ -270,7 +249,6 @@ async function main() {
       const svg = buildSvg({
         title: site.title,
         description: site.description,
-        tags: site.tags,
       });
       await sharp(Buffer.from(svg)).png().toFile(outPath);
       console.log(`  OK: ${staticUrl}`);
