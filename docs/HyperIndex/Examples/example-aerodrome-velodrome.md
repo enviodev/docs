@@ -29,5 +29,5 @@ The [Velodrome & Aerodrome Indexer](https://github.com/enviodev/velodrome-indexe
 For implementation details, usage examples, and setup instructions, see the project's [README](https://github.com/enviodev/velodrome-indexer/blob/main/README.md).
 
 :::note
-This indexer was built by Envio partners and community builders. While it provides a valuable reference implementation, it may not be using the latest version of Envio's tooling. Always perform appropriate testing and data validation before using in production environments.
+This indexer was built by Envio partners and community builders and serves as a valuable reference implementation. As with any indexer, perform appropriate testing and data validation before using in production environments.
 :::
