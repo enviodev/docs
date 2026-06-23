@@ -144,6 +144,10 @@ const redirectsList = [
     to: "/docs/HyperIndex/overview",
   },
   {
+    from: "/docs/HyperIndex/example-ens",
+    to: "/docs/HyperIndex/overview",
+  },
+  {
     from: "/docs/logging",
     to: "/docs/HyperIndex/logging",
   },
