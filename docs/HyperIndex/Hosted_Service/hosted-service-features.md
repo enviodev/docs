@@ -160,6 +160,10 @@ Access your indexed data directly through SQL queries, providing flexibility bey
 
 A comprehensive analytics platform that automatically pipes your indexed data from PostgreSQL into ClickHouse (approximately 2 minutes behind real-time) and provides access through a hosted Metabase instance.
 
+:::info Configuration required
+To enable this feature, set ClickHouse as a [storage backend](/docs/HyperIndex/configuration-file#storage) in your `config.yaml`.
+:::
+
 **Technical Architecture:**
 - **Data Pipeline**: Automatic replication from PostgreSQL to ClickHouse
 - **Near Real-time**: Data available in an analytics platform within ~2 minutes
