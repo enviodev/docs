@@ -130,7 +130,22 @@ module.exports = {
       ],
     },
     networksSection,
-    "solana/solana",
+    {
+      type: "category",
+      label: "Solana",
+      link: {
+        type: "doc",
+        id: "solana/solana",
+      },
+      items: [
+        "solana/solana-getting-started",
+        "solana/solana-configuration",
+        "solana/solana-instruction-handlers",
+        "solana/solana-decoding",
+        "solana/solana-slot-handlers",
+        "solana/solana-evm-vs-solana",
+      ],
+    },
     "fuel/fuel",
     {
       type: "link",
