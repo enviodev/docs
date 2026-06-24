@@ -40,17 +40,45 @@ The `name` tag has special behavior—when set, its value is displayed directly 
 - Filter and locate deployments more efficiently
 
 
-## IP Whitelisting
+## Security
 
 *Availability: Paid plans only*
 
-Control access to your indexer by restricting requests to specific IP addresses. This security feature helps protect your data and ensures only authorized clients can query your indexer.
+Control who can query your hosted GraphQL endpoint. Envio Cloud offers two complementary methods to restrict access to your indexer: **IP Whitelisting** and **API Key Authentication**. Use either independently or combine both for layered protection.
+
+Security is configured **per indexer (project)**, not per deployment. This means your access rules carry over automatically when you promote a new version to production—no reconfiguration needed.
+
+### IP Whitelisting
+
+Restrict requests to specific IP addresses. Only clients connecting from an approved IP can query your indexer.
 
 **Benefits:**
 - Enhanced security for sensitive data
 - Prevent unauthorized access
 - Control API usage from specific sources
-- Ideal for production environments with strict access requirements
+- Ideal for production environments with strict access requirements, such as server-to-server backends with stable IP addresses
+
+### API Key Authentication
+
+Protect your endpoint with an API key—a secret token that clients include with each request to prove they're authorized. This is the recommended option for browser-based dApps and frontends, where users connect from unpredictable IP addresses that can't be allow-listed.
+
+**How it works:**
+- Each indexer (project) gets a **unique API key**, automatically generated and securely stored
+- Retrieve your API key from the deployment dashboard
+- Include it with every request using the `Authorization` header as a Bearer token:
+
+```bash
+curl https://<your-endpoint>/v1/graphql \
+  -H "Authorization: Bearer <your-api-key>"
+```
+
+Requests without a valid key are rejected with a `401 Unauthorized` response.
+
+**Benefits:**
+- Works for browser-based apps and frontends with no fixed IP address
+- The same key persists across deployment promotions
+- Both your production endpoint and per-deployment URLs are gated by the same policy—no way to bypass authentication
+- Negligible added latency, validated in-process on every request
 
 
 ## Effect API Cache
