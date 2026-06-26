@@ -1,7 +1,6 @@
 ---
 title: Why Blockchain Indexers Hit Rate Limits at Scale
 sidebar_label: Why Blockchain Indexers Hit Rate Limits at Scale
-tags: ["tutorials"]
 slug: /hypersync-under-load-no-throttling
 authors: j_o_r_d_y_s
 image: /blog-assets/hypersync-under-load-no-throttling.png
