@@ -1,7 +1,6 @@
 ---
 title: Why Blockchain Indexers Hit Rate Limits at Scale
 sidebar_label: Why Blockchain Indexers Hit Rate Limits at Scale
-tags: [hypersync]
 slug: /hypersync-under-load-no-throttling
 authors: j_o_r_d_y_s
 image: /blog-assets/hypersync-under-load-no-throttling.png
@@ -81,7 +80,7 @@ At the time of writing this, the public reference is the Polymarket indexer, whi
 
 ### What Happens to My Indexer if a Data Source Goes Down Mid-Spike?
 
-HyperIndex fails over to a configured fallback source when a primary stops returning new blocks and attempts to recover to the primary 60 seconds after it returns, with no restart required. The source selection logic is built for resilience, and degradation surfaces in the standard Prometheus metrics endpoint.
+HyperIndex fails over to a configured fallback source when a primary stops returning new blocks and attempts to recover to the primary 60 seconds after the primary returns, with no restart required. The source selection logic is built for resilience, and degradation surfaces in the standard Prometheus metrics endpoint.
 
 ### How Do I Benchmark HyperSync Against My Current Provider?
 
