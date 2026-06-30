@@ -19,14 +19,9 @@ Historical sync is an important aspect of maintaining and populating your databa
 - **Slow Performance**: Unfortunately, historical sync for chains using RPC endpoints is not fast. The process is slower due to the limitations of RPC endpoints.
 - **No Local Caching**: We do not have any form of local caching at the moment. This feature was disabled in a previous release due to stability concerns.
 
-### Loaders and Historical Sync
+## Preload Optimization
 
-- **Improved Speed**: Using loaders can improve the speed of historical sync. However, the effectiveness of loaders varies:
-  - **Entity Reuse**: Loaders are more beneficial when the same entities are frequently reused and updated.
-  - **Performance Impact**: For many indexes, the performance difference with loaders is not very large. Loaders are not highly important unless performance is of the utmost importance.
-
-### Future Improvements (v2)
-
-- **preHandlers**: In version 2, we are restructuring the way loaders work into pre-handlers. This change will make loading entities before the handler in batches more ergonomic using preHandler functions, further enhancing the performance and ease of use for historical sync.
+- **Always on in V3**: Preload Optimization is enabled automatically in HyperIndex V3, with no flag to turn it on or off. It speeds up historical sync by batching the entity reads in your handlers into a small number of database queries, and by running external calls in parallel through the Effect API.
+- **Biggest gains**: The benefit is largest when your handlers read and update the same entities frequently, or when they make external calls. For details on how it works and how to write handlers that take advantage of it, see [Preload Optimization](/docs/HyperIndex/preload-optimization).
 
 By understanding these factors, you can better optimize the performance of your historical sync processes.

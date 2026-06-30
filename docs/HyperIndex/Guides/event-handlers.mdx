@@ -212,7 +212,21 @@ indexer.onEvent(
 );
 ```
 
-You can also use comparison operators like `_gt`, `_gte`, `_lt`, `_lte`, and `_in` to filter entities by field value.
+Beyond `_eq`, you can filter by value using comparison operators like `_gt`, `_gte`, `_lt`, `_lte`, and `_in`.
+
+To narrow results further, combine several conditions in a single call — they all have to match (`AND`):
+
+```typescript
+// Find accounts matching a specific id AND a balance within a range
+const accounts = await context.Account.getWhere({
+  id: { _eq: event.params.account },
+  balance: { _gte: 1_000_000n, _lte: 10_000_000n },
+});
+```
+
+:::note
+Multi-field filtering with `getWhere` was added in HyperIndex v3.2.
+:::
 
 **Important:**
 

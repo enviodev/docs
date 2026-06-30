@@ -49,7 +49,7 @@ curl -sS "https://solana.hypersync.xyz/query" \
   -d '{
     "from_slot": 391800000,
     "to_slot": 391800010,
-    "fields": { "instruction": ["slot", "program_id", "d8"] },
+    "field_selection": { "instruction": ["slot", "program_id", "d8"] },
     "instructions": [
       { "program_id": ["6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"] }
     ]
@@ -65,7 +65,7 @@ We want you to be able to build against this without guessing what will move und
 **Stable enough to build on**
 
 - The **endpoint** (`https://solana.hypersync.xyz`) and **bearer-token auth** model.
-- The **request shape** for `POST /query`: `from_slot` / `to_slot`, the `instructions` / `transactions` / `logs` selection arrays, `fields` projection, and the AND-within-object / OR-across-objects semantics.
+- The **request shape** for `POST /query`: `from_slot` / `to_slot`, the `instructions` / `transactions` / `logs` selection arrays, `field_selection` projection, and the AND-within-object / OR-across-objects semantics.
 - The **core filter primitives**: `program_id`, discriminator filters (`d1` / `d2` / `d4` / `d8`), account-position filters (`a0`–`a9`), `is_inner`, `success`, `fee_payer`, log `kind`.
 - The **table model**: `block`, `transaction`, `instruction`, `log`, `balance`, `token_balance`, `reward`, with the fields listed in [Query & Response](./solana-query#available-fields-by-table).
 - **Pagination** via `next_slot` and **reorg detection** via `rollback_guard`.

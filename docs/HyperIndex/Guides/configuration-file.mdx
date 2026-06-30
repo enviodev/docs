@@ -345,6 +345,20 @@ type Snapshot @storage(clickhouse: true) {
 }
 ```
 
+Alternatively, mark one or both backends as `default` so every entity is written there automatically, and reach for the `@storage` directive only when you need to override routing for a specific entity:
+
+```yaml
+storage:
+  postgres:
+    default: true
+  clickhouse:
+    default: true
+```
+
+:::note
+The `default` storage option was added in HyperIndex v3.2.
+:::
+
 `envio dev` automatically spins up a ClickHouse Docker container for local development. For `envio start`, provide the connection via the environment variables `ENVIO_CLICKHOUSE_HOST`, `ENVIO_CLICKHOUSE_DATABASE`, `ENVIO_CLICKHOUSE_USERNAME`, and `ENVIO_CLICKHOUSE_PASSWORD`.
 
 :::warning
@@ -352,6 +366,22 @@ Do not run multiple indexers writing to the same ClickHouse database at the same
 :::
 
 Envio Cloud currently supports ClickHouse on the Dedicated Plan.
+
+### Column Name Format
+
+Set `column_name_format: snake_case` on a backend to store column names in `snake_case` while keeping the original names in the GraphQL API and your handler types. It works for both Postgres and ClickHouse:
+
+```yaml
+storage:
+  postgres:
+    column_name_format: snake_case
+  clickhouse:
+    column_name_format: snake_case
+```
+
+:::note
+Added in HyperIndex v3.2.
+:::
 
 ---
 
@@ -486,6 +516,21 @@ When enabled, all indexed events will be stored in the `raw_events` table in the
 - Creating custom queries against raw blockchain data
 
 Note that enabling this option will increase database storage requirements and may slightly impact indexing performance.
+
+### Skip Chain
+
+Set `skip: true` on a chain to exclude it from indexing and migrations without removing it from your config — handy for temporarily disabling a chain.
+
+```yaml
+chains:
+  - id: 137
+    skip: true
+    start_block: 0
+```
+
+:::note
+Added in HyperIndex v3.1.
+:::
 
 ---
 

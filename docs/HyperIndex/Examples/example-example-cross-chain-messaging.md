@@ -10,6 +10,10 @@ description: Explore cross-chain messaging and track events across multiple chai
 
 This blockchain indexer demonstrates how to track and index cross-chain messaging protocols at scale, providing a complete view of message passing across multiple blockchains.
 
+:::warning Targets HyperIndex V2
+This example links to a third-party community repository that targets HyperIndex **V2** and is now archived (last updated December 2024), so it does not reflect current V3 APIs. We keep it here as a conceptual reference for cross-chain indexing patterns. If you are starting a new project, build on the current [V3 docs](/docs/HyperIndex/overview) and see [Migrate to V3](/docs/HyperIndex/migrate-to-v3) for the latest syntax.
+:::
+
 ## Overview
 
 The [ORMP Indexer](https://github.com/ringecosystem/ormpexer/tree/main) showcases advanced multichain indexing techniques for tracking cross-chain communication. It offers a practical example of how to:
@@ -36,5 +40,5 @@ This blockchain indexer can serve as a foundation for applications requiring vis
 - Message delivery verification tools
 
 :::note
-This blockchain indexer was built by Envio partners and community builders. While it provides a valuable reference implementation, it may not be using the latest version of Envio's tooling. Always perform appropriate testing and data validation before using in production environments.
+This blockchain indexer was built by Envio partners and community builders. As noted above it targets HyperIndex V2 and is no longer maintained, so always perform appropriate testing and data validation, and follow the current V3 docs, before using these patterns in production.
 :::

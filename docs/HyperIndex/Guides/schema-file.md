@@ -379,6 +379,33 @@ type AdvancedEntity {
 
 ---
 
+## Documenting Entities, Fields, and Relationships
+
+You can document your entities, fields, and relationships directly in `schema.graphql` using GraphQL string descriptions. These descriptions are exposed through the generated GraphQL API and appear in introspection, making your API self-documenting.
+
+```graphql
+"""
+A token transfer between two accounts
+"""
+type Transfer {
+  id: ID!
+  "The address the tokens were sent from"
+  from: String!
+  "The address the tokens were sent to"
+  to: String!
+  "The amount transferred, in wei"
+  value: BigInt!
+}
+```
+
+Both single-line (`"..."`) and multi-line (`"""..."""`) descriptions are supported.
+
+:::note
+Only string descriptions are exposed in introspection. Hash (`#`) comments are ignored by the GraphQL parser and do **not** appear in the API. Descriptions on entities, fields, and relationships were added in HyperIndex v3.1.
+:::
+
+---
+
 ## Generating Types
 
 Once you've defined your schema, run this command to generate these entity types that can be accessed in your event handlers:

@@ -13,7 +13,7 @@ Please reach out to our team on [Discord](https://discord.gg/envio) for personal
 :::
 
 :::tip Already on HyperIndex V2?
-This page covers migrating from The Graph to Envio. If you are upgrading an existing HyperIndex project from V2 to V3, follow the [Migrate to V3](./migrate-to-v3) guide instead. Some examples below still use the V2 handler syntax (`Contract.Event.handler(...)`, `networks:`); the V3 equivalents (`indexer.onEvent(...)`, `chains:`) are documented in that guide.
+This page covers migrating from The Graph to Envio, with all examples shown in current HyperIndex V3 syntax (`indexer.onEvent(...)`, `chains:`). If instead you are upgrading an existing HyperIndex project from V2 to V3, follow the [Migrate to V3](./migrate-to-v3) guide.
 :::
 
 ## Introduction
@@ -109,7 +109,7 @@ HyperIndex - `config.yaml`
 ```yaml
 # yaml-language-server: $schema=./node_modules/envio/evm.schema.json
 name: uni-v4-indexer
-networks:
+chains:
   - id: 1
     start_block: 21689089
     contracts:      
@@ -179,19 +179,23 @@ export function handleSubscription(event: SubscriptionEvent): void {
 <div className="col col--6">
 HyperIndex - `eventHandler.ts`
 ```typescript
-PoolManager.Subscription.handler( async (event, context) => {
-  const entity = {
-    id: event.transaction.hash + event.logIndex,
-    tokenId: event.params.tokenId,
-    address: event.params.subscriber,
-    blockNumber: event.block.number,
-    logIndex: event.logIndex,
-    position: event.params.tokenId
-  }
+import { indexer } from "envio";
 
-context.Subscription.set(entity);
-})
+indexer.onEvent(
+  { contract: "PoolManager", event: "Subscription" },
+  async ({ event, context }) => {
+    const entity = {
+      id: event.transaction.hash + event.logIndex,
+      tokenId: event.params.tokenId,
+      address: event.params.subscriber,
+      blockNumber: event.block.number,
+      logIndex: event.logIndex,
+      position: event.params.tokenId,
+    };
 
+    context.Subscription.set(entity);
+  },
+);
 ```
 
 </div>
@@ -205,7 +209,7 @@ HyperIndex is a powerful tool that can be used to index any contract. There are 
 - Multichain indexing in V3 always runs in unordered mode, which is the most common need and provides better performance — see [Multichain Indexing](../HyperIndex/multichain-indexing). (In V2 this required setting `unordered_multichain_mode: true`; in V3 there is no opt-in, and the V2 `multichain: ordered` mode has been removed.)
 - Use wildcard indexing to index by event signatures rather than by contract address.
 - HyperIndex uses the standard GraphQL query language, whereas TheGraph uses a custom GraphQL syntax. You can read about the differences and how to convert queries in our [Query Conversion Guide](/docs/HyperIndex/query-conversion). We also provide a query converter tool for backwards compatibility with existing TheGraph queries.
-- Loaders are a powerful feature to optimize historical sync performance. You can read more about them [here](../HyperIndex/loaders).
+- Preload Optimization is always on in V3 and speeds up historical sync by batching the entity reads in your handlers and running external calls in parallel. You can read more about it [here](/docs/HyperIndex/preload-optimization).
 - HyperIndex is very flexible and can be used to index offchain data too or send messages to a queue etc for fetching external data, you can further optimise the fetching by using the [effects api](/docs/HyperIndex/effect-api)
 
 ### Transaction receipts
@@ -235,10 +239,15 @@ field_selection:
 ```
 
 ```typescript
-MyContract.Transfer.handler(async ({ event, context }) => {
-  const { status, gasUsed } = event.transaction;
-  // ...
-});
+import { indexer } from "envio";
+
+indexer.onEvent(
+  { contract: "MyContract", event: "Transfer" },
+  async ({ event, context }) => {
+    const { status, gasUsed } = event.transaction;
+    // ...
+  },
+);
 ```
 
 See the full list of available `transaction_fields` in the [Configuration File](../HyperIndex/configuration-file#field-selection) docs.
