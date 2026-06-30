@@ -195,7 +195,7 @@ import { createEffect, S } from "envio";
 
 import { getERC20BytesContract, getERC20Contract } from "./utils";
 
-const RPC_URL = process.env.RPC_URL;
+const RPC_URL = process.env.ENVIO_RPC_URL;
 
 const client = createPublicClient({
   chain: mainnet,

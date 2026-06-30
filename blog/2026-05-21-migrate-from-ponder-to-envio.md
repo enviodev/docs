@@ -123,7 +123,7 @@ chains:
 | --- | --- | --- |
 | Config format | `ponder.config.ts` (TypeScript) | `config.yaml` (YAML) |
 | Chain reference | Named + viem object | Numeric chain ID |
-| RPC URL | In config | `RPC_URL_<chainId>` env var |
+| RPC URL | In config | `ENVIO_RPC_URL_<chainId>` env var |
 | ABI source | TypeScript import | JSON file (`abi_file_path`) |
 | Events to index | Inferred from handlers | Explicit `events:` list |
 | Handler file | Inferred | Auto-discovered from `src/handlers/` |
