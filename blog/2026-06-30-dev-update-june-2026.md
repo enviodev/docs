@@ -152,13 +152,13 @@ This month's featured developer is Bazhar, a developer and analyst focused on bl
 
 > ***"My experience with Envio has been really good. I came in with a fairly specific use case around discovering ERC20 approvals by spender contract across chains, and the team helped me think through the right architecture instead of just giving a generic answer. What stood out to me was how practical the support was. They explained where an indexer makes sense, where HyperSync can be used directly, and also clarified the important limitation around "live" allowances that Approval events alone don't always reflect the remaining allowance after transferFrom calls. That helped me understand the trade-offs between preindexing everything, querying HyperSync on demand, and using RPC checks only where needed. Overall, Envio feels very developer-friendly. The team was responsive, honest about the technical and cost trade-offs, and helped turn a rough idea into a much clearer implementation path."***
 
-Well done, Bazhar. Be sure to check out their GitHub to stay up to date with their latest developments.
+Well done, Bazhar. Be sure to check out their [GitHub](https://github.com/bazhar1337) to stay up to date with their latest developments.
 
 ## Playlist of the Month
 
 <img src="/blog-assets/dev-update-june-2026-10.png" alt="Playlist of the month" width="100%"/>
 
-▶ [Open Spotify](insert playlist URL)
+▶ [Open Spotify](https://open.spotify.com/playlist/4262PvQguBC6M84amVTxDr)
 
 ## Build With Envio
 
