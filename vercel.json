@@ -217,6 +217,111 @@
       "source": "/docs/async-mode.md",
       "destination": "/docs/HyperIndex/overview.md",
       "permanent": true
+    },
+    {
+      "source": "/blog/clickhouse-sink-hyperindex-v3",
+      "destination": "/blog/clickhouse-storage-hyperindex-v3",
+      "permanent": true
+    },
+    {
+      "source": "/blog/clickhouse-sink-hyperindex-v3.md",
+      "destination": "/blog/clickhouse-storage-hyperindex-v3.md",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-developer-update-april-2024",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-developer-update-april-2024.md",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-developer-update-june-2024",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-developer-update-june-2024.md",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-developer-update-july-2024",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-developer-update-july-2024.md",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-developer-community-update-no-1",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-developer-community-update-no-1.md",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-developer-community-update-no-3",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-developer-community-update-no-3.md",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-developer-community-update-no-6",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-developer-community-update-no-6.md",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-real-time-indexing-powers-peppy-finance",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-real-time-indexing-powers-peppy-finance.md",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2024/11/08/06-hosted-service-v2",
+      "destination": "/blog/hosted-service-v2",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2024/11/08/06-hosted-service-v2.md",
+      "destination": "/blog/hosted-service-v2.md",
+      "permanent": true
+    },
+    {
+      "source": "/blog/2024/:month/:day/:slug",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/status",
+      "destination": "/docs/HyperIndex/hosted-service",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/status.md",
+      "destination": "/docs/HyperIndex/hosted-service.md",
+      "permanent": true
     }
   ],
   "headers": [
