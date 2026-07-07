@@ -354,6 +354,11 @@ const config = {
             position: "left",
           },
           {
+            href: "https://envio.dev/changelog",
+            label: "Changelog",
+            position: "left",
+          },
+          {
             to: "videos",
             label: "Shipper's Logs",
             position: "left",
