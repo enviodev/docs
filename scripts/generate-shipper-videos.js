@@ -40,11 +40,14 @@ function parse(src) {
 }
 
 function main() {
-  let map = {};
+  let map;
   try {
     map = parse(fs.readFileSync(VIDEOS_FILE, "utf8"));
   } catch (err) {
-    console.warn(`[generate-shipper-videos] Could not read videos.mdx (${err.message}).`);
+    // Fail loudly rather than publish an empty feed, which would silently wipe
+    // the release videos on the changelog.
+    console.error(`[generate-shipper-videos] Could not read videos.mdx (${err.message}).`);
+    process.exit(1);
   }
   fs.mkdirSync(path.dirname(OUTPUT_FILE), { recursive: true });
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(map));
