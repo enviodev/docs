@@ -42,7 +42,6 @@ If you are a network operator or user and would like improved service support or
 | Base Traces*              | 8453            | https://base-traces.hypersync.xyz or https://8453-traces.hypersync.xyz                   | https://base-traces.rpc.hypersync.xyz or https://8453-traces.rpc.hypersync.xyz           |
 | Berachain                 | 80094           | https://berachain.hypersync.xyz or https://80094.hypersync.xyz                           | https://berachain.rpc.hypersync.xyz or https://80094.rpc.hypersync.xyz                   |
 | Blast                     | 81457           | https://blast.hypersync.xyz or https://81457.hypersync.xyz                               | https://blast.rpc.hypersync.xyz or https://81457.rpc.hypersync.xyz                       |
-| Blast Sepolia             | 168587773       | https://blast-sepolia.hypersync.xyz or https://168587773.hypersync.xyz                   | https://blast-sepolia.rpc.hypersync.xyz or https://168587773.rpc.hypersync.xyz           |
 | Boba                      | 288             | https://boba.hypersync.xyz or https://288.hypersync.xyz                                  | https://boba.rpc.hypersync.xyz or https://288.rpc.hypersync.xyz                          |
 | Bsc                       | 56              | https://bsc.hypersync.xyz or https://56.hypersync.xyz                                    | https://bsc.rpc.hypersync.xyz or https://56.rpc.hypersync.xyz                            |
 | Bsc Testnet               | 97              | https://bsc-testnet.hypersync.xyz or https://97.hypersync.xyz                            | https://bsc-testnet.rpc.hypersync.xyz or https://97.rpc.hypersync.xyz                    |
@@ -62,7 +61,6 @@ If you are a network operator or user and would like improved service support or
 | Gnosis                    | 100             | https://gnosis.hypersync.xyz or https://100.hypersync.xyz                                | https://gnosis.rpc.hypersync.xyz or https://100.rpc.hypersync.xyz                        |
 | Gnosis Chiado             | 10200           | https://gnosis-chiado.hypersync.xyz or https://10200.hypersync.xyz                       | https://gnosis-chiado.rpc.hypersync.xyz or https://10200.rpc.hypersync.xyz               |
 | Harmony Shard 0           | 1666600000      | https://harmony-shard-0.hypersync.xyz or https://1666600000.hypersync.xyz                | https://harmony-shard-0.rpc.hypersync.xyz or https://1666600000.rpc.hypersync.xyz        |
-| Holesky                   | 17000           | https://holesky.hypersync.xyz or https://17000.hypersync.xyz                             | https://holesky.rpc.hypersync.xyz or https://17000.rpc.hypersync.xyz                     |
 | Hoodi                     | 560048          | https://hoodi.hypersync.xyz or https://560048.hypersync.xyz                              | https://hoodi.rpc.hypersync.xyz or https://560048.rpc.hypersync.xyz                      |
 | Hyperliquid               | 999             | https://hyperliquid.hypersync.xyz or https://999.hypersync.xyz                           | https://hyperliquid.rpc.hypersync.xyz or https://999.rpc.hypersync.xyz                   |
 | Injective*                | 1776            | https://injective.hypersync.xyz or https://1776.hypersync.xyz                            | https://injective.rpc.hypersync.xyz or https://1776.rpc.hypersync.xyz                    |
@@ -76,7 +74,6 @@ If you are a network operator or user and would like improved service support or
 | Manta                     | 169             | https://manta.hypersync.xyz or https://169.hypersync.xyz                                 | https://manta.rpc.hypersync.xyz or https://169.rpc.hypersync.xyz                         |
 | Mantle                    | 5000            | https://mantle.hypersync.xyz or https://5000.hypersync.xyz                               | https://mantle.rpc.hypersync.xyz or https://5000.rpc.hypersync.xyz                       |
 | Megaeth                   | 4326            | https://megaeth.hypersync.xyz or https://4326.hypersync.xyz                              | https://megaeth.rpc.hypersync.xyz or https://4326.rpc.hypersync.xyz                      |
-| Megaeth Testnet           | 6342            | https://megaeth-testnet.hypersync.xyz or https://6342.hypersync.xyz                      | https://megaeth-testnet.rpc.hypersync.xyz or https://6342.rpc.hypersync.xyz              |
 | Megaeth Testnet2          | 6343            | https://megaeth-testnet2.hypersync.xyz or https://6343.hypersync.xyz                     | https://megaeth-testnet2.rpc.hypersync.xyz or https://6343.rpc.hypersync.xyz             |
 | Merlin                    | 4200            | https://merlin.hypersync.xyz or https://4200.hypersync.xyz                               | https://merlin.rpc.hypersync.xyz or https://4200.rpc.hypersync.xyz                       |
 | Metall2                   | 1750            | https://metall2.hypersync.xyz or https://1750.hypersync.xyz                              | https://metall2.rpc.hypersync.xyz or https://1750.rpc.hypersync.xyz                      |
@@ -93,8 +90,8 @@ If you are a network operator or user and would like improved service support or
 | Polygon                   | 137             | https://polygon.hypersync.xyz or https://137.hypersync.xyz                               | https://polygon.rpc.hypersync.xyz or https://137.rpc.hypersync.xyz                       |
 | Polygon Amoy              | 80002           | https://polygon-amoy.hypersync.xyz or https://80002.hypersync.xyz                        | https://polygon-amoy.rpc.hypersync.xyz or https://80002.rpc.hypersync.xyz                |
 | Polygon zkEVM             | 1101            | https://polygon-zkevm.hypersync.xyz or https://1101.hypersync.xyz                        | https://polygon-zkevm.rpc.hypersync.xyz or https://1101.rpc.hypersync.xyz                |
+| Robinhood                 | 4663            | https://robinhood.hypersync.xyz or https://4663.hypersync.xyz                            | https://robinhood.rpc.hypersync.xyz or https://4663.rpc.hypersync.xyz                    |
 | Rootstock                 | 30              | https://rootstock.hypersync.xyz or https://30.hypersync.xyz                              | https://rootstock.rpc.hypersync.xyz or https://30.rpc.hypersync.xyz                      |
-| Saakuru                   | 7225878         | https://saakuru.hypersync.xyz or https://7225878.hypersync.xyz                           | https://saakuru.rpc.hypersync.xyz or https://7225878.rpc.hypersync.xyz                   |
 | Scroll                    | 534352          | https://scroll.hypersync.xyz or https://534352.hypersync.xyz                             | https://scroll.rpc.hypersync.xyz or https://534352.rpc.hypersync.xyz                     |
 | Sei*                      | 1329            | https://sei.hypersync.xyz or https://1329.hypersync.xyz                                  | https://sei.rpc.hypersync.xyz or https://1329.rpc.hypersync.xyz                          |
 | Sei Testnet*              | 1328            | https://sei-testnet.hypersync.xyz or https://1328.hypersync.xyz                          | https://sei-testnet.rpc.hypersync.xyz or https://1328.rpc.hypersync.xyz                  |
@@ -105,17 +102,16 @@ If you are a network operator or user and would like improved service support or
 | Sonic Testnet             | 14601           | https://sonic-testnet.hypersync.xyz or https://14601.hypersync.xyz                       | https://sonic-testnet.rpc.hypersync.xyz or https://14601.rpc.hypersync.xyz               |
 | Sophon                    | 50104           | https://sophon.hypersync.xyz or https://50104.hypersync.xyz                              | https://sophon.rpc.hypersync.xyz or https://50104.rpc.hypersync.xyz                      |
 | Sophon Testnet            | 531050104       | https://sophon-testnet.hypersync.xyz or https://531050104.hypersync.xyz                  | https://sophon-testnet.rpc.hypersync.xyz or https://531050104.rpc.hypersync.xyz          |
-| Status Sepolia            | 1660990954      | https://status-sepolia.hypersync.xyz or https://1660990954.hypersync.xyz                 | https://status-sepolia.rpc.hypersync.xyz or https://1660990954.rpc.hypersync.xyz         |
+| Stable                    | 988             | Access on request — [contact us](https://discord.gg/envio)                               | Access on request — [contact us](https://discord.gg/envio)                               |
 | Superseed                 | 5330            | https://superseed.hypersync.xyz or https://5330.hypersync.xyz                            | https://superseed.rpc.hypersync.xyz or https://5330.rpc.hypersync.xyz                    |
 | Swell                     | 1923            | https://swell.hypersync.xyz or https://1923.hypersync.xyz                                | https://swell.rpc.hypersync.xyz or https://1923.rpc.hypersync.xyz                        |
-| Taraxa                    | 841             | https://taraxa.hypersync.xyz or https://841.hypersync.xyz                                | https://taraxa.rpc.hypersync.xyz or https://841.rpc.hypersync.xyz                        |
 | Tempo                     | 4217            | https://tempo.hypersync.xyz or https://4217.hypersync.xyz                                | https://tempo.rpc.hypersync.xyz or https://4217.rpc.hypersync.xyz                        |
 | Unichain                  | 130             | https://unichain.hypersync.xyz or https://130.hypersync.xyz                              | https://unichain.rpc.hypersync.xyz or https://130.rpc.hypersync.xyz                      |
 | Worldchain                | 480             | https://worldchain.hypersync.xyz or https://480.hypersync.xyz                            | https://worldchain.rpc.hypersync.xyz or https://480.rpc.hypersync.xyz                    |
-| Xdc                       | 50              | https://xdc.hypersync.xyz or https://50.hypersync.xyz                                    | https://xdc.rpc.hypersync.xyz or https://50.rpc.hypersync.xyz                            |
-| Xdc Testnet               | 51              | https://xdc-testnet.hypersync.xyz or https://51.hypersync.xyz                            | https://xdc-testnet.rpc.hypersync.xyz or https://51.rpc.hypersync.xyz                    |
+| XDC                       | 50              | Access on request — [contact us](https://discord.gg/envio)                               | Access on request — [contact us](https://discord.gg/envio)                               |
+| XDC Testnet               | 51              | Access on request — [contact us](https://discord.gg/envio)                               | Access on request — [contact us](https://discord.gg/envio)                               |
 | Zeta                      | 7000            | https://zeta.hypersync.xyz or https://7000.hypersync.xyz                                 | https://zeta.rpc.hypersync.xyz or https://7000.rpc.hypersync.xyz                         |
-| Zircuit                   | 48900           | https://zircuit.hypersync.xyz or https://48900.hypersync.xyz                             | https://zircuit.rpc.hypersync.xyz or https://48900.rpc.hypersync.xyz                     |
+| Zircuit                   | 48900           | Access on request — [contact us](https://discord.gg/envio)                               | Access on request — [contact us](https://discord.gg/envio)                               |
 | ZKsync                    | 324             | https://zksync.hypersync.xyz or https://324.hypersync.xyz                                | https://zksync.rpc.hypersync.xyz or https://324.rpc.hypersync.xyz                        |
 | Zora                      | 7777777         | https://zora.hypersync.xyz or https://7777777.hypersync.xyz                              | https://zora.rpc.hypersync.xyz or https://7777777.rpc.hypersync.xyz                      |
 
@@ -126,5 +122,6 @@ If you are a network operator or user and would like improved service support or
 - **Injective***: Start block: 129846180 (non-evm before that)
 - **Sei***: Start block: 79123881 (non-evm before that)
 - **Sei Testnet***: Start block: 186100000 (non-evm before that)
+
 
 ---

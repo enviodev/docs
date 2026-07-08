@@ -1,0 +1,24 @@
+{
+  "requestAccessNetworks": [
+    {
+      "name": "xdc",
+      "title": "XDC",
+      "chainId": 50
+    },
+    {
+      "name": "xdc-testnet",
+      "title": "XDC Testnet",
+      "chainId": 51
+    },
+    {
+      "name": "stable",
+      "title": "Stable",
+      "chainId": 988
+    },
+    {
+      "name": "zircuit",
+      "title": "Zircuit",
+      "chainId": 48900
+    }
+  ]
+}

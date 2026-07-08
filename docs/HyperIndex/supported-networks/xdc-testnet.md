@@ -1,30 +1,31 @@
 ---
 id: xdc-testnet
-title: Xdc Testnet
-description: Start indexing Xdc Testnet data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
-sidebar_label: Xdc Testnet
+title: XDC Testnet
+description: Start indexing XDC Testnet data with Envio. HyperSync support for XDC Testnet is available on request.
+sidebar_label: XDC Testnet
 slug: /xdc-testnet
 ---
 
-# Xdc Testnet
+# XDC Testnet
 
-## Indexing Xdc Testnet Data with Envio
+## Indexing XDC Testnet Data with Envio
+
+:::info Access on request
+HyperSync support for XDC Testnet is available on a request basis. To get access, reach out to us on [Discord](https://discord.gg/envio) and we'll enable it for your project.
+:::
 
 | **Field**                     | **Value**                                                                                          |
 |-------------------------------|----------------------------------------------------------------------------------------------------|
-| **Xdc Testnet Chain ID**     | 51                                                                                            |
-| **HyperSync URL Endpoint**    | [https://xdc-testnet.hypersync.xyz](https://xdc-testnet.hypersync.xyz) or [https://51.hypersync.xyz](https://51.hypersync.xyz) |
-| **HyperRPC URL Endpoint**     | [https://xdc-testnet.rpc.hypersync.xyz](https://xdc-testnet.rpc.hypersync.xyz) or [https://51.rpc.hypersync.xyz](https://51.rpc.hypersync.xyz) |
+| **XDC Testnet Chain ID**     | 51                                                                                            |
+| **HyperSync Access**    | On request — [reach out on Discord](https://discord.gg/envio) |
 
 ---
 
 ### Overview
 
-Envio is a modular hyper-performant data indexing solution for Xdc Testnet, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
+Envio is a modular hyper-performant data indexing solution for XDC Testnet, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](/docs/HyperIndex/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
 
-HyperSync accelerates the synchronization of historical data on Xdc Testnet, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 2000x faster than traditional RPC methods.
-
-Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted service.
+XDC Testnet is supported through HyperSync on a request basis. Once access has been granted, HyperIndex uses HyperSync as the data source for XDC Testnet, enabling sync speeds up to 2000x faster than traditional RPC methods.
 
 To get started, see our documentation or follow our quickstart [guide](/docs/HyperIndex/quickstart).
 
@@ -36,7 +37,7 @@ To get started, see our documentation or follow our quickstart [guide](/docs/Hyp
 name: IndexerName # Specify indexer name
 description: Indexer Description # Include indexer description
 chains:
-  - id: 51 # Xdc Testnet
+  - id: 51 # XDC Testnet
     start_block: START_BLOCK_NUMBER  # Specify the starting block
     contracts:
       - name: ContractName
@@ -48,12 +49,12 @@ chains:
           - event: Event
 ```
 
-With these steps completed, your application will be set to efficiently index Xdc Testnet data using Envio’s blockchain indexer.
+With these steps completed, your application will be set to efficiently index XDC Testnet data using Envio’s blockchain indexer.
 
 For more information on how to set up your config, define a schema, and write event handlers, refer to the guides section in our [documentation](/docs/HyperIndex/configuration-file).
 
 ### Support
 
-Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.gg/envio); we’re always happy to help!
+Request access to XDC Testnet, or ask us anything, on [Discord](https://discord.gg/envio); we’re always happy to help!
 
 ---

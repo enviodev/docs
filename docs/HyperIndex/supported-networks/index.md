@@ -21,4 +21,13 @@ If the network that you want to index is not supported on HyperSync, please navi
 
 You can also request a network to be added to HyperSync in the [Discord](https://discord.gg/envio).
 
+### Networks available on request
+
+Some networks are supported on a request basis: HyperSync support exists, but access is enabled per project rather than being publicly available. Reach out to us on [Discord](https://discord.gg/envio) to request access to the following networks:
+
+- [XDC](./xdc.md)
+- [XDC Testnet](./xdc-testnet.md)
+- [Stable](./stable.md)
+- [Zircuit](./zircuit.md)
+
 ---

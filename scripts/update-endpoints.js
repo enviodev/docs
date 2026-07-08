@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { rpcNetworks } = require("./rpc-networks.json");
+const { requestAccessNetworks } = require("./request-access-networks.json");
 
 const URL = "https://chains.hyperquery.xyz/active_chains";
 
@@ -19,6 +20,8 @@ const RENAME_CONFIG = {
   eth: "Ethereum Mainnet",
   "polygon-zkevm": "Polygon zkEVM",
   zksync: "ZKsync",
+  xdc: "XDC",
+  "xdc-testnet": "XDC Testnet",
   // Add other renaming rules here
 };
 
@@ -68,6 +71,35 @@ const sortAndFilterChains = (data) => {
 const getNetworkName = (chain) =>
   RENAME_CONFIG[chain.name] || capitalizeAndSplit(chain.name);
 
+// Request-access networks are listed in the tables, but their endpoints are
+// not public — access has to be requested.
+const isRequestAccessChain = (chain) =>
+  requestAccessNetworks.some(
+    (n) => n.name === chain.name || n.chainId === chain.chain_id
+  );
+
+const REQUEST_ACCESS_CELL =
+  "Access on request — [contact us](https://discord.gg/envio)";
+
+// Some request-access networks are hidden from the chains API even though
+// they exist on HyperSync. Merge them in from the config so they still show
+// up in the supported-networks tables (with a request-access cell instead of
+// endpoint URLs).
+const withRequestAccessChains = (data) => {
+  const merged = [...data];
+  requestAccessNetworks.forEach((n) => {
+    if (!merged.some((c) => c.name === n.name || c.chain_id === n.chainId)) {
+      merged.push({
+        name: n.name,
+        tier: "REQUEST_ACCESS",
+        chain_id: n.chainId,
+        ecosystem: "evm",
+      });
+    }
+  });
+  return merged;
+};
+
 const TICK = "✔️";
 
 const generateTableRow = (columns, values) => {
@@ -111,8 +143,12 @@ const generateHyperSyncTable = (data) => {
     // Check if this is a traces network and modify the URL accordingly
     const isTracesNetwork = chain.name.toLowerCase().includes("traces");
     const chainIdSuffix = isTracesNetwork ? `-traces` : "";
-    const hypersyncUrl = `https://${chain.name}.hypersync.xyz or https://${chain.chain_id}${chainIdSuffix}.hypersync.xyz`;
-    const hyperrpcUrl = `https://${chain.name}.rpc.hypersync.xyz or https://${chain.chain_id}${chainIdSuffix}.rpc.hypersync.xyz`;
+    const hypersyncUrl = isRequestAccessChain(chain)
+      ? REQUEST_ACCESS_CELL
+      : `https://${chain.name}.hypersync.xyz or https://${chain.chain_id}${chainIdSuffix}.hypersync.xyz`;
+    const hyperrpcUrl = isRequestAccessChain(chain)
+      ? REQUEST_ACCESS_CELL
+      : `https://${chain.name}.rpc.hypersync.xyz or https://${chain.chain_id}${chainIdSuffix}.rpc.hypersync.xyz`;
 
     const rowValues = [
       networkName,
@@ -141,7 +177,9 @@ const generateHyperRPCTable = (data) => {
     // Check if this is a traces network and modify the URL accordingly
     const isTracesNetwork = chain.name.toLowerCase().includes("traces");
     const chainIdSuffix = isTracesNetwork ? `-traces` : "";
-    const url = `https://${chain.name}.rpc.hypersync.xyz or https://${chain.chain_id}${chainIdSuffix}.rpc.hypersync.xyz`;
+    const url = isRequestAccessChain(chain)
+      ? REQUEST_ACCESS_CELL
+      : `https://${chain.name}.rpc.hypersync.xyz or https://${chain.chain_id}${chainIdSuffix}.rpc.hypersync.xyz`;
 
     const rowValues = [
       networkName,
@@ -158,7 +196,7 @@ const generateHyperRPCTable = (data) => {
 const updateMarkdownFiles = async () => {
   try {
     const response = await fetch(URL);
-    const data = await response.json();
+    const data = withRequestAccessChains(await response.json());
 
     // Update HyperSync file
     const hyperSyncTable = generateHyperSyncTable(data);
@@ -374,6 +412,80 @@ Want HyperSync for ${network.name
 `;
 };
 
+// Function to generate markdown content for request-access networks.
+// These networks are supported by HyperSync, but access is granted per
+// request rather than via public endpoints.
+const generateRequestAccessMarkdownContent = (network, variant = "v2") => {
+  const title = network.title;
+
+  const chainsKey = variant === "v3" ? "chains" : "networks";
+  const docsBase =
+    variant === "v3" ? "/docs/HyperIndex" : "/docs/v2/HyperIndex";
+  const quickstartSlug = variant === "v3" ? "quickstart" : "contract-import";
+
+  return `---
+id: ${network.name}
+title: ${title}
+description: Start indexing ${title} data with Envio. HyperSync support for ${title} is available on request.
+sidebar_label: ${title}
+slug: /${network.name}
+---
+
+# ${title}
+
+## Indexing ${title} Data with Envio
+
+:::info Access on request
+HyperSync support for ${title} is available on a request basis. To get access, reach out to us on [Discord](https://discord.gg/envio) and we'll enable it for your project.
+:::
+
+| **Field**                     | **Value**                                                                                          |
+|-------------------------------|----------------------------------------------------------------------------------------------------|
+| **${title} Chain ID**     | ${network.chainId}                                                                                            |
+| **HyperSync Access**    | On request — [reach out on Discord](https://discord.gg/envio) |
+
+---
+
+### Overview
+
+Envio is a modular hyper-performant data indexing solution for ${title}, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](${docsBase}/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
+
+${title} is supported through HyperSync on a request basis. Once access has been granted, HyperIndex uses HyperSync as the data source for ${title}, enabling sync speeds up to 2000x faster than traditional RPC methods.
+
+To get started, see our documentation or follow our quickstart [guide](${docsBase}/${quickstartSlug}).
+
+---
+
+### Defining ${chainsKey === "chains" ? "Chain" : "Network"} Configurations
+
+\`\`\`yaml
+name: IndexerName # Specify indexer name
+description: Indexer Description # Include indexer description
+${chainsKey}:
+  - id: ${network.chainId} # ${title}
+    start_block: START_BLOCK_NUMBER  # Specify the starting block
+    contracts:
+      - name: ContractName
+        address:
+          - "0xYourContractAddress1"
+          - "0xYourContractAddress2"
+        events:
+          - event: Event # Specify event
+          - event: Event
+\`\`\`
+
+With these steps completed, your application will be set to efficiently index ${title} data using Envio’s blockchain indexer.
+
+For more information on how to set up your config, define a schema, and write event handlers, refer to the guides section in our [documentation](${docsBase}/configuration-file).
+
+### Support
+
+Request access to ${title}, or ask us anything, on [Discord](https://discord.gg/envio); we’re always happy to help!
+
+---
+`;
+};
+
 // a function to generate a markdown file for each network with a table of endpoints and basic data about the network
 const generateMarkdownFiles = async () => {
   try {
@@ -396,12 +508,18 @@ const generateMarkdownFiles = async () => {
 
     let supportedNetworks = [];
 
+    const isRequestAccess = (chain) =>
+      requestAccessNetworks.some(
+        (n) => n.name === chain.name || n.chainId === chain.chain_id
+      );
+
     // Generate HyperSync files
     data.forEach((network) => {
       if (
         network.tier.toLowerCase() !== "hidden" &&
         network.tier.toLowerCase() !== "internal" &&
-        !network.name.toLowerCase().includes("traces") // Exclude traces networks from HyperIndex docs
+        !network.name.toLowerCase().includes("traces") && // Exclude traces networks from HyperIndex docs
+        !isRequestAccess(network) // Request-access networks get their own page format
       ) {
         for (const [variant, dir] of Object.entries(outputDirs)) {
           const content = generateHyperSyncMarkdownContent(network, variant);
@@ -413,10 +531,33 @@ const generateMarkdownFiles = async () => {
       }
     });
 
+    // Generate request-access files
+    requestAccessNetworks.forEach((network) => {
+      // Prefer the chain id reported by the API if the chain is listed there
+      const apiChain = data.find(
+        (c) => c.name === network.name || c.chain_id === network.chainId
+      );
+      const chainId = apiChain ? apiChain.chain_id : network.chainId;
+      for (const [variant, dir] of Object.entries(outputDirs)) {
+        const content = generateRequestAccessMarkdownContent(
+          { ...network, chainId },
+          variant
+        );
+        const filePath = path.join(dir, `${network.name}.md`);
+        fs.writeFileSync(filePath, content, "utf8");
+        console.log(`Generated file: ${filePath}`);
+      }
+      supportedNetworks.push(`"supported-networks/${network.name}"`);
+    });
+
     // Generate RPC files
     rpcNetworks.forEach((network) => {
       // if network.chainId exists in data, skip it, implies it's now supported in hypersync
       if (data.find((item) => item.chain_id === network.chainId)) {
+        return;
+      }
+      // Skip networks that are handled as request-access above
+      if (requestAccessNetworks.some((n) => n.chainId === network.chainId)) {
         return;
       }
       for (const [variant, dir] of Object.entries(outputDirs)) {
