@@ -1,7 +1,7 @@
 ---
 id: zircuit
 title: Zircuit
-description: Start indexing Zircuit data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
+description: Start indexing Zircuit data with Envio. HyperSync support for Zircuit is available on request.
 sidebar_label: Zircuit
 slug: /zircuit
 ---
@@ -10,11 +10,14 @@ slug: /zircuit
 
 ## Indexing Zircuit Data with Envio
 
+:::info Access on request
+HyperSync support for Zircuit is available on a request basis. To get access, reach out to us on [Discord](https://discord.gg/envio) and we'll enable it for your project.
+:::
+
 | **Field**                     | **Value**                                                                                          |
 |-------------------------------|----------------------------------------------------------------------------------------------------|
 | **Zircuit Chain ID**     | 48900                                                                                            |
-| **HyperSync URL Endpoint**    | [https://zircuit.hypersync.xyz](https://zircuit.hypersync.xyz) or [https://48900.hypersync.xyz](https://48900.hypersync.xyz) |
-| **HyperRPC URL Endpoint**     | [https://zircuit.rpc.hypersync.xyz](https://zircuit.rpc.hypersync.xyz) or [https://48900.rpc.hypersync.xyz](https://48900.rpc.hypersync.xyz) |
+| **HyperSync Access**    | On request — [reach out on Discord](https://discord.gg/envio) |
 
 ---
 
@@ -22,9 +25,7 @@ slug: /zircuit
 
 Envio is a modular hyper-performant data indexing solution for Zircuit, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](/docs/v2/HyperIndex/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
 
-HyperSync accelerates the synchronization of historical data on Zircuit, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 2000x faster than traditional RPC methods.
-
-Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted service.
+Zircuit is supported through HyperSync on a request basis. Once access has been granted, HyperIndex uses HyperSync as the data source for Zircuit, enabling sync speeds up to 2000x faster than traditional RPC methods.
 
 To get started, see our documentation or follow our quickstart [guide](/docs/v2/HyperIndex/contract-import).
 
@@ -54,6 +55,6 @@ For more information on how to set up your config, define a schema, and write ev
 
 ### Support
 
-Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.gg/envio); we’re always happy to help!
+Request access to Zircuit, or ask us anything, on [Discord](https://discord.gg/envio); we’re always happy to help!
 
 ---
