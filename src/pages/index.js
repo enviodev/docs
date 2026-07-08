@@ -77,6 +77,12 @@ export default function Home() {
             <div className={styles.docSection}>
               <h2>News & Media</h2>
               <div className={styles.docLinks}>
+                <Link
+                  className={styles.docLink}
+                  href="https://envio.dev/changelog"
+                >
+                  Changelog
+                </Link>
                 <Link className={styles.docLink} to="/videos">
                   Shipper's Logs (Videos)
                 </Link>
