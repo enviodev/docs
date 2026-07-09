@@ -34,6 +34,11 @@
   ],
   "redirects": [
     {
+      "source": "/blog/blog/:slug*",
+      "destination": "/blog/:slug*",
+      "permanent": true
+    },
+    {
       "source": "/blog/tags/:tag*",
       "destination": "/blog/tag/:tag*",
       "permanent": true
@@ -66,11 +71,6 @@
     {
       "source": "/docs/HyperSync/hyperrpc-supported-networks.md",
       "destination": "/docs/HyperRPC/hyperrpc-supported-networks.md",
-      "permanent": true
-    },
-    {
-      "source": "/blog/blog/:slug",
-      "destination": "/blog/:slug",
       "permanent": true
     },
     {

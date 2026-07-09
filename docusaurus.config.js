@@ -259,7 +259,7 @@ const config = {
   organizationName: "enviodev",
   projectName: "indexer-docs",
   onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "warn",
+  onBrokenMarkdownLinks: "throw",
   customFields: {
     hyperSyncChainCount: networkCountData.hyperSyncChainCount,
   },
