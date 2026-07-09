@@ -26,7 +26,61 @@
   .sidebarViewport {
     top: 0;
     position: sticky;
-    height: 100%;
+    height: 100vh;
     max-height: 100vh;
+    /* Single scroll region: search + quick links + the whole doc nav scroll
+       together as one, like the live docs sidebar. */
+    overflow-y: auto;
   }
+}
+
+/* --- Sidebar header: search + quick links (moved out of the navbar) --- */
+.sidebarHeader {
+  padding: 1rem 0.75rem 0.75rem;
+  margin-top: var(--ifm-navbar-height);
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+}
+
+.sidebarSearch {
+  margin-bottom: 0.75rem;
+}
+
+/* Make the Algolia search button fill the sidebar width, Goldsky-style */
+.sidebarSearch :global(.DocSearch-Button) {
+  width: 100%;
+  margin: 0;
+  border-radius: 8px;
+  height: 40px;
+}
+
+/* Quick links directly under the search box at the top of the sidebar
+   (plain, no box). Legal links (Licensing/Terms/Privacy) stay at the bottom
+   of the doc nav tree, reached by scrolling. */
+.sidebarLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidebarLink {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ifm-color-emphasis-700);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.sidebarLink:hover {
+  background: var(--envio-accent-tint, rgba(255, 130, 103, 0.09));
+  color: var(--envio-accent, #f4613f);
+  text-decoration: none;
+}
+
+.sidebarLinkArrow {
+  font-size: 0.75rem;
+  opacity: 0.6;
 }

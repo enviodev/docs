@@ -26,9 +26,9 @@ function Footer() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          maxWidth: "var(--ifm-container-width)",
-          margin: "0 auto",
-          padding: "0 1rem",
+          width: "100%",
+          margin: "0",
+          padding: "0 1.5rem",
           height: "var(--ifm-navbar-height)",
           fontSize: "0.875rem",
         }}

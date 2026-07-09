@@ -168,6 +168,16 @@ module.exports = {
     },
     "fuel/fuel",
     {
+      type: "html",
+      value: "<hr />",
+      className: "menu-section-divider",
+    },
+    {
+      type: "link",
+      label: "Support",
+      href: "https://discord.gg/envio",
+    },
+    {
       type: "link",
       label: "LLM Documentation",
       href: "/docs/HyperIndex-LLM/hyperindex-complete",
