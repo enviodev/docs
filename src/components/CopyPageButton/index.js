@@ -137,22 +137,28 @@ export default function CopyPageButton() {
     return null;
   }
 
+  function flagError() {
+    setCopied('error');
+    setTimeout(() => setCopied(''), 2000);
+  }
+
   async function copyText(text, key) {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(key);
       setTimeout(() => setCopied(''), 2000);
     } catch (e) {
-      /* clipboard unavailable */
+      flagError();
     }
   }
 
   async function copyPage() {
     try {
       const res = await fetch(mdPath);
+      if (!res.ok) throw new Error(`Could not fetch ${mdPath}: ${res.status}`);
       await copyText(await res.text(), 'page');
     } catch (e) {
-      /* ignore */
+      flagError();
     }
     setOpen(false);
   }
@@ -174,7 +180,7 @@ export default function CopyPageButton() {
       <div className={styles.split}>
         <button type="button" className={styles.mainBtn} onClick={copyPage}>
           {copied === 'page' ? <CheckIcon /> : <CopyIcon />}
-          {copied === 'page' ? 'Copied!' : 'Copy page'}
+          {copied === 'page' ? 'Copied!' : copied === 'error' ? 'Failed' : 'Copy page'}
         </button>
         <button
           type="button"
