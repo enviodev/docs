@@ -34,6 +34,11 @@
   ],
   "redirects": [
     {
+      "source": "/blog/blog/:slug*",
+      "destination": "/blog/:slug*",
+      "permanent": true
+    },
+    {
       "source": "/blog/tags/:tag*",
       "destination": "/blog/tag/:tag*",
       "permanent": true
