@@ -144,6 +144,11 @@ const hyperRPCDescription =
 const hyperRPCKeywords =
   "[HyperRPC, JSON-RPC, fast RPC, blockchain RPC, Envio, EVM RPC, eth_getLogs, read-only RPC, HyperSync, blockchain data, RPC alternative, drop-in RPC]";
 
+const envioCloudDescription =
+  "Complete reference documentation for Envio Cloud - Envio's managed hosting platform for HyperIndex indexers. Covers deployment, hosted-service features, monitoring, the Envio Cloud CLI, billing, organisation setup, and self-hosting.";
+const envioCloudKeywords =
+  "[Envio Cloud, hosted indexer, managed indexing, HyperIndex hosting, indexer deployment, blockchain indexer hosting, Envio, indexer monitoring, self-hosting]";
+
 const hyperIndexKeyFactsBlock = [
   "::::info Key Facts - HyperIndex",
   "",
@@ -472,16 +477,43 @@ function parseSidebarOrder(sidebarPath) {
     })`)(mockRequire);
 
     // Envio Cloud (hosted-service) pages live in a separate `envioCloudSidebar`
-    // export. Append them so they are still included when the consolidated LLM
-    // docs are regenerated. No-op for sidebars without that key.
-    return [
-      ...extractFileOrderFromSidebar(sidebarConfig.someSidebar),
-      ...(sidebarConfig.envioCloudSidebar
-        ? extractFileOrderFromSidebar(sidebarConfig.envioCloudSidebar)
-        : []),
-    ];
+    // export and are consolidated into their own dedicated LLM doc
+    // (envio-cloud-complete) via parseEnvioCloudSidebarOrder — so they are
+    // intentionally excluded here to keep hyperindex-complete focused on
+    // HyperIndex.
+    return extractFileOrderFromSidebar(sidebarConfig.someSidebar);
   } catch (error) {
     console.error(`Error parsing sidebar ${sidebarPath}:`, error.message);
+    return [];
+  }
+}
+
+// Function to parse the Envio Cloud (hosted-service) sidebar order. These pages
+// live under docs/HyperIndex/Hosted_Service but are surfaced as their own
+// product section, so they get a dedicated consolidated LLM doc.
+function parseEnvioCloudSidebarOrder(sidebarPath) {
+  try {
+    const sidebarContent = fs.readFileSync(sidebarPath, "utf8");
+    const mockRequire = (modulePath) => {
+      if (modulePath === "./supported-networks.json") {
+        return { supportedNetworks: [] };
+      }
+      throw new Error(`Unexpected require: ${modulePath}`);
+    };
+    const sidebarConfig = eval(`(function() {
+      const require = arguments[0];
+      ${sidebarContent}
+      return module.exports;
+    })`)(mockRequire);
+
+    return sidebarConfig.envioCloudSidebar
+      ? extractFileOrderFromSidebar(sidebarConfig.envioCloudSidebar)
+      : [];
+  } catch (error) {
+    console.error(
+      `Error parsing Envio Cloud sidebar ${sidebarPath}:`,
+      error.message
+    );
     return [];
   }
 }
@@ -560,73 +592,152 @@ function consolidateHyperIndexDocs() {
   console.log(
     `Processing HyperIndex documentation in logical order from sidebar...`
   );
-  return processFilesInOrder(hyperIndexDir, fileOrder, outputFile);
+  return processFilesInOrder(hyperIndexDir, fileOrder, outputFile, "hyperindex");
 }
+
+// Function to consolidate the Envio Cloud (hosted-service) docs into their own
+// dedicated LLM file. The source pages live under docs/HyperIndex/Hosted_Service
+// but are surfaced as the standalone "Envio Cloud" product section.
+function consolidateEnvioCloudDocs() {
+  const hyperIndexDir = path.join(__dirname, "../docs/HyperIndex");
+  const outputFile = path.join(
+    __dirname,
+    "../docs/EnvioCloud-LLM/envio-cloud-complete.mdx"
+  );
+
+  const outputDir = path.dirname(outputFile);
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir, { recursive: true });
+  }
+
+  const sidebarPath = path.join(__dirname, "../sidebarsHyperIndex.js");
+  const fileOrder = parseEnvioCloudSidebarOrder(sidebarPath);
+
+  if (fileOrder.length === 0) {
+    console.error(
+      "Failed to parse Envio Cloud sidebar order; skipping envio-cloud-complete"
+    );
+    return;
+  }
+
+  console.log(
+    `Processing Envio Cloud documentation in logical order from sidebar...`
+  );
+  return processFilesInOrder(
+    hyperIndexDir,
+    fileOrder,
+    outputFile,
+    "envio-cloud"
+  );
+}
+
+// Per-product metadata for the consolidated LLM doc. Keyed by an explicit
+// docType so Envio Cloud (whose source pages live under docs/HyperIndex) can
+// be distinguished from HyperIndex itself.
+const DOC_TYPES = {
+  hyperindex: {
+    id: "hyperindex-complete",
+    label: "HyperIndex",
+    heading: "HyperIndex Complete Documentation",
+    get description() {
+      return hyperIndexDescription;
+    },
+    get keywords() {
+      return hyperIndexKeywords;
+    },
+    get keyFacts() {
+      return hyperIndexKeyFactsBlock;
+    },
+    get faq() {
+      return hyperIndexFaqBlock;
+    },
+  },
+  hypersync: {
+    id: "hypersync-complete",
+    label: "HyperSync",
+    heading: "HyperSync Complete Documentation",
+    get description() {
+      return hyperSyncDescription;
+    },
+    get keywords() {
+      return hyperSyncKeywords;
+    },
+    get keyFacts() {
+      return hyperSyncKeyFactsBlock;
+    },
+    get faq() {
+      return hyperSyncFaqBlock;
+    },
+  },
+  hyperrpc: {
+    id: "hyperrpc-complete",
+    label: "HyperRPC",
+    heading: "HyperRPC Complete Documentation",
+    get description() {
+      return hyperRPCDescription;
+    },
+    get keywords() {
+      return hyperRPCKeywords;
+    },
+    get keyFacts() {
+      return hyperRPCKeyFactsBlock;
+    },
+    get faq() {
+      return hyperRPCFaqBlock;
+    },
+  },
+  "envio-cloud": {
+    id: "envio-cloud-complete",
+    label: "Envio Cloud",
+    heading: "Envio Cloud Complete Documentation",
+    get description() {
+      return envioCloudDescription;
+    },
+    get keywords() {
+      return envioCloudKeywords;
+    },
+    // Envio Cloud has no hand-authored Key Facts / FAQ blocks; the consolidated
+    // page is built purely from its sidebar pages.
+    keyFacts: null,
+    faq: null,
+  },
+};
 
 // Function to process files in a given order
-function processFilesInOrder(sourceDir, fileOrder, outputFile) {
-  // Determine if this is HyperIndex, HyperSync, or HyperRPC based on the source directory
-  const isHyperIndex = sourceDir.includes("HyperIndex");
-  const isHyperSync = sourceDir.includes("HyperSync");
-  const isHyperRPC = sourceDir.includes("HyperRPC");
+function processFilesInOrder(sourceDir, fileOrder, outputFile, docType) {
+  // Determine the product. Prefer the explicit docType; fall back to inferring
+  // from the source directory for callers that don't pass one. Order matters:
+  // Envio Cloud shares docs/HyperIndex, so it must be passed explicitly.
+  const resolvedType =
+    docType ||
+    (sourceDir.includes("HyperSync")
+      ? "hypersync"
+      : sourceDir.includes("HyperRPC")
+        ? "hyperrpc"
+        : "hyperindex");
+  const meta = DOC_TYPES[resolvedType];
 
   let consolidatedContent = `---
-id: ${isHyperIndex ? "hyperindex-complete" : isHyperSync ? "hypersync-complete" : "hyperrpc-complete"}
-title: ${
-    isHyperIndex
-      ? "HyperIndex Complete Documentation"
-      : isHyperSync
-      ? "HyperSync Complete Documentation"
-      : "HyperRPC Complete Documentation"
-  }
-sidebar_label: ${
-    isHyperIndex
-      ? "HyperIndex Complete Documentation"
-      : isHyperSync
-      ? "HyperSync Complete Documentation"
-      : "HyperRPC Complete Documentation"
-  }
-slug: /${isHyperIndex ? "hyperindex-complete" : isHyperSync ? "hypersync-complete" : "hyperrpc-complete"}
-description: ${
-  isHyperIndex
-    ? hyperIndexDescription
-    : isHyperSync
-      ? hyperSyncDescription
-      : hyperRPCDescription
-}
-keywords: ${
-  isHyperIndex
-    ? hyperIndexKeywords
-    : isHyperSync
-      ? hyperSyncKeywords
-      : hyperRPCKeywords
-}
+id: ${meta.id}
+title: ${meta.heading}
+sidebar_label: ${meta.heading}
+slug: /${meta.id}
+description: ${meta.description}
+keywords: ${meta.keywords}
 robots: noindex, nofollow
 ---
 
-# ${
-    isHyperIndex
-      ? "HyperIndex Complete Documentation"
-      : isHyperSync
-      ? "HyperSync Complete Documentation"
-      : "HyperRPC Complete Documentation"
-  }
+# ${meta.heading}
 
-This document contains all ${
-    isHyperIndex ? "HyperIndex" : isHyperSync ? "HyperSync" : "HyperRPC"
-  } documentation consolidated into a single file for LLM consumption.
+This document contains all ${meta.label} documentation consolidated into a single file for LLM consumption.
 
 ---
 
 `;
 
   // Insert product-specific "Key Facts" right after the intro section.
-  if (isHyperIndex) {
-    consolidatedContent += hyperIndexKeyFactsBlock;
-  } else if (isHyperSync) {
-    consolidatedContent += hyperSyncKeyFactsBlock;
-  } else if (isHyperRPC) {
-    consolidatedContent += hyperRPCKeyFactsBlock;
+  if (meta.keyFacts) {
+    consolidatedContent += meta.keyFacts;
   }
 
   // Process files in the defined order
@@ -675,12 +786,8 @@ ${fixedBody}
   // Do not append additional supported-network docs beyond sidebar order.
 
   // Append product-specific FAQs at the very bottom.
-  if (isHyperIndex) {
-    consolidatedContent += hyperIndexFaqBlock;
-  } else if (isHyperSync) {
-    consolidatedContent += hyperSyncFaqBlock;
-  } else if (isHyperRPC) {
-    consolidatedContent += hyperRPCFaqBlock;
+  if (meta.faq) {
+    consolidatedContent += meta.faq;
   }
 
   // Write the consolidated file
@@ -720,7 +827,7 @@ function consolidateHyperSyncDocs() {
   console.log(
     `Processing HyperSync documentation in logical order from sidebar...`
   );
-  return processFilesInOrder(hyperSyncDir, fileOrder, outputFile);
+  return processFilesInOrder(hyperSyncDir, fileOrder, outputFile, "hypersync");
 }
 
 // Function to consolidate all HyperRPC docs
@@ -755,7 +862,7 @@ function consolidateHyperRPCDocs() {
   console.log(
     `Processing HyperRPC documentation in logical order from sidebar...`
   );
-  return processFilesInOrder(hyperRPCDir, fileOrder, outputFile);
+  return processFilesInOrder(hyperRPCDir, fileOrder, outputFile, "hyperrpc");
 }
 
 // Main execution
@@ -777,11 +884,17 @@ if (require.main === module) {
     consolidateHyperRPCDocs();
   }
 
+  if (args.includes("--envio-cloud")) {
+    console.log("Consolidating Envio Cloud documentation...");
+    consolidateEnvioCloudDocs();
+  }
+
   if (args.includes("--all")) {
     console.log("Consolidating all documentation...");
     consolidateHyperIndexDocs();
     consolidateHyperSyncDocs();
     consolidateHyperRPCDocs();
+    consolidateEnvioCloudDocs();
   }
 }
 
@@ -789,4 +902,5 @@ module.exports = {
   consolidateHyperIndexDocs,
   consolidateHyperSyncDocs,
   consolidateHyperRPCDocs,
+  consolidateEnvioCloudDocs,
 };

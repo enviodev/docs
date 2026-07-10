@@ -1,0 +1,1315 @@
+---
+id: envio-cloud-complete
+title: Envio Cloud Complete Documentation
+sidebar_label: Envio Cloud Complete Documentation
+slug: /envio-cloud-complete
+description: Complete reference documentation for Envio Cloud - Envio's managed hosting platform for HyperIndex indexers. Covers deployment, hosted-service features, monitoring, the Envio Cloud CLI, billing, organisation setup, and self-hosting.
+keywords: [Envio Cloud, hosted indexer, managed indexing, HyperIndex hosting, indexer deployment, blockchain indexer hosting, Envio, indexer monitoring, self-hosting]
+robots: noindex, nofollow
+---
+
+# Envio Cloud Complete Documentation
+
+This document contains all Envio Cloud documentation consolidated into a single file for LLM consumption.
+
+---
+
+## Hosted Service
+
+**File:** `Hosted_Service/hosted-service.md`
+
+Envio Cloud (formerly Hosted Service) is a fully managed hosting solution for your blockchain indexers, providing all the infrastructure, scaling, and monitoring needed to run production-grade indexers without operational overhead.
+
+Envio Cloud offers multiple plans to suit different needs, from free development environments to enterprise-grade dedicated hosting. Each plan includes powerful features like static production endpoints, built-in alerts, and production-ready infrastructure.
+
+
+## Deployment Options
+
+Envio provides flexibility in how you deploy and host your indexers:
+
+- **Envio Cloud (Fully Managed)**: Let Envio handle everything. The following sections of this page outline Envio Cloud in more detail. This is the recommended deployment method for most users and removes the hosting overhead for your team. See below for the all the awesome features we provide and see the Pricing & Billing page for more information on which plan suits your indexing needs.
+
+- **Self-Hosting**: Run your indexer on your own infrastructure. This requires advanced setup and infrastructure knowledge not unique to Envio. See the following [repository](https://github.com/enviodev/local-docker-example) for a simple docker example to get you started. Please note this example does not cover all infrastructure related needs. It is recommended that at least a separate Postgres management tool is used for self-hosting in production. For further instructions see the Self Hosting Guide
+
+## Key Features
+
+- **Git-based Deployments**: Similar to Vercel, deploy your indexer by simply pushing to a designated deployment branch
+- **Zero Infrastructure Management**: We handle all the servers, databases, and scaling for you
+- **Static Production Endpoints**: Consistent URLs with zero-downtime deployments and instant version switching
+- **Built-in Monitoring**: Track logs, sync status, and deployment health in real-time
+- **Comprehensive Alerting**: Multi-channel notifications (Discord, Slack, Telegram, Email) for critical issues, performance warnings, and deployment updates
+- **Security Features**: IP/Domain whitelisting to control access to your indexer endpoints
+- **GraphQL API**: Access your indexed data through a performant, production-ready GraphQL endpoint
+- **Multichain Support**: Deploy indexers that track multiple networks from a single codebase
+
+
+## Deployment Model
+
+Envio Cloud provides a seamless GitHub-integrated deployment workflow:
+
+1. **GitHub Integration**: Install the Envio Deployments GitHub App to connect your repositories
+2. **Flexible Configuration**: Support for monorepos with configurable root directories, config file locations, and deployment branches
+3. **Automatic Deployments**: Push to your deployment branch to trigger builds and deployments
+4. **Version Management**: Maintain multiple deployment versions with one-click switching and rollback capabilities
+5. **Real-time Monitoring**: Track deployment progress, logs, and sync status through the dashboard
+
+**Multiple Indexers**: Deploy several indexers from a single repository using different configurations, branches, or directories.
+
+You can view and manage your hosted indexers in the [Envio Explorer](https://envio.dev/explorer).
+
+
+
+## Getting Started
+
+- **Features** - Learn about all available Envio Cloud features
+- **Deployment Guide** - Step-by-step instructions for deploying your indexer
+- **Envio Cloud CLI** - Manage and monitor your hosted indexers from the command line
+- **Pricing & Billing** - Compare plans and pricing options
+- **Self-Hosting** - Run your indexer on your own infrastructure
+
+:::info
+It is recommended that before deploying to Envio Cloud, the indexer is built and tested locally to ensure it runs smoothly.
+For a complete list of local CLI commands to develop your indexer, see the CLI Commands documentation.
+:::
+
+---
+
+## Envio Cloud Features
+
+**File:** `Hosted_Service/hosted-service-features.md`
+
+Envio Cloud includes several production-ready features to help you manage and secure your blockchain indexer deployments.
+
+:::info Plan Availability
+Most features listed on this page are available for **paid production plans only**. The free development plan has limited features and is designed for testing and development purposes. View our pricing plans to see what's included in each plan.
+:::
+
+
+## Deployment Tags
+
+Organize and identify your deployments with custom key/value tags. Tags help you categorize deployments by environment, project, team, or any custom attribute that fits your workflow.
+
+**How it works:**
+- Add up to **5 custom tags** per deployment via the deployment overview page
+- Each tag consists of a **key** (max 20 characters) and a **value** (max 20 characters, automatically lowercased)
+- Click "+ Add Tag" to create new tags, or click existing tags to edit or delete them
+
+**Special `name` Tag:**
+
+The `name` tag has special behavior—when set, its value is displayed directly on the deployment list, making it easy to identify deployments at a glance without navigating into each one.
+
+**Example Use Cases:**
+- `name: staging` or `name: production` — quickly identify deployment purpose
+- `env: staging` / `env: production` — categorize by environment
+- `team: frontend` — organize by team ownership
+- `version: v2` — track deployment versions
+
+**Benefits:**
+- Quickly identify deployments in the list view
+- Organize deployments across multiple projects or environments
+- Add context and metadata to your deployments
+- Filter and locate deployments more efficiently
+
+
+## Security
+
+*Availability: Paid plans only*
+
+Control who can query your hosted GraphQL endpoint. Envio Cloud offers two complementary methods to restrict access to your indexer: **IP Whitelisting** and **API Key Authentication**. Use either independently or combine both for layered protection.
+
+Security is configured **per indexer (project)**, not per deployment. This means your access rules carry over automatically when you promote a new version to production—no reconfiguration needed.
+
+### IP Whitelisting
+
+Restrict requests to specific IP addresses. Only clients connecting from an approved IP can query your indexer.
+
+**Benefits:**
+- Enhanced security for sensitive data
+- Prevent unauthorized access
+- Control API usage from specific sources
+- Ideal for production environments with strict access requirements, such as server-to-server backends with stable IP addresses
+
+### API Key Authentication
+
+Protect your endpoint with an API key—a secret token that clients include with each request to prove they're authorized. This is the recommended option for browser-based dApps and frontends, where users connect from unpredictable IP addresses that can't be allow-listed.
+
+**How it works:**
+- Each indexer (project) gets a **unique API key**, automatically generated and securely stored
+- Retrieve your API key from the deployment dashboard
+- Include it with every request using the `Authorization` header as a Bearer token:
+
+```bash
+curl https:///v1/graphql \
+  -H "Authorization: Bearer "
+```
+
+Requests without a valid key are rejected with a `401 Unauthorized` response.
+
+**Benefits:**
+- Works for browser-based apps and frontends with no fixed IP address
+- The same key persists across deployment promotions
+- Both your production endpoint and per-deployment URLs are gated by the same policy—no way to bypass authentication
+
+
+## Effect API Cache
+
+*Availability: Medium plans and up*
+
+Speed up your indexer deployments by caching Effect API results. When enabled, new deployments will start with preloaded effect data, eliminating the need to re-fetch external data and significantly reducing sync time.
+
+**How it works:**
+1. **Save a Cache**: From any deployment, click "Save Cache" to capture the current effect data
+2. **Configure Settings**: Navigate to Settings > Cache to manage your caches
+3. **Enable Caching**: Toggle caching on and select which cache to use for new deployments
+4. **Deploy**: New deployments will automatically restore from the selected cache
+
+**Key Features:**
+- **Quick Save**: Save cache directly from the deployment page with one click
+- **Cache Management**: View, select, and delete caches from the Cache settings page
+- **Automatic Restore**: New deployments preload effect data from the active cache
+- **Download Cache**: Download caches for local development, enabling faster iteration without re-fetching external data
+
+
+**Benefits:**
+- Dramatically faster deployment sync times
+- Reduced external API calls during indexing
+- Seamless deployment updates with preserved effect state
+
+:::tip
+Learn more about the Effect API and how caching works in our Effect API documentation.
+:::
+
+:::info Version Requirement
+This feature is only available for blockchain indexers deployed with version 2.26.0 or higher.
+:::
+
+## Built-in Alerts
+
+*Availability: Paid plans only*
+
+Stay informed about your indexer's health and performance with our integrated alerting system. Configure multiple notification channels and choose which alerts you want to receive.
+
+:::info Version Requirement
+This feature is only available for blockchain indexers deployed with version 2.24.0 or higher.
+:::
+
+### Notification Channels
+
+Configure one or multiple notification channels to receive alerts:
+
+- **Discord** 
+- **Slack**
+- **Telegram** 
+- **Email** 
+
+## Zero-Downtime Deployments
+
+Update your blockchain indexer without any service interruption using our seamless deployment system with static production endpoints.
+
+**How it works:**
+- Deploy new versions alongside your current deployment
+- Each indexer gets a **static production endpoint** that remains consistent
+- Use 'Promote to Production' to instantly route the static endpoint to any deployment
+- All requests to your static production endpoint are automatically routed to the promoted deployment
+- Maintain API availability throughout upgrades with no endpoint changes required
+
+**Key Features:**
+- **Static Production Endpoint**: Consistent URL that never changes, regardless of which deployment is active
+- **Instant Switching**: Promote any deployment to production with zero downtime
+- **Rollback Capabilities**: Quickly switch back to previous deployments if needed
+- **Seamless Updates**: Your applications continue working without any configuration changes
+
+
+## Deployment Location Choice
+
+:::info Coming Soon!
+Full support for cross-region deployments is in active development. If you require a deployment to be based in the USA please contact us through our support channel on discord.
+:::
+
+*Availability: Dedicated plans only*
+
+Choose your primary deployment region to optimize performance and meet compliance requirements.
+
+**Available Regions:**
+- **USA** 
+- **EU** 
+
+**Benefits:**
+- Reduced latency for your target users
+- Data residency compliance support
+- Custom infrastructure configurations
+- Dedicated infrastructure resources
+
+## Direct Database Access
+
+*Availability: Dedicated plans only*
+
+Access your indexed data directly through SQL queries, providing flexibility beyond the standard GraphQL endpoint.
+
+**Use Cases:**
+- Complex analytical queries
+- Custom data exports
+- Advanced reporting and dashboards
+- Integration with external analytics tools
+
+## Powerful Analytics Solution
+
+*Availability: Dedicated plans only (additional cost)*
+
+A comprehensive analytics platform that automatically pipes your indexed data from PostgreSQL into ClickHouse (approximately 2 minutes behind real-time) and provides access through a hosted Metabase instance.
+
+**Technical Architecture:**
+- **Data Pipeline**: Automatic replication from PostgreSQL to ClickHouse
+- **Near Real-time**: Data available in an analytics platform within ~2 minutes
+- **Frontend**: Hosted Metabase instance for visualization and analysis
+- **Performance**: ClickHouse optimized for analytical queries on large datasets
+
+**Capabilities:**
+- Interactive, customizable dashboards through Metabase
+- Variety of visualization options (charts, graphs, tables, maps)
+- Fast analytical queries on large datasets via ClickHouse
+- Ad-hoc SQL queries for data exploration
+- Automated alerts based on data thresholds
+- Team collaboration and report sharing
+- Export capabilities for further analysis
+
+:::tip
+For deployment instructions and limits, see our Deployment Guide. For pricing and feature availability by plan, see our Billing & Pricing page.
+:::
+
+---
+
+## Deploying Your Indexer
+
+**File:** `Hosted_Service/hosted-service-deployment.md`
+
+Envio Cloud provides a seamless git-based deployment workflow, similar to modern platforms like Vercel. This enables you to easily deploy, update, and manage your blockchain indexers through your normal development workflow.
+
+## Prerequisites & Important Information
+
+### Requirements
+
+- **Version Support**: We strongly advise using the latest [release version](https://github.com/enviodev/hyperindex/releases) for improved deployment performance. Envio Cloud requires a minimum version of at least `2.21.5`.
+Additionally, the following versions are not supported on Envio Cloud: 
+  - `2.29.x`
+- **PNPM Support**: the deployment must be compatible with pnpm version `10.32.0`
+- **Repository Folder**:
+  - **Package.json**: a `package.json` file must be present in the root folder and support the above two requirements, with the envio version explicitly configured in the dependencies.
+  - **Configuration file**: a HyperIndex configuration file must be present.
+
+  The root folder and configuration file name can be set in the [indexer settings](#configure-your-indexer).
+- **GitHub Repository**: The repository must be no larger than `100MB`. Caching between deployments is supported for paid plans using the Effects Api.
+- **Node Version**: It is strongly recommended that the indexer is compatible with node version [24 or higher](https://github.com/nodejs/node/tags).
+
+
+
+:::note Fair use and limitations
+Before deploying your indexer, please be aware of the below limits and policies
+:::
+
+### Deployment Limits
+
+
+
+- **3 development plan indexers** per organization
+- **Deployments per indexer**:  3 deployments per indexer
+- Deployments can be deleted in Envio Cloud to make space for more deployments
+
+### Development Plan Fair Usage Policy
+The free development plan includes automatic deletion policies to ensure fair resource allocation:
+
+#### Automatic Deletion Rules:
+- **Hard Limits**: 
+  - Deployments that exceed 20GB of storage will be automatically deleted
+  - Deployments older than 30 days will be automatically deleted
+- **Soft Limits** (whichever comes first): 
+  - 100,000 events processed
+  - 5GB storage used 
+  - no requests for 7 days 
+
+**When soft limits are breached, the two-stage deletion process begins**
+
+#### Two-Stage Deletion Process
+
+_Applies to development deployments that breach the soft limits_
+
+1. **Grace Period (7 days)** - Your indexer continues to function normally, you receive notification about the upcoming deletion
+2. **Read-Only Access (3 days)** - Indexer stops processing new data, existing data remains accessible for queries  
+3. **Full Deletion** - Indexer and all data are permanently deleted
+
+:::warning Timeline Subject to Change
+The grace period durations (7 + 3 days) are subject to change. Always monitor your deployment status and upgrade when approaching limits.
+:::
+
+:::tip
+For complete pricing details and feature comparison, see our Pricing & Billing page.
+:::
+
+## Step-by-Step Deployment Instructions
+
+### Initial Setup
+
+1. **Log in with GitHub**: Visit the [Envio App](https://envio.dev/app/login) and authenticate with your GitHub account
+2. **Select an Organization**: Choose your personal account or any organization you have access to
+3. **Install the Envio Deployments GitHub App**: Grant access to the repositories you want to deploy
+
+### Configure Your Indexer
+
+4. **Connect a Repo**: Select the repository containing your indexer code
+5. **Add the Indexer**: Click "Add Indexer" and configure your indexer
+6. **Configure Deployment Settings**:
+   - Specify the config file location
+   - Set the root directory (important for monorepos)
+   - Choose the deployment branch
+
+:::tip Multiple Indexers Per Repository
+You can deploy multiple indexers from a single repository by configuring them with different config file paths, root directories, and/or deployment branches.
+:::
+
+:::warning Monorepo Configuration
+If you're working in a monorepo, ensure all your imports are contained within your indexer directory to avoid deployment issues.
+:::
+
+### Deploy Your Code
+
+7. **Create a Deployment Branch**: Set up the branch you specified during configuration
+8. **Deploy via Git**: Push your code to the deployment branch
+9. **Monitor Deployment**: Track the progress of your deployment in the Envio dashboard
+
+### Manage Your Deployment
+
+10. **Version Management**: Once deployed, you can:
+    - View detailed logs
+    - Switch between different deployed versions
+    - Rollback to previous versions if needed
+
+
+## Updating Your Deployment
+
+After your initial deployment, you can update your indexer by pushing new commits to the deployment branch. Each push creates a new deployment version.
+
+### What happens on each push
+
+When you push to your deployment branch, Envio Cloud will:
+
+1. Build your updated indexer code
+2. Start a **new deployment** that re-indexes from the start block
+3. Keep your previous deployment running and serving queries until the new one is fully synced
+
+This means there is **no downtime** during updates — your existing deployment continues serving data while the new one catches up.
+
+### When re-indexing is required
+
+A full re-index from the start block happens on every new deployment. This includes changes to:
+
+- Event handler logic
+- Schema (`schema.graphql`)
+- Configuration (`config.yaml`)
+- ABIs or contract addresses
+
+:::tip
+Use the Effects API cache to speed up re-indexing by caching expensive external calls (like `eth_call` results) across deployments. This is available on paid plans.
+:::
+
+### Adding a new chain to your indexer
+
+To add a new chain, update your `config.yaml` with the new network configuration and push to the deployment branch. The new deployment will index all configured chains, including the new one.
+
+Your previous deployment continues serving data for the existing chains while the new deployment syncs.
+
+### Rolling back to a previous version
+
+If a new deployment introduces issues, you can switch back to a previous version from the Envio Cloud dashboard. Navigate to your indexer and select the version you want to activate.
+
+## Monitoring
+
+Once your indexer is deployed, you can monitor its health, performance, and progress using several built-in tools including the dashboard, logs, and alerts.
+
+For detailed information about monitoring your deployments, see our **Monitoring Guide**.
+
+## Continuous Deployment Best Practices and Configuration
+
+For a robust deployment workflow, we recommend:
+
+1. **Protected Branches**: Set up branch protection rules for your deployment branch
+2. **Pull Request Workflow**: Instead of pushing directly to the deployment branch, use pull requests from feature branches
+3. **CI Integration**: Add tests to your CI pipeline to validate indexer functionality before merging to the deployment branch
+
+
+### Continuous Configuration
+
+After deploying your indexer, you can manage its configuration through the `Settings` tab in the Envio Cloud dashboard:
+
+#### General Tab
+
+The General tab provides core configuration options:
+
+- **Config File Path**: Update the location of your indexer's configuration file
+- **Deployment Branch**: Change which Git branch triggers deployments
+- **Root Directory**: Modify the root directory for your indexer (useful for monorepos)
+- **Delete Indexer**: Permanently remove the indexer and all its deployments
+
+:::warning Deleting an Indexer
+Deleting an indexer is permanent and will remove all associated deployments and data. This action cannot be undone.
+:::
+
+#### Environment Variables Tab
+
+Configure environment-specific variables for your indexer:
+
+- Add custom environment variables with the `ENVIO_` prefix
+- Environment variables are securely stored and injected into your indexer at runtime
+- Useful for API keys, configuration values, and other deployment-specific settings
+
+:::tip Environment Variable Best Practices
+Use environment variables for sensitive data rather than hardcoding values in your repository. Remember to prefix all variables with `ENVIO_`.
+:::
+
+#### Plans & Billing Tab
+
+Manage your indexer's pricing plan and billing:
+
+- Select from available pricing plans
+- Upgrade your plan to suit your needs
+- View current plan features and limits
+
+For detailed pricing information, see our Pricing & Billing page.
+
+#### Alerts Tab
+
+Configure monitoring and notification preferences:
+
+- Set up notification channels (Discord, Slack, Telegram, Email)
+- Choose which alert types to receive (Production Endpoint Down, Indexer Stopped Processing, etc.)
+- Configure deployment notifications (Historical Sync Complete)
+
+For complete alert configuration details, see our Features page.
+
+:::info Alert Availability
+Alert configuration is available for indexers deployed with version 2.24.0 or higher on paid production plans.
+:::
+
+## Visual Reference Guide
+
+The following screenshots show each step of the deployment process:
+
+### Step 1: Select Organization
+!Select organisation
+
+### Step 2: Install GitHub App
+!Install GitHub App
+
+### Step 3: Connect a Repo
+!Connect a repo
+
+### Step 4: Add the Indexer
+!Add the indexer
+
+### Step 5: Configure Deployment Settings
+!Configure indexer
+
+### Step 6: Create a Deployment Branch
+!Create deployment branch
+
+### Step 7: Deploy via Git
+!Deploy via Git
+
+### Step 8: Indexer Deployed
+Once deployment completes, your indexer should be live and you should see the overview dashboard below. Full monitoring details are available in our **Monitoring Guide**.
+
+!Indexer overview
+
+### Step 9: Manage Indexer Configuration
+Manage indexer configurations and deployments using the sidebar navigation on the left.
+
+!Manage indexer configuration
+
+
+## Related Documentation
+
+- **Features** - Learn about all available Envio Cloud features
+- **Envio Cloud CLI** - Deploy and manage indexers from the command line
+- **Pricing & Billing** - Compare plans and see feature availability
+- **Overview** - Introduction to Envio Cloud
+- **Self-Hosting** - Run your indexer on your own infrastructure
+
+---
+
+## Monitoring Your Blockchain Indexer
+
+**File:** `Hosted_Service/hosted-service-monitoring.md`
+
+Once your blockchain indexer is deployed, Envio Cloud provides several tools to help you monitor its health, performance, and progress.
+
+## Dashboard Overview
+
+The main dashboard provides real-time visibility into your indexer's status:
+
+**Key Metrics Displayed:**
+- **Active Deployments**: Track how many deployments are currently running (e.g., 1/3 active)
+- **Deployment Status**: See whether your indexer is actively syncing, stopped, or has encountered errors
+- **Recent Commits**: View your deployment history with commit information and active status
+- **Usage Statistics**: Monitor your indexing hours, storage usage, and query rate limits
+- **Network Progress**: Real-time progress bars showing sync status for each blockchain network
+- **Events Processed**: Track the total number of events your indexer has processed
+- **Historical Sync Time**: See how long it took to complete the initial sync
+
+## Deployment Status Indicators
+
+Each deployment shows clear status information:
+- **Syncing**: Indexer is actively processing blocks and events
+- **Syncing Stopped**: Indexer has stopped processing (may indicate an error or a breach of plan limits)
+- **Historical Sync Complete**: Initial sync finished, indexer is processing new blocks in real-time
+
+## Error Detection and Troubleshooting
+
+When issues occur, the dashboard displays failure information to help you quickly diagnose problems.
+
+**Failure Information Includes:**
+- **Error Type**: Clear indication of the failure (e.g., "Indexing Has Stopped")
+- **Error Description**: Details about what went wrong (e.g., "Error during event handling")
+- **Next Steps**: Guidance on where to find more information (error logs)
+- **Support Access**: Direct link to Discord for assistance
+
+## Logging
+
+_Full logging supported is integrated and configured by Envio via Envio Cloud_
+
+Access detailed logs to troubleshoot issues and monitor indexer behavior:
+
+- **Real-time Logs**: View live logs as your indexer processes events
+- **Error Logs**: Quickly identify and diagnose errors in your event handlers
+- **Deployment Logs**: Track the deployment process and startup sequence
+- **Filter Log Levels**: Find specific log entries to debug issues
+
+Access logs through the "Logs" button on your deployment page.
+
+## Built-in Alerts
+
+Configure proactive monitoring through the Alerts tab to receive notifications before issues impact your users:
+
+- **Critical Alerts**: Get notified when your production endpoint goes down
+- **Warning Alerts**: Receive alerts when your indexer stops processing blocks
+- **Info Alerts**: Stay informed about indexer restarts and error logs
+- **Deployment Notifications**: Know when historical sync completes
+
+For detailed alert configuration, see the Deployment Guide and our Features page.
+
+### Notification Channels
+
+Envio Cloud supports the following notification channels:
+
+| Channel | Configuration |
+|---------|--------------|
+| **Discord** | Webhook URL, optional bot username |
+| **Slack** | Webhook URL, channel name, optional bot username |
+| **Telegram** | Bot API token, chat ID |
+| **Email** | One or more email addresses |
+| **Webhook** | Any HTTP endpoint URL (works with incident.io, PagerDuty, Opsgenie, etc.) |
+
+Channels are configured at the organisation level via **Settings > Notification Channels**, then subscribed to alerts on individual indexers.
+
+### Webhook Channel
+
+The webhook channel sends a structured JSON payload via HTTP POST to any URL you provide. This makes it compatible with any service that accepts webhook-based alerts.
+
+**Custom Headers (optional):** When creating a webhook channel, you can add custom HTTP headers that will be sent with every request. This is useful for services that require authentication via API keys or bearer tokens — for example, incident.io requires an `Authorization: Bearer ` header.
+
+:::warning
+The webhook channel is a generic HTTP endpoint. It is not guaranteed to work with all third-party services — please see the [integration guides below](#webhook-integrations) for supported setup instructions. If you need help integrating with a specific service, please reach out on the [Envio Discord](https://discord.envio.dev).
+:::
+
+**Webhook Payload Schema:**
+
+```json
+{
+  "title": "IndexerStoppedProcessing — my-indexer (abc123)",
+  "status": "firing",
+  "severity": "warning",
+  "description": "Indexer my-indexer has stopped processing blocks for 10+ minutes (commit: abc123)",
+  "source_url": "https://envio.dev/app/my-org/my-indexer/abc123",
+  "alert_id": "my-org/proj456/my-indexer/IndexerStoppedProcessing",
+  "metadata": {
+    "organisationId": "my-org",
+    "indexerName": "my-indexer",
+    "commit": "abc123",
+    "labels": { "envio_alert_name": "IndexerStoppedProcessing", "severity": "warning" },
+    "annotations": {
+      "summary": "Indexer my-indexer has stopped processing blocks for 10+ minutes",
+      "description": "The indexer has not processed any blocks in the last 10 minutes."
+    },
+    "startsAt": "2025-05-15T12:00:00Z",
+    "type": "alert"
+  }
+}
+```
+
+:::note
+The `endsAt` field is only included when the alert has resolved. Firing alerts omit this field.
+:::
+
+| Field | Description |
+|-------|------------|
+| `title` | Alert name (e.g. `IndexerStoppedProcessing`, `ProdEndpointDown`) |
+| `status` | `"firing"` or `"resolved"` |
+| `severity` | `"critical"`, `"warning"`, or `"info"` |
+| `description` | Human-readable summary of the alert |
+| `source_url` | Link to the deployment in the Envio dashboard |
+| `alert_id` | Unique key for deduplication: `orgId/projectId/indexerName/alertName` |
+| `metadata` | Additional context including labels, timestamps, and deployment info |
+
+### Webhook Integrations
+
+### incident.io
+
+[incident.io](https://incident.io) can receive Envio alerts via their [Custom HTTP Sources](https://docs.incident.io/alerts/custom-http-sources) feature.
+
+**Step 1: Create a Custom HTTP Source in incident.io**
+
+In the incident.io dashboard, Follow the incident.io [custom HTTP sources](https://docs.incident.io/alerts/custom-http-sources) guide to setup the webhook integration.
+
+**Step 2: Configure the Transform Expression**
+
+Paste this ES5 JavaScript transform expression to map the Envio payload into incident.io's format:
+
+```javascript
+var severity = body.severity || "info";
+var severityMap = { critical: 1, warning: 2, info: 3 };
+
+return {
+  title: body.title,
+  status: body.status,
+  description: body.description || "",
+  source_url: body.source_url || "",
+  metadata: {
+    severity: severity,
+    severity_rank: severityMap[severity] || 3,
+    organisation_id: body.metadata.organisationId,
+    indexer_name: body.metadata.indexerName,
+    commit: body.metadata.commit,
+    source: "envio",
+    type: body.metadata.type,
+    starts_at: body.metadata.startsAt,
+    ends_at: body.metadata.endsAt || "",
+    labels: JSON.stringify(body.metadata.labels || {}),
+    annotations: JSON.stringify(body.metadata.annotations || {})
+  }
+};
+```
+
+**Step 3: Set the Deduplication Key Path**
+
+Set the dedup key path to `alert_id`. This ensures alerts are grouped per indexer and auto-resolve when the status changes to `"resolved"`.
+
+**Step 4: Add the Webhook Channel in Envio**
+
+1. Go to **Settings > Notification Channels** in the Envio Cloud dashboard
+2. Click **Add Channel** and select **Webhook**
+3. Paste the webhook URL from incident.io
+4. Expand **Custom Headers** and add the authorization header:
+   - **Header name**: `Authorization`
+   - **Value**: Copy the full `Bearer ` value from the incident.io source config
+5. Subscribe your indexer's alerts to this channel
+
+:::tip Proactive Monitoring
+Set up multiple notification channels (**Paid Plans Only**) to ensure you never miss critical alerts about your indexer's health.
+:::
+
+## Visual Reference
+
+### Dashboard Overview
+!Dashboard overview
+
+### Network Progress by Chain
+!Network progress bars
+
+### Example Failure Notification
+When indexing stops, the dashboard clearly surfaces the issue so you can investigate and resolve it quickly.
+
+!Indexing has stopped
+
+## Related Documentation
+
+- **Deploying Your Indexer** - Complete deployment guide
+- **Envio Cloud CLI** - Monitor deployments from the command line with `envio-cloud deployment metrics` and `envio-cloud deployment status`
+- **Features** - Learn about all available Envio Cloud features
+- **Pricing & Billing** - Compare plans and see feature availability
+
+---
+
+## Envio Cloud CLI
+
+**File:** `Hosted_Service/envio-cloud-cli.md`
+
+:::warning Alpha Release
+The `envio-cloud` CLI is currently in **alpha**. The tool is under active development and will be iterated on before a stable version 1 release once the final form of the tool's interaction is finalized.
+
+For feature requests, please reach out to us on [Telegram](https://t.me/envaborations) or [Discord](https://discord.gg/envio).
+:::
+
+The `envio-cloud` CLI is a command-line tool for interacting with Envio Cloud. It enables you to deploy, manage, and monitor your blockchain indexers directly from the terminal — making it particularly useful for CI/CD pipelines, scripting, and agentic workflows.
+
+## Installation
+
+```bash
+npm install -g envio-cloud
+```
+
+Or run directly without installation:
+
+```bash
+npx envio-cloud 
+```
+
+## Shell Completion
+
+The `envio-cloud` CLI ships with shell completion scripts for `bash`, `zsh`, `fish`, and `powershell`. Completion includes dynamic suggestions for **indexer names** and **commit hashes**, so you can tab-complete them directly from the terminal.
+
+Run the one-liner for your shell to install completions:
+
+| Shell | One-liner |
+|-------|-----------|
+| `zsh` | `echo 'source > ~/.zshrc` |
+| `bash` | `envio-cloud completion bash > ~/.local/share/bash-completion/completions/envio-cloud` |
+| `fish` | `envio-cloud completion fish > ~/.config/fish/completions/envio-cloud.fish` |
+| `powershell` | `envio-cloud completion powershell >> $PROFILE` |
+
+Restart your shell (or `source` your profile) for the completions to take effect. Run `envio-cloud completion --help` for further options.
+
+## Authentication
+
+### Browser Login
+
+```bash
+envio-cloud login
+```
+
+Opens browser-based authentication via envio.dev with a 30-day session duration. Tokens are automatically refreshed when expired.
+
+### Token-Based Login (CI/CD)
+
+```bash
+envio-cloud login --token ghp_YOUR_TOKEN
+```
+
+Or using an environment variable:
+
+```bash
+export ENVIO_GITHUB_TOKEN=ghp_YOUR_TOKEN
+envio-cloud login
+```
+
+Required GitHub token scopes: `read:org`, `read:user`, `user:email`.
+
+### Session Management
+
+```bash
+envio-cloud token    # Check current session
+envio-cloud logout   # Remove credentials
+```
+
+## Context Management
+
+Like `kubectl` namespaces, `envio-cloud` lets you store default values for organisation and indexer so you don't have to pass them on every command. Flags (`--org`, `--indexer`) always override stored context.
+
+```bash
+# Set defaults
+envio-cloud config set-org myorg
+envio-cloud config set-indexer myindexer
+
+# View current context
+envio-cloud config get-context
+
+# Commands now use defaults automatically
+envio-cloud deployment status abc1234          # org and indexer from context
+envio-cloud indexer settings get               # both from context
+
+# Flags override context
+envio-cloud deployment status abc1234 --org other-org
+
+# Clear stored context
+envio-cloud config clear
+```
+
+Context is stored at `~/.envio-cloud/context.json`. Resolution priority:
+
+1. Explicit positional arguments
+2. `--org` / `--indexer` flags
+3. Stored context
+4. GitHub login (organisation only)
+
+| Command | Description |
+|---------|-------------|
+| `config set-org ` | Set default organisation |
+| `config set-indexer ` | Set default indexer |
+| `config get-context` | Show current defaults and where they come from |
+| `config clear` | Remove all stored defaults |
+
+## Commands
+
+### Indexer Commands
+
+#### List Indexers
+
+Lists indexers across every organisation you are a member of. Use `--org` to
+scope to a single organisation. Requires authentication.
+
+```bash
+envio-cloud indexer list
+envio-cloud indexer list --org myorg
+envio-cloud indexer list --limit 10
+envio-cloud indexer list -o json
+```
+
+| Flag | Description |
+|------|-------------|
+| `--org` | Scope to a single organisation you belong to |
+| `--limit` | Limit number of results |
+| `-o, --output` | Output format (`json`) |
+
+#### Get Indexer Details
+
+```bash
+envio-cloud indexer get  [organisation]
+envio-cloud indexer get hyperindex mjyoung114 -o json
+envio-cloud indexer get hyperindex --org mjyoung114
+```
+
+Organisation can be omitted if set via context. Requires authentication — you
+can only view indexers in organisations you are a member of.
+
+#### Add an Indexer
+
+```bash
+envio-cloud indexer add --name my-indexer --repo my-repo
+envio-cloud indexer add --name my-indexer --repo my-repo --branch main --tier development
+envio-cloud indexer add --name my-indexer --repo my-repo --dry-run
+```
+
+| Flag | Description | Default |
+|------|-------------|---------|
+| `-n, --name` | Indexer name (required) | — |
+| `-r, --repo` | Repository name (required) | — |
+| `-b, --branch` | Deployment branch | `envio` |
+| `-d, --root-dir` | Root directory | `./` |
+| `-c, --config-file` | Config file path | `config.yaml` |
+| `-t, --tier` | Pricing tier | `development` |
+| `-a, --access-type` | Access type | `public` |
+| `-e, --env-file` | Environment file | — |
+| `--auto-deploy` | Enable auto-deploy | `true` |
+| `--dry-run` | Preview without creating | — |
+| `-y, --yes` | Skip confirmation prompts | — |
+
+#### Delete an Indexer
+
+Permanently delete an indexer and **all** of its deployments. Requires typing the indexer name to confirm.
+
+```bash
+envio-cloud indexer delete myindexer myorg
+envio-cloud indexer delete myindexer --org myorg
+envio-cloud indexer delete myindexer myorg --yes   # skip confirmation for CI/CD
+```
+
+:::danger
+This action cannot be undone. All deployments, data, and configuration for the indexer will be permanently removed.
+:::
+
+#### View and Modify Settings
+
+```bash
+# View current settings
+envio-cloud indexer settings get myindexer myorg
+
+# Modify settings (only specified flags are changed)
+envio-cloud indexer settings set myindexer myorg --branch main
+envio-cloud indexer settings set myindexer myorg --auto-deploy=false
+envio-cloud indexer settings set myindexer myorg --config-file config.yaml --branch develop
+```
+
+| Flag (set) | Description |
+|------------|-------------|
+| `--branch` | Git branch for deployments |
+| `--config-file` | Path to config file |
+| `--root-dir` | Root directory within the repository |
+| `--auto-deploy` | Enable or disable auto-deploy on push |
+| `--description` | Indexer description |
+| `--access-type` | `public` or `private` |
+
+#### Manage Environment Variables
+
+Environment variables can be managed from the CLI. All keys must be prefixed with `ENVIO_`. Changes take effect on the next deployment.
+
+```bash
+# List variables (values masked by default)
+envio-cloud indexer env list myindexer myorg
+envio-cloud indexer env list myindexer myorg --show-values
+
+# Set one or more variables
+envio-cloud indexer env set myindexer myorg ENVIO_API_KEY=abc123 ENVIO_DEBUG=true
+
+# Remove a variable
+envio-cloud indexer env delete myindexer myorg ENVIO_DEBUG
+
+# Bulk import from a .env file
+envio-cloud indexer env import myindexer myorg --file .env
+```
+
+The `.env` file format is one `KEY=VALUE` per line. Lines starting with `#` are ignored.
+
+#### Configure IP Whitelisting
+
+Restrict access to your indexer's GraphQL endpoint by IP address. Supports IPv4 addresses and CIDR notation.
+
+```bash
+# View current IP whitelist configuration
+envio-cloud indexer security get myindexer myorg
+
+# Add IPs to the whitelist
+envio-cloud indexer security add-ip myindexer myorg 203.0.113.50
+envio-cloud indexer security add-ip myindexer myorg 10.0.0.0/8
+
+# Enable IP whitelisting (make sure to add IPs first)
+envio-cloud indexer security enable myindexer myorg
+
+# Disable IP whitelisting
+envio-cloud indexer security disable myindexer myorg
+
+# Restrict whitelisting to production deployments only
+envio-cloud indexer security set-prod-only myindexer myorg true
+
+# Remove an IP
+envio-cloud indexer security remove-ip myindexer myorg 203.0.113.50
+```
+
+:::tip
+Add your IP addresses **before** enabling whitelisting — otherwise you may lock yourself out. The CLI will warn you if you try to enable whitelisting with no IPs configured.
+:::
+
+### Deployment Commands
+
+All deployment commands accept arguments as `  [organisation]`. Organisation and indexer can be omitted if set via `envio-cloud config`.
+
+#### Deployment Metrics
+
+```bash
+envio-cloud deployment metrics   [organisation]
+envio-cloud deployment metrics hyperindex b3ead3a mjyoung114 --watch
+envio-cloud deployment metrics hyperindex b3ead3a mjyoung114 -o json
+```
+
+No authentication required.
+
+| Flag | Description |
+|------|-------------|
+| `--watch` | Continuously poll for updates |
+| `-o, --output` | Output format (`json`) |
+
+#### Deployment Status
+
+```bash
+envio-cloud deployment status   [organisation]
+envio-cloud deployment status hyperindex b3ead3a mjyoung114 --watch-till-synced
+```
+
+| Flag | Description |
+|------|-------------|
+| `--watch-till-synced` | Wait until deployment is fully synced |
+
+#### Deployment Info
+
+```bash
+envio-cloud deployment info   [organisation]
+```
+
+#### Get Query Endpoint
+
+Returns the GraphQL query endpoint URL for a deployment. The endpoint is
+computed from deployment parameters and the cluster is resolved from the
+deployment tier via the API. Output is a bare URL, so it composes cleanly with
+shell scripting.
+
+```bash
+envio-cloud deployment endpoint   [organisation]
+envio-cloud deployment endpoint hyperindex b3ead3a mjyoung114
+envio-cloud deployment endpoint hyperindex b3ead3a mjyoung114 -o json
+```
+
+Use the URL directly in a `curl` query:
+
+```bash
+curl "$(envio-cloud deployment endpoint hyperindex b3ead3a mjyoung114)" \
+  -H "Content-Type: application/json" \
+  -d '{"query": "{ _meta { chainMetadata { chainId } } }"}'
+```
+
+| Flag | Description |
+|------|-------------|
+| `--cluster` | Override cluster (`hyper`, `hypertierchicago`, `ip-projects`, `prodaws`, `staging`) |
+| `-o, --output` | Output format (`json`) |
+
+The `ep` alias is also available: `envio-cloud deployment ep  `.
+
+#### Promote a Deployment
+
+Promote a deployment to the production endpoint. Requires confirmation (`y/N`).
+
+```bash
+envio-cloud deployment promote   [organisation]
+envio-cloud deployment promote myindexer abc1234 myorg --yes
+```
+
+#### Delete a Deployment
+
+Permanently delete a deployment. Requires typing the indexer name to confirm.
+
+```bash
+envio-cloud deployment delete   [organisation]
+envio-cloud deployment delete myindexer abc1234 myorg --yes
+```
+
+:::danger
+This action cannot be undone. The deployment and its data will be permanently removed.
+:::
+
+#### Restart a Deployment
+
+Restart a running deployment. There is a 10-minute cooldown between restarts.
+
+```bash
+envio-cloud deployment restart   [organisation]
+envio-cloud deployment restart myindexer abc1234 myorg --yes
+```
+
+#### Deployment Logs
+
+Show build or runtime logs for a deployment.
+
+```bash
+envio-cloud deployment logs   [organisation]
+envio-cloud deployment logs myindexer abc1234 myorg --build
+envio-cloud deployment logs myindexer abc1234 myorg --level error,warn
+envio-cloud deployment logs myindexer abc1234 myorg --follow
+```
+
+| Flag | Description |
+|------|-------------|
+| `--build` | Show build logs instead of runtime logs |
+| `--level` | Filter by log level (e.g., `error,warn`) |
+| `--limit` | Max number of log lines (default: 100) |
+| `--follow` | Poll for new logs every 10 seconds |
+
+### Repository Commands
+
+#### List Repositories
+
+```bash
+envio-cloud repos
+envio-cloud repos -o json
+```
+
+Requires authentication.
+
+## Confirmation Prompts
+
+Dangerous commands require confirmation before executing:
+
+| Command | Confirmation type |
+|---------|-------------------|
+| `indexer delete` | Type the indexer name |
+| `deployment delete` | Type the indexer name |
+| `deployment promote` | y/N prompt |
+| `deployment restart` | y/N prompt |
+
+All prompts can be skipped with the `--yes` / `-y` flag for CI/CD usage.
+
+## Global Flags
+
+| Flag | Description |
+|------|-------------|
+| `--org` | Override default organisation |
+| `--indexer` | Override default indexer |
+| `-q, --quiet` | Suppress informational messages |
+| `-o, --output` | Output format (`json`) |
+| `--config` | Specify config file path |
+| `-h, --help` | Display command help |
+| `-v, --version` | Show CLI version |
+
+## JSON Output
+
+All commands support JSON output via the `-o json` flag, making the CLI easy to integrate into scripts and automation pipelines.
+
+**Success response:**
+
+```json
+{"ok": true, "data": [ ... ]}
+```
+
+**Error response:**
+
+```json
+{"ok": false, "error": "error message"}
+```
+
+**Example with jq:**
+
+```bash
+# Get event count for a deployment
+envio-cloud deployment metrics hyperindex b3ead3a mjyoung114 -o json | jq '.data[].num_events_processed'
+
+# List all indexer IDs in an org
+envio-cloud indexer list --org enviodev -o json | jq -r '.data[].indexer_id'
+```
+
+## Exit Codes
+
+| Code | Meaning |
+|------|---------|
+| `0` | Success |
+| `1` | User error (invalid arguments, authentication required) |
+| `2` | API or server error |
+
+## Related Documentation
+
+- **Envio Cloud Overview** - Introduction to Envio Cloud
+- **Deploying Your Indexer** - Step-by-step deployment guide via the dashboard
+- **Production Features** - Tags, IP whitelisting, caching, and alerts
+- **Monitoring** - Dashboard monitoring and alerts
+- **Envio CLI** - Local development CLI reference
+- **[npm package](https://www.npmjs.com/package/envio-cloud)** - Latest version and changelog
+
+---
+
+## Hosted Service Billing
+
+**File:** `Hosted_Service/hosted-service-billing.mdx`
+
+
+# Pricing & Billing
+
+Envio offers flexible pricing options to meet the needs of projects at different stages of development.
+
+## Pricing Plans
+
+Envio Cloud offers flexible pricing plans to match your project's needs, from free development environments to enterprise-grade dedicated hosting.
+
+:::info Current Pricing
+For the most up-to-date pricing information, detailed plan comparisons, and feature breakdowns, please visit our official [Envio Pricing Page](https://envio.dev/pricing).
+:::
+
+**Available Plans:**
+
+| Plan                  | Price  | Intended for                                                                                                                                                  |
+| --------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Development**       | Free   | Testing, prototyping, and development. 30-day max lifespan, subject to fair usage limits |
+| **Production Small**  | Paid   | Getting started with production deployments                                                                                                                   |
+| **Production Medium** | Paid   | Scaling your indexing operations with higher limits                                                                                                           |
+| **Production Large**  | Paid   | High-volume production workloads                                                                                                                              |
+| **Dedicated**         | Custom | Ultimate performance, isolated infrastructure, and custom SLAs                                                                                                |
+
+**What's included across paid plans:**
+
+- Higher event processing and storage limits (increases with each tier)
+- Higher query rate limits on your GraphQL endpoint
+- Effect API cache support for faster re-indexing (Medium plans and up)
+- Monitoring, alerts, and deployment management
+- Priority support (Dedicated plan)
+
+:::warning Development Plan Disclaimer
+The free development plan is intended for testing and development purposes only and should not be used as a production environment. Development plan deployments have a maximum life span of 30 days and Envio makes no guarantees regarding uptime, availability, or data persistence for deployments on the development plan. If you choose to use a development plan deployment in a production capacity, you do so entirely at your own risk. Envio assumes no liability or accountability for any downtime, data loss, or service interruptions that may occur on development plan deployments.
+:::
+
+:::tip
+For detailed feature explanations, see our Features page. For deployment instructions, see our Deployment Guide. Not sure which option is right for your project? [Book a call with our team](https://cal.com/jonjon-clark/15min) to discuss your specific needs.
+:::
+
+---
+
+## Self-Hosting Your Blockchain Indexer
+
+**File:** `Hosted_Service/self-hosting.md`
+
+:::info
+This documentation page is actively being improved. Check back regularly for updates and additional information.
+:::
+
+While Envio offers a fully managed cloud hosting solution via Envio Cloud, you may prefer to run your blockchain indexer on your own infrastructure. This guide covers everything you need to know about self-hosting Envio indexers.
+
+:::note
+We deeply appreciate users who choose Envio Cloud, as it directly supports our team and helps us continue developing and improving Envio's technology. If your use case allows for it, please consider the hosted option.
+:::
+
+## Why Self-Host?
+
+Self-hosting gives you:
+
+- **Complete Control**: Manage your own infrastructure and configurations
+- **Data Sovereignty**: Keep all indexed data within your own systems
+
+:::warning Disclaimer
+Self Hosting can be done with a variety of different infrastructure, tools and methods. The outline below is merely a starting point and does not offer a full production level solution. In some cases advanced knowledge of infrastructure, database management and networking may be required for a full production level solution.
+:::
+## Prerequisites
+
+Before self-hosting, ensure you have:
+
+- Docker installed on your host machine
+- Sufficient storage for blockchain data and the indexer database
+- Adequate CPU and memory resources (requirements vary based on chains and indexing complexity)
+- Required HyperSync and/or RPC endpoints
+- Envio API token for HyperSync access (`ENVIO_API_TOKEN`) — required for continued access. See API Tokens.
+
+## Getting Started
+
+In general, if you want to self-host, you will likely use a Docker setup.
+For a working example, check out the [local-docker-example repository](https://github.com/enviodev/local-docker-example).
+It contains a minimal `Dockerfile` and `docker-compose.yaml` that configure the Envio indexer together with PostgreSQL and Hasura.
+
+## Configuration Explained
+
+The compose file in that repository sets up three main services:
+
+1. **PostgreSQL Database** (`envio-postgres`): Stores your indexed data
+2. **Hasura GraphQL Engine** (`graphql-engine`): Provides the GraphQL API for querying your data
+3. **Envio Indexer** (`envio-indexer`): The core indexing service that processes blockchain data
+
+### Environment Variables
+
+The configuration uses environment variables with sensible defaults. For production, you should customize:
+
+- Envio API token (`ENVIO_API_TOKEN`)
+- Database credentials (`ENVIO_PG_PASSWORD`, `ENVIO_PG_USER`, etc.)
+- Hasura admin secret (`HASURA_GRAPHQL_ADMIN_SECRET`)
+- Resource limits based on your workload requirements
+
+## Getting Help
+
+If you encounter issues with self-hosting:
+
+- Check the [Envio GitHub repository](https://github.com/enviodev/hyperindex) for known issues
+- Join the [Envio Discord community](https://discord.gg/envio) for community support
+
+:::tip
+For most production use cases, we recommend using Envio Cloud to benefit from automatic scaling, monitoring, and maintenance.
+:::
+
+---
+
+## Organisation Setup
+
+**File:** `Hosted_Service/organisation-setup.md`
+
+Use this guide to set up an organisation in Envio Cloud and grant access to your team.
+
+
+## Access Control
+
+Being a member of the GitHub organisation **does not** automatically grant access to the organisation in the Envio Cloud UI. Each member must be explicitly added by the organisation admin. If someone attempts to visit the organisation URL (e.g., `https://envio.dev/app/`) without being added, they'll see a "You are not a member of this team" message.
+
+
+
+!Not a Member Error
+
+
+
+---
+
