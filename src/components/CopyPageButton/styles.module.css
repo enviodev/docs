@@ -1,0 +1,136 @@
+/* Floats top-right of the doc content, aligned with the page title (h1) so
+   the button sits inline with the heading rather than above it. */
+.wrapper {
+  position: relative;
+  float: right;
+  margin: 0.35rem 0 0.5rem 1.25rem;
+  z-index: 5;
+}
+
+/* Split button: "Copy page" + caret */
+.split {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--ifm-background-color);
+}
+
+.mainBtn,
+.caretBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: transparent;
+  border: none;
+  color: var(--ifm-font-color-base);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  font-family: inherit;
+}
+
+.mainBtn {
+  padding: 7px 12px;
+}
+
+.caretBtn {
+  padding: 7px 8px;
+  border-left: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.mainBtn:hover,
+.caretBtn:hover {
+  background: var(--ifm-color-emphasis-100);
+}
+
+/* Dropdown menu */
+.menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 300px;
+  padding: 6px;
+  background: var(--ifm-background-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 12px;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.14);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+[data-theme='dark'] .menu {
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.5);
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 11px;
+  text-align: left;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--ifm-font-color-base);
+  font-family: inherit;
+  width: 100%;
+  transition: background 0.12s ease;
+  text-decoration: none;
+}
+
+.itemIcon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  margin-top: 2px;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.itemText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.item .itemLabel,
+.item .itemDesc {
+  text-decoration: none;
+}
+
+.item:hover {
+  background: var(--ifm-color-emphasis-100);
+  text-decoration: none;
+  color: var(--ifm-font-color-base);
+}
+
+.itemLabel {
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.itemDesc {
+  font-size: 0.75rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.ext {
+  font-size: 0.7rem;
+  opacity: 0.6;
+}
+
+/* On narrow screens, don't float — sit above the content full-width-ish */
+@media (max-width: 996px) {
+  .wrapper {
+    float: none;
+    margin: 0 0 1rem 0;
+  }
+}

@@ -3,11 +3,51 @@ import clsx from 'clsx';
 import {prefersReducedMotion, ThemeClassNames} from '@docusaurus/theme-common';
 import {useDocsSidebar} from '@docusaurus/theme-common/internal';
 import {useLocation} from '@docusaurus/router';
+import Link from '@docusaurus/Link';
 import DocSidebar from '@theme/DocSidebar';
+import SearchBar from '@theme/SearchBar';
 import ExpandButton from '@theme/DocRoot/Layout/Sidebar/ExpandButton';
 import type {Props} from '@theme/DocRoot/Layout/Sidebar';
 
 import styles from './styles.module.css';
+
+// Quick links surfaced at the top of the sidebar (Goldsky-style), moved out
+// of the top navbar to keep the product tabs clean. External links get an
+// arrow affordance.
+const SIDEBAR_LINKS = [
+  {label: 'Changelog', href: 'https://envio.dev/changelog', external: true},
+  {label: 'Showcase', to: '/showcase'},
+  {label: 'Blog', to: '/blog'},
+  {label: "Shipper's Logs", to: '/videos'},
+];
+
+function SidebarHeader() {
+  return (
+    <div className={styles.sidebarHeader}>
+      <div className={styles.sidebarSearch}>
+        <SearchBar />
+      </div>
+      <nav className={styles.sidebarLinks} aria-label="Quick links">
+        {SIDEBAR_LINKS.map((item) =>
+          item.external ? (
+            <a
+              key={item.label}
+              href={item.href}
+              className={styles.sidebarLink}
+              target="_blank"
+              rel="noopener noreferrer">
+              {item.label}
+            </a>
+          ) : (
+            <Link key={item.label} to={item.to!} className={styles.sidebarLink}>
+              {item.label}
+            </Link>
+          ),
+        )}
+      </nav>
+    </div>
+  );
+}
 
 // Reset sidebar state when sidebar changes
 // Use React key to unmount/remount the children
@@ -69,6 +109,7 @@ export default function DocRootLayoutSidebar({
             styles.sidebarViewport,
             hiddenSidebar && styles.sidebarViewportHidden,
           )}>
+          {!hiddenSidebar && <SidebarHeader />}
           <DocSidebar
             sidebar={sidebar}
             path={pathname}

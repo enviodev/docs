@@ -1,13 +1,15 @@
 var { supportedNetworks } = require("./supported-networks.json");
 
+// Plain collapsible category (no `link`) so its caret renders identically to
+// every other category. The overview page is preserved as the first item so
+// it's still reachable from the sidebar.
 const networksSection = {
   type: "category",
   label: "Supported Networks",
-  link: {
-    type: "doc",
-    id: "supported-networks/index",
-  },
-  items: supportedNetworks,
+  items: [
+    { type: "doc", id: "supported-networks/index", label: "Overview" },
+    ...supportedNetworks,
+  ],
 };
 
 module.exports = {
@@ -49,21 +51,6 @@ module.exports = {
         "Examples/example-sablier",
         "Examples/example-velodrome-aerodrome",
         // "Examples/example-cross-chain-messaging",
-      ],
-    },
-    {
-      type: "category",
-      label: "Envio Cloud",
-      collapsed: false,
-      items: [
-        "Hosted_Service/hosted-service",
-        "Hosted_Service/hosted-service-features",
-        "Hosted_Service/hosted-service-deployment",
-        "Hosted_Service/hosted-service-monitoring",
-        "Hosted_Service/envio-cloud-cli",
-        "Hosted_Service/hosted-service-billing",
-        "Hosted_Service/self-hosting",
-        "Hosted_Service/organisation-setup",
       ],
     },
     {
@@ -132,6 +119,18 @@ module.exports = {
     networksSection,
     "solana/solana",
     "fuel/fuel",
+    // Divider to split off the bottom section (LLM docs + legal), matching the
+    // divider under the top quick-links section.
+    {
+      type: "html",
+      value: "<hr />",
+      className: "menu-section-divider",
+    },
+    {
+      type: "link",
+      label: "Support",
+      href: "https://discord.gg/envio",
+    },
     {
       type: "link",
       label: "LLM Documentation",
@@ -163,5 +162,30 @@ module.exports = {
     //     "dashboard-alerts",
     //   ],
     // },
+  ],
+
+  // Envio Cloud is its own section: the hosted-service pages live here in a
+  // dedicated sidebar (not inside the HyperIndex tree). Docusaurus shows this
+  // sidebar automatically on any of these pages. URLs are unchanged — this is
+  // purely a navigation restructure, no content or slug changes.
+  envioCloudSidebar: [
+    "Hosted_Service/hosted-service",
+    "Hosted_Service/hosted-service-features",
+    "Hosted_Service/hosted-service-deployment",
+    "Hosted_Service/hosted-service-monitoring",
+    "Hosted_Service/envio-cloud-cli",
+    "Hosted_Service/hosted-service-billing",
+    "Hosted_Service/self-hosting",
+    "Hosted_Service/organisation-setup",
+    {
+      type: "html",
+      value: "<hr />",
+      className: "menu-section-divider",
+    },
+    {
+      type: "link",
+      label: "Support",
+      href: "https://discord.gg/envio",
+    },
   ],
 };

@@ -471,7 +471,15 @@ function parseSidebarOrder(sidebarPath) {
       return module.exports;
     })`)(mockRequire);
 
-    return extractFileOrderFromSidebar(sidebarConfig.someSidebar);
+    // Envio Cloud (hosted-service) pages live in a separate `envioCloudSidebar`
+    // export. Append them so they are still included when the consolidated LLM
+    // docs are regenerated. No-op for sidebars without that key.
+    return [
+      ...extractFileOrderFromSidebar(sidebarConfig.someSidebar),
+      ...(sidebarConfig.envioCloudSidebar
+        ? extractFileOrderFromSidebar(sidebarConfig.envioCloudSidebar)
+        : []),
+    ];
   } catch (error) {
     console.error(`Error parsing sidebar ${sidebarPath}:`, error.message);
     return [];

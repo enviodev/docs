@@ -306,6 +306,10 @@ const config = {
       href: "/custom.css",
       type: "text/css",
     },
+    {
+      href: "https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap",
+      type: "text/css",
+    },
   ],
 
   themeConfig:
@@ -335,49 +339,53 @@ const config = {
         },
         items: [
           {
-            to: "docs/HyperIndex/overview",
-            label: "HyperIndex Docs",
+            type: "dropdown",
+            label: "HyperIndex",
             position: "left",
-          },
-          {
-            type: "custom-hyperIndexVersionDropdown",
-            position: "left",
+            items: [
+              {
+                label: "v3 (latest)",
+                to: "docs/HyperIndex/overview",
+                activeBaseRegex:
+                  "^/docs/HyperIndex/(?!(hosted-service|self-hosting|organisation-setup|envio-cloud-cli))",
+              },
+              {
+                label: "v2",
+                to: "docs/v2/HyperIndex/overview",
+                activeBaseRegex: "^/docs/v2/HyperIndex/",
+              },
+            ],
           },
           {
             to: "docs/HyperSync/overview",
-            label: "HyperSync Docs",
+            label: "HyperSync",
             position: "left",
+            activeBaseRegex: "^/docs/HyperSync/",
           },
           {
             to: "docs/HyperRPC/overview-hyperrpc",
-            label: "HyperRPC Docs",
+            label: "HyperRPC",
             position: "left",
+            activeBaseRegex: "^/docs/HyperRPC/",
           },
           {
-            href: "https://envio.dev/changelog",
-            label: "Changelog",
+            to: "docs/HyperIndex/hosted-service",
+            label: "Envio Cloud",
             position: "left",
-          },
-          {
-            to: "videos",
-            label: "Shipper's Logs",
-            position: "left",
-          },
-          {
-            to: "showcase",
-            label: "Showcase",
-            position: "left",
-            className: "navbar__item--showcase",
-          },
-          {
-            to: "/blog",
-            label: "Blog",
-            position: "left",
+            activeBaseRegex:
+              "^/docs/HyperIndex/(hosted-service|self-hosting|organisation-setup|envio-cloud-cli)",
           },
           {
             href: "https://github.com/enviodev",
-            label: "GitHub",
             position: "right",
+            className: "header-github-link",
+            "aria-label": "Envio on GitHub",
+          },
+          {
+            href: "https://envio.dev/app",
+            label: "Sign in",
+            position: "right",
+            className: "navbar__item--signin",
           },
         ],
       },
