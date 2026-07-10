@@ -28,27 +28,31 @@ export default function DocVersionBanner() {
 
   if (pluginId === 'HyperIndexV2') {
     return (
-      <Admonition type="warning" title="You're viewing v2 documentation">
-        <p>
-          This is the <strong>v2</strong> HyperIndex documentation. We highly
-          recommend migrating to <strong>v3</strong> — follow the{' '}
-          <Link to="/docs/HyperIndex/migrate-to-v3">v3 migration guide</Link>.
-        </p>
-      </Admonition>
+      <div className="envio-version-banner">
+        <Admonition type="warning" title="You're viewing v2 documentation">
+          <p>
+            This is the <strong>v2</strong> HyperIndex documentation. We highly
+            recommend migrating to <strong>v3</strong> — follow the{' '}
+            <Link to="/docs/HyperIndex/migrate-to-v3">v3 migration guide</Link>.
+          </p>
+        </Admonition>
+      </div>
     );
   }
 
   if (pluginId === 'HyperIndex' && !ENVIO_CLOUD_RE.test(pathname)) {
     return (
-      <Admonition type="info" title="You're viewing v3 documentation">
-        <p>
-          This is the <strong>v3</strong> HyperIndex documentation. Still on an
-          older version? Open the{' '}
-          <Link to="/docs/v2/HyperIndex/overview">v2 documentation</Link> and
-          consider{' '}
-          <Link to="/docs/HyperIndex/migrate-to-v3">migrating to v3</Link>.
-        </p>
-      </Admonition>
+      <div className="envio-version-banner">
+        <Admonition type="info" title="You're viewing v3 documentation">
+          <p>
+            This is the <strong>v3</strong> HyperIndex documentation. Still on
+            an older version? Open the{' '}
+            <Link to="/docs/v2/HyperIndex/overview">v2 documentation</Link> and
+            consider{' '}
+            <Link to="/docs/HyperIndex/migrate-to-v3">migrating to v3</Link>.
+          </p>
+        </Admonition>
+      </div>
     );
   }
 

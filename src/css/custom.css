@@ -192,26 +192,7 @@ html {
   color: #ffffff;
 }
 
-.menu__link--active {
-  background: #000000;
-  color: white;
-  font-weight: 600;
-}
-
-[data-theme="dark"] .menu__link--active {
-  background: #ffffff;
-  color: #000000;
-}
-
-.menu__link--active:hover {
-  background: #1a1a1a;
-  color: white;
-}
-
-[data-theme="dark"] .menu__link--active:hover {
-  background: #e5e5e5;
-  color: #000000;
-}
+/* Selected menu item styling lives in the brand-refresh section below. */
 
 /* Clean footer styling */
 .footer {
@@ -765,20 +746,29 @@ html:not([data-theme="dark"]) {
   height: auto !important;
   max-height: none !important;
   position: static !important;
-  padding-top: 0.5rem !important;
+  padding-top: 0 !important;
 }
 
 /* The whole sidebar scrolls as one (sidebarViewport). Disable the DocSidebar's
-   own inner scroll so there's a single, unified scrollbar. */
+   own inner scroll so there's a single, unified scrollbar, and trim the menu's
+   top padding so the doc nav sits snugly under the quick-links divider (no
+   large empty gap between "Shipper's Logs" and the first nav item). */
 .theme-doc-sidebar-container nav.menu {
   overflow: visible !important;
+  padding-top: 1rem;
 }
 
-/* Right-hand table of contents: start below the breadcrumb divider line
-   (not level with it), and stick below the fixed navbar when scrolled. */
+.theme-doc-sidebar-container nav.menu > .menu__list {
+  padding-top: 0;
+}
+
+/* Right-hand table of contents: align its first entry with the top of the
+   page title (h1), and stick below the fixed navbar when scrolled. On pages
+   with a version banner the title is pushed down, so we add the measured banner
+   height (--envio-toc-banner-offset, set in DocItem/Layout) to keep them level. */
 @media (min-width: 997px) {
   .theme-doc-toc-desktop {
-    margin-top: 4rem;
+    margin-top: calc(5.25rem + var(--envio-toc-banner-offset, 0px));
     top: calc(var(--ifm-navbar-height) + 1rem);
   }
 }
@@ -809,19 +799,35 @@ html:not([data-theme="dark"]) {
   background: transparent;
 }
 
-/* Soft hover + soft active — no heavy fills */
+/* Soft coral hover for non-selected items */
 .menu__link:hover,
 [data-theme="dark"] .menu__link:hover {
   background: var(--envio-accent-tint);
   color: var(--envio-accent);
 }
 
-.menu__link--active,
-.menu__link--active:hover,
-[data-theme="dark"] .menu__link--active,
-[data-theme="dark"] .menu__link--active:hover {
-  background: var(--envio-accent-tint-strong);
-  color: var(--envio-accent);
+/* Selected item: solid, high-contrast. The hover state is deliberately
+   identical to the resting state so the label can never drop out — a previous
+   un-themed `.menu__link--active:hover` rule left white text on a light
+   background in light mode, making the selected label disappear on hover.
+   Scoped to the sidebar and given a :not() qualifier so the specificity beats
+   Infima's `.menu__link--active:not(.menu__link--sublist)` background rule
+   (otherwise the solid fill loses and the white text lands on a light grey). */
+.theme-doc-sidebar-container .menu__link--active:not(.menu__link--sublist),
+.theme-doc-sidebar-container .menu__link--active:not(.menu__link--sublist):hover {
+  background: #000000;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+[data-theme="dark"]
+  .theme-doc-sidebar-container
+  .menu__link--active:not(.menu__link--sublist),
+[data-theme="dark"]
+  .theme-doc-sidebar-container
+  .menu__link--active:not(.menu__link--sublist):hover {
+  background: #ffffff;
+  color: #000000;
   font-weight: 600;
 }
 
@@ -1040,6 +1046,16 @@ article a:hover {
 .navbar
   .navbar__link:not(.navbar__link--active):not(.navbar__item--signin):hover {
   color: #ffffff !important;
+}
+/* HyperIndex is a dropdown, so its toggle never receives .navbar__link--active
+   and the grey rule above would otherwise keep it neutral. Colour it coral
+   whenever any of its versions (v3 or v2) is the active section, so it matches
+   the other product tabs. Higher specificity + later source order than the grey
+   default so it wins. */
+.navbar
+  .navbar__item.dropdown:has(.dropdown__link--active)
+  > .navbar__link {
+  color: var(--envio-coral) !important;
 }
 .navbar__brand {
   border-right-color: #333 !important;

@@ -29,14 +29,18 @@
     height: 100vh;
     max-height: 100vh;
     /* Single scroll region: search + quick links + the whole doc nav scroll
-       together as one, like the live docs sidebar. */
+       together as one, like the live docs sidebar. The sidebar never needs a
+       horizontal scrollbar — hide any 1px overflow so it doesn't render (which
+       also stops the phantom vertical scrollbar it would otherwise trigger on
+       tall screens). */
     overflow-y: auto;
+    overflow-x: hidden;
   }
 }
 
 /* --- Sidebar header: search + quick links (moved out of the navbar) --- */
 .sidebarHeader {
-  padding: 1rem 0.75rem 0.75rem;
+  padding: 1rem 0.75rem 0.5rem;
   margin-top: var(--ifm-navbar-height);
   border-bottom: 1px solid var(--ifm-toc-border-color);
 }
