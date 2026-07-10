@@ -35,13 +35,6 @@ const config = {
     ],
   ],
 
-  stylesheets: [
-    {
-      href: "/custom.css",
-      type: "text/css",
-    },
-  ],
-
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({

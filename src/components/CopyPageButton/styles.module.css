@@ -1,9 +1,10 @@
-/* Floats top-right of the doc content, aligned with the page title (h1) so
-   the button sits inline with the heading rather than above it. */
+/* Floats top-right of the doc content and is nudged down so it sits vertically
+   centred on the first line of the page title (h1) — reading as inline with the
+   heading rather than pinned to its top, which looked off on two-line titles. */
 .wrapper {
   position: relative;
   float: right;
-  margin: 0.35rem 0 0.5rem 1.25rem;
+  margin: 0.95rem 0 0.5rem 1.25rem;
   z-index: 5;
 }
 

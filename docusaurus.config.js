@@ -304,10 +304,6 @@ const config = {
 
   stylesheets: [
     {
-      href: "/custom.css",
-      type: "text/css",
-    },
-    {
       href: "https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap",
       type: "text/css",
     },
@@ -323,13 +319,6 @@ const config = {
         disableSwitch: false,
         respectPrefersColorScheme: true,
       },
-      // Add custom CSS for smaller sidebar text
-      stylesheets: [
-        {
-          href: "/custom.css",
-          type: "text/css",
-        },
-      ],
       navbar: {
         title: "ENVIO",
         logo: {
