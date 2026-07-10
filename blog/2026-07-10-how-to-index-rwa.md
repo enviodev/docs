@@ -1,15 +1,19 @@
 ---
 title: How to Build an Open Source RWA Stablecoin Dashboard
-sidebar_label:
+sidebar_label: How to Build an Open Source RWA Stablecoin Dashboard
 slug: /how-to-build-rwa-dashboard
-tags: [tutorial]
+tags: ["tutorials"]
 description: "How to build an open-source RWA stablecoin dashboard backed by a HyperIndex indexer you can run yourself, deriving total supply, transfers, mints, burns, and daily snapshots straight from Transfer events, with USDT's Issue and Redeem handled directly."
 image: /blog-assets/rwa-dashboard.png
 last_update:
   date: 2026-07-10
-  author: "nikbhintade"
+  author: Nikhil Bhintade
 authors: ["nikbhintade"]
 ---
+
+<img src="/blog-assets/rwa-dashboard.png" alt="How to Build an Open Source RWA Stablecoin Dashboard" width="100%"/>
+
+<!--truncate-->
 
 :::note TL;DR
 
