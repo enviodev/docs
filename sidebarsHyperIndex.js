@@ -187,5 +187,10 @@ module.exports = {
       label: "Support",
       href: "https://discord.gg/envio",
     },
+    {
+      type: "link",
+      label: "LLM Documentation",
+      href: "/docs/EnvioCloud-LLM/envio-cloud-complete",
+    },
   ],
 };

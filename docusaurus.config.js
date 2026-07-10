@@ -295,6 +295,7 @@ const config = {
             "/docs/HyperIndex-LLM/**",
             "/docs/HyperSync-LLM/**",
             "/docs/HyperRPC-LLM/**",
+            "/docs/EnvioCloud-LLM/**",
           ],
         },
       }),
@@ -467,6 +468,7 @@ const config = {
           "/docs/HyperIndex-LLM/**",
           "/docs/HyperSync-LLM/**",
           "/docs/HyperRPC-LLM/**",
+          "/docs/EnvioCloud-LLM/**",
           "/docs/v2/HyperIndex/**",
         ],
       },
@@ -481,6 +483,7 @@ const config = {
           "HyperIndex-LLM",
           "HyperSync-LLM",
           "HyperRPC-LLM",
+          "EnvioCloud-LLM",
         ],
         // V2 is listed in llms.txt for discoverability but stays out of
         // llms-full.txt and the per-page .md copies.
@@ -815,6 +818,18 @@ This file is generated from page frontmatter at build time and follows the llmst
         path: "docs/HyperRPC-LLM",
         routeBasePath: "docs/HyperRPC-LLM",
         sidebarPath: require.resolve("./sidebarsHyperRPCLLM.js"),
+        editUrl: "https://github.com/enviodev/docs/edit/main/",
+        showLastUpdateAuthor: false,
+        showLastUpdateTime: false,
+      },
+    ],
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "EnvioCloud-LLM",
+        path: "docs/EnvioCloud-LLM",
+        routeBasePath: "docs/EnvioCloud-LLM",
+        sidebarPath: require.resolve("./sidebarsEnvioCloudLLM.js"),
         editUrl: "https://github.com/enviodev/docs/edit/main/",
         showLastUpdateAuthor: false,
         showLastUpdateTime: false,
