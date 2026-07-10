@@ -26,19 +26,19 @@ Most teams reach for The Graph first, because subgraphs are the incumbent way to
 
 This is a direct comparison of the two. We put them head to head on what actually separates them, sync speed, the language you write handlers in, multichain support, and reorg handling, then cover what switching involves. For the wider field of indexers, our [2026 indexer comparison](/blog/best-blockchain-indexers-2026) ranks Envio, The Graph, Goldsky, SubQuery, Subsquid, Ormi, and Ponder side by side.
 
-## Sync speed
+## Sync Speed
 
 Speed is the clearest difference, and it is well documented. HyperIndex pulls data through [HyperSync](/docs/HyperSync/overview), Envio's Rust data engine, which delivers up to 2000x faster data access than standard RPC. HyperIndex can also index over a standard RPC endpoint, either for chains HyperSync does not yet support or if you would rather not use it. The Graph reads through standard RPC only.
 
 In the independent Sentio Uniswap V2 Factory benchmark, HyperIndex finished in 8 seconds against 19 minutes for The Graph, 142x faster. On the Sentio LBTC workload, it finished in 3 minutes against 3 hours 9 minutes. Full methodology is on the [benchmarks page](/docs/HyperIndex/benchmarks), with the raw runs in the [open-indexer-benchmark repo](https://github.com/enviodev/open-indexer-benchmark). Fast sync matters beyond backfills, because a schema change means re-syncing in hours rather than days.
 
-## Handler language, TypeScript vs AssemblyScript
+## Handler Language, TypeScript vs AssemblyScript
 
 The Graph's mappings are written in AssemblyScript, a strict subset of TypeScript that compiles to WebAssembly. The syntax looks familiar, but the runtime is not. Standard npm packages do not run, common idioms like optional chaining and class inheritance are restricted, and numbers use AssemblyScript BigInt rather than native JS BigInt.
 
 HyperIndex handlers are standard TypeScript executed in Node. Any npm package works, generated types come from both your GraphQL schema and your contract ABIs, and there is no WebAssembly step. For teams already writing TypeScript across their stack, this is the difference felt every day.
 
-## Multichain indexing
+## Multichain Indexing
 
 A subgraph is deployed per chain. Indexing the same protocol on Ethereum and Base means two subgraphs, and cross-chain reads happen in your application layer.
 
@@ -46,17 +46,17 @@ HyperIndex declares every chain under a single `chains` array in one `config.yam
 
 Read more about [multichain indexing](/docs/HyperIndex/multichain-indexing) in our docs.
 
-## Reorg handling
+## Reorg Handling
 
 Reorgs are the most common chain-level event a production indexer has to survive. On The Graph, graph-node reverts affected entities automatically when a reorg is detected, bounded by its reorg threshold and prune settings, and because each chain is its own subgraph, multichain coverage means handling that across several deployments.
 
 HyperIndex tracks per-entity state history for every unfinalised block at the framework level, with rollback on by default. When a reorg happens, the framework rolls each entity back to its pre-reorg state and reprocesses forward against the canonical chain, then prunes history once a block finalises. No handler code is required. The details are in [Reorgs Support](/docs/HyperIndex/reorgs-support).
 
-## Head-to-head at a glance
+## Head-to-Head at a Glance
 
 <div className="scroll-table" tabIndex={0} role="region" aria-label="Envio vs The Graph comparison table">
 
-| Comparison point | Envio HyperIndex | The Graph |
+| Comparison Point | Envio HyperIndex | The Graph |
 | --- | --- | --- |
 | Handler language | TypeScript in Node, any npm package | AssemblyScript compiled to WebAssembly |
 | Multichain | Every chain in one `config.yaml` | One subgraph per chain |
@@ -67,7 +67,7 @@ HyperIndex tracks per-entity state history for every unfinalised block at the fr
 
 </div>
 
-## Switching from The Graph
+## Switching From The Graph
 
 If the comparison points you toward Envio, moving is a [documented flow](/docs/HyperIndex/migration-guide) rather than a rewrite. It comes down to three steps, convert `subgraph.yaml` to `config.yaml`, bring your schema across (close to copy and paste, with the `@entity` directive removed), and port your handlers from AssemblyScript to TypeScript. Running `pnpx envio init` scaffolds the config and schema, your existing subgraph queries keep working through Envio's [query converter](/docs/HyperIndex/query-conversion) tool, and the [Indexer Migration Validator](https://github.com/enviodev/indexer-migration-validator) checks both endpoints field-by-field before you cut over.
 
@@ -75,11 +75,11 @@ Because AssemblyScript is a subset of TypeScript, most of the handler work is me
 
 [Katana](/blog/case-study-katana-sushiswap) moved two production SushiSwap subgraphs off The Graph entity-for-entity. [Revert Finance](/blog/revert-finance-pancakeswap-bnb-hyperindex) had a PancakeSwap V3 subgraph stuck at 70 percent sync on BNB Smart Chain for over two years, and HyperIndex synced it to 100 percent in 10 days across 1.7 billion events. The [Polymarket reference indexer](/blog/polymarket-hyperindex-case-study) consolidated 8 subgraph domains into one indexer that synced 4 billion Polygon events in 6 days. Envio also offers full white-glove migration help.
 
-## The bottom line
+## The Bottom Line
 
 For most EVM teams, HyperIndex is the stronger choice with faster syncs, TypeScript handlers, multichain from a single config, and a documented path off a subgraph. The one case where The Graph still fits is if you need to consume its existing network of public subgraphs, which is its own ecosystem. For building and running your own indexer, Envio is the better tool.
 
-## Get started
+## Get Started
 
 - [HyperIndex Quickstart](/docs/HyperIndex/quickstart)
 - [Migrate from The Graph](/docs/HyperIndex/migration-guide)
@@ -87,29 +87,29 @@ For most EVM teams, HyperIndex is the stronger choice with faster syncs, TypeScr
 - [Polymarket production reference](/blog/polymarket-hyperindex-case-study)
 - [Best Blockchain Indexers in 2026](/blog/best-blockchain-indexers-2026)
 
-## Frequently asked questions
+## Frequently Asked Questions
 
-### Do my existing subgraph GraphQL queries work after switching to Envio?
+### Do My Existing Subgraph GraphQL Queries Work After Switching to Envio?
 
 You do not have to rewrite them by hand. HyperIndex serves standard GraphQL rather than The Graph's dialect, and Envio provides a [query converter tool and conversion guide](/docs/HyperIndex/query-conversion) to translate existing subgraph queries. After switching, the [Indexer Migration Validator](https://github.com/enviodev/indexer-migration-validator) compares your new endpoint against the original subgraph field-by-field so you can confirm the data matches before cutting over.
 
-### Can I keep my subgraph schema when moving to HyperIndex?
+### Can I Keep My Subgraph Schema When Moving to HyperIndex?
 
 Largely yes. Schema migration is close to copy and paste. You remove the `@entity` directive, and there are small nuances around enums and BigDecimals documented in the [schema docs](/docs/HyperIndex/schema). HyperIndex generates its types from the same GraphQL schema and your contract ABIs, so entity definitions and relationships carry across with minimal rework.
 
-### How long does a The Graph to Envio migration take?
+### How Long Does a The Graph to Envio Migration Take?
 
 It depends on handler complexity, but the shape is fixed at three steps, config, schema, and handlers. Pure handler logic often copies straight across because AssemblyScript is a subset of TypeScript, and `pnpx envio init` scaffolds the config and schema for you. Teams also use [AI-assisted migration](/docs/HyperIndex/migrate-with-ai) for the rewrite, and Envio offers white-glove help via [Discord](https://discord.gg/envio).
 
-### Can one Envio indexer replace several per-chain subgraphs?
+### Can One Envio Indexer Replace Several Per-Chain Subgraphs?
 
 Yes, and it is a common outcome. Because every chain lives in one `config.yaml`, teams routinely consolidate multiple subgraph deployments into a single indexer. Sablier replaced 12 deployments with one indexer across 27 chains, and the [Polymarket reference](/blog/polymarket-hyperindex-case-study) unified 8 subgraph domains into one indexer syncing 4 billion events in 6 days.
 
-### Does moving to Envio mean I lose access to The Graph's public subgraphs?
+### Does Moving to Envio Mean I Lose Access to The Graph's Public Subgraphs?
 
 Yes, and that is the main reason to stay on The Graph. Its decentralised network hosts the largest set of community-maintained subgraphs for major protocols. Envio indexes your own contracts into your own schema, so if your dependency is on consuming those public subgraphs rather than running your own indexer, The Graph is still the right home for that.
 
-### Is HyperIndex faster than The Graph in independent benchmarks?
+### Is HyperIndex Faster Than The Graph in Independent Benchmarks?
 
 Yes. In the independent Sentio Uniswap V2 Factory benchmark, HyperIndex finished in 8 seconds against 19 minutes for The Graph, 142x faster, and on the Sentio LBTC workload it finished in 3 minutes against 3 hours 9 minutes. The gap comes from HyperSync, Envio's Rust data engine, which delivers up to 2000x faster data access than the standard RPC that The Graph reads through. Full methodology is on the [benchmarks page](/docs/HyperIndex/benchmarks) and the raw runs are in the [open-indexer-benchmark repo](https://github.com/enviodev/open-indexer-benchmark).
 
