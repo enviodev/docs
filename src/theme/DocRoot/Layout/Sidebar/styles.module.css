@@ -36,6 +36,21 @@
     overflow-y: auto;
     overflow-x: hidden;
   }
+
+  /* DocSidebar/Desktop renders a single root <div> (the one that normally
+     carries Infima's sticky positioning, 100vh max-height and navbar-height
+     top padding). We run our own single scroll region on .sidebarViewport, so
+     flatten that child: let it flow, drop the height cap, and remove the
+     navbar-height top padding — the header already accounts for the navbar, so
+     leaving it in doubles the gap under the quick links. Targeting our own
+     wrapper class keeps this working in production, where the module class is
+     hashed. */
+  .sidebarNav > div {
+    position: static;
+    height: auto;
+    max-height: none;
+    padding-top: 0;
+  }
 }
 
 /* --- Sidebar header: search + quick links (moved out of the navbar) --- */

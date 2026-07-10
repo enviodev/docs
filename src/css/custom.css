@@ -738,16 +738,10 @@ html:not([data-theme="dark"]) {
   padding: 7px 12px;
 }
 
-/* The sidebar header sits above and stays fixed; the DocSidebar fills the
-   remaining space and scrolls internally (min-height:0 lets the flex child
-   shrink so its inner .menu scrollbar engages — clean scroll like live docs).
-   Also drops the DocSidebar's own navbar-height offset (header handles it). */
-[class*="theme-DocSidebar-Desktop-styles-module"] {
-  height: auto !important;
-  max-height: none !important;
-  position: static !important;
-  padding-top: 0 !important;
-}
+/* NB: flattening of the DocSidebar/Desktop root (height/position/padding-top)
+   now lives in DocRoot/Layout/Sidebar/styles.module.css, scoped to our own
+   `.sidebarNav` wrapper. Styling the generated `…DocSidebar-Desktop-styles-module`
+   class only worked in dev (the class is content-hashed in production). */
 
 /* The whole sidebar scrolls as one (sidebarViewport). Disable the DocSidebar's
    own inner scroll so there's a single, unified scrollbar, and trim the menu's
@@ -763,12 +757,12 @@ html:not([data-theme="dark"]) {
 }
 
 /* Right-hand table of contents: align its first entry with the top of the
-   page title (h1), and stick below the fixed navbar when scrolled. On pages
-   with a version banner the title is pushed down, so we add the measured banner
-   height (--envio-toc-banner-offset, set in DocItem/Layout) to keep them level. */
+   page title (h1), and stick below the fixed navbar when scrolled. The version
+   banner now renders above the column row (see DocItem/Layout), so banner and
+   non-banner pages share this one static offset. */
 @media (min-width: 997px) {
   .theme-doc-toc-desktop {
-    margin-top: calc(5.25rem + var(--envio-toc-banner-offset, 0px));
+    margin-top: 5.25rem;
     top: calc(var(--ifm-navbar-height) + 1rem);
   }
 }
@@ -810,21 +804,23 @@ html:not([data-theme="dark"]) {
    identical to the resting state so the label can never drop out — a previous
    un-themed `.menu__link--active:hover` rule left white text on a light
    background in light mode, making the selected label disappear on hover.
-   Scoped to the sidebar and given a :not() qualifier so the specificity beats
-   Infima's `.menu__link--active:not(.menu__link--sublist)` background rule
-   (otherwise the solid fill loses and the white text lands on a light grey). */
-.theme-doc-sidebar-container .menu__link--active:not(.menu__link--sublist),
-.theme-doc-sidebar-container .menu__link--active:not(.menu__link--sublist):hover {
+   The `:not(.menu__link--sublist)` qualifier is what beats Infima's
+   `.menu__link--active:not(.menu__link--sublist)` (same 0,2,0 specificity, we
+   win on source order). Scope to `.theme-doc-sidebar-menu` (the <ul> present in
+   BOTH the desktop and mobile-drawer sidebars) rather than the desktop-only
+   `.theme-doc-sidebar-container`, so the selected pill also renders on mobile. */
+.theme-doc-sidebar-menu .menu__link--active:not(.menu__link--sublist),
+.theme-doc-sidebar-menu .menu__link--active:not(.menu__link--sublist):hover {
   background: #000000;
   color: #ffffff;
   font-weight: 600;
 }
 
 [data-theme="dark"]
-  .theme-doc-sidebar-container
+  .theme-doc-sidebar-menu
   .menu__link--active:not(.menu__link--sublist),
 [data-theme="dark"]
-  .theme-doc-sidebar-container
+  .theme-doc-sidebar-menu
   .menu__link--active:not(.menu__link--sublist):hover {
   background: #ffffff;
   color: #000000;

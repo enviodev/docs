@@ -110,12 +110,19 @@ export default function DocRootLayoutSidebar({
             hiddenSidebar && styles.sidebarViewportHidden,
           )}>
           {!hiddenSidebar && <SidebarHeader />}
-          <DocSidebar
-            sidebar={sidebar}
-            path={pathname}
-            onCollapse={toggleSidebar}
-            isHidden={hiddenSidebar}
-          />
+          {/* Wrap DocSidebar in a stable class we own. Docusaurus hashes CSS
+              module class names in production builds (e.g.
+              `sidebar_njMd`), so a `[class*="…DocSidebar-Desktop-styles-module"]`
+              selector only matches in dev — styling that generated class was a
+              no-op on the live site. Targeting our own class works everywhere. */}
+          <div className={styles.sidebarNav}>
+            <DocSidebar
+              sidebar={sidebar}
+              path={pathname}
+              onCollapse={toggleSidebar}
+              isHidden={hiddenSidebar}
+            />
+          </div>
           {hiddenSidebar && <ExpandButton toggleSidebar={toggleSidebar} />}
         </div>
       </ResetOnSidebarChange>
