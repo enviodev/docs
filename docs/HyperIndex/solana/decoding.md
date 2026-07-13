@@ -3,7 +3,7 @@ id: solana-decoding
 title: Solana Decoding & IDLs
 sidebar_label: Decoding & IDLs
 slug: /solana/decoding
-description: How HyperIndex decodes Solana instructions — discriminators, Anchor IDLs, inline schemas, supported argument types, and the decoded output shape.
+description: How HyperIndex decodes Solana instructions - discriminators, Anchor IDLs, inline schemas, supported argument types, and the decoded params shape.
 ---
 
 # Decoding & IDLs
@@ -67,7 +67,7 @@ HyperIndex resolves an instruction's argument/account layout in this order:
 | **Anchor IDL** | Program has `idl:` set | HyperIndex derives `args` + `accounts` from the IDL for every instruction. |
 | **Inline schema** | Instruction has `args` + `accounts` | You declare the layout directly. Mutually exclusive with `idl`. |
 | **Bundled** | Program id matches a built-in schema | Currently only **Metaplex Token Metadata** — no `idl`/inline needed. |
-| **None** | No schema available | The instruction still matches and fires the handler, but `decoded` is `undefined` (you can read raw `instruction.data` / `instruction.accounts`). |
+| **None** | No schema available | The instruction still matches and fires the handler, but `params` is `undefined` (you can read raw `instruction.data` / `instruction.accounts`). |
 
 ### Anchor IDLs
 
@@ -78,15 +78,16 @@ argument layouts, ordered account names (including nested account groups), and t
 IDL `types` registry.
 
 ```yaml
-programs_experimental:
-  - name: Jupiter
-    program_id: JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
-    idl: idls/jupiter.json
-    instructions:
-      - name: route
-        discriminator: "0xe517cb977ae3ad2a" # legacy IDL → supply the sighash
-      - name: sharedAccountsRoute
-        discriminator: "0xc1209b3341d69c81"
+experimental:
+  programs:
+    - name: Jupiter
+      program_id: JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
+      idl: idls/jupiter.json
+      instructions:
+        - name: route
+          discriminator: "0xe517cb977ae3ad2a" # legacy IDL: supply the sighash
+        - name: sharedAccountsRoute
+          discriminator: "0xc1209b3341d69c81"
 ```
 
 With an IDL set, you only list each instruction's `name` (+ `discriminator` for
@@ -100,20 +101,21 @@ argument list (in order, after the discriminator); `accounts` is the ordered lis
 of account names. They must be provided **together**.
 
 ```yaml
-programs_experimental:
-  - name: Raydium
-    program_id: 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
-    instructions:
-      - name: swap
-        discriminator: "0x09"
-        args:
-          - { name: amountIn, type: u64 }
-          - { name: minAmountOut, type: u64 }
-        accounts:           # positional: accounts[0] is tokenProgram, etc.
-          - tokenProgram
-          - amm
-          - userSourceTokenAccount
-          - userDestTokenAccount
+experimental:
+  programs:
+    - name: Raydium
+      program_id: 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
+      instructions:
+        - name: swap
+          discriminator: "0x09"
+          args:
+            - { name: amountIn, type: u64 }
+            - { name: minAmountOut, type: u64 }
+          accounts:         # positional: accounts[0] is tokenProgram, etc.
+            - tokenProgram
+            - amm
+            - userSourceTokenAccount
+            - userDestTokenAccount
 ```
 
 :::warning Verify positional layouts
@@ -125,9 +127,9 @@ accounts beyond your named list still arrive — see [`extraAccounts`](#decoded-
 ## Supported argument types
 
 Use these in inline `args` (and they're what HyperIndex understands from IDLs).
-The right column is how each value appears in `decoded.args`.
+The right column is how each value appears in `params.args`.
 
-| `type` | Rendered in `decoded.args` as |
+| `type` | Rendered in `params.args` as |
 | --- | --- |
 | `bool` | boolean |
 | `u8` `u16` `u32`, `i8` `i16` `i32` | number |
@@ -154,10 +156,10 @@ args:
 
 ## Decoded output
 
-When a schema matches, `event.instruction.decoded` is:
+When a schema matches, `instruction.params` is:
 
 ```typescript
-type SvmDecodedInstruction = {
+type SvmInstructionParams = {
   name: string;                          // the instruction name
   args: unknown;                         // object keyed by arg name (typed after codegen)
   accounts: Record<string, string>;      // schema account name -> base58 pubkey
@@ -169,7 +171,7 @@ type SvmDecodedInstruction = {
   instruction; if you bypass that (see below) it's `unknown` — narrow it with a
   local type and read defensively.
 - **`accounts`** maps each schema account name to its base58 pubkey, e.g.
-  `decoded.accounts.mint`. Names come from the IDL or your inline `accounts` list.
+  `params.accounts.mint`. Names come from the IDL or your inline `accounts` list.
 - **`extraAccounts`** collects accounts present on-chain beyond your named list —
   Anchor `remaining_accounts`, optional accounts, or accounts resolved from an
   address lookup table.
@@ -180,7 +182,7 @@ Because `args` is loosely typed (and `u64`+ values are strings), read each field
 as possibly-absent so one missing field can't throw and kill the handler:
 
 ```typescript
-import { type SvmDecodedInstruction } from "envio";
+import { type SvmInstructionParams } from "envio";
 
 interface JupiterRouteArgs {
   inAmount: string;
@@ -190,18 +192,18 @@ interface JupiterRouteArgs {
 const bi = (x: unknown) =>
   x === undefined || x === null ? undefined : BigInt(x as string);
 
-function mapRoute(decoded: SvmDecodedInstruction) {
-  const a = decoded.args as Partial<JupiterRouteArgs>;
+function mapRoute(params: SvmInstructionParams) {
+  const a = params.args as Partial<JupiterRouteArgs>;
   return {
     inAmount: bi(a.inAmount),
     outAmount: bi(a.quotedOutAmount),
-    sourceMint: decoded.accounts.sourceMint,
-    destMint: decoded.accounts.destinationMint,
+    sourceMint: params.accounts.sourceMint,
+    destMint: params.accounts.destinationMint,
   };
 }
 ```
 
-## When `decoded` is `undefined`
+## When `params` is `undefined`
 
 Decoding returns `undefined` (rather than crashing) when:
 
@@ -209,7 +211,7 @@ Decoding returns `undefined` (rather than crashing) when:
 - there were too few accounts for the named list;
 - the argument bytes didn't decode cleanly (wrong/partial layout).
 
-The indexer keeps running and logs at debug. Always `if (!decoded) return;` before
+The indexer keeps running and logs at debug. Always `if (!params) return;` before
 using it — or fall back to the raw `instruction.data` and `instruction.accounts`.
 
 ## Known limitations
@@ -217,7 +219,7 @@ using it — or fall back to the raw `instruction.data` and `instruction.account
 - **`[u8; 32]` is always rendered as a base58 pubkey.** A 32-byte hash or Merkle
   root will look like a pubkey string.
 - **Account-count tolerance.** Surplus accounts go to `extraAccounts`; too few
-  means `decoded` is `undefined`.
+  means `params` is `undefined`.
 - **Address lookup tables.** ALT-resolved addresses are included in the
   instruction's account list and mapped positionally — there's no separate ALT
   handling to configure.
@@ -228,4 +230,4 @@ using it — or fall back to the raw `instruction.data` and `instruction.account
 ## Related
 
 - [Configuration](/docs/HyperIndex/solana/configuration) — where `idl`, `discriminator`, `args`, `accounts` live.
-- [Instruction Handlers](/docs/HyperIndex/solana/instruction-handlers) — using `decoded` in handlers.
+- [Instruction Handlers](/docs/HyperIndex/solana/instruction-handlers) — using `params` in handlers.

@@ -99,7 +99,7 @@ instruction, or IDL — requires `pnpm envio codegen` to regenerate the typed
 
 ## 4. Add your own program
 
-Open `config.yaml` and add a program under `programs_experimental` with the
+Open `config.yaml` and add a program under `experimental.programs` with the
 instructions you want, then write a handler. The shortest path:
 
 1. **Point at an Anchor IDL** if you have one — HyperIndex derives the argument and account layout for you ([IDL decoding](/docs/HyperIndex/solana/decoding#anchor-idls)).
@@ -110,32 +110,35 @@ instructions you want, then write a handler. The shortest path:
 ```yaml title="config.yaml"
 ecosystem: svm
 chains:
-  - rpc: https://api.mainnet-beta.solana.com
-    start_block: 417995000
-    programs_experimental:
-      - name: TokenMetadata
-        program_id: metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s
-        instructions:
-          - name: CreateMetadataAccountV3
-            discriminator: "0x21"
-            field_selection:
-              transaction_fields: true
+  - start_block: 417995000
+    experimental:
+      hypersync_config:
+        url: https://solana.hypersync.xyz
+      programs:
+        - name: TokenMetadata
+          program_id: metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s
+          instructions:
+            - name: CreateMetadataAccountV3
+              discriminator: "0x21"
+              field_selection:
+                transaction_fields:
+                  - signatures
 ```
 
 ```typescript title="src/handlers/TokenMetadataHandlers.ts"
-import { indexer, type TokenMetadataAccount } from "envio";
+import { indexer } from "envio";
 
 indexer.onInstruction(
   { program: "TokenMetadata", instruction: "CreateMetadataAccountV3" },
-  async ({ event, context }) => {
-    const decoded = event.instruction.decoded;
-    if (!decoded) return; // discriminator matched but decode failed — skip
+  async ({ instruction, context }) => {
+    const params = instruction.params;
+    if (!params) return; // discriminator matched but decode failed - skip
 
     context.TokenMetadataAccount.set({
-      id: decoded.accounts.metadata,
-      mint: decoded.accounts.mint ?? "",
-      createdAtSlot: event.slot,
-      lastTxSignature: event.transaction?.signatures[0],
+      id: params.accounts.metadata,
+      mint: params.accounts.mint ?? "",
+      createdAtSlot: instruction.block.slot,
+      lastTxSignature: instruction.transaction.signatures[0],
     });
   },
 );
@@ -144,6 +147,6 @@ indexer.onInstruction(
 ## Next steps
 
 - [Configuration](/docs/HyperIndex/solana/configuration) — every `config.yaml` field for Solana.
-- [Instruction Handlers](/docs/HyperIndex/solana/instruction-handlers) — the full event object, token balances, CPIs, and testing.
+- [Instruction Handlers](/docs/HyperIndex/solana/instruction-handlers) — the full instruction object, token balances, CPIs, and testing.
 - [Decoding & IDLs](/docs/HyperIndex/solana/decoding) — discriminators, IDLs, inline schemas, supported types.
 - [Deploy to Envio Cloud](/docs/HyperIndex/hosted-service) — host your Solana indexer the same way as EVM.

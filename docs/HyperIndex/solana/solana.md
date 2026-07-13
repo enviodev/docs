@@ -21,7 +21,7 @@ fast and you never touch an RPC node for the bulk of indexing.
 
 :::info Early access — and a good time to shape it
 Solana support is **experimental and pre-release**. The program/instruction
-config surface (`programs_experimental`) may change, indexers are
+config surface (the chain-level `experimental` key) may change, indexers are
 **TypeScript-only**, and the indexer tracks **finalized data** (no reorg
 handling — see [below](#what-is-not-supported-yet)). The APIs documented here are
 the latest in active development. If you're building on Solana, say hello on
@@ -58,7 +58,7 @@ If you've used HyperIndex on EVM, the shift is mostly vocabulary:
 | --- | --- |
 | Contract + ABI | Program + IDL |
 | Event (`onEvent`) | Instruction (`onInstruction`) |
-| `event.params` | `event.instruction.decoded.args` |
+| `event.params` | `instruction.params.args` |
 | Topic0 / event signature | Instruction discriminator |
 | Block (`onBlock`) | Slot (`onSlot`) |
 | Hex addresses `0x…` | Base58 addresses |
@@ -92,7 +92,7 @@ If the piece you need is on this list, [tell us on Discord](https://discord.gg/e
 
 - **[Getting Started](/docs/HyperIndex/solana/getting-started)** — scaffold and run your first Solana indexer.
 - **[Configuration](/docs/HyperIndex/solana/configuration)** — the `config.yaml` reference for `ecosystem: svm`.
-- **[Instruction Handlers](/docs/HyperIndex/solana/instruction-handlers)** — `onInstruction`, the event object, token balances, CPIs, testing.
+- **[Instruction Handlers](/docs/HyperIndex/solana/instruction-handlers)** — `onInstruction`, the instruction object, token balances, CPIs, testing.
 - **[Decoding & IDLs](/docs/HyperIndex/solana/decoding)** — discriminators, Anchor IDLs, inline schemas, supported types.
 - **[Slot Handlers](/docs/HyperIndex/solana/slot-handlers)** — `onSlot` and RPC enrichment.
 - **[EVM vs Solana](/docs/HyperIndex/solana/evm-vs-solana)** — every difference in one place.

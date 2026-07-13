@@ -22,7 +22,7 @@ difference in one place.
 | ABI | Anchor IDL (or an inline schema) |
 | Event / log | Instruction |
 | `indexer.onEvent` | `indexer.onInstruction` |
-| `event.params.<name>` | `event.instruction.decoded.args.<name>` |
+| `event.params.<name>` | `instruction.params.args.<name>` |
 | Event signature / topic0 | Instruction discriminator |
 | Indexed event args | Account positions / `account_filters` |
 | `indexer.onBlock` | `indexer.onSlot` |
@@ -36,12 +36,12 @@ difference in one place.
 | | EVM | Solana |
 | --- | --- | --- |
 | `ecosystem` | `evm` (default) | `svm` |
-| What you list | `contracts` (with `abi_file_path`, `address`, `events`) | `programs_experimental` (with `program_id`, optional `idl`, `instructions`) |
-| Chain identity | `chains[].id` (public chain ID, required) | no `id` — identified by `rpc`/`hypersync_config` (chain id is `0` in handlers) |
+| What you list | `contracts` (with `abi_file_path`, `address`, `events`) | `experimental.programs` (with `program_id`, optional `idl`, `instructions`) |
+| Chain identity | `chains[].id` (public chain ID, required) | no `id` — identified by the configured endpoints (chain id is `0` in handlers) |
 | `start_block` | block number | **slot** number |
 | Matching key | event signature (from ABI) | `discriminator` (hex, 1/2/4/8 bytes) |
 | Decoding source | ABI | Anchor IDL, inline `args`+`accounts`, or bundled |
-| Field selection | global, rich block/transaction field lists | per-instruction toggles only: `transaction_fields`, `token_balance_fields`, `log_fields` (value `true`) |
+| Field selection | global, rich block/transaction field lists | per-instruction: `transaction_fields`/`block_fields` (field name lists), `token_balance_fields`/`log_fields` (`true`) |
 | Reorg options | `rollback_on_reorg`, `save_full_history` | not configurable — finalized data only |
 
 :::note `chains`, not `networks`
@@ -70,25 +70,25 @@ indexer.onEvent(
 ```typescript
 indexer.onInstruction(
   { program: "Jupiter", instruction: "sharedAccountsRoute" },
-  async ({ event, context }) => {
-    const decoded = event.instruction.decoded;
-    if (!decoded) return;                       // decode can fail → null-check
-    const inAmount = BigInt(decoded.args.inAmount); // u64 → decimal string
-    const sourceMint = decoded.accounts.sourceMint; // base58
-    const programId = event.instruction.programId;  // base58
-    const slot = event.slot;
-    const txSig = event.transaction?.signatures[0]; // needs transaction_fields
-    const isInner = event.instruction.isInner;      // CPI?
+  async ({ instruction, context }) => {
+    const params = instruction.params;
+    if (!params) return;                          // decode can fail: null-check
+    const inAmount = BigInt(params.args.inAmount);  // u64 arrives as decimal string
+    const sourceMint = params.accounts.sourceMint;  // base58
+    const programId = instruction.programId;        // base58
+    const slot = instruction.block.slot;
+    const txSig = instruction.transaction.signatures[0]; // needs transaction_fields: [signatures]
+    const isInner = instruction.isInner;            // CPI?
   },
 );
 ```
 
 Key handler-level differences:
 
-- **`decoded` is optional.** EVM `event.params` is always populated (the ABI is known); Solana decoding can fail, so always `if (!decoded) return;`.
+- **`params` is optional.** EVM `event.params` is always populated (the ABI is known); Solana decoding can fail, so always `if (!params) return;`.
 - **Numbers as strings.** `u64`/`u128`/`i64`/`i128` arrive as decimal strings — wrap in `BigInt(...)`. (Smaller ints are JS numbers.)
 - **Addresses are base58.** No `0x` lowercase/checksum concerns; pubkeys are base58 strings.
-- **Opt in to context.** Transaction metadata, token balances, and logs require [field selection](/docs/HyperIndex/solana/configuration#field-selection); on EVM the event always carries block/transaction context.
+- **Opt in to context.** Transaction fields, token balances, and logs require [field selection](/docs/HyperIndex/solana/configuration#field-selection); on EVM the event always carries block/transaction context.
 - **Chain id is `0`.** Single-cluster today; `context.chain.id === 0`.
 
 ## CPIs vs internal calls

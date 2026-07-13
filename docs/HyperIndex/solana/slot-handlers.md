@@ -140,7 +140,7 @@ See [Preload Optimization](/docs/HyperIndex/preload-optimization).
 | --- | --- | --- |
 | Trigger | Every slot / interval | A matched program instruction |
 | Data source | RPC (via Effects) | HyperSync |
-| Config needed | None (self-registers) | `programs_experimental` entry |
+| Config needed | None (self-registers) | `experimental.programs` entry |
 | Best for | Time-series, snapshots, scheduled pulls | Decoding protocol activity |
 
 Reach for [instruction handlers](/docs/HyperIndex/solana/instruction-handlers) to

@@ -27,36 +27,38 @@ name: my-solana-indexer
 description: Index Jupiter swaps and Metaplex NFT mints
 ecosystem: svm
 chains:
-  - rpc: https://api.mainnet-beta.solana.com
-    hypersync_config:
-      url: https://solana.hypersync.xyz   # optional; this is the default
-    start_block: 417995000                 # a SLOT number, not a block
-    programs_experimental:
-      # --- decoded from an Anchor IDL ---
-      - name: Jupiter
-        program_id: JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
-        idl: idls/jupiter.json
-        instructions:
-          - name: sharedAccountsRoute
-            discriminator: "0xc1209b3341d69c81"
-            field_selection:
-              token_balance_fields: true
-      # --- decoded from an inline schema (no IDL) ---
-      - name: Raydium
-        program_id: 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
-        instructions:
-          - name: swap
-            discriminator: "0x09"
-            args:
-              - { name: amountIn, type: u64 }
-              - { name: minAmountOut, type: u64 }
-            accounts:
-              - tokenProgram
-              - amm
-              - userSourceTokenAccount
-              - userDestTokenAccount
-            field_selection:
-              token_balance_fields: true
+  - start_block: 417995000                 # a SLOT number, not a block
+    experimental:
+      hypersync_config:
+        url: https://solana.hypersync.xyz  # the HyperSync endpoint serving instructions
+      programs:
+        # --- decoded from an Anchor IDL ---
+        - name: Jupiter
+          program_id: JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4
+          idl: idls/jupiter.json
+          instructions:
+            - name: sharedAccountsRoute
+              discriminator: "0xc1209b3341d69c81"
+              field_selection:
+                token_balance_fields: true
+        # --- decoded from an inline schema (no IDL) ---
+        - name: Raydium
+          program_id: 675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8
+          instructions:
+            - name: swap
+              discriminator: "0x09"
+              args:
+                - { name: amountIn, type: u64 }
+                - { name: minAmountOut, type: u64 }
+              accounts:
+                - tokenProgram
+                - amm
+                - userSourceTokenAccount
+                - userDestTokenAccount
+              field_selection:
+                token_balance_fields: true
+                transaction_fields:
+                  - signatures
 ```
 
 ## Top-level fields
@@ -85,32 +87,37 @@ Each entry is one Solana cluster.
 
 | Field | Required | Default | Notes |
 | --- | --- | --- | --- |
-| `rpc` | ✅ | — | RPC URL. Used by [slot handlers](/docs/HyperIndex/solana/slot-handlers) and the [Effect API](/docs/HyperIndex/effect-api). |
-| `start_block` | ✅ | — | The **slot** to start indexing from. |
-| `hypersync_config.url` | — | `https://solana.hypersync.xyz` | The HyperSync endpoint that serves historical instructions. |
-| `end_block` | — | — | Stop at this slot (inclusive of the range processed). Useful for finite backfills and tests. |
-| `block_lag` | — | — | Stay this many slots behind the head. |
-| `skip` | — | `false` | Skip this chain. |
-| `programs_experimental` | — | — | Programs to index (see below). |
+| `start_block` | ✅ | - | The **slot** to start indexing from. |
+| `experimental` | - | - | HyperSync-backed instruction indexing: `hypersync_config` + `programs` (see below). The key is named `experimental` to signal that this shape is still evolving. |
+| `rpc` | - | - | RPC URL. Required only when `experimental` is not set; ignored in favour of the HyperSync source when it is. |
+| `end_block` | - | - | Stop at this slot (inclusive of the range processed). Useful for finite backfills and tests. |
+| `block_lag` | - | - | Stay this many slots behind the head. |
+| `skip` | - | `false` | Skip this chain. |
 
 :::tip EVM difference: no chain `id`
-EVM chains require an `id` (the public chain ID). Solana chains have **no `id`** —
-the cluster is identified by the `rpc` / `hypersync_config` you point at. Inside
+EVM chains require an `id` (the public chain ID). Solana chains have **no `id`** -
+the cluster is identified by the endpoints you point at. Inside
 handlers the Solana chain id is `0`.
 :::
 
-## `programs_experimental`
+## `experimental`
 
-The list of Solana programs to index on this chain. The YAML key is
-`programs_experimental` to signal that this shape is still evolving.
+Everything HyperSync-backed lives under the chain's `experimental` key:
 
 | Field | Required | Default | Notes |
 | --- | --- | --- | --- |
-| `name` | ✅ | — | A unique name you choose. Used in handlers (`onInstruction({ program: "<name>" })`) and generated types. |
-| `program_id` | ✅ | — | The base58 program address. |
-| `instructions` | ✅ | — | Instructions to match within this program (see below). |
-| `idl` | — | — | Path to an Anchor IDL JSON. If set, HyperIndex derives each instruction's `args` + `accounts` from it. **Mutually exclusive** with per-instruction inline `args`/`accounts`. |
-| `handler` | — | auto | Path to the file that registers this program's handlers. By default handler files are auto-loaded. |
+| `hypersync_config.url` | ✅ | - | The HyperSync endpoint that serves instructions (e.g. `https://solana.hypersync.xyz`). |
+| `programs` | ✅ | - | Solana programs to index on this chain (see below). |
+
+### `programs`
+
+| Field | Required | Default | Notes |
+| --- | --- | --- | --- |
+| `name` | ✅ | - | A unique name you choose. Used in handlers (`onInstruction({ program: "<name>" })`) and generated types. |
+| `program_id` | ✅ | - | The base58 program address. |
+| `instructions` | ✅ | - | Instructions to match within this program (see below). |
+| `idl` | - | - | Path to an Anchor IDL JSON. If set, HyperIndex derives each instruction's `args` + `accounts` from it. **Mutually exclusive** with per-instruction inline `args`/`accounts`. |
+| `handler` | - | auto | Path to the file that registers this program's handlers. By default handler files are auto-loaded. |
 
 ## `instructions`
 
@@ -130,25 +137,30 @@ instruction apart from the program's others.
 
 ### Field selection
 
-By default a handler receives only the instruction itself. Opt into more data
-per instruction:
+By default a handler receives only the instruction itself, plus its block's
+`slot`/`time`/`hash`. Opt into more data per instruction:
 
-| Toggle | Adds to the event |
-| --- | --- |
-| `transaction_fields: true` | `event.transaction` — signatures, fee payer, fee, compute units, success, account keys. |
-| `token_balance_fields: true` | `event.transaction.tokenBalances` — pre/post SPL Token balances. **Implies `transaction_fields`.** |
-| `log_fields: true` | `event.logs` — program logs scoped to this instruction. |
+| Key | Value | Adds to the handler's `instruction` |
+| --- | --- | --- |
+| `transaction_fields` | list of field names | `instruction.transaction.<field>` for each selected field: `signatures`, `feePayer`, `success`, `err`, `fee`, `computeUnitsConsumed`, `accountKeys`, `recentBlockhash`, `version`, `transactionIndex`. |
+| `block_fields` | list of field names | `instruction.block.<field>` on top of the always-present `slot`/`time`/`hash`: `height`, `parentSlot`, `parentHash`. |
+| `token_balance_fields` | `true` | `instruction.transaction.tokenBalances`: pre/post SPL Token balances. Independent of `transaction_fields`. |
+| `log_fields` | `true` | `instruction.logs`: program logs scoped to this instruction. |
 
 ```yaml
 field_selection:
-  token_balance_fields: true   # also gives you transaction fields
+  transaction_fields:
+    - signatures
+    - feePayer
+  block_fields:
+    - height
+  token_balance_fields: true
   log_fields: true
 ```
 
-:::note `true` only, for now
-Each toggle currently accepts `true` (all fields) only. Per-field name lists are
-not yet supported.
-:::
+Unselected fields are typed as compile errors in the handler (`FieldNotSelected`),
+so reading a field you forgot to select fails at `tsc` time, not silently at
+runtime.
 
 ### Account filters
 
