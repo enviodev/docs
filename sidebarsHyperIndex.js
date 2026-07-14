@@ -117,7 +117,22 @@ module.exports = {
       ],
     },
     networksSection,
-    "solana/solana",
+    {
+      type: "category",
+      label: "Solana",
+      link: {
+        type: "doc",
+        id: "solana/solana",
+      },
+      items: [
+        "solana/solana-getting-started",
+        "solana/solana-configuration",
+        "solana/solana-instruction-handlers",
+        "solana/solana-decoding",
+        "solana/solana-slot-handlers",
+        "solana/solana-evm-vs-solana",
+      ],
+    },
     "fuel/fuel",
     // Divider to split off the bottom section (LLM docs + legal), matching the
     // divider under the top quick-links section.
