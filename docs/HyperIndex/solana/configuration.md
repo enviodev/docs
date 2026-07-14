@@ -76,8 +76,9 @@ chains:
 :::note No EVM-style global fields
 For Solana, several EVM top-level fields don't apply: `contracts`,
 `rollback_on_reorg`, `save_full_history`, `raw_events`, a global
-`field_selection`, and `address_format`. Reorg-related options are fixed off
-(Solana indexes finalized data). Field selection is **per-instruction** only
+`field_selection`, and `address_format`. Reorg handling isn't a config knob:
+the HyperSync source rolls back on reorg automatically, while the RPC source
+indexes finalized data only. Field selection is **per-instruction** only
 (see [field selection](#field-selection)).
 :::
 
@@ -128,7 +129,7 @@ instruction apart from the program's others.
 | Field | Required | Default | Notes |
 | --- | --- | --- | --- |
 | `name` | ✅ | — | The instruction name. For Anchor IDL programs this should match the IDL instruction (the snake_cased name is used to derive the default discriminator). Also the key in `onInstruction({ instruction: "<name>" })`. |
-| `discriminator` | — | — | Hex bytes that identify the instruction (e.g. `"0xc1209b3341d69c81"`). See [discriminators](/docs/HyperIndex/solana/decoding#discriminators). Without it, the instruction matches purely on program + filters and isn't decoded by discriminator. |
+| `discriminator` | — | — | Hex bytes that identify the instruction (e.g. `"0xc1209b3341d69c81"`). **Modern Anchor IDLs (0.30+) embed it, so HyperIndex reads it automatically; legacy Anchor IDLs and native/inline-schema instructions need it set explicitly.** See [discriminators](/docs/HyperIndex/solana/decoding#discriminators). Without a discriminator (embedded or configured), the instruction matches purely on program + filters and isn't decoded by discriminator. |
 | `is_inner` | — | *unset* | `true` = inner (CPI) only, `false` = top-level only, **omitted = matches both**. |
 | `args` | — | — | Inline argument schema (Borsh), `{ name, type }` per arg. Requires `accounts` too. Mutually exclusive with the program's `idl`. See [supported types](/docs/HyperIndex/solana/decoding#supported-argument-types). |
 | `accounts` | — | — | Inline ordered list of account names. The Nth name labels the Nth account. Requires `args` too. |

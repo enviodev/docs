@@ -14,7 +14,7 @@ and handlers differ.
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org) v20+ and [pnpm](https://pnpm.io) (or npm/yarn/bun)
+- [Node.js](https://nodejs.org) v20+ and [pnpm](https://pnpm.io). The commands below use `pnpm`/`pnpx`; npm, Yarn, and Bun work too if you swap the equivalents
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) (for the local Postgres + GraphQL stack)
 - A HyperSync API token — the CLI's login flow sets this up for you, or generate one in the [Envio Cloud portal](https://envio.dev/app/api-tokens). See [API tokens](/docs/HyperSync/api-tokens).
 
@@ -36,15 +36,9 @@ pnpx envio init svm template --template metaplex-token-metadata --name my-indexe
 pnpx envio init svm template --template feature-block-handler  --name my-indexer
 ```
 
-:::note Solana is TypeScript-only
-The `--language` flag is ignored for Solana; projects are always scaffolded in
-TypeScript. There is no `contract-import` flow for Solana — unlike EVM/Fuel you
-wire up programs in `config.yaml` by hand (see [Configuration](/docs/HyperIndex/solana/configuration)).
-:::
-
 The template scaffolds:
 
-```
+```text
 my-indexer/
 ├── config.yaml          # chain + program/instruction selection
 ├── schema.graphql       # the entities you index into
@@ -110,7 +104,7 @@ instructions you want, then write a handler. The shortest path:
 ```yaml title="config.yaml"
 ecosystem: svm
 chains:
-  - start_block: 417995000
+  - start_block: 417995000 # example only; query /height (step 2) and pick a recent slot within the retention window
     experimental:
       hypersync_config:
         url: https://solana.hypersync.xyz

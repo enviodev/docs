@@ -21,9 +21,8 @@ fast and you never touch an RPC node for the bulk of indexing.
 
 :::info Early access — and a good time to shape it
 Solana support is **experimental and pre-release**. The program/instruction
-config surface (the chain-level `experimental` key) may change, indexers are
-**TypeScript-only**, and the indexer tracks **finalized data** (no reorg
-handling — see [below](#what-is-not-supported-yet)). The APIs documented here are
+config surface (the chain-level `experimental` key) may change, and indexers are
+**TypeScript-only**. The APIs documented here are
 the latest in active development. If you're building on Solana, say hello on
 [Discord](https://discord.gg/envio) — we can tell you which pieces are stable,
 which are moving, and often suggest a better data path for your use case.
@@ -78,7 +77,6 @@ See [EVM vs Solana](/docs/HyperIndex/solana/evm-vs-solana) for the full picture.
 
 ## What is not supported yet
 
-- **Reorg handling.** Solana indexers track finalized data only; there is no rollback-on-reorg. Expect a short latency at the head.
 - **Native SOL balance fields on handlers.** Pre/post **token** balances are surfaced today; native SOL (lamport) balances are available via [HyperSync](/docs/HyperSync/solana) directly but not yet as a handler field-selection toggle.
 - **Account-change subscriptions.** There is no `onAccount`/program-account handler. Account *state* is available only as the accounts referenced by an instruction (plus per-transaction token balances).
 - **A separate log handler.** Logs are a field on the instruction event, not their own handler.

@@ -42,7 +42,7 @@ difference in one place.
 | Matching key | event signature (from ABI) | `discriminator` (hex, 1/2/4/8 bytes) |
 | Decoding source | ABI | Anchor IDL, inline `args`+`accounts`, or bundled |
 | Field selection | global, rich block/transaction field lists | per-instruction: `transaction_fields`/`block_fields` (field name lists), `token_balance_fields`/`log_fields` (`true`) |
-| Reorg options | `rollback_on_reorg`, `save_full_history` | not configurable — finalized data only |
+| Reorg options | `rollback_on_reorg`, `save_full_history` | not a config knob; the HyperSync source rolls back on reorg automatically, while the RPC source is finalized-only |
 
 :::note `chains`, not `networks`
 Current HyperIndex uses `chains` for both EVM and Solana. (Older versions used
@@ -119,13 +119,11 @@ there's no direct EVM equivalent built into the event. See
 
 These EVM features have no Solana equivalent today:
 
-- **Reorg handling** (`rollback_on_reorg`) — Solana indexes finalized data.
 - **No-code contract import** — no `envio init svm contract-import`; configure programs by hand.
 - **Account-change / log handlers** — no `onAccount`; logs are an event field, not a handler.
 - **Dynamic/factory registration** — no Solana equivalent of [dynamic contracts](/docs/HyperIndex/dynamic-contracts) yet.
 - **Wildcard indexing** across all programs.
 - **ReScript** — Solana indexers are TypeScript only.
-- **Per-field selection** — toggles are `true`/absent, not field-name lists.
 
 What's the same: the [schema file](/docs/HyperIndex/schema), the entity
 `context` API, the [Effect API](/docs/HyperIndex/effect-api), local Docker dev,

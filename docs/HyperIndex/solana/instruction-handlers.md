@@ -59,6 +59,13 @@ indexer.onInstruction(
 );
 ```
 
+:::note Reading `instruction.transaction`
+`instruction.transaction.signatures[0]` is only populated when the instruction
+opts into it via [field selection](/docs/HyperIndex/solana/configuration#field-selection)
+(`transaction_fields: [signatures]` in `config.yaml`). Without it the field is
+absent and won't type-check.
+:::
+
 ## The instruction object
 
 The handler receives `{ instruction, context }`. The instruction carries its own
