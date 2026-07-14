@@ -76,9 +76,9 @@ chains:
 :::note No EVM-style global fields
 For Solana, several EVM top-level fields don't apply: `contracts`,
 `rollback_on_reorg`, `save_full_history`, `raw_events`, a global
-`field_selection`, and `address_format`. Reorg handling isn't a config knob:
-the HyperSync source rolls back on reorg automatically, while the RPC source
-indexes finalized data only. Field selection is **per-instruction** only
+`field_selection`, and `address_format`. Reorgs are handled automatically on
+the HyperSync source (it rolls back on reorg); the RPC source indexes finalized
+data only. Field selection is **per-instruction** only
 (see [field selection](#field-selection)).
 :::
 

@@ -42,7 +42,7 @@ difference in one place.
 | Matching key | event signature (from ABI) | `discriminator` (hex, 1/2/4/8 bytes) |
 | Decoding source | ABI | Anchor IDL, inline `args`+`accounts`, or bundled |
 | Field selection | global, rich block/transaction field lists | per-instruction: `transaction_fields`/`block_fields` (field name lists), `token_balance_fields`/`log_fields` (`true`) |
-| Reorg options | `rollback_on_reorg`, `save_full_history` | not a config knob; the HyperSync source rolls back on reorg automatically, while the RPC source is finalized-only |
+| Reorg options | `rollback_on_reorg`, `save_full_history` | handled automatically on the HyperSync source (rolls back on reorg); the RPC source is finalized-only |
 
 :::note `chains`, not `networks`
 Current HyperIndex uses `chains` for both EVM and Solana. (Older versions used
