@@ -267,6 +267,46 @@ const config = {
     defaultLocale: "en",
     locales: ["en"],
   },
+  // Site-wide structured data. The Organization node is mirrored verbatim from
+  // envio.dev (same @id/logo/sameAs) so search + answer engines treat the docs
+  // subdomain and the marketing site as one entity. The WebSite node is docs-
+  // specific and points back to that shared Organization as its publisher.
+  headTags: [
+    {
+      tagName: "script",
+      attributes: { type: "application/ld+json" },
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "@id": "https://envio.dev/#organization",
+        name: "Envio",
+        url: "https://envio.dev",
+        logo: "https://envio.dev/brand-assets/envio-logo-square.png",
+        description:
+          "Envio is a real-time multichain blockchain indexer. Index, query, and stream onchain data for Web3 apps across any EVM chain, plus Solana and Fuel.",
+        sameAs: [
+          "https://twitter.com/envio_indexer",
+          "https://github.com/enviodev",
+          "https://www.linkedin.com/company/envio_indexer",
+          "https://discord.gg/envio",
+        ],
+      }),
+    },
+    {
+      tagName: "script",
+      attributes: { type: "application/ld+json" },
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://docs.envio.dev/#website",
+        name: "Envio Documentation",
+        url: "https://docs.envio.dev",
+        description:
+          "Envio's documentation for HyperIndex, HyperSync and HyperRPC. Learn how to index blockchain data, query real-time data and build production-ready applications.",
+        publisher: { "@id": "https://envio.dev/#organization" },
+      }),
+    },
+  ],
   presets: [
     [
       "classic",
