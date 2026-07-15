@@ -296,6 +296,11 @@ const config = {
             "/docs/HyperSync-LLM/**",
             "/docs/HyperRPC-LLM/**",
             "/docs/EnvioCloud-LLM/**",
+            // Legacy v2 docs near-duplicate the live v3 pages; keep them out of
+            // the sitemap so they don't compete for the same rankings.
+            "/docs/v2/HyperIndex/**",
+            // Client-side search results page carries no indexable content.
+            "/search",
           ],
         },
       }),
