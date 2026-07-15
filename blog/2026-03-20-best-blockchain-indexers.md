@@ -2,6 +2,7 @@
 title: "Best Blockchain Indexers in 2026: Real Benchmark Comparison"
 sidebar_label: Best Blockchain Indexers in 2026
 slug: /best-blockchain-indexers-2026
+authors: ["j_o_r_d_y_s"]
 description: "The most accurate, benchmark-backed comparison of the best blockchain indexers in 2026, including the fastest EVM indexer (Envio HyperIndex) and top alternatives to The Graph. Covers Envio, The Graph, Goldsky, SubQuery, Subsquid, Ormi, and Ponder."
 image: /blog-assets/best-blockchain-indexers.png
 last_update:
