@@ -37,7 +37,7 @@ HyperFuel requires an API token. Generate one from the [Envio Dashboard](https:/
 
 Below is an example of a Hyperfuel query in each of our clients searching the first 1,300,000 blocks for all `input` objects of a specific `asset-id`. This example returns 10,543 inputs in around 100ms - not including latency.
 
-## Rust ([repo](https://github.com/enviodev/hyperfuel-client-rust/tree/main/examples/asset-id))
+## Rust ([repo](https://github.com/enviodev/hyperfuel-client-rust/tree/main/examples))
 
 ```rust
 use hyperfuel_client::{Client, ClientConfig};
