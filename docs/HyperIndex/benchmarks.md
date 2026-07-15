@@ -6,6 +6,39 @@ slug: /benchmarks
 description: Discover HyperIndex benchmarks and see why it's the fastest blockchain data indexer.
 ---
 
+import Head from '@docusaurus/Head';
+
+{/* Dataset structured data: describes this benchmark page for search + answer
+    engines and points them at the open benchmark data. Metadata only — it does
+    not restate the figures in the table below. */}
+<Head>
+  <script type="application/ld+json">
+    {JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Dataset",
+      "name": "HyperIndex Blockchain Indexer Benchmarks",
+      "description":
+        "Independent, reproducible performance benchmarks comparing Envio HyperIndex against other blockchain indexers, including The Graph, Ponder, and Subsquid, across real-world indexing scenarios. Based on benchmarks conducted by Sentio.",
+      "url": "https://docs.envio.dev/docs/HyperIndex/benchmarks",
+      "keywords": [
+        "blockchain indexer",
+        "indexing benchmark",
+        "Envio HyperIndex",
+        "The Graph",
+        "Ponder",
+        "Subsquid",
+        "EVM",
+      ],
+      "publisher": { "@id": "https://envio.dev/#organization" },
+      "isAccessibleForFree": true,
+      "sameAs": [
+        "https://github.com/enviodev/sentio-benchmark",
+        "https://github.com/enviodev/open-indexer-benchmark",
+      ],
+    })}
+  </script>
+</Head>
+
 # HyperIndex Performance Benchmarks
 
 ## Overview
