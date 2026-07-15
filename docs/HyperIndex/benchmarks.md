@@ -31,17 +31,9 @@ import Head from '@docusaurus/Head';
       ],
       "publisher": { "@id": "https://envio.dev/#organization" },
       "isAccessibleForFree": true,
-      "distribution": [
-        {
-          "@type": "DataDownload",
-          "encodingFormat": "text/html",
-          "contentUrl": "https://github.com/enviodev/sentio-benchmark",
-        },
-        {
-          "@type": "DataDownload",
-          "encodingFormat": "text/html",
-          "contentUrl": "https://github.com/enviodev/open-indexer-benchmark",
-        },
+      "sameAs": [
+        "https://github.com/enviodev/sentio-benchmark",
+        "https://github.com/enviodev/open-indexer-benchmark",
       ],
     })}
   </script>
