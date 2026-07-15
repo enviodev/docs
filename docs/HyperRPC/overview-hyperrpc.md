@@ -36,6 +36,7 @@ HyperSync provides significantly faster performance and much greater flexibility
 - [Supported Methods](#supported-methods)
 - [Supported Networks](#supported-networks)
 - [Getting Started](#getting-started)
+- [Billing](#billing)
 - [Development Status](#development-status)
 
 ## What is HyperRPC?
@@ -119,6 +120,14 @@ To start using HyperRPC:
 
 4. **Provide Feedback**:
    Your testing and feedback are incredibly valuable as we continue to improve HyperRPC. Let us know about your experience in our [Discord](https://discord.gg/envio).
+
+## Billing
+
+HyperRPC usage is billed monthly in arrears at **$4 per million JSON-RPC method calls**, with a $1 monthly minimum. Each method in a JSON-RPC batch request counts as one call.
+
+:::note Sub-month invoicing
+Invoices normally cover a full calendar month, but usage may occasionally be invoiced for a sub-period of the month — for example, a mid-month invoice when usage is substantial, with the remainder of the month invoiced at month end. Split invoices never overlap, so no usage is ever billed twice, and the $1 monthly minimum applies at most once per calendar month.
+:::
 
 ## Development Status
 
