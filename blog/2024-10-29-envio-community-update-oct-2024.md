@@ -134,7 +134,7 @@ This month's featured developer and community member of the month is [Ankush Jha
 
 Ankush developed a GMX V2 multichain indexer spanning Arbitrum and Avalanche, where GMX data can be queried via a unified API. The code repo is available on [GitHub](https://github.com/Noveleader/gmx-v2-subgraph-envio).
 
-Be sure to follow Ankush on [X](https://x.com/0xnoveleader) and check out his work on [GitHub](https://github.com/noveleader) to stay up-to-date with their latest projects and contributions.
+Be sure to check out Ankush's work on [GitHub](https://github.com/noveleader) to stay up-to-date with their latest projects and contributions.
 
 For a full list of deployed indexers visit our [explorer](https://envio.dev/explorer).
 

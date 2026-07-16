@@ -43,7 +43,7 @@ By [Martin Lettry](https://x.com/MartinLettry)
 
 [Hypertui](https://ethglobal.com/showcase/hypertui-dshua) is a terminal UI analytics tool that provides onchain data insights for Ethereum and EVM-compatible chains. This innovative application demonstrates the versatility of Envio's features and encourages developers to explore new ways to interact with blockchain data.
 
-By [Falco Rodenburg](https://x.com/anestha_).
+By Falco Rodenburg.
 
 <img src="/blog-assets/ethonline-hackathon-winners-4.png" alt="Hypertui terminal UI showing regular transfers, ERC20 transfers, and transaction details with onchain stats" width="100%"/>
 
@@ -51,7 +51,7 @@ By [Falco Rodenburg](https://x.com/anestha_).
 
 [ZkDNS](https://ethglobal.com/showcase/zkdns-0fo7m) is a privacy-preserving multichain domain resolver that utilizes ZkProofs for enhanced security. This project bridges the gap between Web2 and Web3 through DNS and ENS systems, offering tokenized domains and expedited queries while maintaining user privacy.
 
-By [Dhananjay Pa](https://x.com/dhananj10181396).
+By Dhananjay Pa.
 
 <img src="/blog-assets/ethonline-hackathon-winners-5.png" alt="ZkDNS 'Add ENS Record' form with fields for staking, ENS name, ETH address, and expiry date for vitalik.eth" width="100%"/>
 

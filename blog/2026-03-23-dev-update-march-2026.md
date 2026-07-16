@@ -152,8 +152,7 @@ Check out this Uniswap CCA indexer built with HyperIndex to index continuous cle
 
 Shoutout to [@0xdivergence](https://x.com/0xdivergence) for sharing this and building with Envio.
 
-Check it out on GitHub: [https://github.com/dzmbs/uniswap-cca-indexer](https://github.com/dzmbs/uniswap-cca-indexer)  
-Original post on X: [https://x.com/0xdivergence/status/1769735600377133273](https://x.com/0xdivergence/status/1769735600377133273)
+Check it out on GitHub: [https://github.com/dzmbs/uniswap-cca-indexer](https://github.com/dzmbs/uniswap-cca-indexer)
 
 ## Open Indexer Benchmark
 
