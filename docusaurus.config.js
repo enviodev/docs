@@ -237,6 +237,12 @@ const redirectsList = [
     from: "/docs/v2/HyperIndex/whats-new-in-v3",
     to: "/docs/HyperIndex/whats-new-in-v3",
   },
+  // Removed broken `others.md` (empty aggregation stub); send its URL to the
+  // supported-networks index rather than 404.
+  {
+    from: "/docs/HyperIndex/supported-networks/others",
+    to: "/docs/HyperIndex/supported-networks",
+  },
 ];
 // Load build-time generated network count (written by scripts/update-endpoints.js).
 // Falls back to a safe default if the file hasn't been generated yet.
