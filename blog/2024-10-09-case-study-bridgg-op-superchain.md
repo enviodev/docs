@@ -45,7 +45,7 @@ With user experience as a core focus, Brid.gg allows users to view their past an
 <img src="/blog-assets/case-study-bridgg-op-superchain-2.png" alt="Bridgg Account History Feature" width="100%"/>
 *Screenshot of Brid.gg's built-in account history dashboard*
 
-Visit [Brid.gg](http://brid.gg/) directly or find them listed in the [Optimism](https://app.optimism.io/bridge/deposit) and [Base](https://docs.base.org/docs/tools/bridges/) docs.
+Visit [Brid.gg](http://brid.gg/) directly or find them listed in the [Optimism](https://app.optimism.io/bridge/deposit) and [Base](https://docs.base.org/base-chain/network-information/ecosystem-bridges) docs.
 
 ## How Envio Supercharges Brid.gg
 

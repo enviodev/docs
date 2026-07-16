@@ -147,7 +147,7 @@ To stay updated on our upcoming events and where to find us next, check out the 
 
 <img src="/blog-assets/envio-developer-community-november-2024-7.png" alt="Envio Featured Developer banner for Chris Koo with avatar over a glowing jar" width="100%"/>
 
-This month's featured developer and community member is Chris Koo, a talented developer and crypto enthusiast known for his contributions to the DeFi space. Chris created the [Salt Dex Indexer](https://v2.envio.dev/app/hashscape/salt-dex-indexer-prod), which indexes Uniswap V2 and V3 across all EVM chains, enabling users to easily access decentralized trading through [Salt](https://saltapp.xyz/) - an all-in-one trading service that connects over 30 chains and all major DEXs, allowing you to trade newly created tokens quickly and securely.
+This month's featured developer and community member is Chris Koo, a talented developer and crypto enthusiast known for his contributions to the DeFi space. Chris created the [Salt Dex Indexer](https://v2.envio.dev/app/hashscape/salt-dex-indexer-prod), which indexes Uniswap V2 and V3 across all EVM chains, enabling users to easily access decentralized trading through Salt - an all-in-one trading service that connects over 30 chains and all major DEXs, allowing you to trade newly created tokens quickly and securely.
 
 ***"Envio Indexer's speed comes from its amazing team. They love solving problems and keep pushing themselves to find better solutions. That's how Envio stays the top indexer." – Chris Koo***
 

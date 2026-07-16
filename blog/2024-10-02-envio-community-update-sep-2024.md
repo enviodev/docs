@@ -81,9 +81,9 @@ A big thank you to all the attendees, sponsors, and event organizers for making 
 
 ## Upcoming Events
 
-- [Golden Gate Promenade Run with Envio](https://lu.ma/1v6mzzx0) - October 16
+- Golden Gate Promenade Run with Envio - October 16
 - [EthGlobal, EthSanFransisco](https://ethglobal.com/events/sanfrancisco2024) - October 18-20
-- [Encode London](https://www.encode.club/encodelondon-24) - October 25-27
+- Encode London - October 25-27
 
 ## Workshops & Developer Tutorials
 

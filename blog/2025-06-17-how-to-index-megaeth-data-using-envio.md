@@ -31,7 +31,7 @@ Unlike other chains that trade off EVM compatibility for speed, MegaETH keeps yo
 
 ### Key features
 
-- [Mini Blocks + EVM Blocks](https://docs.megaeth.com/mini-blocks): Fast mini-blocks (~10 ms) combined with full EVM block finality offer real-time latency and standard blockchain guarantees.
+- [Mini Blocks + EVM Blocks](https://docs.megaeth.com/architecture): Fast mini-blocks (~10 ms) combined with full EVM block finality offer real-time latency and standard blockchain guarantees.
 - [High-Throughput Sequencing + Parallel Execution](https://docs.megaeth.com/architecture): MegaETH achieves high TPS through a centralized sequencer architecture and parallel execution across node types.
 - [Realtime API Access](https://docs.megaeth.com/realtime-api): The Realtime API surfaces mini-block data via standard JSON-RPC methods, allowing near-instant visibility into state and transaction outcomes.
 - **EigenDA-Powered Data Availability**: By integrating EigenDA, MegaETH enables scalable, secure data access without burdening Ethereum's onchain storage.
@@ -90,7 +90,6 @@ This is just one of many examples of what Envio is powering in the MegaETH ecosy
 * [Envio's HyperSync](https://docs.envio.dev/docs/HyperSync/overview)
 * [Envio's Hosted Service](https://docs.envio.dev/docs/HyperIndex/hosted-service)
 * [Indexing MegaETH Data with Envio](https://docs.envio.dev/docs/HyperIndex/megaeth-testnet#indexing-megaeth-testnet-data-with-envio)
-* [Indexers on MegaETH](https://docs.megaeth.com/infra)
 
 ## Frequently asked questions
 

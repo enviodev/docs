@@ -63,7 +63,7 @@ Six indexing solutions were included:
 - [Envio](https://envio.dev/) v0.0.20
 - [Envio](https://envio.dev/) v0.0.19
 - [Subsquid](https://subsquid.io/)
-- Subgraph on [The Graph](https://thegraph.com/hosted-service) hosted service
+- Subgraph on [The Graph](https://thegraph.com/) hosted service
 - [Ponder](https://ponder.sh/)
 - [Substreams-powered Subgraph](https://thegraph.com/docs/en/cookbook/substreams-powered-subgraphs/) on The Graph hosted service
 

@@ -88,7 +88,7 @@ Specifically, Envio supports zkPass in:
 
 ## How Envio Enhances zkPass with Multichain Support
 
-zkPass utilizes Envio's [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) to efficiently index and aggregate data across eight EVM networks, including [Optimism](https://www.optimism.io/), [Binance Smart Chain](https://www.bnbchain.org/en), [X Layer](https://www.okx.com/xlayer), [Base](https://www.base.org/), and [Arbitrum](https://arbitrum.io/). This enables zkPass to seamlessly query real-time and historical data from their smart contract deployments, providing a comprehensive view of their application data and user actions.
+zkPass utilizes Envio's [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview) to efficiently index and aggregate data across eight EVM networks, including [Optimism](https://www.optimism.io/), [Binance Smart Chain](https://www.bnbchain.org/en), [X Layer](https://web3.okx.com/xlayer), [Base](https://www.base.org/), and [Arbitrum](https://arbitrum.io/). This enables zkPass to seamlessly query real-time and historical data from their smart contract deployments, providing a comprehensive view of their application data and user actions.
 
 <img src="/blog-assets/zkpass-casestudy-3.png" alt="GraphQL Playground Example Query" width="100%"/>
 
