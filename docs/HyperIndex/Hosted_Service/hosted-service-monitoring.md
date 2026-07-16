@@ -3,6 +3,7 @@ id: hosted-service-monitoring
 title: Monitoring Your Indexer
 sidebar_label: Monitoring
 slug: /hosted-service-monitoring
+description: Monitor your hosted blockchain indexer on Envio Cloud with the real-time dashboard, deployment status, logs, error detection, and configurable alerts.
 ---
 
 # Monitoring Your Blockchain Indexer

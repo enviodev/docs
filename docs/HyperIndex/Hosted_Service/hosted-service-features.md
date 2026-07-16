@@ -3,6 +3,7 @@ id: hosted-service-features
 title: Features
 sidebar_label: Features
 slug: /hosted-service-features
+description: Envio Cloud features to manage and secure your hosted blockchain indexer, including deployment tags, IP whitelisting, and API key authentication.
 ---
 
 # Envio Cloud Features
