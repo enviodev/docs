@@ -85,7 +85,7 @@ The webhook channel sends a structured JSON payload via HTTP POST to any URL you
 **Custom Headers (optional):** When creating a webhook channel, you can add custom HTTP headers that will be sent with every request. This is useful for services that require authentication via API keys or bearer tokens — for example, incident.io requires an `Authorization: Bearer <token>` header.
 
 :::warning
-The webhook channel is a generic HTTP endpoint. It is not guaranteed to work with all third-party services — please see the [integration guides below](#webhook-integrations) for supported setup instructions. If you need help integrating with a specific service, please reach out on the [Envio Discord](https://discord.envio.dev).
+The webhook channel is a generic HTTP endpoint. It is not guaranteed to work with all third-party services — please see the [integration guides below](#webhook-integrations) for supported setup instructions. If you need help integrating with a specific service, please reach out on the [Envio Discord](https://discord.gg/envio).
 :::
 
 **Webhook Payload Schema:**
