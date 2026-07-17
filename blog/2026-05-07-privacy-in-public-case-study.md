@@ -236,5 +236,5 @@ Envio HyperIndex is independently benchmarked as the fastest EVM blockchain inde
 - Repo: [https://github.com/enviodev/privacy-pools](https://github.com/enviodev/privacy-pools)
 - Docs: [https://docs.envio.dev/](https://docs.envio.dev/)
 - Discord: [https://discord.gg/envio](https://discord.gg/envio)
-- Telegram: [https://t.me/+kAIGElzPjApiMjI0](https://t.me/+kAIGElzPjApiMjI0)
+- Telegram: [https://t.me/+BeS5ihVUFONjNGFk](https://t.me/+BeS5ihVUFONjNGFk)
 - X: [https://x.com/envio_indexer](https://x.com/envio_indexer)

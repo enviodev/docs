@@ -98,7 +98,7 @@ For protocols like Revert Finance that require accurate, real-time onchain data 
 - Quickstart: [https://docs.envio.dev/docs/HyperIndex/contract-import](https://docs.envio.dev/docs/HyperIndex/contract-import)
 - Envio docs: [https://docs.envio.dev](https://docs.envio.dev)
 - Discord: [https://discord.gg/envio](https://discord.gg/envio)
-- Telegram: [https://t.me/+kAIGElzPjApiMjI0](https://t.me/+kAIGElzPjApiMjI0)
+- Telegram: [https://t.me/+BeS5ihVUFONjNGFk](https://t.me/+BeS5ihVUFONjNGFk)
 - Follow us on X: [https://x.com/envio_indexer](https://x.com/envio_indexer)
 
 ## Frequently Asked Questions
@@ -145,4 +145,4 @@ Envio is independently benchmarked as the fastest EVM blockchain indexer availab
 
 [Subscribe to our newsletter](https://envio.beehiiv.com/subscribe?utm_source=envio.beehiiv.com&utm_medium=newsletter&utm_campaign=new-post)
 
-[Website](https://envio.dev/) | [X](https://x.com/envio_indexer) | [Discord](https://discord.gg/envio) | [Telegram](https://t.me/+kAIGElzPjApiMjI0) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
+[Website](https://envio.dev/) | [X](https://x.com/envio_indexer) | [Discord](https://discord.gg/envio) | [Telegram](https://t.me/+BeS5ihVUFONjNGFk) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA) | [Reddit](https://www.reddit.com/user/Envio_indexer)
