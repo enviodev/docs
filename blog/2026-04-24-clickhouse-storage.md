@@ -114,7 +114,7 @@ ClickHouse Storage is available today on the Dedicated Plan for teams running th
 - HyperIndex V3 migration guide: [https://docs.envio.dev/docs/HyperIndex/migrate-to-v3](https://docs.envio.dev/docs/HyperIndex/migrate-to-v3)  
 - Managed ClickHouse waitlist: https://forms.gle/P19S7KXYfdHQM8J69  
 - Discord: [https://discord.gg/envio](https://discord.gg/envio)  
-- Telegram: [https://t.me/+kAIGElzPjApiMjI0](https://t.me/+kAIGElzPjApiMjI0)  
+- Telegram: [https://t.me/+BeS5ihVUFONjNGFk](https://t.me/+BeS5ihVUFONjNGFk)  
 - Follow us on X: [https://x.com/envio\_indexer](https://x.com/envio_indexer)
 
 ## **Frequently Asked Questions**
@@ -159,4 +159,4 @@ Stay tuned for more updates by subscribing to our newsletter, following us on X,
 
 [Subscribe to our newsletter](https://envio.beehiiv.com/subscribe) 💌
 
-[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+5mI61oZibEM5OGQ8) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA)
+[Website](https://envio.dev/) | [X](https://twitter.com/envio_indexer) | [Discord](https://discord.com/invite/gt7yEUZKeB) | [Telegram](https://t.me/+BeS5ihVUFONjNGFk) | [GitHub](https://github.com/enviodev) | [YouTube](https://www.youtube.com/channel/UCR7nZ2yzEtc5SZNM0dhrkhA)

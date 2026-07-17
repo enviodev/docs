@@ -755,7 +755,7 @@ This file is generated from page frontmatter at build time and follows the llmst
               },
               {
                 label: "Telegram",
-                href: "https://t.me/+5mI61oZibEM5OGQ8",
+                href: "https://t.me/+BeS5ihVUFONjNGFk",
                 description: "Community chat.",
               },
               {
