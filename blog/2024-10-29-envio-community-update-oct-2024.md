@@ -88,7 +88,7 @@ Read the [full case study](https://docs.envio.dev/blog/case-study-bridgg-op-supe
 
 <img src="/blog-assets/envio-developer-community-oct-2024-4.png" alt="ModuleScan dashboard showing recent installations and uninstallations tables with chain ID, account, and module columns" width="100%"/>
 
-Congratulations to [ModuleScan](https://modulescan-ui.vercel.app/) for winning multiple prizes at the Encode hackathon! This innovative indexer tracks historical smart account module activity, showcasing:
+Congratulations to ModuleScan for winning multiple prizes at the Encode hackathon! This innovative indexer tracks historical smart account module activity, showcasing:
 
 - Recently deployed accounts
 - Installed and uninstalled modules
@@ -112,7 +112,7 @@ Kudos to [Timur Badretdinov](https://x.com/DestinerX)!
 
 <img src="/blog-assets/envio-developer-community-oct-2024-5.png" alt="Speaker presenting onstage at Zebu Live in front of a sponsor backdrop with Fabric, Eden Block, Bionic, Cherry, Fidesium logos" width="100%"/>
 
-We had a fantastic time at [Zebu Live](https://www.zebulive.xyz/) and the [Encode London](https://www.encode.club/encodelondon-24/#Prizes) Hackathon & Conference! At both events, we hosted data indexing workshops where blockchain developers could explore faster, smarter ways to access their onchain data, demonstrating how alternative indexers like Envio can improve their data retrieval.
+We had a fantastic time at [Zebu Live](https://www.zebulive.xyz/) and the Encode London Hackathon & Conference! At both events, we hosted data indexing workshops where blockchain developers could explore faster, smarter ways to access their onchain data, demonstrating how alternative indexers like Envio can improve their data retrieval.
 
 Additionally, we sponsored $4,500 in bounties at the Encode London Conference, encouraging developers to engage with our platform and showcase their skills. A massive thank you to the organizers and to everyone who attended our workshops and participated in our bounties.
 
@@ -134,7 +134,7 @@ This month's featured developer and community member of the month is [Ankush Jha
 
 Ankush developed a GMX V2 multichain indexer spanning Arbitrum and Avalanche, where GMX data can be queried via a unified API. The code repo is available on [GitHub](https://github.com/Noveleader/gmx-v2-subgraph-envio).
 
-Be sure to follow Ankush on [X](https://x.com/0xnoveleader) and check out his work on [GitHub](https://github.com/noveleader) to stay up-to-date with their latest projects and contributions.
+Be sure to check out Ankush's work on [GitHub](https://github.com/noveleader) to stay up-to-date with their latest projects and contributions.
 
 For a full list of deployed indexers visit our [explorer](https://envio.dev/explorer).
 

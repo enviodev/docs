@@ -83,7 +83,7 @@ MyContract.Transfer.handler(async ({ event, context }) => {
 - [Envio HyperSync](https://docs.envio.dev/docs/HyperSync/overview)
 - [Contract Import](https://docs.envio.dev/docs/HyperIndex/contract-import)
 - [Envio Hosted Service](https://docs.envio.dev/docs/HyperIndex/hosted-service)
-- [LUKSO Docs](https://docs.lukso.tech/tools/partners/)
+- [LUKSO Docs](https://docs.lukso.tech/)
 
 ## About LUKSO
 

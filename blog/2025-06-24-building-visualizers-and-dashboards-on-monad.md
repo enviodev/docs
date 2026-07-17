@@ -61,8 +61,6 @@ By [@velkan_gst](https://x.com/velkan_gst)
 
 Miris is a fully featured chain visualizer offering insights into blocks, transactions, and overall network health. Envio handles the indexing of core protocols like Wormhole and Apr Labs, and the Explorer page uncovers activity from additional Monad projects. Built using Apollo Client and Next.js.
 
-Check it out [here](https://miris.vercel.app/)
-
 ## Monad Frens
 
 By [@WagmiArc](https://x.com/WagmiArc)
