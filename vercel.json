@@ -427,6 +427,11 @@
       "source": "/docs/migration-guide",
       "destination": "/docs/HyperIndex/migration-guide",
       "permanent": true
+    },
+    {
+      "source": "/blog/page/8",
+      "destination": "/blog",
+      "permanent": true
     }
   ],
   "headers": [
