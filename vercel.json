@@ -322,6 +322,116 @@
       "source": "/docs/HyperIndex/status.md",
       "destination": "/docs/HyperIndex/hosted-service.md",
       "permanent": true
+    },
+    {
+      "source": "/blog/envio-developer-update-may-2024",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-developer-update-may-2024.md",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-celebrates-first-grantee-multi-chain-liquidation-metrics-indexer",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-celebrates-first-grantee-multi-chain-liquidation-metrics-indexer.md",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-azuro-developer-grant-multi-chain-indexer",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-azuro-developer-grant-multi-chain-indexer.md",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-developer-community-update-no-4",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-developer-community-update-no-4.md",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-community-update-no-8",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-community-update-no-8.md",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-bounty-erc4626-tokenized-vault-indexer",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-bounty-erc4626-tokenized-vault-indexer.md",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-empowers-jarvis-network",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-empowers-jarvis-network.md",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-data-indexing-supports-developers-building-on-harmony",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-data-indexing-supports-developers-building-on-harmony.md",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-grant-program-now-live",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/envio-grant-program-now-live.md",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/example-liquidation-metrics",
+      "destination": "/docs/HyperIndex/overview",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/example-uniswap-v3-multi-chain-indexer",
+      "destination": "/docs/HyperIndex/overview",
+      "permanent": true
+    },
+    {
+      "source": "/docs/migration-guide",
+      "destination": "/docs/HyperIndex/migration-guide",
+      "permanent": true
+    },
+    {
+      "source": "/blog/page/8",
+      "destination": "/blog",
+      "permanent": true
     }
   ],
   "headers": [
