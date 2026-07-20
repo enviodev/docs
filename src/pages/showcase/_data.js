@@ -44,9 +44,9 @@ const sites = [
     slug: "rwa-radar",
     title: "RWA Radar",
     description:
-      "A real-time analytics dashboard for tracking real-world assets (RWAs) across multiple sectors and chains.",
+      "A real-time analytics dashboard for tracking tokenised stocks and stablecoins across multiple chains.",
     longDescription:
-      "RWA Radar is a real-time analytics dashboard that tracks real-world assets (RWAs) on-chain across multiple sectors, including stablecoins, credit, stocks, securities, and more. Built with Envio's HyperIndex, the dashboard shows token activity across multiple blockchain networks, providing sector-level breakdowns, volume metrics, and historical trends. You can view multichain data for any single asset in one unified view and export dashboard data as CSV, PDF, or XLSX for your own analysis. The dashboard gives researchers, investors, and DeFi developers a comprehensive window into the growing RWA ecosystem.",
+      "RWA Radar is a real-time analytics dashboard that tracks real-world assets (RWAs) on-chain across two asset classes, stablecoins and tokenised stocks. Built with Envio's HyperIndex, the dashboard shows token activity across multiple blockchain networks, providing asset-class breakdowns, volume metrics, and historical trends. You can view multichain data for any single asset in one unified view and export dashboard data as CSV, PDF, or XLSX for your own analysis. The dashboard gives researchers, investors, and DeFi developers a comprehensive window into the growing RWA ecosystem.",
     video: "/img/showcase/rwaradar.mp4",
     source: "https://rwaradar.io",
     tags: [tags.hyperindex],
@@ -55,9 +55,9 @@ const sites = [
     slug: "stable-volume",
     title: "Stable Volume",
     description:
-      "A real-time dashboard for monitoring stablecoin transactions across 10+ chains.",
+      "A real-time dashboard for monitoring USDC and USDT transfers across multiple chains.",
     longDescription:
-      "Stable Volume is a real-time analytics dashboard that tracks stablecoin transaction volume across more than 10 blockchain networks. Using Envio's HyperIndex, it indexes transfer events from major stablecoins including USDT, USDC, DAI, and others, providing up-to-date volume metrics, chain-by-chain breakdowns, and historical trend analysis. The platform leverages HyperIndex's multi-chain indexing to deliver a comprehensive cross-chain view of stablecoin activity, helping users understand liquidity flows and adoption trends across the ecosystem.",
+      "Stable Volume is a real-time analytics dashboard that tracks stablecoin transfer volume across multiple blockchain networks. Using Envio's HyperIndex, it indexes transfer events for USDC and USDT, providing up-to-date volume metrics, chain-by-chain breakdowns, and historical trend analysis. The platform leverages HyperIndex's multi-chain indexing to deliver a comprehensive cross-chain view of stablecoin activity, helping users understand liquidity flows and adoption trends across the ecosystem.",
     image: "/img/showcase/www.stablevolume.com-scroll_original.gif",
     source: "https://www.stablevolume.com/",
     tags: [tags.hyperindex],
@@ -68,7 +68,7 @@ const sites = [
     description:
       "A multi-chain liquidation tracking platform for DeFi Lending protocols.",
     longDescription:
-      "Liqo is a multi-chain liquidation tracking platform focused on DeFi lending protocols such as Aave, Compound, and others. Built with Envio's HyperIndex, it indexes liquidation events, health factor changes, and collateral positions across multiple chains in real time. The platform provides alerts, historical liquidation data, and protocol-level analytics, giving DeFi users and liquidators the information they need to monitor at-risk positions and understand liquidation dynamics across the lending ecosystem.",
+      "Liqo is a multi-chain liquidation tracking platform focused on DeFi lending protocols including Aave, Euler and Morpho. Built with Envio's HyperIndex, it indexes liquidation events, health factor changes, and collateral positions across multiple chains in real time. The platform provides alerts, historical liquidation data, and protocol-level analytics, giving DeFi users and liquidators the information they need to monitor at-risk positions and understand liquidation dynamics across the lending ecosystem.",
     image: "/img/showcase/www.liqo.xyz_.png",
     source: "https://liqo.xyz",
     tags: [tags.hyperindex],
@@ -90,7 +90,7 @@ const sites = [
     description:
       "Visualize and compare real-time oracle price data across multiple oracles.",
     longDescription:
-      "Oracle Wars is an interactive visualization tool that compares real-time price feed data from multiple blockchain oracle providers including Chainlink, Pyth, and others. Powered by Envio's HyperIndex, it indexes oracle price update events across chains, allowing users to compare price accuracy, update frequency, and deviation between different oracle solutions. The platform helps developers and researchers evaluate oracle reliability and make informed decisions about which price feed providers to integrate into their DeFi applications.",
+      "Oracle Wars is an interactive visualisation tool that compares real-time price feed data from three oracle providers, RedStone, Chainlink and Chronicle. Powered by Envio's HyperIndex, it indexes oracle price update events and refreshes the data every 30 seconds, letting users compare how each provider reports the ETH/USD pair on Ethereum, with more pairs coming soon. An Oracle Statistics panel breaks down update counts for each provider over the last 24 hours, helping developers and researchers evaluate oracle reliability and decide which price feed providers to integrate into their DeFi applications. A separate deployment tracks RedStone Bolt price feeds across several pairs on MegaETH Mainnet and Testnet.",
     image: "/img/showcase/www.oraclewars.xyz_.png",
     source: "https://oraclewars.xyz/",
     tags: [tags.hyperindex],
