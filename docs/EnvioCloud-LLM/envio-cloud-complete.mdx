@@ -139,8 +139,8 @@ Protect your endpoint with an API key—a secret token that clients include with
 - Include it with every request using the `Authorization` header as a Bearer token:
 
 ```bash
-curl https:///v1/graphql \
-  -H "Authorization: Bearer "
+curl https://<your-endpoint>/v1/graphql \
+  -H "Authorization: Bearer <your-api-key>"
 ```
 
 Requests without a valid key are rejected with a `401 Unauthorized` response.
@@ -613,7 +613,7 @@ Channels are configured at the organisation level via **Settings > Notification 
 
 The webhook channel sends a structured JSON payload via HTTP POST to any URL you provide. This makes it compatible with any service that accepts webhook-based alerts.
 
-**Custom Headers (optional):** When creating a webhook channel, you can add custom HTTP headers that will be sent with every request. This is useful for services that require authentication via API keys or bearer tokens — for example, incident.io requires an `Authorization: Bearer ` header.
+**Custom Headers (optional):** When creating a webhook channel, you can add custom HTTP headers that will be sent with every request. This is useful for services that require authentication via API keys or bearer tokens — for example, incident.io requires an `Authorization: Bearer <token>` header.
 
 :::warning
 The webhook channel is a generic HTTP endpoint. It is not guaranteed to work with all third-party services — please see the [integration guides below](#webhook-integrations) for supported setup instructions. If you need help integrating with a specific service, please reach out on the [Envio Discord](https://discord.gg/envio).
@@ -708,7 +708,7 @@ Set the dedup key path to `alert_id`. This ensures alerts are grouped per indexe
 3. Paste the webhook URL from incident.io
 4. Expand **Custom Headers** and add the authorization header:
    - **Header name**: `Authorization`
-   - **Value**: Copy the full `Bearer ` value from the incident.io source config
+   - **Value**: Copy the full `Bearer <token>` value from the incident.io source config
 5. Subscribe your indexer's alerts to this channel
 
 :::tip Proactive Monitoring
@@ -758,7 +758,7 @@ npm install -g envio-cloud
 Or run directly without installation:
 
 ```bash
-npx envio-cloud 
+npx envio-cloud <command>
 ```
 
 ## Shell Completion
@@ -769,7 +769,7 @@ Run the one-liner for your shell to install completions:
 
 | Shell | One-liner |
 |-------|-----------|
-| `zsh` | `echo 'source > ~/.zshrc` |
+| `zsh` | `echo 'source <(envio-cloud completion zsh)' >> ~/.zshrc` |
 | `bash` | `envio-cloud completion bash > ~/.local/share/bash-completion/completions/envio-cloud` |
 | `fish` | `envio-cloud completion fish > ~/.config/fish/completions/envio-cloud.fish` |
 | `powershell` | `envio-cloud completion powershell >> $PROFILE` |
@@ -840,8 +840,8 @@ Context is stored at `~/.envio-cloud/context.json`. Resolution priority:
 
 | Command | Description |
 |---------|-------------|
-| `config set-org ` | Set default organisation |
-| `config set-indexer ` | Set default indexer |
+| `config set-org <org>` | Set default organisation |
+| `config set-indexer <indexer>` | Set default indexer |
 | `config get-context` | Show current defaults and where they come from |
 | `config clear` | Remove all stored defaults |
 
@@ -870,7 +870,7 @@ envio-cloud indexer list -o json
 #### Get Indexer Details
 
 ```bash
-envio-cloud indexer get  [organisation]
+envio-cloud indexer get <name> [organisation]
 envio-cloud indexer get hyperindex mjyoung114 -o json
 envio-cloud indexer get hyperindex --org mjyoung114
 ```
@@ -935,6 +935,21 @@ envio-cloud indexer settings set myindexer myorg --config-file config.yaml --bra
 | `--description` | Indexer description |
 | `--access-type` | `public` or `private` |
 
+#### List Recent Commits
+
+Show recent commits pushed to the indexer's repository, along with their processing status. Commits with status `inactive` can be deployed manually with `envio-cloud deployment deploy`.
+
+```bash
+envio-cloud indexer commits myindexer myorg
+envio-cloud indexer commits myindexer --org myorg --limit 20
+envio-cloud indexer commits myindexer myorg -o json
+```
+
+| Flag | Description |
+|------|-------------|
+| `--limit` | Maximum number of commits to show (default: 10) |
+| `-o, --output` | Output format (`json`) |
+
 #### Manage Environment Variables
 
 Environment variables can be managed from the CLI. All keys must be prefixed with `ENVIO_`. Changes take effect on the next deployment.
@@ -987,12 +1002,12 @@ Add your IP addresses **before** enabling whitelisting — otherwise you may loc
 
 ### Deployment Commands
 
-All deployment commands accept arguments as `  [organisation]`. Organisation and indexer can be omitted if set via `envio-cloud config`.
+All deployment commands accept arguments as `<indexer> <commit> [organisation]`. Organisation and indexer can be omitted if set via `envio-cloud config`.
 
 #### Deployment Metrics
 
 ```bash
-envio-cloud deployment metrics   [organisation]
+envio-cloud deployment metrics <indexer> <commit> [organisation]
 envio-cloud deployment metrics hyperindex b3ead3a mjyoung114 --watch
 envio-cloud deployment metrics hyperindex b3ead3a mjyoung114 -o json
 ```
@@ -1007,7 +1022,7 @@ No authentication required.
 #### Deployment Status
 
 ```bash
-envio-cloud deployment status   [organisation]
+envio-cloud deployment status <indexer> <commit> [organisation]
 envio-cloud deployment status hyperindex b3ead3a mjyoung114 --watch-till-synced
 ```
 
@@ -1018,7 +1033,7 @@ envio-cloud deployment status hyperindex b3ead3a mjyoung114 --watch-till-synced
 #### Deployment Info
 
 ```bash
-envio-cloud deployment info   [organisation]
+envio-cloud deployment info <indexer> <commit> [organisation]
 ```
 
 #### Get Query Endpoint
@@ -1029,7 +1044,7 @@ deployment tier via the API. Output is a bare URL, so it composes cleanly with
 shell scripting.
 
 ```bash
-envio-cloud deployment endpoint   [organisation]
+envio-cloud deployment endpoint <indexer> <commit> [organisation]
 envio-cloud deployment endpoint hyperindex b3ead3a mjyoung114
 envio-cloud deployment endpoint hyperindex b3ead3a mjyoung114 -o json
 ```
@@ -1047,14 +1062,31 @@ curl "$(envio-cloud deployment endpoint hyperindex b3ead3a mjyoung114)" \
 | `--cluster` | Override cluster (`hyper`, `hypertierchicago`, `ip-projects`, `prodaws`, `staging`) |
 | `-o, --output` | Output format (`json`) |
 
-The `ep` alias is also available: `envio-cloud deployment ep  `.
+The `ep` alias is also available: `envio-cloud deployment ep <indexer> <commit>`.
+
+#### Manually Deploy a Commit
+
+Trigger a deployment of a specific commit — the CLI equivalent of the **Deploy** button in the Envio Cloud dashboard. Combined with disabling auto-deploy, this gives you full manual control over what gets deployed and when.
+
+```bash
+# Turn off automatic deploys on push
+envio-cloud indexer settings set myindexer myorg --auto-deploy=false
+
+# See recent commits and their statuses ('inactive' commits can be deployed)
+envio-cloud indexer commits myindexer myorg
+
+# Deploy a specific commit
+envio-cloud deployment deploy myindexer abc1234 myorg
+```
+
+Only commits with status `inactive` can be deployed. If a commit cannot be deployed (already active, still processing, missing config file, unsupported Envio version, etc.), the CLI explains why. Requires confirmation (`y/N`); skip with `--yes` for CI/CD.
 
 #### Promote a Deployment
 
 Promote a deployment to the production endpoint. Requires confirmation (`y/N`).
 
 ```bash
-envio-cloud deployment promote   [organisation]
+envio-cloud deployment promote <indexer> <commit> [organisation]
 envio-cloud deployment promote myindexer abc1234 myorg --yes
 ```
 
@@ -1063,7 +1095,7 @@ envio-cloud deployment promote myindexer abc1234 myorg --yes
 Permanently delete a deployment. Requires typing the indexer name to confirm.
 
 ```bash
-envio-cloud deployment delete   [organisation]
+envio-cloud deployment delete <indexer> <commit> [organisation]
 envio-cloud deployment delete myindexer abc1234 myorg --yes
 ```
 
@@ -1076,7 +1108,7 @@ This action cannot be undone. The deployment and its data will be permanently re
 Restart a running deployment. There is a 10-minute cooldown between restarts.
 
 ```bash
-envio-cloud deployment restart   [organisation]
+envio-cloud deployment restart <indexer> <commit> [organisation]
 envio-cloud deployment restart myindexer abc1234 myorg --yes
 ```
 
@@ -1085,7 +1117,7 @@ envio-cloud deployment restart myindexer abc1234 myorg --yes
 Show build or runtime logs for a deployment.
 
 ```bash
-envio-cloud deployment logs   [organisation]
+envio-cloud deployment logs <indexer> <commit> [organisation]
 envio-cloud deployment logs myindexer abc1234 myorg --build
 envio-cloud deployment logs myindexer abc1234 myorg --level error,warn
 envio-cloud deployment logs myindexer abc1234 myorg --follow
@@ -1097,6 +1129,30 @@ envio-cloud deployment logs myindexer abc1234 myorg --follow
 | `--level` | Filter by log level (e.g., `error,warn`) |
 | `--limit` | Max number of log lines (default: 100) |
 | `--follow` | Poll for new logs every 10 seconds |
+
+#### Manage Deployment Tags
+
+Organize deployments with custom key/value tags (see Production Features for how tags appear in the dashboard).
+
+```bash
+# List tags on a deployment
+envio-cloud deployment tags list <indexer> <commit> [organisation]
+
+# Set one or more tags (existing keys are overwritten, other tags preserved)
+envio-cloud deployment tags set <indexer> <commit> [organisation] KEY=VALUE [KEY=VALUE ...]
+envio-cloud deployment tags set myindexer abc1234 myorg env=staging team=backend
+
+# Remove a tag by key
+envio-cloud deployment tags remove <indexer> <commit> [organisation] KEY
+envio-cloud deployment tags remove myindexer abc1234 myorg env
+```
+
+Tag rules:
+
+- Deployments support up to **5 custom tags**
+- Keys and values are limited to **20 characters**; values are automatically lowercased
+- Keys starting with `envio` are **reserved** for system tags and are hidden from output
+- The special `name` tag is displayed directly on the deployment list in the dashboard
 
 ### Repository Commands
 
@@ -1117,6 +1173,7 @@ Dangerous commands require confirmation before executing:
 |---------|-------------------|
 | `indexer delete` | Type the indexer name |
 | `deployment delete` | Type the indexer name |
+| `deployment deploy` | y/N prompt |
 | `deployment promote` | y/N prompt |
 | `deployment restart` | y/N prompt |
 
@@ -1303,7 +1360,7 @@ Use this guide to set up an organisation in Envio Cloud and grant access to your
 
 ## Access Control
 
-Being a member of the GitHub organisation **does not** automatically grant access to the organisation in the Envio Cloud UI. Each member must be explicitly added by the organisation admin. If someone attempts to visit the organisation URL (e.g., `https://envio.dev/app/`) without being added, they'll see a "You are not a member of this team" message.
+Being a member of the GitHub organisation **does not** automatically grant access to the organisation in the Envio Cloud UI. Each member must be explicitly added by the organisation admin. If someone attempts to visit the organisation URL (e.g., `https://envio.dev/app/<org-name>`) without being added, they'll see a "You are not a member of this team" message.
 
 
 

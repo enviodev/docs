@@ -115,8 +115,17 @@ function fixInternalLinks(content, relativePath) {
   // Remove CSS imports
   content = content.replace(/^import\s+["'][^"']*\.css["'];?\s*$/gm, "");
 
-  // Remove HTML elements that cause parsing errors (but preserve code blocks)
-  content = content.replace(/<(?!\/?(?:code|pre))[^>]*>/g, "");
+  // Remove HTML elements that cause parsing errors, but leave fenced code
+  // blocks and inline code spans untouched — angle-bracket placeholders like
+  // `<indexer> <commit>` in CLI synopses are meaningful there and safe in MDX.
+  content = content
+    .split(/(```[\s\S]*?```|`[^`\n]*`)/g)
+    .map((segment) =>
+      segment.startsWith("`")
+        ? segment
+        : segment.replace(/<(?!\/?(?:code|pre))[^>]*>/g, "")
+    )
+    .join("");
 
   // Remove any remaining image references
   content = content.replace(/image\.png/g, "");
