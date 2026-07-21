@@ -416,6 +416,7 @@ envio-cloud deployment tags remove myindexer abc1234 myorg env
 
 Tag rules:
 
+- Deployments support up to **5 custom tags**
 - Keys and values are limited to **20 characters**; values are automatically lowercased
 - Keys starting with `envio` are **reserved** for system tags and are hidden from output
 - The special `name` tag is displayed directly on the deployment list in the dashboard
