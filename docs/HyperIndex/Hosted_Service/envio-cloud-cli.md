@@ -202,6 +202,21 @@ envio-cloud indexer settings set myindexer myorg --config-file config.yaml --bra
 | `--description` | Indexer description |
 | `--access-type` | `public` or `private` |
 
+#### List Recent Commits
+
+Show recent commits pushed to the indexer's repository, along with their processing status. Commits with status `inactive` can be deployed manually with `envio-cloud deployment deploy`.
+
+```bash
+envio-cloud indexer commits myindexer myorg
+envio-cloud indexer commits myindexer --org myorg --limit 20
+envio-cloud indexer commits myindexer myorg -o json
+```
+
+| Flag | Description |
+|------|-------------|
+| `--limit` | Maximum number of commits to show (default: 10) |
+| `-o, --output` | Output format (`json`) |
+
 #### Manage Environment Variables
 
 Environment variables can be managed from the CLI. All keys must be prefixed with `ENVIO_`. Changes take effect on the next deployment.
@@ -316,6 +331,23 @@ curl "$(envio-cloud deployment endpoint hyperindex b3ead3a mjyoung114)" \
 
 The `ep` alias is also available: `envio-cloud deployment ep <indexer> <commit>`.
 
+#### Manually Deploy a Commit
+
+Trigger a deployment of a specific commit — the CLI equivalent of the **Deploy** button in the Envio Cloud dashboard. Combined with disabling auto-deploy, this gives you full manual control over what gets deployed and when.
+
+```bash
+# Turn off automatic deploys on push
+envio-cloud indexer settings set myindexer myorg --auto-deploy=false
+
+# See recent commits and their statuses ('inactive' commits can be deployed)
+envio-cloud indexer commits myindexer myorg
+
+# Deploy a specific commit
+envio-cloud deployment deploy myindexer abc1234 myorg
+```
+
+Only commits with status `inactive` can be deployed. If a commit cannot be deployed (already active, still processing, missing config file, unsupported Envio version, etc.), the CLI explains why. Requires confirmation (`y/N`); skip with `--yes` for CI/CD.
+
 #### Promote a Deployment
 
 Promote a deployment to the production endpoint. Requires confirmation (`y/N`).
@@ -365,6 +397,29 @@ envio-cloud deployment logs myindexer abc1234 myorg --follow
 | `--limit` | Max number of log lines (default: 100) |
 | `--follow` | Poll for new logs every 10 seconds |
 
+#### Manage Deployment Tags
+
+Organize deployments with custom key/value tags (see [Production Features](./hosted-service-features.md) for how tags appear in the dashboard).
+
+```bash
+# List tags on a deployment
+envio-cloud deployment tags list <indexer> <commit> [organisation]
+
+# Set one or more tags (existing keys are overwritten, other tags preserved)
+envio-cloud deployment tags set <indexer> <commit> [organisation] KEY=VALUE [KEY=VALUE ...]
+envio-cloud deployment tags set myindexer abc1234 myorg env=staging team=backend
+
+# Remove a tag by key
+envio-cloud deployment tags remove <indexer> <commit> [organisation] KEY
+envio-cloud deployment tags remove myindexer abc1234 myorg env
+```
+
+Tag rules:
+
+- Keys and values are limited to **20 characters**; values are automatically lowercased
+- Keys starting with `envio` are **reserved** for system tags and are hidden from output
+- The special `name` tag is displayed directly on the deployment list in the dashboard
+
 ### Repository Commands
 
 #### List Repositories
@@ -384,6 +439,7 @@ Dangerous commands require confirmation before executing:
 |---------|-------------------|
 | `indexer delete` | Type the indexer name |
 | `deployment delete` | Type the indexer name |
+| `deployment deploy` | y/N prompt |
 | `deployment promote` | y/N prompt |
 | `deployment restart` | y/N prompt |
 
