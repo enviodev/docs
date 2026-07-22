@@ -46,7 +46,7 @@ const sites = [
     description:
       "A real-time firehose of every swap happening on Solana's busiest DEXs, from Jupiter and Pump.fun to Orca and Raydium.",
     longDescription:
-      "SolSwaps is a live firehose of decentralised exchange activity on Solana. Built with Envio's HyperSync, it streams swaps from the network's busiest venues, including Jupiter, Pump.fun, Orca and Raydium, into a single view with no RPC endpoint, archive node, or database for you to run. The dashboard tracks swaps per second, estimated SOL moved, aggregated fees, and a running list of the 25 biggest trades as they land, giving traders, researchers, and builders a fast, real-time picture of where volume is flowing across Solana.",
+      "SolSwaps is a live firehose of decentralised exchange activity on Solana. Built with Envio's HyperSync, it streams swaps from the network's busiest DEXs, including Jupiter, Pump.fun, Orca and Raydium, into a single view with no RPC endpoint, archive node, or database for you to run. The dashboard tracks swaps per second, estimated SOL moved, aggregated fees, and a running list of the 25 biggest trades as they land, giving traders, researchers, and builders a fast, real-time picture of where volume is flowing across Solana.",
     video: "/img/showcase/solswaps.webm",
     source: "https://solswaps.envio.sh/",
     tags: [tags.hypersync],
