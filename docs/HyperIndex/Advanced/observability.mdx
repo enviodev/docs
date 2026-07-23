@@ -142,6 +142,13 @@ context.log.info("Processing blockchain event", {
 For production analytics, pair the ECS log strategies with a tool like Kibana to
 build dashboards and alerts from your logs.
 
+:::tip Performance
+Logging isn't free — excessive logging (especially per-event `debug`/`trace`
+logs on high-throughput chains) can slow indexing down. Keep only the logs that
+serve a real observability need, and lean on [metrics](#metrics) rather than logs
+for high-frequency signals.
+:::
+
 ## Metrics
 
 HyperIndex exposes [Prometheus](https://prometheus.io/) metrics so you can plug
@@ -377,7 +384,7 @@ Result:
 
 ### Metadata fields
 
-#### Configuration
+#### Configuration fields
 
 These fields are populated on indexer startup and don't change during the
 indexer process.
@@ -386,7 +393,7 @@ indexer process.
 - `startBlock` — Start block number from `config.yaml`.
 - `endBlock` — End block number from `config.yaml`.
 
-#### Transactional
+#### Transactional fields
 
 These fields are updated in the batch write transaction, and are guaranteed to
 be written to the database at the same time. This means `progressBlock` and
@@ -394,9 +401,9 @@ be written to the database at the same time. This means `progressBlock` and
 is written to the database and becomes available for querying.
 
 - `progressBlock` — Block number fully processed and written to the DB.
-- `eventsProcessed` — Number of processed events written to the DB (not reorg resistant).
+- `eventsProcessed` — Number of processed events written to the DB (reorg resistant).
 
-#### Throttled
+#### Throttled fields
 
 These fields are updated outside of the batch transaction and throttled to avoid
 performance overhead. There might be a small delay between the event processing
