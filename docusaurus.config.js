@@ -149,7 +149,7 @@ const redirectsList = [
   },
   {
     from: "/docs/logging",
-    to: "/docs/HyperIndex/logging",
+    to: "/docs/HyperIndex/observability",
   },
   {
     from: "/docs/common-issues",

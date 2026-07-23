@@ -111,4 +111,4 @@ If you encounter issues with environment variables:
 3. Ensure there are no typos in variable names
 4. Confirm that the values are correctly formatted
 
-For more help, see our [Troubleshooting Guide](../HyperIndex/logging).
+For more help, see our [Observability Guide](../HyperIndex/observability).

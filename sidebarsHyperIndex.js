@@ -82,6 +82,7 @@ module.exports = {
         "Advanced/reorgs-support",
         "Advanced/generated-files",
         "Advanced/metadata-query",
+        "Advanced/observability",
         "Advanced/terminology",
         "Advanced/performance/database-performance-optimization",
         "Advanced/performance/latency-at-head",
@@ -110,7 +111,6 @@ module.exports = {
       type: "category",
       label: "Troubleshoot",
       items: [
-        "Troubleshoot/logging",
         "Troubleshoot/common-issues",
         "Troubleshoot/error-codes",
         "Troubleshoot/reserved-words",
