@@ -21,8 +21,8 @@ is doing — while you develop locally and once it's running in production:
 
 :::info Endpoints & port
 When the indexer starts it serves an HTTP server (default port **`9898`**) that
-exposes `/metrics`, `/metrics/runtime`, `/healthz`, and the `/console` API. Change
-the port with `ENVIO_INDEXER_PORT`:
+exposes `/metrics`, `/metrics/runtime`, and `/healthz`. Change the port with
+`ENVIO_INDEXER_PORT`:
 
 ```bash
 ENVIO_INDEXER_PORT=9899 envio start
@@ -36,7 +36,7 @@ shows the state of your indexer at a glance:
 
 - Per-chain sync status and block numbers
 - Events processed and indexing progress
-- The GraphQL (Hasura) endpoint and the Dev Console URL
+- The GraphQL (Hasura) endpoint, and the [Dev Console](#dev-console) URL when running `envio dev`
 - HyperSync rate-limit information when you're being throttled
 
 ![Envio Terminal UI](/blog-assets/envio-tui.gif)
@@ -179,6 +179,9 @@ envio metrics          # raw Prometheus metrics from /metrics
 envio metrics runtime  # runtime metrics from /metrics/runtime
 ```
 
+The command resolves the port automatically from `ENVIO_INDEXER_PORT` in your
+shell session or the `.env` file at your project root, falling back to `9898`.
+
 ### Available metrics
 
 Every metric is prefixed with `envio_`. Counters and gauges are labeled where
@@ -292,7 +295,7 @@ scrape_configs:
 - **`envio_progress_block`** — track indexing progress over time.
 - **`envio_processing_handler_seconds`** — identify slow event handlers by contract and event.
 - **`envio_indexing_idle_seconds`** — a high value may indicate the data source sync is a bottleneck.
-- **`envio_reorg_detected_total`** — monitor for chain reorganizations.
+- **`envio_reorg_detected_total`** — track how frequently chain reorganizations occur.
 
 ## Health checks
 
@@ -350,15 +353,11 @@ reference and update semantics.
 ## Dev Console
 
 When you run `envio dev`, HyperIndex enables the **Dev Console** — a web UI for
-debugging your indexer during local development. The TUI prints its URL on
-startup:
+debugging your indexer during local development, available at
+[envio.dev/console](https://envio.dev/console). The TUI also prints the link on
+startup.
 
-```
-https://envio.dev/console
-```
-
-The Dev Console is a hosted web app that connects to your locally running
-indexer through the `/console` endpoint (default port `9898`), so your data never
+The Dev Console connects to your locally running indexer, so your data never
 leaves your machine. It's available in development mode only — `envio start`
 (production) does not expose console state.
 
@@ -377,9 +376,9 @@ indexed data. The default admin secret is `testing`. Disable Hasura with
 If you deploy to [Envio Cloud](/docs/HyperIndex/hosted-service), observability is
 fully managed for you — no need to run Prometheus or ship logs yourself:
 
-- **Real-time dashboard** — sync status, events processed, and per-network progress bars.
-- **Logs** — live and historical logs with level filtering, integrated and configured by Envio.
-- **Built-in alerts** — get notified via Discord, Slack, Telegram, Email, or a generic webhook when your endpoint goes down or your indexer stops processing.
+- **[Real-time dashboard](/docs/HyperIndex/hosted-service-monitoring#dashboard-overview)** — sync status, events processed, and per-network progress bars.
+- **[Logs](/docs/HyperIndex/hosted-service-monitoring#logging)** — live and historical logs with level filtering, integrated and configured by Envio.
+- **[Built-in alerts](/docs/HyperIndex/hosted-service-monitoring#built-in-alerts)** — get notified via Discord, Slack, Telegram, Email, or a generic webhook when your endpoint goes down or your indexer stops processing.
 
 Envio Cloud also exposes the same **Prometheus metrics** described above, so you
 can scrape them into your own Grafana or Datadog. On Cloud the endpoint is served
@@ -398,14 +397,3 @@ See [Monitoring Your Indexer](/docs/HyperIndex/hosted-service-monitoring) and th
 [Envio Cloud features](/docs/HyperIndex/hosted-service-features) page for details,
 and [Envio Cloud CLI](/docs/HyperIndex/envio-cloud-cli) for monitoring deployments
 from the command line.
-
-## Endpoint reference
-
-All endpoints are served by the indexer on `ENVIO_INDEXER_PORT` (default `9898`).
-
-| Endpoint | Description |
-|----------|-------------|
-| `/metrics` | Prometheus index metrics |
-| `/metrics/runtime` | Node.js runtime metrics (CPU, memory, GC, event loop) |
-| `/healthz` | Liveness probe — returns `200 OK` |
-| `/console` | Dev Console API (development mode only) |

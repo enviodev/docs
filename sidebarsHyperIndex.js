@@ -81,7 +81,6 @@ module.exports = {
         "Guides/cli-commands",
         "Advanced/reorgs-support",
         "Advanced/generated-files",
-        "Advanced/metadata-query",
         "Advanced/observability",
         "Advanced/terminology",
         "Advanced/performance/database-performance-optimization",
