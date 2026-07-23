@@ -2,6 +2,7 @@
 title: "How GBlast Eliminated Data Latency in Their GambleFi Platform"
 sidebar_label: "How GBlast Eliminated Data Latency in Their GambleFi Platform"
 slug: /case-study-gblast
+tags: ["case-studies"]
 description: "How GBlast integrated Envio to eliminate real-time data latency, power their points system, and deliver a responsive GambleFi experience on Blast."
 image: /blog-assets/case-study-gblast.png
 last_update:
