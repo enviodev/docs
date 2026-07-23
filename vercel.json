@@ -114,6 +114,16 @@
       "permanent": true
     },
     {
+      "source": "/docs/HyperIndex/metadata-query",
+      "destination": "/docs/HyperIndex/observability",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/metadata-query.md",
+      "destination": "/docs/HyperIndex/observability.md",
+      "permanent": true
+    },
+    {
       "source": "/docs/HyperIndex/installation",
       "destination": "/docs/HyperIndex/quickstart",
       "permanent": true
