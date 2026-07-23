@@ -99,7 +99,7 @@ The Data tab provides direct access to your database tables and relationships, a
 To confirm your blockchain indexer is working correctly:
 
 1. Check entity tables to ensure they contain the expected data
-2. Query the `envio_chains` table (or use the [Metadata Query](/docs/HyperIndex/metadata-query) API) to see each chain's latest processed block and confirm the indexer is making progress
+2. Run the [`_meta` indexing status](/docs/HyperIndex/observability#indexing-status) query to see each chain's latest processed block and confirm the indexer is making progress
 
 ## Common Tasks
 
@@ -107,9 +107,8 @@ To confirm your blockchain indexer is working correctly:
 
 To verify your blockchain indexer is actively processing new blocks:
 
-1. Go to the Data tab
-2. Select the `envio_chains` table (or query the [Metadata Query](/docs/HyperIndex/metadata-query) API) to see each chain's latest processed block
-3. Monitor those values over time to ensure they're advancing
+1. Run the [`_meta` indexing status](/docs/HyperIndex/observability#indexing-status) query to see each chain's latest processed block
+2. Monitor those values over time to ensure they're advancing
 
 (Note the TUI is also an easy way to monitor this)
 

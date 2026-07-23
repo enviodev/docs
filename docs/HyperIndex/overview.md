@@ -37,7 +37,7 @@ While HyperIndex gives you a complete indexing solution with schema management a
 - **[Factory contract support](/docs/HyperIndex/dynamic-contracts)** – Index data from over 1M dynamically registered contracts seamlessly.
 - **[On-chain and off-chain data integration](/docs/HyperIndex/contract-state)** – Easily combine multiple data sources.
 - **[Self-hosted and managed options](/docs/HyperIndex/hosted-service)** – Run your own setup or use Envio Cloud.
-- **[Detailed logging and error reporting](/docs/HyperIndex/logging)** – Debug and optimize with clarity.
+- **[Detailed logging and observability](/docs/HyperIndex/observability)** – Debug and optimize with clarity.
 - **[External API actions](/docs/HyperIndex/ipfs)** – Trigger external services based on blockchain events.
 - **[Wildcard topic indexing](/docs/HyperIndex/wildcard-indexing)** – Flexibly index based on event topics.
 - **[Fallback RPC data sources](/docs/HyperIndex/rpc-sync#improving-resilience-with-rpc-fallback)** – Enhance reliability with RPC connections.
