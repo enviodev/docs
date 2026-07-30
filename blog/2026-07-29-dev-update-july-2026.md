@@ -160,7 +160,7 @@ Explore the dataset here: [Polymarket onchain dataset on Hugging Face](https://h
 ## Envio Analytics, Now in Alpha
 
 <div style={{position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden"}}>
-  <iframe src="https://www.loom.com/embed/8a0eea55c95d47598f525f9d88497993" style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+  <iframe src="https://www.loom.com/embed/8a0eea55c95d47598f525f9d88497993" title="Envio Analytics alpha demo" style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
 </div>
 
 An indexer already holds some of the richest, most structured data about a protocol. Once that foundation exists, the next step is making the data easier to explore, question and understand.
