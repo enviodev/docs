@@ -859,6 +859,152 @@ storage:
     column_name_format: snake_case
 ```
 
+### Huge Multichain & Factory Indexers (v3.3)
+
+Faster backfill, lower memory usage, better stability and lower latency at the head for indexers with many chains or many dynamically registered contracts.
+
+### Per-Chain Effects (v3.3)
+
+Effects are cross-chain by default: one cache and one rate-limit budget shared by every chain. Set `crossChain: false` to scope an effect to the chain that called it — each chain gets its own cache entries and its own rate-limit budget, and the handler gains `context.chain.id`:
+
+```typescript
+export const getTokenName = createEffect(
+  {
+    name: "getTokenName",
+    input: S.string,
+    output: S.string,
+    rateLimit: { calls: 5, per: "second" },
+    cache: true,
+    crossChain: false,
+  },
+  async ({ input, context }) => {
+    const client = clientsByChainId[context.chain.id];
+    // ...
+  },
+);
+```
+
+Read more in [Per-Chain Effects](/docs/HyperIndex/effect-api#per-chain-effects).
+
+### Custom HTTP Headers for RPC (v3.3)
+
+RPC endpoints accept arbitrary HTTP headers, so you can use providers that gate access behind an `Authorization` header instead of a URL key. Values support `${ENV_VAR}` interpolation:
+
+```yaml
+chains:
+  - id: 1
+    rpc:
+      - url: https://eth-mainnet.your-rpc-provider.com
+        for: sync
+        headers:
+          Authorization: "Bearer ${RPC_API_KEY}"
+```
+
+### RPC Source Improvements (v3.3)
+
+- Event handlers support `or` union filtering in `where` clauses on RPC sources — pass an array to `params` to match any of several conditions.
+- An RPC-backed indexer can register multiple `wildcard` events. Previously only one was allowed.
+
+### Nested Environment Variable Interpolation (v3.3)
+
+`config.yaml` supports nested fallback values in defaults, so an RPC URL can fall back to another variable rather than only to a literal.
+
+### Unlimited `onEvent` Handlers (v3.4)
+
+You can now register any number of handlers for the same event, each with a different filter. Previously only handlers with matching filters could coexist. This lets you track all transfers globally while running separate logic for a specific contract:
+
+```typescript
+indexer.onEvent(
+  { contract: "ERC20", event: "Transfer", wildcard: true },
+  async ({ event, context }) => {
+    // Global accounting
+  },
+);
+
+indexer.onEvent(
+  {
+    contract: "ERC20",
+    event: "Transfer",
+    where: () => ({ params: [{ from: USDC_ADDRESS }] }),
+  },
+  async ({ event, context }) => {
+    // USDC-specific logic
+  },
+);
+```
+
+Handlers run in registration order. Read more in [Multiple Handlers for One Event](/docs/HyperIndex/event-handlers#multiple-handlers-for-one-event).
+
+### Per-Entity ClickHouse Tuning (v3.4)
+
+The `@storage` directive's `clickhouse` argument accepts an options object that tunes that entity's ClickHouse table — partitioning, sorting key and TTL:
+
+```graphql
+type Transfer
+  @storage(
+    postgres: true
+    clickhouse: {
+      partitionBy: "toYYYYMM(timestamp)"
+      orderBy: ["timestamp"]
+      ttl: "timestamp + INTERVAL 2 YEAR"
+    }
+  ) {
+  id: ID!
+  timestamp: Timestamp!
+  amount: BigInt!
+}
+```
+
+Read more in [Per-Entity ClickHouse Tuning](/docs/HyperIndex/schema#per-entity-clickhouse-tuning).
+
+### 12x Faster Test Indexer (v3.4)
+
+The testing framework recovered the speed it lost in V3 — test indexer instances now run in-process. Note that this can surface shared-state issues in some edge cases.
+
+Handlebars was also removed as a dependency.
+
+### Factories with Billions of Addresses (v3.5)
+
+HyperIndex used to struggle past roughly 8 million registered addresses. That ceiling is gone: once a contract's address count passes a threshold, HyperIndex automatically switches from server-side to client-side address filtering, and the hot path was partially rewritten in Rust. Read more in [Scaling to Very Large Factories](/docs/HyperIndex/dynamic-contracts#scaling-to-very-large-factories).
+
+### Deferred Postgres Index Creation (v3.5)
+
+Indexes are no longer created up front — they're built in one pass once the backfill completes, which gives a **2.5x backfill speedup** for some users. On top of that, a `getWhere` query on a field with no index now creates the index on demand, so `getWhere` works on any entity field without you declaring `@index` first.
+
+Read more in [Deferred Index Creation](/docs/HyperIndex/database-performance-optimization#deferred-index-creation).
+
+### Bottleneck Observability (v3.5)
+
+New Prometheus metrics attribute indexing stalls to a specific cause instead of leaving you to infer it:
+
+- `envio_processing_stalled_on_fetch_seconds` — waiting for events to be fetched
+- `envio_processing_stalled_on_storage_write_seconds` — waiting for pending writes to drain
+- `envio_process_start_time_seconds`, `envio_process_metric_time_seconds`, `envio_process_elapsed_seconds` — process timing, useful for turning cumulative counters into a share of the run
+
+Read more in [Finding the bottleneck](/docs/HyperIndex/observability#finding-the-bottleneck).
+
+### Numeric Entity IDs (v3.5)
+
+Entities can be keyed on `Int` or `BigInt` instead of `ID`. Relationship fields automatically adopt the referenced entity's id type:
+
+```graphql
+type Auction {
+  id: BigInt!
+  bids: [Bid!]! @derivedFrom(field: "auction")
+}
+
+type Bid {
+  id: ID!
+  auction: Auction! # inferred as BigInt
+}
+```
+
+Read more in [Numeric Entity IDs](/docs/HyperIndex/schema#numeric-entity-ids).
+
+### Chain IDs Above 2^31 (v3.5)
+
+Database column types scale automatically for chains whose id exceeds 2^31, so no configuration is needed to index them.
+
 ## Fixes
 
 - Fixed an issue where the indexer stops progressing without any error (PostgreSQL client update)
@@ -868,11 +1014,22 @@ storage:
 - Fixed an edge case where a multichain indexer could freeze during a rollback on reorg (also backported to v2.32.10)
 - Fixed external Postgres database support via `ENVIO_PG_HOST`
 - Fixed `S.nullable` schema type to be `T | null` instead of `T | undefined`
+- Fixed rollback handling for deleted entities (v3.3)
+- Fixed an edge case causing an incorrect rollback on reorg (v3.3)
+- Fixed serialization of zero-parameter events in `raw_events` (v3.3)
+- Fixed SVM `account_filters` config parsing and transaction instruction filtering (v3.3)
+- Improved the error message for a missing `field_selection` config (v3.3)
+- Fixed handlers for entities with lowercase names (v3.5)
+- ClickHouse-only entities are now skipped during rollback on reorg (v3.5)
+- `envio init` templates target ES2023 (v3.5)
 
 ## Release Notes
 
 For detailed release notes, see:
 
+- [v3.5.0](https://github.com/enviodev/hyperindex/releases/tag/v3.5.0)
+- [v3.4.0](https://github.com/enviodev/hyperindex/releases/tag/v3.4.0)
+- [v3.3.0](https://github.com/enviodev/hyperindex/releases/tag/v3.3.0)
 - [v3.2.0](https://github.com/enviodev/hyperindex/releases/tag/v3.2.0)
 - [v3.1.0](https://github.com/enviodev/hyperindex/releases/tag/v3.1.0)
 - [v3.0.0](https://github.com/enviodev/hyperindex/releases/tag/v3.0.0)

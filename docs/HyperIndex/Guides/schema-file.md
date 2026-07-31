@@ -28,7 +28,32 @@ type User {
 ### Requirements:
 
 - Every entity **must** have a unique `id` field, using one of these scalar types:
-  - `ID!`, `String!`, `Int!`, `Bytes!`, or `BigInt!`
+  - `ID!`, `String!`, `Int!`, or `BigInt!`
+- The `id` field must be non-nullable, must not be a list, and cannot be a [`@derivedFrom`](#relationships-one-to-many-derivedfrom) field.
+
+### Numeric Entity IDs
+
+`ID` is the usual choice and behaves as a string. Since [`v3.5.0`](https://github.com/enviodev/hyperindex/releases/tag/v3.5.0) you can also key an entity on `Int` or `BigInt`, which is a better fit when the identifier is genuinely a number — a block number, an auction id, a sequential position:
+
+```graphql
+type Auction {
+  id: BigInt! # the on-chain auction id, not a stringified copy of it
+  seller: String!
+  bids: [Bid!]! @derivedFrom(field: "auction")
+}
+
+type Bid {
+  id: ID!
+  auction: Auction! # inferred as BigInt to match Auction.id
+  amount: BigInt!
+}
+```
+
+Relationship fields adopt the referenced entity's id type automatically, so `Bid.auction` above is typed `bigint` in your handlers rather than `string`. You don't declare the foreign key type — keep the two sides in sync by changing the referenced entity's `id`.
+
+:::note
+An `ID` id resolves to `string` on both sides. The numeric types are the only case where a relationship field becomes something other than a string.
+:::
 
 ---
 
@@ -328,6 +353,56 @@ type Token {
 ```
 
 - All `id` fields and fields referenced via `@derivedFrom` are indexed automatically.
+- Since v3.5, `@index` is an optimization rather than a requirement: a `getWhere` query on an unindexed field creates the index on demand. Declaring it up front is still faster, because declared indices are built in one batched pass at the end of the backfill. See [Deferred Index Creation](/docs/HyperIndex/database-performance-optimization#deferred-index-creation).
+
+---
+
+## Choosing a Storage Backend (`@storage`)
+
+When you enable more than one storage backend in `config.yaml`, the `@storage` directive controls where each entity is written:
+
+```graphql
+# Queryable over GraphQL and mirrored into ClickHouse for analytics
+type Transfer @storage(postgres: true, clickhouse: true) {
+  id: ID!
+  amount: BigInt!
+}
+```
+
+Since v3.2 you can mark a backend as `default` in `config.yaml`, and entities without a `@storage` directive go there — you no longer need the directive on every entity. See [`storage`](/docs/HyperIndex/config-schema-reference#storage).
+
+### Per-Entity ClickHouse Tuning
+
+Since [`v3.4.0`](https://github.com/enviodev/hyperindex/releases/tag/v3.4.0), the `clickhouse` argument also accepts an options object that tunes that entity's ClickHouse history table:
+
+```graphql
+type Transfer
+  @storage(
+    postgres: true
+    clickhouse: {
+      partitionBy: "toYYYYMM(timestamp)"
+      orderBy: ["timestamp"]
+      ttl: "timestamp + INTERVAL 2 YEAR"
+    }
+  ) {
+  id: ID!
+  timestamp: Timestamp!
+  amount: BigInt!
+}
+```
+
+| Option | Type | Description |
+|--------|------|-------------|
+| `partitionBy` | ClickHouse expression | Emitted as `PARTITION BY <expr>`. Use it to keep queries and TTL deletes inside a partition instead of scanning the whole table. |
+| `orderBy` | list of entity field names | Entity fields that lead the table's sorting key, replacing the default `id` prefix. The internal checkpoint column stays appended, so the key becomes `ORDER BY (<orderBy...>, envio_checkpoint_id)`. |
+| `ttl` | ClickHouse expression | Emitted as `TTL <expr>`. Ages rows out automatically. |
+
+Rules worth knowing before you reach for these:
+
+- `orderBy` takes **entity field names**, not expressions — unlike `partitionBy` and `ttl`, which are raw ClickHouse expressions passed through as written.
+- Don't list `id` in `orderBy`: it's already the default sorting key, and codegen rejects it.
+- Nullable fields, list fields and `@derivedFrom` fields can't appear in `orderBy` — ClickHouse doesn't allow them in a sorting key, and codegen catches this rather than letting table creation fail at runtime.
+- An entity can carry only one `@storage` directive, and it must enable at least one backend.
 
 ---
 

@@ -85,6 +85,38 @@ HyperIndex automatically creates indices for:
 
 There's no need to manually add indices for these fields.
 
+## Deferred Index Creation
+
+Indices make writes slower, and a backfill is nothing but writes. Since [`v3.5.0`](https://github.com/enviodev/hyperindex/releases/tag/v3.5.0) HyperIndex takes advantage of that: the initial schema migration creates only tables, primary keys and views, and every index your schema asks for is built in a single pass once the backfill finishes — just before the indexer reports itself ready. Some users see a **2.5x backfill speedup** from this alone.
+
+You don't need to configure anything. What changes is what you'll observe:
+
+- During backfill, the indices declared in `schema.graphql` don't exist in the database yet. Querying the database directly mid-backfill will be slower than querying it once the indexer is ready.
+- Near the end of the backfill the indexer logs that it's creating indices, and pauses processing while it does. On a large database this step can take a while — it's progress, not a hang.
+- The indexer never reports ready with an index its schema promises still missing. If a build fails part-way, the indices already built stay, and the retry only owes what's left.
+
+### Indices created on demand
+
+A [`getWhere`](/docs/HyperIndex/event-handlers#retrieving-entities-by-field) call on a field with no supporting index no longer runs unindexed forever — HyperIndex creates the index the first time a handler asks for it, then reuses it.
+
+This means `getWhere` now works on **any** entity field, not just ones you marked with `@index` or `@derivedFrom`. But an on-demand build isn't free: it pauses writes to that table until it completes, and it happens while your indexer is running rather than in the batched pass at the end of the backfill.
+
+So the guidance is unchanged for fields you already know you'll query — declare them:
+
+```graphql
+type Transfer {
+  id: ID!
+  userAddress: String! @index # queried via getWhere in a handler
+  timestamp: BigInt!
+}
+```
+
+Declared indices are built together at the end of the backfill. Undeclared ones are built one at a time, mid-run, the moment a handler needs them. Treat on-demand creation as a safety net rather than the plan.
+
+:::note
+If an on-demand build fails, the query still runs — just without the index — and the next `getWhere` retries the build. You'll see a warning in the logs rather than a crash.
+:::
+
 ## Strategic Indexing: When to Use Each Type
 
 ### When to Use Single-Column Indices
