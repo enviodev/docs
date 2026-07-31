@@ -104,6 +104,7 @@ Here is a table of the currently supported networks on HyperRPC and their respec
 | Superseed                 | 5330            | https://superseed.rpc.hypersync.xyz or https://5330.rpc.hypersync.xyz                    |
 | Swell                     | 1923            | https://swell.rpc.hypersync.xyz or https://1923.rpc.hypersync.xyz                        |
 | Tempo                     | 4217            | https://tempo.rpc.hypersync.xyz or https://4217.rpc.hypersync.xyz                        |
+| Tron                      | 728126428       | https://tron.rpc.hypersync.xyz or https://728126428.rpc.hypersync.xyz                    |
 | Unichain                  | 130             | https://unichain.rpc.hypersync.xyz or https://130.rpc.hypersync.xyz                      |
 | Worldchain                | 480             | https://worldchain.rpc.hypersync.xyz or https://480.rpc.hypersync.xyz                    |
 | XDC                       | 50              | Access on request — [contact us](https://discord.gg/envio)                               |
