@@ -274,7 +274,7 @@ Docs: [Sei Testnet on Envio](https://docs.envio.dev/docs/HyperSync/hypersync-sup
 ## Resources
 
 - [HyperIndex overview](https://docs.envio.dev/docs/HyperIndex/overview)
-- [Sei on Envio](https://docs.envio.dev/docs/HyperIndex/sei)
+- [Sei on Envio](https://envio.dev/chains/sei)
 - [HyperSync supported networks](https://docs.envio.dev/docs/HyperSync/hypersync-supported-networks)
 - [Configuration file](https://docs.envio.dev/docs/HyperIndex/configuration-file)
 - [Schema reference](https://docs.envio.dev/docs/HyperIndex/schema)

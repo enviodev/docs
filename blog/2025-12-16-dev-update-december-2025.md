@@ -161,7 +161,7 @@ With Sonic's fast finality and high transaction volumes, teams need indexing inf
 
 This support makes it easier for teams to build data-heavy applications, analytics dashboards, and monitoring tools on Sonic without having to manage indexing infrastructure themselves.
 
-[Start building on Sonic](https://docs.envio.dev/docs/HyperIndex/sonic)
+[Start building on Sonic](https://envio.dev/chains/sonic)
 
 
 
@@ -215,7 +215,7 @@ Envio now supports [Tempo](https://tempo.xyz), giving teams an easier way to ind
 
 This support makes it simpler for developers to work with Tempo data using [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview), without needing to set up or maintain custom indexing infrastructure. Teams can define their own indexing logic and query patterns while keeping full control over how data flows through their pipelines.
 
-To get started and learn how to index data on Tempo, check out the [setup guide](https://docs.envio.dev/docs/HyperIndex/tempo-testnet) in the Envio docs.
+To get started and learn how to index data on Tempo, check out the [setup guide](https://docs.envio.dev/docs/HyperIndex/supported-networks) in the Envio docs.
 
 
 ## How to Index Cross-Chain USDT0 Transfers with Envio

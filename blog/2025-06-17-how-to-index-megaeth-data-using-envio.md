@@ -89,7 +89,7 @@ This is just one of many examples of what Envio is powering in the MegaETH ecosy
 * [Getting Started](https://docs.envio.dev/docs/HyperIndex/getting-started)
 * [Envio's HyperSync](https://docs.envio.dev/docs/HyperSync/overview)
 * [Envio's Hosted Service](https://docs.envio.dev/docs/HyperIndex/hosted-service)
-* [Indexing MegaETH Data with Envio](https://docs.envio.dev/docs/HyperIndex/megaeth-testnet#indexing-megaeth-testnet-data-with-envio)
+* [Indexing MegaETH Data with Envio](https://docs.envio.dev/docs/HyperIndex/supported-networks)
 
 ## Frequently asked questions
 
