@@ -9,12 +9,12 @@ description: HyperSync for Solana - ultra-fast queries over Solana blocks, trans
 # Solana HyperSync
 
 :::info Early access — built in the open
-Solana HyperSync is **early**. The core query path (slots, transactions, instructions, logs, balances, token balances, rewards) is live and ready to test against real workloads — and we're actively shaping it with the teams using it. If you're evaluating it for a real project, **please [say hi on Discord](https://discord.gg/envio)** before you build a lot on top of it: we can tell you which parts are stable, which parts are still moving, and often suggest a better data path for your specific use case (NFTs, AMMs, token flows, wallet activity, custom programs, etc.).
+Solana HyperSync is **early**. The core query path (slots, transactions, instructions, logs, account activity, rewards) is live and ready to test against real workloads — and we're actively shaping it with the teams using it. If you're evaluating it for a real project, **please [say hi on Discord](https://discord.gg/envio)** before you build a lot on top of it: we can tell you which parts are stable, which parts are still moving, and often suggest a better data path for your specific use case (NFTs, AMMs, token flows, wallet activity, custom programs, etc.).
 
 **Rolling retention window.** Only the most recent chain data is retained — not a fixed history from one slot forever. The current retention floor is roughly slot `391791680`; as new slots are indexed, older slots fall off. Use `GET https://solana.hypersync.xyz/height` for the current synced head and **do not hard-code** historical lower bounds. Need a deeper window for backfill? Tell us — we're prioritizing this based on real use cases.
 :::
 
-HyperSync for Solana exposes **`https://solana.hypersync.xyz`**: one JSON (or Arrow) API over slots, transactions, instructions, logs, balances, token balances, and rewards. Use the [Rust client](https://github.com/enviodev/hypersync-client-solana) or any HTTP client (for example `curl`). Details: [Query & Response](./solana-query), [curl Examples](./solana-curl-examples).
+HyperSync for Solana exposes **`https://solana.hypersync.xyz`**: one JSON (or Arrow) API over slots, transactions, instructions, logs, account activity (native SOL + SPL token), and rewards. Use the [Rust client](https://github.com/enviodev/hypersync-client-solana) or any HTTP client (for example `curl`). Details: [Query & Response](./solana-query), [curl Examples](./solana-curl-examples).
 
 **Slots vs blocks:** Some slots have **no block** (skipped leader, etc.). A query over `[from_slot, to_slot)` can return **fewer block rows** than the slot span implies; that is normal, not a bug.
 
@@ -24,7 +24,7 @@ HyperSync for Solana exposes **`https://solana.hypersync.xyz`**: one JSON (or Ar
 |---|---|---|
 | Unit of progress | `block` | `slot` |
 | Range bounds | `from_block` / `to_block` | `from_slot` / `to_slot` |
-| Primary filter | `logs`, `transactions`, `traces` | `instructions`, `transactions`, `logs` |
+| Primary filter | `logs`, `transactions`, `traces` | `instruction_calls`, `transactions`, `logs`, `account_activity` |
 | Match key | event topic + address | program ID + discriminator + account positions |
 | Logs | Contract events (topics + structured log data) | Program output lines (free-form strings; filter by emitter `program_id` and parsed `kind`) |
 | Pagination | `next_block` | `next_slot` |
@@ -49,9 +49,9 @@ curl -sS "https://solana.hypersync.xyz/query" \
   -d '{
     "from_slot": 391800000,
     "to_slot": 391800010,
-    "field_selection": { "instruction": ["slot", "program_id", "d8"] },
-    "instructions": [
-      { "program_id": ["6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"] }
+    "field_selection": { "instruction_call": ["slot", "executing_account", "d8"] },
+    "instruction_calls": [
+      { "executing_account": ["6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"] }
     ]
   }'
 ```
@@ -65,9 +65,9 @@ We want you to be able to build against this without guessing what will move und
 **Stable enough to build on**
 
 - The **endpoint** (`https://solana.hypersync.xyz`) and **bearer-token auth** model.
-- The **request shape** for `POST /query`: `from_slot` / `to_slot`, the `instructions` / `transactions` / `logs` selection arrays, `field_selection` projection, and the AND-within-object / OR-across-objects semantics.
-- The **core filter primitives**: `program_id`, discriminator filters (`d1` / `d2` / `d4` / `d8`), account-position filters (`a0`–`a9`), `is_inner`, `success`, `fee_payer`, log `kind`.
-- The **table model**: `block`, `transaction`, `instruction`, `log`, `balance`, `token_balance`, `reward`, with the fields listed in [Query & Response](./solana-query#available-fields-by-table).
+- The **request shape** for `POST /query`: `from_slot` / `to_slot`, the `instruction_calls` / `transactions` / `logs` / `account_activity` selection arrays, `field_selection` projection, and the AND-within-object / OR-across-objects semantics.
+- The **core filter primitives**: `executing_account` (the invoked program), discriminator filters (`d1` / `d2` / `d4` / `d8`), account-position filters (`a0`–`a9`), `is_inner`, `is_committed`, `success`, `fee_payer`, `transaction_id`, log `kind`.
+- The **table model**: `block`, `transaction`, `instruction_call`, `log`, `account_activity`, `reward`, with the fields listed in [Query & Response](./solana-query#available-fields-by-table).
 - **Pagination** via `next_slot` and **reorg detection** via `rollback_guard`.
 
 **Still evolving — check in if you depend on these**

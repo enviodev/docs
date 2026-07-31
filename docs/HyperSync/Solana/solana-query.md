@@ -14,7 +14,7 @@ Solana HyperSync is **early** — the query shape, filters, and tables described
 Data is kept in a **rolling retention window**; the floor moves forward over time. Use `GET /height` instead of hard-coding how far back you can query.
 :::
 
-A query selects a slot range, optional filters on instructions / transactions / logs, and the columns you want. The server returns matched rows plus a `next_slot` cursor.
+A query selects a slot range, optional filters on instructions / transactions / logs / account activity, and the columns you want. The server returns matched rows plus a `next_slot` cursor.
 
 Some slots have **no block**; the `blocks` array can be sparse across the requested slot range.
 
@@ -25,28 +25,43 @@ Some slots have **no block**; the `blocks` array can be sparse across the reques
   "from_slot": 391800000,
   "to_slot": 391800100,
   "include_all_blocks": false,
-  "instructions": [ ... ],
+  "instruction_calls": [ ... ],
   "transactions": [ ... ],
   "logs": [ ... ],
+  "account_activity": [ ... ],
+  "include_account_activity": false,
   "field_selection": { ... }
 }
 ```
 
 - `from_slot` is **inclusive**, `to_slot` is **exclusive**. Omit `to_slot` to run toward the current head.
 - Within one selection object, all set fields are **AND**-ed.
-- Multiple objects in `instructions`, `transactions`, or `logs` are **OR**-ed.
-- If **`instructions`**, **`transactions`**, and **`logs`** are all absent or empty and **`include_all_blocks`** is false, you get **no matching rows** (empty tables). Set `include_all_blocks: true` to pull block headers across a range without program filters.
+- Multiple objects in `instruction_calls`, `transactions`, `logs`, or `account_activity` are **OR**-ed.
+- If **`instruction_calls`**, **`transactions`**, **`logs`**, and **`account_activity`** are all absent or empty and **`include_all_blocks`** is false, you get **no matching rows** (empty tables). Set `include_all_blocks: true` to pull block headers across a range without program filters.
+
+:::caution Unknown top-level keys are rejected
+The top-level query object and its `field_selection` are strict: an unrecognised key — a table that no longer exists (e.g. the removed `balances` / `token_balances`), or a misspelled `max_num_*` — makes the whole query **fail** rather than being silently ignored. This is deliberate: a dropped table selection would otherwise widen the query to match everything. Individual selection objects (`InstructionSelection`, `AccountActivitySelection`, ...) stay lenient, so an unknown key **inside** a selection is ignored.
+:::
+
+:::note Renamed fields (legacy names still accepted)
+Several keys were renamed for clarity. Requests using the old names still work — the server accepts them as aliases — but **responses use the new names**. See [Renamed fields and compatibility](#renamed-fields-and-compatibility) for the full mapping. New queries should use the new names shown throughout this page.
+:::
 
 ## Filters
 
 ### InstructionSelection
 
+Selects **instruction calls** — a single program invocation, including inner CPIs. The array key is `instruction_calls` (legacy: `instructions`).
+
 | Field | Description |
 |---|---|
-| `program_id` | Match program (base58 pubkeys). |
+| `executing_account` | Match the invoked program (base58 pubkeys). Legacy name: `program_id`. |
 | `d1` / `d2` / `d4` / `d8` | First _N_ bytes of instruction data, as hex. **`0x` prefix is optional** (`"0x03"` and `"03"` are equivalent). |
 | `a0` - `a9` | Account pubkey at that **index in the instruction's account metas** (`a0` = first account, `a2` = third). Which account is "the mint", "the pool", etc. is **defined by the program's IDL / instruction layout**, not by Solana globally. |
 | `is_inner` | `true` = inner only, `false` = outer only, **omitted** = both. |
+| `is_committed` | `true` = only instructions of successful transactions, `false` = only instructions of failed transactions, **omitted** = both. See the note below. |
+
+**`is_committed`:** Failed transactions still land on chain, and their instructions (up to the point of failure) are served. `is_committed` is derived from the parent transaction's success, so consumers that count on-chain effects should set `"is_committed": true` to filter failed transactions **server-side** rather than dropping them after the fact.
 
 **`instruction_address`:** This array encodes **where** the instruction sits in the transaction: outer-only indices use one element, e.g. `[2]` = third top-level instruction; inner instructions append an index, e.g. `[2, 0]` = first inner instruction inside that outer instruction.
 
@@ -55,6 +70,8 @@ Some slots have **no block**; the `blocks` array can be sparse across the reques
 | Field | Description |
 |---|---|
 | `fee_payer` | Match fee payer pubkey. |
+| `transaction_id` | Match by transaction id (`signatures[0]`, base58) — the canonical Solana transaction signature. |
+| `transaction_index` | Match by position within the block (numbers). |
 | `success` | `true` = succeeded only, `false` = failed only, **omitted** = both (same pattern as `is_inner`). |
 
 ### LogSelection
@@ -77,6 +94,22 @@ These mirror the usual Solana runtime log line shapes (see the [transactions](ht
 | `data` | `Program data: <base64>` |
 | `other` | Anything else the parser did not classify (full text still in `message`) |
 
+### AccountActivitySelection
+
+Selects rows of the unified [`account_activity`](#the-account_activity-table) table (native SOL and SPL token movements). Non-empty fields are AND-ed; an empty selection `{}` matches every row in range. Requesting `account_activity` does **not** force every block in the range to be returned — rows join to their transaction the same way `balances` / `token_balances` used to.
+
+| Field | Description |
+|---|---|
+| `kind` | Restrict to one side of the merge: `"native"`, `"token"`, or both. `"native"` is exactly the row set the old `balances` table held; `"token"` the row set `token_balances` held. Empty matches every row. |
+| `account` | Match by account address. On a **token** row this is the token account (ATA / raw token account); on a **native** row it is the wallet. |
+| `transaction_id` | Match by the transaction's base58 `signatures[0]`. |
+| `mint` | Match by mint. Only token rows carry a mint, so a non-empty `mint` restricts to token activity. |
+| `owner` | Match by owner (wallet) address. |
+| `program_id` | Match by token program id (classic SPL Token vs Token-2022); matches either the pre or the post program id. |
+| `is_signer` / `is_writable` / `is_fee_payer` / `from_lookup_table` | Header-derived position flags. A **null** flag matches neither `true` nor `false` (unknown is not false). |
+
+Because fields within one selection are AND-ed and `account` means different things on the two sides, "everything for wallet W" is **two** selections: `[{ "account": ["W"] }, { "owner": ["W"] }]`.
+
 ## Field selection
 
 Use `field_selection` to choose columns per logical table. Omit a table key to receive **all** columns for that table (when rows are returned).
@@ -85,7 +118,7 @@ Use `field_selection` to choose columns per logical table. Omit a table key to r
 {
   "field_selection": {
     "block": ["slot", "blockhash", "block_time"],
-    "instruction": ["slot", "program_id", "data", "d8"],
+    "instruction_call": ["slot", "executing_account", "data", "d8"],
     "transaction": ["slot", "fee_payer", "success"]
   }
 }
@@ -96,18 +129,28 @@ Use `field_selection` to choose columns per logical table. Omit a table key to r
 | Table | Fields |
 |---|---|
 | `block` | `slot`, `blockhash`, `parent_slot`, `parent_blockhash`, `block_time`, `block_height` |
-| `transaction` | `slot`, `transaction_index`, `signatures`, `fee_payer`, `success`, `err`, `fee`, `compute_units_consumed`, `account_keys`, `recent_blockhash`, `version`, `loaded_addresses_writable`, `loaded_addresses_readonly` |
-| `instruction` | `slot`, `transaction_index`, `instruction_address`, `program_id`, `accounts`, `data`, `d1`, `d2`, `d4`, `d8`, `a0`-`a9`, `is_inner`, `is_committed` |
+| `transaction` | `slot`, `transaction_index`, `transaction_id`, `signatures`, `fee_payer`, `success`, `err`, `fee`, `compute_units_consumed`, `account_keys`, `recent_blockhash`, `version`, `loaded_addresses_writable`, `loaded_addresses_readonly` |
+| `instruction_call` | `slot`, `transaction_index`, `instruction_address`, `executing_account`, `executing_account_index`, `account_arguments`, `account_index_arguments`, `data`, `d1`, `d2`, `d4`, `d8`, `a0`-`a9`, `is_inner`, `is_committed` |
 | `log` | `slot`, `transaction_index`, `instruction_address`, `program_id`, `kind`, `message` |
-| `balance` | `slot`, `transaction_index`, `account`, `pre`, `post` |
-| `token_balance` | `slot`, `transaction_index`, `account`, `mint`, `owner`, `pre_amount`, `post_amount` |
+| `account_activity` | `slot`, `transaction_index`, `transaction_id`, `account_index`, `account`, `pre_balance`, `post_balance`, `is_signer`, `is_writable`, `is_fee_payer`, `from_lookup_table`, `mint`, `owner`, `token_decimals`, `pre_token_balance`, `post_token_balance`, `pre_program_id`, `post_program_id` |
 | `reward` | `slot`, `pubkey`, `lamports`, `post_balance`, `reward_type`, `commission` |
 
-**`is_committed` (instruction):** Whether this instruction row is part of the **executed** instruction trace for the landed transaction (as opposed to being present only for structural / edge cases). Always interpret next to `transaction.success` and `transaction.err`: failed transactions can still include instructions up to the failure point.
+**`is_committed` (instruction):** `true` when the parent transaction succeeded. Instructions from failed transactions are returned with `is_committed: false` unless you filter them out with `"is_committed": true` in the selection. Interpret it next to `transaction.success` / `transaction.err` when a transaction is included.
+
+**`executing_account_index` / `account_index_arguments` (instruction):** derived columns giving the executing account's and the account arguments' positions within the transaction's resolved account keys. They have no legacy equivalent.
+
+### The account_activity table
+
+`account_activity` is the unified per-(transaction, account) table that replaces the old separate `balance` and `token_balance` tables. Each row is one account's activity in one transaction, carrying the native SOL change, the SPL token balance, or both:
+
+- **Native side** (`pre_balance`, `post_balance`, in lamports) is populated when the account's SOL balance changed in this transaction, null otherwise.
+- **Token side** (`mint`, `owner`, `token_decimals`, `pre_token_balance`, `post_token_balance`, `pre_program_id`, `post_program_id`) is populated when the account appears in the transaction's token-balance metadata, null otherwise.
+
+A row commonly carries **both** sides, since a token account also holds lamports; the native and token amounts are independent axes, not two encodings of one value (for wrapped SOL, lamports equal the token amount plus the rent-exempt reserve). `pre_token_balance` / `post_token_balance` are raw base-unit **decimal strings** (scaled by `token_decimals`), not numbers, because Token-2022 amounts can exceed `u64::MAX`. `account_index` is the account's position in the transaction's resolved key list (`account_keys` ++ ALT writable ++ ALT readonly); the flags (`is_signer`, `is_writable`, `is_fee_payer`, `from_lookup_table`) are derived from the message header and are null where a source could not supply them.
 
 ## Join behavior
 
-The server automatically joins related rows based on which tables you include in `field_selection`. For example, if your query filters on `instructions` and you also select `transaction` fields, the server returns the parent transaction for each matched instruction — no extra flags needed.
+The server automatically joins related rows based on which tables you include in `field_selection`. For example, if your query filters on `instruction_calls` and you also select `transaction` fields, the server returns the parent transaction for each matched instruction — no extra flags needed.
 
 :::note Join modes not yet available
 Solana HyperSync currently operates on a single default join mode. More granular control — for example fetching only the directly matched rows with no joins, or fetching all rows belonging to matched transactions — is planned but not yet exposed.
@@ -123,12 +166,13 @@ Advanced knobs (defaults are usually fine):
 |---|---|
 | `max_num_blocks` | Cap rows returned per table (approximate server-side bound). |
 | `max_num_transactions` | Same, for `transactions`. |
-| `max_num_instructions` | Same, for `instructions`. |
+| `max_num_instructions` | Same, for `instruction_calls`. |
 | `max_num_logs` | Same, for `logs`. |
+| `max_num_account_activity` | Same, for `account_activity`. |
 
 ## Response
 
-Top-level keys include `next_slot`, `total_execution_time_ms`, optional `rollback_guard`, and one array per table when present: `blocks`, `transactions`, `instructions`, `logs`, `balances`, `token_balances`, `rewards`—each holds **row objects** shaped by your `field_selection`.
+Top-level keys include `next_slot`, `total_execution_time_ms`, optional `rollback_guard`, and one array per table when present: `blocks`, `transactions`, `instructions`, `logs`, `account_activity`, `rewards` — each holds **row objects** shaped by your `field_selection`.
 
 ### Example fragment (illustrative)
 
@@ -147,9 +191,10 @@ Top-level keys include `next_slot`, `total_execution_time_ms`, optional `rollbac
   "instructions": [
     {
       "slot": 391800000,
-      "program_id": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
-      "accounts": ["7xK...", "9mY...", "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"],
-      "data": "<opaque encoded payload>"
+      "executing_account": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      "account_arguments": ["7xK...", "9mY...", "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"],
+      "data": "<opaque encoded payload>",
+      "is_committed": true
     }
   ],
   "transactions": []
@@ -192,6 +237,20 @@ Example `rollback_guard` payload (field names only—values are illustrative):
   "first_previous_blockhash": "3nF..."
 }
 ```
+
+## Renamed fields and compatibility
+
+Several fields were given clearer names. The legacy names are still accepted on input (via aliases), so existing queries keep working, but responses use the new names.
+
+| Location | Legacy name | Current name |
+|---|---|---|
+| Top-level query | `instructions` | `instruction_calls` |
+| `InstructionSelection` | `program_id` | `executing_account` |
+| `field_selection` | `instruction` | `instruction_call` |
+| `instruction_call` field | `program_id` | `executing_account` |
+| `instruction_call` field | `accounts` | `account_arguments` |
+
+The `balance` and `token_balance` field-selection tables were **removed**, not renamed: use `account_activity` instead. Because the query envelope now rejects unknown keys, a query that still selects `balance` / `token_balance` (or the top-level `balances` / `token_balances`) is an error rather than a silently empty result.
 
 ## Authentication
 

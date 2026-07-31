@@ -55,11 +55,11 @@ curl_query '{
   "from_slot": 391800000,
   "to_slot": 391800100,
   "field_selection": {
-    "instruction": ["slot", "transaction_index", "program_id", "accounts", "data", "d8"],
+    "instruction_call": ["slot", "transaction_index", "executing_account", "account_arguments", "data", "d8"],
     "transaction": ["slot", "signatures", "fee_payer", "success", "fee"]
   },
-  "instructions": [{
-    "program_id": ["whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc"],
+  "instruction_calls": [{
+    "executing_account": ["whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc"],
     "d8": ["0xf8c69e91e17587c8"]
   }]
 }' | jq '{next_slot, sample_instruction: .instructions[0], sample_tx: .transactions[0]}'
@@ -67,18 +67,18 @@ curl_query '{
 
 ## SPL Token `Transfer` (`d1`)
 
-1-byte discriminator: `0x03` = `Transfer` (hex with or without `0x`).
+1-byte discriminator: `0x03` = `Transfer` (hex with or without `0x`). Token movements come from the unified `account_activity` table (`pre_token_balance` / `post_token_balance` are raw base-unit decimal **strings**).
 
 ```bash
 curl_query '{
   "from_slot": 391800000,
   "to_slot": 391800100,
   "field_selection": {
-    "instruction": ["slot", "program_id", "accounts", "data", "d1"],
-    "token_balance": ["slot", "transaction_index", "account", "mint", "owner", "pre_amount", "post_amount"]
+    "instruction_call": ["slot", "executing_account", "account_arguments", "data", "d1"],
+    "account_activity": ["slot", "transaction_index", "account", "mint", "owner", "pre_token_balance", "post_token_balance"]
   },
-  "instructions": [{
-    "program_id": ["TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"],
+  "instruction_calls": [{
+    "executing_account": ["TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"],
     "d1": ["0x03"]
   }]
 }'
@@ -93,11 +93,11 @@ curl_query '{
   "from_slot": 391800000,
   "to_slot": 391800100,
   "field_selection": {
-    "instruction": ["slot", "program_id", "data", "d8"]
+    "instruction_call": ["slot", "executing_account", "data", "d8"]
   },
-  "instructions": [
-    { "program_id": ["JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4"] },
-    { "program_id": ["whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc"] }
+  "instruction_calls": [
+    { "executing_account": ["JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4"] },
+    { "executing_account": ["whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc"] }
   ]
 }'
 ```
@@ -110,7 +110,7 @@ curl_query '{
   "to_slot": 391800100,
   "field_selection": {
     "transaction": ["slot", "signatures", "fee_payer", "success", "fee", "compute_units_consumed"],
-    "instruction": ["slot", "program_id", "data", "accounts"]
+    "instruction_call": ["slot", "executing_account", "data", "account_arguments"]
   },
   "transactions": [{
     "fee_payer": ["MfDuWeqSHEqTFVYZ7LoexgAK9dxk7cy4DFJWjWMGVWa"]
@@ -127,11 +127,11 @@ curl_query '{
   "from_slot": 391800000,
   "to_slot": 391800100,
   "field_selection": {
-    "instruction": ["slot", "program_id", "accounts", "data", "d8", "a2"],
+    "instruction_call": ["slot", "executing_account", "account_arguments", "data", "d8", "a2"],
     "transaction": ["slot", "fee_payer", "success"]
   },
-  "instructions": [{
-    "program_id": ["6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"]
+  "instruction_calls": [{
+    "executing_account": ["6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"]
   }]
 }'
 ```
@@ -164,8 +164,8 @@ while [ "$SLOT" -lt "$TO" ]; do
   RESP=$(curl_query "{
     \"from_slot\": $SLOT,
     \"to_slot\": $TO,
-    \"field_selection\": { \"instruction\": [\"slot\", \"program_id\", \"d8\"] },
-    \"instructions\": [{ \"program_id\": [\"whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc\"] }]
+    \"field_selection\": { \"instruction_call\": [\"slot\", \"executing_account\", \"d8\"] },
+    \"instruction_calls\": [{ \"executing_account\": [\"whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc\"] }]
   }")
   echo "$RESP" | jq '.instructions | length, .next_slot'
   NEXT=$(echo "$RESP" | jq -r .next_slot)
