@@ -1,6 +1,9 @@
 const { themes } = require("prism-react-renderer");
+const { getBlogLastmodMap } = require("./scripts/blog-lastmod");
 const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
+
+const blogLastmod = getBlogLastmodMap();
 
 const redirectsList = [
   {
@@ -325,7 +328,12 @@ const config = {
           blogDescription:
             "Technical articles, case studies, tutorials, product updates, and agentic indexing insights from Envio's blockchain data infrastructure team.",
           postsPerPage: "ALL",
-          blogSidebarCount: 0,
+          // Every post links to every other post. Older posts had no inbound
+          // links except the /blog index, which left them with too little
+          // internal link equity for Google to spend crawl budget on them
+          // ("Discovered - currently not indexed" in Search Console).
+          blogSidebarCount: "ALL",
+          blogSidebarTitle: "All posts",
           tagsBasePath: 'tag',
         },
 
@@ -337,6 +345,10 @@ const config = {
           anonymizeIP: true,
         },
         sitemap: {
+          // Google ignores changefreq/priority entirely and uses lastmod as the
+          // signal for which URLs are worth recrawling. Without it every URL
+          // looked equally stale, so older posts were never crawled at all.
+          lastmod: "date",
           ignorePatterns: [
             "/docs/HyperIndex-LLM/**",
             "/docs/HyperSync-LLM/**",
@@ -347,7 +359,22 @@ const config = {
             "/docs/v2/HyperIndex/**",
             // Client-side search results page carries no indexable content.
             "/search",
+            // Auto-generated blog index pages carry no unique content. They
+            // stay crawlable for link discovery, but listing them in the
+            // sitemap spends discovery budget that real articles need.
+            "/blog/archive",
+            "/blog/author/**",
           ],
+          // Docs keep the git-derived lastmod; blog posts use their
+          // frontmatter revision date instead. See scripts/blog-lastmod.js.
+          async createSitemapItems({ defaultCreateSitemapItems, ...params }) {
+            const items = await defaultCreateSitemapItems(params);
+            return items.map((item) => {
+              const pathname = new URL(item.url).pathname.replace(/\/$/, "");
+              const lastmod = blogLastmod.get(pathname);
+              return lastmod ? { ...item, lastmod } : item;
+            });
+          },
         },
       }),
     ],
