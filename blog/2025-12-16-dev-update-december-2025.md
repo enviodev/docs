@@ -215,7 +215,7 @@ Envio now supports [Tempo](https://tempo.xyz), giving teams an easier way to ind
 
 This support makes it simpler for developers to work with Tempo data using [HyperIndex](https://docs.envio.dev/docs/HyperIndex/overview), without needing to set up or maintain custom indexing infrastructure. Teams can define their own indexing logic and query patterns while keeping full control over how data flows through their pipelines.
 
-To get started and learn how to index data on Tempo, check out the [setup guide](https://docs.envio.dev/docs/HyperIndex/supported-networks) in the Envio docs.
+To get started and learn how to index data on Tempo, check out the [setup guide](https://envio.dev/chains/tempo) in the Envio docs.
 
 
 ## How to Index Cross-Chain USDT0 Transfers with Envio

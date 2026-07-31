@@ -869,6 +869,146 @@
       "permanent": true
     },
     {
+      "source": "/docs/HyperIndex/arbitrum-blueberry",
+      "destination": "https://envio.dev/chains/arbitrum",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/aurora-turbo",
+      "destination": "https://envio.dev/chains/aurora",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/berachain-artio-testnet",
+      "destination": "https://envio.dev/chains/berachain",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/berachain-bartio",
+      "destination": "https://envio.dev/chains/berachain",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/boba-bnb-mainnet",
+      "destination": "https://envio.dev/chains/boba",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/celo-alfajores-testnet",
+      "destination": "https://envio.dev/chains/celo",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/chiliz-testnet-spicy",
+      "destination": "https://envio.dev/chains/chiliz",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/citrea-devnet",
+      "destination": "https://envio.dev/chains/citrea",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/etherlink-testnet",
+      "destination": "https://envio.dev/chains/etherlink",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/fantom-testnet",
+      "destination": "https://envio.dev/chains/fantom",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/flare-songbird",
+      "destination": "https://envio.dev/chains/flare",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/hyperliquid-temp",
+      "destination": "https://envio.dev/chains/hyperliquid",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/manta-pacific-sepolia",
+      "destination": "https://envio.dev/chains/manta",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/megaeth-testnet",
+      "destination": "https://envio.dev/chains/megaeth",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/megaeth-testnet1",
+      "destination": "https://envio.dev/chains/megaeth",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/monad-testnet-backup",
+      "destination": "https://envio.dev/chains/monad-testnet",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/morph-holesky",
+      "destination": "https://envio.dev/chains/morph",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/morph-testnet",
+      "destination": "https://envio.dev/chains/morph",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/opbnb-mainnet",
+      "destination": "https://envio.dev/chains/opbnb",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/polygon-zkevm-cardona-testnet",
+      "destination": "https://envio.dev/chains/polygon-zkevm",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/scroll-sepolia",
+      "destination": "https://envio.dev/chains/scroll",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/sepolia-temp-eip-7702",
+      "destination": "https://envio.dev/chains/sepolia",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/superseed-sepolia-testnet",
+      "destination": "https://envio.dev/chains/superseed",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/tempo-testnet",
+      "destination": "https://envio.dev/chains/tempo",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/unichain-sepolia",
+      "destination": "https://envio.dev/chains/unichain",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/zeta-testnet",
+      "destination": "https://envio.dev/chains/zeta",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/zksync-sepolia-testnet",
+      "destination": "https://envio.dev/chains/zksync",
+      "permanent": true
+    },
+    {
+      "source": "/docs/HyperIndex/zora-sepolia",
+      "destination": "https://envio.dev/chains/zora",
+      "permanent": true
+    },
+    {
       "source": "/docs/HyperIndex/0g-newton-testnet",
       "destination": "/docs/HyperIndex/supported-networks",
       "permanent": true
@@ -885,11 +1025,6 @@
     },
     {
       "source": "/docs/HyperIndex/ancient8",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
-      "source": "/docs/HyperIndex/arbitrum-blueberry",
       "destination": "/docs/HyperIndex/supported-networks",
       "permanent": true
     },
@@ -919,11 +1054,6 @@
       "permanent": true
     },
     {
-      "source": "/docs/HyperIndex/aurora-turbo",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
       "source": "/docs/HyperIndex/b2-hub-testnet",
       "destination": "/docs/HyperIndex/supported-networks",
       "permanent": true
@@ -945,16 +1075,6 @@
     },
     {
       "source": "/docs/HyperIndex/beam",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
-      "source": "/docs/HyperIndex/berachain-artio-testnet",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
-      "source": "/docs/HyperIndex/berachain-bartio",
       "destination": "/docs/HyperIndex/supported-networks",
       "permanent": true
     },
@@ -1009,11 +1129,6 @@
       "permanent": true
     },
     {
-      "source": "/docs/HyperIndex/boba-bnb-mainnet",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
       "source": "/docs/HyperIndex/botanix-testnet",
       "destination": "/docs/HyperIndex/supported-networks",
       "permanent": true
@@ -1030,11 +1145,6 @@
     },
     {
       "source": "/docs/HyperIndex/canto-testnet",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
-      "source": "/docs/HyperIndex/celo-alfajores-testnet",
       "destination": "/docs/HyperIndex/supported-networks",
       "permanent": true
     },
@@ -1060,16 +1170,6 @@
     },
     {
       "source": "/docs/HyperIndex/chainweb-testnet-24",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
-      "source": "/docs/HyperIndex/chiliz-testnet-spicy",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
-      "source": "/docs/HyperIndex/citrea-devnet",
       "destination": "/docs/HyperIndex/supported-networks",
       "permanent": true
     },
@@ -1154,27 +1254,12 @@
       "permanent": true
     },
     {
-      "source": "/docs/HyperIndex/etherlink-testnet",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
       "source": "/docs/HyperIndex/exosama",
       "destination": "/docs/HyperIndex/supported-networks",
       "permanent": true
     },
     {
       "source": "/docs/HyperIndex/extrabud",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
-      "source": "/docs/HyperIndex/fantom-testnet",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
-      "source": "/docs/HyperIndex/flare-songbird",
       "destination": "/docs/HyperIndex/supported-networks",
       "permanent": true
     },
@@ -1215,11 +1300,6 @@
     },
     {
       "source": "/docs/HyperIndex/holesky-token-test",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
-      "source": "/docs/HyperIndex/hyperliquid-temp",
       "destination": "/docs/HyperIndex/supported-networks",
       "permanent": true
     },
@@ -1284,21 +1364,6 @@
       "permanent": true
     },
     {
-      "source": "/docs/HyperIndex/manta-pacific-sepolia",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
-      "source": "/docs/HyperIndex/megaeth-testnet",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
-      "source": "/docs/HyperIndex/megaeth-testnet1",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
       "source": "/docs/HyperIndex/meter-mainnet",
       "destination": "/docs/HyperIndex/supported-networks",
       "permanent": true
@@ -1324,22 +1389,7 @@
       "permanent": true
     },
     {
-      "source": "/docs/HyperIndex/monad-testnet-backup",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
       "source": "/docs/HyperIndex/moonbase-alpha",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
-      "source": "/docs/HyperIndex/morph-holesky",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
-      "source": "/docs/HyperIndex/morph-testnet",
       "destination": "/docs/HyperIndex/supported-networks",
       "permanent": true
     },
@@ -1409,11 +1459,6 @@
       "permanent": true
     },
     {
-      "source": "/docs/HyperIndex/opbnb-mainnet",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
       "source": "/docs/HyperIndex/optopia",
       "destination": "/docs/HyperIndex/supported-networks",
       "permanent": true
@@ -1425,11 +1470,6 @@
     },
     {
       "source": "/docs/HyperIndex/pharos-devnet",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
-      "source": "/docs/HyperIndex/polygon-zkevm-cardona-testnet",
       "destination": "/docs/HyperIndex/supported-networks",
       "permanent": true
     },
@@ -1464,22 +1504,12 @@
       "permanent": true
     },
     {
-      "source": "/docs/HyperIndex/scroll-sepolia",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
       "source": "/docs/HyperIndex/sentient",
       "destination": "/docs/HyperIndex/supported-networks",
       "permanent": true
     },
     {
       "source": "/docs/HyperIndex/sentient-testnet",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
-      "source": "/docs/HyperIndex/sepolia-temp-eip-7702",
       "destination": "/docs/HyperIndex/supported-networks",
       "permanent": true
     },
@@ -1505,11 +1535,6 @@
     },
     {
       "source": "/docs/HyperIndex/stratovm-testnet",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
-      "source": "/docs/HyperIndex/superseed-sepolia-testnet",
       "destination": "/docs/HyperIndex/supported-networks",
       "permanent": true
     },
@@ -1544,22 +1569,12 @@
       "permanent": true
     },
     {
-      "source": "/docs/HyperIndex/tempo-testnet",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
       "source": "/docs/HyperIndex/torus-mainnet",
       "destination": "/docs/HyperIndex/supported-networks",
       "permanent": true
     },
     {
       "source": "/docs/HyperIndex/torus-testnet",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
-      "source": "/docs/HyperIndex/unichain-sepolia",
       "destination": "/docs/HyperIndex/supported-networks",
       "permanent": true
     },
@@ -1614,22 +1629,7 @@
       "permanent": true
     },
     {
-      "source": "/docs/HyperIndex/zeta-testnet",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
       "source": "/docs/HyperIndex/zklink-nova-mainnet",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
-      "source": "/docs/HyperIndex/zksync-sepolia-testnet",
-      "destination": "/docs/HyperIndex/supported-networks",
-      "permanent": true
-    },
-    {
-      "source": "/docs/HyperIndex/zora-sepolia",
       "destination": "/docs/HyperIndex/supported-networks",
       "permanent": true
     },
