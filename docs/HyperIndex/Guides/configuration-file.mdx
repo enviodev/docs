@@ -183,6 +183,22 @@ After switching to a fallback source, HyperIndex automatically attempts to recov
 
 See the [Rpc reference](/docs/HyperIndex/config-schema-reference#def-rpc) for advanced tuning options such as `initial_block_interval`, `polling_interval`, `query_timeout_millis`, and backoff parameters.
 
+#### Custom Headers
+
+Since v3.3, `headers` sets custom HTTP headers on an RPC entry — for endpoints gated behind an auth header rather than a key in the URL. Values support `${ENV_VAR}` interpolation:
+
+```yaml
+chains:
+  - id: 1
+    rpc:
+      - url: https://eth-mainnet.your-rpc-provider.com
+        for: sync
+        headers:
+          Authorization: "Bearer ${RPC_API_KEY}"
+```
+
+See [Custom HTTP Headers](/docs/HyperIndex/rpc-sync#custom-http-headers) for details.
+
 ### WebSocket Height Streaming
 
 Pair `wss://` URLs with `for: realtime` to improve head latency by streaming new block heights over a WebSocket connection.
@@ -366,6 +382,8 @@ Do not run multiple indexers writing to the same ClickHouse database at the same
 :::
 
 Envio Cloud currently supports ClickHouse on the Dedicated Plan.
+
+Since v3.4, the `@storage` directive's `clickhouse` argument also accepts an options object for per-entity table tuning — partitioning, sorting key and TTL. See [Per-Entity ClickHouse Tuning](/docs/HyperIndex/schema#per-entity-clickhouse-tuning).
 
 ### Column Name Format
 

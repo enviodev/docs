@@ -28,7 +28,28 @@ type User {
 ### Requirements:
 
 - Every entity **must** have a unique `id` field, using one of these scalar types:
-  - `ID!`, `String!`, `Int!`, `Bytes!`, or `BigInt!`
+  - `ID!`, `String!`, `Int!`, or `BigInt!`
+- The `id` field must be non-nullable, must not be a list, and cannot be a [`@derivedFrom`](#relationships-one-to-many-derivedfrom) field.
+
+### Numeric Entity IDs
+
+`ID` is the usual choice and behaves as a string. Since v3.5, you can also key an entity on `Int` or `BigInt`, which is a better fit when the identifier is genuinely a number — a block number, an auction id, a sequential position:
+
+```graphql
+type Auction {
+  id: BigInt! # the on-chain auction id, not a stringified copy of it
+  seller: String!
+  bids: [Bid!]! @derivedFrom(field: "auction")
+}
+
+type Bid {
+  id: ID!
+  auction: Auction! # inferred as BigInt to match Auction.id
+  amount: BigInt!
+}
+```
+
+Relationship fields adopt the referenced entity's id type automatically, so `Bid.auction` above is typed `bigint` in your handlers rather than `string`. You don't declare the foreign key type — keep the two sides in sync by changing the referenced entity's `id`.
 
 ---
 
@@ -328,6 +349,55 @@ type Token {
 ```
 
 - All `id` fields and fields referenced via `@derivedFrom` are indexed automatically.
+- Declare `@index` for the fields your GraphQL consumers filter and sort by. You don't need it for fields your handlers query with [`getWhere`](/docs/HyperIndex/event-handlers#retrieving-entities-by-field) — since v3.5 HyperIndex creates those indices itself. See [Indices created on demand](/docs/HyperIndex/database-performance-optimization#indices-created-on-demand).
+
+---
+
+## Choosing a Storage Backend (`@storage`)
+
+When you enable more than one storage backend in `config.yaml`, the `@storage` directive controls where each entity is written:
+
+```graphql
+# Queryable over GraphQL and mirrored into ClickHouse for analytics
+type Transfer @storage(postgres: true, clickhouse: true) {
+  id: ID!
+  amount: BigInt!
+}
+```
+
+Since v3.2 you can mark a backend as `default` in `config.yaml`, and entities without a `@storage` directive go there — you no longer need the directive on every entity. See [`storage`](/docs/HyperIndex/config-schema-reference#storage).
+
+### Per-Entity ClickHouse Tuning
+
+Since v3.4, the `clickhouse` argument also accepts an options object that tunes that entity's ClickHouse history table:
+
+```graphql
+type Transfer
+  @storage(
+    postgres: true
+    clickhouse: {
+      partitionBy: "toYYYYMM(timestamp)"
+      orderBy: ["timestamp"]
+      ttl: "timestamp + INTERVAL 2 YEAR"
+    }
+  ) {
+  id: ID!
+  timestamp: Timestamp!
+  amount: BigInt!
+}
+```
+
+| Option | Type | Description |
+|--------|------|-------------|
+| `partitionBy` | ClickHouse expression | Emitted as `PARTITION BY <expr>`. Keeps queries and TTL deletes inside a partition instead of scanning the whole table. |
+| `orderBy` | list of entity field names | Fields that lead the table's sorting key, ahead of the default `id`. |
+| `ttl` | ClickHouse expression | Emitted as `TTL <expr>`. Ages rows out automatically. |
+
+A few constraints, all caught at `envio codegen` rather than at runtime:
+
+- `orderBy` takes **entity field names**, not expressions — unlike `partitionBy` and `ttl`, which are ClickHouse expressions passed through as written.
+- `orderBy` can't list `id` (already the default sorting key), nor nullable, list or `@derivedFrom` fields, which ClickHouse doesn't allow in a sorting key.
+- An entity can carry only one `@storage` directive, and it must enable at least one backend.
 
 ---
 

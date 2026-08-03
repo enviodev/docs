@@ -1,27 +1,33 @@
 #!/usr/bin/env node
 /*
  Generates two deep-linkable Markdown references from the published config
- JSON Schema:
- - V2 doc: docs/HyperIndexV2/Advanced/config-schema-reference.md, written
-   directly from static/schemas/config.evm.json.
- - V3 doc: docs/HyperIndex/Advanced/config-schema-reference.md, written
-   from the same schema after applying the V2 → V3 transformations defined
-   in `toV3()` below (rename networks → chains, drop removed fields, add
-   V3-only fields like storage / full_batch_size, etc.).
+ JSON Schemas, one per major version, each read directly from its own
+ snapshot under static/schemas:
+ - V2 doc: docs/HyperIndexV2/Advanced/config-schema-reference.md, from
+   config.evm.json.
+ - V3 doc: docs/HyperIndex/Advanced/config-schema-reference.md, from
+   config.v3.evm.json.
 
- If a published V3 JSON Schema becomes available, replace the `toV3()`
- transform with a direct read of that schema.
+ The V3 doc used to be synthesized from the V2 schema by a hand-maintained
+ `toV3()` transform, which silently went stale every time upstream added a
+ field. Both snapshots are now refreshed by `yarn update-evm-config-schema`.
 */
 
 const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
-const INPUT_SCHEMA_PATH = path.resolve(
+const V2_INPUT_SCHEMA_PATH = path.resolve(
   ROOT,
   "static",
   "schemas",
   "config.evm.json"
+);
+const V3_INPUT_SCHEMA_PATH = path.resolve(
+  ROOT,
+  "static",
+  "schemas",
+  "config.v3.evm.json"
 );
 
 const V2_OUTPUT_PATH = path.resolve(
@@ -86,287 +92,24 @@ const V3_EXAMPLES = {
     field_selection: `field_selection:\n  transaction_fields:\n    - hash\n  block_fields:\n    - miner`,
     raw_events: "raw_events: true",
     full_batch_size: "full_batch_size: 5000",
-    storage: `storage:\n  postgres: true\n  clickhouse: true`,
+    storage: `storage:\n  postgres:\n    default: true\n    column_name_format: snake_case\n  clickhouse: true`,
   },
   defs: {
     FieldSelection: `events:\n  - event: "Assigned(address indexed user, uint256 amount)"\n    # can be within an event as shown here, or globally for all events\n    field_selection:\n      transaction_fields:\n        - transactionIndex\n      block_fields:\n        - miner`,
-    Chain: `chains:\n  - id: 1\n    start_block: 0\n    end_block: 19000000\n    contracts:\n      - name: Greeter\n        address: "0x1111111111111111111111111111111111111111"`,
-    Rpc: `chains:\n  - id: 1\n    rpc:\n      - url: https://eth.llamarpc.com\n        for: sync\n      - url: wss://eth.llamarpc.com\n        for: realtime\n      - url: https://fallback.example.com\n        for: fallback`,
+    Chain: `chains:\n  - id: 1\n    start_block: 0\n    end_block: 19000000\n    contracts:\n      - name: Greeter\n        address: "0x1111111111111111111111111111111111111111"\n  # Excluded from indexing and migrations, but still code-generated\n  - id: 137\n    skip: true\n    start_block: 0`,
+    Rpc: `chains:\n  - id: 1\n    rpc:\n      - url: https://eth.llamarpc.com\n        for: sync\n        headers:\n          Authorization: "Bearer \${RPC_API_KEY}"\n      - url: wss://eth.llamarpc.com\n        for: realtime\n      - url: https://fallback.example.com\n        for: fallback`,
     HypersyncConfig: `chains:\n  - id: 1\n    hypersync_config:\n      url: https://eth.hypersync.xyz`,
-    GlobalContract_for_ContractConfig: `contracts:\n  - name: Greeter\n    events:\n      - event: "NewGreeting(address user, string greeting)"`,
-    NetworkContract_for_ContractConfig: `chains:\n  - id: 1\n    start_block: 0\n    contracts:\n      - name: Greeter\n        address:\n          - "0x1111111111111111111111111111111111111111"\n        events:\n          - event: Transfer(address indexed from, address indexed to, uint256 value)`,
+    GlobalContract: `contracts:\n  - name: Greeter\n    events:\n      - event: "NewGreeting(address user, string greeting)"`,
+    ChainContract: `chains:\n  - id: 1\n    start_block: 0\n    contracts:\n      - name: Greeter\n        address:\n          - "0x1111111111111111111111111111111111111111"\n        events:\n          - event: Transfer(address indexed from, address indexed to, uint256 value)`,
     Addresses: `chains:\n  - id: 1\n    contracts:\n      - name: Greeter\n        address:\n          - "0x1111111111111111111111111111111111111111"\n          - "0x2222222222222222222222222222222222222222"`,
     EventConfig: `contracts:\n  - name: Greeter\n    events:\n      - event: "Assigned(address indexed recipientId, uint256 amount, address token)"\n        name: Assigned\n        field_selection:\n          transaction_fields:\n            - transactionIndex`,
     EcosystemTag: `ecosystem: evm`,
-    Storage: `storage:\n  postgres: true\n  clickhouse: true`,
+    StorageConfig: `storage:\n  postgres:\n    # Entities without an @storage directive land here\n    default: true\n    # Columns become snake_case in the database, while GraphQL and\n    # handler types keep the schema.graphql casing\n    column_name_format: snake_case\n  clickhouse:\n    default: false`,
   },
 };
 
 // Fields that V3 removed entirely from `config.yaml`.
 const V3_REMOVED_FIELDS_NOTE = `\n## Removed in V3\n\nThe following V2 options have been removed and are no longer accepted in \`config.yaml\`:\n\n- \`output\` — generated types are always emitted to \`.envio/\`.\n- \`unordered_multichain_mode\` — unordered is now the only mode. The V2 \`multichain: ordered\` opt-in has also been removed.\n- \`event_decoder\` — the Rust-based decoder is the only implementation.\n- \`loaders\` — Preload Optimization is now always on.\n- \`preload_handlers\` — now always enabled.\n- \`preRegisterDynamicContracts\` — no longer needed.\n- \`rpc_config\` — replaced by \`rpc\` (see above).\n- \`networks\` — renamed to \`chains\`.\n- \`confirmed_block_threshold\` — renamed to \`max_reorg_depth\`.\n`;
-
-/** Deep clone helper. */
-function clone(value) {
-  return JSON.parse(JSON.stringify(value));
-}
-
-/**
- * Transform a V2 schema document into the V3 schema shape.
- *
- * V2 → V3 changes applied:
- * - Top-level fields removed: output, unordered_multichain_mode,
- *   event_decoder, preload_handlers.
- * - Top-level field renamed: networks → chains (and `required` updated).
- * - Top-level fields added: full_batch_size, storage.
- * - `$defs.Network` → `$defs.Chain` (and all `$ref`s repointed). Inside it:
- *     - rpc_config removed
- *     - confirmed_block_threshold → max_reorg_depth
- *     - block_lag added
- *     - id / contracts descriptions updated (network → chain)
- *     - The rpc property accepts a string, single Rpc, or array of Rpc.
- * - `$defs` removed: RpcConfig, NetworkRpc, EventDecoder.
- * - `$defs.Storage` added.
- * - `$defs.For` description tightened.
- */
-function toV3(originalSchema) {
-  const schema = clone(originalSchema);
-
-  // Top-level removals
-  const removedTopLevel = [
-    "output",
-    "unordered_multichain_mode",
-    "event_decoder",
-    "preload_handlers",
-  ];
-  for (const key of removedTopLevel) {
-    if (schema.properties && schema.properties[key]) {
-      delete schema.properties[key];
-    }
-  }
-
-  // networks → chains, preserve property order (rebuild)
-  if (schema.properties && schema.properties.networks) {
-    const networks = schema.properties.networks;
-    if (networks.items && networks.items.$ref === "#/$defs/Network") {
-      networks.items.$ref = "#/$defs/Chain";
-    }
-    networks.description =
-      "Configuration of the blockchain chains that the project is deployed on.";
-    const newProps = {};
-    for (const k of Object.keys(schema.properties)) {
-      if (k === "networks") {
-        newProps.chains = networks;
-      } else {
-        newProps[k] = schema.properties[k];
-      }
-    }
-    schema.properties = newProps;
-  }
-  if (Array.isArray(schema.required)) {
-    schema.required = schema.required.map((r) =>
-      r === "networks" ? "chains" : r
-    );
-  }
-
-  // Top-level additions (slotted before address_format if present)
-  schema.properties = schema.properties || {};
-  const newTopAdds = {
-    full_batch_size: {
-      description:
-        "Maximum number of events processed per batch. Replaces the V2 `MAX_BATCH_SIZE` environment variable.",
-      type: ["integer", "null"],
-      format: "uint32",
-      minimum: 1,
-    },
-    storage: {
-      description:
-        "Configures which storage backends the indexer writes to. Postgres is enabled by default; enable ClickHouse by setting `clickhouse: true`.",
-      anyOf: [{ $ref: "#/$defs/Storage" }, { type: "null" }],
-    },
-  };
-  Object.assign(schema.properties, newTopAdds);
-
-  // $defs transformations
-  schema.$defs = schema.$defs || {};
-
-  // Rename Network → Chain
-  if (schema.$defs.Network) {
-    const network = clone(schema.$defs.Network);
-
-    if (network.properties) {
-      delete network.properties.rpc_config;
-
-      if (network.properties.confirmed_block_threshold) {
-        const cbt = network.properties.confirmed_block_threshold;
-        cbt.description =
-          "The number of blocks from the head that the indexer should account for in case of reorgs. Replaces the V2 `confirmed_block_threshold` field.";
-        network.properties.max_reorg_depth = cbt;
-        delete network.properties.confirmed_block_threshold;
-      }
-
-      network.properties.block_lag = {
-        description:
-          "Number of blocks the indexer stays behind the chain head. Replaces the V2 `ENVIO_INDEXING_BLOCK_LAG` environment variable, applied per chain.",
-        type: ["integer", "null"],
-        format: "uint32",
-        minimum: 0,
-      };
-
-      if (network.properties.id && network.properties.id.description) {
-        network.properties.id.description = "The public blockchain chain ID.";
-      }
-      if (
-        network.properties.contracts &&
-        network.properties.contracts.description
-      ) {
-        network.properties.contracts.description =
-          "All the contracts that should be indexed on the given chain";
-      }
-      if (network.properties.rpc) {
-        network.properties.rpc = {
-          description:
-            "RPC configuration for your indexer. Accepts a single URL, a single Rpc object, or an array of Rpc objects. For chains supported by HyperSync, RPC serves as a fallback for added reliability. For others, it acts as the primary data-source. WebSocket URLs (`wss://...`) are also supported for realtime endpoints.",
-          anyOf: [
-            { type: "string" },
-            { $ref: "#/$defs/Rpc" },
-            {
-              type: "array",
-              items: { $ref: "#/$defs/Rpc" },
-            },
-            { type: "null" },
-          ],
-        };
-      }
-    }
-
-    schema.$defs.Chain = network;
-    delete schema.$defs.Network;
-  }
-
-  // Remove obsolete $defs
-  for (const key of ["RpcConfig", "NetworkRpc", "EventDecoder"]) {
-    if (schema.$defs[key]) {
-      delete schema.$defs[key];
-    }
-  }
-
-  // Add Storage def
-  schema.$defs.Storage = {
-    type: "object",
-    properties: {
-      postgres: {
-        description: "Enable Postgres storage (default: true)",
-        type: ["boolean", "null"],
-      },
-      clickhouse: {
-        description:
-          "Enable ClickHouse storage in addition to Postgres (default: false). Requires the `ENVIO_CLICKHOUSE_*` environment variables.",
-        type: ["boolean", "null"],
-      },
-    },
-    additionalProperties: false,
-  };
-
-  // `For` gains `realtime` (V2 only had sync | fallback)
-  if (schema.$defs.For && Array.isArray(schema.$defs.For.oneOf)) {
-    const hasRealtime = schema.$defs.For.oneOf.some(
-      (v) => v && v.const === "realtime"
-    );
-    if (!hasRealtime) {
-      schema.$defs.For.oneOf.splice(1, 0, { const: "realtime" });
-    }
-  }
-
-  // Rpc.for description: include realtime
-  if (
-    schema.$defs.Rpc &&
-    schema.$defs.Rpc.properties &&
-    schema.$defs.Rpc.properties.for
-  ) {
-    schema.$defs.Rpc.properties.for.description =
-      "Determines if this RPC is for historical sync (`sync`), realtime head indexing (`realtime`, supports WebSocket), or as a fallback (`fallback`).";
-  }
-  if (
-    schema.$defs.Rpc &&
-    schema.$defs.Rpc.properties &&
-    schema.$defs.Rpc.properties.url
-  ) {
-    schema.$defs.Rpc.properties.url.description =
-      "The RPC endpoint URL. WebSocket URLs (`wss://...`) are also supported when paired with `for: realtime`.";
-  }
-
-  // Handler is auto-discovered in V3 — relax the requirement and reword the
-  // description on both contract definitions.
-  for (const defName of [
-    "GlobalContract_for_ContractConfig",
-    "NetworkContract_for_ContractConfig",
-  ]) {
-    const def = schema.$defs[defName];
-    if (!def) continue;
-    if (Array.isArray(def.required)) {
-      def.required = def.required.filter((r) => r !== "handler");
-    }
-    if (def.properties && def.properties.handler) {
-      def.properties.handler = {
-        description:
-          "Optional explicit path to a handler file. If omitted, handlers are auto-discovered from `src/handlers/`.",
-        type: ["string", "null"],
-      };
-    }
-    if (
-      def.properties &&
-      def.properties.start_block &&
-      def.properties.start_block.description
-    ) {
-      def.properties.start_block.description = def.properties.start_block.description
-        .replace(/network start_block/g, "chain `start_block`")
-        .replace(/network/g, "chain");
-    }
-  }
-
-  if (
-    schema.$defs.HypersyncConfig &&
-    schema.$defs.HypersyncConfig.properties &&
-    schema.$defs.HypersyncConfig.properties.url &&
-    schema.$defs.HypersyncConfig.properties.url.description
-  ) {
-    schema.$defs.HypersyncConfig.properties.url.description =
-      schema.$defs.HypersyncConfig.properties.url.description.replace(
-        /network/g,
-        "chain"
-      );
-  }
-
-  // TransactionField enum: kind → type (renamed in V3)
-  if (
-    schema.$defs.TransactionField &&
-    Array.isArray(schema.$defs.TransactionField.enum)
-  ) {
-    schema.$defs.TransactionField.enum = schema.$defs.TransactionField.enum.map(
-      (v) => (v === "kind" ? "type" : v)
-    );
-  }
-
-  // Repoint any remaining `$ref`s from Network to Chain
-  function repointRefs(node) {
-    if (!node || typeof node !== "object") return;
-    if (Array.isArray(node)) {
-      node.forEach(repointRefs);
-      return;
-    }
-    for (const k of Object.keys(node)) {
-      const v = node[k];
-      if (k === "$ref" && typeof v === "string" && v === "#/$defs/Network") {
-        node[k] = "#/$defs/Chain";
-      } else {
-        repointRefs(v);
-      }
-    }
-  }
-  repointRefs(schema);
-
-  return schema;
-}
 
 /** Utility functions **/
 function slugify(text, preserveUnderscores = false) {
@@ -385,6 +128,23 @@ function slugify(text, preserveUnderscores = false) {
 
 function toInlineCode(value) {
   return "`" + String(value) + "`";
+}
+
+// Schema descriptions are emitted as prose, and Docusaurus parses these pages
+// as MDX — where a bare `${VAR}` reads as a JSX expression and either blows up
+// the build or silently swallows the text. Wrap those in inline code instead.
+//
+// Split on code spans first so a `${VAR}` an upstream description already
+// wrapped is left alone; wrapping it twice would render the backticks.
+function toProse(description) {
+  return String(description)
+    .split(/(`[^`]*`)/)
+    .map((segment, i) =>
+      i % 2 === 1 // odd segments are the captured code spans
+        ? segment
+        : segment.replace(/\$\{([^}]+)\}/g, "`\${$1}`")
+    )
+    .join("");
 }
 
 function ensureDirSync(filePath) {
@@ -416,7 +176,12 @@ function describeType(schema, rootSchema = null) {
     const refName = schema.$ref.split("/").slice(-1)[0];
     const resolved = resolveRef(schema.$ref, rootSchema);
     if (resolved) {
-      return `object<${refName}>`;
+      // Naming the target is only useful when it really is an object. A `$ref`
+      // to an enum or a union is not — rendering `for: sync` as `object<For>`
+      // tells the reader to write an object where a string belongs.
+      return resolved.type === "object"
+        ? `object<${refName}>`
+        : describeType(resolved, rootSchema);
     }
   }
 
@@ -425,6 +190,19 @@ function describeType(schema, rootSchema = null) {
   }
   if (schema.const !== undefined) {
     return `const ${String(schema.const)}`;
+  }
+  // A schema that declares its own `type` describes its own shape. Composition
+  // keywords sitting alongside it — `allOf` carrying `not`/`if` constraints,
+  // say — are validation rules, and describing those instead yields noise like
+  // `allOf(unknown & unknown)` for what is plainly an object.
+  if (schema.type === "array") {
+    const items = Array.isArray(schema.items)
+      ? schema.items.map((s) => describeType(s, rootSchema)).join(", ")
+      : describeType(schema.items, rootSchema);
+    return `array<${items}>`;
+  }
+  if (schema.type === "object") {
+    return "object";
   }
   if (schema.anyOf) {
     const parts = schema.anyOf.map((s) => describeType(s, rootSchema));
@@ -437,15 +215,6 @@ function describeType(schema, rootSchema = null) {
   if (schema.allOf) {
     const parts = schema.allOf.map((s) => describeType(s, rootSchema));
     return `allOf(${parts.join(" & ")})`;
-  }
-  if (schema.type === "array") {
-    const items = Array.isArray(schema.items)
-      ? schema.items.map((s) => describeType(s, rootSchema)).join(", ")
-      : describeType(schema.items, rootSchema);
-    return `array<${items}>`;
-  }
-  if (schema.type === "object") {
-    return "object";
   }
   if (Array.isArray(schema.type)) {
     return schema.type.join(" | ");
@@ -490,7 +259,7 @@ function renderProperty(name, schema, rootSchema, level = 4) {
         ? `\n#### ${name} {#${anchor}}\n`
         : `\n##### ${name} {#${anchor}}\n`;
   let out = heading;
-  if (schema.description) out += `\n${schema.description}\n`;
+  if (schema.description) out += `\n${toProse(schema.description)}\n`;
   out += `\n- **type**: ${toInlineCode(describeType(schema, rootSchema))}\n`;
   if (schema.enum) out += `- **allowed**: ${renderEnumValues(schema)}\n`;
   const nb = renderNumberBounds(schema);
@@ -536,7 +305,7 @@ function renderProperty(name, schema, rootSchema, level = 4) {
         const prop = props[propName];
         out +=
           `- ${toInlineCode(propName)}: ${toInlineCode(describeType(prop))}${
-            prop.description ? ` – ${prop.description}` : ""
+            prop.description ? ` – ${toProse(prop.description)}` : ""
           }` + "\n";
       });
     }
@@ -614,7 +383,7 @@ function generateMarkdown(schema, version) {
 
       const defSchema = defs[defName];
       md += `\n### ${defName} {#def-${slugify(defName)}}\n`;
-      if (defSchema.description) md += `\n${defSchema.description}\n`;
+      if (defSchema.description) md += `\n${toProse(defSchema.description)}\n`;
       md += `\n- **type**: ${toInlineCode(describeType(defSchema, schema))}\n`;
       if (defSchema.enum) {
         md += `- **allowed**: ${renderEnumValues(defSchema)}\n`;
@@ -634,7 +403,7 @@ function generateMarkdown(schema, version) {
             md +=
               `- ${toInlineCode(dpName)}: ${toInlineCode(
                 describeType(dp, schema)
-              )}${dp.description ? ` – ${dp.description}` : ""}` + "\n";
+              )}${dp.description ? ` – ${toProse(dp.description)}` : ""}` + "\n";
 
             if (dpName === "transaction_fields" || dpName === "block_fields") {
               if (dp.items && dp.items.$ref) {
@@ -694,14 +463,17 @@ ${values}
   return md;
 }
 
-function main() {
-  if (!fs.existsSync(INPUT_SCHEMA_PATH)) {
-    console.error(`Schema not found at ${INPUT_SCHEMA_PATH}`);
+function readSchema(schemaPath) {
+  if (!fs.existsSync(schemaPath)) {
+    console.error(`Schema not found at ${schemaPath}`);
     process.exit(1);
   }
-  const raw = fs.readFileSync(INPUT_SCHEMA_PATH, "utf8");
-  const v2Schema = JSON.parse(raw);
-  const v3Schema = toV3(v2Schema);
+  return JSON.parse(fs.readFileSync(schemaPath, "utf8"));
+}
+
+function main() {
+  const v2Schema = readSchema(V2_INPUT_SCHEMA_PATH);
+  const v3Schema = readSchema(V3_INPUT_SCHEMA_PATH);
 
   const v2Md = generateMarkdown(v2Schema, "v2");
   ensureDirSync(V2_OUTPUT_PATH);

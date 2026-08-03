@@ -12,10 +12,13 @@ Static, deep-linkable reference for the V3 `config.yaml` schema.
 
 ## Top-level Properties
 
-- [description](#description)
 - [name](#name) (required)
-- [ecosystem](#ecosystem)
+- [description](#description)
 - [schema](#schema)
+- [handlers](#handlers)
+- [full_batch_size](#fullbatchsize)
+- [storage](#storage)
+- [ecosystem](#ecosystem)
 - [contracts](#contracts)
 - [chains](#chains) (required)
 - [rollback_on_reorg](#rollbackonreorg)
@@ -23,21 +26,6 @@ Static, deep-linkable reference for the V3 `config.yaml` schema.
 - [field_selection](#fieldselection)
 - [raw_events](#rawevents)
 - [address_format](#addressformat)
-- [full_batch_size](#fullbatchsize)
-- [storage](#storage)
-
-### description {#description}
-
-Description of the project
-
-- **type**: `string | null`
-
-
-Example (config.yaml):
-
-```yaml
-description: Greeter indexer
-```
 
 ### name {#name}
 
@@ -52,21 +40,17 @@ Example (config.yaml):
 name: MyIndexer
 ```
 
-### ecosystem {#ecosystem}
+### description {#description}
 
-Ecosystem of the project.
+Description of the project
 
-- **type**: `anyOf(object<EcosystemTag> | null)`
-
-Variants:
-- `1`: [EcosystemTag](#def-ecosystemtag)
-- `2`: `null`
+- **type**: `string | null`
 
 
 Example (config.yaml):
 
 ```yaml
-ecosystem: evm
+description: Greeter indexer
 ```
 
 ### schema {#schema}
@@ -80,6 +64,65 @@ Example (config.yaml):
 
 ```yaml
 schema: ./schema.graphql
+```
+
+### handlers {#handlers}
+
+Optional relative path to handlers directory for auto-loading. Defaults to 'src/handlers' if not specified.
+
+- **type**: `string | null`
+
+
+### full_batch_size {#fullbatchsize}
+
+Target number of events to be processed per batch. Set it to smaller number if you have many Effect API calls which are slow to resolve and can't be batched. (Default: 5000)
+
+- **type**: `integer | null`
+- **bounds**: min: 0, format: `uint64`
+
+
+Example (config.yaml):
+
+```yaml
+full_batch_size: 5000
+```
+
+### storage {#storage}
+
+Storage backends the indexer writes data to. Defaults to Postgres when omitted. Set `clickhouse: true` to additionally sync the indexed data to ClickHouse. Mark a backend with `default: true` to store entities that don't have an @storage directive in the schema, e.g. `clickhouse: {default: true}`.
+
+- **type**: `anyOf(object<StorageConfig> | null)`
+
+Variants:
+- `1`: [StorageConfig](#def-storageconfig)
+- `2`: `null`
+
+
+Example (config.yaml):
+
+```yaml
+storage:
+  postgres:
+    default: true
+    column_name_format: snake_case
+  clickhouse: true
+```
+
+### ecosystem {#ecosystem}
+
+Ecosystem of the project.
+
+- **type**: `anyOf(enum (1 values) | null)`
+
+Variants:
+- `1`: [EcosystemTag](#def-ecosystemtag)
+- `2`: `null`
+
+
+Example (config.yaml):
+
+```yaml
+ecosystem: evm
 ```
 
 ### contracts {#contracts}
@@ -182,53 +225,36 @@ raw_events: true
 
 Address format for Ethereum addresses: 'checksum' or 'lowercase' (default: checksum)
 
-- **type**: `anyOf(object<AddressFormat> | null)`
+- **type**: `anyOf(enum (2 values) | null)`
 
 Variants:
 - `1`: [AddressFormat](#def-addressformat)
 - `2`: `null`
 
 
-### full_batch_size {#fullbatchsize}
+## Definitions
 
-Maximum number of events processed per batch. Replaces the V2 `MAX_BATCH_SIZE` environment variable.
+### StorageConfig {#def-storageconfig}
 
-- **type**: `integer | null`
-- **bounds**: min: 1, format: `uint32`
+- **type**: `object`
 
-
-Example (config.yaml):
-
-```yaml
-full_batch_size: 5000
-```
-
-### storage {#storage}
-
-Configures which storage backends the indexer writes to. Postgres is enabled by default; enable ClickHouse by setting `clickhouse: true`. When both backends are enabled, route each entity explicitly via the `@storage` directive in `schema.graphql`:
-
-```graphql
-type Transfer @storage(postgres: true, clickhouse: true) {
-  id: ID!
-}
-```
-
-- **type**: `anyOf(object<Storage> | null)`
-
-Variants:
-- `1`: [Storage](#def-storage)
-- `2`: `null`
-
+Properties:
+- `postgres`: `anyOf(boolean | null | object)` – Whether to use Postgres as a storage backend (default: true). Accepts a boolean or an options object (the object form implies the backend is enabled).
+- `clickhouse`: `anyOf(boolean | null | object)` – Whether to additionally sync the indexed data to ClickHouse. Requires Postgres to be enabled (default: false). Accepts a boolean or an options object (the object form implies the backend is enabled).
 
 Example (config.yaml):
 
 ```yaml
 storage:
-  postgres: true
-  clickhouse: true
+  postgres:
+    # Entities without an @storage directive land here
+    default: true
+    # Columns become snake_case in the database, while GraphQL and
+    # handler types keep the schema.graphql casing
+    column_name_format: snake_case
+  clickhouse:
+    default: false
 ```
-
-## Definitions
 
 ### EcosystemTag {#def-ecosystemtag}
 
@@ -241,7 +267,7 @@ Example (config.yaml):
 ecosystem: evm
 ```
 
-### GlobalContract_for_ContractConfig {#def-globalcontractforcontractconfig}
+### GlobalContract {#def-globalcontract}
 
 - **type**: `object`
 - **required**: `name`, `events`
@@ -249,7 +275,7 @@ ecosystem: evm
 Properties:
 - `name`: `string` – A unique project-wide name for this contract (no spaces)
 - `abi_file_path`: `string | null` – Relative path (from config) to a json abi. If this is used then each configured event should simply be referenced by its name
-- `handler`: `string | null` – Optional explicit path to a handler file. If omitted, handlers are auto-discovered from `src/handlers/`.
+- `handler`: `string | null` – Optional relative path to a file where handlers are registered for the given contract. If not provided, handlers can be auto-loaded from src directory.
 - `events`: `array<object<EventConfig>>` – A list of events that should be indexed on this contract
 
 Example (config.yaml):
@@ -291,7 +317,7 @@ contracts:
 Properties:
 - `transaction_fields`: `array | null` – The transaction fields to include in the event, or in all events if applied globally
   - Available values:
-`transactionIndex`, `hash`, `from`, `to`, `gas`, `gasPrice`, `maxPriorityFeePerGas`, `maxFeePerGas`, `cumulativeGasUsed`, `effectiveGasPrice`, `gasUsed`, `input`, `nonce`, `value`, `v`, `r`, `s`, `contractAddress`, `logsBloom`, `root`, `status`, `yParity`, `chainId`, `accessList`, `maxFeePerBlobGas`, `blobVersionedHashes`, `type`, `l1Fee`, `l1GasPrice`, `l1GasUsed`, `l1FeeScalar`, `gasUsedForL1`, `authorizationList`
+`transactionIndex`, `hash`, `from`, `to`, `gas`, `gasPrice`, `maxPriorityFeePerGas`, `maxFeePerGas`, `cumulativeGasUsed`, `effectiveGasPrice`, `gasUsed`, `input`, `nonce`, `value`, `v`, `r`, `s`, `contractAddress`, `logsBloom`, `root`, `status`, `yParity`, `accessList`, `maxFeePerBlobGas`, `blobVersionedHashes`, `type`, `l1Fee`, `l1GasPrice`, `l1GasUsed`, `l1FeeScalar`, `gasUsedForL1`, `authorizationList`
 - `block_fields`: `array | null` – The block fields to include in the event, or in all events if applied globally
   - Available values:
 `parentHash`, `nonce`, `sha3Uncles`, `logsBloom`, `transactionsRoot`, `stateRoot`, `receiptsRoot`, `miner`, `difficulty`, `totalDifficulty`, `extraData`, `size`, `gasLimit`, `gasUsed`, `uncles`, `baseFeePerGas`, `blobGasUsed`, `excessBlobGas`, `parentBeaconBlockRoot`, `withdrawalsRoot`, `l1BlockNumber`, `sendCount`, `sendRoot`, `mixHash`
@@ -309,14 +335,57 @@ events:
         - miner
 ```
 
+### Chain {#def-chain}
+
+- **type**: `object`
+- **required**: `id`, `start_block`
+
+Properties:
+- `id`: `integer` – The public blockchain chain ID.
+- `skip`: `boolean | null` – Excludes the chain from indexing and migrations. Code generation is unaffected. For testing, prefer using a test framework instead.
+- `rpc`: `anyOf(anyOf(string | object<Rpc> | array<object<Rpc>>) | null)` – RPC configuration for your indexer. If not specified otherwise, for chains supported by HyperSync, RPC serves as a fallback for added reliability. For others, it acts as the primary data-source. HyperSync offers significant performance improvements, up to a 1000x faster than traditional RPC.
+- `hypersync_config`: `anyOf(object<HypersyncConfig> | null)` – Optional HyperSync Config for additional fine-tuning
+- `max_reorg_depth`: `integer | null` – The number of blocks from the head that the indexer should account for in case of reorgs.
+- `block_lag`: `integer | null` – The number of blocks behind the chain head that the indexer should lag. Useful for avoiding reorg issues by indexing slightly behind the tip.
+- `start_block`: `integer` – The block at which the indexer should start ingesting data
+- `end_block`: `integer | null` – The block at which the indexer should terminate.
+- `contracts`: `array | null` – All the contracts that should be indexed on the given chain
+
+Example (config.yaml):
+
+```yaml
+chains:
+  - id: 1
+    start_block: 0
+    end_block: 19000000
+    contracts:
+      - name: Greeter
+        address: "0x1111111111111111111111111111111111111111"
+  # Excluded from indexing and migrations, but still code-generated
+  - id: 137
+    skip: true
+    start_block: 0
+```
+
+### RpcSelection {#def-rpcselection}
+
+- **type**: `anyOf(string | object<Rpc> | array<object<Rpc>>)`
+
+Variants:
+- `1`: `string`
+- `2`: [Rpc](#def-rpc)
+- `3`: `array<object<Rpc>>`
+
 ### Rpc {#def-rpc}
 
 - **type**: `object`
-- **required**: `url`, `for`
+- **required**: `url`
 
 Properties:
-- `url`: `string` – The RPC endpoint URL. WebSocket URLs (`wss://...`) are also supported when paired with `for: realtime`.
-- `for`: `object<For>` – Determines if this RPC is for historical sync (`sync`), realtime head indexing (`realtime`, supports WebSocket), or as a fallback (`fallback`).
+- `url`: `string` – The RPC endpoint URL.
+- `for`: `anyOf(oneOf(const sync | const fallback | const realtime) | null)` – Determines if this RPC is for historical sync, real-time chain indexing, or as a fallback. If not specified, defaults to "fallback" when HyperSync is available for the chain, or "sync" otherwise.
+- `ws`: `string | null` – Optional WebSocket endpoint URL (wss:// or ws://) for real-time block header notifications via eth_subscribe("newHeads"). Provides lower latency than HTTP polling for detecting new blocks.
+- `headers`: `object | null` – Optional HTTP headers sent with every request to this RPC endpoint, e.g. an Authorization bearer token for gated endpoints. Values support `${ENV_VAR}` interpolation.
 - `initial_block_interval`: `integer | null` – The starting interval in range of blocks per query
 - `backoff_multiplicative`: `number | null` – After an RPC error, how much to scale back the number of blocks requested at once
 - `acceleration_additive`: `integer | null` – Without RPC errors or timeouts, how much to increase the number of blocks requested by for the next batch
@@ -324,6 +393,7 @@ Properties:
 - `backoff_millis`: `integer | null` – After an error, how long to wait before retrying
 - `fallback_stall_timeout`: `integer | null` – If a fallback RPC is provided, the amount of time in ms to wait before kicking off the next provider
 - `query_timeout_millis`: `integer | null` – How long to wait before cancelling an RPC request
+- `polling_interval`: `integer | null` – How frequently (in milliseconds) to check for new blocks in realtime. Default is 1000ms. Note: Setting this higher than block time does not reduce RPC usage as every block is still fetched to check for reorgs.
 
 Example (config.yaml):
 
@@ -333,6 +403,8 @@ chains:
     rpc:
       - url: https://eth.llamarpc.com
         for: sync
+        headers:
+          Authorization: "Bearer ${RPC_API_KEY}"
       - url: wss://eth.llamarpc.com
         for: realtime
       - url: https://fallback.example.com
@@ -341,12 +413,12 @@ chains:
 
 ### For {#def-for}
 
-- **type**: `oneOf(const sync | const realtime | const fallback)`
+- **type**: `oneOf(const sync | const fallback | const realtime)`
 
 Variants:
 - `1`: `const sync`
-- `2`: `const realtime`
-- `3`: `const fallback`
+- `2`: `const fallback`
+- `3`: `const realtime`
 
 ### HypersyncConfig {#def-hypersyncconfig}
 
@@ -354,7 +426,7 @@ Variants:
 - **required**: `url`
 
 Properties:
-- `url`: `string` – URL of the HyperSync endpoint (default: The most performant HyperSync endpoint for the chain)
+- `url`: `string` – URL of the HyperSync endpoint (default: The most performant HyperSync endpoint for the network)
 
 Example (config.yaml):
 
@@ -365,17 +437,17 @@ chains:
       url: https://eth.hypersync.xyz
 ```
 
-### NetworkContract_for_ContractConfig {#def-networkcontractforcontractconfig}
+### ChainContract {#def-chaincontract}
 
 - **type**: `object`
 - **required**: `name`
 
 Properties:
 - `name`: `string` – A unique project-wide name for this contract if events and handler are defined OR a reference to the name of contract defined globally at the top level
-- `address`: `object<Addresses>` – A single address or a list of addresses to be indexed. This can be left as null in the case where this contracts addresses will be registered dynamically.
-- `start_block`: `integer | null` – The block at which the indexer should start ingesting data for this specific contract. If not specified, uses the chain `start_block`. Can be greater than the chain `start_block` for more specific indexing.
+- `address`: `anyOf(anyOf(string | integer) | array<anyOf(string | integer)>)` – A single address or a list of addresses to be indexed. This can be left as null in the case where this contracts addresses will be registered dynamically.
+- `start_block`: `integer | null` – The block at which the indexer should start ingesting data for this specific contract. If not specified, uses the chain start_block. Can be greater than the chain start_block for more specific indexing.
 - `abi_file_path`: `string | null` – Relative path (from config) to a json abi. If this is used then each configured event should simply be referenced by its name
-- `handler`: `string | null` – Optional explicit path to a handler file. If omitted, handlers are auto-discovered from `src/handlers/`.
+- `handler`: `string | null` – Optional relative path to a file where handlers are registered for the given contract. If not provided, handlers can be auto-loaded from src directory.
 - `events`: `array<object<EventConfig>>` – A list of events that should be indexed on this contract
 
 Example (config.yaml):
@@ -416,49 +488,6 @@ chains:
 
 - **type**: `enum (2 values)`
 - **allowed**: `checksum`, `lowercase`
-
-### Chain {#def-chain}
-
-- **type**: `object`
-- **required**: `id`, `start_block`, `contracts`
-
-Properties:
-- `id`: `integer` – The public blockchain chain ID.
-- `rpc`: `anyOf(string | object<Rpc> | array<object<Rpc>> | null)` – RPC configuration for your indexer. Accepts a single URL, a single Rpc object, or an array of Rpc objects. For chains supported by HyperSync, RPC serves as a fallback for added reliability. For others, it acts as the primary data-source. WebSocket URLs (`wss://...`) are also supported for realtime endpoints.
-- `hypersync_config`: `anyOf(object<HypersyncConfig> | null)` – Optional HyperSync Config for additional fine-tuning
-- `start_block`: `integer` – The block at which the indexer should start ingesting data
-- `end_block`: `integer | null` – The block at which the indexer should terminate.
-- `contracts`: `array<object<NetworkContract_for_ContractConfig>>` – All the contracts that should be indexed on the given chain
-- `max_reorg_depth`: `integer | null` – The number of blocks from the head that the indexer should account for in case of reorgs. Replaces the V2 `confirmed_block_threshold` field.
-- `block_lag`: `integer | null` – Number of blocks the indexer stays behind the chain head. Replaces the V2 `ENVIO_INDEXING_BLOCK_LAG` environment variable, applied per chain.
-
-Example (config.yaml):
-
-```yaml
-chains:
-  - id: 1
-    start_block: 0
-    end_block: 19000000
-    contracts:
-      - name: Greeter
-        address: "0x1111111111111111111111111111111111111111"
-```
-
-### Storage {#def-storage}
-
-- **type**: `object`
-
-Properties:
-- `postgres`: `boolean | null` – Enable Postgres storage (default: true)
-- `clickhouse`: `boolean | null` – Enable ClickHouse storage in addition to Postgres (default: false). Requires the `ENVIO_CLICKHOUSE_*` environment variables.
-
-Example (config.yaml):
-
-```yaml
-storage:
-  postgres: true
-  clickhouse: true
-```
 
 ## Removed in V3
 

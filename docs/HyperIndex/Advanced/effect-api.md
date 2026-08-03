@@ -54,6 +54,7 @@ The first argument is an options object that describes the effect:
 - `output` (required) - the output type of the effect
 - `rateLimit` (required) - the maximum calls allowed per timeframe, or `false` to disable
 - `cache` (optional) - save effect results in the database to prevent duplicate calls
+- `crossChain` (optional) - whether the cache and rate limit are shared across all chains (default: `true`). See [Per-Chain Effects](#per-chain-effects)
 
 The second argument is a function that will be called with the effect's input.
 
@@ -172,7 +173,7 @@ Open [Development Console](https://envio.dev/console) of the running indexer whi
 
 When the indexer is rerun by using `envio dev` or `envio start -r` call, the initial cache will be loaded from the `.envio/cache` directory and used for the indexer run.
 
-> **Note:** This feature is available starting from `envio@2.26.0`. It also doesn't support rollbacks on reorgs. The support for reorgs will be added in the future.
+> **Note:** This doesn't support rollbacks on reorgs. The support for reorgs will be added in the future.
 
 
 ### Cache on Envio Cloud
@@ -190,7 +191,7 @@ For detailed instructions, see the [Effect API Cache documentation](/docs/HyperI
 
 ### Rate Limit
 
-Starting from [`v2.32.0`](https://github.com/enviodev/hyperindex/releases/tag/v2.32.0), the `rateLimit` option was added. It controls how frequently an effect can run within a given timeframe. You can set it to `false` to disable rate limiting or define a custom limit such as calls per second, minute, or a duration in milliseconds.
+The `rateLimit` option controls how frequently an effect can run within a given timeframe. You can set it to `false` to disable rate limiting or define a custom limit such as calls per second, minute, or a duration in milliseconds.
 
 ```typescript
 // Effect to get the balance of a specific address at a specific block
@@ -217,6 +218,52 @@ export const getBalance = createEffect(
 
 Watch the following video to learn more about createEffect and other updates introduced in [v2.32.0](https://github.com/enviodev/hyperindex/releases/tag/v2.32.0).
 <Video id="yvUVzV1ifig" title="Envio v2.32.0" />
+
+### Per-Chain Effects
+
+By default an effect is **cross-chain**: one cache and one rate-limit budget are shared by every chain. That's correct when the input fully identifies the result — an IPFS hash means the same thing whichever chain asked for it.
+
+It's wrong when the same input means different things per chain. A token address on Ethereum and the same address on Base are different contracts, so a shared cache would serve one chain's result to the other.
+
+Since v3.3, set `crossChain: false` to scope an effect to the chain that called it:
+
+```typescript
+import { createEffect, S } from "envio";
+
+export const getTokenName = createEffect(
+  {
+    name: "getTokenName",
+    input: S.string,
+    output: S.string,
+    // Each chain gets its own 5 calls/second budget
+    rateLimit: {
+      calls: 5,
+      per: "second",
+    },
+    cache: true,
+    crossChain: false,
+  },
+  async ({ input, context }) => {
+    // context.chain is only available on `crossChain: false` effects
+    const client = clientsByChainId[context.chain.id];
+    return await client.readContract({
+      address: input,
+      abi: erc20Abi,
+      functionName: "name",
+    });
+  },
+);
+```
+
+Setting `crossChain: false` changes three things:
+
+- **Cache** — entries are keyed per chain, so two chains calling with the same input each get their own result.
+- **Rate limit** — each chain gets its own budget rather than competing for a shared one. An effect limited to 5 calls/second across 3 chains now allows 15 calls/second in total.
+- **`context.chain`** — the handler gains `context.chain.id`, the chain the effect was called on. Accessing `context.chain` on a cross-chain effect throws.
+
+:::warning
+`crossChain` is part of the effect's cache identity. Changing it on an effect with `cache: true` invalidates the existing cached results, and they will be refetched on the next run.
+:::
 
 ### Sending Notifications (Webhooks)
 

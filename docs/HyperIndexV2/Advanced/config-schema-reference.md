@@ -58,7 +58,7 @@ name: MyIndexer
 
 Ecosystem of the project.
 
-- **type**: `anyOf(object<EcosystemTag> | null)`
+- **type**: `anyOf(enum (1 values) | null)`
 
 Variants:
 - `1`: [EcosystemTag](#def-ecosystemtag)
@@ -151,7 +151,7 @@ unordered_multichain_mode: true
 
 The event decoder to use for the indexer (default: hypersync-client)
 
-- **type**: `anyOf(object<EventDecoder> | null)`
+- **type**: `anyOf(enum (2 values) | null)`
 
 Variants:
 - `1`: [EventDecoder](#def-eventdecoder)
@@ -241,7 +241,7 @@ preload_handlers: true
 
 Address format for Ethereum addresses: 'checksum' or 'lowercase' (default: checksum)
 
-- **type**: `anyOf(object<AddressFormat> | null)`
+- **type**: `anyOf(enum (2 values) | null)`
 
 Variants:
 - `1`: [AddressFormat](#def-addressformat)
@@ -340,7 +340,7 @@ events:
 Properties:
 - `id`: `integer` – The public blockchain network ID.
 - `rpc_config`: `anyOf(object<RpcConfig> | null)` – RPC configuration for utilizing as the network's data-source. Typically optional for chains with HyperSync support, which is highly recommended. HyperSync dramatically enhances performance, providing up to a 1000x speed boost over traditional RPC.
-- `rpc`: `anyOf(object<NetworkRpc> | null)` – RPC configuration for your indexer. If not specified otherwise, for networks supported by HyperSync, RPC serves as a fallback for added reliability. For others, it acts as the primary data-source. HyperSync offers significant performance improvements, up to a 1000x faster than traditional RPC.
+- `rpc`: `anyOf(anyOf(string | object<Rpc> | array<object<Rpc>>) | null)` – RPC configuration for your indexer. If not specified otherwise, for networks supported by HyperSync, RPC serves as a fallback for added reliability. For others, it acts as the primary data-source. HyperSync offers significant performance improvements, up to a 1000x faster than traditional RPC.
 - `hypersync_config`: `anyOf(object<HypersyncConfig> | null)` – Optional HyperSync Config for additional fine-tuning
 - `confirmed_block_threshold`: `integer | null` – The number of blocks from the head that the indexer should account for in case of reorgs.
 - `start_block`: `integer` – The block at which the indexer should start ingesting data
@@ -408,7 +408,7 @@ networks:
 
 Properties:
 - `url`: `string` – The RPC endpoint URL.
-- `for`: `object<For>` – Determines if this RPC is for historical sync, real-time chain indexing, or as a fallback.
+- `for`: `oneOf(const sync | const fallback)` – Determines if this RPC is for historical sync, real-time chain indexing, or as a fallback.
 - `initial_block_interval`: `integer | null` – The starting interval in range of blocks per query
 - `backoff_multiplicative`: `number | null` – After an RPC error, how much to scale back the number of blocks requested at once
 - `acceleration_additive`: `integer | null` – Without RPC errors or timeouts, how much to increase the number of blocks requested by for the next batch
@@ -459,7 +459,7 @@ networks:
 
 Properties:
 - `name`: `string` – A unique project-wide name for this contract if events and handler are defined OR a reference to the name of contract defined globally at the top level
-- `address`: `object<Addresses>` – A single address or a list of addresses to be indexed. This can be left as null in the case where this contracts addresses will be registered dynamically.
+- `address`: `anyOf(anyOf(string | integer) | array<anyOf(string | integer)>)` – A single address or a list of addresses to be indexed. This can be left as null in the case where this contracts addresses will be registered dynamically.
 - `start_block`: `integer | null` – The block at which the indexer should start ingesting data for this specific contract. If not specified, uses the network start_block. Can be greater than the network start_block for more specific indexing.
 - `abi_file_path`: `string | null` – Relative path (from config) to a json abi. If this is used then each configured event should simply be referenced by its name
 - `handler`: `string` – The relative path to a file where handlers are registered for the given contract

@@ -87,6 +87,31 @@ chains:
 
 The optimal values depend on your RPC provider's performance and limits, as well as the complexity of your contracts and the data being indexed.
 
+### Custom HTTP Headers
+
+Some providers gate their endpoints behind an `Authorization` header or a custom API-key header rather than putting the key in the URL. Since v3.3, `headers` sets arbitrary HTTP headers on every request to an RPC endpoint:
+
+```yaml
+chains:
+  - id: 1
+    rpc:
+      - url: https://eth-mainnet.your-rpc-provider.com
+        for: sync
+        headers:
+          Authorization: "Bearer ${RPC_API_KEY}"
+          X-Custom-Header: "my-value"
+    start_block: 15000000
+```
+
+Header values support `${ENV_VAR}` interpolation, so keep credentials in [environment variables](/docs/HyperIndex/environment-variables) rather than committing them to `config.yaml`.
+
+### Event Filtering on RPC
+
+RPC sources support the same [`where` filtering](/docs/HyperIndex/wildcard-indexing#topic-filtering) as HyperSync, and since v3.3 that includes:
+
+- **`OR` conditions** — passing an array to `params` matches an event if any entry in the array matches. See [Multiple Filters](/docs/HyperIndex/wildcard-indexing#multiple-filters).
+- **Multiple wildcard events** — an RPC-backed indexer can register more than one [wildcard](/docs/HyperIndex/wildcard-indexing) event. Earlier versions allowed only one.
+
 ## RPC Best Practices
 
 ### Selecting an RPC Provider
