@@ -1,0 +1,45 @@
+name: Algolia docs crawl
+
+on:
+  schedule:
+    # 03:00 UTC nightly
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: algolia-crawl
+  cancel-in-progress: false
+
+jobs:
+  crawl:
+    name: Crawl docs.envio.dev into Algolia
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Verify Algolia secrets are present
+        env:
+          ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+          ALGOLIA_WRITE_API_KEY: ${{ secrets.ALGOLIA_WRITE_API_KEY }}
+        run: |
+          if [ -z "$ALGOLIA_APP_ID" ] || [ -z "$ALGOLIA_WRITE_API_KEY" ]; then
+            echo "::error::ALGOLIA_APP_ID and ALGOLIA_WRITE_API_KEY must be set as repository secrets."
+            exit 1
+          fi
+
+      - name: Validate docsearch.config.json
+        run: jq empty docsearch.config.json
+
+      - name: Run DocSearch scraper
+        env:
+          APPLICATION_ID: ${{ secrets.ALGOLIA_APP_ID }}
+          API_KEY: ${{ secrets.ALGOLIA_WRITE_API_KEY }}
+        run: |
+          docker run \
+            --rm \
+            --env APPLICATION_ID \
+            --env API_KEY \
+            --env "CONFIG=$(jq -r tostring docsearch.config.json)" \
+            algolia/docsearch-scraper
