@@ -84,7 +84,7 @@ indexer.onEvent(
 
 ## Multiple Filters
 
-If you want to index both `Mint` and `Burn` events you can provide multiple filters as an array — an event matches if **any** entry in the array matches (`OR`), while the parameters within a single entry must all match (`AND`). Also, every parameter can accept an array to filter by multiple possible values. We'll use it to filter by a group of whitelisted addresses in the example below:
+If you want to index both `Mint` and `Burn` events you can provide multiple filters as an array, and an event is indexed if it matches any one of them. Within a single filter, all parameters must match. Also, every parameter can accept an array to filter by multiple possible values. We'll use it to filter by a group of whitelisted addresses in the example below:
 
 ```typescript
 import { indexer } from "envio";

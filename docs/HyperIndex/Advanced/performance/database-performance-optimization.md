@@ -96,19 +96,17 @@ Nothing to configure. Two things change in what you'll observe:
 
 ### Indices created on demand
 
-A [`getWhere`](/docs/HyperIndex/event-handlers#retrieving-entities-by-field) call on a field with no index creates one the first time a handler asks for it. That means `getWhere` works on **any** entity field, not just those marked `@index` or `@derivedFrom`.
+A [`getWhere`](/docs/HyperIndex/event-handlers#retrieving-entities-by-field) call on a field with no index creates one the first time a handler asks for it. That means `getWhere` works on **any** entity field, and you don't need to declare `@index` for the fields your handlers filter on — HyperIndex works out which indices your handlers need.
 
-Still declare `@index` on fields you know you'll query:
+`@index` is for the queries **you** serve. Declare it on the fields your GraphQL consumers filter and sort by, since HyperIndex can't know those from your handler code:
 
 ```graphql
 type Transfer {
   id: ID!
-  userAddress: String! @index # queried via getWhere in a handler
+  userAddress: String! @index
   timestamp: BigInt!
 }
 ```
-
-Declared indices are built together at the end of the backfill. Undeclared ones are built individually, mid-run, and pause writes to that table while they build. Treat on-demand creation as a safety net rather than the plan.
 
 ## Strategic Indexing: When to Use Each Type
 

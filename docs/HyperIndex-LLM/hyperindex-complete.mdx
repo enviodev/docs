@@ -53,6 +53,29 @@ This document contains all HyperIndex documentation consolidated into a single f
 While HyperIndex gives you a complete indexing solution with schema management and event handling, HyperSync can be used directly for custom data pipelines and specialized applications.
 :::
 
+---
+
+## Key Features
+
+- **Quickstart templates** – Rapidly bootstrap your indexer.
+- **Real-time indexing** – Instantly track blockchain events.
+- **Multichain indexing** – Support multiple blockchains simultaneously.
+- **Local development** – A full-featured local environment with Docker.
+- **Reorg support** – Gracefully handle blockchain reorganizations without sacrificing latency.
+- **GraphQL API** – Easily query indexed data.
+- **Cross-platform support** – Index any EVM-, SVM-, or Fuel-compatible blockchain.
+- **High performance** – Perform historical backfills at 30,000+ events per second.
+- **Indexer auto-generation** – Generate indexers directly from smart contract addresses.
+- **Flexible language support** – TypeScript, JavaScript, and ReScript.
+- **Factory contract support** – Index data from over 1M dynamically registered contracts seamlessly.
+- **On-chain and off-chain data integration** – Easily combine multiple data sources.
+- **Self-hosted and managed options** – Run your own setup or use Envio Cloud.
+- **Detailed logging and observability** – Debug and optimize with clarity.
+- **External API actions** – Trigger external services based on blockchain events.
+- **Wildcard topic indexing** – Flexibly index based on event topics.
+- **Fallback RPC data sources** – Enhance reliability with RPC connections.
+
+---
 
 ## Feature Roadmap
 
@@ -62,6 +85,20 @@ Upcoming features on our development roadmap:
 - **Polished Solana Support**
 - **Indexing 1,000,000+ events per second**
 
+---
+
+## HyperSync API Token Requirements
+
+HyperSync (the data engine powering HyperIndex) requires an API token for all requests. You can generate one in the [Envio Cloud portal](https://envio.dev/app/api-tokens). Here's what you need to know:
+
+- **Local Development**: An API token is required. The CLI supports an automatic login flow to make this smoother.
+- **Self-Hosted Deployments**: API tokens are required for HyperSync access in self-hosted deployments. Set the token via the `ENVIO_API_TOKEN` environment variable in your indexer configuration. This can be read from the `.env` file in the root of your HyperIndex project.
+- **Envio Cloud**: Indexers deployed to Envio Cloud have special access that doesn't require a custom API token.
+- **Pricing**: Tiered packages are available for those self-hosting HyperIndex and using HyperSync. See the [HyperSync pricing page](https://envio.dev/pricing/hypersync) for details, or reach out to us on [Discord](https://discord.gg/envio) for preferred pricing based on your specific use case.
+
+For more details about API tokens, including how to generate and implement them, see our API Tokens documentation.
+
+---
 
 ## 🔗 Quick Links
 
@@ -78,6 +115,21 @@ The **Quickstart** enables you to instantly autogenerate a powerful blockchain i
 
 **Example:** Autogenerate an indexer for the Eigenlayer contract and index its entire history in less than 5 minutes by simply running `pnpx envio init` and providing the contract address from [Etherscan](https://etherscan.io/address/0x858646372cc42e1a627fce94aa7a7033e7cf075a).
 
+---
+
+## Prerequisites
+
+- **[Node.js](https://nodejs.org/en/download/current)** _(v22 or newer recommended)_
+- **[pnpm](https://pnpm.io/installation)** _(recommended but not required)_
+- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(required to run the Envio indexer locally)_
+
+> **Note:** Docker is only required if you plan to run your indexer locally. You can skip installing Docker if you'll only be using Envio Cloud.
+
+### Additionally for Windows Users:
+
+- **[WSL](https://learn.microsoft.com/en-us/windows/wsl/install)** _Windows Subsystem for Linux_
+
+---
 
 ## Getting Started
 
@@ -89,6 +141,17 @@ pnpx envio init
 
 You'll then follow interactive prompts to customize your indexer.
 
+---
+
+### Video Tutorials
+
+
+
+
+
+
+
+---
 
 ## Indexer Initialization Options
 
@@ -106,6 +169,74 @@ Choose the **Contract Import** option to auto-generate indexers directly from sm
 [↑↓ to move, enter to select]
 ```
 
+---
+
+## Contract Import Methods
+
+There are two convenient methods to import your contract:
+
+- **Block Explorer** _(verified contracts on supported explorers like Etherscan and Blockscout)_
+- **Local ABI** _(custom or unverified contracts)_
+
+### 1. Block Explorer Import
+
+This method uses a verified contract's address from a supported blockchain explorer (Etherscan, Routescan, etc.) to automatically fetch the ABI.
+
+#### Steps:
+
+**a. Select the blockchain**
+
+```bash
+? Which blockchain would you like to import a contract from?
+> ethereum-mainnet
+  goerli
+  optimism
+  base
+  bsc
+  gnosis
+  polygon
+[↑↓ to move, enter to select]
+```
+
+:::note
+HyperIndex supports all EVM-compatible chains. If your desired chain is not listed, you can import via the local ABI method or manually adjust the `config.yaml` file after initialization.
+:::
+
+**b. Enter the contract address**
+
+```bash
+? What is the address of the contract?
+[Use proxy address if ABI is for a proxy implementation]
+```
+
+:::tip
+If using a proxy contract, always specify the **proxy address**, not the implementation address.
+:::
+
+**c. Select events to index**
+
+```bash
+? Which events would you like to index?
+> [x] ClaimRewards(address indexed from, address indexed reward, uint256 amount)
+  [x] Deposit(address indexed from, uint256 indexed tokenId, uint256 amount)
+  [x] NotifyReward(address indexed from, address indexed reward, uint256 indexed epoch, uint256 amount)
+  [x] Withdraw(address indexed from, uint256 indexed tokenId, uint256 amount)
+[space to select, → to select all, ← to deselect all]
+```
+
+**d. Finish or add more contracts**
+
+You'll be prompted to continue adding more contracts or to complete the setup:
+
+```bash
+? Would you like to add another contract?
+> I'm finished
+  Add a new address for same contract on same network
+  Add a new network for same contract
+  Add a new contract (with a different ABI)
+```
+
+---
 
 ### 2. Local ABI Import
 
@@ -182,10 +313,52 @@ Complete the import process or continue adding contracts:
   Add a new contract (with a different ABI)
 ```
 
+---
+
+## Generated Files & Configuration
+
+The Quickstart automatically generates key files:
+
+### 1. `config.yaml`
+
+Automatically configured parameters include:
+
+- **Network ID**
+- **Start Block**
+- **Contract Name**
+- **Contract Address**
+- **Event Signatures**
+
+By default, all selected events are included, but you can manually adjust the file if needed. See the detailed guide on `config.yaml`.
+
+### 2. GraphQL Schema
+
+- Entities are automatically generated for each selected event.
+- Fields match the event parameters emitted.
+
+See more details in the schema file guide.
+
+### 3. Event Handlers
+
+- Handlers are autogenerated for each event.
+- Handlers create event-specific entities.
+
+Learn more in the event handlers guide.
+
+---
 
 **Congratulations!** Your HyperIndex indexer is now ready to run and query data!
 
 Next step: Running your Indexer locally or Deploying to Envio Cloud.
+
+---
+
+## Other Ways to Start
+
+Contract Import is the recommended path, but you can also bootstrap an indexer from:
+
+- **Templates** — pre-built `ERC20` or Greeter projects, selectable from the `pnpx envio init` interactive prompt.
+- **Examples** — copy and adapt an existing indexer from the [Envio Explorer](https://envio.dev/explorer), our Tutorials, or the [GitHub repositories](https://github.com/enviodev).
 
 ---
 
@@ -201,6 +374,16 @@ Most developers now reach for an AI coding assistant before they open a file. Th
 If you'd rather drive the CLI yourself, see the Quickstart.
 :::
 
+---
+
+## Prerequisites
+
+- **[Node.js](https://nodejs.org/en/download/current)** _(v22 or newer)_
+- **[pnpm](https://pnpm.io/installation)** _(recommended but not required)_
+- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** _(only needed to run the indexer locally)_
+- An AI coding assistant (we recommend **[Claude Code](https://claude.com/claude-code)**)
+
+---
 
 ## Step 1. Initialize The Indexer
 
@@ -233,6 +416,24 @@ The **Envio API token** is your **HyperSync API token**. A few things to know:
 
 See API Tokens and Environment Variables for full details.
 
+---
+
+## Step 2. The Development Loop
+
+The skills cover config, schema, handlers, loaders, dynamic contracts, testing, and migration checklists, so an agent can read them directly instead of inventing patterns. A productive loop looks like:
+
+1. Describe the behavior you want in plain English.
+2. Let the assistant edit `config.yaml`, `schema.graphql`, and `src/handlers`.
+3. Have it follow a test-driven loop: write a failing test with `createTestIndexer()`, implement the handler, then run `pnpm test` to capture and lock in snapshots. See the Testing guide for the full TDD workflow.
+4. Iterate on failures together.
+
+The three files your agent will spend most of its time in:
+
+- **`config.yaml`**: networks, contracts, events
+- **`schema.graphql`**: entities and relationships
+- **`src/handlers`**: per-event logic
+
+---
 
 ## Step 3. Migrating an Existing Indexer
 
@@ -243,6 +444,24 @@ If you're porting from The Graph, Ponder, or another indexing framework, start w
 - Migrate from Ponder
 - Migrate from Alchemy
 
+---
+
+## Step 4. Deploy Programmatically with `envio-cloud`
+
+Once your indexer runs locally, the `envio-cloud` CLI lets an assistant (or a CI job) deploy and manage the hosted indexer without opening the dashboard.
+
+```bash
+npm install -g envio-cloud
+
+envio-cloud login --token $ENVIO_GITHUB_TOKEN
+envio-cloud indexer add --name my-indexer --repo my-repo
+envio-cloud deployment status my-indexer <commit> --watch-till-synced
+envio-cloud deployment logs my-indexer <commit> --follow
+```
+
+Every command supports `-o json`, which makes it easy for assistants and scripts to parse results. Full reference: Envio Cloud CLI.
+
+---
 
 ## Related Resources
 
@@ -1684,6 +1903,17 @@ pnpm envio codegen   # validate config + schema, regenerate types
 pnpm dev             # run the indexer locally
 ```
 
+---
+
+## Step 0: Bootstrap the Project
+
+```bash
+pnpx envio init
+```
+
+This generates a `config.yaml`, a starter `schema.graphql`, and handler stubs. Use your Ponder project as the source of truth for contract addresses, ABIs, and events, then fill in the generated files.
+
+---
 
 ## Step 1: `ponder.config.ts` → `config.yaml`
 
@@ -1770,6 +2000,245 @@ contracts:
 ```
 
 See the full list of available fields in the Configuration File docs.
+
+---
+
+## Step 2: `ponder.schema.ts` → `schema.graphql`
+
+**Ponder**
+
+```typescript
+
+export const token = onchainTable("token", (t) => ({
+  address: t.hex().primaryKey(),
+  symbol: t.text().notNull(),
+  balance: t.bigint().notNull(),
+}));
+
+export const transferEvent = onchainTable(
+  "transfer_event",
+  (t) => ({
+    id: t.text().primaryKey(),
+    from: t.hex().notNull(),
+    to: t.hex().notNull(),
+    amount: t.bigint().notNull(),
+    timestamp: t.integer().notNull(),
+  }),
+  (table) => ({
+    fromIdx: index().on(table.from),
+  }),
+);
+```
+
+**HyperIndex**
+
+```graphql
+type Token {
+  id: ID!
+  symbol: String!
+  balance: BigInt!
+}
+
+type TransferEvent {
+  id: ID!
+  from: String! @index
+  to: String!
+  amount: BigInt!
+  timestamp: Int!
+}
+```
+
+Type mapping:
+
+| Ponder                             | HyperIndex GraphQL |
+| ---------------------------------- | ------------------ |
+| `t.hex()`                          | `String!`          |
+| `t.text()`                         | `String!`          |
+| `t.bigint()`                       | `BigInt!`          |
+| `t.integer()`                      | `Int!`             |
+| `t.boolean()`                      | `Boolean!`         |
+| `t.real()` / `t.doublePrecision()` | `Float!`           |
+| `t.hex().array()`                  | `Json!`            |
+
+**Primary keys**: HyperIndex requires a single `id: ID!` string field on every entity. For composite PKs (e.g. `owner + spender`), construct the ID string manually: `` `${owner}_${spender}` ``.
+
+**Indexes**: Replace `index().on(column)` with an `@index` directive on the field.
+
+**Relations**: Replace Ponder's `relations()` call with `@derivedFrom` on the parent entity:
+
+```graphql
+type Token {
+  id: ID!
+  transfers: [TransferEvent!]! @derivedFrom(field: "token_id")
+}
+```
+
+See the full Schema docs.
+
+## Step 3: Event Handlers
+
+### Handler registration
+
+**Ponder**
+
+```typescript
+
+ponder.on("MyToken:Transfer", async ({ event, context }) => {
+  // ...
+});
+```
+
+**HyperIndex**
+
+```typescript
+
+indexer.onEvent(
+  { contract: "MyToken", event: "Transfer" },
+  async ({ event, context }) => {
+    // ...
+  },
+);
+```
+
+### Event data access
+
+| Data             | Ponder                           | HyperIndex                                          |
+| ---------------- | -------------------------------- | --------------------------------------------------- |
+| Event parameters | `event.args.name`                | `event.params.name`                                 |
+| Contract address | `event.log.address`              | `event.srcAddress`                                  |
+| Chain ID         | `context.chain.id`               | `event.chainId`                                     |
+| Block number     | `event.block.number`             | `event.block.number`                                |
+| Block timestamp  | `event.block.timestamp` (bigint) | `event.block.timestamp` (number)                    |
+| Tx hash          | `event.transaction.hash`         | `event.transaction.hash` ⚠️ needs `field_selection` |
+
+### Entity operations
+
+| Intent          | Ponder                                    | HyperIndex                                                         |
+| --------------- | ----------------------------------------- | ------------------------------------------------------------------ |
+| Insert          | `context.db.insert(t).values({...})`      | `context.Entity.set({ id, ...fields })`                            |
+| Update          | `context.db.update(t, pk).set({...})`     | `get` → spread → `context.Entity.set({ ...existing, ...changes })` |
+| Upsert          | `.insert().values().onConflictDoUpdate()` | `context.Entity.getOrCreate({ id, ...defaults })` → `set`          |
+| Read (nullable) | `context.db.find(table, pk)`              | `context.Entity.get(id)`                                           |
+| Read (throws)   | manual null check                         | `context.Entity.getOrThrow(id)`                                    |
+
+**Full handler example**
+
+_Ponder_
+
+```typescript
+ponder.on("MyToken:Transfer", async ({ event, context }) => {
+  await context.db.insert(transferEvent).values({
+    id: event.id,
+    from: event.args.from,
+    to: event.args.to,
+    amount: event.args.amount,
+    timestamp: Number(event.block.timestamp),
+  });
+
+  await context.db
+    .update(token, { address: event.args.to })
+    .set((row) => ({ balance: row.balance + event.args.amount }));
+});
+```
+
+_HyperIndex_
+
+```typescript
+
+indexer.onEvent(
+  { contract: "MyToken", event: "Transfer" },
+  async ({ event, context }) => {
+    context.TransferEvent.set({
+      id: `${event.transaction.hash}_${event.logIndex}`,
+      from: event.params.from,
+      to: event.params.to,
+      amount: event.params.amount,
+      timestamp: event.block.timestamp,
+    });
+
+    const token = await context.Token.getOrThrow(event.params.to);
+    context.Token.set({
+      ...token,
+      balance: token.balance + event.params.amount,
+    });
+  },
+);
+```
+
+> **Important**: Entity objects from `context.Entity.get()` are read-only. Always spread (`...existing`) and set new fields — never mutate directly.
+
+See the Event Handlers docs for the full API reference.
+
+
+## Extra Tips
+
+### Factory contracts (dynamic registration)
+
+Replace Ponder's `factory()` helper in config with a `contractRegister` handler:
+
+```typescript
+
+// Registers each newly deployed contract for indexing
+indexer.contractRegister(
+  { contract: "MyFactory", event: "ContractCreated" },
+  ({ event, context }) => {
+    context.chain.MyContract.add(event.params.contractAddress);
+  },
+);
+```
+
+In `config.yaml`, omit the `address` field for the dynamically registered contract.
+
+### External calls
+
+Replace `context.client.readContract(...)` with the Effect API to safely isolate external calls from the sync path:
+
+```typescript
+
+export const getSymbol = createEffect(
+  {
+    name: "getSymbol",
+    input: S.schema({ address: S.string, chainId: S.number }),
+    output: S.string,
+    cache: true,
+  },
+  async ({ input }) => {
+    /* viem call here */
+  },
+);
+
+// In handler:
+const symbol = await context.effect(getSymbol, {
+  address,
+  chainId: event.chainId,
+});
+```
+
+### Multichain
+
+Add multiple entries under `chains:` and namespace your entity IDs by chain to prevent collisions:
+
+```typescript
+const id = `${event.chainId}_${event.params.tokenId}`;
+```
+
+See Multichain Indexing for configuration details.
+
+### Wildcard indexing
+
+HyperIndex supports wildcard indexing — index events by signature across all contracts on a chain without specifying addresses.
+
+
+## Validating Your Migration
+
+Use the [Indexer Migration Validator](https://github.com/enviodev/indexer-migration-validator) CLI to compare entity data between your Ponder and HyperIndex endpoints field-by-field.
+
+
+## Getting Help
+
+- **Discord**: [discord.gg/envio](https://discord.gg/envio) — fastest way to get help
+- **Docs**: the HyperIndex documentation
+- **AI-friendly docs**: HyperIndex complete reference
 
 ---
 
@@ -2376,6 +2845,41 @@ The `config.yaml` file defines your indexer's behavior, including which blockcha
 Whenever you make changes in `config.yaml` that should affect generated types (e.g. adding events, contracts, or chains), run `pnpm codegen` to regenerate types and code for your event handlers.
 :::
 
+---
+
+## Example
+
+This is a basic ERC-20 `config.yaml` — it's enough on its own to get an indexer running across Ethereum Mainnet and Gnosis, tracking `Approval` and `Transfer` events on the UNI token.
+
+```yaml
+# yaml-language-server: $schema=./node_modules/envio/evm.schema.json
+name: erc20-indexer
+description: ERC-20 Indexer
+contracts:
+  - name: ERC20
+    events:
+      - event: "Approval(address indexed owner, address indexed spender, uint256 value)"
+      - event: "Transfer(address indexed from, address indexed to, uint256 value)"
+chains:
+  - id: 1 # Ethereum Mainnet
+    start_block: 0
+    contracts:
+      - name: ERC20
+        address: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984" # UNI
+  - id: 100 # Gnosis Mainnet
+    start_block: 0
+    contracts:
+      - name: ERC20
+        address: "0x4537e328Bf7e4eFA29D05CAeA260D7fE26af9D74" # UNI
+```
+
+**Next steps:**
+
+- Define how each event updates your data → `src/handlers`
+- Shape the entities you'll query → `schema.graphql`
+- Need more than the basics? Keep reading for the full set of configuration options below.
+
+---
 
 ## Contracts Definition
 
@@ -2470,6 +2974,193 @@ field_selection:
 
 Try to use this option sparingly as it can cause redundant Data Source calls and increased credits usage.
 
+---
+
+## Chains
+
+Everything under the top-level `chains` field configures the networks your indexer connects to — data sources, start/end blocks, reorg behavior, and multichain indexing semantics.
+
+### RPC
+
+The `rpc` option configures an RPC data source per chain. It supports multiple URLs with explicit roles via the `for` field:
+
+- `sync` – use this RPC for historical sync.
+- `realtime` – use this RPC for low-latency head tracking once the indexer enters realtime mode. WebSocket endpoints (`wss://...`) are supported here.
+- `fallback` – use as a fallback when the primary source is unavailable.
+
+:::tip Optional for HyperSync chains
+For chains supported by HyperSync, `rpc` is **not required** — HyperSync is used as the primary data source out of the box. You can still add an RPC entry as a fallback for extra reliability. For chains without HyperSync, `rpc` is required and acts as the primary data source.
+:::
+
+```yaml
+chains:
+  - id: 1
+    rpc:
+      - url: https://eth-mainnet.your-rpc-provider.com
+        for: sync
+      - url: wss://eth-mainnet.your-rpc-provider.com
+        for: realtime
+      - url: https://fallback.example.com
+        for: fallback
+```
+
+A short form is also supported when you only need a single RPC URL:
+
+```yaml
+chains:
+  - id: 1
+    rpc: https://eth-mainnet.your-rpc-provider.com
+```
+
+After switching to a fallback source, HyperIndex automatically attempts to recover to the primary source 60 seconds later.
+
+See the Rpc reference for advanced tuning options such as `initial_block_interval`, `polling_interval`, `query_timeout_millis`, and backoff parameters.
+
+#### Custom Headers
+
+Since v3.3, `headers` sets custom HTTP headers on an RPC entry — for endpoints gated behind an auth header rather than a key in the URL. Values support `${ENV_VAR}` interpolation:
+
+```yaml
+chains:
+  - id: 1
+    rpc:
+      - url: https://eth-mainnet.your-rpc-provider.com
+        for: sync
+        headers:
+          Authorization: "Bearer ${RPC_API_KEY}"
+```
+
+See Custom HTTP Headers for details.
+
+### WebSocket Height Streaming
+
+Pair `wss://` URLs with `for: realtime` to improve head latency by streaming new block heights over a WebSocket connection.
+
+```yaml
+chains:
+  - id: 1
+    rpc:
+      url: ${ENVIO_RPC_ENDPOINT}
+      ws: ${ENVIO_WS_ENDPOINT}
+      for: realtime
+```
+
+:::tip Experimental
+WebSocket support for RPC sources is experimental. Please open a GitHub issue if you hit any problems.
+:::
+
+### Start Block
+
+Set `start_block` on a chain to control the block at which the indexer begins ingesting data. Setting it to `0` is a safe default for HyperSync — it will automatically skip ahead to the first block that contains data for your configured contracts.
+
+```yaml
+chains:
+  - id: 1
+    start_block: 0 # HyperSync will fast-forward to the first relevant block
+    contracts:
+      - name: Greeter
+        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
+```
+
+For finer-grained control, see [Per-Contract Start Block Override](#per-contract-start-block-override) and the per-event start block tip below it.
+
+### End Block
+
+Set `end_block` on a chain to stop indexing once that block is reached. Useful for backfills with a known cutoff or one-off snapshots.
+
+```yaml
+chains:
+  - id: 1
+    start_block: 18000000
+    end_block: 19000000
+    contracts:
+      - name: Greeter
+        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
+```
+
+:::note Don't use this for tests
+If you're capping the range to make a deterministic test run, prefer the built-in testing framework instead — it lets you pin block ranges or feed synthetic events without spinning up a real indexer.
+:::
+
+### Contracts (per chain)
+
+Inside each chain you list the contracts you want to index on that chain — referenced by `name` from your top-level [Contracts Definition](#contracts-definition). The chain-level entry is where you pin the on-chain `address` (or list of addresses) and, optionally, a per-contract `start_block`.
+
+:::note
+Addresses can be provided in **checksum** format or in **lowercase**.
+Envio accepts both and normalizes them internally.
+:::
+
+#### Addresses
+
+**Single address:**
+
+```yaml
+chains:
+  - id: 1
+    start_block: 0
+    contracts:
+      - name: MyContract
+        address: "0xContractAddress"
+```
+
+**Multiple addresses for the same contract:**
+
+```yaml
+chains:
+  - id: 1
+    start_block: 0
+    contracts:
+      - name: MyContract
+        address:
+          - "0xAddress1"
+          - "0xAddress2"
+```
+
+:::tip
+If using a **proxy contract**, always use the **proxy address**, not the implementation address.
+:::
+
+#### Per-Contract Start Block Override
+
+By default, contracts use the chain `start_block`. You can also set a per-contract `start_block` to override it. Handy when:
+
+- Contracts were deployed at different blocks
+- You only need data from a contract starting at a specific block
+- You want to skip unnecessary historical data for some contracts
+- Works nicely with Dynamic Contract Registration
+
+```yaml
+chains:
+  - id: 1 # ethereum-mainnet
+    start_block: 18000000 # Default start block for all contracts on this chain
+    contracts:
+      - name: ERC20
+        address:
+          - "0x1111111111111111111111111111111111111111"
+          - "0x2222222222222222222222222222222222222222"
+        start_block: 18500000 # Override for this contract
+      - name: Greeter
+        address: "0x9D02A17dE4E68545d3a58D3a20BbBE0399E05c9c"
+        # Uses chain default (18000000)
+```
+
+:::tip Per-event start block
+For even finer control, you can also specify a start block per event from your handler using the `where.block.number._gte` filter on `indexer.onEvent`. See Event Handlers for the full API.
+:::
+
+#### Indexer Without Contracts
+
+The `contracts` field is **optional** in V3. You can run an indexer that only uses block handlers (`indexer.onBlock`) without declaring any contracts:
+
+```yaml
+name: BlockHandlerOnly
+chains:
+  - id: 1
+    start_block: 18000000
+```
+
+---
 
 ## Storage
 
@@ -2543,6 +3234,22 @@ storage:
 Added in HyperIndex v3.2.
 :::
 
+---
+
+## Address Format
+
+Use `address_format` to control how every address surfaced by the indexer (event fields like `event.srcAddress` / `event.transaction.from`, `chain.<Contract>.addresses`, addresses embedded in entity ids, etc.) is formatted.
+
+```yaml
+address_format: lowercase # default: checksum
+```
+
+- `checksum` (default) – [EIP-55](https://eips.ethereum.org/EIPS/eip-55) checksummed mixed-case addresses.
+- `lowercase` – every address is lowercased globally. Useful when joining against another data source that stores addresses in lowercase, or when you want byte-for-byte deterministic ids without per-handler `.toLowerCase()` calls.
+
+You can still call `.toLowerCase()` ad-hoc inside a handler when you only need a single value lowercased.
+
+---
 
 ## Ecosystem
 
@@ -2554,6 +3261,34 @@ ecosystem: evm # default — also: fuel, svm
 
 Most projects don't set this field explicitly. Use `pnpx envio init fuel` or `pnpx envio init svm` to scaffold non-EVM indexers — the generated `config.yaml` will already have `ecosystem` set correctly. See the Fuel and Solana guides for the ecosystem-specific options.
 
+---
+
+## Environment Variables
+
+Environment variable interpolation is supported anywhere in `config.yaml`, which is useful for keeping RPC URLs, addresses, or chain IDs out of source control.
+
+```yaml
+chains:
+  - id: ${ENVIO_CHAIN_ID:-ethereum-mainnet}
+    contracts:
+      - name: Greeter
+        address: "${ENVIO_GREETER_ADDRESS}"
+```
+
+Run your indexer with custom environment variables:
+
+```bash
+ENVIO_CHAIN_ID=optimism ENVIO_GREETER_ADDRESS=0xYourContractAddress pnpm dev
+```
+
+**Interpolation syntax:**
+
+- `${ENVIO_VAR}` – Use the value of `ENVIO_VAR`
+- `${ENVIO_VAR:-default}` – Use `ENVIO_VAR` if set, otherwise use `default`
+
+For more detailed information about environment variables, see our Environment Variables Guide.
+
+---
 
 ## Advanced
 
@@ -2648,6 +3383,33 @@ chains:
 Added in HyperIndex v3.1.
 :::
 
+---
+
+## Configuration Schema Reference
+
+Explore detailed configuration schema parameters here:
+
+- See the full, deep-linkable reference: Config Schema Reference
+
+:::info For AI/LLM Systems
+**Recommended**: Use the Config Schema Reference for programmatic access to schema information. The interactive viewer below is optimized for human users.
+:::
+
+
+
+
+
+
+
+📋 Hierarchical Interactive Schema Explorer (Click to expand - For human reference only)
+
+
+  
+
+
+
+
+---
 
 Now your configuration file is set, you're ready to start indexing with HyperIndex!
 
@@ -2659,6 +3421,50 @@ Now your configuration file is set, you're ready to start indexing with HyperInd
 
 The **`schema.graphql`** file defines the data model for your HyperIndex indexer. Each entity type defined in this schema corresponds directly to a database table, with your event handlers responsible for creating and updating the records. HyperIndex automatically generates a GraphQL API based on these entity types, allowing easy access to the indexed data.
 
+---
+
+## Defining Entity Types
+
+Entities in your schema are defined as GraphQL object types:
+
+**Example:**
+
+```graphql
+type User {
+  id: ID!
+  greetings: [String!]!
+  latestGreeting: String!
+  numberOfGreetings: Int!
+}
+```
+
+### Requirements:
+
+- Every entity **must** have a unique `id` field, using one of these scalar types:
+  - `ID!`, `String!`, `Int!`, or `BigInt!`
+- The `id` field must be non-nullable, must not be a list, and cannot be a [`@derivedFrom`](#relationships-one-to-many-derivedfrom) field.
+
+### Numeric Entity IDs
+
+`ID` is the usual choice and behaves as a string. Since v3.5, you can also key an entity on `Int` or `BigInt`, which is a better fit when the identifier is genuinely a number — a block number, an auction id, a sequential position:
+
+```graphql
+type Auction {
+  id: BigInt! # the on-chain auction id, not a stringified copy of it
+  seller: String!
+  bids: [Bid!]! @derivedFrom(field: "auction")
+}
+
+type Bid {
+  id: ID!
+  auction: Auction! # inferred as BigInt to match Auction.id
+  amount: BigInt!
+}
+```
+
+Relationship fields adopt the referenced entity's id type automatically, so `Bid.auction` above is typed `bigint` in your handlers rather than `string`. You don't declare the foreign key type — keep the two sides in sync by changing the referenced entity's `id`.
+
+---
 
 ## Scalar Types
 
@@ -2679,6 +3485,192 @@ Scalar types represent basic data types and map directly to JavaScript, TypeScri
 
 Learn more about GraphQL scalars [here](https://graphql.org/learn/).
 
+---
+
+## Working with BigDecimal
+
+The `BigDecimal` scalar type in HyperIndex is based on the [bignumber.js](https://mikemcl.github.io/bignumber.js/) library, which provides arbitrary-precision decimal arithmetic. This is essential for financial calculations and handling numeric values that exceed JavaScript's native number precision.
+
+### Importing BigDecimal
+
+```typescript
+// JavaScript/TypeScript
+
+// ReScript
+open BigDecimal;
+```
+
+### Creating BigDecimal Instances
+
+```typescript
+// From string (recommended for precision)
+const price = new BigDecimal("123.456789");
+
+// From number (may lose precision for very large values)
+const amount = new BigDecimal(123.45);
+
+// From other BigDecimal
+const copy = new BigDecimal(price);
+```
+
+### Arithmetic Operations
+
+BigDecimal instances are immutable. Operations return new BigDecimal instances:
+
+```typescript
+// Basic arithmetic
+const a = new BigDecimal("123.45");
+const b = new BigDecimal("67.89");
+
+const sum = a.plus(b); // 191.34
+const difference = a.minus(b); // 55.56
+const product = a.times(b); // 8,381.03
+const quotient = a.div(b); // 1.81839...
+
+// Power
+const squared = a.pow(2); // 15,239.9025
+
+// Square root
+const root = a.sqrt(); // 11.11...
+
+// Absolute value
+const abs = new BigDecimal("-123.45").abs(); // 123.45
+```
+
+### Comparison Methods
+
+```typescript
+const x = new BigDecimal("10.5");
+const y = new BigDecimal("10.5");
+const z = new BigDecimal("9.9");
+
+x.eq(y); // true (equal)
+x.gt(z); // true (greater than)
+x.gte(y); // true (greater than or equal)
+x.lt(z); // false (less than)
+x.lte(y); // true (less than or equal)
+
+// Check for special values
+x.isZero(); // false
+x.isPositive(); // true
+x.isNegative(); // false
+x.isFinite(); // true
+```
+
+### Rounding and Formatting
+
+```typescript
+const value = new BigDecimal("123.456789");
+
+// Get with specific decimal places
+value.dp(2); // 123.46 (rounded)
+value.dp(2, 1); // 123.45 (rounded down)
+
+// Format as string
+value.toString(); // "123.456789"
+value.toFixed(2); // "123.46"
+value.toExponential(2); // "1.23e+2"
+value.toPrecision(5); // "123.46"
+```
+
+### Working with Schema-Defined BigDecimal Fields
+
+When you've defined a `BigDecimal` field in your schema:
+
+```graphql
+type TokenPair {
+  id: ID!
+  name: String!
+  price: BigDecimal!
+  volume: BigDecimal!
+}
+```
+
+You can use it in your handlers:
+
+```typescript
+// In your event handler
+context.TokenPair.set({
+  id: event.params.pairId,
+  name: event.params.name,
+  price: new BigDecimal(event.params.price),
+  volume: new BigDecimal("0"), // Start with zero volume
+});
+
+// Updating a field
+const tokenPair = await context.TokenPair.get(pairId);
+if (tokenPair) {
+  const newVolume = tokenPair.volume.plus(new BigDecimal(tradeAmount));
+  context.TokenPair.set({
+    ...tokenPair,
+    volume: newVolume,
+  });
+}
+```
+
+### Example: Financial Calculation
+
+```typescript
+function calculateFee(amount: BigDecimal, feeRate: BigDecimal): BigDecimal {
+  // Calculate fee with proper rounding
+  return amount.times(feeRate).dp(2);
+}
+
+const tradeAmount = new BigDecimal("1250.75");
+const feeRate = new BigDecimal("0.0025"); // 0.25%
+const fee = calculateFee(tradeAmount, feeRate); // 3.13
+```
+
+### Best Practices for BigDecimal
+
+1. **Always use strings for initialization** when precision matters:
+
+   ```typescript
+   // Preferred
+   const value = new BigDecimal("123.456789");
+
+   // May lose precision
+   const value = new BigDecimal(123.456789);
+   ```
+
+2. **Set precision explicitly** when doing division:
+
+   ```typescript
+   // Set to 8 decimal places for crypto prices
+   const price = totalValue.div(tokenAmount).dp(8);
+   ```
+
+3. **Handle rounding appropriately** for financial calculations:
+
+   ```typescript
+   // Round down (floor) for user-favorable calculations
+   const userReceives = amount.dp(2, 1); // ROUND_DOWN
+
+   // Round up (ceil) for protocol-favorable calculations
+   const protocolFee = amount.dp(2, 0); // ROUND_UP
+   ```
+
+4. **Compare with equals method** instead of `==` or `===`:
+
+   ```typescript
+   // Correct
+   if (value.eq(new BigDecimal(0))) {
+     /* ... */
+   }
+
+   // Incorrect - compares object references
+   if (value === new BigDecimal(0)) {
+     /* ... */
+   }
+   ```
+
+5. **Chain operations carefully**, remembering that each operation returns a new instance:
+   ```typescript
+   // Calculate (a + b) * c with proper precision
+   const result = a.plus(b).times(c).dp(8);
+   ```
+
+---
 
 ## Enum Types
 
@@ -2722,6 +3714,37 @@ let user: Types.userEntity = {
 };
 ```
 
+---
+
+## Relationships: One-to-Many (`@derivedFrom`)
+
+Define relationships between entities using the `@derivedFrom` directive, known as **reverse lookups**.
+
+**Example:**
+
+```graphql
+type NftCollection {
+  id: ID!
+  contractAddress: Bytes!
+  name: String!
+  symbol: String!
+  maxSupply: BigInt!
+  currentSupply: Int!
+  tokens: [Token!]! @derivedFrom(field: "collection")
+}
+
+type Token {
+  id: ID!
+  tokenId: BigInt!
+  collection: NftCollection!
+  owner: User!
+}
+```
+
+ - The `tokens` field in `NftCollection` is a virtual field, populated automatically when querying the API.
+ - Set relationships in your handlers by assigning `<field>_id` with the related entity's `id`. For example, create or update a `Token` entity with `collection_id: collectionId`.
+
+---
 
 ## Field Indexing (`@index`)
 
@@ -2737,8 +3760,57 @@ type Token {
 ```
 
 - All `id` fields and fields referenced via `@derivedFrom` are indexed automatically.
-- Since v3.5, `@index` is an optimization rather than a requirement: a `getWhere` query on an unindexed field creates the index on demand. Declaring it up front is still faster, because declared indices are built in one batched pass at the end of the backfill. See Deferred Index Creation.
+- Declare `@index` for the fields your GraphQL consumers filter and sort by. You don't need it for fields your handlers query with `getWhere` — since v3.5 HyperIndex creates those indices itself. See Indices created on demand.
 
+---
+
+## Choosing a Storage Backend (`@storage`)
+
+When you enable more than one storage backend in `config.yaml`, the `@storage` directive controls where each entity is written:
+
+```graphql
+# Queryable over GraphQL and mirrored into ClickHouse for analytics
+type Transfer @storage(postgres: true, clickhouse: true) {
+  id: ID!
+  amount: BigInt!
+}
+```
+
+Since v3.2 you can mark a backend as `default` in `config.yaml`, and entities without a `@storage` directive go there — you no longer need the directive on every entity. See `storage`.
+
+### Per-Entity ClickHouse Tuning
+
+Since v3.4, the `clickhouse` argument also accepts an options object that tunes that entity's ClickHouse history table:
+
+```graphql
+type Transfer
+  @storage(
+    postgres: true
+    clickhouse: {
+      partitionBy: "toYYYYMM(timestamp)"
+      orderBy: ["timestamp"]
+      ttl: "timestamp + INTERVAL 2 YEAR"
+    }
+  ) {
+  id: ID!
+  timestamp: Timestamp!
+  amount: BigInt!
+}
+```
+
+| Option | Type | Description |
+|--------|------|-------------|
+| `partitionBy` | ClickHouse expression | Emitted as `PARTITION BY <expr>`. Keeps queries and TTL deletes inside a partition instead of scanning the whole table. |
+| `orderBy` | list of entity field names | Fields that lead the table's sorting key, ahead of the default `id`. |
+| `ttl` | ClickHouse expression | Emitted as `TTL <expr>`. Ages rows out automatically. |
+
+A few constraints, all caught at `envio codegen` rather than at runtime:
+
+- `orderBy` takes **entity field names**, not expressions — unlike `partitionBy` and `ttl`, which are ClickHouse expressions passed through as written.
+- `orderBy` can't list `id` (already the default sorting key), nor nullable, list or `@derivedFrom` fields, which ClickHouse doesn't allow in a sorting key.
+- An entity can carry only one `@storage` directive, and it must enable at least one backend.
+
+---
 
 ## Advanced: Precision and Scale (`@config` Directive)
 
@@ -2786,6 +3858,34 @@ type AdvancedEntity {
 
 
 
+---
+
+## Documenting Entities, Fields, and Relationships
+
+You can document your entities, fields, and relationships directly in `schema.graphql` using GraphQL string descriptions. These descriptions are exposed through the generated GraphQL API and appear in introspection, making your API self-documenting.
+
+```graphql
+"""
+A token transfer between two accounts
+"""
+type Transfer {
+  id: ID!
+  "The address the tokens were sent from"
+  from: String!
+  "The address the tokens were sent to"
+  to: String!
+  "The amount transferred, in wei"
+  value: BigInt!
+}
+```
+
+Both single-line (`"..."`) and multi-line (`"""..."""`) descriptions are supported.
+
+:::note
+Only string descriptions are exposed in introspection. Hash (`#`) comments are ignored by the GraphQL parser and do **not** appear in the API. Descriptions on entities, fields, and relationships were added in HyperIndex v3.1.
+:::
+
+---
 
 ## Generating Types
 
@@ -2795,6 +3895,14 @@ Once you've defined your schema, run this command to generate these entity types
 pnpm envio codegen
 ```
 
+---
+
+## Best Practices
+
+- Use camelCase for field names (`latestGreeting`, `numberOfGreetings`).
+- Keep entity and field names clear, descriptive, and intuitive.
+
+---
 
 You're now ready to define powerful schemas and efficiently query your indexed data with HyperIndex!
 
@@ -2915,6 +4023,62 @@ HyperIndex provides many features to help you build more powerful and efficient 
 - Access Contract State directly from handlers
 - Perform external calls from handlers by following the IPFS Integration guide
 
+---
+
+## Event Object
+
+Each handler receives an `event` object containing details about the emitted event, including parameters and blockchain metadata.
+
+### Accessing Event Parameters
+
+Event parameters are accessed via:
+
+```typescript
+event.params.<PARAMETER_NAME>
+```
+
+Example usage:
+
+```typescript
+const sender = event.params.sender;
+const amount = event.params.amount;
+```
+
+### Additional Event Information
+
+The event object also contains additional metadata:
+
+- `event.chainId` – Chain ID of the network emitting the event.
+- `event.srcAddress` – Contract address emitting the event.
+- `event.logIndex` – Index of the log within the block.
+- `event.block` – Block fields (By default: `number`, `timestamp`, `hash`).
+- `event.transaction` – Transaction fields (eg `hash`, `gasUsed`, etc. Empty by default).
+
+:::tip
+By default, all addresses returned in the `event` object, such as `event.transaction.from`,
+`event.transaction.to`, and `event.srcAddress`, are [EIP-55](https://eips.ethereum.org/EIPS/eip-55) checksummed.
+Use `.toLowerCase()` on a single value if you specifically need it in lowercase, or set
+`address_format: lowercase` in `config.yaml` to switch every address that the indexer surfaces (events, `chain.<Contract>.addresses`, entity ids, etc.) to lowercase globally.
+:::
+
+:::note
+Configure block and transaction fields with `field_selection` in your `config.yaml` file.
+:::
+
+**Example event type definition:**
+
+```typescript
+type Event<Params, TransactionFields, BlockFields> = {
+  params: Params;
+  chainId: 1 | 137;
+  srcAddress: `0x${string}`;
+  logIndex: number;
+  transaction: TransactionFields;
+  block: BlockFields;
+};
+```
+
+---
 
 ## Context Object
 
@@ -3001,7 +4165,7 @@ Multi-field filtering with `getWhere` was added in HyperIndex v3.2.
 
 - Preload Optimization is always enabled in V3 and powers `getWhere`. See How Preload Optimization Works.
 
-- Works with any entity field. Since v3.5, if the field has no supporting database index, HyperIndex creates one the first time a handler queries it — you no longer need to declare `@index` up front. Declaring it is still worthwhile for fields you know you'll query: indexes named in the schema are built in one pass at the end of the backfill, whereas an on-demand build pauses writes to that table while it runs. See Deferred Index Creation.
+- Works with any entity field. Since v3.5, HyperIndex creates whatever database index the query needs, so you don't have to declare `@index` for it.
 
 - Potential Memory Issues: Very large `getWhere` queries might cause memory overflows.
 - Tip: Try to put the `getWhere` query to the top of the handler, to make sure it's being preloaded. Read more about how Preload Optimization works.
@@ -3168,6 +4332,32 @@ indexer.onEvent(
 );
 ```
 
+---
+
+## Accessing `config.yaml` Data in Handlers
+
+You can read your indexer configuration and live indexing state from the `indexer` value — either at the top level of a handler file or inside a handler. Use `indexer.chains[chainId]` (or one of the named entries on `indexer.chains`) to inspect a specific chain:
+
+```typescript
+
+indexer.onEvent(
+  { contract: "Greeter", event: "NewGreeting" },
+  async ({ event, context }) => {
+    const chain = indexer.chains[event.chainId];
+    chain.id;                  // chain id
+    chain.startBlock;          // configured start block
+    chain.endBlock;            // configured end block (or undefined)
+    chain.isRealtime;          // true once this chain has reached the head
+    chain.Greeter.name;        // contract name
+    chain.Greeter.abi;         // parsed ABI
+    chain.Greeter.addresses;   // initial + dynamically registered addresses
+  },
+);
+```
+
+Top-level fields like `indexer.name`, `indexer.description`, and `indexer.chainIds` are also available. After restart, addresses on `chain.<Contract>.addresses` include any contracts that were dynamically registered in previous runs, not just those declared in `config.yaml`.
+
+---
 
 ## Performance Considerations
 
@@ -3180,11 +4370,205 @@ These guides offer detailed recommendations on optimizing entity loading and ind
 
 ---
 
+---
+
 ## Block Handlers
 
 **File:** `Guides/block-handlers.md`
 
 Run logic on every block or an interval.
+
+---
+
+`indexer.onBlock` lets you run logic on every block or an interval. This is useful for aggregations and time-series logic.
+
+To get started, import the `indexer` value from `envio` and call `onBlock` in one of your handler files.
+
+```typescript
+
+indexer.onBlock(
+  {
+    name: "MyBlockHandler",
+  },
+  async ({ block, context }) => {
+    context.log.info(`Processing block ${block.number}`);
+  }
+);
+```
+
+> Block handlers don't require any config changes as well as codegen runs.
+
+In the example above, the handler runs on **every** chain configured in `config.yaml` (the V3 default). To restrict it to a single chain, pass a `where` callback — see below.
+
+## Options
+
+`indexer.onBlock` accepts an options object as the first argument with the following properties:
+
+- `name` (required) — The name of the block handler. It's used for logging, debugging and metrics.
+- `where` (optional) — A callback `({ chain }) => false | true | { block: { number: { _gte?, _lte?, _every? } } }` that decides which chains the handler runs on and over which block range/interval. Omit it to run on every chain on every block.
+
+To express the V2-era `chain`, `startBlock`, `endBlock`, and `interval` options, return them from `where`:
+
+```typescript
+
+indexer.onBlock(
+  {
+    name: "MyBlockHandler",
+    where: ({ chain }) => {
+      if (chain.id !== 1) return false;
+      return {
+        block: {
+          number: {
+            _gte: 19_000_000, // start block (inclusive)
+            _lte: 20_000_000, // end block (inclusive)
+            _every: 100,      // run every Nth block
+          },
+        },
+      };
+    },
+  },
+  async ({ block, context }) => {
+    context.log.info(`Processing block ${block.number}`);
+  }
+);
+```
+
+## Handler Function
+
+:::note
+Preload Optimization is always enabled in HyperIndex V3 and powers Block Handlers. Don't forget that it makes your handlers run twice.
+:::
+
+The second argument is a handler function that receives the block object and the handler context.
+
+- `block` — The block object.
+  - `number` — The block number.
+  - More fields will be added in the future. Let us know in [Discord](https://discord.gg/envio) if you need any specific fields. You can also use Effect API to get the data from RPC.
+- `context` — Exactly the same as the Event Handlers Context Object. Use `context.chain.id` to read the current chain ID inside the handler.
+
+## Multichain
+
+By default `indexer.onBlock` runs on every chain in your config. To run different parameters per chain, branch inside the `where` callback:
+
+```typescript
+
+const perChain = {
+  1: { startBlock: 19783636, interval: (60 * 60) / 12 }, // Every 60 minutes (12s block time)
+  10: { startBlock: 119534316, interval: (60 * 60) / 2 }, // Every 60 minutes (2s block time)
+} as const;
+
+indexer.onBlock(
+  {
+    name: "HourlyPrice",
+    where: ({ chain }) => {
+      const cfg = perChain[chain.id as keyof typeof perChain];
+      if (!cfg) return false;
+      return {
+        block: {
+          number: { _gte: cfg.startBlock, _every: cfg.interval },
+        },
+      };
+    },
+  },
+  async ({ block, context }) => {
+    context.log.info(`Processing block ${block.number} on chain ${context.chain.id}`);
+  }
+);
+```
+
+## Time Interval
+
+The `_every` option is a number of blocks. But quite often you want to run some logic on a time interval. To convert time interval to blocks, you can use the following formula:
+
+```typescript
+// Every 60 minutes
+const timeIntervalInSeconds = 60 * 60;
+// 12 seconds per block
+const secondsPerBlock = 12;
+// 300 blocks per 60 minutes
+const blockInterval = timeIntervalInSeconds / secondsPerBlock;
+```
+
+## Different Historical and Realtime Intervals
+
+Here's the recipe to speed up your historical sync by increasing the interval for historical blocks.
+
+You can achieve this by registering multiple block handlers with the same handler, but different `_gte`, `_lte`, and `_every` values.
+
+```typescript
+
+const realtimeBlocks = {
+  1: 19783636,
+  10: 119534316,
+} as const;
+
+indexer.onBlock(
+  {
+    name: "HistoricalBlockHandler",
+    where: ({ chain }) => {
+      const realtime = realtimeBlocks[chain.id as keyof typeof realtimeBlocks];
+      if (!realtime) return false;
+      return { block: { number: { _lte: realtime - 1, _every: 1000 } } };
+    },
+  },
+  async ({ block, context }) => {
+    context.log.info(`Processing block ${block.number}`);
+  }
+);
+
+indexer.onBlock(
+  {
+    name: "RealtimeBlockHandler",
+    where: ({ chain }) => {
+      const realtime = realtimeBlocks[chain.id as keyof typeof realtimeBlocks];
+      if (!realtime) return false;
+      return { block: { number: { _gte: realtime } } };
+    },
+  },
+  async ({ block, context }) => {
+    context.log.info(`Processing block ${block.number}`);
+  }
+);
+```
+
+In this case we'll run the historical handler on every 1000 blocks and from the realtime block we'll start running the second handler on every block.
+
+> We recommend exploring the approach together with HyperSync client to effectively query data for big block ranges.
+
+## Preset Handler
+
+This is not an official feature, but a creative way to use block handlers. You can define a block handler that runs on a single block at the start of the chain and use it to populate the database with the initial data.
+
+```typescript
+
+indexer.onBlock(
+  {
+    name: "Preset",
+    where: ({ chain }) => {
+      if (chain.id !== 1) return false;
+      return { block: { number: { _gte: 0, _lte: 0 } } };
+    },
+  },
+  async ({ block, context }) => {
+    // You don't need preload optimization here,
+    // so don't forget to disable it to prevent double-run.
+    if (context.isPreload) return;
+
+    const users = await fetch("https://api.example.com/users");
+    users.forEach((user) => {
+      context.User.set({
+        id: user.id,
+        address: user.address,
+        name: user.name,
+      });
+    });
+  }
+);
+```
+
+## Current Limitations
+
+- Only block number is provided in the block object. We'll definitely add more fields in the future.
 
 ---
 
@@ -3429,6 +4813,66 @@ describe("Indexer Testing", () => {
 
 Run `pnpm test` — Vitest auto-fills the snapshots on first run. Review and commit them.
 
+---
+
+## Process API
+
+`indexer.process({ chains })` is the single entry point for driving the indexer. The shape of each chain entry determines the mode.
+
+### Auto-exit (recommended for getting started)
+
+Processes the first block with matching events for each chain, then exits. Each subsequent call continues from where the previous one stopped.
+
+```typescript
+const result = await indexer.process({
+  chains: {
+    1: {},           // auto-detect first block with events on chain 1
+    8453: {},        // same for chain 8453
+  },
+});
+```
+
+### Explicit block range
+
+Process a specific block range. Use when you need deterministic, pinned snapshots.
+
+```typescript
+const result = await indexer.process({
+  chains: {
+    1: { startBlock: 10_000_000, endBlock: 10_000_100 },
+  },
+});
+```
+
+### Simulate (mock events)
+
+Feed synthetic events without hitting the network. Best for unit-testing handler logic.
+
+```typescript
+await indexer.process({
+  chains: {
+    1: {
+      simulate: [
+        {
+          contract: "ERC20",
+          event: "Transfer",
+          params: { from: addr1, to: addr2, value: 100n },
+        },
+      ],
+    },
+  },
+});
+```
+
+You can pass multiple events in a single `simulate` array — they will be processed in order, just like in production.
+
+You can optionally specify detailed event metadata per simulated event using the same `block` / `transaction` / `srcAddress` / `logIndex` shape that real events expose. See field_selection for the full list of overridable fields.
+
+### result.changes
+
+`result.changes` is an array of per-block change objects. Each entry has `block`, `chainId`, `eventsProcessed`, plus entity names as keys with `sets` arrays of created/updated entities. Dynamic contract registrations appear under `addresses.sets`.
+
+---
 
 ## Entity State API
 
@@ -3444,6 +4888,28 @@ await indexer.EntityName.getOrThrow("id"); // throws if not found
 await indexer.EntityName.getAll();         // returns all entities of this type
 ```
 
+---
+
+## Assertions
+
+The testing library works with any JavaScript assertion library. The examples below use Vitest's built-in `expect`.
+
+```typescript
+// Snapshot (recommended — captures full output, auto-filled on first run)
+t.expect(result.changes).toMatchInlineSnapshot(`...`);
+
+// Entity assertions
+const pool = await indexer.Pool.getOrThrow(poolId);
+t.expect(pool).toEqual({ id: poolId, token0_id: "0xabc..." });
+
+// Count
+t.expect(result.changes[0]?.Pair?.sets).toHaveLength(1);
+
+// Contract addresses (after dynamic registration)
+t.expect(indexer.chains[1].MyContract.addresses).toContain("0x1234...");
+```
+
+---
 
 ## TDD Workflow
 
@@ -3662,6 +5128,10 @@ If runtime aggregate queries are a hard requirement for your use case, please re
 ## Disable Hasura for Self-Hosted Blockchain Indexers
 
 Set the `ENVIO_HASURA` environment variable to `false` to disable Hasura integration for self-hosted blockchain indexers.
+
+---
+
+For more information on using GraphQL with your indexed data, refer to the [Hasura GraphQL documentation](https://hasura.io/docs/latest/queries/overview/).
 
 ---
 
@@ -5548,7 +7018,7 @@ There is no practical ceiling on how many addresses a factory can register. Befo
 
 You don't need to configure anything for this. Once a contract accumulates enough addresses, HyperIndex automatically changes how it filters events for that contract: instead of asking the data source for a specific address list, it fetches events more broadly and filters them locally. The switch is per contract, so one large factory doesn't affect how your other contracts are indexed.
 
-The practical consequence is that a very large factory fetches more data than its handlers ultimately use. That's the trade that keeps it fast — expect fetch volume to grow with address count even as indexing throughput holds up.
+The trade-off is that a very large factory fetches more data than its handlers ultimately use, since the filtering happens after the fetch rather than before it. That's what keeps indexing fast at this scale.
 
 To see how many addresses a chain has registered, watch `envio_indexing_addresses` on the metrics endpoint.
 
@@ -5641,7 +7111,7 @@ indexer.onEvent(
 
 ## Multiple Filters
 
-If you want to index both `Mint` and `Burn` events you can provide multiple filters as an array — an event matches if **any** entry in the array matches (`OR`), while the parameters within a single entry must all match (`AND`). Also, every parameter can accept an array to filter by multiple possible values. We'll use it to filter by a group of whitelisted addresses in the example below:
+If you want to index both `Mint` and `Burn` events you can provide multiple filters as an array, and an event is indexed if it matches any one of them. Within a single filter, all parameters must match. Also, every parameter can accept an array to filter by multiple possible values. We'll use it to filter by a group of whitelisted addresses in the example below:
 
 ```typescript
 
@@ -6278,7 +7748,7 @@ Open [Development Console](https://envio.dev/console) of the running indexer whi
 
 When the indexer is rerun by using `envio dev` or `envio start -r` call, the initial cache will be loaded from the `.envio/cache` directory and used for the indexer run.
 
-> **Note:** This feature is available starting from `envio@2.26.0`. It also doesn't support rollbacks on reorgs. The support for reorgs will be added in the future.
+> **Note:** This doesn't support rollbacks on reorgs. The support for reorgs will be added in the future.
 
 
 ### Cache on Envio Cloud
@@ -6296,7 +7766,7 @@ For detailed instructions, see the Effect API Cache documentation.
 
 ### Rate Limit
 
-Since v2.32, the `rateLimit` option controls how frequently an effect can run within a given timeframe. You can set it to `false` to disable rate limiting or define a custom limit such as calls per second, minute, or a duration in milliseconds.
+The `rateLimit` option controls how frequently an effect can run within a given timeframe. You can set it to `false` to disable rate limiting or define a custom limit such as calls per second, minute, or a duration in milliseconds.
 
 ```typescript
 // Effect to get the balance of a specific address at a specific block
@@ -6348,7 +7818,7 @@ export const getTokenName = createEffect(
     crossChain: false,
   },
   async ({ input, context }) => {
-    // Only available on effects created with `crossChain: false`
+    // context.chain is only available on `crossChain: false` effects
     const client = clientsByChainId[context.chain.id];
     return await client.readContract({
       address: input,
@@ -8623,6 +10093,8 @@ HyperIndex automates all of this: it fetches recent block hashes to pinpoint exa
 
 ---
 
+---
+
 ## Understanding Generated Indexing Files
 
 **File:** `Advanced/generated-files.md`
@@ -8867,6 +10339,8 @@ The generated declarations directly reflect the structure defined in your setup 
 Generated declarations form the critical bridge between your indexing specifications and the actual runtime execution. While you shouldn't modify them directly, understanding their structure and purpose can help you debug issues and optimize your indexing process.
 
 If you encounter persistent errors related to generated files, ensure your configuration, schema, and handlers follow Envio's best practices, or contact support for assistance.
+
+---
 
 ---
 
@@ -9638,19 +11112,17 @@ Nothing to configure. Two things change in what you'll observe:
 
 ### Indices created on demand
 
-A `getWhere` call on a field with no index creates one the first time a handler asks for it. That means `getWhere` works on **any** entity field, not just those marked `@index` or `@derivedFrom`.
+A `getWhere` call on a field with no index creates one the first time a handler asks for it. That means `getWhere` works on **any** entity field, and you don't need to declare `@index` for the fields your handlers filter on — HyperIndex works out which indices your handlers need.
 
-Still declare `@index` on fields you know you'll query:
+`@index` is for the queries **you** serve. Declare it on the fields your GraphQL consumers filter and sort by, since HyperIndex can't know those from your handler code:
 
 ```graphql
 type Transfer {
   id: ID!
-  userAddress: String! @index # queried via getWhere in a handler
+  userAddress: String! @index
   timestamp: BigInt!
 }
 ```
-
-Declared indices are built together at the end of the backfill. Undeclared ones are built individually, mid-run, and pause writes to that table while they build. Treat on-demand creation as a safety net rather than the plan.
 
 ## Strategic Indexing: When to Use Each Type
 
@@ -10409,6 +11881,272 @@ The query converter tool has several limitations to be aware of:
 
 For production applications, we recommend migrating your queries to Envio's standard GraphQL syntax to avoid these limitations.
 
+---
+
+### 1. Entity Name Conversion
+
+**Rule**: TheGraph uses pluralized entity names (e.g., `pools`, `factories`, `tokens`), while Envio uses the entity name as-is from the schema (singular, PascalCase). When converting, plural entity names are automatically singularized and capitalized to match Envio's schema.
+
+**Example**:
+
+```graphql
+# TheGraph
+query {
+  pools { id }
+  factories { id }
+  tokens { id }
+}
+
+# Envio
+query {
+  Pool { id }
+  Factory { id }
+  Token { id }
+}
+```
+
+Single entity queries use `EntityName_by_pk` (by primary key) in Envio. Alternatively, you could use a `where` clause with the primary key field:
+
+```graphql
+# TheGraph
+query {
+  pool(id: "0x123") { value }
+}
+
+# Envio
+query {
+  Pool_by_pk(id: "0x123") { value }
+}
+```
+
+Or using a `where` clause:
+
+```graphql
+# Envio
+query {
+  Pool(where: {id: {_eq: "0x123"}}) { value }
+}
+```
+
+### 2. Pagination Parameters
+
+#### First → Limit
+
+**Rule**: The `first` parameter is converted to `limit`.
+
+**Example**:
+
+```graphql
+# TheGraph
+query {
+  pools(first: 10) { id }
+}
+
+# Envio
+query {
+  Pool(limit: 10) { id }
+}
+```
+
+#### Skip → Offset
+
+**Rule**: The `skip` parameter is converted to `offset`.
+
+**Example**:
+
+```graphql
+# TheGraph
+query {
+  pools(skip: 20) { id }
+}
+
+# Envio
+query {
+  Pool(offset: 20) { id }
+}
+```
+
+### 3. Ordering Parameters
+
+#### OrderBy and OrderDirection → Order_by
+
+**Rule**: The `orderBy` and `orderDirection` parameters are combined into a single `order_by: {field: direction}` clause.
+
+**Example**:
+
+```graphql
+# TheGraph
+query {
+  pools(orderBy: name, orderDirection: desc) { id name }
+  # Use orderDirection: asc for ascending order
+}
+
+# Envio
+query {
+  Pool(order_by: {name: desc}) { id name }
+  # Use asc for ascending order, e.g., order_by: {name: asc}
+}
+```
+
+### 4. Filter Operators
+
+#### Equality Filter
+
+**Rule**: Simple equality filters are converted to `where: {field: {_eq: value}}` format.
+
+**Example**:
+
+```graphql
+# TheGraph
+query {
+  pools(name: "test") { id name }
+}
+
+# Envio
+query {
+  Pool(where: {name: {_eq: "test"}}) { id name }
+}
+```
+
+#### Comparison Filters
+
+**Rule**: Comparison filters (`_not`, `_gt`, `_gte`, `_lt`, `_lte`, `_in`, `_not_in`) are converted to their Hasura equivalents.
+
+**Examples**:
+
+```graphql
+# TheGraph
+query {
+  pools(id_not: "0x123") { id }
+  pools(amount_gt: 100) { id amount }
+  pools(amount_gte: 100) { id amount }
+  pools(timestamp_lt: 1650000000) { id timestamp }
+  pools(timestamp_lte: 1650000000) { id timestamp }
+  pools(id_in: ["1", "2", "3"]) { id name }
+  pools(id_not_in: ["1", "2", "3"]) { id name }
+}
+
+# Envio
+query {
+  Pool(where: {id: {_neq: "0x123"}}) { id }
+  Pool(where: {amount: {_gt: 100}}) { id amount }
+  Pool(where: {amount: {_gte: 100}}) { id amount }
+  Pool(where: {timestamp: {_lt: 1650000000}}) { id timestamp }
+  Pool(where: {timestamp: {_lte: 1650000000}}) { id timestamp }
+  Pool(where: {id: {_in: ["1", "2", "3"]}}) { id name }
+  Pool(where: {id: {_nin: ["1", "2", "3"]}}) { id name }
+}
+```
+
+#### String Filters
+
+**Rule**: String filters (`_contains`, `_starts_with`, `_ends_with`, and their `_not` and `_nocase` variants) are converted to `_ilike` with appropriate wildcards. The `%` symbol represents any text at that position in the pattern.
+
+**Examples**:
+
+```graphql
+# TheGraph
+query {
+  pools(name_contains: "test") { id name }
+  pools(name_not_contains: "test") { id name }
+  pools(symbol_starts_with: "ABC") { id symbol }
+  pools(symbol_ends_with: "XYZ") { id symbol }
+  pools(name_not_starts_with: "A") { id name }
+  pools(name_not_ends_with: "x") { id name }
+  pools(name_contains_nocase: "test") { id name }
+  pools(name_starts_with_nocase: "test") { id name }
+  pools(name_ends_with_nocase: "test") { id name }
+}
+
+# Envio
+query {
+  Pool(where: {name: {_ilike: "%test%"}}) { id name }
+  Pool(where: {_not: {name: {_ilike: "%test%"}}}) { id name }
+  Pool(where: {symbol: {_ilike: "ABC%"}}) { id symbol }
+  Pool(where: {symbol: {_ilike: "%XYZ"}}) { id symbol }
+  Pool(where: {_not: {name: {_ilike: "A%"}}}) { id name }
+  Pool(where: {_not: {name: {_ilike: "%x"}}}) { id name }
+  Pool(where: {name: {_ilike: "%test%"}}) { id name }
+  Pool(where: {name: {_ilike: "test%"}}) { id name }
+  Pool(where: {name: {_ilike: "%test"}}) { id name }
+}
+```
+
+### 5. Variable Type Conversions
+
+#### ID → String
+
+**Rule**: Variable types `ID` and `ID!` are converted to `String` and `String!` respectively.
+
+**Example**:
+
+```graphql
+# TheGraph
+query getPoolValue($id: ID!) {
+  pool(id: $id) { value }
+}
+
+# Envio
+query getPoolValue($id: String!) {
+  Pool_by_pk(id: $id) { value }
+}
+```
+
+#### Bytes → String
+
+**Rule**: Variable types `Bytes` and `Bytes!` are converted to `String` and `String!` respectively.
+
+**Example**:
+
+```graphql
+# TheGraph
+query getTokens($id: Bytes) {
+  tokens(where: { id: $id }) { id timestamp }
+}
+
+# Envio
+query getTokens($id: String) {
+  Token(where: {id: {_eq: $id}}) { id timestamp }
+}
+```
+
+#### BigInt → numeric
+
+**Rule**: Variable types `BigInt` and `BigInt!` are converted to `numeric` and `numeric!` respectively.
+
+**Example**:
+
+```graphql
+# TheGraph
+query GetTokens($amount: BigInt) {
+  tokens(where: { amount: $amount }) { id amount }
+}
+
+# Envio
+query GetTokens($amount: numeric) {
+  Token(where: {amount: {_eq: $amount}}) { id amount }
+}
+```
+
+#### BigDecimal → numeric
+
+**Rule**: Variable types `BigDecimal` and `BigDecimal!` are converted to `numeric` and `numeric!` respectively.
+
+**Example**:
+
+```graphql
+# TheGraph
+query GetValue($value: BigDecimal!) {
+  pools(where: { value: $value }) { id }
+}
+
+# Envio
+query GetValue($value: numeric!) {
+  Pool(where: {value: {_eq: $value}}) { id }
+}
+```
+
+---
 
 ## Summary Table
 
@@ -10421,6 +12159,15 @@ For production applications, we recommend migrating your queries to Envio's stan
 | **Comparison Filters** | `field_gt`, `field_gte`, etc. | `field: {_gt: value}`, etc. | `amount_gt: 100` → `amount: {_gt: 100}` |
 | **String Filters** | `_contains`, `_starts_with`, etc. | `_ilike` with `%` wildcards | `name_contains: "test"` → `name: {_ilike: "%test%"}` |
 | **Variable Types** | `ID`, `Bytes`, `BigInt`, `BigDecimal` | `String`, `numeric` | `$id: ID!` → `$id: String!` |
+
+---
+
+## Getting Help
+
+If you encounter any issues with query conversion or have questions:
+
+- **Converter Issues**: File a [GitHub issue](https://github.com/enviodev/subgraph-to-hyperindex-query-converter/issues) for the converter tool
+- **General Questions**: Join our [Discord community](https://discord.gg/envio) for support
 
 ---
 
@@ -10778,6 +12525,8 @@ You can further customize your Postgres connection with these additional environ
 
 - Check the indexer logs for any skipped blocks or error messages
 - Test with a small block range locally to isolate the issue
+
+---
 
 ---
 
@@ -11306,6 +13055,8 @@ pnpm envio local db-migrate setup
 
 ---
 
+---
+
 ## Reserved Words in Envio
 
 **File:** `Troubleshoot/reserved-words.md`
@@ -11442,11 +13193,46 @@ If you encounter persistent issues with reserved words or need help refactoring 
 
 ---
 
+---
+
 ## Any EVM with RPC 🐌
 
 **File:** `supported-networks/any-evm-with-rpc.md`
 
+---
 
+Any EVM-compatible chain can be indexed using an RPC as a source. This means that you can use any EVM-compatible chain as a data source for your indexer. This is particularly useful for chains that do not have a native HyperSync or HyperRPC solution.
+
+### Defining Network Configurations
+
+```yaml
+name: IndexerName # Specify indexer name
+description: Indexer Description # Include indexer description
+chains:
+  - id: 1234567890
+    rpc: https://custom-network-rpc.com # RPC URL for that custom network
+    start_block: START_BLOCK_NUMBER # Specify the starting block
+    contracts:
+      - name: ContractName
+        address:
+          - "0xYourContractAddress1"
+          - "0xYourContractAddress2"
+        events:
+          - event: Event # Specify event
+          - event: Event
+```
+
+### Support
+
+Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.gg/envio); we’re always happy to help!
+
+:::info
+The backbone of HyperIndex’s blazing-fast indexing speed lies in using HyperSync as a more performant and cost-effective data source to RPC for data retrieval. While RPCs are functional, and can be used in HyperIndex as a data source, they are far from efficient when it comes to querying large amounts of data (a time-consuming and resource-intensive endeavour).
+
+HyperSync is significantly faster and more cost-effective than traditional RPC methods, allowing the retrieval of multiple blocks at once, and enabling sync speeds up to 1000x faster than RPC.
+:::
+
+---
 
 ---
 
@@ -11454,7 +13240,30 @@ If you encounter persistent issues with reserved words or need help refactoring 
 
 **File:** `supported-networks/local-anvil.md`
 
+---
 
+A local network can be used as a data source for your indexer. You simply need to specify the local network.
+
+### Defining Network Configurations
+
+```yaml
+name: IndexerName # Specify indexer name
+description: Indexer Description # Include indexer description
+chains:
+  - id: 31337 # Local Anvil network default chainId
+    rpc: http://localhost:8545 # RPC URL for your local Anvil network
+    start_block: START_BLOCK_NUMBER # Specify the starting block
+    contracts:
+      - name: ContractName
+        address:
+          - "0xYourContractAddress1"
+          - "0xYourContractAddress2"
+        events:
+          - event: Event # Specify event
+          - event: Event
+```
+
+---
 
 ---
 
@@ -11462,7 +13271,30 @@ If you encounter persistent issues with reserved words or need help refactoring 
 
 **File:** `supported-networks/local-hardhat.md`
 
+---
 
+A local network can be used as a data source for your indexer. You simply need to specify the local network.
+
+### Defining Network Configurations
+
+```yaml
+name: IndexerName # Specify indexer name
+description: Indexer Description # Include indexer description
+chains:
+  - id: 31337 # Local Hardhat network default chainId
+    rpc: http://localhost:8545 # RPC URL for your local Hardhat network
+    start_block: START_BLOCK_NUMBER # Specify the starting block
+    contracts:
+      - name: ContractName
+        address:
+          - "0xYourContractAddress1"
+          - "0xYourContractAddress2"
+        events:
+          - event: Event # Specify event
+          - event: Event
+```
+
+--
 
 ---
 

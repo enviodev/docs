@@ -173,7 +173,7 @@ Open [Development Console](https://envio.dev/console) of the running indexer whi
 
 When the indexer is rerun by using `envio dev` or `envio start -r` call, the initial cache will be loaded from the `.envio/cache` directory and used for the indexer run.
 
-> **Note:** This feature is available starting from `envio@2.26.0`. It also doesn't support rollbacks on reorgs. The support for reorgs will be added in the future.
+> **Note:** This doesn't support rollbacks on reorgs. The support for reorgs will be added in the future.
 
 
 ### Cache on Envio Cloud
@@ -191,7 +191,7 @@ For detailed instructions, see the [Effect API Cache documentation](/docs/HyperI
 
 ### Rate Limit
 
-Since v2.32, the `rateLimit` option controls how frequently an effect can run within a given timeframe. You can set it to `false` to disable rate limiting or define a custom limit such as calls per second, minute, or a duration in milliseconds.
+The `rateLimit` option controls how frequently an effect can run within a given timeframe. You can set it to `false` to disable rate limiting or define a custom limit such as calls per second, minute, or a duration in milliseconds.
 
 ```typescript
 // Effect to get the balance of a specific address at a specific block
@@ -244,7 +244,7 @@ export const getTokenName = createEffect(
     crossChain: false,
   },
   async ({ input, context }) => {
-    // Only available on effects created with `crossChain: false`
+    // context.chain is only available on `crossChain: false` effects
     const client = clientsByChainId[context.chain.id];
     return await client.readContract({
       address: input,

@@ -167,7 +167,7 @@ There is no practical ceiling on how many addresses a factory can register. Befo
 
 You don't need to configure anything for this. Once a contract accumulates enough addresses, HyperIndex automatically changes how it filters events for that contract: instead of asking the data source for a specific address list, it fetches events more broadly and filters them locally. The switch is per contract, so one large factory doesn't affect how your other contracts are indexed.
 
-The practical consequence is that a very large factory fetches more data than its handlers ultimately use. That's the trade that keeps it fast — expect fetch volume to grow with address count even as indexing throughput holds up.
+The trade-off is that a very large factory fetches more data than its handlers ultimately use, since the filtering happens after the fetch rather than before it. That's what keeps indexing fast at this scale.
 
 To see how many addresses a chain has registered, watch `envio_indexing_addresses` on the [metrics endpoint](/docs/HyperIndex/observability#available-metrics).
 

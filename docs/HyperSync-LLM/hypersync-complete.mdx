@@ -141,7 +141,7 @@ The **[HyperSync Query Builder](https://builder.hypersync.xyz)** lets you constr
 
 :::
 
-Get up and running with HyperSync in minutes. This guide will help you start accessing blockchain data at unprecedented speeds with minimal setup.
+Get up and running with HyperSync in minutes. This guide will help you start accessing blockchain data at unprecedented speeds with minimal setup. For a conceptual overview before you dive in, see What is HyperSync?.
 
 ## Quickest Start: Try LogTUI
 
@@ -925,6 +925,7 @@ Choose the client that best fits your use case:
 - 📝 Query Reference
 - 🧪 cURL Examples
 - 📊 Supported Networks
+- 🧱 HyperIndex blockchain indexer, the full framework with schema, handlers, and a hosted GraphQL API, powered by HyperSync
 
 ## Support
 
@@ -1105,16 +1106,16 @@ struct Query {
 
     /// The block to end the query at (exclusive)
     /// If not specified, the query runs until the end of available data
-    to_block: Optional,
+    to_block: Optional<u64>,
 
     /// Log selection criteria (OR relationship between selections)
-    logs: Array,
+    logs: Array<LogSelection>,
 
     /// Transaction selection criteria (OR relationship between selections)
-    transactions: Array,
+    transactions: Array<TransactionSelection>,
 
     /// Trace selection criteria (OR relationship between selections)
-    traces: Array,
+    traces: Array<TraceSelection>,
 
     /// Whether to include all blocks in the requested range
     /// Default: only return blocks related to matched transactions/logs
@@ -1124,10 +1125,10 @@ struct Query {
     field_selection: FieldSelection,
 
     /// Maximum results limits (approximate)
-    max_num_blocks: Optional,
-    max_num_transactions: Optional,
-    max_num_logs: Optional,
-    max_num_traces: Optional,
+    max_num_blocks: Optional<usize>,
+    max_num_transactions: Optional<usize>,
+    max_num_logs: Optional<usize>,
+    max_num_traces: Optional<usize>,
 
     /// Data relationship model (Default, JoinAll, or JoinNothing)
     join_mode: JoinMode,
@@ -1141,12 +1142,12 @@ struct Query {
 ```rust
 struct LogSelection {
     /// Contract addresses to match (empty = match all)
-    address: Array,
+    address: Array<Address>,
 
     /// Topics to match by position (empty = match all)
     /// Each array element corresponds to a topic position (0-3)
     /// Within each position, any matching value will satisfy the condition
-    topics: Array>,
+    topics: Array<Array<Topic>>,
 }
 ```
 
@@ -1156,23 +1157,23 @@ struct LogSelection {
 struct TransactionSelection {
     /// Sender addresses (empty = match all)
     /// Has AND relationship with 'to' field
-    from: Array,
+    from: Array<Address>,
 
     /// Recipient addresses (empty = match all)
     /// Has AND relationship with 'from' field
-    to: Array,
+    to: Array<Address>,
 
     /// Method signatures to match (first 4 bytes of input)
-    sighash: Array,
+    sighash: Array<Sighash>,
 
     /// Transaction status to match (1 = success, 0 = failure)
-    status: Optional,
+    status: Optional<u8>,
 
     /// Transaction types to match (e.g., 0 = legacy, 2 = EIP-1559)
-    type: Array,
+    type: Array<u8>,
 
     /// Created contract addresses to match
-    contract_address: Array,
+    contract_address: Array<Address>,
 }
 ```
 
@@ -1181,10 +1182,10 @@ struct TransactionSelection {
 ```rust
 struct BlockSelection {
     /// Block hashes to match (empty = match all)
-    hash: Array,
+    hash: Array<Hash>,
 
     /// Miner/validator addresses to match (empty = match all)
-    miner: Array,
+    miner: Array<Address>,
 }
 ```
 
@@ -1194,26 +1195,26 @@ struct BlockSelection {
 struct TraceSelection {
     /// Sender addresses (empty = match all)
     /// Has AND relationship with 'to' field
-    from: Array,
+    from: Array<Address>,
 
     /// Recipient addresses (empty = match all)
     /// Has AND relationship with 'from' field
-    to: Array,
+    to: Array<Address>,
 
     /// Created contract addresses to match
-    address: Array,
+    address: Array<Address>,
 
     /// Call types to match (e.g., "call", "delegatecall")
-    call_type: Array,
+    call_type: Array<String>,
 
     /// Reward types to match (e.g., "block", "uncle")
-    reward_type: Array,
+    reward_type: Array<String>,
 
     /// Trace types to match (e.g., "call", "create", "suicide", "reward")
-    kind: Array,
+    kind: Array<String>,
 
     /// Method signatures to match (first 4 bytes of input)
-    sighash: Array,
+    sighash: Array<Sighash>,
 }
 ```
 
@@ -1222,16 +1223,16 @@ struct TraceSelection {
 ```rust
 struct FieldSelection {
     /// Block fields to include in response
-    block: Array,
+    block: Array<String>,
 
     /// Transaction fields to include in response
-    transaction: Array,
+    transaction: Array<String>,
 
     /// Log fields to include in response
-    log: Array,
+    log: Array<String>,
 
     /// Trace fields to include in response
-    trace: Array,
+    trace: Array<String>,
 }
 ```
 
@@ -1427,7 +1428,7 @@ When you execute a HyperSync query, the response includes both metadata and the 
 ```rust
 struct QueryResponse {
     /// Current height of the blockchain in HyperSync
-    archive_height: Optional,
+    archive_height: Optional<u64>,
 
     /// Block number immediately after the last block included in this response.
     /// Use as from_block in your next query for pagination.
@@ -1440,7 +1441,7 @@ struct QueryResponse {
     data: ResponseData,
 
     /// Information to help handle chain reorganizations
-    rollback_guard: Optional,
+    rollback_guard: Optional<RollbackGuard>,
 }
 ```
 
@@ -1466,7 +1467,7 @@ struct RollbackGuard {
 }
 ```
 
-The guard is `Option`: it is present whenever the response covers blocks near the chain tip (where reorgs can still happen) and absent for queries that return no data.
+The guard is `Option<RollbackGuard>`: it is present whenever the response covers blocks near the chain tip (where reorgs can still happen) and absent for queries that return no data.
 
 #### How HyperSync handles reorgs internally
 
@@ -1586,7 +1587,7 @@ JoinAll creates a more comprehensive network of related data:
                  ┌─────────────────────────────┐
                  │                             │
                  ▼                             │
-┌───────┐  ┌───────────────┐  ┌───────┐  ┌───────┐
+┌───────┐ <──> ┌───────────────┐ <──> ┌───────┐ <──> ┌───────┐
 │  Logs │      │ Transactions  │      │ Traces│      │ Blocks│
 └───────┘      └───────────────┘      └───────┘      └───────┘
 ```
@@ -2148,6 +2149,23 @@ This approach keeps your tokens secure while making them available to your appli
 We are rapidly adding new supported networks. If you don't see your network here or would like us to add a network to HyperSync, pop us a message in our [Discord](https://discord.gg/envio).
 :::
 
+:::info
+The Tier is the level of support (and therefore reliability) based on the infrastructure running the chain. We are actively working to make the tier distinctions more clear and transparent to our users.
+
+Currently, tiers relate to various service quality aspects including:
+
+- Allocated resources and compute power
+- Query processing speed
+- Infrastructure redundancy
+- Backup frequency and retention
+- Multi-region availability
+- Priority for upgrades and new features
+- SLA guarantees
+
+While detailed tier specifications are still being finalized, we're committed to providing transparent service level information in the near future.
+
+If you are a network operator or user and would like improved service support or to discuss upgrading a chain's level of support, please reach out to us in [Discord](https://discord.gg/envio).
+:::
 | Network Name              | Network ID      | HyperSync URL                                                                            | HyperRPC URL                                                                             |
 | ------------------------- | --------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | Ab                        | 36888           | https://ab.hypersync.xyz or https://36888.hypersync.xyz                                  | https://ab.rpc.hypersync.xyz or https://36888.rpc.hypersync.xyz                          |
@@ -2163,7 +2181,6 @@ We are rapidly adding new supported networks. If you don't see your network here
 | Base Traces*              | 8453            | https://base-traces.hypersync.xyz or https://8453-traces.hypersync.xyz                   | https://base-traces.rpc.hypersync.xyz or https://8453-traces.rpc.hypersync.xyz           |
 | Berachain                 | 80094           | https://berachain.hypersync.xyz or https://80094.hypersync.xyz                           | https://berachain.rpc.hypersync.xyz or https://80094.rpc.hypersync.xyz                   |
 | Blast                     | 81457           | https://blast.hypersync.xyz or https://81457.hypersync.xyz                               | https://blast.rpc.hypersync.xyz or https://81457.rpc.hypersync.xyz                       |
-| Blast Sepolia             | 168587773       | https://blast-sepolia.hypersync.xyz or https://168587773.hypersync.xyz                   | https://blast-sepolia.rpc.hypersync.xyz or https://168587773.rpc.hypersync.xyz           |
 | Boba                      | 288             | https://boba.hypersync.xyz or https://288.hypersync.xyz                                  | https://boba.rpc.hypersync.xyz or https://288.rpc.hypersync.xyz                          |
 | Bsc                       | 56              | https://bsc.hypersync.xyz or https://56.hypersync.xyz                                    | https://bsc.rpc.hypersync.xyz or https://56.rpc.hypersync.xyz                            |
 | Bsc Testnet               | 97              | https://bsc-testnet.hypersync.xyz or https://97.hypersync.xyz                            | https://bsc-testnet.rpc.hypersync.xyz or https://97.rpc.hypersync.xyz                    |
@@ -2183,7 +2200,6 @@ We are rapidly adding new supported networks. If you don't see your network here
 | Gnosis                    | 100             | https://gnosis.hypersync.xyz or https://100.hypersync.xyz                                | https://gnosis.rpc.hypersync.xyz or https://100.rpc.hypersync.xyz                        |
 | Gnosis Chiado             | 10200           | https://gnosis-chiado.hypersync.xyz or https://10200.hypersync.xyz                       | https://gnosis-chiado.rpc.hypersync.xyz or https://10200.rpc.hypersync.xyz               |
 | Harmony Shard 0           | 1666600000      | https://harmony-shard-0.hypersync.xyz or https://1666600000.hypersync.xyz                | https://harmony-shard-0.rpc.hypersync.xyz or https://1666600000.rpc.hypersync.xyz        |
-| Holesky                   | 17000           | https://holesky.hypersync.xyz or https://17000.hypersync.xyz                             | https://holesky.rpc.hypersync.xyz or https://17000.rpc.hypersync.xyz                     |
 | Hoodi                     | 560048          | https://hoodi.hypersync.xyz or https://560048.hypersync.xyz                              | https://hoodi.rpc.hypersync.xyz or https://560048.rpc.hypersync.xyz                      |
 | Hyperliquid               | 999             | https://hyperliquid.hypersync.xyz or https://999.hypersync.xyz                           | https://hyperliquid.rpc.hypersync.xyz or https://999.rpc.hypersync.xyz                   |
 | Injective*                | 1776            | https://injective.hypersync.xyz or https://1776.hypersync.xyz                            | https://injective.rpc.hypersync.xyz or https://1776.rpc.hypersync.xyz                    |
@@ -2197,7 +2213,6 @@ We are rapidly adding new supported networks. If you don't see your network here
 | Manta                     | 169             | https://manta.hypersync.xyz or https://169.hypersync.xyz                                 | https://manta.rpc.hypersync.xyz or https://169.rpc.hypersync.xyz                         |
 | Mantle                    | 5000            | https://mantle.hypersync.xyz or https://5000.hypersync.xyz                               | https://mantle.rpc.hypersync.xyz or https://5000.rpc.hypersync.xyz                       |
 | Megaeth                   | 4326            | https://megaeth.hypersync.xyz or https://4326.hypersync.xyz                              | https://megaeth.rpc.hypersync.xyz or https://4326.rpc.hypersync.xyz                      |
-| Megaeth Testnet           | 6342            | https://megaeth-testnet.hypersync.xyz or https://6342.hypersync.xyz                      | https://megaeth-testnet.rpc.hypersync.xyz or https://6342.rpc.hypersync.xyz              |
 | Megaeth Testnet2          | 6343            | https://megaeth-testnet2.hypersync.xyz or https://6343.hypersync.xyz                     | https://megaeth-testnet2.rpc.hypersync.xyz or https://6343.rpc.hypersync.xyz             |
 | Merlin                    | 4200            | https://merlin.hypersync.xyz or https://4200.hypersync.xyz                               | https://merlin.rpc.hypersync.xyz or https://4200.rpc.hypersync.xyz                       |
 | Metall2                   | 1750            | https://metall2.hypersync.xyz or https://1750.hypersync.xyz                              | https://metall2.rpc.hypersync.xyz or https://1750.rpc.hypersync.xyz                      |
@@ -2214,8 +2229,8 @@ We are rapidly adding new supported networks. If you don't see your network here
 | Polygon                   | 137             | https://polygon.hypersync.xyz or https://137.hypersync.xyz                               | https://polygon.rpc.hypersync.xyz or https://137.rpc.hypersync.xyz                       |
 | Polygon Amoy              | 80002           | https://polygon-amoy.hypersync.xyz or https://80002.hypersync.xyz                        | https://polygon-amoy.rpc.hypersync.xyz or https://80002.rpc.hypersync.xyz                |
 | Polygon zkEVM             | 1101            | https://polygon-zkevm.hypersync.xyz or https://1101.hypersync.xyz                        | https://polygon-zkevm.rpc.hypersync.xyz or https://1101.rpc.hypersync.xyz                |
+| Robinhood                 | 4663            | https://robinhood.hypersync.xyz or https://4663.hypersync.xyz                            | https://robinhood.rpc.hypersync.xyz or https://4663.rpc.hypersync.xyz                    |
 | Rootstock                 | 30              | https://rootstock.hypersync.xyz or https://30.hypersync.xyz                              | https://rootstock.rpc.hypersync.xyz or https://30.rpc.hypersync.xyz                      |
-| Saakuru                   | 7225878         | https://saakuru.hypersync.xyz or https://7225878.hypersync.xyz                           | https://saakuru.rpc.hypersync.xyz or https://7225878.rpc.hypersync.xyz                   |
 | Scroll                    | 534352          | https://scroll.hypersync.xyz or https://534352.hypersync.xyz                             | https://scroll.rpc.hypersync.xyz or https://534352.rpc.hypersync.xyz                     |
 | Sei*                      | 1329            | https://sei.hypersync.xyz or https://1329.hypersync.xyz                                  | https://sei.rpc.hypersync.xyz or https://1329.rpc.hypersync.xyz                          |
 | Sei Testnet*              | 1328            | https://sei-testnet.hypersync.xyz or https://1328.hypersync.xyz                          | https://sei-testnet.rpc.hypersync.xyz or https://1328.rpc.hypersync.xyz                  |
@@ -2226,17 +2241,17 @@ We are rapidly adding new supported networks. If you don't see your network here
 | Sonic Testnet             | 14601           | https://sonic-testnet.hypersync.xyz or https://14601.hypersync.xyz                       | https://sonic-testnet.rpc.hypersync.xyz or https://14601.rpc.hypersync.xyz               |
 | Sophon                    | 50104           | https://sophon.hypersync.xyz or https://50104.hypersync.xyz                              | https://sophon.rpc.hypersync.xyz or https://50104.rpc.hypersync.xyz                      |
 | Sophon Testnet            | 531050104       | https://sophon-testnet.hypersync.xyz or https://531050104.hypersync.xyz                  | https://sophon-testnet.rpc.hypersync.xyz or https://531050104.rpc.hypersync.xyz          |
-| Status Sepolia            | 1660990954      | https://status-sepolia.hypersync.xyz or https://1660990954.hypersync.xyz                 | https://status-sepolia.rpc.hypersync.xyz or https://1660990954.rpc.hypersync.xyz         |
+| Stable                    | 988             | Access on request — [contact us](https://discord.gg/envio)                               | Access on request — [contact us](https://discord.gg/envio)                               |
 | Superseed                 | 5330            | https://superseed.hypersync.xyz or https://5330.hypersync.xyz                            | https://superseed.rpc.hypersync.xyz or https://5330.rpc.hypersync.xyz                    |
 | Swell                     | 1923            | https://swell.hypersync.xyz or https://1923.hypersync.xyz                                | https://swell.rpc.hypersync.xyz or https://1923.rpc.hypersync.xyz                        |
-| Taraxa                    | 841             | https://taraxa.hypersync.xyz or https://841.hypersync.xyz                                | https://taraxa.rpc.hypersync.xyz or https://841.rpc.hypersync.xyz                        |
 | Tempo                     | 4217            | https://tempo.hypersync.xyz or https://4217.hypersync.xyz                                | https://tempo.rpc.hypersync.xyz or https://4217.rpc.hypersync.xyz                        |
+| Tron                      | 728126428       | https://tron.hypersync.xyz or https://728126428.hypersync.xyz                            | https://tron.rpc.hypersync.xyz or https://728126428.rpc.hypersync.xyz                    |
 | Unichain                  | 130             | https://unichain.hypersync.xyz or https://130.hypersync.xyz                              | https://unichain.rpc.hypersync.xyz or https://130.rpc.hypersync.xyz                      |
 | Worldchain                | 480             | https://worldchain.hypersync.xyz or https://480.hypersync.xyz                            | https://worldchain.rpc.hypersync.xyz or https://480.rpc.hypersync.xyz                    |
-| Xdc                       | 50              | https://xdc.hypersync.xyz or https://50.hypersync.xyz                                    | https://xdc.rpc.hypersync.xyz or https://50.rpc.hypersync.xyz                            |
-| Xdc Testnet               | 51              | https://xdc-testnet.hypersync.xyz or https://51.hypersync.xyz                            | https://xdc-testnet.rpc.hypersync.xyz or https://51.rpc.hypersync.xyz                    |
+| XDC                       | 50              | Access on request — [contact us](https://discord.gg/envio)                               | Access on request — [contact us](https://discord.gg/envio)                               |
+| XDC Testnet               | 51              | Access on request — [contact us](https://discord.gg/envio)                               | Access on request — [contact us](https://discord.gg/envio)                               |
 | Zeta                      | 7000            | https://zeta.hypersync.xyz or https://7000.hypersync.xyz                                 | https://zeta.rpc.hypersync.xyz or https://7000.rpc.hypersync.xyz                         |
-| Zircuit                   | 48900           | https://zircuit.hypersync.xyz or https://48900.hypersync.xyz                             | https://zircuit.rpc.hypersync.xyz or https://48900.rpc.hypersync.xyz                     |
+| Zircuit                   | 48900           | Access on request — [contact us](https://discord.gg/envio)                               | Access on request — [contact us](https://discord.gg/envio)                               |
 | ZKsync                    | 324             | https://zksync.hypersync.xyz or https://324.hypersync.xyz                                | https://zksync.rpc.hypersync.xyz or https://324.rpc.hypersync.xyz                        |
 | Zora                      | 7777777         | https://zora.hypersync.xyz or https://7777777.hypersync.xyz                              | https://zora.rpc.hypersync.xyz or https://7777777.rpc.hypersync.xyz                      |
 
@@ -2247,6 +2262,247 @@ We are rapidly adding new supported networks. If you don't see your network here
 - **Injective***: Start block: 129846180 (non-evm before that)
 - **Sei***: Start block: 79123881 (non-evm before that)
 - **Sei Testnet***: Start block: 186100000 (non-evm before that)
+
+
+---
+
+---
+
+## Stream Config & Tuning
+
+**File:** `stream-config-tuning.md`
+
+When you `stream` (or `collect`) with a HyperSync client, the engine fans your block
+range out across many concurrent HTTP requests, sizes each request automatically, and
+delivers results to you **in block order**. `StreamConfig` controls that engine.
+
+:::tip TL;DR
+**The defaults are good for most workloads, so you usually don't need to touch this.**
+Reach for tuning when you want to squeeze more throughput out of a specific workload, or to
+bound memory. The fastest way to find a good config for *your* query is the
+[`tune_stream`](#find-the-best-config-for-your-query) tool, which sweeps configs against your
+query and prints a comparison table.
+:::
+
+## Quick decision guide
+
+| Your situation | Do this |
+|---|---|
+| Just getting started | Use the defaults. |
+| Want maximum throughput on a busy contract (lots of logs) | Raise `concurrency` (for example 20). |
+| Scanning a wide range for a rare event | Keep `concurrency` moderate (around 10); a larger `batch_size` helps. |
+| Pulling full blocks + all transactions | Defaults are fine; the adaptive buffer handles the large responses. |
+| Memory constrained | Set `max_buffered_bytes` to a fixed cap. |
+| Hitting API rate limits | The client waits out limits and retries automatically. For higher limits, upgrade your plan. |
+| Not sure | Run [`tune_stream`](#find-the-best-config-for-your-query) against your query. |
+
+## How the engine works (the 30-second model)
+
+Two ideas make every knob obvious:
+
+1. **One HTTP request is one unit of work.** The engine sizes each request to land near
+   `response_bytes_target` bytes, based on the byte-density it has measured so far. If the
+   server returns less than requested (a "truncation"), the leftover range becomes a gap that
+   any free worker backfills in parallel.
+2. **Delivery is in block order.** Results are buffered and handed to you contiguously, so
+   the stream yields one response per HTTP response in ascending (or `reverse`) block order.
+
+So `concurrency` sets how many requests run in parallel, and `response_bytes_target` sets how
+big each response is. Because truncations are backfilled automatically, the engine is
+forgiving: an over-estimated request size corrects itself rather than failing.
+
+## Configuration options
+
+Field names below are shown in `snake_case` (Rust, Python). **Node and TypeScript use
+`camelCase`** (for example `response_bytes_target` becomes `responseBytesTarget`).
+
+| Option | Default | What it does |
+|---|---|---|
+| `concurrency` | `10` | Number of requests in flight, and your main throughput knob. `0` is an error, `1` streams sequentially, `2` or more uses the parallel scheduler. |
+| `response_bytes_target` | `400_000` | Target size in bytes for each response. Each request is sized to aim here. Raise it for fewer, larger responses. |
+| `batch_size` | `1_000` | Initial block range for the first wave of requests, before any density has been measured. Also the fallback. |
+| `min_batch_size` | `200` | Lower clamp on the projected block count, to avoid tiny ranges. |
+| `max_batch_size` | _unset_ | Optional hard cap on blocks per request. Unset means no cap (over-shoot self-corrects via backfill). Set it only if you specifically want to bound blocks per request. |
+| `max_buffered_bytes` | _unset_ | Cap on bytes of fetched-but-undelivered data held for re-ordering (consumer backpressure). Unset means adaptive (it grows with the largest response seen) so byte-heavy pulls stay pipelined. Set a fixed value to bound memory. |
+| `reverse` | `false` | Stream from the top of the range downward. |
+| `max_num_blocks`, `max_num_transactions`, `max_num_logs`, `max_num_traces` | _unset_ | Stop the stream once this many of an entity have been delivered. |
+| `column_mapping`, `event_signature`, `hex_output` | none | Output shaping (decoding, hex formatting). Not performance knobs. |
+
+:::info Breaking change in v1.3.0 / streaming v2
+`response_bytes_floor` and `response_bytes_ceiling` were replaced by a single
+`response_bytes_target`. `max_batch_size` became optional (unset means no cap).
+`max_buffered_bytes` was added. If you set the old fields, switch to `response_bytes_target`.
+:::
+
+## Tuning recipes
+
+These are good starting points. Confirm against your own query with
+[`tune_stream`](#find-the-best-config-for-your-query).
+
+### Dense: busy contracts and all-logs
+
+Lots of matching data per block. Throughput scales with parallelism.
+
+```python
+# Python
+config = hypersync.StreamConfig(concurrency=20, response_bytes_target=400_000)
+```
+```typescript
+// Node / TypeScript
+const config = { concurrency: 20, responseBytesTarget: 400_000 };
+```
+```rust
+// Rust has a ready-made preset
+let config = StreamConfig::dense();
+```
+
+### Sparse: rare events over a wide range
+
+Most blocks match nothing. Raising concurrency past the default tends to just fragment the
+empty range into more, smaller requests without adding throughput, so keep it moderate. A
+larger `batch_size` lets the first wave cover more ground.
+
+```python
+config = hypersync.StreamConfig(concurrency=10, batch_size=20_000)
+```
+```typescript
+const config = { concurrency: 10, batchSize: 20_000 };
+```
+```rust
+let config = StreamConfig::sparse();
+```
+
+### Archival: full blocks and all transactions
+
+Each response is many megabytes, so the run is bound by the re-order buffer rather than
+concurrency. Leave `max_buffered_bytes` unset so the adaptive buffer keeps the pipeline full.
+
+```python
+config = hypersync.StreamConfig(concurrency=12)
+```
+```typescript
+const config = { concurrency: 12 };
+```
+```rust
+let config = StreamConfig::archival();
+```
+
+## Find the best config for your query
+
+Rather than guess, measure. The Rust client ships a standalone **`tune_stream`** example
+that runs your query under a grid of configs and prints a comparison table: throughput,
+request count, truncation rate, and how close responses land to the target. It takes a query
+as JSON, so it works for any query regardless of which client language you use.
+
+### 1. Save your query as JSON
+
+```json title="query.json"
+{
+  "from_block": 18000000,
+  "to_block": 18100000,
+  "logs": [
+    { "topics": [["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"]] }
+  ],
+  "field_selection": { "log": ["block_number", "log_index", "data", "topic0"] }
+}
+```
+
+### 2. Run the sweep
+
+```bash
+git clone https://github.com/enviodev/hypersync-client-rust
+cd hypersync-client-rust
+
+export ENVIO_API_TOKEN=<your-token>
+export CHAIN_ID=1   # 1 = Ethereum mainnet
+
+# Sweep a grid of configs and print a comparison table
+cargo run -p tune_stream -- query.json
+
+# Or a single detailed run with the default config
+cargo run -p tune_stream -- query.json --single
+```
+
+The table shows, per config: requests, truncation %, blocks/s, MB/s, the mean
+size-vs-target ratio, and the observed buffer and in-flight counts. Pick the config with the
+best throughput for your workload.
+
+### 3. Apply the winning config
+
+Copy `response_bytes_target`, `concurrency`, and any other fields from the best row into your
+client's `StreamConfig`.
+
+### Rust: attach an observer in your own code
+
+Rust users can read the same metrics live, without the example, via the observer API:
+
+```rust
+use std::sync::Arc;
+use hypersync_client::{Client, StreamConfig, StreamMetrics, StreamObserver};
+
+let metrics = Arc::new(StreamMetrics::new());
+let observer: Arc<dyn StreamObserver> = metrics.clone();
+
+let mut rx = client
+    .stream_arrow_with_observer(query, StreamConfig::default(), observer)
+    .await?;
+while let Some(res) = rx.recv().await {
+    let _ = res?; // consume the stream
+}
+
+let summary = metrics.summary();
+println!(
+    "requests={} truncated={:.0}% blocks/s={:.0} mean size ratio={:.2}",
+    summary.num_requests,
+    summary.truncation_rate * 100.0,
+    summary.blocks_per_sec,
+    summary.mean_size_ratio,
+);
+```
+
+The plain `stream` and `stream_arrow` methods do no metrics work; `RequestStats` are only
+built when you attach an observer. (Surfacing this handle in the Node and Python clients is a
+fast-follow; until then, use `tune_stream` for those languages.)
+
+## Reading the metrics
+
+When tuning, the two numbers worth watching are:
+
+- **Mean size ratio**, which is response size divided by `response_bytes_target`. Around
+  `1.0` means responses are landing on target. Well below `1.0` means the server is returning
+  smaller responses than your target, which is perfectly normal for selective queries or
+  minimal field selections; raising `response_bytes_target` won't change it, and the way to
+  go faster is usually more `concurrency`.
+- **Blocks per second**, which is the throughput you are tuning for.
+
+Truncation is shown too, but you can usually ignore it. Some truncation is normal and
+harmless because the leftover range is backfilled automatically, and a sparse query that
+selects only a few fields will often show small, frequently-truncated responses while still
+streaming quickly. It is only worth a look if throughput is poor.
+
+## Rate limits
+
+The clients handle rate limits for you: when the server signals a limit (HTTP 429) the client
+waits for the window to reset and retries, so a stream slows down rather than failing. If you
+want more headroom or higher throughput, upgrade your plan.
+
+If you need the client to make fewer requests per unit time (for example to fit a fixed
+request budget), `concurrency` is the lever. It trades throughput for request volume: fewer
+requests run in parallel, so fewer go out per unit time. Setting `concurrency = 1` streams
+sequentially, one request at a time.
+
+## Full default reference
+
+```text
+concurrency           = 10
+response_bytes_target = 400_000
+batch_size            = 1_000
+min_batch_size        = 200
+max_batch_size        = unset  (no cap)
+max_buffered_bytes    = unset  (adaptive)
+reverse               = false
+max_num_blocks / transactions / logs / traces = unset
+```
 
 ---
 
@@ -2367,6 +2623,10 @@ You can integrate with HyperFuel using any of our clients:
 HyperFuel supports Fuel mainnet and testnet: 
 Mainnet: https://fuel.hypersync.xyz 
 Testnet: https://fuel-testnet.hypersync.xyz
+:::
+
+:::note
+HyperFuel requires an API token. Generate one from the [Envio Dashboard](https://envio.dev/app/api-tokens) and pass it to the client when you initialize it. For example, the Rust client below reads it from the `ENVIO_API_TOKEN` environment variable and passes it via the `api_token` config field. See API Tokens for more details.
 :::
 
 
@@ -2871,6 +3131,460 @@ All fields are optional.  Below is an exhaustive list of all fields in a FieldSe
         "contract",
     ]
 }
+```
+
+---
+
+## Solana HyperSync
+
+**File:** `Solana/solana.md`
+
+:::info Early access — built in the open
+Solana HyperSync is **early**. The core query path (slots, transactions, instructions, logs, balances, token balances, rewards) is live and ready to test against real workloads — and we're actively shaping it with the teams using it. If you're evaluating it for a real project, **please [say hi on Discord](https://discord.gg/envio)** before you build a lot on top of it: we can tell you which parts are stable, which parts are still moving, and often suggest a better data path for your specific use case (NFTs, AMMs, token flows, wallet activity, custom programs, etc.).
+
+**Rolling retention window.** Only the most recent chain data is retained — not a fixed history from one slot forever. The current retention floor is roughly slot `391791680`; as new slots are indexed, older slots fall off. Use `GET https://solana.hypersync.xyz/height` for the current synced head and **do not hard-code** historical lower bounds. Need a deeper window for backfill? Tell us — we're prioritizing this based on real use cases.
+:::
+
+HyperSync for Solana exposes **`https://solana.hypersync.xyz`**: one JSON (or Arrow) API over slots, transactions, instructions, logs, balances, token balances, and rewards. Use the [Rust client](https://github.com/enviodev/hypersync-client-solana) or any HTTP client (for example `curl`). Details: Query & Response, curl Examples.
+
+**Slots vs blocks:** Some slots have **no block** (skipped leader, etc.). A query over `from_slot, to_slot)` can return **fewer block rows** than the slot span implies; that is normal, not a bug.
+
+## Differences vs EVM HyperSync
+
+| Concept | EVM | Solana |
+|---|---|---|
+| Unit of progress | `block` | `slot` |
+| Range bounds | `from_block` / `to_block` | `from_slot` / `to_slot` |
+| Primary filter | `logs`, `transactions`, `traces` | `instructions`, `transactions`, `logs` |
+| Match key | event topic + address | program ID + discriminator + account positions |
+| Logs | Contract events (topics + structured log data) | Program output lines (free-form strings; filter by emitter `program_id` and parsed `kind`) |
+| Pagination | `next_block` | `next_slot` |
+
+## Endpoints
+
+| Path | Description |
+|---|---|
+| `POST /query` | JSON query, JSON response. |
+| `POST /query/arrow` | Same JSON query; response is **Apache Arrow IPC** (stream-encoded record batches—typically smaller and faster to decode than JSON). |
+| `GET /height` | Current synced slot (JSON). Example: `curl https://solana.hypersync.xyz/height`. |
+| `GET /height/sse` | Server-sent events stream of the head slot (see [curl Examples). |
+| `GET /health` | Health check. |
+| `POST /`, `POST /rpc` | **Experimental** Solana JSON-RPC-compatible facade for tooling that already speaks JSON-RPC; coverage may be incomplete—prefer `POST /query` for indexing. |
+
+## Minimal first query
+
+```bash
+curl -sS "https://solana.hypersync.xyz/query" \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "from_slot": 391800000,
+    "to_slot": 391800010,
+    "field_selection": { "instruction": ["slot", "program_id", "d8"] },
+    "instructions": [
+      { "program_id": ["6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"] }
+    ]
+  }'
+```
+
+Expect JSON with `instructions` (and any joined tables you asked for), `next_slot`, optional `rollback_guard`, and other keys empty or omitted. API tokens are the same as for EVM HyperSync (`Authorization: Bearer`).
+
+## What's stable vs. what's still evolving
+
+We want you to be able to build against this without guessing what will move under you. As of today:
+
+**Stable enough to build on**
+
+- The **endpoint** (`https://solana.hypersync.xyz`) and **bearer-token auth** model.
+- The **request shape** for `POST /query`: `from_slot` / `to_slot`, the `instructions` / `transactions` / `logs` selection arrays, `field_selection` projection, and the AND-within-object / OR-across-objects semantics.
+- The **core filter primitives**: `program_id`, discriminator filters (`d1` / `d2` / `d4` / `d8`), account-position filters (`a0`–`a9`), `is_inner`, `success`, `fee_payer`, log `kind`.
+- The **table model**: `block`, `transaction`, `instruction`, `log`, `balance`, `token_balance`, `reward`, with the fields listed in Query & Response.
+- **Pagination** via `next_slot` and **reorg detection** via `rollback_guard`.
+
+**Still evolving — check in if you depend on these**
+
+- The **historical retention floor** (rolling window today; we're prioritizing deeper backfill based on demand).
+- Decoded / higher-level helpers built on top of the raw tables (IDL-aware decoding, common-program shortcuts).
+- The **JSON-RPC-compatible facade** (`POST /` / `POST /rpc`) — useful for tools that already speak Solana JSON-RPC, but coverage is incomplete; prefer `POST /query` for indexing.
+- Client libraries beyond the [Rust client](https://github.com/enviodev/hypersync-client-solana) (TypeScript / Python clients are in progress).
+
+If a piece you need is in the second list, the fastest path is to tell us — most of the roadmap here is being driven by the use cases people bring us.
+
+## Working with us
+
+Solana HyperSync is the right time to be a design partner: the foundation is live, the abstractions on top are being shaped now, and your use case can influence what gets prioritized.
+
+- **[Join us on Discord](https://discord.gg/envio)** — fastest way to reach the team building this.
+- Have a specific Solana indexing problem (NFTs, AMM trades, token flows, wallet activity, a custom program)? Share a sample transaction signature or program ID and we'll map it to a concrete query path.
+- Hitting a missing field, a too-shallow retention window, or a filter you wish existed? File it on [GitHub](https://github.com/enviodev/hypersync-client-solana/issues) or tell us on Discord — early feedback shapes what ships next.
+
+---
+
+## Query & Response
+
+**File:** `Solana/solana-query.md`
+
+:::info Early access
+Solana HyperSync is **early** — the query shape, filters, and tables described below are the ones we expect to keep, and they're stable enough to build against today. See What's stable vs. what's still evolving for the current line between the two, and [reach out on Discord](https://discord.gg/envio) if you're planning a real workload — we can usually save you time by suggesting the right query shape for your use case.
+
+Data is kept in a **rolling retention window**; the floor moves forward over time. Use `GET /height` instead of hard-coding how far back you can query.
+:::
+
+A query selects a slot range, optional filters on instructions / transactions / logs, and the columns you want. The server returns matched rows plus a `next_slot` cursor.
+
+Some slots have **no block**; the `blocks` array can be sparse across the requested slot range.
+
+## Query shape
+
+```json
+{
+  "from_slot": 391800000,
+  "to_slot": 391800100,
+  "include_all_blocks": false,
+  "instructions": [ ... ],
+  "transactions": [ ... ],
+  "logs": [ ... ],
+  "field_selection": { ... }
+}
+```
+
+- `from_slot` is **inclusive**, `to_slot` is **exclusive**. Omit `to_slot` to run toward the current head.
+- Within one selection object, all set fields are **AND**-ed.
+- Multiple objects in `instructions`, `transactions`, or `logs` are **OR**-ed.
+- If **`instructions`**, **`transactions`**, and **`logs`** are all absent or empty and **`include_all_blocks`** is false, you get **no matching rows** (empty tables). Set `include_all_blocks: true` to pull block headers across a range without program filters.
+
+## Filters
+
+### InstructionSelection
+
+| Field | Description |
+|---|---|
+| `program_id` | Match program (base58 pubkeys). |
+| `d1` / `d2` / `d4` / `d8` | First _N_ bytes of instruction data, as hex. **`0x` prefix is optional** (`"0x03"` and `"03"` are equivalent). |
+| `a0` - `a9` | Account pubkey at that **index in the instruction's account metas** (`a0` = first account, `a2` = third). Which account is "the mint", "the pool", etc. is **defined by the program's IDL / instruction layout**, not by Solana globally. |
+| `is_inner` | `true` = inner only, `false` = outer only, **omitted** = both. |
+
+**`instruction_address`:** This array encodes **where** the instruction sits in the transaction: outer-only indices use one element, e.g. `[2]` = third top-level instruction; inner instructions append an index, e.g. `[2, 0]` = first inner instruction inside that outer instruction.
+
+### TransactionSelection
+
+| Field | Description |
+|---|---|
+| `fee_payer` | Match fee payer pubkey. |
+| `success` | `true` = succeeded only, `false` = failed only, **omitted** = both (same pattern as `is_inner`). |
+
+### LogSelection
+
+| Field | Description |
+|---|---|
+| `program_id` | Match log emitter program. |
+| `kind` | Parsed log line category (see below). |
+
+#### Log `kind` values
+
+These mirror the usual Solana runtime log line shapes (see the [transactions](https://solana.com/docs/core/transactions) docs and your RPC `logsSubscribe` / meta log output for raw strings).
+
+| `kind` | Typical meaning |
+|---|---|
+| `invoke` | `Program <id> invoke <depth>` |
+| `success` | `Program <id> success` |
+| `failure` | `Program <id> failed: ...` |
+| `log` | `Program log: ...` |
+| `data` | `Program data: <base64>` |
+| `other` | Anything else the parser did not classify (full text still in `message`) |
+
+## Field selection
+
+Use `field_selection` to choose columns per logical table. Omit a table key to receive **all** columns for that table (when rows are returned).
+
+```json
+{
+  "field_selection": {
+    "block": ["slot", "blockhash", "block_time"],
+    "instruction": ["slot", "program_id", "data", "d8"],
+    "transaction": ["slot", "fee_payer", "success"]
+  }
+}
+```
+
+### Available fields (by table)
+
+| Table | Fields |
+|---|---|
+| `block` | `slot`, `blockhash`, `parent_slot`, `parent_blockhash`, `block_time`, `block_height` |
+| `transaction` | `slot`, `transaction_index`, `signatures`, `fee_payer`, `success`, `err`, `fee`, `compute_units_consumed`, `account_keys`, `recent_blockhash`, `version`, `loaded_addresses_writable`, `loaded_addresses_readonly` |
+| `instruction` | `slot`, `transaction_index`, `instruction_address`, `program_id`, `accounts`, `data`, `d1`, `d2`, `d4`, `d8`, `a0`-`a9`, `is_inner`, `is_committed` |
+| `log` | `slot`, `transaction_index`, `instruction_address`, `program_id`, `kind`, `message` |
+| `balance` | `slot`, `transaction_index`, `account`, `pre`, `post` |
+| `token_balance` | `slot`, `transaction_index`, `account`, `mint`, `owner`, `pre_amount`, `post_amount` |
+| `reward` | `slot`, `pubkey`, `lamports`, `post_balance`, `reward_type`, `commission` |
+
+**`is_committed` (instruction):** Whether this instruction row is part of the **executed** instruction trace for the landed transaction (as opposed to being present only for structural / edge cases). Always interpret next to `transaction.success` and `transaction.err`: failed transactions can still include instructions up to the failure point.
+
+## Join behavior
+
+The server automatically joins related rows based on which tables you include in `field_selection`. For example, if your query filters on `instructions` and you also select `transaction` fields, the server returns the parent transaction for each matched instruction — no extra flags needed.
+
+:::note Join modes not yet available
+Solana HyperSync currently operates on a single default join mode. More granular control — for example fetching only the directly matched rows with no joins, or fetching all rows belonging to matched transactions — is planned but not yet exposed.
+
+If you have specific join or filtering requirements that the current API cannot satisfy, we would love to hear about your use case. Reach out on [Discord](https://discord.gg/envio) or open an issue on [GitHub](https://github.com/enviodev/hypersync-client-solana/issues).
+:::
+
+## Limits (optional)
+
+Advanced knobs (defaults are usually fine):
+
+| Field | Role |
+|---|---|
+| `max_num_blocks` | Cap rows returned per table (approximate server-side bound). |
+| `max_num_transactions` | Same, for `transactions`. |
+| `max_num_instructions` | Same, for `instructions`. |
+| `max_num_logs` | Same, for `logs`. |
+
+## Response
+
+Top-level keys include `next_slot`, `total_execution_time_ms`, optional `rollback_guard`, and one array per table when present: `blocks`, `transactions`, `instructions`, `logs`, `balances`, `token_balances`, `rewards`—each holds **row objects** shaped by your `field_selection`.
+
+### Example fragment (illustrative)
+
+```json
+{
+  "next_slot": 391800050,
+  "total_execution_time_ms": 12,
+  "rollback_guard": null,
+  "blocks": [
+    {
+      "slot": 391800000,
+      "blockhash": "8dK...",
+      "block_time": 1731000123
+    }
+  ],
+  "instructions": [
+    {
+      "slot": 391800000,
+      "program_id": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      "accounts": ["7xK...", "9mY...", "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"],
+      "data": "<opaque encoded payload>"
+    }
+  ],
+  "transactions": []
+}
+```
+
+- Pubkeys in filters and in many columns are **base58** strings.
+- Instruction `data` is an **encoded payload** (treat as opaque unless you decode it); for filtering, prefer the hex **discriminator** fields (`d1` / `d2` / `d4` / `d8`) in the query body.
+- On failure, `transaction.err` carries the chain's error structure (object or string depending on field selection).
+
+### Pagination
+
+Use the response's `next_slot` as the **next** request's `from_slot`.
+
+**Bounded scan** (you set `to_slot`): repeat while `next_slot < to_slot`. When `next_slot >= to_slot`, the range `from_slot, to_slot)` is exhausted.
+
+**Unbounded / to head** (no `to_slot`, or you stop at live head): repeat while `next_slot` **strictly increases** between requests. If `next_slot` is not greater than the previous `from_slot`, you have caught up to the server's head or hit a limit—stop or backoff.
+
+The server may stop early after a time or size budget; a single response can cover more or fewer slots than requested depending on filter density.
+
+### Reorg detection (`rollback_guard`)
+
+`rollback_guard` is **`null`** when the response does **not** overlap the unfinalized / risky tip region. When it is **present**, the fields tie the returned batch to a specific head blockhash so you can detect shallow reorgs between paginated calls.
+
+**Algorithm (defensive):**
+
+1. Let `G` be `rollback_guard` from response _n_. If `G` is null, skip reorg checks for that page (data is from finalized-safe depth).
+2. When `G` is present, record `G.blockhash` and `G.first_previous_blockhash` together with the span of slots you believe you have ingested from that page.
+3. On response _n+1_, if both pages have a non-null `rollback_guard`, compare response _n_'s **`rollback_guard.blockhash`** to response _n+1_'s **`rollback_guard.first_previous_blockhash`**. They should chain the same parent hash across the gap you queried; if they **differ**, a **reorg** occurred between the two calls—re-sync from a finalized slot or from the parent you still trust.
+4. If a reorg **deeper** than your last page (your highest ingested slot is no longer on the winning fork), matching on parent blockhash alone may not fire until you overlap the new tip again—**never assume slot numbers alone are stable identifiers**; always reconcile with `blockhash` / `parent_blockhash` when consuming near-head data.
+
+Example `rollback_guard` payload (field names only—values are illustrative):
+
+```json
+{
+  "slot_number": 391800099,
+  "timestamp": 1731000000,
+  "blockhash": "8dK...",
+  "first_slot_number": 391800000,
+  "first_previous_blockhash": "3nF..."
+}
+```
+
+## Authentication
+
+Same **Bearer token** model as EVM HyperSync. See [API tokens.
+
+---
+
+## Solana curl Examples
+
+**File:** `Solana/solana-curl-examples.md`
+
+:::info Early access
+Solana HyperSync is **early** but the query shape used in these examples is stable enough to build against. Only **recent** slots are retained — the floor is a **rolling window** (see Overview); use `GET /height` instead of hard-coding how far back you can query. Working on something specific? [Ping us on Discord](https://discord.gg/envio) — we can often suggest a tighter query for your use case.
+:::
+
+Copy-paste examples against **`https://solana.hypersync.xyz`**. Use the same API token as EVM HyperSync: pass `Authorization: Bearer <token>` on **`POST /query`** (and on Arrow). `GET /health`, `GET /height`, and `GET /height/sse` are typically usable without a token, but follow whatever your deployment returns.
+
+Curl is great for testing; for production, prefer one of our clients. The [Rust client](https://github.com/enviodev/hypersync-client-solana) is the most complete today (and uses Arrow for faster decoding); TypeScript and Python clients are in progress — tell us on Discord which one would unblock you and we'll prioritize accordingly.
+
+```bash
+export URL=https://solana.hypersync.xyz
+export TOKEN="your-api-token"
+
+# JSON POST helper (adds auth + content-type)
+curl_query() {
+  curl -sS "$URL/query" \
+    -H "Authorization: Bearer $TOKEN" \
+    -H "Content-Type: application/json" \
+    -d "$1"
+}
+```
+
+Discriminator filters accept hex **with or without** a `0x` prefix (`03` and `0x03` are the same). Pipe responses through `jq` or `python3 -m json.tool` for readability.
+
+## Quick checks
+
+```bash
+curl -sS "$URL/health"
+curl -sS "$URL/height"
+```
+
+### Head slot (SSE)
+
+`curl -N` disables buffering so lines arrive as the server pushes them:
+
+```bash
+curl -sSN -H "Accept: text/event-stream" "$URL/height/sse"
+```
+
+## Orca Whirlpool (`swap` discriminator)
+
+8-byte Anchor discriminator. Example response shape (truncated):
+
+```bash
+curl_query '{
+  "from_slot": 391800000,
+  "to_slot": 391800100,
+  "field_selection": {
+    "instruction": ["slot", "transaction_index", "program_id", "accounts", "data", "d8"],
+    "transaction": ["slot", "signatures", "fee_payer", "success", "fee"]
+  },
+  "instructions": [{
+    "program_id": ["whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc"],
+    "d8": ["0xf8c69e91e17587c8"]
+  }]
+}' | jq '{next_slot, sample_instruction: .instructions[0], sample_tx: .transactions[0]}'
+```
+
+## SPL Token `Transfer` (`d1`)
+
+1-byte discriminator: `0x03` = `Transfer` (hex with or without `0x`).
+
+```bash
+curl_query '{
+  "from_slot": 391800000,
+  "to_slot": 391800100,
+  "field_selection": {
+    "instruction": ["slot", "program_id", "accounts", "data", "d1"],
+    "token_balance": ["slot", "transaction_index", "account", "mint", "owner", "pre_amount", "post_amount"]
+  },
+  "instructions": [{
+    "program_id": ["TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"],
+    "d1": ["0x03"]
+  }]
+}'
+```
+
+## Jupiter **or** Orca (program-only OR)
+
+Each object in `instructions` is OR-ed. This is the “match by program id only” pattern (no discriminator).
+
+```bash
+curl_query '{
+  "from_slot": 391800000,
+  "to_slot": 391800100,
+  "field_selection": {
+    "instruction": ["slot", "program_id", "data", "d8"]
+  },
+  "instructions": [
+    { "program_id": ["JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4"] },
+    { "program_id": ["whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc"] }
+  ]
+}'
+```
+
+## Transactions by fee payer
+
+```bash
+curl_query '{
+  "from_slot": 391800000,
+  "to_slot": 391800100,
+  "field_selection": {
+    "transaction": ["slot", "signatures", "fee_payer", "success", "fee", "compute_units_consumed"],
+    "instruction": ["slot", "program_id", "data", "accounts"]
+  },
+  "transactions": [{
+    "fee_payer": ["MfDuWeqSHEqTFVYZ7LoexgAK9dxk7cy4DFJWjWMGVWa"]
+  }]
+}'
+```
+
+## Pump.fun bonding-curve trades (account index)
+
+`a2` matches the **third account** in the instruction's account metas (`a0` = first). For Pump.fun's buy/sell instructions, the mint is **account index 2 per that program's IDL**—not a Solana-wide rule.
+
+```bash
+curl_query '{
+  "from_slot": 391800000,
+  "to_slot": 391800100,
+  "field_selection": {
+    "instruction": ["slot", "program_id", "accounts", "data", "d8", "a2"],
+    "transaction": ["slot", "fee_payer", "success"]
+  },
+  "instructions": [{
+    "program_id": ["6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"]
+  }]
+}'
+```
+
+## Raydium AMM logs
+
+```bash
+curl_query '{
+  "from_slot": 391800000,
+  "to_slot": 391800100,
+  "field_selection": {
+    "log": ["slot", "program_id", "kind", "message"],
+    "transaction": ["slot", "fee_payer", "success"]
+  },
+  "logs": [{
+    "program_id": ["675kPX9MHTjS2zt1qfr1NYHuzeLXfQM9H24wFSUt1Mp8"]
+  }]
+}'
+```
+
+## Paginating a bounded scan
+
+Use the same termination rule as Query & Response: stop when `next_slot >= to_slot`, or when `next_slot` does not advance (stuck at head).
+
+```bash
+FROM=391800000
+TO=391801000
+SLOT=$FROM
+while [ "$SLOT" -lt "$TO" ]; do
+  RESP=$(curl_query "{
+    \"from_slot\": $SLOT,
+    \"to_slot\": $TO,
+    \"field_selection\": { \"instruction\": [\"slot\", \"program_id\", \"d8\"] },
+    \"instructions\": [{ \"program_id\": [\"whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc\"] }]
+  }")
+  echo "$RESP" | jq '.instructions | length, .next_slot'
+  NEXT=$(echo "$RESP" | jq -r .next_slot)
+  if [ "$NEXT" -ge "$TO" ] || [ "$NEXT" -le "$SLOT" ]; then
+    break
+  fi
+  SLOT=$NEXT
+done
 ```
 
 ---

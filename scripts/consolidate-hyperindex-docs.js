@@ -23,18 +23,19 @@ function processMarkdownContent(content, filePath) {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
-    // Skip front matter
-    if (line.startsWith("---")) {
-      if (!inFrontMatter) {
-        inFrontMatter = true;
-      } else {
-        inFrontMatter = false;
-        frontMatterEnded = true;
-      }
+    // Front matter is only the leading `---` block. Every `---` after it is a
+    // horizontal rule: treating those as front-matter delimiters too would
+    // silently drop everything between each pair of rules.
+    if (i === 0 && line.startsWith("---")) {
+      inFrontMatter = true;
       continue;
     }
 
     if (inFrontMatter) {
+      if (line.startsWith("---")) {
+        inFrontMatter = false;
+        frontMatterEnded = true;
+      }
       continue;
     }
 

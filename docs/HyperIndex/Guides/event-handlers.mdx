@@ -264,7 +264,7 @@ Multi-field filtering with `getWhere` was added in HyperIndex v3.2.
 
 - Preload Optimization is always enabled in V3 and powers `getWhere`. See [How Preload Optimization Works](/docs/HyperIndex/preload-optimization).
 
-- Works with any entity field. Since v3.5, if the field has no supporting database index, HyperIndex creates one the first time a handler queries it — you no longer need to declare [`@index`](database-performance-optimization/#creating-custom-indices-in-your-schema) up front. Declaring it is still worthwhile for fields you know you'll query: indexes named in the schema are built in one pass at the end of the backfill, whereas an on-demand build pauses writes to that table while it runs. See [Deferred Index Creation](/docs/HyperIndex/database-performance-optimization#deferred-index-creation).
+- Works with any entity field. Since v3.5, HyperIndex creates whatever database index the query needs, so you don't have to declare [`@index`](/docs/HyperIndex/database-performance-optimization#indices-created-on-demand) for it.
 
 - Potential Memory Issues: Very large `getWhere` queries might cause memory overflows.
 - Tip: Try to put the `getWhere` query to the top of the handler, to make sure it's being preloaded. Read more about how [Preload Optimization](/docs/HyperIndex/preload-optimization) works.

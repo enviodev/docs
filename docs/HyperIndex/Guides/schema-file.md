@@ -51,10 +51,6 @@ type Bid {
 
 Relationship fields adopt the referenced entity's id type automatically, so `Bid.auction` above is typed `bigint` in your handlers rather than `string`. You don't declare the foreign key type — keep the two sides in sync by changing the referenced entity's `id`.
 
-:::note
-An `ID` id resolves to `string` on both sides. The numeric types are the only case where a relationship field becomes something other than a string.
-:::
-
 ---
 
 ## Scalar Types
@@ -353,7 +349,7 @@ type Token {
 ```
 
 - All `id` fields and fields referenced via `@derivedFrom` are indexed automatically.
-- Since v3.5, `@index` is an optimization rather than a requirement: a `getWhere` query on an unindexed field creates the index on demand. Declaring it up front is still faster, because declared indices are built in one batched pass at the end of the backfill. See [Deferred Index Creation](/docs/HyperIndex/database-performance-optimization#deferred-index-creation).
+- Declare `@index` for the fields your GraphQL consumers filter and sort by. You don't need it for fields your handlers query with [`getWhere`](/docs/HyperIndex/event-handlers#retrieving-entities-by-field) — since v3.5 HyperIndex creates those indices itself. See [Indices created on demand](/docs/HyperIndex/database-performance-optimization#indices-created-on-demand).
 
 ---
 
