@@ -89,7 +89,7 @@ The optimal values depend on your RPC provider's performance and limits, as well
 
 ### Custom HTTP Headers
 
-Some providers gate their endpoints behind an `Authorization` header or a custom API-key header rather than putting the key in the URL. Since [`v3.3.0`](https://github.com/enviodev/hyperindex/releases/tag/v3.3.0), `headers` sets arbitrary HTTP headers on every request to an RPC endpoint:
+Some providers gate their endpoints behind an `Authorization` header or a custom API-key header rather than putting the key in the URL. Since v3.3, `headers` sets arbitrary HTTP headers on every request to an RPC endpoint:
 
 ```yaml
 chains:

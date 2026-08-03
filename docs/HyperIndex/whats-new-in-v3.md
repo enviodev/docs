@@ -865,45 +865,18 @@ Faster backfill, lower memory usage, better stability and lower latency at the h
 
 ### Per-Chain Effects (v3.3)
 
-Effects are cross-chain by default: one cache and one rate-limit budget shared by every chain. Set `crossChain: false` to scope an effect to the chain that called it — each chain gets its own cache entries and its own rate-limit budget, and the handler gains `context.chain.id`:
-
-```typescript
-export const getTokenName = createEffect(
-  {
-    name: "getTokenName",
-    input: S.string,
-    output: S.string,
-    rateLimit: { calls: 5, per: "second" },
-    cache: true,
-    crossChain: false,
-  },
-  async ({ input, context }) => {
-    const client = clientsByChainId[context.chain.id];
-    // ...
-  },
-);
-```
+Effects share one cache and one rate-limit budget across every chain by default. Set `crossChain: false` to scope an effect to the chain that called it — each chain then gets its own cache entries and rate-limit budget, and the handler can read `context.chain.id`. Use it when the same input means different things on different chains, such as a token address.
 
 Read more in [Per-Chain Effects](/docs/HyperIndex/effect-api#per-chain-effects).
 
 ### Custom HTTP Headers for RPC (v3.3)
 
-RPC endpoints accept arbitrary HTTP headers, so you can use providers that gate access behind an `Authorization` header instead of a URL key. Values support `${ENV_VAR}` interpolation:
-
-```yaml
-chains:
-  - id: 1
-    rpc:
-      - url: https://eth-mainnet.your-rpc-provider.com
-        for: sync
-        headers:
-          Authorization: "Bearer ${RPC_API_KEY}"
-```
+RPC entries accept a `headers` option, so you can use providers that gate access behind an `Authorization` header instead of a key in the URL. Read more in [Custom HTTP Headers](/docs/HyperIndex/rpc-sync#custom-http-headers).
 
 ### RPC Source Improvements (v3.3)
 
-- Event handlers support `or` union filtering in `where` clauses on RPC sources — pass an array to `params` to match any of several conditions.
-- An RPC-backed indexer can register multiple `wildcard` events. Previously only one was allowed.
+- `where` filters support `OR` conditions on RPC sources — pass an array to `params` to match any of several conditions. See [Multiple Filters](/docs/HyperIndex/wildcard-indexing#multiple-filters).
+- An RPC-backed indexer can register multiple [`wildcard`](/docs/HyperIndex/wildcard-indexing) events. Previously only one was allowed.
 
 ### Nested Environment Variable Interpolation (v3.3)
 
@@ -911,65 +884,25 @@ chains:
 
 ### Unlimited `onEvent` Handlers (v3.4)
 
-You can now register any number of handlers for the same event, each with a different filter. Previously only handlers with matching filters could coexist. This lets you track all transfers globally while running separate logic for a specific contract:
+You can register any number of handlers for the same event, each with a different filter — previously only handlers with matching filters could coexist. This lets you keep global logic and contract-specific logic in separate handlers instead of branching inside one. Handlers run in registration order.
 
-```typescript
-indexer.onEvent(
-  { contract: "ERC20", event: "Transfer", wildcard: true },
-  async ({ event, context }) => {
-    // Global accounting
-  },
-);
-
-indexer.onEvent(
-  {
-    contract: "ERC20",
-    event: "Transfer",
-    where: () => ({ params: [{ from: USDC_ADDRESS }] }),
-  },
-  async ({ event, context }) => {
-    // USDC-specific logic
-  },
-);
-```
-
-Handlers run in registration order. Read more in [Multiple Handlers for One Event](/docs/HyperIndex/event-handlers#multiple-handlers-for-one-event).
+Read more in [Multiple Handlers for One Event](/docs/HyperIndex/event-handlers#multiple-handlers-for-one-event).
 
 ### Per-Entity ClickHouse Tuning (v3.4)
 
-The `@storage` directive's `clickhouse` argument accepts an options object that tunes that entity's ClickHouse table — partitioning, sorting key and TTL:
-
-```graphql
-type Transfer
-  @storage(
-    postgres: true
-    clickhouse: {
-      partitionBy: "toYYYYMM(timestamp)"
-      orderBy: ["timestamp"]
-      ttl: "timestamp + INTERVAL 2 YEAR"
-    }
-  ) {
-  id: ID!
-  timestamp: Timestamp!
-  amount: BigInt!
-}
-```
-
-Read more in [Per-Entity ClickHouse Tuning](/docs/HyperIndex/schema#per-entity-clickhouse-tuning).
+The `@storage` directive's `clickhouse` argument accepts an options object that tunes that entity's ClickHouse table — `partitionBy`, `orderBy` and `ttl`. Read more in [Per-Entity ClickHouse Tuning](/docs/HyperIndex/schema#per-entity-clickhouse-tuning).
 
 ### 12x Faster Test Indexer (v3.4)
 
 The testing framework recovered the speed it lost in V3 — test indexer instances now run in-process. Note that this can surface shared-state issues in some edge cases.
 
-Handlebars was also removed as a dependency.
-
 ### Factories with Billions of Addresses (v3.5)
 
-HyperIndex used to struggle past roughly 8 million registered addresses. That ceiling is gone: once a contract's address count passes a threshold, HyperIndex automatically switches from server-side to client-side address filtering, and the hot path was partially rewritten in Rust. Read more in [Scaling to Very Large Factories](/docs/HyperIndex/dynamic-contracts#scaling-to-very-large-factories).
+HyperIndex used to struggle past roughly 8 million registered addresses. That ceiling is gone, and no configuration is needed to benefit. Read more in [Scaling to Very Large Factories](/docs/HyperIndex/dynamic-contracts#scaling-to-very-large-factories).
 
 ### Deferred Postgres Index Creation (v3.5)
 
-Indexes are no longer created up front — they're built in one pass once the backfill completes, which gives a **2.5x backfill speedup** for some users. On top of that, a `getWhere` query on a field with no index now creates the index on demand, so `getWhere` works on any entity field without you declaring `@index` first.
+Indexes are no longer created up front — they're built in one pass once the backfill completes, which gives a **2.5x backfill speedup** for some users. A `getWhere` query on a field with no index also creates the index on demand, so `getWhere` now works on any entity field without declaring `@index` first.
 
 Read more in [Deferred Index Creation](/docs/HyperIndex/database-performance-optimization#deferred-index-creation).
 
@@ -979,27 +912,13 @@ New Prometheus metrics attribute indexing stalls to a specific cause instead of 
 
 - `envio_processing_stalled_on_fetch_seconds` — waiting for events to be fetched
 - `envio_processing_stalled_on_storage_write_seconds` — waiting for pending writes to drain
-- `envio_process_start_time_seconds`, `envio_process_metric_time_seconds`, `envio_process_elapsed_seconds` — process timing, useful for turning cumulative counters into a share of the run
+- `envio_process_metric_time_seconds` and `envio_process_elapsed_seconds` — process timing, useful for turning cumulative counters into a share of the run
 
 Read more in [Finding the bottleneck](/docs/HyperIndex/observability#finding-the-bottleneck).
 
 ### Numeric Entity IDs (v3.5)
 
-Entities can be keyed on `Int` or `BigInt` instead of `ID`. Relationship fields automatically adopt the referenced entity's id type:
-
-```graphql
-type Auction {
-  id: BigInt!
-  bids: [Bid!]! @derivedFrom(field: "auction")
-}
-
-type Bid {
-  id: ID!
-  auction: Auction! # inferred as BigInt
-}
-```
-
-Read more in [Numeric Entity IDs](/docs/HyperIndex/schema#numeric-entity-ids).
+Entities can be keyed on `Int` or `BigInt` instead of `ID`, and relationship fields automatically adopt the referenced entity's id type. Read more in [Numeric Entity IDs](/docs/HyperIndex/schema#numeric-entity-ids).
 
 ### Chain IDs Above 2^31 (v3.5)
 

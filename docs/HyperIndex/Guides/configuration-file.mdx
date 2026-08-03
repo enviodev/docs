@@ -185,7 +185,7 @@ See the [Rpc reference](/docs/HyperIndex/config-schema-reference#def-rpc) for ad
 
 #### Custom Headers
 
-For endpoints gated behind an auth header rather than a key in the URL, set `headers` on the RPC entry (added in v3.3). Values support `${ENV_VAR}` interpolation:
+Since v3.3, `headers` sets custom HTTP headers on an RPC entry — for endpoints gated behind an auth header rather than a key in the URL. Values support `${ENV_VAR}` interpolation:
 
 ```yaml
 chains:

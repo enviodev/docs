@@ -163,18 +163,13 @@ Use dynamic contract registration when:
 
 ## Scaling to Very Large Factories
 
-There is no practical ceiling on how many addresses a factory can register. Before [`v3.5.0`](https://github.com/enviodev/hyperindex/releases/tag/v3.5.0) HyperIndex started to struggle at around 8 million addresses; that limit is gone, and indexers with billions of registered addresses are supported.
+There is no practical ceiling on how many addresses a factory can register. Before v3.5, HyperIndex started to struggle at around 8 million addresses. That limit is gone — indexers with billions of registered addresses are supported.
 
-The mechanism is a switch in how events are filtered. While a contract has a manageable number of registered addresses, HyperIndex asks the data source for exactly those addresses — the filtering happens server-side, and only matching events come back. Past a per-contract threshold that stops paying off: the address list itself becomes the expensive part of every query. At that point HyperIndex stops sending the list, fetches the events unfiltered, and discards non-matching ones locally.
+You don't need to configure anything for this. Once a contract accumulates enough addresses, HyperIndex automatically changes how it filters events for that contract: instead of asking the data source for a specific address list, it fetches events more broadly and filters them locally. The switch is per contract, so one large factory doesn't affect how your other contracts are indexed.
 
-This is automatic and needs no configuration. What's worth knowing:
+The practical consequence is that a very large factory fetches more data than its handlers ultimately use. That's the trade that keeps it fast — expect fetch volume to grow with address count even as indexing throughput holds up.
 
-- The switch is **per contract**, not per indexer, so a large factory doesn't penalize your other contracts.
-- It's **sticky** — once a contract switches to client-side filtering it stays there, rather than flapping around the threshold.
-- After the switch, the data source returns more events than your handlers need. Expect fetch volume to rise even though indexing throughput improves.
-- `ENVIO_CLIENT_FILTER_ADDRESS_THRESHOLD` overrides the address count at which the switch happens. The default suits nearly every indexer — reach for it only when profiling says otherwise.
-
-Watch `envio_indexing_addresses` in the [metrics endpoint](/docs/HyperIndex/observability#available-metrics) to see how many addresses a chain has registered.
+To see how many addresses a chain has registered, watch `envio_indexing_addresses` on the [metrics endpoint](/docs/HyperIndex/observability#available-metrics).
 
 ## Debugging Tips
 

@@ -325,7 +325,7 @@ scrape_configs:
 
 ### Finding the bottleneck
 
-A slow indexer is usually waiting on one of two things: fetching events, or writing them. Since [`v3.5.0`](https://github.com/enviodev/hyperindex/releases/tag/v3.5.0) two counters attribute that wait directly, so you no longer have to infer it from handler timings:
+A slow indexer is usually waiting on one of two things: fetching events, or writing them. Since v3.5, two counters attribute that wait directly, so you no longer have to infer it from handler timings:
 
 - **`envio_processing_stalled_on_fetch_seconds`** — the indexer had nothing to process because events hadn't arrived yet. A high rate means **fetching** is the bottleneck: check data-source latency and whether it can take more concurrency. Time spent waiting at the chain head for new blocks is deliberately excluded, so a fully synced indexer doesn't look stalled.
 - **`envio_processing_stalled_on_storage_write_seconds`** — the indexer paused because too many changes were still queued for writing. A high rate means **storage writes** are the bottleneck: cross-check `envio_storage_write_seconds` and your [database performance](/docs/HyperIndex/database-performance-optimization).
@@ -333,14 +333,14 @@ A slow indexer is usually waiting on one of two things: fetching events, or writ
 Both are cumulative counters, so read them as a rate. To turn one into a share of total runtime, divide by `envio_process_elapsed_seconds`:
 
 ```promql
-# Fraction of the run spent stalled waiting on fetches
+# Fraction of the last 5 minutes spent stalled on fetches (0 to 1)
 rate(envio_processing_stalled_on_fetch_seconds[5m])
 
-# Share of the whole run so far, as a ratio between 0 and 1
+# Same, but across the whole run so far
 envio_processing_stalled_on_fetch_seconds / envio_process_elapsed_seconds
 ```
 
-The same trick works for any cumulative seconds metric — `envio_processing_seconds / envio_process_elapsed_seconds` gives the share of the run spent inside event handlers. When comparing two snapshots scraped manually rather than by Prometheus, `envio_process_metric_time_seconds` tells you when each was collected.
+The same division works for any cumulative seconds metric — `envio_processing_seconds / envio_process_elapsed_seconds` gives the share of the run spent inside event handlers. If you scrape snapshots by hand rather than with Prometheus, `envio_process_metric_time_seconds` tells you when each was collected.
 
 ## Health checks
 

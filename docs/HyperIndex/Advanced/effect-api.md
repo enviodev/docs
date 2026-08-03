@@ -191,7 +191,7 @@ For detailed instructions, see the [Effect API Cache documentation](/docs/HyperI
 
 ### Rate Limit
 
-Starting from [`v2.32.0`](https://github.com/enviodev/hyperindex/releases/tag/v2.32.0), the `rateLimit` option was added. It controls how frequently an effect can run within a given timeframe. You can set it to `false` to disable rate limiting or define a custom limit such as calls per second, minute, or a duration in milliseconds.
+Since v2.32, the `rateLimit` option controls how frequently an effect can run within a given timeframe. You can set it to `false` to disable rate limiting or define a custom limit such as calls per second, minute, or a duration in milliseconds.
 
 ```typescript
 // Effect to get the balance of a specific address at a specific block
@@ -221,11 +221,11 @@ Watch the following video to learn more about createEffect and other updates int
 
 ### Per-Chain Effects
 
-By default an effect is **cross-chain**: one cache and one rate-limit budget are shared by every chain in your indexer. That's the right default when the input fully identifies the result — an IPFS hash or an off-chain API key means the same thing no matter which chain asked for it.
+By default an effect is **cross-chain**: one cache and one rate-limit budget are shared by every chain. That's correct when the input fully identifies the result — an IPFS hash means the same thing whichever chain asked for it.
 
-It's the wrong default when the same input means different things on different chains. A token address on Ethereum and the same address on Base are different contracts, so a cross-chain effect keyed only on the address would serve one chain's result to the other.
+It's wrong when the same input means different things per chain. A token address on Ethereum and the same address on Base are different contracts, so a shared cache would serve one chain's result to the other.
 
-Starting from [`v3.3.0`](https://github.com/enviodev/hyperindex/releases/tag/v3.3.0), set `crossChain: false` to scope an effect to the chain that called it:
+Since v3.3, set `crossChain: false` to scope an effect to the chain that called it:
 
 ```typescript
 import { createEffect, S } from "envio";

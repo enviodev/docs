@@ -64,7 +64,7 @@ indexer.onEvent(
 
 ### Multiple Handlers for One Event
 
-Starting from [`v3.4.0`](https://github.com/enviodev/hyperindex/releases/tag/v3.4.0), you can register as many handlers as you like for the same event, each with its own [`where`](/docs/HyperIndex/wildcard-indexing) filter. Earlier versions only accepted handlers whose filters matched.
+Since v3.4, you can register as many handlers as you like for the same event, each with its own [`where`](/docs/HyperIndex/wildcard-indexing) filter. Earlier versions only accepted handlers whose filters matched.
 
 This lets you keep broad and narrow logic in separate functions instead of branching inside one handler:
 
@@ -92,11 +92,7 @@ indexer.onEvent(
 );
 ```
 
-Handlers run in the order they were registered. Because registration order is file order, keep handlers for the same event in a predictable place if one depends on the other having run.
-
-:::note
-Each registration is fetched and filtered independently, so an event matching two registrations is delivered to both.
-:::
+An event matching more than one registration is delivered to each of them, in registration order.
 
 ### Preload Optimization
 

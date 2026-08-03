@@ -1104,44 +1104,17 @@ Faster backfill, lower memory usage, better stability and lower latency at the h
 
 ### Per-Chain Effects (v3.3)
 
-Effects are cross-chain by default: one cache and one rate-limit budget shared by every chain. Set `crossChain: false` to scope an effect to the chain that called it — each chain gets its own cache entries and its own rate-limit budget, and the handler gains `context.chain.id`:
-
-```typescript
-export const getTokenName = createEffect(
-  {
-    name: "getTokenName",
-    input: S.string,
-    output: S.string,
-    rateLimit: { calls: 5, per: "second" },
-    cache: true,
-    crossChain: false,
-  },
-  async ({ input, context }) => {
-    const client = clientsByChainId[context.chain.id];
-    // ...
-  },
-);
-```
+Effects share one cache and one rate-limit budget across every chain by default. Set `crossChain: false` to scope an effect to the chain that called it — each chain then gets its own cache entries and rate-limit budget, and the handler can read `context.chain.id`. Use it when the same input means different things on different chains, such as a token address.
 
 Read more in Per-Chain Effects.
 
 ### Custom HTTP Headers for RPC (v3.3)
 
-RPC endpoints accept arbitrary HTTP headers, so you can use providers that gate access behind an `Authorization` header instead of a URL key. Values support `${ENV_VAR}` interpolation:
-
-```yaml
-chains:
-  - id: 1
-    rpc:
-      - url: https://eth-mainnet.your-rpc-provider.com
-        for: sync
-        headers:
-          Authorization: "Bearer ${RPC_API_KEY}"
-```
+RPC entries accept a `headers` option, so you can use providers that gate access behind an `Authorization` header instead of a key in the URL. Read more in Custom HTTP Headers.
 
 ### RPC Source Improvements (v3.3)
 
-- Event handlers support `or` union filtering in `where` clauses on RPC sources — pass an array to `params` to match any of several conditions.
+- `where` filters support `OR` conditions on RPC sources — pass an array to `params` to match any of several conditions. See Multiple Filters.
 - An RPC-backed indexer can register multiple `wildcard` events. Previously only one was allowed.
 
 ### Nested Environment Variable Interpolation (v3.3)
@@ -1150,65 +1123,25 @@ chains:
 
 ### Unlimited `onEvent` Handlers (v3.4)
 
-You can now register any number of handlers for the same event, each with a different filter. Previously only handlers with matching filters could coexist. This lets you track all transfers globally while running separate logic for a specific contract:
+You can register any number of handlers for the same event, each with a different filter — previously only handlers with matching filters could coexist. This lets you keep global logic and contract-specific logic in separate handlers instead of branching inside one. Handlers run in registration order.
 
-```typescript
-indexer.onEvent(
-  { contract: "ERC20", event: "Transfer", wildcard: true },
-  async ({ event, context }) => {
-    // Global accounting
-  },
-);
-
-indexer.onEvent(
-  {
-    contract: "ERC20",
-    event: "Transfer",
-    where: () => ({ params: [{ from: USDC_ADDRESS }] }),
-  },
-  async ({ event, context }) => {
-    // USDC-specific logic
-  },
-);
-```
-
-Handlers run in registration order. Read more in Multiple Handlers for One Event.
+Read more in Multiple Handlers for One Event.
 
 ### Per-Entity ClickHouse Tuning (v3.4)
 
-The `@storage` directive's `clickhouse` argument accepts an options object that tunes that entity's ClickHouse table — partitioning, sorting key and TTL:
-
-```graphql
-type Transfer
-  @storage(
-    postgres: true
-    clickhouse: {
-      partitionBy: "toYYYYMM(timestamp)"
-      orderBy: ["timestamp"]
-      ttl: "timestamp + INTERVAL 2 YEAR"
-    }
-  ) {
-  id: ID!
-  timestamp: Timestamp!
-  amount: BigInt!
-}
-```
-
-Read more in Per-Entity ClickHouse Tuning.
+The `@storage` directive's `clickhouse` argument accepts an options object that tunes that entity's ClickHouse table — `partitionBy`, `orderBy` and `ttl`. Read more in Per-Entity ClickHouse Tuning.
 
 ### 12x Faster Test Indexer (v3.4)
 
 The testing framework recovered the speed it lost in V3 — test indexer instances now run in-process. Note that this can surface shared-state issues in some edge cases.
 
-Handlebars was also removed as a dependency.
-
 ### Factories with Billions of Addresses (v3.5)
 
-HyperIndex used to struggle past roughly 8 million registered addresses. That ceiling is gone: once a contract's address count passes a threshold, HyperIndex automatically switches from server-side to client-side address filtering, and the hot path was partially rewritten in Rust. Read more in Scaling to Very Large Factories.
+HyperIndex used to struggle past roughly 8 million registered addresses. That ceiling is gone, and no configuration is needed to benefit. Read more in Scaling to Very Large Factories.
 
 ### Deferred Postgres Index Creation (v3.5)
 
-Indexes are no longer created up front — they're built in one pass once the backfill completes, which gives a **2.5x backfill speedup** for some users. On top of that, a `getWhere` query on a field with no index now creates the index on demand, so `getWhere` works on any entity field without you declaring `@index` first.
+Indexes are no longer created up front — they're built in one pass once the backfill completes, which gives a **2.5x backfill speedup** for some users. A `getWhere` query on a field with no index also creates the index on demand, so `getWhere` now works on any entity field without declaring `@index` first.
 
 Read more in Deferred Index Creation.
 
@@ -1218,27 +1151,13 @@ New Prometheus metrics attribute indexing stalls to a specific cause instead of 
 
 - `envio_processing_stalled_on_fetch_seconds` — waiting for events to be fetched
 - `envio_processing_stalled_on_storage_write_seconds` — waiting for pending writes to drain
-- `envio_process_start_time_seconds`, `envio_process_metric_time_seconds`, `envio_process_elapsed_seconds` — process timing, useful for turning cumulative counters into a share of the run
+- `envio_process_metric_time_seconds` and `envio_process_elapsed_seconds` — process timing, useful for turning cumulative counters into a share of the run
 
 Read more in Finding the bottleneck.
 
 ### Numeric Entity IDs (v3.5)
 
-Entities can be keyed on `Int` or `BigInt` instead of `ID`. Relationship fields automatically adopt the referenced entity's id type:
-
-```graphql
-type Auction {
-  id: BigInt!
-  bids: [Bid!]! @derivedFrom(field: "auction")
-}
-
-type Bid {
-  id: ID!
-  auction: Auction! # inferred as BigInt
-}
-```
-
-Read more in Numeric Entity IDs.
+Entities can be keyed on `Int` or `BigInt` instead of `ID`, and relationship fields automatically adopt the referenced entity's id type. Read more in Numeric Entity IDs.
 
 ### Chain IDs Above 2^31 (v3.5)
 
@@ -2939,7 +2858,7 @@ indexer.onEvent(
 
 ### Multiple Handlers for One Event
 
-Starting from [`v3.4.0`](https://github.com/enviodev/hyperindex/releases/tag/v3.4.0), you can register as many handlers as you like for the same event, each with its own `where` filter. Earlier versions only accepted handlers whose filters matched.
+Since v3.4, you can register as many handlers as you like for the same event, each with its own `where` filter. Earlier versions only accepted handlers whose filters matched.
 
 This lets you keep broad and narrow logic in separate functions instead of branching inside one handler:
 
@@ -2966,11 +2885,7 @@ indexer.onEvent(
 );
 ```
 
-Handlers run in the order they were registered. Because registration order is file order, keep handlers for the same event in a predictable place if one depends on the other having run.
-
-:::note
-Each registration is fetched and filtered independently, so an event matching two registrations is delivered to both.
-:::
+An event matching more than one registration is delivered to each of them, in registration order.
 
 ### Preload Optimization
 
@@ -5629,18 +5544,13 @@ Use dynamic contract registration when:
 
 ## Scaling to Very Large Factories
 
-There is no practical ceiling on how many addresses a factory can register. Before [`v3.5.0`](https://github.com/enviodev/hyperindex/releases/tag/v3.5.0) HyperIndex started to struggle at around 8 million addresses; that limit is gone, and indexers with billions of registered addresses are supported.
+There is no practical ceiling on how many addresses a factory can register. Before v3.5, HyperIndex started to struggle at around 8 million addresses. That limit is gone — indexers with billions of registered addresses are supported.
 
-The mechanism is a switch in how events are filtered. While a contract has a manageable number of registered addresses, HyperIndex asks the data source for exactly those addresses — the filtering happens server-side, and only matching events come back. Past a per-contract threshold that stops paying off: the address list itself becomes the expensive part of every query. At that point HyperIndex stops sending the list, fetches the events unfiltered, and discards non-matching ones locally.
+You don't need to configure anything for this. Once a contract accumulates enough addresses, HyperIndex automatically changes how it filters events for that contract: instead of asking the data source for a specific address list, it fetches events more broadly and filters them locally. The switch is per contract, so one large factory doesn't affect how your other contracts are indexed.
 
-This is automatic and needs no configuration. What's worth knowing:
+The practical consequence is that a very large factory fetches more data than its handlers ultimately use. That's the trade that keeps it fast — expect fetch volume to grow with address count even as indexing throughput holds up.
 
-- The switch is **per contract**, not per indexer, so a large factory doesn't penalize your other contracts.
-- It's **sticky** — once a contract switches to client-side filtering it stays there, rather than flapping around the threshold.
-- After the switch, the data source returns more events than your handlers need. Expect fetch volume to rise even though indexing throughput improves.
-- `ENVIO_CLIENT_FILTER_ADDRESS_THRESHOLD` overrides the address count at which the switch happens. The default suits nearly every indexer — reach for it only when profiling says otherwise.
-
-Watch `envio_indexing_addresses` in the metrics endpoint to see how many addresses a chain has registered.
+To see how many addresses a chain has registered, watch `envio_indexing_addresses` on the metrics endpoint.
 
 ## Debugging Tips
 
@@ -5762,7 +5672,7 @@ indexer.onEvent(
 ```
 
 :::note
-`OR` filtering on RPC data sources requires v3.3 or later. On earlier versions the array form was only honoured by HyperSync.
+On RPC data sources, passing an array requires v3.3 or later. HyperSync supports it on all V3 versions.
 :::
 
 ## Different Filters per Chain
@@ -6386,7 +6296,7 @@ For detailed instructions, see the Effect API Cache documentation.
 
 ### Rate Limit
 
-Starting from [`v2.32.0`](https://github.com/enviodev/hyperindex/releases/tag/v2.32.0), the `rateLimit` option was added. It controls how frequently an effect can run within a given timeframe. You can set it to `false` to disable rate limiting or define a custom limit such as calls per second, minute, or a duration in milliseconds.
+Since v2.32, the `rateLimit` option controls how frequently an effect can run within a given timeframe. You can set it to `false` to disable rate limiting or define a custom limit such as calls per second, minute, or a duration in milliseconds.
 
 ```typescript
 // Effect to get the balance of a specific address at a specific block
@@ -6416,11 +6326,11 @@ Watch the following video to learn more about createEffect and other updates int
 
 ### Per-Chain Effects
 
-By default an effect is **cross-chain**: one cache and one rate-limit budget are shared by every chain in your indexer. That's the right default when the input fully identifies the result — an IPFS hash or an off-chain API key means the same thing no matter which chain asked for it.
+By default an effect is **cross-chain**: one cache and one rate-limit budget are shared by every chain. That's correct when the input fully identifies the result — an IPFS hash means the same thing whichever chain asked for it.
 
-It's the wrong default when the same input means different things on different chains. A token address on Ethereum and the same address on Base are different contracts, so a cross-chain effect keyed only on the address would serve one chain's result to the other.
+It's wrong when the same input means different things per chain. A token address on Ethereum and the same address on Base are different contracts, so a shared cache would serve one chain's result to the other.
 
-Starting from [`v3.3.0`](https://github.com/enviodev/hyperindex/releases/tag/v3.3.0), set `crossChain: false` to scope an effect to the chain that called it:
+Since v3.3, set `crossChain: false` to scope an effect to the chain that called it:
 
 ```typescript
 
@@ -7404,7 +7314,7 @@ The optimal values depend on your RPC provider's performance and limits, as well
 
 ### Custom HTTP Headers
 
-Some providers gate their endpoints behind an `Authorization` header or a custom API-key header rather than putting the key in the URL. Since [`v3.3.0`](https://github.com/enviodev/hyperindex/releases/tag/v3.3.0), `headers` sets arbitrary HTTP headers on every request to an RPC endpoint:
+Some providers gate their endpoints behind an `Authorization` header or a custom API-key header rather than putting the key in the URL. Since v3.3, `headers` sets arbitrary HTTP headers on every request to an RPC endpoint:
 
 ```yaml
 chains:
@@ -9281,7 +9191,7 @@ scrape_configs:
 
 ### Finding the bottleneck
 
-A slow indexer is usually waiting on one of two things: fetching events, or writing them. Since [`v3.5.0`](https://github.com/enviodev/hyperindex/releases/tag/v3.5.0) two counters attribute that wait directly, so you no longer have to infer it from handler timings:
+A slow indexer is usually waiting on one of two things: fetching events, or writing them. Since v3.5, two counters attribute that wait directly, so you no longer have to infer it from handler timings:
 
 - **`envio_processing_stalled_on_fetch_seconds`** — the indexer had nothing to process because events hadn't arrived yet. A high rate means **fetching** is the bottleneck: check data-source latency and whether it can take more concurrency. Time spent waiting at the chain head for new blocks is deliberately excluded, so a fully synced indexer doesn't look stalled.
 - **`envio_processing_stalled_on_storage_write_seconds`** — the indexer paused because too many changes were still queued for writing. A high rate means **storage writes** are the bottleneck: cross-check `envio_storage_write_seconds` and your database performance.
@@ -9289,14 +9199,14 @@ A slow indexer is usually waiting on one of two things: fetching events, or writ
 Both are cumulative counters, so read them as a rate. To turn one into a share of total runtime, divide by `envio_process_elapsed_seconds`:
 
 ```promql
-# Fraction of the run spent stalled waiting on fetches
+# Fraction of the last 5 minutes spent stalled on fetches (0 to 1)
 rate(envio_processing_stalled_on_fetch_seconds[5m])
 
-# Share of the whole run so far, as a ratio between 0 and 1
+# Same, but across the whole run so far
 envio_processing_stalled_on_fetch_seconds / envio_process_elapsed_seconds
 ```
 
-The same trick works for any cumulative seconds metric — `envio_processing_seconds / envio_process_elapsed_seconds` gives the share of the run spent inside event handlers. When comparing two snapshots scraped manually rather than by Prometheus, `envio_process_metric_time_seconds` tells you when each was collected.
+The same division works for any cumulative seconds metric — `envio_processing_seconds / envio_process_elapsed_seconds` gives the share of the run spent inside event handlers. If you scrape snapshots by hand rather than with Prometheus, `envio_process_metric_time_seconds` tells you when each was collected.
 
 ## Health checks
 
@@ -9719,21 +9629,18 @@ There's no need to manually add indices for these fields.
 
 ## Deferred Index Creation
 
-Indices make writes slower, and a backfill is nothing but writes. Since [`v3.5.0`](https://github.com/enviodev/hyperindex/releases/tag/v3.5.0) HyperIndex takes advantage of that: the initial schema migration creates only tables, primary keys and views, and every index your schema asks for is built in a single pass once the backfill finishes — just before the indexer reports itself ready. Some users see a **2.5x backfill speedup** from this alone.
+Indices make writes slower, and a backfill is nothing but writes. Since v3.5, HyperIndex builds the indices your schema declares in one pass *after* the backfill completes, rather than up front. Some users see a **2.5x backfill speedup** from this alone.
 
-You don't need to configure anything. What changes is what you'll observe:
+Nothing to configure. Two things change in what you'll observe:
 
-- During backfill, the indices declared in `schema.graphql` don't exist in the database yet. Querying the database directly mid-backfill will be slower than querying it once the indexer is ready.
-- Near the end of the backfill the indexer logs that it's creating indices, and pauses processing while it does. On a large database this step can take a while — it's progress, not a hang.
-- The indexer never reports ready with an index its schema promises still missing. If a build fails part-way, the indices already built stay, and the retry only owes what's left.
+- Querying the database directly mid-backfill is slower, because the declared indices don't exist yet.
+- Near the end of the backfill, the indexer pauses to create them and logs that it's doing so. On a large database this takes a while — it's progress, not a hang.
 
 ### Indices created on demand
 
-A `getWhere` call on a field with no supporting index no longer runs unindexed forever — HyperIndex creates the index the first time a handler asks for it, then reuses it.
+A `getWhere` call on a field with no index creates one the first time a handler asks for it. That means `getWhere` works on **any** entity field, not just those marked `@index` or `@derivedFrom`.
 
-This means `getWhere` now works on **any** entity field, not just ones you marked with `@index` or `@derivedFrom`. But an on-demand build isn't free: it pauses writes to that table until it completes, and it happens while your indexer is running rather than in the batched pass at the end of the backfill.
-
-So the guidance is unchanged for fields you already know you'll query — declare them:
+Still declare `@index` on fields you know you'll query:
 
 ```graphql
 type Transfer {
@@ -9743,11 +9650,7 @@ type Transfer {
 }
 ```
 
-Declared indices are built together at the end of the backfill. Undeclared ones are built one at a time, mid-run, the moment a handler needs them. Treat on-demand creation as a safety net rather than the plan.
-
-:::note
-If an on-demand build fails, the query still runs — just without the index — and the next `getWhere` retries the build. You'll see a warning in the logs rather than a crash.
-:::
+Declared indices are built together at the end of the backfill. Undeclared ones are built individually, mid-run, and pause writes to that table while they build. Treat on-demand creation as a safety net rather than the plan.
 
 ## Strategic Indexing: When to Use Each Type
 

@@ -133,8 +133,18 @@ function toInlineCode(value) {
 // Schema descriptions are emitted as prose, and Docusaurus parses these pages
 // as MDX — where a bare `${VAR}` reads as a JSX expression and either blows up
 // the build or silently swallows the text. Wrap those in inline code instead.
+//
+// Split on code spans first so a `${VAR}` an upstream description already
+// wrapped is left alone; wrapping it twice would render the backticks.
 function toProse(description) {
-  return String(description).replace(/(?<!`)\$\{([^}]+)\}(?!`)/g, "`\${$1}`");
+  return String(description)
+    .split(/(`[^`]*`)/)
+    .map((segment, i) =>
+      i % 2 === 1 // odd segments are the captured code spans
+        ? segment
+        : segment.replace(/\$\{([^}]+)\}/g, "`\${$1}`")
+    )
+    .join("");
 }
 
 function ensureDirSync(filePath) {

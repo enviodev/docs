@@ -33,7 +33,7 @@ type User {
 
 ### Numeric Entity IDs
 
-`ID` is the usual choice and behaves as a string. Since [`v3.5.0`](https://github.com/enviodev/hyperindex/releases/tag/v3.5.0) you can also key an entity on `Int` or `BigInt`, which is a better fit when the identifier is genuinely a number — a block number, an auction id, a sequential position:
+`ID` is the usual choice and behaves as a string. Since v3.5, you can also key an entity on `Int` or `BigInt`, which is a better fit when the identifier is genuinely a number — a block number, an auction id, a sequential position:
 
 ```graphql
 type Auction {
@@ -373,7 +373,7 @@ Since v3.2 you can mark a backend as `default` in `config.yaml`, and entities wi
 
 ### Per-Entity ClickHouse Tuning
 
-Since [`v3.4.0`](https://github.com/enviodev/hyperindex/releases/tag/v3.4.0), the `clickhouse` argument also accepts an options object that tunes that entity's ClickHouse history table:
+Since v3.4, the `clickhouse` argument also accepts an options object that tunes that entity's ClickHouse history table:
 
 ```graphql
 type Transfer
@@ -393,15 +393,14 @@ type Transfer
 
 | Option | Type | Description |
 |--------|------|-------------|
-| `partitionBy` | ClickHouse expression | Emitted as `PARTITION BY <expr>`. Use it to keep queries and TTL deletes inside a partition instead of scanning the whole table. |
-| `orderBy` | list of entity field names | Entity fields that lead the table's sorting key, replacing the default `id` prefix. The internal checkpoint column stays appended, so the key becomes `ORDER BY (<orderBy...>, envio_checkpoint_id)`. |
+| `partitionBy` | ClickHouse expression | Emitted as `PARTITION BY <expr>`. Keeps queries and TTL deletes inside a partition instead of scanning the whole table. |
+| `orderBy` | list of entity field names | Fields that lead the table's sorting key, ahead of the default `id`. |
 | `ttl` | ClickHouse expression | Emitted as `TTL <expr>`. Ages rows out automatically. |
 
-Rules worth knowing before you reach for these:
+A few constraints, all caught at `envio codegen` rather than at runtime:
 
-- `orderBy` takes **entity field names**, not expressions — unlike `partitionBy` and `ttl`, which are raw ClickHouse expressions passed through as written.
-- Don't list `id` in `orderBy`: it's already the default sorting key, and codegen rejects it.
-- Nullable fields, list fields and `@derivedFrom` fields can't appear in `orderBy` — ClickHouse doesn't allow them in a sorting key, and codegen catches this rather than letting table creation fail at runtime.
+- `orderBy` takes **entity field names**, not expressions — unlike `partitionBy` and `ttl`, which are ClickHouse expressions passed through as written.
+- `orderBy` can't list `id` (already the default sorting key), nor nullable, list or `@derivedFrom` fields, which ClickHouse doesn't allow in a sorting key.
 - An entity can carry only one `@storage` directive, and it must enable at least one backend.
 
 ---
