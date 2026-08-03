@@ -187,7 +187,7 @@ node run-tui.js
 
 That's it! You're now streaming data directly from Ethereum mainnet through HyperSync! (TUI version below)
 
-!HyperSync in Action
+
 
 ## Understanding the Code
 
@@ -1467,7 +1467,7 @@ struct RollbackGuard {
 }
 ```
 
-The guard is `Option<RollbackGuard>`: it is present whenever the response covers blocks near the chain tip (where reorgs can still happen) and absent for queries that return no data.
+The guard is `Optional<RollbackGuard>`: it is present whenever the response covers blocks near the chain tip (where reorgs can still happen) and absent for queries that return no data.
 
 #### How HyperSync handles reorgs internally
 
@@ -3147,7 +3147,7 @@ Solana HyperSync is **early**. The core query path (slots, transactions, instruc
 
 HyperSync for Solana exposes **`https://solana.hypersync.xyz`**: one JSON (or Arrow) API over slots, transactions, instructions, logs, balances, token balances, and rewards. Use the [Rust client](https://github.com/enviodev/hypersync-client-solana) or any HTTP client (for example `curl`). Details: Query & Response, curl Examples.
 
-**Slots vs blocks:** Some slots have **no block** (skipped leader, etc.). A query over `from_slot, to_slot)` can return **fewer block rows** than the slot span implies; that is normal, not a bug.
+**Slots vs blocks:** Some slots have **no block** (skipped leader, etc.). A query over `[from_slot, to_slot)` can return **fewer block rows** than the slot span implies; that is normal, not a bug.
 
 ## Differences vs EVM HyperSync
 
@@ -3167,7 +3167,7 @@ HyperSync for Solana exposes **`https://solana.hypersync.xyz`**: one JSON (or Ar
 | `POST /query` | JSON query, JSON response. |
 | `POST /query/arrow` | Same JSON query; response is **Apache Arrow IPC** (stream-encoded record batches—typically smaller and faster to decode than JSON). |
 | `GET /height` | Current synced slot (JSON). Example: `curl https://solana.hypersync.xyz/height`. |
-| `GET /height/sse` | Server-sent events stream of the head slot (see [curl Examples). |
+| `GET /height/sse` | Server-sent events stream of the head slot (see curl Examples). |
 | `GET /health` | Health check. |
 | `POST /`, `POST /rpc` | **Experimental** Solana JSON-RPC-compatible facade for tooling that already speaks JSON-RPC; coverage may be incomplete—prefer `POST /query` for indexing. |
 
@@ -3380,7 +3380,7 @@ Top-level keys include `next_slot`, `total_execution_time_ms`, optional `rollbac
 
 Use the response's `next_slot` as the **next** request's `from_slot`.
 
-**Bounded scan** (you set `to_slot`): repeat while `next_slot < to_slot`. When `next_slot >= to_slot`, the range `from_slot, to_slot)` is exhausted.
+**Bounded scan** (you set `to_slot`): repeat while `next_slot < to_slot`. When `next_slot >= to_slot`, the range `[from_slot, to_slot)` is exhausted.
 
 **Unbounded / to head** (no `to_slot`, or you stop at live head): repeat while `next_slot` **strictly increases** between requests. If `next_slot` is not greater than the previous `from_slot`, you have caught up to the server's head or hit a limit—stop or backoff.
 
@@ -3411,7 +3411,7 @@ Example `rollback_guard` payload (field names only—values are illustrative):
 
 ## Authentication
 
-Same **Bearer token** model as EVM HyperSync. See [API tokens.
+Same **Bearer token** model as EVM HyperSync. See API tokens.
 
 ---
 

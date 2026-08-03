@@ -157,7 +157,8 @@ into your existing monitoring stack (Prometheus, Grafana, Datadog, etc.).
 :::info Stability
 As of **v3.0.0** the `/metrics` endpoint is official: metric names follow
 Prometheus conventions, time is measured in seconds, and the metric surface is
-covered by semver and documented here.
+covered by semver and documented here. The one exception to the seconds
+convention is `envio_progress_latency`, which is reported in milliseconds.
 :::
 
 ### The `/metrics` endpoint

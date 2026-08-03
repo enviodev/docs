@@ -176,7 +176,12 @@ function describeType(schema, rootSchema = null) {
     const refName = schema.$ref.split("/").slice(-1)[0];
     const resolved = resolveRef(schema.$ref, rootSchema);
     if (resolved) {
-      return `object<${refName}>`;
+      // Naming the target is only useful when it really is an object. A `$ref`
+      // to an enum or a union is not — rendering `for: sync` as `object<For>`
+      // tells the reader to write an object where a string belongs.
+      return resolved.type === "object"
+        ? `object<${refName}>`
+        : describeType(resolved, rootSchema);
     }
   }
 
@@ -185,6 +190,19 @@ function describeType(schema, rootSchema = null) {
   }
   if (schema.const !== undefined) {
     return `const ${String(schema.const)}`;
+  }
+  // A schema that declares its own `type` describes its own shape. Composition
+  // keywords sitting alongside it — `allOf` carrying `not`/`if` constraints,
+  // say — are validation rules, and describing those instead yields noise like
+  // `allOf(unknown & unknown)` for what is plainly an object.
+  if (schema.type === "array") {
+    const items = Array.isArray(schema.items)
+      ? schema.items.map((s) => describeType(s, rootSchema)).join(", ")
+      : describeType(schema.items, rootSchema);
+    return `array<${items}>`;
+  }
+  if (schema.type === "object") {
+    return "object";
   }
   if (schema.anyOf) {
     const parts = schema.anyOf.map((s) => describeType(s, rootSchema));
@@ -197,15 +215,6 @@ function describeType(schema, rootSchema = null) {
   if (schema.allOf) {
     const parts = schema.allOf.map((s) => describeType(s, rootSchema));
     return `allOf(${parts.join(" & ")})`;
-  }
-  if (schema.type === "array") {
-    const items = Array.isArray(schema.items)
-      ? schema.items.map((s) => describeType(s, rootSchema)).join(", ")
-      : describeType(schema.items, rootSchema);
-    return `array<${items}>`;
-  }
-  if (schema.type === "object") {
-    return "object";
   }
   if (Array.isArray(schema.type)) {
     return schema.type.join(" | ");

@@ -18,7 +18,6 @@ function processMarkdownContent(content, filePath) {
   let title = "";
   let body = "";
   let inFrontMatter = false;
-  let frontMatterEnded = false;
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -26,15 +25,14 @@ function processMarkdownContent(content, filePath) {
     // Front matter is only the leading `---` block. Every `---` after it is a
     // horizontal rule: treating those as front-matter delimiters too would
     // silently drop everything between each pair of rules.
-    if (i === 0 && line.startsWith("---")) {
+    if (i === 0 && /^---\s*$/.test(line)) {
       inFrontMatter = true;
       continue;
     }
 
     if (inFrontMatter) {
-      if (line.startsWith("---")) {
+      if (/^---\s*$/.test(line)) {
         inFrontMatter = false;
-        frontMatterEnded = true;
       }
       continue;
     }
@@ -46,7 +44,7 @@ function processMarkdownContent(content, filePath) {
     }
 
     // If no title found, use filename
-    if (!title && frontMatterEnded && line.trim()) {
+    if (!title && line.trim()) {
       title = path
         .basename(filePath, path.extname(filePath))
         .replace(/-/g, " ")
@@ -84,31 +82,26 @@ function findMarkdownFiles(dir) {
 
 // Function to fix internal links in the content
 function fixInternalLinks(content, relativePath) {
-  // Remove all markdown links that reference other files
-  content = content.replace(/\[([^\]]+)\]\([^)]+\.md\)/g, "$1");
-  content = content.replace(/\[([^\]]+)\]\([^)]+\.mdx\)/g, "$1");
-  content = content.replace(/\[([^\]]+)\]\(\/[^)]+\)/g, "$1");
-  content = content.replace(/\[([^\]]+)\]\(\/\.\/[^)]+\)/g, "$1");
-  content = content.replace(/\[([^\]]+)\]\(\/\.\.\/[^)]+\)/g, "$1");
-  content = content.replace(/\[([^\]]+)\]\(\/docs\/[^)]+\)/g, "$1");
-  content = content.replace(/\[([^\]]+)\]\(\/docs\/HyperIndex\/[^)]+\)/g, "$1");
-  content = content.replace(/\[([^\]]+)\]\(\/docs\/HyperSync\/[^)]+\)/g, "$1");
-
-  // Remove any remaining markdown links to internal/relative paths.
-  // Preserve external URLs (http/https), anchors (#), and mailto: links.
-  // Also do not touch markdown images: `![alt](...)`.
-  content = content.replace(
-    /(?<!\!)\[([^\]]+)\]\((?!https?:\/\/|mailto:|#)[^)]+\)/g,
-    "$1"
+  // Link text and targets must not span lines. With `[^\]]`/`[^)]` a stray `[`
+  // in prose — an interval like `[from_slot, to_slot)`, say — starts a match
+  // that runs across lines until the next real link's `](target)`, deleting
+  // everything in between and leaving an unbalanced bracket behind.
+  const TEXT = "[^\\]\\n]+";
+  const TARGET = "[^)\\n]+";
+  const internalLink = new RegExp(
+    `(?<!\\!)\\[(${TEXT})\\]\\((?!https?://|mailto:|#)${TARGET}\\)`,
+    "g"
   );
+  const imageLink = new RegExp(`!\\[(${TEXT}|)\\]\\(${TARGET}\\)`, "g");
 
-  // Remove image references that cause errors - be more aggressive
-  content = content.replace(/!\[([^\]]*)\]\([^)]+\)/g, "");
-  content = content.replace(/!\[([^\]]*)\]\([^)]+\.png\)/g, "");
-  content = content.replace(/!\[([^\]]*)\]\([^)]+\.jpg\)/g, "");
-  content = content.replace(/!\[([^\]]*)\]\([^)]+\.jpeg\)/g, "");
-  content = content.replace(/!\[([^\]]*)\]\([^)]+\.gif\)/g, "");
-  content = content.replace(/!\[([^\]]*)\]\([^)]+\.webp\)/g, "");
+  // Drop images first so their `!` prefix can't be mistaken for a link.
+  content = content.replace(imageLink, "");
+
+  // Internal links become plain text; external URLs, anchors and mailto: links
+  // are left alone. Applied to the whole document rather than to prose spans
+  // only — link text is frequently a code span (`` [`src/handlers`](...) ``),
+  // and splitting on code would cut those links in half.
+  content = content.replace(internalLink, "$1");
 
   // Remove MDX imports that cause parsing errors
   content = content.replace(/^import\s+.*\s+from\s+["'][^"']+["'];?\s*$/gm, "");
@@ -124,7 +117,7 @@ function fixInternalLinks(content, relativePath) {
     .map((segment) =>
       segment.startsWith("`")
         ? segment
-        : segment.replace(/<(?!\/?(?:code|pre))[^>]*>/g, "")
+        : segment.replace(/<(?!\/?(?:code|pre))[^>\n]*>/g, "")
     )
     .join("");
 

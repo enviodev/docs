@@ -112,7 +112,7 @@ storage:
 
 Ecosystem of the project.
 
-- **type**: `anyOf(object<EcosystemTag> | null)`
+- **type**: `anyOf(enum (1 values) | null)`
 
 Variants:
 - `1`: [EcosystemTag](#def-ecosystemtag)
@@ -225,7 +225,7 @@ raw_events: true
 
 Address format for Ethereum addresses: 'checksum' or 'lowercase' (default: checksum)
 
-- **type**: `anyOf(object<AddressFormat> | null)`
+- **type**: `anyOf(enum (2 values) | null)`
 
 Variants:
 - `1`: [AddressFormat](#def-addressformat)
@@ -236,7 +236,7 @@ Variants:
 
 ### StorageConfig {#def-storageconfig}
 
-- **type**: `allOf(unknown & unknown)`
+- **type**: `object`
 
 Properties:
 - `postgres`: `anyOf(boolean | null | object)` – Whether to use Postgres as a storage backend (default: true). Accepts a boolean or an options object (the object form implies the backend is enabled).
@@ -343,7 +343,7 @@ events:
 Properties:
 - `id`: `integer` – The public blockchain chain ID.
 - `skip`: `boolean | null` – Excludes the chain from indexing and migrations. Code generation is unaffected. For testing, prefer using a test framework instead.
-- `rpc`: `anyOf(object<RpcSelection> | null)` – RPC configuration for your indexer. If not specified otherwise, for chains supported by HyperSync, RPC serves as a fallback for added reliability. For others, it acts as the primary data-source. HyperSync offers significant performance improvements, up to a 1000x faster than traditional RPC.
+- `rpc`: `anyOf(anyOf(string | object<Rpc> | array<object<Rpc>>) | null)` – RPC configuration for your indexer. If not specified otherwise, for chains supported by HyperSync, RPC serves as a fallback for added reliability. For others, it acts as the primary data-source. HyperSync offers significant performance improvements, up to a 1000x faster than traditional RPC.
 - `hypersync_config`: `anyOf(object<HypersyncConfig> | null)` – Optional HyperSync Config for additional fine-tuning
 - `max_reorg_depth`: `integer | null` – The number of blocks from the head that the indexer should account for in case of reorgs.
 - `block_lag`: `integer | null` – The number of blocks behind the chain head that the indexer should lag. Useful for avoiding reorg issues by indexing slightly behind the tip.
@@ -383,7 +383,7 @@ Variants:
 
 Properties:
 - `url`: `string` – The RPC endpoint URL.
-- `for`: `anyOf(object<For> | null)` – Determines if this RPC is for historical sync, real-time chain indexing, or as a fallback. If not specified, defaults to "fallback" when HyperSync is available for the chain, or "sync" otherwise.
+- `for`: `anyOf(oneOf(const sync | const fallback | const realtime) | null)` – Determines if this RPC is for historical sync, real-time chain indexing, or as a fallback. If not specified, defaults to "fallback" when HyperSync is available for the chain, or "sync" otherwise.
 - `ws`: `string | null` – Optional WebSocket endpoint URL (wss:// or ws://) for real-time block header notifications via eth_subscribe("newHeads"). Provides lower latency than HTTP polling for detecting new blocks.
 - `headers`: `object | null` – Optional HTTP headers sent with every request to this RPC endpoint, e.g. an Authorization bearer token for gated endpoints. Values support `${ENV_VAR}` interpolation.
 - `initial_block_interval`: `integer | null` – The starting interval in range of blocks per query
@@ -444,7 +444,7 @@ chains:
 
 Properties:
 - `name`: `string` – A unique project-wide name for this contract if events and handler are defined OR a reference to the name of contract defined globally at the top level
-- `address`: `object<Addresses>` – A single address or a list of addresses to be indexed. This can be left as null in the case where this contracts addresses will be registered dynamically.
+- `address`: `anyOf(anyOf(string | integer) | array<anyOf(string | integer)>)` – A single address or a list of addresses to be indexed. This can be left as null in the case where this contracts addresses will be registered dynamically.
 - `start_block`: `integer | null` – The block at which the indexer should start ingesting data for this specific contract. If not specified, uses the chain start_block. Can be greater than the chain start_block for more specific indexing.
 - `abi_file_path`: `string | null` – Relative path (from config) to a json abi. If this is used then each configured event should simply be referenced by its name
 - `handler`: `string | null` – Optional relative path to a file where handlers are registered for the given contract. If not provided, handlers can be auto-loaded from src directory.

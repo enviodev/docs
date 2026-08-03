@@ -9,7 +9,7 @@ description: Learn how to index events using wildcard indexing feature and topic
 Wildcard indexing is a feature that allows you to index all events matching a specified event signature without requiring the contract address from which the event was emitted. This is useful in cases such as indexing contracts deployed through factories, where the factory contract does not emit any events upon contract creation. It also enables indexing events from all contracts implementing a standard (e.g. all ERC20 transfers).
 
 :::note
-Wildcard Indexing is supported on [HyperSync](/docs/HyperIndex/Advanced/hypersync.md), [HyperFuel](/docs/HyperIndex/fuel/fuel.md), and [RPC](/docs/HyperIndex/Advanced/rpc-sync.md) data sources. Since v3.3, an RPC-backed indexer can register **multiple** wildcard events — earlier versions allowed only one.
+Wildcard Indexing is supported on [HyperSync](/docs/HyperIndex/hypersync), [HyperFuel](/docs/HyperIndex/fuel), and [RPC](/docs/HyperIndex/rpc-sync) data sources. Since v3.3, an RPC-backed indexer can register **multiple** wildcard events — earlier versions allowed only one.
 :::
 
 ## Index all ERC20 transfers

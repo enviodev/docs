@@ -530,7 +530,7 @@ struct RollbackGuard {
 }
 ```
 
-The guard is `Option<RollbackGuard>`: it is present whenever the response covers blocks near the chain tip (where reorgs can still happen) and absent for queries that return no data.
+The guard is `Optional<RollbackGuard>`: it is present whenever the response covers blocks near the chain tip (where reorgs can still happen) and absent for queries that return no data.
 
 #### How HyperSync handles reorgs internally
 

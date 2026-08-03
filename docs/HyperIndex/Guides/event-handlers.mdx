@@ -71,6 +71,8 @@ This lets you keep broad and narrow logic in separate functions instead of branc
 ```typescript
 import { indexer } from "envio";
 
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+
 // Track every ERC20 transfer on the chain
 indexer.onEvent(
   { contract: "ERC20", event: "Transfer", wildcard: true },
@@ -79,15 +81,16 @@ indexer.onEvent(
   },
 );
 
-// ...and run extra logic for USDC only
+// ...and run extra logic for mints, where tokens come from the zero address
 indexer.onEvent(
   {
     contract: "ERC20",
     event: "Transfer",
-    where: () => ({ params: [{ from: USDC_ADDRESS }] }),
+    wildcard: true,
+    where: () => ({ params: [{ from: ZERO_ADDRESS }] }),
   },
   async ({ event, context }) => {
-    // USDC-specific logic
+    // Mint-specific logic
   },
 );
 ```

@@ -198,7 +198,7 @@ Type mapping:
 | `t.real()` / `t.doublePrecision()` | `Float!`           |
 | `t.hex().array()`                  | `Json!`            |
 
-**Primary keys**: HyperIndex requires a single `id: ID!` string field on every entity. For composite PKs (e.g. `owner + spender`), construct the ID string manually: `` `${owner}_${spender}` ``.
+**Primary keys**: HyperIndex requires a single `id` field on every entity, typed `ID!`, `String!`, `Int!`, or `BigInt!`. For composite PKs (e.g. `owner + spender`), construct the ID string manually: `` `${owner}_${spender}` ``.
 
 **Indexes**: Replace `index().on(column)` with an [`@index`](/docs/HyperIndex/schema) directive on the field.
 
