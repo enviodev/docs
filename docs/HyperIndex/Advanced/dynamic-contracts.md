@@ -157,9 +157,7 @@ Use dynamic contract registration when:
 
 - **Block Coverage**: When a dynamic contract is registered, Envio will index all events from that contract in the same block where it was created, even if those events happened in transactions before the registration event. This is particularly useful for contracts that emit events during their construction.
 
-- **Handler Organization**: You can register contracts from any event handler. For example, you might register a token contract when you see it being added to a registry, not just when it's created.
-
-- **Pre-registration**: Pre-registration was a recommended mode in early V2 to optimize performance. The `preRegisterDynamicContracts` option has been removed entirely in V3 — the default registration path is now the fastest, so no flag is needed.
+- **Triggering Event**: Any event can trigger a registration — it doesn't have to be the one that created the contract. You might register a token when you see it added to a registry, or when it's first used, rather than at deployment.
 
 ## Scaling to Very Large Factories
 

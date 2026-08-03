@@ -892,10 +892,6 @@ Read more in [Multiple Handlers for One Event](/docs/HyperIndex/event-handlers#m
 
 The `@storage` directive's `clickhouse` argument accepts an options object that tunes that entity's ClickHouse table — `partitionBy`, `orderBy` and `ttl`. Read more in [Per-Entity ClickHouse Tuning](/docs/HyperIndex/schema#per-entity-clickhouse-tuning).
 
-### 12x Faster Test Indexer (v3.4)
-
-The testing framework recovered the speed it lost in V3 — test indexer instances now run in-process. Note that this can surface shared-state issues in some edge cases.
-
 ### Factories with Billions of Addresses (v3.5)
 
 HyperIndex used to struggle past roughly 8 million registered addresses. That ceiling is gone, and no configuration is needed to benefit. Read more in [Scaling to Very Large Factories](/docs/HyperIndex/dynamic-contracts#scaling-to-very-large-factories).
@@ -933,14 +929,6 @@ Database column types scale automatically for chains whose id exceeds 2^31, so n
 - Fixed an edge case where a multichain indexer could freeze during a rollback on reorg (also backported to v2.32.10)
 - Fixed external Postgres database support via `ENVIO_PG_HOST`
 - Fixed `S.nullable` schema type to be `T | null` instead of `T | undefined`
-- Fixed rollback handling for deleted entities (v3.3)
-- Fixed an edge case causing an incorrect rollback on reorg (v3.3)
-- Fixed serialization of zero-parameter events in `raw_events` (v3.3)
-- Fixed SVM `account_filters` config parsing and transaction instruction filtering (v3.3)
-- Improved the error message for a missing `field_selection` config (v3.3)
-- Fixed handlers for entities with lowercase names (v3.5)
-- ClickHouse-only entities are now skipped during rollback on reorg (v3.5)
-- `envio init` templates target ES2023 (v3.5)
 
 ## Release Notes
 

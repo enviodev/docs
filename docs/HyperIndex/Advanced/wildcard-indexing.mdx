@@ -299,8 +299,6 @@ indexer.contractRegister(
 );
 ```
 
-## Limitations
-
-- For any given chain, only one event of a given signature can be indexed using wildcard indexing. This means that if you have multiple contract definitions in your config that contain the same event signature, only one of them is allowed to be set to `wildcard: true`.
-
-- Either the `contractRegister` or the `onEvent` registration for a given event can take a `where` option, but not both.
+:::note
+Wildcard registrations are matched by event signature. If the same signature is declared on more than one contract in your `config.yaml`, set `wildcard: true` on just one of them.
+:::
