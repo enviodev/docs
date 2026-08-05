@@ -64,9 +64,9 @@ Restrict requests to specific IP addresses. Only clients connecting from an appr
 Protect your endpoint with an API key—a secret token that clients include with each request to prove they're authorized. This is the recommended option for browser-based dApps and frontends, where users connect from unpredictable IP addresses that can't be allow-listed.
 
 **How it works:**
-- Each indexer (project) gets a **unique API key**, automatically generated and securely stored
-- Retrieve your API key from the deployment dashboard
-- Include it with every request using the `Authorization` header as a Bearer token:
+- Enabling authentication provisions an initial key automatically, stored securely
+- Retrieve your keys from the Security page in the dashboard, or with the [Envio Cloud CLI](./envio-cloud-cli.md)
+- Include a key with every request using the `Authorization` header as a Bearer token:
 
 ```bash
 curl https://<your-endpoint>/v1/graphql \
@@ -75,9 +75,16 @@ curl https://<your-endpoint>/v1/graphql \
 
 Requests without a valid key are rejected with a `401 Unauthorized` response.
 
+**Rotating keys:**
+
+An indexer can hold **several named keys at once**, so you can rotate without downtime: add a new key, migrate your clients onto it, then remove the old one. Removing a key revokes it immediately, so migrate before you remove.
+
+The last remaining key cannot be removed — turn API key authentication off instead if you want to stop requiring a token.
+
 **Benefits:**
 - Works for browser-based apps and frontends with no fixed IP address
-- The same key persists across deployment promotions
+- Keys persist across deployment promotions
+- Rotate credentials without an outage
 - Both your production endpoint and per-deployment URLs are gated by the same policy—no way to bypass authentication
 
 
