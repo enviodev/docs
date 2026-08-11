@@ -171,8 +171,13 @@
     padding: 1rem;
   }
 
+  /* "Documentation" is a single 13-character word that needs ~289px at 2.5rem.
+     The content box is only 279px on a 375px phone (iPhone SE / 13 mini) and
+     224px at 320px, so a flat 2.5rem hard-broke the word across two lines
+     ("Documentatio" / "n"). Scaling with the viewport keeps it on one line all
+     the way down to 320px and still reaches 2.5rem on wider phones. */
   .title {
-    font-size: 2.5rem;
+    font-size: clamp(1.75rem, 9vw, 2.5rem);
   }
 
   .docsGrid {
