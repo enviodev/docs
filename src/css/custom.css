@@ -367,6 +367,18 @@ article .markdown table {
   -webkit-overflow-scrolling: touch;
 }
 
+/* …except where a table is already inside a scroll container. Those wrappers
+   carry `tabindex="0"` and `role="region"`, which is what makes the table
+   keyboard-scrollable; letting the inner <table> become the scrolling element
+   instead would move the scroll off the focusable node and strand keyboard
+   users. Hand scrolling back to the wrapper and let the table size to its
+   content (see the `width: max-content` rule above). */
+article .markdown .scroll-table > table,
+article .markdown .table-wrapper > table {
+  max-width: none;
+  overflow-x: visible;
+}
+
 /* YouTube embeds are authored as raw <iframe width="560" height="315">, which
    is wider than the content column on any phone and drags the whole page
    sideways. Scale them to the column and keep the 16:9 box. */
