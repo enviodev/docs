@@ -762,6 +762,22 @@ This file is generated from page frontmatter at build time and follows the llmst
               },
             ],
             optional: [
+              // The full-text dumps point back at this file, but nothing here
+              // pointed at them, so an agent starting from llms.txt had no way
+              // to discover them. Listed first because they are the highest
+              // value follow-up for an agent that can ingest them.
+              {
+                label: "Full documentation (llms-full.txt)",
+                href: "https://docs.envio.dev/llms-full.txt",
+                description:
+                  "Every documentation page concatenated as markdown with per-page source URLs, for direct ingestion into a context window.",
+              },
+              {
+                label: "Full blog and case studies (llms-full-blog.txt)",
+                href: "https://docs.envio.dev/llms-full-blog.txt",
+                description:
+                  "Every blog post and case study concatenated as markdown with per-page source URLs.",
+              },
               {
                 label: "Envio website",
                 href: "https://envio.dev",
