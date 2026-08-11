@@ -1,6 +1,7 @@
 ---
 id: config-schema-reference
 title: Configuration Schema Reference
+description: Deep-linkable reference for every field and definition in the V2 config.yaml JSON Schema.
 sidebar_label: Config Schema Reference
 slug: /config-schema-reference
 ---

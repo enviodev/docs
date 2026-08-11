@@ -246,6 +246,98 @@ function GenerateLLMSPlugin(context, options) {
                 return p.split(path.sep).join("/");
             }
 
+            // 1c. collect standalone Docusaurus pages (src/pages/**.mdx).
+            // These are real, indexed pages that the docs/blog collectors miss
+            // because they are not owned by a content plugin. They have no .md
+            // twin, so they are flagged hasMarkdown: false and link to the
+            // plain URL.
+            if (options.pages) {
+                const pagesConfig =
+                    typeof options.pages === "object" ? options.pages : {};
+                const pagesDir = pagesConfig.path || "src/pages";
+                const pagesAbsPath = path.resolve(context.siteDir, pagesDir);
+
+                if (fs.existsSync(pagesAbsPath)) {
+                    const pageFiles = glob.sync("**/*.{md,mdx}", {
+                        cwd: pagesAbsPath,
+                        // Partials and data files are prefixed with _ by
+                        // Docusaurus convention and are not routable.
+                        ignore: ["**/_*.{md,mdx}"],
+                    });
+
+                    for (const file of pageFiles) {
+                        const fullPath = path.join(pagesAbsPath, file);
+                        const parsed = matter(
+                            fs.readFileSync(fullPath, "utf-8")
+                        );
+                        const title = parsed.data.title;
+                        if (!title) continue;
+
+                        const route = toPosix(file).replace(
+                            /(\/index)?\.(md|mdx)$/,
+                            ""
+                        );
+
+                        collectedDocs.push({
+                            filePath: fullPath,
+                            relativePath: toPosix(
+                                path.relative(context.siteDir, fullPath)
+                            ),
+                            title,
+                            description: parsed.data.description || "",
+                            pageUrl: `${url.replace(/\/$/, "")}/${route}`,
+                            source: "pages",
+                            pluginId: "pages",
+                            hasMarkdown: false,
+                            tags: [],
+                        });
+                    }
+                }
+            }
+
+            // 1d. collect showcase entries from the same data file that renders
+            // the showcase pages, so adding a site to _data.js also lists it
+            // here with no second place to update.
+            if (options.showcase) {
+                const showcaseConfig =
+                    typeof options.showcase === "object"
+                        ? options.showcase
+                        : {};
+                const dataPath = path.resolve(
+                    context.siteDir,
+                    showcaseConfig.dataPath || "src/pages/showcase/_data.js"
+                );
+                const routeBasePath = showcaseConfig.routeBasePath || "showcase";
+
+                if (fs.existsSync(dataPath)) {
+                    // Dynamic import rather than require: the data file is ESM
+                    // and require(esm) only works on Node 20.19+, while the
+                    // repo supports Node >=20.0.
+                    const mod = await import(`file://${dataPath}`);
+                    const sites = mod.sites || [];
+
+                    for (const site of sites) {
+                        if (!site.slug || !site.title) continue;
+                        collectedDocs.push({
+                            filePath: dataPath,
+                            relativePath: `${toPosix(
+                                path.relative(context.siteDir, dataPath)
+                            )}#${site.slug}`,
+                            title: site.title,
+                            description: site.description || "",
+                            pageUrl: `${url.replace(
+                                /\/$/,
+                                ""
+                            )}/${routeBasePath}/${site.slug}`,
+                            source: "showcase",
+                            pluginId: "showcase",
+                            hasMarkdown: false,
+                            tags: [],
+                        });
+                    }
+                }
+            }
+
             function orderDocs(includeOrder) {
                 if (!includeOrder || includeOrder.length === 0) {
                     return [];
@@ -283,15 +375,22 @@ function GenerateLLMSPlugin(context, options) {
             }
 
             function formatDocBullet(doc, opts = {}) {
+                // Docs and blog posts get a .md twin written by
+                // writeMarkdownCopies; standalone pages and showcase entries
+                // do not, so they link to the rendered URL instead.
+                const href =
+                    doc.hasMarkdown === false
+                        ? doc.pageUrl
+                        : `${doc.pageUrl}.md`;
                 if (opts.compact) {
-                    return `- [${doc.title}](${doc.pageUrl}.md)`;
+                    return `- [${doc.title}](${href})`;
                 }
                 const desc =
                     doc.description ||
                     (doc.title.length > 20
                         ? `${doc.title} section of the docs.`
                         : "");
-                return `- [${doc.title}](${doc.pageUrl}.md): ${desc}`;
+                return `- [${doc.title}](${href}): ${desc}`;
             }
 
             // Match a doc against a section/subsection node. Returns docs that
@@ -455,12 +554,86 @@ function GenerateLLMSPlugin(context, options) {
                 )}/llms.txt`;
                 const directive = `> For the complete documentation index, see [llms.txt](${llmsTxtUrl}).\n\n`;
 
+                // Source files link to siblings by relative source path
+                // (../Advanced/hypersync.md) and to assets by relative repo
+                // path (../../static/img/sync.gif). Both break in the .md copy,
+                // because the copy is served from the flattened slug URL rather
+                // than its source directory. Resolve each one against the
+                // source tree and rewrite it to an absolute site path.
+                const byRelativePath = new Map(
+                    docs.map((d) => [d.relativePath, d])
+                );
+                // Docs are served from a flattened slug URL, so most relative
+                // links in the source resolve in URL space rather than against
+                // the source tree. Both spaces are tried.
+                const siteRoot = siteConfig.url.replace(/\/$/, "");
+                const byUrlPath = new Map(
+                    docs.map((d) => [d.pageUrl.replace(siteRoot, ""), d])
+                );
+
+                const rewriteRelativeLinks = (content, doc) => {
+                    const sourceDir = path.posix.dirname(doc.relativePath);
+                    const urlDir = path.posix.dirname(
+                        doc.pageUrl.replace(siteRoot, "")
+                    );
+                    return content.replace(
+                        /(\]\()(\.{1,2}\/[^)\s]+)(\))/g,
+                        (match, open, target, close) => {
+                            const [pathPart, hash = ""] = target.split(/(#.*)$/);
+                            const resolved = path.posix.normalize(
+                                path.posix.join(sourceDir, pathPart)
+                            );
+                            const urlResolved = path.posix.normalize(
+                                path.posix.join(urlDir, pathPart)
+                            );
+
+                            // URL space first, matching how the rendered page
+                            // resolves the link.
+                            const urlHit =
+                                byUrlPath.get(urlResolved) ||
+                                byUrlPath.get(urlResolved.replace(/\.mdx?$/, ""));
+                            if (urlHit) {
+                                return `${open}${urlHit.pageUrl}.md${hash}${close}`;
+                            }
+
+                            // Sibling doc or blog post -> its published .md
+                            // twin. Docusaurus links are commonly written
+                            // without an extension (./testing), so try the
+                            // usual suffixes before giving up.
+                            const hit =
+                                byRelativePath.get(resolved) ||
+                                byRelativePath.get(`${resolved}.md`) ||
+                                byRelativePath.get(`${resolved}.mdx`) ||
+                                byRelativePath.get(`${resolved}/index.md`) ||
+                                byRelativePath.get(`${resolved}/index.mdx`);
+                            if (hit) {
+                                return `${open}${hit.pageUrl}.md${hash}${close}`;
+                            }
+
+                            // static/ is served from the site root.
+                            if (resolved.startsWith("static/")) {
+                                return `${open}/${resolved.slice(
+                                    "static/".length
+                                )}${hash}${close}`;
+                            }
+
+                            console.warn(
+                                `[plugin-generate-llms] ${doc.relativePath}: could not resolve relative link "${target}"`
+                            );
+                            return match;
+                        }
+                    );
+                };
+
                 for (const doc of docs) {
                     const rawContent = fs.readFileSync(doc.filePath, "utf-8");
 
                     // Use gray-matter to strip frontmatter
                     const parsed = matter(rawContent);
-                    const cleanContent = parsed.content.trimStart();
+                    const cleanContent = rewriteRelativeLinks(
+                        parsed.content.trimStart(),
+                        doc
+                    );
 
                     // Convert pageUrl to relative path inside build
                     let relativePath = doc.pageUrl.replace(
@@ -520,10 +693,16 @@ function GenerateLLMSPlugin(context, options) {
                     // llms.txt resolves. llms-full.txt is restricted further
                     // to keep V2 (and similar legacy content) out of the
                     // concatenated knowledge dump.
-                    writeMarkdownCopies(collectedDocs);
+                    // Pages and showcase entries have no markdown source to
+                    // copy, so they are excluded here and from llms-full.
+                    writeMarkdownCopies(
+                        collectedDocs.filter((d) => d.hasMarkdown !== false)
+                    );
 
                     const fullDocsPool = collectedDocs.filter(
-                        (d) => !excludeFromFullPluginIds.has(d.pluginId)
+                        (d) =>
+                            !excludeFromFullPluginIds.has(d.pluginId) &&
+                            d.hasMarkdown !== false
                     );
 
                     // Generate llms-full variants: one for docs, one for blog.
