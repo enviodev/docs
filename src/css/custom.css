@@ -283,9 +283,11 @@ table td {
   border-bottom: 1px solid #262626;
 }
 
-/* Scrollable wrappers for wide markdown/blog tables */
-.markdown .table-wrapper,
-.scroll-table {
+/* Scrollable wrappers for wide markdown/blog tables. Every markdown table is
+   wrapped in `.table-wrapper` by src/components/MarkdownTable, which also adds
+   `tabindex="0"` and a named `role="region"` once the wrapper overflows, so
+   the scroller is reachable by keyboard. */
+.markdown .table-wrapper {
   display: block;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -294,40 +296,37 @@ table td {
   margin-bottom: 1rem;
 }
 
-.markdown .table-wrapper::-webkit-scrollbar,
-.scroll-table::-webkit-scrollbar {
+.markdown .table-wrapper::-webkit-scrollbar {
   height: 10px;
   -webkit-appearance: none;
 }
 
-.markdown .table-wrapper::-webkit-scrollbar-thumb,
-.scroll-table::-webkit-scrollbar-thumb {
+.markdown .table-wrapper::-webkit-scrollbar-thumb {
   background-color: rgba(128, 128, 128, 0.5);
   border-radius: 5px;
 }
 
-.markdown .table-wrapper::-webkit-scrollbar-track,
-.scroll-table::-webkit-scrollbar-track {
+.markdown .table-wrapper::-webkit-scrollbar-track {
   background-color: rgba(128, 128, 128, 0.1);
   border-radius: 5px;
 }
 
-.markdown .table-wrapper > table,
-.scroll-table > table {
+.markdown .table-wrapper > table {
   width: max-content;
   min-width: 100%;
   margin: 0;
 }
 
-.scroll-table:focus-visible {
+.markdown .table-wrapper:focus-visible {
   outline: 2px solid var(--ifm-color-primary);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
 @media (max-width: 768px) {
-  .markdown .table-wrapper::after,
-  .scroll-table::after {
+  /* Only on wrappers that actually overflow, otherwise every narrow table
+     picks up a hint to swipe somewhere it cannot go. */
+  .markdown .table-wrapper--scrollable::after {
     content: "Swipe horizontally to view more \2192";
     display: block;
     margin-top: 0.35rem;
@@ -337,28 +336,31 @@ table td {
     white-space: nowrap;
   }
 
-  .markdown .table-wrapper > table,
-  .scroll-table > table {
+  .markdown .table-wrapper > table {
     font-size: 0.8125rem;
   }
 
   .markdown .table-wrapper > table th,
-  .markdown .table-wrapper > table td,
-  .scroll-table > table th,
-  .scroll-table > table td {
+  .markdown .table-wrapper > table td {
     padding: 8px 10px;
   }
 }
 
-/* Fallback for tables that are not wrapped by markdown */
-@media (max-width: 768px) {
-  article .markdown > table {
-    display: block;
-    width: max-content;
-    max-width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
+/* YouTube embeds are authored as raw <iframe width="560" height="315">, which
+   is wider than the content column on any phone and drags the whole page
+   sideways. Scale them down to the column and keep the 16:9 box.
+
+   Scoped to video hosts, and capped at the width they were authored at, so
+   this neither stretches a 560px embed across a desktop content column nor
+   forces 16:9 onto an embed that is not a video. */
+.markdown iframe[src*="youtube.com"],
+.markdown iframe[src*="youtube-nocookie.com"],
+.markdown iframe[src*="youtu.be"] {
+  max-width: 560px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border: 0;
 }
 
 /* Clean alert styling */
@@ -510,10 +512,20 @@ table td {
   }
 }
 
+/* The drawer is a flex column whose first child is the brand bar (the row with
+   the wordmark and the close button). The items pane is the second child, so
+   it should simply take whatever height is left.
+
+   It previously offset itself by --ifm-navbar-height and set its own height to
+   100dvh minus that, as if it started at the top of the viewport. The brand bar
+   is shorter than the navbar, so that left a ~60px empty band under it and
+   pushed the pane's last ~50px below the fold. `min-height: 0` is what lets a
+   flex child actually shrink so the inner list scrolls instead of overflowing. */
 .navbar-sidebar__items {
-  margin-top: var(--ifm-navbar-height);
-  height: calc(100dvh - var(--ifm-navbar-height));
-  max-height: calc(100dvh - var(--ifm-navbar-height));
+  margin-top: 0;
+  height: auto;
+  max-height: none;
+  min-height: 0;
   overflow: visible; /* avoid clipping links; let inner list handle scroll */
   flex: 1 1 auto;
 }
@@ -521,6 +533,7 @@ table td {
 /* Let the inner list area scroll instead of the container */
 .navbar-sidebar__item.menu {
   overflow-y: auto;
+  max-height: 100%;
 }
 
 /* While sidebar is open, ensure clicks go to the sidebar, not the navbar */
@@ -712,6 +725,12 @@ html:not([data-theme="dark"]) {
 
   /* Search now lives in the left sidebar on desktop — hide the navbar copy */
   .navbar .DocSearch-Button {
+    display: none !important;
+  }
+
+  /* Changelog / Showcase / Blog / Shipper's Logs are in the sidebar header at
+     this width, so the mobile-drawer copies would be duplicates. */
+  .navbar__item--mobile-only {
     display: none !important;
   }
 }

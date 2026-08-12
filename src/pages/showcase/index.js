@@ -88,10 +88,7 @@ function ShowcaseCards() {
     <div className="container">
       <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
         {sites.map((site, idx) => (
-          <div
-            key={idx}
-            style={{ display: "flex", flex: "0 0 calc((100% - 2rem) / 3)" }}
-          >
+          <div key={idx} className="showcase-card-cell">
             <ShowcaseCard site={site} />
           </div>
         ))}
@@ -118,6 +115,24 @@ export default function Showcase() {
         .showcase-card:hover {
           border-color: #454545 !important;
           transform: scale(1.02);
+        }
+        /* Three across is only readable once there's room for it. The cell
+           width used to be a flat one third at every size, which on a phone
+           left ~121px cards with a ~79px description column — six lines for a
+           one-line sentence. */
+        .showcase-card-cell {
+          display: flex;
+          flex: 0 0 calc((100% - 2rem) / 3);
+        }
+        @media (max-width: 996px) {
+          .showcase-card-cell {
+            flex-basis: calc((100% - 1rem) / 2);
+          }
+        }
+        @media (max-width: 600px) {
+          .showcase-card-cell {
+            flex-basis: 100%;
+          }
         }
       `}</style>
       <main className="margin-vert--lg">

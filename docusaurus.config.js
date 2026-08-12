@@ -453,6 +453,35 @@ const config = {
             activeBaseRegex:
               "^/docs/HyperIndex/(hosted-service|self-hosting|organisation-setup|envio-cloud-cli)",
           },
+          // Changelog / Showcase / Blog / Shipper's Logs otherwise live only in
+          // the docs sidebar header, which is display:none below 997px — so on
+          // every phone and on an iPad in portrait they had no entry point at
+          // all (the footer only carries Blog). These mirror them into the
+          // mobile drawer and are hidden again once the sidebar reappears.
+          {
+            href: "https://envio.dev/changelog",
+            label: "Changelog",
+            position: "left",
+            className: "navbar__item--mobile-only",
+          },
+          {
+            to: "/showcase",
+            label: "Showcase",
+            position: "left",
+            className: "navbar__item--mobile-only",
+          },
+          {
+            to: "/blog",
+            label: "Blog",
+            position: "left",
+            className: "navbar__item--mobile-only",
+          },
+          {
+            to: "/videos",
+            label: "Shipper's Logs",
+            position: "left",
+            className: "navbar__item--mobile-only",
+          },
           {
             href: "https://github.com/enviodev",
             position: "right",
