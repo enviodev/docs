@@ -258,6 +258,16 @@ try {
   );
 }
 
+// Chain count for the llms.txt header. network-count.json is regenerated from
+// the live chain API on every build, so this tracks reality instead of drifting
+// like a hardcoded number does. The count is EVM-only (update-endpoints.js
+// filters out Fuel and the -traces endpoint variants), which is why Fuel is
+// named separately in the header sentence. Falls back to a deliberately vague
+// phrase rather than a stale figure if the file is missing.
+const hyperSyncChainCountLabel = networkCountData.hyperSyncChainCount
+  ? `${networkCountData.hyperSyncChainCount}+`
+  : "many";
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Envio",
@@ -555,6 +565,15 @@ const config = {
         // V2 is listed in llms.txt for discoverability but stays out of
         // llms-full.txt and the per-page .md copies.
         excludeFromFullPluginIds: ["HyperIndexV2"],
+        // Standalone pages and showcase entries are live, sitemapped pages that
+        // the docs and blog collectors do not own. Both are read from the same
+        // sources that render them, so new entries appear in llms.txt with no
+        // second list to maintain.
+        pages: { path: "src/pages" },
+        showcase: {
+          dataPath: "src/pages/showcase/_data.js",
+          routeBasePath: "showcase",
+        },
         filesConfigs: [
           {
             main: true, // becomes llms.txt
@@ -562,7 +581,7 @@ const config = {
             header: `
 # Envio: Fast, Multi-Chain Blockchain Indexer
 
-> Envio is a real-time multichain blockchain indexer. HyperIndex is a multichain indexer supporting any EVM chain, plus Solana and Fuel. HyperSync is a high-throughput data layer natively available on 70+ EVM chains and Fuel, and supports any EVM chain via RPC. HyperRPC is a read-only JSON-RPC endpoint powered by HyperSync, up to 5x faster than traditional nodes. Benchmark: Envio 1 min vs The Graph 143 min (Uniswap V2 Factory, [Sentio, May 2025](https://docs.envio.dev/docs/HyperIndex/benchmarks.md)).
+> Envio is a real-time multichain blockchain indexer. HyperIndex is a multichain indexer supporting any EVM chain, plus Solana and Fuel. HyperSync is a high-throughput data layer natively available on ${hyperSyncChainCountLabel} EVM chains and Fuel, and supports any EVM chain via RPC. HyperRPC is a read-only JSON-RPC endpoint powered by HyperSync, up to 5x faster than traditional nodes. On the Uniswap V2 Factory case, independent Sentio benchmarks from April 2025 measured Envio at 8s against The Graph at 19m, 142x slower ([full results](https://docs.envio.dev/docs/HyperIndex/benchmarks.md)).
 
 This file is generated from page frontmatter at build time and follows the llmstxt.org standard.
 `,
@@ -725,14 +744,40 @@ This file is generated from page frontmatter at build time and follows the llmst
                 ],
               },
               {
+                heading: "Showcase",
+                source: "showcase",
+                catchAll: true,
+              },
+              {
                 heading: "Legal",
                 include: [
                   "docs/HyperIndex/privacy-policy.{md,mdx}",
                   "docs/HyperIndex/terms-of-service.{md,mdx}",
                 ],
               },
+              {
+                heading: "Other pages",
+                source: "pages",
+                catchAll: true,
+              },
             ],
             optional: [
+              // The full-text dumps point back at this file, but nothing here
+              // pointed at them, so an agent starting from llms.txt had no way
+              // to discover them. Listed first because they are the highest
+              // value follow-up for an agent that can ingest them.
+              {
+                label: "Full documentation (llms-full.txt)",
+                href: "https://docs.envio.dev/llms-full.txt",
+                description:
+                  "Every documentation page concatenated as markdown with per-page source URLs, for direct ingestion into a context window.",
+              },
+              {
+                label: "Full blog and case studies (llms-full-blog.txt)",
+                href: "https://docs.envio.dev/llms-full-blog.txt",
+                description:
+                  "Every blog post and case study concatenated as markdown with per-page source URLs.",
+              },
               {
                 label: "Envio website",
                 href: "https://envio.dev",

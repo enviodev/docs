@@ -1,6 +1,7 @@
 ---
 id: index
 title: HyperIndex Supported Networks
+description: Every network HyperIndex supports natively, with chain IDs and HyperSync endpoints, plus RPC support for any other EVM chain and indexing on Fuel.
 sidebar_label: Supported Networks
 slug: /supported-networks
 ---

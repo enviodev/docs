@@ -1,6 +1,7 @@
 ---
 id: hosted-service-features
 title: Features
+description: Production features for managing and securing indexer deployments on Envio Cloud, and which plans include them.
 sidebar_label: Features
 slug: /hosted-service-features
 ---
