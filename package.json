@@ -10,6 +10,7 @@
     "dev": "yarn start",
     "prebuild": "node ./scripts/update-endpoints.js && node ./scripts/generate-blog-index.js && node ./scripts/generate-shipper-videos.js && node ./scripts/validate-blog-social-images.js && node ./scripts/generate-og-images.js && node ./scripts/generate-blog-og-images.js && node ./scripts/generate-showcase-og-images.js && node ./scripts/test-blog-jsonld.js",
     "build": "docusaurus build",
+    "postbuild": "node ./scripts/validate-llms.js",
     "swizzle": "docusaurus swizzle",
     "update-endpoints": "node ./scripts/update-endpoints.js",
     "test-blog-jsonld": "node ./scripts/test-blog-jsonld.js",
@@ -29,7 +30,8 @@
     "preinstall": "npx only-allow yarn",
     "consolidate-docs": "node ./scripts/consolidate-hyperindex-docs.js --all",
     "build-llm": "yarn consolidate-docs && node ./scripts/validate-blog-social-images.js && npx docusaurus build --config docusaurus.config.llm.js",
-    "start-llm": "yarn consolidate-docs && npx docusaurus start --config docusaurus.config.llm.js"
+    "start-llm": "yarn consolidate-docs && npx docusaurus start --config docusaurus.config.llm.js",
+    "validate-llms": "node ./scripts/validate-llms.js"
   },
   "dependencies": {
     "@cookbookdev/docsbot": "^4.21.23",
