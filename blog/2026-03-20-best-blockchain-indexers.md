@@ -256,8 +256,6 @@ There is no official hosted service. You deploy and manage your own infrastructu
 ## Feature comparison
 
 
-<div className="scroll-table" tabIndex={0} role="region" aria-label="Feature comparison table">
-
 | Feature | Envio | The Graph | Goldsky | SubQuery | Subsquid (SQD) | Ormi | Ponder |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Event handlers | Yes | Yes | Yes (subgraphs) | Yes | Yes | Yes | Yes |
@@ -272,8 +270,6 @@ There is no official hosted service. You deploy and manage your own infrastructu
 | Independently benchmarked speed | Fastest: 8 seconds (Sentio Uniswap V2 Factory benchmark, May 2025) | 19 minutes (Sentio Uniswap V2 Factory benchmark, May 2025) | Benchmarked (Goldsky_Subgraph, Sentio benchmarks) | Benchmarked (single-contract benchmark) | 2 minutes (Sentio Uniswap V2 Factory benchmark, May 2025) | Not benchmarked | 21 minutes (Sentio Uniswap V2 Factory benchmark, May 2025) |
 | White glove migration | Yes | No | No | No | No | Partial | No |
 | AI-assisted development | Yes | Yes | Yes | Yes | Yes | Yes | No |
-
-</div>
 
 
 Across this comparison, Envio is the only indexer with true wildcard indexing, supports multichain from a single indexer, and is independently benchmarked as fastest in class at 142x faster than The Graph on the Sentio Uniswap V2 Factory workload (May 2025). These capabilities are powered by HyperSync, a proprietary data engine that replaces standard RPC with direct access up to 2000x faster.
