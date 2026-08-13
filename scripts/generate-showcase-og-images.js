@@ -12,9 +12,9 @@
  * referenced by src/pages/showcase/index.js. Entry slugs are restricted to
  * [a-z0-9-] below, so the leading underscore cannot collide with a real entry.
  *
- * Each card shows that entry's own showcase asset, cropped to the 1200x630 OG
- * frame with a small Envio logo over a bottom scrim, so a shared /showcase/<slug>
- * link unfurls as the project itself rather than as generic branding.
+ * Each card is that entry's own showcase asset cropped to the 1200x630 OG frame,
+ * with no branding over it, so a shared /showcase/<slug> link unfurls as the
+ * project itself rather than as generic Envio branding.
  *
  * Animated gifs are flattened to their first frame, since no social platform
  * unfurls an animation. Video entries (webm/mp4) cannot be sampled at build time
@@ -89,11 +89,6 @@ const DESC_MAX_LINES = 3;
 // stays within the 630px canvas.
 const SECTION_Y = 278;
 const TITLE_START_Y = 356;
-
-// Branding overlaid on the asset cards. The logo reuses the LOGO_* constants so
-// it sits exactly where the generated text cards put it, and the scrim behind it
-// keeps it legible no matter how light the underlying screenshot is.
-const SCRIM_HEIGHT = 170;
 
 // Showcase assets live under this prefix; anything else is rejected rather than
 // read, so a bad _data.js entry cannot pull an arbitrary file into a card.
@@ -227,22 +222,9 @@ function resolveAsset(site) {
   return fs.existsSync(abs) ? abs : null;
 }
 
-function buildOverlaySvg() {
-  return `<?xml version="1.0" encoding="UTF-8"?>
-<svg width="${WIDTH}" height="${HEIGHT}" viewBox="0 0 ${WIDTH} ${HEIGHT}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <defs>
-    <linearGradient id="scrim" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="${COLOR_BG}" stop-opacity="0.95"/>
-      <stop offset="100%" stop-color="${COLOR_BG}" stop-opacity="0"/>
-    </linearGradient>
-  </defs>
-  <rect x="0" y="0" width="${WIDTH}" height="${SCRIM_HEIGHT}" fill="url(#scrim)"/>
-  <image xlink:href="${logoDataUri}" x="${LOGO_X}" y="${LOGO_Y}" width="${LOGO_W}" height="${LOGO_H}"/>
-</svg>`;
-}
-
 /**
- * The entry's screenshot cropped to the OG frame. Every showcase asset is
+ * The entry's screenshot cropped to the OG frame, with no branding over it so
+ * the project's own interface is all that shows. Every showcase asset is
  * landscape and close to 16:9, so a top-anchored cover crop into the slightly
  * wider 1200x630 frame trims the edges without cutting into the content.
  * `animated: false` takes frame one of a gif rather than the whole sequence.
@@ -250,7 +232,6 @@ function buildOverlaySvg() {
 function buildAssetCard(assetPath) {
   return sharp(assetPath, { animated: false })
     .resize(WIDTH, HEIGHT, { fit: "cover", position: "top" })
-    .composite([{ input: Buffer.from(buildOverlaySvg()), top: 0, left: 0 }])
     .png()
     .toBuffer();
 }
