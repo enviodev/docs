@@ -9,7 +9,7 @@ const sites = [
     title: "v4.xyz",
     description: "The hub for Uniswap V4 data, analytics, and insights.",
     longDescription:
-      "v4.xyz is the central hub for exploring Uniswap V4 hook deployments, pool data, and on-chain analytics. Built with Envio's HyperIndex, it provides real-time indexing of Uniswap V4 smart contract events across multiple chains, enabling developers and researchers to track pool creation, liquidity positions, swap activity, and hook usage. The platform offers fast, reliable data access through a GraphQL API powered by HyperIndex's multi-chain indexing capabilities.",
+      "v4.xyz is the central hub for exploring Uniswap V4 hook deployments, pool data, and onchain analytics. Built with Envio's HyperIndex, it provides real-time indexing of Uniswap V4 smart contract events across multiple chains, enabling developers and researchers to track pool creation, liquidity positions, swap activity, and hook usage. The platform offers fast, reliable data access through a GraphQL API powered by HyperIndex's multi-chain indexing capabilities.",
     image: "/img/showcase/www.v4.xyz-scroll_original.gif",
     source: "https://v4.xyz",
     tags: [tags.hyperindex],
@@ -29,9 +29,9 @@ const sites = [
     slug: "x402stats",
     title: "x402stats",
     description:
-      "A real-time analytics dashboard for the x402 payment protocol on Base: volume, facilitators, services, buyers, and a live payment feed.",
+      "A real-time analytics dashboard for the x402 payment protocol on Base, tracking volume, facilitators, services, buyers, and a live payment feed.",
     longDescription:
-      "x402stats is a real-time analytics dashboard for the x402 payment protocol on Base. Built with Envio's HyperIndex, it tracks total payment volume (in USDC), payment counts, active services, and buyers across configurable time ranges (24h, 7d, 30d, and all-time). A live feed streams payments as they happen, while leaderboards rank the top services accepting x402 and the top facilitators clearing those payments (grouped by brand and aggregated across their operator wallets). The dashboard also breaks data down by facilitator, marketplace of services, individual payments, and buyer wallets, alongside higher-level insights and health metrics such as payment attribution and volume drift. It additionally taps Envio's HyperSync to pull on-chain trace data, enabling a deeper, transaction-level view of x402 flows. Together these give developers, builders, and researchers a single, fast window into the x402 ecosystem on Base.",
+      "x402stats is a real-time analytics dashboard for the x402 payment protocol on Base. Built with Envio's HyperIndex, it tracks total payment volume (in USDC), payment counts, active services, and buyers across configurable time ranges (24h, 7d, 30d, and all-time). A live feed streams payments as they happen, while leaderboards rank the top services accepting x402 and the top facilitators clearing those payments (grouped by brand and aggregated across their operator wallets). The dashboard also breaks data down by facilitator, marketplace of services, individual payments, and buyer wallets, alongside higher-level insights and health metrics such as payment attribution and volume drift. It additionally taps Envio's HyperSync to pull onchain trace data, enabling a deeper, transaction-level view of x402 flows. Together these give developers, builders, and researchers a single, fast window into the x402 ecosystem on Base.",
     image: "/img/showcase/x402stats.gif",
     source: "https://x402stats.ai",
     tags: [tags.hyperindex, tags.hypersync],
@@ -77,7 +77,7 @@ const sites = [
     description:
       "A real-time analytics dashboard for tracking tokenised stocks and stablecoins across multiple chains.",
     longDescription:
-      "RWA Radar is a real-time analytics dashboard that tracks real-world assets (RWAs) on-chain across two asset classes, stablecoins and tokenised stocks. Built with Envio's HyperIndex, the dashboard shows token activity across multiple blockchain networks, providing asset-class breakdowns, volume metrics, and historical trends. You can view multichain data for any single asset in one unified view and export dashboard data as CSV, PDF, or XLSX for your own analysis. The dashboard gives researchers, investors, and DeFi developers a comprehensive window into the growing RWA ecosystem.",
+      "RWA Radar is a real-time analytics dashboard that tracks real-world assets (RWAs) onchain across two asset classes, stablecoins and tokenised stocks. Built with Envio's HyperIndex, the dashboard shows token activity across multiple blockchain networks, providing asset-class breakdowns, volume metrics, and historical trends. You can view multichain data for any single asset in one unified view and export dashboard data as CSV, PDF, or XLSX for your own analysis. The dashboard gives researchers, investors, and DeFi developers a comprehensive window into the growing RWA ecosystem.",
     video: "/img/showcase/rwaradar.mp4",
     poster: "/img/showcase/rwa-radar-poster.png",
     source: "https://rwaradar.io",
@@ -98,7 +98,7 @@ const sites = [
     slug: "oracle-wars",
     title: "Oracle Wars",
     description:
-      "Visualize and compare real-time oracle price data across multiple oracles.",
+      "Visualise and compare real-time oracle price data across multiple oracles.",
     longDescription:
       "Oracle Wars is an interactive visualisation tool that compares real-time price feed data from three oracle providers, RedStone, Chainlink and Chronicle. Powered by Envio's HyperIndex, it indexes oracle price update events and refreshes the data every 30 seconds, letting users compare how each provider reports the ETH/USD pair on Ethereum, with more pairs coming soon. An Oracle Statistics panel breaks down update counts for each provider over the last 24 hours, helping developers and researchers evaluate oracle reliability and decide which price feed providers to integrate into their DeFi applications. A separate deployment tracks RedStone Bolt price feeds across several pairs on MegaETH Mainnet and Testnet.",
     image: "/img/showcase/www.oraclewars.xyz_.png",
@@ -134,7 +134,7 @@ const sites = [
     description:
       "Trace and explore the genetic traits of CryptoKitties from parents to offspring.",
     longDescription:
-      "The CryptoKitties Genome Visualiser is an interactive tool that lets users explore the genetic trait system of CryptoKitties NFTs. Built with Envio's HyperIndex, it indexes breeding events, birth events, and genome data from the CryptoKitties smart contracts on Ethereum. Users can trace genetic traits from parent kitties to offspring, visualize trait inheritance patterns, and explore the full genealogy of any CryptoKitty. The project showcases HyperIndex's ability to index complex on-chain data structures and make them accessible through an intuitive interface.",
+      "The CryptoKitties Genome Visualiser is an interactive tool that lets users explore the genetic trait system of CryptoKitties NFTs. Built with Envio's HyperIndex, it indexes breeding events, birth events, and genome data from the CryptoKitties smart contracts on Ethereum. Users can trace genetic traits from parent kitties to offspring, visualise trait inheritance patterns, and explore the full genealogy of any CryptoKitty. The project showcases HyperIndex's ability to index complex onchain data structures and make them accessible through an intuitive interface.",
     image: "/img/showcase/crypto-kitties-genome-visualiser.vercel.app_.png",
     source: "https://crypto-kitties-genome-visualiser.vercel.app/",
     tags: [tags.hyperindex],
@@ -143,9 +143,9 @@ const sites = [
     slug: "chain-density",
     title: "Chain Density",
     description:
-      "Analyze and visualize transaction and event density for any address across dozens of chains.",
+      "Analyse and visualise transaction and event density for any address across dozens of chains.",
     longDescription:
-      "Chain Density is a cross-chain analytics tool that visualizes transaction and event density for any wallet address across dozens of blockchain networks. Built with Envio's HyperSync, it leverages high-speed data retrieval to quickly scan activity across dozens of chains, generating density maps and activity heatmaps for any given address. The platform is useful for on-chain investigators, portfolio trackers, and anyone looking to understand multi-chain wallet activity patterns without manually checking each network individually.",
+      "Chain Density is a cross-chain analytics tool that visualises transaction and event density for any wallet address across dozens of blockchain networks. Built with Envio's HyperSync, it leverages high-speed data retrieval to quickly scan activity across dozens of chains, generating density maps and activity heatmaps for any given address. The platform is useful for onchain investigators, portfolio trackers, and anyone looking to understand multi-chain wallet activity patterns without manually checking each network individually.",
     image: "/img/showcase/chaindensity.xyz_.png",
     source: "https://chaindensity.xyz/",
     tags: [tags.hypersync],
@@ -156,7 +156,7 @@ const sites = [
     description:
       "A TUI tool for scanning token approvals and tracking exposure.",
     longDescription:
-      "Snubb is a terminal user interface (TUI) tool built with Envio's HyperSync that scans and analyzes ERC-20 token approval data for any wallet address. Using HyperSync's fast data retrieval, Snubb quickly identifies all active token approvals, their spender contracts, and the approved amounts, helping users understand their exposure to potentially risky smart contract permissions. It's a lightweight, developer-friendly tool for auditing token approvals directly from the command line.",
+      "Snubb is a terminal user interface (TUI) tool built with Envio's HyperSync that scans and analyses ERC-20 token approval data for any wallet address. Using HyperSync's fast data retrieval, Snubb quickly identifies all active token approvals, their spender contracts, and the approved amounts, helping users understand their exposure to potentially risky smart contract permissions. It's a lightweight, developer-friendly tool for auditing token approvals directly from the command line.",
     image: "/img/showcase/snubb.png",
     source: "https://www.npmjs.com/package/snubb",
     tags: [tags.hypersync],
@@ -166,7 +166,7 @@ const sites = [
     title: "LogTUI",
     description: "A TUI for monitoring blockchain events in real time.",
     longDescription:
-      "LogTUI is a terminal user interface tool that provides real-time monitoring of blockchain events directly in your terminal. Powered by Envio's HyperSync, it streams on-chain event logs with minimal latency, allowing developers to watch contract events, debug transactions, and monitor protocol activity from the command line. LogTUI supports filtering by contract address, event signature, and topic, making it a versatile tool for blockchain developers who prefer terminal-based workflows.",
+      "LogTUI is a terminal user interface tool that provides real-time monitoring of blockchain events directly in your terminal. Powered by Envio's HyperSync, it streams onchain event logs with minimal latency, allowing developers to watch contract events, debug transactions, and monitor protocol activity from the command line. LogTUI supports filtering by contract address, event signature, and topic, making it a versatile tool for blockchain developers who prefer terminal-based workflows.",
     image: "/img/showcase/logtui.gif",
     source: "https://www.npmjs.com/package/logtui",
     tags: [tags.hypersync],
