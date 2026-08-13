@@ -416,23 +416,22 @@ const config = {
           style: { display: "none" },
         },
         items: [
+          // A plain link, not a version dropdown. The dropdown put a sitewide
+          // link to `/docs/v2/HyperIndex/overview` on all 282 pages, and that
+          // page — like all 64 v2 pages — is `noindex`. Across the whole site
+          // 2,596 internal links terminated in that tree, so a large share of
+          // the link graph drained into pages Google is told to discard, and
+          // v3's own overview never got a top-level sitewide link of its own
+          // (the dropdown's parent label is a button, not an anchor).
+          //
+          // v2 stays published and reachable — see the migration guides, which
+          // is where someone on v2 actually starts.
           {
-            type: "dropdown",
+            to: "docs/HyperIndex/overview",
             label: "HyperIndex",
             position: "left",
-            items: [
-              {
-                label: "v3 (latest)",
-                to: "docs/HyperIndex/overview",
-                activeBaseRegex:
-                  "^/docs/HyperIndex/(?!(hosted-service|self-hosting|organisation-setup|envio-cloud-cli))",
-              },
-              {
-                label: "v2",
-                to: "docs/v2/HyperIndex/overview",
-                activeBaseRegex: "^/docs/v2/HyperIndex/",
-              },
-            ],
+            activeBaseRegex:
+              "^/docs/HyperIndex/(?!(hosted-service|self-hosting|organisation-setup|envio-cloud-cli))",
           },
           {
             to: "docs/HyperSync/overview",
@@ -453,26 +452,27 @@ const config = {
             activeBaseRegex:
               "^/docs/HyperIndex/(hosted-service|self-hosting|organisation-setup|envio-cloud-cli)",
           },
-          // Changelog / Showcase / Blog / Shipper's Logs otherwise live only in
-          // the docs sidebar header, which is display:none below 997px — so on
-          // every phone and on an iPad in portrait they had no entry point at
-          // all (the footer only carries Blog). These mirror them into the
-          // mobile drawer and are hidden again once the sidebar reappears.
+          // Blog and Showcase are now real navbar items on every viewport.
+          // They previously carried `navbar__item--mobile-only`, so on desktop
+          // their only entry point was the docs sidebar header — which renders
+          // on `/docs/*` and nowhere else. Both are content hubs we want
+          // crawled, and neither had a sitewide link.
           {
-            href: "https://envio.dev/changelog",
-            label: "Changelog",
+            to: "/blog",
+            label: "Blog",
             position: "left",
-            className: "navbar__item--mobile-only",
           },
           {
             to: "/showcase",
             label: "Showcase",
             position: "left",
-            className: "navbar__item--mobile-only",
           },
+          // Changelog and Shipper's Logs stay out of the desktop navbar to keep
+          // it from wrapping, but they are no longer sidebar-only: the footer
+          // below now carries them sitewide.
           {
-            to: "/blog",
-            label: "Blog",
+            href: "https://envio.dev/changelog",
+            label: "Changelog",
             position: "left",
             className: "navbar__item--mobile-only",
           },
@@ -502,33 +502,80 @@ const config = {
         appId: "584MK2OMPZ",
         contextualSearch: true,
       },
+      // The footer renders on all ~280 pages, so it is the only surface that
+      // can give a page a sitewide link. It previously carried four links
+      // (Discord, Twitter, Blog, GitHub), which left every content hub relying
+      // on the docs sidebar header — a surface that exists only under /docs/*.
+      //
+      // The Pricing column is deliberately cross-domain. envio.dev has no
+      // footer at all, and /pricing/hypersync, /pricing/hyperrpc and
+      // /pricing/services had zero inbound links from anywhere on either site:
+      // they existed in envio.dev's sitemap and in no link graph, which is the
+      // textbook shape of "Discovered - currently not indexed". Linking them
+      // from here gives each one a real inbound edge from every docs page
+      // until envio.dev grows a footer of its own.
       footer: {
         style: "dark",
         links: [
           {
-            title: "Community",
+            title: "Docs",
             items: [
+              { label: "HyperIndex", to: "/docs/HyperIndex/overview" },
+              { label: "HyperSync", to: "/docs/HyperSync/overview" },
+              { label: "HyperRPC", to: "/docs/HyperRPC/overview-hyperrpc" },
+              { label: "Envio Cloud", to: "/docs/HyperIndex/hosted-service" },
+              { label: "Migrate to v3", to: "/docs/HyperIndex/migration-guide" },
+            ],
+          },
+          {
+            title: "Resources",
+            items: [
+              { label: "Blog", to: "/blog" },
+              { label: "Showcase", to: "/showcase" },
+              { label: "Shipper's Logs", to: "/videos" },
+              { label: "Benchmarks", to: "/docs/HyperIndex/benchmarks" },
               {
-                label: "Discord",
-                href: "https://discord.gg/envio",
+                label: "Supported Chains",
+                href: "https://envio.dev/chains",
               },
               {
-                label: "Twitter",
-                href: "https://twitter.com/envio_indexer",
+                label: "Changelog",
+                href: "https://envio.dev/changelog",
               },
             ],
           },
           {
-            title: "More",
+            title: "Pricing",
             items: [
               {
-                label: "Blog",
-                to: "/blog",
+                label: "HyperIndex Hosting",
+                href: "https://envio.dev/pricing/hosting",
               },
               {
-                label: "GitHub",
-                href: "https://github.com/enviodev",
+                label: "HyperSync",
+                href: "https://envio.dev/pricing/hypersync",
               },
+              {
+                label: "HyperRPC",
+                href: "https://envio.dev/pricing/hyperrpc",
+              },
+              {
+                label: "Subgraph Hosting",
+                href: "https://envio.dev/pricing/subgraphs",
+              },
+              {
+                label: "Support & Services",
+                href: "https://envio.dev/pricing/services",
+              },
+            ],
+          },
+          {
+            title: "Community",
+            items: [
+              { label: "Discord", href: "https://discord.gg/envio" },
+              { label: "Telegram", href: "https://t.me/+BeS5ihVUFONjNGFk" },
+              { label: "Twitter", href: "https://twitter.com/envio_indexer" },
+              { label: "GitHub", href: "https://github.com/enviodev" },
             ],
           },
         ],

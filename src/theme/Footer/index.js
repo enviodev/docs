@@ -1,60 +1,51 @@
 import React from "react";
 import Link from "@docusaurus/Link";
 import { useThemeConfig } from "@docusaurus/theme-common";
+import styles from "./styles.module.css";
 
+// This override used to flatten every footer group into one row inside a
+// fixed-height bar (`height: var(--ifm-navbar-height)`), which worked while the
+// footer held four links. It now carries twenty across four groups, and a
+// single row overflowed into an unreadable strip with the group headings
+// dropped entirely. Rendering the groups as columns is also the point of the
+// footer: it is the only surface that gives a page a sitewide link.
 function Footer() {
   const { footer } = useThemeConfig();
   if (!footer) return null;
 
-  const links = footer.links.flatMap((group) =>
-    group.items.map((item) => ({
-      label: item.label,
-      href: item.href || item.to,
-      isExternal: !!item.href,
-    }))
+  const groups = (footer.links ?? []).filter(
+    (group) => (group.items ?? []).length > 0
   );
 
   return (
-    <footer
-      style={{
-        borderTop: "1px solid var(--ifm-color-emphasis-300)",
-        background: "var(--ifm-background-color)",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          width: "100%",
-          margin: "0",
-          padding: "0 1.5rem",
-          height: "var(--ifm-navbar-height)",
-          fontSize: "0.875rem",
-        }}
-      >
-        <span style={{ color: "var(--ifm-color-emphasis-600)" }}>
-          {footer.copyright}
-        </span>
-
-        <nav style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
-          {links.map((link, i) => (
-            <Link
-              key={i}
-              to={link.href}
-              style={{
-                color: "var(--ifm-color-emphasis-600)",
-                fontSize: "0.875rem",
-                textDecoration: "none",
-              }}
-              {...(link.isExternal
-                ? { target: "_blank", rel: "noopener noreferrer" }
-                : {})}
-            >
-              {link.label}
-            </Link>
+    <footer className={styles.footer}>
+      <div className={styles.inner}>
+        <div className={styles.columns}>
+          {groups.map((group) => (
+            <div key={group.title} className={styles.column}>
+              <div className={styles.heading}>{group.title}</div>
+              {group.items.map((item) => {
+                const href = item.href || item.to;
+                const isExternal = !!item.href;
+                return (
+                  <Link
+                    key={href ?? item.label}
+                    to={href}
+                    className={styles.link}
+                    {...(isExternal
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
           ))}
-        </nav>
+        </div>
+        {footer.copyright && (
+          <div className={styles.bottom}>{footer.copyright}</div>
+        )}
       </div>
     </footer>
   );
