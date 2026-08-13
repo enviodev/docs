@@ -90,13 +90,10 @@ const DESC_MAX_LINES = 3;
 const SECTION_Y = 278;
 const TITLE_START_Y = 356;
 
-// Branding overlaid on the asset cards. The scrim keeps the logo legible no
-// matter how light the underlying screenshot is.
+// Branding overlaid on the asset cards. The logo reuses the LOGO_* constants so
+// it sits exactly where the generated text cards put it, and the scrim behind it
+// keeps it legible no matter how light the underlying screenshot is.
 const SCRIM_HEIGHT = 170;
-const OVERLAY_LOGO_W = 150;
-const OVERLAY_LOGO_H = 36;
-const OVERLAY_LOGO_X = 60;
-const OVERLAY_LOGO_BOTTOM_INSET = 54;
 
 // Showcase assets live under this prefix; anything else is rejected rather than
 // read, so a bad _data.js entry cannot pull an arbitrary file into a card.
@@ -234,13 +231,13 @@ function buildOverlaySvg() {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="${WIDTH}" height="${HEIGHT}" viewBox="0 0 ${WIDTH} ${HEIGHT}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
-    <linearGradient id="scrim" x1="0" y1="1" x2="0" y2="0">
+    <linearGradient id="scrim" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="${COLOR_BG}" stop-opacity="0.95"/>
       <stop offset="100%" stop-color="${COLOR_BG}" stop-opacity="0"/>
     </linearGradient>
   </defs>
-  <rect x="0" y="${HEIGHT - SCRIM_HEIGHT}" width="${WIDTH}" height="${SCRIM_HEIGHT}" fill="url(#scrim)"/>
-  <image xlink:href="${logoDataUri}" x="${OVERLAY_LOGO_X}" y="${HEIGHT - OVERLAY_LOGO_H - OVERLAY_LOGO_BOTTOM_INSET}" width="${OVERLAY_LOGO_W}" height="${OVERLAY_LOGO_H}"/>
+  <rect x="0" y="0" width="${WIDTH}" height="${SCRIM_HEIGHT}" fill="url(#scrim)"/>
+  <image xlink:href="${logoDataUri}" x="${LOGO_X}" y="${LOGO_Y}" width="${LOGO_W}" height="${LOGO_H}"/>
 </svg>`;
 }
 
