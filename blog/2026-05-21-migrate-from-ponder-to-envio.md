@@ -1,7 +1,7 @@
 ---
 title: Migrate from Ponder to Envio HyperIndex
 sidebar_label: Migrate from Ponder to Envio HyperIndex
-tags: [tutorial]
+tags: [tutorials]
 slug: /migrate-from-ponder-to-envio
 description: "Migrate from Ponder to HyperIndex in three steps. Up to 157x faster sync. Same TypeScript, multichain by default. Real before-and-after code."
 image: /blog-assets/migrate-from-ponder-to-envio.png

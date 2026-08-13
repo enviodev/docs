@@ -1,7 +1,7 @@
 ---
 title: How to Scale Subgraphs to Millions of Requests
 sidebar_label: How to Scale Subgraphs to Millions of Requests
-tags: [tutorial]
+tags: [tutorials]
 slug: /scale-subgraphs-millions-of-requests
 description: "Scaling subgraph-style data to millions of requests is two problems: sync speed and query latency. How HyperIndex handles both while keeping your data model intact."
 image: /blog-assets/scale-subgraphs-millions-of-requests.png
