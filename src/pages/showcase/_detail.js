@@ -15,7 +15,10 @@ function metaDescriptionFor(site) {
   if (source.length <= 160) return source;
   const cut = source.slice(0, 160);
   const lastSpace = cut.lastIndexOf(" ");
-  return `${cut.slice(0, lastSpace > 0 ? lastSpace : 160).replace(/[,.;:\s]+$/, "")}…`;
+  // With no space to fall back on, leave room for the ellipsis so the result
+  // still fits 160.
+  const end = lastSpace > 0 ? lastSpace : 159;
+  return `${cut.slice(0, end).replace(/[,.;:\s]+$/, "")}…`;
 }
 
 function renderWithCode(text = "") {
