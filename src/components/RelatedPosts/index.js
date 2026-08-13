@@ -65,14 +65,22 @@ function pickRelated(permalink, currentTags) {
     currentTags.length > 0
       ? allPosts.filter((p) => (p.tags ?? []).some((t) => currentTags.includes(t)))
       : [];
-  // A tag with a single member gives nothing to point at; fall back to the
-  // full list so the block never disappears.
-  const pool = tagged.length > 1 ? tagged : allPosts;
-  const related = rotate(pool, permalink, RELATED_COUNT - neighbour.length, claimed);
+  // Take what the tag can offer, then backfill from the full list. A small tag
+  // cannot fill the row on its own: `announcements` holds three posts, so once
+  // the current post and the post already claimed as the neighbour are
+  // excluded it yields a single card, and
+  // /blog/metamask-smart-accounts-hackathon-winners rendered a two-card row.
+  // Backfilling keeps every post at RELATED_COUNT while still preferring
+  // same-tag matches, and a tag with a single member still degrades cleanly.
+  const remaining = RELATED_COUNT - neighbour.length;
+  const related =
+    tagged.length > 1 ? rotate(tagged, permalink, remaining, claimed) : [];
+  related.forEach((post) => claimed.add(post.permalink));
+  const fill = rotate(allPosts, permalink, remaining - related.length, claimed);
 
   return {
-    items: [...related, ...neighbour].slice(0, RELATED_COUNT),
-    fromTag: pool === tagged && related.length > 0,
+    items: [...related, ...fill, ...neighbour].slice(0, RELATED_COUNT),
+    fromTag: related.length > 0,
   };
 }
 
