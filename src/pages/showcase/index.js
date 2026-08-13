@@ -6,7 +6,7 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import { sites } from "./_data";
 
 // TITLE and DESCRIPTION are also read by scripts/generate-showcase-og-images.js
-// to render the card below, so keep them as plain double-quoted string literals.
+// to render the card below, so keep them as plain string literals.
 const TITLE = "Envio Showcase";
 const DESCRIPTION = "Explore live demos built with HyperIndex and HyperSync.";
 

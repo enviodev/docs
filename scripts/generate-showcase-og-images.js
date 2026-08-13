@@ -96,7 +96,7 @@ const SCRIM_HEIGHT = 170;
 const OVERLAY_LOGO_W = 150;
 const OVERLAY_LOGO_H = 36;
 const OVERLAY_LOGO_X = 60;
-const OVERLAY_LOGO_Y = HEIGHT - 36 - 54;
+const OVERLAY_LOGO_BOTTOM_INSET = 54;
 
 // Showcase assets live under this prefix; anything else is rejected rather than
 // read, so a bad _data.js entry cannot pull an arbitrary file into a card.
@@ -240,7 +240,7 @@ function buildOverlaySvg() {
     </linearGradient>
   </defs>
   <rect x="0" y="${HEIGHT - SCRIM_HEIGHT}" width="${WIDTH}" height="${SCRIM_HEIGHT}" fill="url(#scrim)"/>
-  <image xlink:href="${logoDataUri}" x="${OVERLAY_LOGO_X}" y="${OVERLAY_LOGO_Y}" width="${OVERLAY_LOGO_W}" height="${OVERLAY_LOGO_H}"/>
+  <image xlink:href="${logoDataUri}" x="${OVERLAY_LOGO_X}" y="${HEIGHT - OVERLAY_LOGO_H - OVERLAY_LOGO_BOTTOM_INSET}" width="${OVERLAY_LOGO_W}" height="${OVERLAY_LOGO_H}"/>
 </svg>`;
 }
 
@@ -288,14 +288,22 @@ function loadSites() {
  */
 function loadIndexMeta() {
   const src = fs.readFileSync(INDEX_FILE, "utf8");
-  const title = src.match(/^const TITLE\s*=\s*"([^"]*)";/m);
-  const description = src.match(/^const DESCRIPTION\s*=\s*"([^"]*)";/m);
+  // Tolerant of the line breaks and quote style a formatter may introduce, so a
+  // reformat of index.js cannot fail the build.
+  const read = (name) => {
+    const m = src.match(
+      new RegExp(`\\bconst\\s+${name}\\s*=\\s*(["'])((?:\\\\.|(?!\\1).)*)\\1`)
+    );
+    return m ? m[2] : null;
+  };
+  const title = read("TITLE");
+  const description = read("DESCRIPTION");
   if (!title || !description) {
     throw new Error(
       "Could not read TITLE/DESCRIPTION from src/pages/showcase/index.js"
     );
   }
-  return { title: title[1], description: description[1] };
+  return { title, description };
 }
 
 /**
@@ -326,10 +334,18 @@ async function main() {
 
   if (PREVIEW) {
     const previewOut = path.join(STATIC_DIR, "showcase-og-preview.png");
+    // Preview whatever that entry would really ship, so the overlay constants
+    // can be tuned against the layout most cards actually use.
     const s = sites[0];
-    const svg = buildSvg({ title: s.title, description: s.description });
-    await sharp(Buffer.from(svg)).png().toFile(previewOut);
-    console.log(`Preview written to: ${path.relative(REPO_ROOT, previewOut)} (source: ${s.slug})`);
+    const asset = resolveAsset(s);
+    const buf = asset
+      ? await buildAssetCard(asset)
+      : await buildTextCard({ title: s.title, description: s.description });
+    fs.writeFileSync(previewOut, buf);
+    console.log(
+      `Preview written to: ${path.relative(REPO_ROOT, previewOut)} ` +
+        `(source: ${s.slug}, ${asset ? "asset card" : "text card"})`
+    );
     return;
   }
 
