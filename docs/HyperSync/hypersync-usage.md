@@ -335,6 +335,69 @@ const amount = decodedLog.body[0]?.val.toString();
 - **Batch Processing**: Decode multiple logs with a single call
 - **Multiple Event Support**: Handle different event types in the same processing pipeline
 
+## Subscribing to the Chain Head (SSE)
+
+Once you're caught up to the tip of the chain, polling `GET /height` in a loop is a wasteful way to notice new blocks. `GET /height/sse` is a **Server-Sent Events** endpoint that pushes the head to you instead: one long-lived HTTP `GET`, no WebSocket upgrade, and the server writes a record every time the height moves.
+
+It carries the height and nothing else — no blocks, logs or transactions. Use it to learn _when_ there's new data, then run a normal query to fetch it. (Not to be confused with [Stream Config & Tuning](./stream-config-tuning.md), which is about pulling historical data fast.)
+
+### Wire format
+
+`GET https://eth.hypersync.xyz/height/sse`, authenticated with the same [API token](./api-tokens.mdx) as your queries. Two event types come down the stream:
+
+```text
+event: height
+data: 25731849
+
+event: ping
+data:
+```
+
+- **`data` on a `height` event is a bare decimal integer**, not JSON.
+- **`ping` is a liveness signal**, sent at least every 5 seconds while the height is unchanged. Ignore the payload, but reset your read timeout on it.
+- **The current head is re-sent on every connect**, so ignore any height less than or equal to the one you already have.
+
+To watch it directly (`-N` disables buffering):
+
+```bash
+curl -sSN -H "Authorization: Bearer $ENVIO_API_TOKEN" "https://eth.hypersync.xyz/height/sse"
+```
+
+### JavaScript
+
+The token has to go in the `Authorization` header — it is not accepted as a query parameter, and adding one makes the request fail. The `EventSource` built into Node and browsers can't set headers, so it can't authenticate. HyperIndex solves this with the [`eventsource`](https://www.npmjs.com/package/eventsource) package (v4+), which lets you supply your own `fetch`:
+
+```javascript
+import { EventSource } from "eventsource";
+
+let lastHeight = 0;
+
+const es = new EventSource("https://eth.hypersync.xyz/height/sse", {
+  fetch: (url, init) =>
+    fetch(url, {
+      ...init,
+      // Merge — replacing init.headers drops what the library sets for you
+      headers: {
+        ...init.headers,
+        Authorization: `Bearer ${process.env.ENVIO_API_TOKEN}`,
+      },
+    }),
+});
+
+es.addEventListener("height", (event) => {
+  const height = Number(event.data);
+  // The head is re-sent on every reconnect, so ignore what we've already seen
+  if (!Number.isFinite(height) || height <= lastHeight) return;
+  lastHeight = height;
+  console.log("new head:", height);
+});
+
+// Without this, a bad token fails silently — you just never get an event
+es.onerror = (err) => console.error("stream error:", err.code, err.message);
+```
+
+If you're on Rust, the [Rust client](https://github.com/enviodev/hypersync-client-rust) wraps all of this in `stream_height()` — use that instead of wiring up SSE yourself.
+
 ## Next Steps
 
 Now that you understand the basics of using HyperSync:
