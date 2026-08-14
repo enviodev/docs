@@ -44,6 +44,7 @@ const sites = [
     longDescription:
       "SolSwaps is a live firehose of decentralised exchange activity on Solana. Built with Envio's HyperSync, it streams swaps from the network's busiest DEXs, including Jupiter, Pump.fun, Orca and Raydium, into a single view with no RPC endpoint, archive node, or database for you to run. The dashboard tracks swaps per second, estimated SOL moved, aggregated fees, and a running list of the 25 biggest trades as they land, giving traders, researchers, and builders a fast, real-time picture of where volume is flowing across Solana.",
     video: "/img/showcase/solswaps.webm",
+    poster: "/img/showcase/solswaps-poster.png",
     source: "https://solswaps.envio.sh/",
     tags: [tags.hypersync],
   },
@@ -55,6 +56,7 @@ const sites = [
     longDescription:
       "Stable Radar is a real-time monitoring dashboard built with Envio's HyperSync that tracks USDC transactions across multiple blockchain networks. HyperSync's high-performance data streaming enables Stable Radar to process and display large volumes of stablecoin transfer data with minimal latency. The dashboard provides live transaction feeds, volume analytics, and cross-chain comparisons, making it a powerful tool for monitoring USDC flows and identifying trends in stablecoin usage across the multi-chain ecosystem.",
     video: "/img/showcase/stable-radar.webm",
+    poster: "/img/showcase/stable-radar-poster.png",
     source: "https://stable-radar.com",
     tags: [tags.hypersync],
   },
@@ -77,6 +79,7 @@ const sites = [
     longDescription:
       "RWA Radar is a real-time analytics dashboard that tracks real-world assets (RWAs) on-chain across two asset classes, stablecoins and tokenised stocks. Built with Envio's HyperIndex, the dashboard shows token activity across multiple blockchain networks, providing asset-class breakdowns, volume metrics, and historical trends. You can view multichain data for any single asset in one unified view and export dashboard data as CSV, PDF, or XLSX for your own analysis. The dashboard gives researchers, investors, and DeFi developers a comprehensive window into the growing RWA ecosystem.",
     video: "/img/showcase/rwaradar.mp4",
+    poster: "/img/showcase/rwa-radar-poster.png",
     source: "https://rwaradar.io",
     tags: [tags.hyperindex],
   },
@@ -110,6 +113,7 @@ const sites = [
     longDescription:
       "Solana Stables is a real-time analytics dashboard that tracks stablecoin transfer activity on the Solana blockchain. Built with Envio's HyperIndex, it indexes token transfer events for major stablecoins on Solana, providing live transaction feeds, volume metrics, and historical trend data. The platform demonstrates HyperIndex's capabilities beyond EVM chains, offering fast and reliable indexing of Solana's high-throughput transaction data for stablecoin monitoring and analysis.",
     video: "/img/showcase/solana-stables.webm",
+    poster: "/img/showcase/solana-stables-poster.png",
     source: "https://solanastables.com/",
     tags: [tags.hyperindex],
   },
