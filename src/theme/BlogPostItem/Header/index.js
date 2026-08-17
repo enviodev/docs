@@ -33,7 +33,11 @@ function ReviewerLine({handle}) {
         target="_blank"
         rel="noopener noreferrer"
         className={styles.reviewerLink}>
-        {reviewers[handle] ?? handle}
+        {/* Own-property lookup: `constructor` and `toString` are valid GitHub
+            logins, and an inherited match would render a function. */}
+        {Object.prototype.hasOwnProperty.call(reviewers, handle)
+          ? reviewers[handle]
+          : handle}
       </a>
     </div>
   );

@@ -11,6 +11,12 @@ on:
 permissions:
   contents: write
 
+# Two reviewers approving at once would otherwise both stamp from the same base
+# commit, and the second push would be rejected as non-fast-forward.
+concurrency:
+  group: stamp-reviewer-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
 jobs:
   stamp:
     # Same-repo branches only: pushing to a fork's branch needs credentials this
@@ -38,6 +44,10 @@ jobs:
         run: node scripts/stamp-reviewer.js
 
       - name: Commit and push
+        # Passed via env rather than interpolated into the script: `${{ }}` inside
+        # a run block is the standard Actions script-injection footgun.
+        env:
+          REVIEWER: ${{ github.event.review.user.login }}
         run: |
           if [ -z "$(git status --porcelain blog)" ]; then
             echo "no changes to commit"
@@ -46,5 +56,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add blog
-          git commit -m "chore(blog): credit ${{ github.event.review.user.login }} as reviewer"
+          git commit -m "chore(blog): credit ${REVIEWER} as reviewer"
           git push

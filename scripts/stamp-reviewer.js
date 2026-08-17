@@ -77,6 +77,3 @@ if (stamped.length === 0) {
 }
 
 console.log(`stamped ${REVIEWER} into:\n  ${stamped.join('\n  ')}`);
-
-// Surfaced to the workflow so the commit step can be skipped when clean.
-fs.appendFileSync(process.env.GITHUB_OUTPUT ?? '/dev/null', 'stamped=true\n');
