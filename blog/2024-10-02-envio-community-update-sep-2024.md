@@ -7,6 +7,7 @@ image: /blog-assets/envio-developer-community-sep-2024.png
 last_update:
   date: 2026-04-15
 authors: ["j_o_r_d_y_s"]
+reviewed_by: moose-code
 ---
 
 <img src="/blog-assets/envio-developer-community-sep-2024.png" alt="Cover Image Envio Developer Community Update September 2024" width="100%"/>

@@ -7,6 +7,7 @@ image: /blog-assets/envio-dedicated-hosting.png
 last_update:
   date: 2026-04-15
 authors: ["j_o_r_d_y_s"]
+reviewed_by: WooSungD
 ---
 
 <img src="/blog-assets/envio-dedicated-hosting.png" alt="Dedicated Hosting for Blockchain Indexers" width="100%"/>

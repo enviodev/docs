@@ -5,6 +5,7 @@ slug: /hypersync-under-load-no-throttling
 authors: j_o_r_d_y_s
 image: /blog-assets/hypersync-under-load-no-throttling.png
 description: "Blockchain indexers hit rate limits because RPC meters every request. See how HyperSync's bulk-read architecture handles high traffic without throttling, with production-scale numbers."
+reviewed_by: keenbeen32
 ---
 
 ![Cover image for Why Blockchain Indexers Hit Rate Limits at Scale](/blog-assets/hypersync-under-load-no-throttling.png)

@@ -9,6 +9,7 @@ image: /blog-assets/polymarket-trades-hypersync.png
 last_update:
   date: 2026-04-15
   author: Nikhil Bhintade
+reviewed_by: Jordy-Baby
 ---
 
 <img src="/blog-assets/polymarket-trades-hypersync.png" alt="Cover Image: Track Polymarket Trades in Real-Time" width="100%"/>

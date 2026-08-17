@@ -8,6 +8,7 @@ image: /blog-assets/best-blockchain-indexers.png
 last_update:
   date: 2026-04-15
   author: Jords
+reviewed_by: nikbhintade
 ---
 
 <img src="/blog-assets/best-blockchain-indexers.png" alt="Envio cover graphic with a podium and the title Best Blockchain Indexers, Real Benchmark Comparison" width="100%"/>

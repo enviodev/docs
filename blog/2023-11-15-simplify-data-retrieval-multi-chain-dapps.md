@@ -7,6 +7,7 @@ image: /blog-assets/envio-simplifies-data-retrieval-for-multi-chain-dapps.png
 last_update:
   date: 2026-04-15
 authors: ["j_o_r_d_y_s"]
+reviewed_by: WooSungD
 ---
 
 <img src="/blog-assets/envio-simplifies-data-retrieval-for-multi-chain-dapps.png" alt="How Envio Simplifies Data Retrieval for Multichain dApps" width="100%"/>

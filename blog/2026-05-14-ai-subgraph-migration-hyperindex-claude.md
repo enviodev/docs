@@ -9,6 +9,7 @@ authors: ["j_o_r_d_y_s"]
 last_update:
   date: 2026-05-14
   author: Jordyn Laurier
+reviewed_by: nikbhintade
 ---
 
 <img src="/blog-assets/ai-subgraph-migration-hyperindex-claude.png" alt="AI-Assisted Subgraph Migration to HyperIndex with Claude" width="100%"/>

@@ -9,6 +9,7 @@ authors: ["nikbhintade", "j_o_r_d_y_s"]
 last_update:
   date: 2026-04-24
   author: Nikhil Bhintade
+reviewed_by: Jordy-Baby
 ---
 
 ![Cover image for the ClickHouse Storage blog](/blog-assets/clickhouse-storage.png)

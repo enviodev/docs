@@ -8,6 +8,7 @@ authors: ["j_o_r_d_y_s"]
 last_update:
   date: 2026-07-10
   author: Jords
+reviewed_by: nikbhintade
 ---
 
 <img src="/blog-assets/envio-vs-the-graph.png" alt="Envio vs The Graph" width="100%"/>

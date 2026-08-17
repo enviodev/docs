@@ -7,6 +7,7 @@ image: /blog-assets/envio-supports-70-networks.png
 last_update:
   date: 2026-04-15
 authors: ["j_o_r_d_y_s"]
+reviewed_by: DZakh
 ---
 
 <img src="/blog-assets/envio-supports-70-networks.png" alt="Envio cover banner reading Powering 70+ Blockchains, HyperSync Support, surrounded by chain logos" width="100%"/>
