@@ -7,6 +7,7 @@ import BlogPostItemHeaderInfo from '@theme/BlogPostItem/Header/Info';
 import BlogPostItemHeaderAuthors from '@theme/BlogPostItem/Header/Authors';
 import styles from './styles.module.css';
 import tagStyles from '../../BlogListPage/styles.module.css';
+import reviewers from '@site/src/data/reviewers.json';
 
 const TAG_LABELS = {
   'case-studies': 'Case Studies',
@@ -16,7 +17,29 @@ const TAG_LABELS = {
   'tutorials': 'Tutorials',
 };
 
-function AuthorMetaLine({authors, assets, date, readingTime}) {
+// The reviewer is the person who approved the PR that published the post. The
+// handle is stamped into `reviewed_by` frontmatter by .github/workflows/stamp-reviewer.yml;
+// names come from src/data/reviewers.json, falling back to the raw handle so a
+// missing entry is visible rather than silently dropping the credit.
+function ReviewerLine({handle}) {
+  if (!handle) {
+    return null;
+  }
+  return (
+    <div className={styles.reviewLine}>
+      <span className={styles.metaLabel}>Reviewed by:</span>
+      <a
+        href={`https://github.com/${handle}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={styles.reviewerLink}>
+        {reviewers[handle] ?? handle}
+      </a>
+    </div>
+  );
+}
+
+function AuthorMetaLine({authors, assets, date, readingTime, reviewedBy}) {
   const dateTimeFormat = useDateTimeFormat({
     day: 'numeric',
     month: 'long',
@@ -30,7 +53,11 @@ function AuthorMetaLine({authors, assets, date, readingTime}) {
   const label = namedAuthors.length > 1 ? 'Authors' : 'Author';
 
   return (
-    <div className={styles.metaLine}>
+    <>
+    <div
+      className={
+        reviewedBy ? `${styles.metaLine} ${styles.metaLineTight}` : styles.metaLine
+      }>
       {namedAuthors.length > 0 && (
         <>
           <span className={styles.metaLabel}>{label}:</span>
@@ -67,11 +94,13 @@ function AuthorMetaLine({authors, assets, date, readingTime}) {
         </>
       )}
     </div>
+    <ReviewerLine handle={reviewedBy} />
+    </>
   );
 }
 
 export default function BlogPostItemHeader() {
-  const {metadata, assets, isBlogPostPage} = useBlogPost();
+  const {metadata, frontMatter, assets, isBlogPostPage} = useBlogPost();
   const {tags, authors, date, readingTime} = metadata;
 
   const firstTag = tags?.[0];
@@ -93,6 +122,7 @@ export default function BlogPostItemHeader() {
           assets={assets}
           date={date}
           readingTime={readingTime}
+          reviewedBy={frontMatter.reviewed_by}
         />
       ) : (
         <>

@@ -14,6 +14,41 @@
   color: #737373;
 }
 
+.metaLineTight {
+  margin-bottom: 0.35rem;
+}
+
+.reviewLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 0.5rem;
+  row-gap: 0.25rem;
+  margin: 0 0 1.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: #737373;
+}
+
+.reviewerLink {
+  font-weight: 500;
+  color: #e5e5e5;
+  text-decoration: none !important;
+  transition: color 0.15s ease;
+}
+
+.reviewerLink:hover {
+  color: #ffffff;
+}
+
+[data-theme='light'] .reviewerLink {
+  color: #171717;
+}
+
+[data-theme='light'] .reviewerLink:hover {
+  color: #000000;
+}
+
 .metaLabel {
   font-size: 0.7rem;
   font-weight: 600;
