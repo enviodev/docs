@@ -65,13 +65,13 @@ Set `start_block` to a few tens of thousands of slots below the head for a quick
 backfill, or to the slot your program was deployed at for a fuller history -
 provided that slot sits above the endpoint's floor.
 
-:::danger A `start_block` below the endpoint's floor stalls the sync
-It does not error. The server returns an empty page with `next_slot` equal to the
-`from_slot` you sent, so the cursor never advances and the indexer sits there
-retrying the same empty range while reporting itself healthy. Both
-`https://solana.hypersync.xyz` and `https://solana-mainnet-history.hypersync.xyz`
-served from slot 403,000,000 when measured on 2026-08-18, but treat that as a
-moving number. See
+:::danger A `start_block` below the endpoint's floor is silently wrong
+It never errors. An indexer running toward head skips straight to the floor and
+syncs happily, writing nothing at all for the slots before it. An indexer whose
+`end_block` is also below the floor stalls instead: the server returns an empty
+page with `next_slot` equal to the `from_slot` it was sent, so the cursor never
+advances. Both endpoints served from slot 403,000,000 when measured on
+2026-08-18, but treat that as a moving number. See
 [choosing an endpoint](/docs/HyperIndex/solana/configuration#choosing-an-endpoint-and-a-start-slot)
 for how to probe it.
 :::

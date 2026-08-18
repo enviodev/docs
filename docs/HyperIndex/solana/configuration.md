@@ -131,15 +131,30 @@ re-probe the floor rather than copying one into a config as if it were permanent
 403,000,000 is a suspiciously round number, which is what a deliberate backfill
 target looks like; it is not a guarantee.
 
-:::danger A `start_block` below the floor stalls the sync silently
-If `start_block` is earlier than the endpoint's history floor, the server does
-**not** error. It returns an empty page with `next_slot` equal to the `from_slot`
-you sent, so the cursor never advances and the indexer retries the same empty
-range forever while reporting itself healthy.
+:::danger A `start_block` below the floor is silently wrong, in one of two ways
+A below-floor request never errors. What happens instead depends on whether the
+range you asked for reaches the floor:
 
-To probe the floor directly, send a one-slot query and compare `next_slot` against
-what you asked for. Below the floor they are equal; at or above it, `next_slot` is
-`from_slot + 1`:
+- **The range reaches the floor** (an indexer with no `end_block`, so it runs
+  toward head). The server skips straight to the floor and serves from there.
+  Sync looks perfectly healthy and simply never writes a row for any slot before
+  the floor. This is the dangerous one: nothing anywhere reports a problem.
+- **The whole range sits below the floor** (`start_block` and `end_block` both
+  earlier than it). There is nothing to skip to, so the server returns an empty
+  page with `next_slot` equal to the `from_slot` it was sent. The cursor never
+  advances and the indexer retries the same empty range indefinitely.
+
+Measured on 2026-08-18 against `solana.hypersync.xyz` (floor 403,000,000):
+
+| Request | `next_slot` returned | Rows |
+| --- | --- | --- |
+| `from_slot: 100`, no `to_slot` | 403,000,001 | serves from the floor |
+| `from_slot: 100, to_slot: 200` | 100 | none, no progress |
+| `from_slot: 402999999, to_slot: 403000002` | 403,000,001 | serves from the floor |
+
+To probe the floor directly, send a one-slot bounded query and compare
+`next_slot` against what you asked for. Below the floor they are equal; at or
+above it, `next_slot` is `from_slot + 1`:
 
 ```bash
 curl -sS -X POST https://solana.hypersync.xyz/query \
@@ -152,12 +167,15 @@ curl -sS -X POST https://solana.hypersync.xyz/query \
 # 403000000  => below the floor
 ```
 
+Note the `to_slot` is what makes this a reliable probe. Without it the server
+skips ahead to the floor and answers successfully from any `from_slot`.
+
 Two consequences:
 
 - Pick an endpoint that covers the range you want, then set `start_block` at or
   above its floor.
-- If a backfill is not progressing, check `next_slot` against `from_slot` before
-  assuming your discriminators or handlers are wrong.
+- If a backfill produced no early rows, or is not progressing at all, check the
+  floor before assuming your discriminators or handlers are wrong.
 :::
 
 ### `programs`
