@@ -35,8 +35,28 @@ Some slots have **no block**; the `blocks` array can be sparse across the reques
 
 - `from_slot` is **inclusive**, `to_slot` is **exclusive**. Omit `to_slot` to run toward the current head.
 - Within one selection object, all set fields are **AND**-ed.
-- Multiple objects in `instruction_calls`, `transactions`, `logs`, or `account_activity` are **OR**-ed.
+- Multiple objects **within one** array (`instruction_calls`, `transactions`, `logs`, `account_activity`) are **OR**-ed.
+- Different arrays are **AND**-ed against each other, which is not what the EVM API does. See the warning below before combining them.
 - If **`instruction_calls`**, **`transactions`**, **`logs`**, and **`account_activity`** are all absent or empty and **`include_all_blocks`** is false, you get **no matching rows** (empty tables). Set `include_all_blocks: true` to pull block headers across a range without program filters.
+
+:::warning Filling in a second selection array narrows the result, it does not widen it
+Selections in **different** arrays are intersected, not unioned. Adding a `transactions` filter next to an `instruction_calls` filter does not give you "the instructions I asked for, plus these transactions". It gives you only the instructions belonging to transactions that also match, and a selection matching nothing zeroes **every** table in the response, including rows that matched on their own.
+
+Measured on a single slot (437500000), selecting `instruction_call` and `transaction` columns throughout:
+
+| Query | Instruction rows |
+|---|---|
+| `instruction_calls: [{executing_account: [Tokenkeg...], d1: ["03"]}]` alone | 44 |
+| `transactions: [{fee_payer: [P]}]` alone, where P paid for one of those transactions | 16 |
+| both together | **2** |
+| the instruction filter plus `transactions: [{fee_payer: ["1111...1111"]}]`, which matches nothing | **0** |
+
+The 2 is the intersection: the token transfers inside that one transaction. The 0 is the trap. There is no error and no warning; a query that returned rows a moment ago returns an empty response because a filter was added to it.
+
+**If you want a union, send separate queries and merge the results.** If you want the intersection, this is already what you want, but state it to yourself explicitly, because the EVM API unions its `logs` and `transactions` selections and the habit carries over.
+
+Note this is orthogonal to joins: whether a matched row's *related* rows come back is decided by `field_selection` (see [Join behavior](#join-behavior)). This warning is about which rows match in the first place.
+:::
 
 :::caution Unknown top-level keys are rejected
 The top-level query object and its `field_selection` are strict: an unrecognised key — a table that no longer exists (e.g. the removed `balances` / `token_balances`), or a misspelled `max_num_*` — makes the whole query **fail** rather than being silently ignored. This is deliberate: a dropped table selection would otherwise widen the query to match everything. Individual selection objects (`InstructionSelection`, `AccountActivitySelection`, ...) stay lenient, so an unknown key **inside** a selection is ignored.
