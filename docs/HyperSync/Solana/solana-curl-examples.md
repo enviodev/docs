@@ -14,7 +14,7 @@ Solana HyperSync is **early** but the query shape used in these examples is stab
 
 Copy-paste examples against **`https://solana.hypersync.xyz`**. Use the same [API token](/docs/HyperSync/api-tokens) as EVM HyperSync: pass `Authorization: Bearer <token>` on **`POST /query`** (and on Arrow). `GET /health`, `GET /height`, and `GET /height/sse` are typically usable without a token, but follow whatever your deployment returns.
 
-Curl is great for testing; for production, prefer one of our clients. The [Rust client](https://github.com/enviodev/hypersync-client-solana) is the most complete today (and uses Arrow for faster decoding); TypeScript and Python clients are in progress — tell us on Discord which one would unblock you and we'll prioritize accordingly.
+Curl is great for testing; for production, prefer the [Solana client](./solana-client): it is Rust, uses Arrow for faster decoding, and handles pagination, retries, and rate limits for you. Node bindings live in the same repo but are not published yet, and there is no Python client; tell us on Discord which one would unblock you and we will prioritize accordingly.
 
 ```bash
 export URL=https://solana.hypersync.xyz
@@ -62,7 +62,7 @@ curl_query '{
     "executing_account": ["whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc"],
     "d8": ["0xf8c69e91e17587c8"]
   }]
-}' | jq '{next_slot, sample_instruction: .instructions[0], sample_tx: .transactions[0]}'
+}' | jq '{next_slot, sample_instruction: .instruction_calls[0], sample_tx: .transactions[0]}'
 ```
 
 ## SPL Token `Transfer` (`d1`)
@@ -75,7 +75,7 @@ curl_query '{
   "to_slot": 391800100,
   "field_selection": {
     "instruction_call": ["slot", "executing_account", "account_arguments", "data", "d1"],
-    "account_activity": ["slot", "transaction_index", "account", "mint", "owner", "pre_token_balance", "post_token_balance"]
+    "account_activity": ["slot", "transaction_index", "account", "mint", "pre_owner", "post_owner", "token_state", "pre_token_balance", "post_token_balance"]
   },
   "instruction_calls": [{
     "executing_account": ["TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"],
@@ -84,9 +84,58 @@ curl_query '{
 }'
 ```
 
+## Wallet activity (native SOL + tokens)
+
+`account` is the wallet on a native row and the token account on a token row, and fields
+within one selection are AND-ed, so "everything for wallet W" is **two** selections.
+
+```bash
+curl_query '{
+  "from_slot": 391800000,
+  "to_slot": 391800100,
+  "field_selection": {
+    "account_activity": ["slot", "transaction_id", "account", "pre_balance", "post_balance", "mint", "pre_owner", "post_owner", "token_state", "pre_token_balance", "post_token_balance"]
+  },
+  "account_activity": [
+    { "account": ["MfDuWeqSHEqTFVYZ7LoexgAK9dxk7cy4DFJWjWMGVWa"] },
+    { "owner": ["MfDuWeqSHEqTFVYZ7LoexgAK9dxk7cy4DFJWjWMGVWa"] }
+  ]
+}'
+```
+
+To pull **every** activity row in a range (the replacement for the removed
+`include_account_activity` flag), use one empty selection:
+
+```bash
+curl_query '{
+  "from_slot": 391800000,
+  "to_slot": 391800010,
+  "field_selection": { "account_activity": ["slot", "account", "pre_balance", "post_balance"] },
+  "account_activity": [{}]
+}'
+```
+
+## Successful transactions only
+
+`tx_success` filters instruction calls by the success of their parent transaction, server-side.
+
+```bash
+curl_query '{
+  "from_slot": 391800000,
+  "to_slot": 391800100,
+  "field_selection": {
+    "instruction_call": ["slot", "executing_account", "d8", "tx_success", "error", "compute_units_consumed"]
+  },
+  "instruction_calls": [{
+    "executing_account": ["whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc"],
+    "tx_success": true
+  }]
+}'
+```
+
 ## Jupiter **or** Orca (program-only OR)
 
-Each object in `instructions` is OR-ed. This is the “match by program id only” pattern (no discriminator).
+Each object in `instruction_calls` is OR-ed. This is the “match by program id only” pattern (no discriminator).
 
 ```bash
 curl_query '{
@@ -167,7 +216,7 @@ while [ "$SLOT" -lt "$TO" ]; do
     \"field_selection\": { \"instruction_call\": [\"slot\", \"executing_account\", \"d8\"] },
     \"instruction_calls\": [{ \"executing_account\": [\"whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc\"] }]
   }")
-  echo "$RESP" | jq '.instructions | length, .next_slot'
+  echo "$RESP" | jq '.instruction_calls | length, .next_slot'
   NEXT=$(echo "$RESP" | jq -r .next_slot)
   if [ "$NEXT" -ge "$TO" ] || [ "$NEXT" -le "$SLOT" ]; then
     break

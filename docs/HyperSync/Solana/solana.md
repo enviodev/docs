@@ -14,7 +14,7 @@ Solana HyperSync is **early**. The core query path (slots, transactions, instruc
 **Rolling retention window.** Only the most recent chain data is retained — not a fixed history from one slot forever. The current retention floor is roughly slot `391791680`; as new slots are indexed, older slots fall off. Use `GET https://solana.hypersync.xyz/height` for the current synced head and **do not hard-code** historical lower bounds. Need a deeper window for backfill? Tell us — we're prioritizing this based on real use cases.
 :::
 
-HyperSync for Solana exposes **`https://solana.hypersync.xyz`**: one JSON (or Arrow) API over slots, transactions, instructions, logs, account activity (native SOL + SPL token), and rewards. Use the [Rust client](https://github.com/enviodev/hypersync-client-solana) or any HTTP client (for example `curl`). Details: [Query & Response](./solana-query), [curl Examples](./solana-curl-examples).
+HyperSync for Solana exposes **`https://solana.hypersync.xyz`**: one JSON (or Arrow) API over slots, transactions, instruction calls, logs, account activity (native SOL + SPL token), and rewards. Use the [Solana client](./solana-client) or any HTTP client (for example `curl`). Details: [Query & Response](./solana-query), [curl Examples](./solana-curl-examples).
 
 **Slots vs blocks:** Some slots have **no block** (skipped leader, etc.). A query over `[from_slot, to_slot)` can return **fewer block rows** than the slot span implies; that is normal, not a bug.
 
@@ -56,7 +56,7 @@ curl -sS "https://solana.hypersync.xyz/query" \
   }'
 ```
 
-Expect JSON with `instructions` (and any joined tables you asked for), `next_slot`, optional `rollback_guard`, and other keys empty or omitted. [API tokens](/docs/HyperSync/api-tokens) are the same as for EVM HyperSync (`Authorization: Bearer`).
+Expect JSON with `instruction_calls` (and any joined tables you asked for), `next_slot`, optional `rollback_guard`, and other keys empty or omitted. [API tokens](/docs/HyperSync/api-tokens) are the same as for EVM HyperSync (`Authorization: Bearer`).
 
 ## What's stable vs. what's still evolving
 
@@ -66,7 +66,7 @@ We want you to be able to build against this without guessing what will move und
 
 - The **endpoint** (`https://solana.hypersync.xyz`) and **bearer-token auth** model.
 - The **request shape** for `POST /query`: `from_slot` / `to_slot`, the `instruction_calls` / `transactions` / `logs` / `account_activity` selection arrays, `field_selection` projection, and the AND-within-object / OR-across-objects semantics.
-- The **core filter primitives**: `executing_account` (the invoked program), discriminator filters (`d1` / `d2` / `d4` / `d8`), account-position filters (`a0`–`a9`), `is_inner`, `is_committed`, `success`, `fee_payer`, `transaction_id`, log `kind`.
+- The **core filter primitives**: `executing_account` (the invoked program), discriminator filters (`d1` / `d2` / `d4` / `d8`), account-position filters (`a0` to `a9`), `is_inner`, `tx_success`, `success`, `fee_payer`, `transaction_id`, log `kind`.
 - The **table model**: `block`, `transaction`, `instruction_call`, `log`, `account_activity`, `reward`, with the fields listed in [Query & Response](./solana-query#available-fields-by-table).
 - **Pagination** via `next_slot` and **reorg detection** via `rollback_guard`.
 
@@ -75,7 +75,7 @@ We want you to be able to build against this without guessing what will move und
 - The **historical retention floor** (rolling window today; we're prioritizing deeper backfill based on demand).
 - Decoded / higher-level helpers built on top of the raw tables (IDL-aware decoding, common-program shortcuts).
 - The **JSON-RPC-compatible facade** (`POST /` / `POST /rpc`) — useful for tools that already speak Solana JSON-RPC, but coverage is incomplete; prefer `POST /query` for indexing.
-- Client libraries beyond the [Rust client](https://github.com/enviodev/hypersync-client-solana) (TypeScript / Python clients are in progress).
+- Client libraries beyond the [Rust client](./solana-client) (the Node bindings are not published yet; Python is not started).
 
 If a piece you need is in the second list, the fastest path is to tell us — most of the roadmap here is being driven by the use cases people bring us.
 

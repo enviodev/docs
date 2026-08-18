@@ -29,7 +29,7 @@ query and prints a comparison table.
 | Scanning a wide range for a rare event | Keep `concurrency` moderate (around 10); a larger `batch_size` helps. |
 | Pulling full blocks + all transactions | Defaults are fine; the adaptive buffer handles the large responses. |
 | Memory constrained | Set `max_buffered_bytes` to a fixed cap. |
-| Hitting API rate limits | The client waits out limits and retries automatically. For higher limits, [upgrade your plan](./api-tokens.mdx). |
+| Hitting API rate limits | The client waits out limits and retries automatically. To read the quota yourself, see [Inspecting rate limits](#inspecting-rate-limits-from-your-code); for higher limits, [upgrade your plan](./api-tokens.mdx). |
 | Not sure | Run [`tune_stream`](#find-the-best-config-for-your-query) against your query. |
 
 ## How the engine works (the 30-second model)
@@ -226,6 +226,46 @@ If you need the client to make fewer requests per unit time (for example to fit 
 request budget), `concurrency` is the lever. It trades throughput for request volume: fewer
 requests run in parallel, so fewer go out per unit time. Setting `concurrency = 1` streams
 sequentially, one request at a time.
+
+### Inspecting rate limits from your code
+
+Sometimes waiting is not enough: you may want to show quota in a dashboard, or coordinate a
+budget across several processes that share one token. Every response carries the server's
+`x-ratelimit-*` headers, and the clients expose them under the same names.
+
+| Purpose | Rust | Node |
+|---|---|---|
+| Query and get the headers back | `get_with_rate_limit`, `get_arrow_with_rate_limit` | `getWithRateLimit` |
+| Last observed headers, no request | `rate_limit_info()` | `rateLimitInfo()` |
+| Wait out an exhausted window | `wait_for_rate_limit()` | `waitForRateLimit()` |
+| Opt out of the automatic pre-request wait | `ClientConfig::proactive_rate_limit_sleep` | `proactiveRateLimitSleep` |
+
+The query methods return a `QueryResponseWithRateLimit`, which pairs the normal response with
+a `RateLimitInfo`:
+
+| Field | Header | Meaning |
+|---|---|---|
+| `limit` | `x-ratelimit-limit` | Total budget for the current window. |
+| `remaining` | `x-ratelimit-remaining` | Budget left in the window. |
+| `reset_secs` / `resetSecs` | `x-ratelimit-reset` | Seconds until the window resets. |
+| `cost` | `x-ratelimit-cost` | Budget consumed per request. |
+
+Every field is optional, because parsing is best-effort: a missing or malformed header just
+leaves it unset. Note that `remaining` counts **budget units, not requests** - divide it by
+`cost` for the number of requests you have left (a limit of 50 with a cost of 10 is 5
+requests per window).
+
+`proactive_rate_limit_sleep` is on by default. With it enabled the client checks the last
+observed headers before sending and waits out a window it knows is exhausted, instead of
+spending a request on a certain 429. Turn it off if you are doing your own scheduling.
+
+:::note One difference between the EVM and Solana clients
+The names and shapes are identical, but the 429 behaviour is not. On the **EVM** client
+`get_with_rate_limit` does **not** retry a 429: it returns with no response body and the
+rate-limit info filled in, and retrying is your job. On the **Solana** client the
+`*_with_rate_limit` methods retry exactly like the plain `get` / `get_arrow`, so the response
+is always present. The plain `get` methods retry on both.
+:::
 
 ## Full default reference
 

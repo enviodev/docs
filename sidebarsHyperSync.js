@@ -37,6 +37,7 @@ module.exports = {
       items: [
         "Solana/solana",
         "Solana/solana-query",
+        "Solana/solana-client",
         "Solana/solana-curl-examples",
       ],
     },

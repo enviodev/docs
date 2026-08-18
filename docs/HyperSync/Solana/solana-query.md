@@ -29,7 +29,6 @@ Some slots have **no block**; the `blocks` array can be sparse across the reques
   "transactions": [ ... ],
   "logs": [ ... ],
   "account_activity": [ ... ],
-  "include_account_activity": false,
   "field_selection": { ... }
 }
 ```
@@ -41,6 +40,10 @@ Some slots have **no block**; the `blocks` array can be sparse across the reques
 
 :::caution Unknown top-level keys are rejected
 The top-level query object and its `field_selection` are strict: an unrecognised key — a table that no longer exists (e.g. the removed `balances` / `token_balances`), or a misspelled `max_num_*` — makes the whole query **fail** rather than being silently ignored. This is deliberate: a dropped table selection would otherwise widen the query to match everything. Individual selection objects (`InstructionSelection`, `AccountActivitySelection`, ...) stay lenient, so an unknown key **inside** a selection is ignored.
+:::
+
+:::caution `include_account_activity` was removed
+The top-level `include_account_activity` flag no longer exists. Because the envelope is strict, a query that still sets it is **rejected**. Use an empty selection instead: `"account_activity": [{}]` requests every activity row in the range without forcing every block into the response. The Node bindings fail the same way, with the same guidance in the error message.
 :::
 
 :::note Renamed fields (legacy names still accepted)
@@ -59,9 +62,11 @@ Selects **instruction calls** — a single program invocation, including inner C
 | `d1` / `d2` / `d4` / `d8` | First _N_ bytes of instruction data, as hex. **`0x` prefix is optional** (`"0x03"` and `"03"` are equivalent). |
 | `a0` - `a9` | Account pubkey at that **index in the instruction's account metas** (`a0` = first account, `a2` = third). Which account is "the mint", "the pool", etc. is **defined by the program's IDL / instruction layout**, not by Solana globally. |
 | `is_inner` | `true` = inner only, `false` = outer only, **omitted** = both. |
-| `is_committed` | `true` = only instructions of successful transactions, `false` = only instructions of failed transactions, **omitted** = both. See the note below. |
+| `tx_success` | `true` = only instructions of successful transactions, `false` = only instructions of failed transactions, **omitted** = both. Legacy name: `is_committed`. See the note below. |
 
-**`is_committed`:** Failed transactions still land on chain, and their instructions (up to the point of failure) are served. `is_committed` is derived from the parent transaction's success, so consumers that count on-chain effects should set `"is_committed": true` to filter failed transactions **server-side** rather than dropping them after the fact.
+**`tx_success`:** this is the success of the **parent transaction**, applied uniformly to every instruction call of that transaction; it says nothing about the individual invocation (Solana metadata only records instructions that actually ran). Consumers that count on-chain effects should set `"tx_success": true` to drop failed transactions **server-side** rather than filtering after the fact.
+
+Note that `"tx_success": false` can legitimately match nothing: servers running the failed-transaction trim keep no instruction rows for failed transactions at all. Failed transactions themselves are still served (with `err` and `fee`) through the transactions table's `success` filter, which is where to look for them.
 
 **`instruction_address`:** This array encodes **where** the instruction sits in the transaction: outer-only indices use one element, e.g. `[2]` = third top-level instruction; inner instructions append an index, e.g. `[2, 0]` = first inner instruction inside that outer instruction.
 
@@ -71,7 +76,7 @@ Selects **instruction calls** — a single program invocation, including inner C
 |---|---|
 | `fee_payer` | Match fee payer pubkey. |
 | `transaction_id` | Match by transaction id (`signatures[0]`, base58) — the canonical Solana transaction signature. |
-| `transaction_index` | Match by position within the block (numbers). |
+| `transaction_index` | Match by `transaction_index` (numbers). See [`transaction_index` semantics](#transaction_index-semantics): it is a dense rank over stored transactions, not the raw position in the block. |
 | `success` | `true` = succeeded only, `false` = failed only, **omitted** = both (same pattern as `is_inner`). |
 
 ### LogSelection
@@ -89,10 +94,17 @@ These mirror the usual Solana runtime log line shapes (see the [transactions](ht
 |---|---|
 | `invoke` | `Program <id> invoke <depth>` |
 | `success` | `Program <id> success` |
-| `failure` | `Program <id> failed: ...` |
+| `failed` | `Program <id> failed: ...` |
+| `consumed` | `Program <id> consumed <n> of <m> compute units` |
 | `log` | `Program log: ...` |
 | `data` | `Program data: <base64>` |
 | `other` | Anything else the parser did not classify (full text still in `message`) |
+
+An unknown `kind` in a **filter** is an error. On the **response** side an unrecognised value decodes as `other`, so a future server-side kind cannot break an older client.
+
+:::note Not every range carries the framing kinds
+SQD-ingested ranges and default RPC-ingested ranges only carry the semantic kinds `log` / `data` / `other`; the framing lines (`invoke` / `success` / `failed` / `consumed`) are dropped there for cross-source row parity. Do not assume every invocation has an `invoke` row.
+:::
 
 ### AccountActivitySelection
 
@@ -104,7 +116,7 @@ Selects rows of the unified [`account_activity`](#the-account_activity-table) ta
 | `account` | Match by account address. On a **token** row this is the token account (ATA / raw token account); on a **native** row it is the wallet. |
 | `transaction_id` | Match by the transaction's base58 `signatures[0]`. |
 | `mint` | Match by mint. Only token rows carry a mint, so a non-empty `mint` restricts to token activity. |
-| `owner` | Match by owner (wallet) address. |
+| `owner` | Match by owner (wallet) address. The **stored** column is split into `pre_owner` / `post_owner`; this one filter matches **either** side, so an in-transaction `SetAuthority(AccountOwner)` change still matches. |
 | `program_id` | Match by token program id (classic SPL Token vs Token-2022); matches either the pre or the post program id. |
 | `is_signer` / `is_writable` / `is_fee_payer` / `from_lookup_table` | Header-derived position flags. A **null** flag matches neither `true` nor `false` (unknown is not false). |
 
@@ -129,24 +141,53 @@ Use `field_selection` to choose columns per logical table. Omit a table key to r
 | Table | Fields |
 |---|---|
 | `block` | `slot`, `blockhash`, `parent_slot`, `parent_blockhash`, `block_time`, `block_height` |
-| `transaction` | `slot`, `transaction_index`, `transaction_id`, `signatures`, `fee_payer`, `success`, `err`, `fee`, `compute_units_consumed`, `account_keys`, `recent_blockhash`, `version`, `loaded_addresses_writable`, `loaded_addresses_readonly` |
-| `instruction_call` | `slot`, `transaction_index`, `instruction_address`, `executing_account`, `executing_account_index`, `account_arguments`, `account_index_arguments`, `data`, `d1`, `d2`, `d4`, `d8`, `a0`-`a9`, `is_inner`, `is_committed` |
+| `transaction` | `slot`, `transaction_index`, `transaction_id`, `signatures`, `fee_payer`, `success`, `err`, `fee`, `compute_units_consumed`, `account_keys`, `recent_blockhash`, `version`, `loaded_addresses_writable`, `loaded_addresses_readonly`, `has_dropped_log_messages` |
+| `instruction_call` | `slot`, `transaction_index`, `instruction_address`, `executing_account`, `executing_account_index`, `account_arguments`, `account_index_arguments`, `data`, `d1`, `d2`, `d4`, `d8`, `a0`-`a9`, `is_inner`, `tx_success`, `error`, `compute_units_consumed` |
 | `log` | `slot`, `transaction_index`, `instruction_address`, `program_id`, `kind`, `message` |
-| `account_activity` | `slot`, `transaction_index`, `transaction_id`, `account_index`, `account`, `pre_balance`, `post_balance`, `is_signer`, `is_writable`, `is_fee_payer`, `from_lookup_table`, `mint`, `owner`, `token_decimals`, `pre_token_balance`, `post_token_balance`, `pre_program_id`, `post_program_id` |
+| `account_activity` | `slot`, `transaction_index`, `transaction_id`, `account_index`, `account`, `pre_balance`, `post_balance`, `is_signer`, `is_writable`, `is_fee_payer`, `from_lookup_table`, `mint`, `pre_owner`, `post_owner`, `token_decimals`, `pre_token_balance`, `post_token_balance`, `pre_program_id`, `post_program_id`, `token_state` |
 | `reward` | `slot`, `pubkey`, `lamports`, `post_balance`, `reward_type`, `commission` |
 
-**`is_committed` (instruction):** `true` when the parent transaction succeeded. Instructions from failed transactions are returned with `is_committed: false` unless you filter them out with `"is_committed": true` in the selection. Interpret it next to `transaction.success` / `transaction.err` when a transaction is included.
+**`tx_success` (instruction call):** `true` when the parent transaction succeeded, carried on every instruction row of that transaction. Interpret it next to `transaction.success` / `transaction.err` when a transaction is included. Legacy column name: `is_committed`.
 
-**`executing_account_index` / `account_index_arguments` (instruction):** derived columns giving the executing account's and the account arguments' positions within the transaction's resolved account keys. They have no legacy equivalent.
+**`executing_account_index` / `account_index_arguments` (instruction call):** the executing account's and the account arguments' positions within the transaction's resolved account key list (`account_keys` ++ ALT writable ++ ALT readonly). Stored at ingest; null when the source could not resolve positions. No legacy equivalent.
+
+**`error` / `compute_units_consumed` (instruction call):** per-invocation failure reason (e.g. `"custom program error: 0x1"`) and per-invocation compute units. SQD serves both directly; RPC and Firehose ranges derive them from the `Program <id> failed: ...` and `Program <id> consumed <n> of <m> compute units` log lines, so both are null where the source did not record them (common for top-level invocations of builtin programs, and for truncated logs).
+
+**`has_dropped_log_messages` (transaction):** `true` when the validator truncated this transaction's log output, so `logs` rows for it are incomplete. SQD serves the flag directly; other sources derive it from the "Log truncated" sentinel line. Null means the source could not say.
+
+### Derived fields
+
+Two response fields are computed at serving time rather than read from a stored column. They behave like any other field: select them in `field_selection` to get them.
+
+| Field | Table | Meaning |
+|---|---|---|
+| `transaction_id` | `transaction` | `signatures[0]` (base58), the canonical Solana transaction id. |
+| `token_state` | `account_activity` | Authoritative token-side state of the row: `not_a_token`, `opened` (token account created in this transaction), `closed` (closed in this transaction), or `persisted` (existed before and after). |
+
+`token_state` exists so you never have to infer "is this a token row" from nulls: because every response field is optional, a null `mint` could equally mean "not selected" or "not a token account". Select `token_state` and the answer is unambiguous.
+
+### Value types in responses
+
+- **Every response field is optional.** Any column can be projected away by `field_selection`, so a missing value means exactly "not selected, or the source could not supply it" - never "zero" or "false".
+- **Addresses, hashes and signatures are base58 strings**, and clients parse them strictly (32 bytes for a pubkey or blockhash, 64 for a signature). A malformed value in a **filter** is a loud error rather than a filter that silently matches nothing.
+- **Token balances are strings.** `pre_token_balance` / `post_token_balance` are raw base units (scaled by `token_decimals`) carried as decimal strings. Raw SPL amounts are `u64` on chain in both SPL Token and Token-2022, so these are real integers; the string encoding exists to protect JavaScript consumers from the 2^53 precision limit. Lamport fields (`pre_balance` / `post_balance`, `fee`) stay numeric.
+
+### `transaction_index` semantics
+
+`transaction_index` is a dense `0..n` rank over the **stored, non-vote** transactions of a slot, in block order. It is **not** the transaction's original position in the block: vote transactions are excluded at ingest, and every ingest source is renumbered onto this same key so the value is uniform no matter which source served the range.
+
+It is stable as a join key: `(slot, transaction_index)` is what ties `instruction_calls`, `logs`, and `account_activity` rows to their transaction. Do not use it to reconstruct the block's original ordering, and do not compare it against an index obtained from an RPC `getBlock` response.
 
 ### The account_activity table
 
 `account_activity` is the unified per-(transaction, account) table that replaces the old separate `balance` and `token_balance` tables. Each row is one account's activity in one transaction, carrying the native SOL change, the SPL token balance, or both:
 
 - **Native side** (`pre_balance`, `post_balance`, in lamports) is populated when the account's SOL balance changed in this transaction, null otherwise.
-- **Token side** (`mint`, `owner`, `token_decimals`, `pre_token_balance`, `post_token_balance`, `pre_program_id`, `post_program_id`) is populated when the account appears in the transaction's token-balance metadata, null otherwise.
+- **Token side** (`mint`, `pre_owner`, `post_owner`, `token_decimals`, `pre_token_balance`, `post_token_balance`, `pre_program_id`, `post_program_id`) is populated when the account appears in the transaction's token-balance metadata, null otherwise.
 
-A row commonly carries **both** sides, since a token account also holds lamports; the native and token amounts are independent axes, not two encodings of one value (for wrapped SOL, lamports equal the token amount plus the rent-exempt reserve). `pre_token_balance` / `post_token_balance` are raw base-unit **decimal strings** (scaled by `token_decimals`), not numbers, because Token-2022 amounts can exceed `u64::MAX`. `account_index` is the account's position in the transaction's resolved key list (`account_keys` ++ ALT writable ++ ALT readonly); the flags (`is_signer`, `is_writable`, `is_fee_payer`, `from_lookup_table`) are derived from the message header and are null where a source could not supply them.
+The owner is stored as a **pair**, `pre_owner` / `post_owner`, so an in-transaction `SetAuthority(AccountOwner)` change stays visible; there is no collapsed `owner` column. A null `pre_owner` means the token account was opened during the transaction and a null `post_owner` that it was closed (the same convention as `pre_program_id` / `post_program_id`). The **filter** is still a single `owner` key, which matches either side.
+
+A row commonly carries **both** sides, since a token account also holds lamports; the native and token amounts are independent axes, not two encodings of one value (for wrapped SOL, lamports equal the token amount plus the rent-exempt reserve). `pre_token_balance` / `post_token_balance` are raw base-unit **decimal strings** (scaled by `token_decimals`), not numbers, so JavaScript consumers cannot lose precision above 2^53. `account_index` is the account's position in the transaction's resolved key list (`account_keys` ++ ALT writable ++ ALT readonly); the flags (`is_signer`, `is_writable`, `is_fee_payer`, `from_lookup_table`) are derived from the message header and are null where a source could not supply them.
 
 ## Join behavior
 
@@ -172,7 +213,7 @@ Advanced knobs (defaults are usually fine):
 
 ## Response
 
-Top-level keys include `next_slot`, `total_execution_time_ms`, optional `rollback_guard`, and one array per table when present: `blocks`, `transactions`, `instructions`, `logs`, `account_activity`, `rewards` — each holds **row objects** shaped by your `field_selection`.
+Top-level keys include `next_slot`, `total_execution_time_ms`, optional `rollback_guard`, and one array per table when present: `blocks`, `transactions`, `instruction_calls`, `logs`, `account_activity`, `rewards` - each holds **row objects** shaped by your `field_selection`. The response table key is `instruction_calls`; the legacy `instructions` key is accepted on **input** only.
 
 ### Example fragment (illustrative)
 
@@ -188,13 +229,13 @@ Top-level keys include `next_slot`, `total_execution_time_ms`, optional `rollbac
       "block_time": 1731000123
     }
   ],
-  "instructions": [
+  "instruction_calls": [
     {
       "slot": 391800000,
       "executing_account": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
       "account_arguments": ["7xK...", "9mY...", "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"],
       "data": "<opaque encoded payload>",
-      "is_committed": true
+      "tx_success": true
     }
   ],
   "transactions": []
@@ -249,8 +290,16 @@ Several fields were given clearer names. The legacy names are still accepted on 
 | `field_selection` | `instruction` | `instruction_call` |
 | `instruction_call` field | `program_id` | `executing_account` |
 | `instruction_call` field | `accounts` | `account_arguments` |
+| `InstructionSelection` | `is_committed` | `tx_success` |
+| `instruction_call` field | `is_committed` | `tx_success` |
 
-The `balance` and `token_balance` field-selection tables were **removed**, not renamed: use `account_activity` instead. Because the query envelope now rejects unknown keys, a query that still selects `balance` / `token_balance` (or the top-level `balances` / `token_balances`) is an error rather than a silently empty result.
+**Removed, not renamed:**
+
+- The `balance` and `token_balance` field-selection tables (and the top-level `balances` / `token_balances` selections): use `account_activity` instead.
+- The top-level `include_account_activity` flag: use `"account_activity": [{}]`.
+- The `account_activity.owner` **column**: it was split into `pre_owner` / `post_owner`. The `owner` **filter** is unchanged and matches either side.
+
+Because the query envelope rejects unknown keys, each of these is a loud error rather than a silently different query.
 
 ## Authentication
 
