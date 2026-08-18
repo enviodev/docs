@@ -213,7 +213,13 @@ Advanced knobs (defaults are usually fine):
 
 ## Response
 
-Top-level keys include `next_slot`, `total_execution_time_ms`, optional `rollback_guard`, and one array per table when present: `blocks`, `transactions`, `instruction_calls`, `logs`, `account_activity`, `rewards` - each holds **row objects** shaped by your `field_selection`. The response table key is `instruction_calls`; the legacy `instructions` key is accepted on **input** only.
+Top-level keys include `next_slot`, `total_execution_time_ms`, optional `rollback_guard`, and one key per table when present: `blocks`, `transactions`, `instruction_calls`, `logs`, `account_activity`, `rewards`. The response table key is `instruction_calls`; the legacy `instructions` key is accepted on **input** only.
+
+:::caution Each table is an array of row **batches**, not a flat array of rows
+Every table value is nested one level: `instruction_calls` is `[[row, row, ...], ...]`, not `[row, row, ...]`. The outer array holds the server's response batches, the same framing EVM HyperSync uses for its `data` key. A single response is usually one batch, so `table[0]` looks like it works right up until it silently gives you a batch instead of a row.
+
+**Flatten before you use it.** In `jq` that is `.instruction_calls[]` or `[.instruction_calls[][]]`; the row count is `[.instruction_calls[][]] | length`, not `.instruction_calls | length`. Batches carry no meaning of their own: they do not correspond to blocks or to transactions, and rows are not grouped by slot within them.
+:::
 
 ### Example fragment (illustrative)
 
@@ -223,20 +229,24 @@ Top-level keys include `next_slot`, `total_execution_time_ms`, optional `rollbac
   "total_execution_time_ms": 12,
   "rollback_guard": null,
   "blocks": [
-    {
-      "slot": 391800000,
-      "blockhash": "8dK...",
-      "block_time": 1731000123
-    }
+    [
+      {
+        "slot": 391800000,
+        "blockhash": "8dK...",
+        "block_time": 1731000123
+      }
+    ]
   ],
   "instruction_calls": [
-    {
-      "slot": 391800000,
-      "executing_account": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
-      "account_arguments": ["7xK...", "9mY...", "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"],
-      "data": "<opaque encoded payload>",
-      "tx_success": true
-    }
+    [
+      {
+        "slot": 391800000,
+        "executing_account": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+        "account_arguments": ["7xK...", "9mY...", "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"],
+        "data": "<opaque encoded payload>",
+        "tx_success": true
+      }
+    ]
   ],
   "transactions": []
 }

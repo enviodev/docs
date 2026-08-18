@@ -31,6 +31,8 @@ curl_query() {
 
 Discriminator filters accept hex **with or without** a `0x` prefix (`03` and `0x03` are the same). Pipe responses through `jq` or `python3 -m json.tool` for readability.
 
+Every response table is an array of row **batches**, so the `jq` below flattens with `[.table[][]]` before indexing or counting. See [Response](./solana-query#response).
+
 ## Quick checks
 
 ```bash
@@ -62,7 +64,7 @@ curl_query '{
     "executing_account": ["whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc"],
     "d8": ["0xf8c69e91e17587c8"]
   }]
-}' | jq '{next_slot, sample_instruction: .instruction_calls[0], sample_tx: .transactions[0]}'
+}' | jq '{next_slot, sample_instruction: [.instruction_calls[][]][0], sample_tx: [.transactions[][]][0]}'
 ```
 
 ## SPL Token `Transfer` (`d1`)
@@ -216,7 +218,7 @@ while [ "$SLOT" -lt "$TO" ]; do
     \"field_selection\": { \"instruction_call\": [\"slot\", \"executing_account\", \"d8\"] },
     \"instruction_calls\": [{ \"executing_account\": [\"whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc\"] }]
   }")
-  echo "$RESP" | jq '.instruction_calls | length, .next_slot'
+  echo "$RESP" | jq '([.instruction_calls[][]] | length), .next_slot'
   NEXT=$(echo "$RESP" | jq -r .next_slot)
   if [ "$NEXT" -ge "$TO" ] || [ "$NEXT" -le "$SLOT" ]; then
     break
