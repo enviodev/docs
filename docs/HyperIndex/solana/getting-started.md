@@ -50,20 +50,29 @@ my-indexer/
 
 `envio init` also runs codegen, installs dependencies, and initializes git.
 
-## 2. Pick a start slot
+## 2. Pick an endpoint and a start slot
 
-`start_block` in `config.yaml` is a **slot number**, not a block number, and
-HyperSync for Solana keeps a rolling window of recent history — so don't hard-code
-an old slot. Query the current head and start somewhere sensible below it:
+`start_block` in `config.yaml` is a **slot number**, not a block number. Each
+HyperSync endpoint serves history back to its own floor slot, and that floor rolls
+forward over time, so don't hard-code an old slot. Query the current head first:
 
 ```bash
 curl -s https://solana.hypersync.xyz/height
-# => {"height": 421234567}
+# => 440063001
 ```
 
-Set `start_block` in `config.yaml` to, say, a few thousand slots below the head
-for a quick backfill, or to the slot your program was deployed at for a full history
-(within the retention window).
+Set `start_block` to a few tens of thousands of slots below the head for a quick
+backfill, or to the slot your program was deployed at for a fuller history -
+provided that slot sits above the endpoint's floor.
+
+:::danger A `start_block` below the endpoint's floor is silently skipped
+It does not error and it does not stall: the server fast-forwards to the floor, so
+the indexer syncs happily and reports healthy while writing nothing at all for the
+slots before it. `https://solana.hypersync.xyz` served from slot 436,162,000 and
+`https://solana-mainnet-history.hypersync.xyz` from at least 403,000,000 when
+measured on 2026-08-18, but treat both as moving numbers. See
+[choosing an endpoint](/docs/HyperIndex/solana/configuration#choosing-an-endpoint-and-a-start-slot).
+:::
 
 ## 3. Run it
 
@@ -98,13 +107,13 @@ instructions you want, then write a handler. The shortest path:
 
 1. **Point at an Anchor IDL** if you have one — HyperIndex derives the argument and account layout for you ([IDL decoding](/docs/HyperIndex/solana/decoding#anchor-idls)).
 2. **Or declare an inline schema** (`args` + `accounts`) for programs without an IDL ([inline schema](/docs/HyperIndex/solana/decoding#inline-schema-no-idl)).
-3. Add a `discriminator` per instruction so HyperIndex knows which instruction to match ([discriminators](/docs/HyperIndex/solana/decoding#discriminators)).
+3. Add a `discriminator` to every instruction. It is how HyperIndex matches the instruction *and* how it looks up the layout, including when an IDL is set ([discriminators](/docs/HyperIndex/solana/decoding#discriminators)).
 4. Register a handler with [`indexer.onInstruction`](/docs/HyperIndex/solana/instruction-handlers).
 
 ```yaml title="config.yaml"
 ecosystem: svm
 chains:
-  - start_block: 417995000 # example only; query /height (step 2) and pick a recent slot within the retention window
+  - start_block: 437000000 # example only; query /height (step 2) and pick a recent slot above the endpoint's floor
     experimental:
       hypersync_config:
         url: https://solana.hypersync.xyz
@@ -115,8 +124,7 @@ chains:
             - name: CreateMetadataAccountV3
               discriminator: "0x21"
               field_selection:
-                transaction_fields:
-                  - signatures
+                transaction_fields: [signature]
 ```
 
 ```typescript title="src/handlers/TokenMetadataHandlers.ts"
@@ -132,7 +140,7 @@ indexer.onInstruction(
       id: params.accounts.metadata,
       mint: params.accounts.mint ?? "",
       createdAtSlot: instruction.block.slot,
-      lastTxSignature: instruction.transaction.signatures[0],
+      lastTxSignature: instruction.transaction.signature,
     });
   },
 );

@@ -22,7 +22,7 @@ difference in one place.
 | ABI | Anchor IDL (or an inline schema) |
 | Event / log | Instruction |
 | `indexer.onEvent` | `indexer.onInstruction` |
-| `event.params.<name>` | `instruction.params.args.<name>` |
+| `event.params.<name>` | `instruction.params?.args.<name>` (optional) |
 | Event signature / topic0 | Instruction discriminator |
 | Indexed event args | Account positions / `account_filters` |
 | `indexer.onBlock` | `indexer.onSlot` |
@@ -41,7 +41,8 @@ difference in one place.
 | `start_block` | block number | **slot** number |
 | Matching key | event signature (from ABI) | `discriminator` (hex, 1/2/4/8 bytes) |
 | Decoding source | ABI | Anchor IDL, inline `args`+`accounts`, or bundled |
-| Field selection | global, rich block/transaction field lists | per-instruction: `transaction_fields`/`block_fields` (field name lists), `token_balance_fields`/`log_fields` (`true`) |
+| Field selection | global, plus a per-event inline `fields` option | per-instruction only, in `config.yaml`: `transaction_fields`/`block_fields` (field name lists), `token_balance_fields`/`log_fields` (`true`). The EVM inline `fields` option does not apply to SVM. |
+| Data source config | HyperSync endpoint inferred from `chains[].id` | `experimental.hypersync_config.url` is **required** and explicit |
 | Reorg options | `rollback_on_reorg`, `save_full_history` | handled automatically on the HyperSync source (rolls back on reorg); the RPC source is finalized-only |
 
 :::note `chains`, not `networks`
@@ -77,7 +78,7 @@ indexer.onInstruction(
     const sourceMint = params.accounts.sourceMint;  // base58
     const programId = instruction.programId;        // base58
     const slot = instruction.block.slot;
-    const txSig = instruction.transaction.signatures[0]; // needs transaction_fields: [signatures]
+    const txSig = instruction.transaction.signature;  // needs transaction_fields: [signature]
     const isInner = instruction.isInner;            // CPI?
   },
 );
@@ -86,7 +87,7 @@ indexer.onInstruction(
 Key handler-level differences:
 
 - **`params` is optional.** EVM `event.params` is always populated (the ABI is known); Solana decoding can fail, so always `if (!params) return;`.
-- **Numbers as strings.** `u64`/`u128`/`i64`/`i128` arrive as decimal strings — wrap in `BigInt(...)`. (Smaller ints are JS numbers.)
+- **Decoded big ints are strings.** `u64`/`u128`/`i64`/`i128` **args** arrive as decimal strings; wrap in `BigInt(...)`. (Smaller ints are JS numbers.) Note this applies to decoded args only: `fee`, `computeUnitsConsumed`, and token-balance `preAmount`/`postAmount` are already `bigint`.
 - **Addresses are base58.** No `0x` lowercase/checksum concerns; pubkeys are base58 strings.
 - **Opt in to context.** Transaction fields, token balances, and logs require [field selection](/docs/HyperIndex/solana/configuration#field-selection); on EVM the event always carries block/transaction context.
 - **Chain id is `0`.** Single-cluster today; `context.chain.id === 0`.
@@ -106,12 +107,13 @@ underneath a Jupiter route). See
 Solana instruction events can carry **pre/post SPL Token balance snapshots** for
 the whole transaction (`token_balance_fields: true`). This gives you net token
 movement (the balance *change*) without indexing every transfer instruction —
-there's no direct EVM equivalent built into the event. See
+there's no direct EVM equivalent built into the event. The amounts are `bigint`
+raw base units, and each entry carries the mint's `decimals`. See
 [Token balances](/docs/HyperIndex/solana/instruction-handlers#token-balances-and-balance-changes).
 
 ## Slots vs blocks
 
-- `start_block` is a **slot**. Use `GET https://solana.hypersync.xyz/height` to find the current head; HyperSync keeps a rolling window, so don't hard-code an ancient slot.
+- `start_block` is a **slot**. Use `GET https://solana.hypersync.xyz/height` to find the current head. Each endpoint also has a history floor, and a `start_block` below it is [silently skipped rather than rejected](/docs/HyperIndex/solana/configuration#choosing-an-endpoint-and-a-start-slot), so don't hard-code an ancient slot.
 - Some slots have **no block** (skipped leader). Slot handlers must handle the empty case.
 - The handler arg for `onSlot` is `{ slot: number }`, not a `block` object.
 

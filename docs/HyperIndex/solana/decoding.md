@@ -39,11 +39,19 @@ instructions:
     discriminator: "0x09"                # 1-byte native
 ```
 
+:::warning Always set `discriminator`, even with an IDL
+HyperIndex reads the discriminator **only** from `config.yaml`. Modern Anchor IDLs
+(0.30+) embed a `discriminator` array, but codegen ignores it, and it is the
+configured bytes that the IDL's argument/account layout is looked up by.
+
+Omit `discriminator` and two things happen at once: the instruction matches
+*every* instruction of the program, and no layout resolves, so `params` is
+`undefined` on every one of them. Neither failure raises an error.
+:::
+
 ### Computing an Anchor discriminator
 
-Modern Anchor IDLs (0.30+) embed the discriminator, so HyperIndex reads it from
-the IDL automatically. **Legacy Anchor IDLs don't include it**, so you compute it
-from the instruction name:
+For an Anchor program, compute the 8-byte sighash from the instruction name:
 
 ```typescript
 import { createHash } from "node:crypto";
@@ -64,10 +72,13 @@ HyperIndex resolves an instruction's argument/account layout in this order:
 
 | Source | When | How to use |
 | --- | --- | --- |
-| **Anchor IDL** | Program has `idl:` set | HyperIndex derives `args` + `accounts` from the IDL for every instruction. |
-| **Inline schema** | Instruction has `args` + `accounts` | You declare the layout directly. Mutually exclusive with `idl`. |
-| **Bundled** | Program id matches a built-in schema | Currently only **Metaplex Token Metadata** — no `idl`/inline needed. |
-| **None** | No schema available | The instruction still matches and fires the handler, but `params` is `undefined` (you can read raw `instruction.data` / `instruction.accounts`). |
+| **Inline schema** | Instruction has both `args` and `accounts` | You declare the layout directly. Highest priority; mutually exclusive with the program's `idl`. |
+| **Anchor IDL** | Program has `idl:` set | HyperIndex derives `args` + `accounts` from the IDL entry whose discriminator matches the instruction's configured `discriminator`. |
+| **Bundled** | Program id matches a built-in schema | Currently only **Metaplex Token Metadata**: no `idl`/inline needed. Looked up by `discriminator` the same way. |
+| **None** | No schema resolved | The instruction still matches and fires the handler, but `params` is `undefined` (you can read raw `instruction.data` / `instruction.accounts`). |
+
+The order above is the resolution order: inline `args`+`accounts` win, then the
+IDL or bundled schema keyed by `discriminator`, then nothing.
 
 ### Anchor IDLs
 
@@ -85,14 +96,15 @@ experimental:
       idl: idls/jupiter.json
       instructions:
         - name: route
-          discriminator: "0xe517cb977ae3ad2a" # legacy IDL: supply the sighash
+          discriminator: "0xe517cb977ae3ad2a"
         - name: sharedAccountsRoute
           discriminator: "0xc1209b3341d69c81"
 ```
 
-With an IDL set, you only list each instruction's `name` (+ `discriminator` for
-legacy IDLs) — the args and accounts come from the IDL. Don't add inline
-`args`/`accounts`; they're mutually exclusive with `idl`.
+With an IDL set, list each instruction's `name` and `discriminator`; the args and
+accounts come from the IDL, matched on those discriminator bytes. Don't add inline
+`args`/`accounts`; they're mutually exclusive with `idl`. Supplying only one of
+`args`/`accounts` is a config error: they must be given together or both omitted.
 
 ### Inline schema (no IDL)
 
@@ -134,7 +146,7 @@ The right column is how each value appears in `params.args`.
 | `bool` | boolean |
 | `u8` `u16` `u32`, `i8` `i16` `i32` | number |
 | `u64` `u128` `i64` `i128` | **decimal string** (precision-safe) |
-| `f32` `f64` | number (`null` if NaN/Inf) |
+| `f32` `f64` | number |
 | `string` | string |
 | `bytes` | `0x`-prefixed hex string |
 | `pubkey` (alias `publicKey`) | base58 string |
@@ -207,12 +219,16 @@ function mapRoute(params: SvmInstructionParams) {
 
 Decoding returns `undefined` (rather than crashing) when:
 
-- the discriminator didn't match a configured instruction with a schema;
+- the instruction has no `discriminator` in `config.yaml`, so no layout could be
+  looked up;
+- the configured discriminator matched no schema entry (a stale IDL, or the wrong
+  sighash);
 - there were too few accounts for the named list;
 - the argument bytes didn't decode cleanly (wrong/partial layout).
 
-The indexer keeps running and logs at debug. Always `if (!params) return;` before
-using it — or fall back to the raw `instruction.data` and `instruction.accounts`.
+None of these throws, and the indexer keeps running. `params` is optional in the
+type system too, so always `if (!params) return;` before using it, or fall back to
+the raw `instruction.data` and `instruction.accounts`.
 
 ## Known limitations
 

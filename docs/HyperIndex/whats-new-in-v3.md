@@ -369,7 +369,7 @@ Block handlers are now supported for Fuel indexing.
 
 ### Solana Support (Experimental)
 
-HyperIndex now supports Solana with RPC as a source. This feature is experimental and may undergo minor breaking changes. Solana exposes its block-stream handler as `indexer.onSlot` (rather than `onBlock`) to match Solana's slot-based model.
+HyperIndex now supports Solana. This feature is experimental and may undergo minor breaking changes. Solana exposes its block-stream handler as `indexer.onSlot` (rather than `onBlock`) to match Solana's slot-based model, and program instructions are indexed with `indexer.onInstruction` over a HyperSync source. Solana indexers are TypeScript only.
 
 To initialize a Solana project:
 
