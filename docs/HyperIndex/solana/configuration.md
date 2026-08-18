@@ -114,31 +114,50 @@ Everything HyperSync-backed lives under the chain's `experimental` key:
 
 ### Choosing an endpoint and a start slot
 
-Two public Solana HyperSync endpoints exist, and they differ in how far back they
-serve, not in what they return:
+Two public Solana HyperSync endpoints exist:
 
-| Endpoint | Serves history back to |
-| --- | --- |
-| `https://solana.hypersync.xyz` | slot **436,162,000** (measured 2026-08-18) |
-| `https://solana-mainnet-history.hypersync.xyz` | at least slot **403,000,000** (measured 2026-08-18) |
+| Endpoint | Oldest slot served | Head |
+| --- | --- | --- |
+| `https://solana.hypersync.xyz` | **403,000,000** | 440,067,639 |
+| `https://solana-mainnet-history.hypersync.xyz` | **403,000,000** | 440,067,639 |
 
-Both reported a head of 440,063,001 on 2026-08-18. Treat both the head and the
-history floor as moving targets: query `GET <endpoint>/height` for the head, and
-expect the floor to roll forward. Do not copy a floor number into a config as if
-it were permanent.
+Measured 2026-08-18 by bisecting `from_slot` against each endpoint. On that date
+the two were indistinguishable: same floor to the slot, same head. They have not
+always been, so prefer whichever one your project already pins rather than
+switching on the assumption that they are interchangeable.
 
-:::danger A `start_block` below the floor is silently skipped
-If `start_block` is earlier than the endpoint's history floor, the indexer does
-**not** error and does **not** stall. The server fast-forwards `next_slot` to the
-floor, so the sync reports healthy, progresses normally, and quietly writes no
-rows at all for every slot before the floor.
+Treat both numbers as moving. Query `GET <endpoint>/height` for the head, and
+re-probe the floor rather than copying one into a config as if it were permanent.
+403,000,000 is a suspiciously round number, which is what a deliberate backfill
+target looks like; it is not a guarantee.
+
+:::danger A `start_block` below the floor stalls the sync silently
+If `start_block` is earlier than the endpoint's history floor, the server does
+**not** error. It returns an empty page with `next_slot` equal to the `from_slot`
+you sent, so the cursor never advances and the indexer retries the same empty
+range forever while reporting itself healthy.
+
+To probe the floor directly, send a one-slot query and compare `next_slot` against
+what you asked for. Below the floor they are equal; at or above it, `next_slot` is
+`from_slot + 1`:
+
+```bash
+curl -sS -X POST https://solana.hypersync.xyz/query \
+  -H "Authorization: Bearer $ENVIO_API_TOKEN" \
+  -H 'Content-Type: application/json' \
+  -d '{"from_slot": 403000000, "to_slot": 403000001,
+       "include_all_blocks": true,
+       "field_selection": {"block": ["slot"]}}' | jq .next_slot
+# 403000001  => served
+# 403000000  => below the floor
+```
 
 Two consequences:
 
-- Pick the endpoint that actually covers the range you want, then set
-  `start_block` at or above its floor.
-- If a backfill produced fewer early rows than you expected, re-probe the floor
-  before assuming your discriminators or handlers are wrong.
+- Pick an endpoint that covers the range you want, then set `start_block` at or
+  above its floor.
+- If a backfill is not progressing, check `next_slot` against `from_slot` before
+  assuming your discriminators or handlers are wrong.
 :::
 
 ### `programs`

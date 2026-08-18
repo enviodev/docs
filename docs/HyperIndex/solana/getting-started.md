@@ -58,20 +58,22 @@ forward over time, so don't hard-code an old slot. Query the current head first:
 
 ```bash
 curl -s https://solana.hypersync.xyz/height
-# => 440063001
+# => 440067639
 ```
 
 Set `start_block` to a few tens of thousands of slots below the head for a quick
 backfill, or to the slot your program was deployed at for a fuller history -
 provided that slot sits above the endpoint's floor.
 
-:::danger A `start_block` below the endpoint's floor is silently skipped
-It does not error and it does not stall: the server fast-forwards to the floor, so
-the indexer syncs happily and reports healthy while writing nothing at all for the
-slots before it. `https://solana.hypersync.xyz` served from slot 436,162,000 and
-`https://solana-mainnet-history.hypersync.xyz` from at least 403,000,000 when
-measured on 2026-08-18, but treat both as moving numbers. See
-[choosing an endpoint](/docs/HyperIndex/solana/configuration#choosing-an-endpoint-and-a-start-slot).
+:::danger A `start_block` below the endpoint's floor stalls the sync
+It does not error. The server returns an empty page with `next_slot` equal to the
+`from_slot` you sent, so the cursor never advances and the indexer sits there
+retrying the same empty range while reporting itself healthy. Both
+`https://solana.hypersync.xyz` and `https://solana-mainnet-history.hypersync.xyz`
+served from slot 403,000,000 when measured on 2026-08-18, but treat that as a
+moving number. See
+[choosing an endpoint](/docs/HyperIndex/solana/configuration#choosing-an-endpoint-and-a-start-slot)
+for how to probe it.
 :::
 
 ## 3. Run it
