@@ -8,6 +8,7 @@ import BlogPostItemHeaderAuthors from '@theme/BlogPostItem/Header/Authors';
 import styles from './styles.module.css';
 import tagStyles from '../../BlogListPage/styles.module.css';
 import reviewers from '@site/src/data/reviewers.json';
+import useGlobalData from '@docusaurus/useGlobalData';
 
 const TAG_LABELS = {
   'case-studies': 'Case Studies',
@@ -105,7 +106,14 @@ function AuthorMetaLine({authors, assets, date, readingTime, reviewedBy}) {
 
 export default function BlogPostItemHeader() {
   const {metadata, frontMatter, assets, isBlogPostPage} = useBlogPost();
-  const {tags, authors, date, readingTime} = metadata;
+  const {tags, authors, date, readingTime, permalink} = metadata;
+
+  // Frontmatter wins; plugin-blog-reviewers resolves anything without one at
+  // build time, so a newly merged post is credited without a commit.
+  const globalData = useGlobalData();
+  const resolvedReviewers =
+    globalData?.['plugin-blog-reviewers']?.default ?? {};
+  const reviewedBy = frontMatter.reviewed_by ?? resolvedReviewers[permalink];
 
   const firstTag = tags?.[0];
   const tagLabel = firstTag
@@ -126,7 +134,7 @@ export default function BlogPostItemHeader() {
           assets={assets}
           date={date}
           readingTime={readingTime}
-          reviewedBy={frontMatter.reviewed_by}
+          reviewedBy={reviewedBy}
         />
       ) : (
         <>

@@ -602,6 +602,7 @@ const config = {
     }),
   plugins: [
     require.resolve('./plugins/plugin-author-pages'),
+    require.resolve('./plugins/plugin-blog-reviewers'),
     [
       "docusaurus-plugin-mcp-server",
       {
