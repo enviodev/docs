@@ -70,21 +70,27 @@ function addingCommitSubject(file) {
  * repo, and a build must not hinge on it.
  */
 async function approverFor(pr) {
-  const res = await fetch(
-    `https://api.github.com/repos/${REPO}/pulls/${pr}/reviews?per_page=100`,
-    {
-      headers: {
-        Accept: "application/vnd.github+json",
-        ...(TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {}),
-      },
-    }
-  );
-  if (!res.ok) throw new Error(`GitHub responded ${res.status}`);
-  const reviews = await res.json();
-  const approver = reviews.find(
-    (r) => r.state === "APPROVED" && !BOT.test(r.user?.login ?? "")
-  );
-  return approver?.user?.login ?? null;
+  // Paginated: a busy PR can carry more than one page of reviews, and the
+  // approval is usually last.
+  for (let page = 1; page <= 10; page++) {
+    const res = await fetch(
+      `https://api.github.com/repos/${REPO}/pulls/${pr}/reviews?per_page=100&page=${page}`,
+      {
+        headers: {
+          Accept: "application/vnd.github+json",
+          ...(TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {}),
+        },
+      }
+    );
+    if (!res.ok) throw new Error(`GitHub responded ${res.status}`);
+    const reviews = await res.json();
+    const approver = reviews.find(
+      (r) => r.state === "APPROVED" && !BOT.test(r.user?.login ?? "")
+    );
+    if (approver) return approver.user.login;
+    if (reviews.length < 100) return null;
+  }
+  return null;
 }
 
 /**

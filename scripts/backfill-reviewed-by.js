@@ -64,12 +64,15 @@ const reviewCache = new Map();
 function reviewsFor(pr) {
   const key = Number(pr);
   if (!reviewCache.has(key)) {
+    // `--slurp` wraps the pages in one array. Without it `--paginate` emits
+    // `[...][...]` for a multi-page result, which JSON.parse rejects.
     const raw = shWithRetry('gh', [
       'api',
       `repos/${REPO}/pulls/${key}/reviews`,
       '--paginate',
+      '--slurp',
     ]);
-    reviewCache.set(key, JSON.parse(raw));
+    reviewCache.set(key, JSON.parse(raw).flat());
   }
   return reviewCache.get(key);
 }
