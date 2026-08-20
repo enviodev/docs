@@ -78,7 +78,7 @@ Envio has a dedicated migration cursor flow so you do not have to replay your en
 
 After this, you can run the indexer locally with Docker or deploy directly to [Envio Cloud](https://docs.envio.dev/docs/HyperIndex/hosted-service). Once deployed, your indexer will sync with HyperSync-level speed.
 
-If you prefer hands-on help, or would like the team to check your setup, you can book a free migration call [here](https://envio.dev/alchemy-migration). Alternatively, reach out in [Discord](https://discord.gg/envio).
+If you prefer hands-on help, or would like the team to check your setup, reach out in [Discord](https://discord.gg/envio).
 
 ## What changes when you leave Alchemy?
 
@@ -95,7 +95,7 @@ Your application code stays untouched. Queries stay close to what you already us
 
 Alchemy stepping away from Subgraphs does not mean your project has to stop. Migrating to Envio is fast, stable, and gives you a more reliable long-term foundation for your data.
 
-Book a [migration call](https://envio.dev/alchemy-migration), move your Subgraphs, and keep shipping without interruption.
+Move your Subgraphs and keep shipping without interruption.
 
 ## Frequently asked questions
 
