@@ -107,7 +107,7 @@ Alchemy Subgraphs are officially sunsetting on **December 8, 2025**. Many teams 
 
 Envio is supporting affected teams with **2 months of free hosting**, faster backfills, multichain indexing, and full white-glove migration support to help you move over smoothly. HyperIndex gives you a modern indexing setup with real-time syncing and production ready deployments, making the transition quick and reliable.
 
-If your subgraphs are affected and you need to migrate, chat to our team or check out this [page](https://envio.dev/alchemy-migration) for more information and we will help you get set up.
+If your subgraphs are affected and you need to migrate, chat to our team in [Discord](https://discord.gg/envio) and we will help you get set up.
 
 For a full walkthrough on how to migrate, read our guide on [How to Migrate Alchemy Subgraphs to Envio](https://docs.envio.dev/docs/HyperIndex/migrate-from-alchemy).
 
