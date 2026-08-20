@@ -630,8 +630,10 @@ const config = {
     [
       require.resolve("./plugins/plugin-generate-llms"),
       {
-        // LLM-mirror plugins are bundled re-exports of other docs — skip them
-        // entirely to avoid duplication.
+        // LLM-mirror plugins are bundled re-exports of other docs — keep them
+        // out of the llms.txt / llms-full.txt indexes to avoid duplication.
+        // Their .md copies are still written so the pages resolve when
+        // fetched directly (e.g. /docs/HyperSync-LLM/hypersync-complete.md).
         excludePluginIds: [
           "HyperIndex-LLM",
           "HyperSync-LLM",
