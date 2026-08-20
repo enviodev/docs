@@ -23,12 +23,17 @@ const REPO = "enviodev/docs";
 const TOKEN = process.env.GITHUB_TOKEN;
 const BOT = /\[bot\]|coderabbitai/i;
 
+// A build must not hang on a stalled response, and fetch has no default
+// timeout, so every call is bounded and a timeout lands in the caller's catch.
+const REQUEST_TIMEOUT_MS = 10000;
+
 async function gh(endpoint) {
   const res = await fetch(`https://api.github.com/repos/${REPO}/${endpoint}`, {
     headers: {
       Accept: "application/vnd.github+json",
       ...(TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {}),
     },
+    signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
   });
   if (!res.ok) throw new Error(`GitHub responded ${res.status} for ${endpoint}`);
   return res.json();
