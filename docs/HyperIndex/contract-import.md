@@ -253,4 +253,4 @@ Next step: [Running your Indexer locally](./running-locally) or [Deploying to En
 Contract Import is the recommended path, but you can also bootstrap an indexer from:
 
 - **Templates** — pre-built `ERC20` or [Greeter](./greeter-tutorial) projects, selectable from the `pnpx envio init` interactive prompt.
-- **Examples** — copy and adapt an existing indexer from our [Examples](./Examples/example-uniswap-v4), our [Tutorials](./tutorial-erc20-token-transfers), or the [GitHub repositories](https://github.com/enviodev).
+- **Examples** — copy and adapt an existing indexer from our [Examples](./example-uniswap-v4-multi-chain-indexer), our [Tutorials](./tutorial-erc20-token-transfers), or the [GitHub repositories](https://github.com/enviodev).
