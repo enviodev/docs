@@ -17,8 +17,10 @@ const path = require("path");
 const matter = require("gray-matter");
 
 const blogDir = path.join(__dirname, "../blog");
-const REPO = process.env.REVIEWERS_REPO || "enviodev/docs";
-const TOKEN = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+const REPO = "enviodev/docs";
+// Optional. Unauthenticated calls work but share a 60/hour limit per IP, so set
+// GITHUB_TOKEN in the Vercel project to make resolution reliable.
+const TOKEN = process.env.GITHUB_TOKEN;
 const BOT = /\[bot\]|coderabbitai/i;
 
 async function gh(endpoint) {
