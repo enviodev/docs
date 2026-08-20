@@ -116,9 +116,13 @@ function GenerateLLMSPlugin(context, options) {
                     plugin[0] === "@docusaurus/plugin-content-docs"
                 ) {
                     const config = plugin[1];
-                    if (config.id && excludePluginIds.has(config.id)) {
-                        continue;
-                    }
+                    // Excluded plugins stay out of the llms.txt /
+                    // llms-full.txt indexes but still get .md copies
+                    // written, so their pages resolve when fetched
+                    // directly (e.g. the *-LLM mirror bundles).
+                    const indexExcluded = Boolean(
+                        config.id && excludePluginIds.has(config.id)
+                    );
                     const docsPath = path.resolve(config.path);
                     const routeBasePath = config.routeBasePath || "";
 
@@ -158,6 +162,7 @@ function GenerateLLMSPlugin(context, options) {
                             pageUrl,
                             source: "docs",
                             pluginId: config.id || "",
+                            indexExcluded,
                             tags: Array.isArray(parsed.data.tags)
                                 ? parsed.data.tags
                                 : [],
@@ -349,6 +354,7 @@ function GenerateLLMSPlugin(context, options) {
 
                 for (const pattern of includeOrder) {
                     for (const doc of collectedDocs) {
+                        if (doc.indexExcluded) continue;
                         const docPath = toPosix(doc.filePath);
                         const pat = toPosix(pattern);
 
@@ -404,6 +410,7 @@ function GenerateLLMSPlugin(context, options) {
                 const out = [];
 
                 for (const doc of collectedDocs) {
+                    if (doc.indexExcluded) continue;
                     if (claimed.has(doc.relativePath)) continue;
                     if (doc.source !== source) continue;
 
@@ -701,6 +708,7 @@ function GenerateLLMSPlugin(context, options) {
 
                     const fullDocsPool = collectedDocs.filter(
                         (d) =>
+                            !d.indexExcluded &&
                             !excludeFromFullPluginIds.has(d.pluginId) &&
                             d.hasMarkdown !== false
                     );
