@@ -33,3 +33,11 @@ denhampreen:
   description: "Co-Founder at Envio. Building blockchain indexing infrastructure for the multichain era."
   socials:
     twitter: https://x.com/DenhamPreen
+jonjonclark:
+  name: Jonjon Clark
+  title: Co-Founder at Envio
+  url: /blog/author/jonjonclark
+  image_url: /blog-assets/authors/jonjonclark.jpg
+  description: "Co-Founder at Envio. Building blockchain indexing infrastructure, and digging through onchain data to see what it actually shows."
+  socials:
+    twitter: https://x.com/jonjonclark
