@@ -11,7 +11,7 @@ image: /docs-assets/og/HyperSync/overview.png
 
 ## What is HyperSync?
 
-HyperSync is a purpose-built, high-performance data retrieval layer that gives developers unprecedented access to blockchain data. Built from the ground up in Rust, HyperSync serves as an alternative to traditional JSON-RPC endpoints, offering dramatically faster queries and more flexible data access patterns.
+HyperSync is Envio's ultra-fast blockchain data API, a direct replacement for traditional JSON-RPC endpoints that delivers up to 2000x faster data access. Built from the ground up in Rust, it offers flexible query patterns across dozens of EVM chains and Fuel, with client libraries for Python, Rust, Node.js and Go.
 
 :::info HyperSync & HyperIndex
 

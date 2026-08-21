@@ -3,7 +3,7 @@ id: overview
 title: "HyperIndex: Fast Multichain Blockchain Indexer"
 sidebar_label: Overview
 slug: /overview
-description: Explore HyperIndex, a blazing-fast multichain indexer for real-time blockchain data.
+description: HyperIndex is Envio's multichain indexing framework, independently benchmarked as the fastest blockchain indexer. On-chain events to a GraphQL API in minutes.
 image: /docs-assets/og/HyperIndex/overview.png
 ---
 

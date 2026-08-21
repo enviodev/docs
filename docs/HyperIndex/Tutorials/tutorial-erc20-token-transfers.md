@@ -3,7 +3,7 @@ id: tutorial-erc20-token-transfers
 title: Indexing ERC20 Token Transfers on Base
 sidebar_label: Indexing ERC20 Token Transfers on Base
 slug: /tutorial-erc20-token-transfers
-description: Learn how to index and query USDC ERC20 transfers on Base using Envio.
+description: Step-by-step ERC20 indexing tutorial. Index USDC token transfers on Base and query them through a GraphQL API, in under 5 minutes.
 ---
 
 ## Introduction
