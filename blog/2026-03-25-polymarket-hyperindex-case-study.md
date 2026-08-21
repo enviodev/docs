@@ -11,6 +11,7 @@ authors: ["nikbhintade", "j_o_r_d_y_s"]
 last_update:
   date: 2026-04-15
   author: Jordyn Laurier
+reviewed_by: nikbhintade
 ---
 
 <img src="/blog-assets/polymarket-hyperindex-case-study.png" alt="Indexing 4 Billion Polymarket Events Using Envio HyperIndex" width="100%"/>

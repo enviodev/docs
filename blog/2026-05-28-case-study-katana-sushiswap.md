@@ -6,6 +6,7 @@ slug: case-study-katana-sushiswap
 description: "Katana moved two production SushiSwap subgraphs from The Graph to Envio HyperIndex. The data model carried over entity-for-entity, and Katana's app now runs on Envio's native GraphQL endpoint."
 image: /blog-assets/katana-sushiswap-case-study.png
 authors: ["j_o_r_d_y_s"]
+reviewed_by: DenhamPreen
 ---
 
 <img src="/blog-assets/katana-sushiswap-case-study.png" alt="Envio case study cover for Katana, headline reads Migrating SushiSwap Data Off The Graph" width="100%"/>

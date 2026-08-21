@@ -8,6 +8,7 @@ image: /blog-assets/case-study-bridgg-op-superchain.png
 last_update:
   date: 2026-04-15
 authors: ["j_o_r_d_y_s"]
+reviewed_by: Jordy-Baby
 ---
 
 <img src="/blog-assets/case-study-bridgg-op-superchain.png" alt="Cover Image Bridgg OP Superchain Case Study" width="100%"/>

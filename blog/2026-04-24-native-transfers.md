@@ -9,6 +9,7 @@ authors: ["nikbhintade", "j_o_r_d_y_s"]
 last_update:
   date: 2026-04-24
   author: Nikhil Bhintade
+reviewed_by: Jordy-Baby
 ---
 
 ![Envio blog cover with title "Tracking Native ETH Transfers Using HyperSync" and a network of linked Ethereum nodes](/blog-assets/tracking-native-eth-transfers-hypersync.png)

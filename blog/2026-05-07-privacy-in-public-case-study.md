@@ -8,6 +8,7 @@ description: "What an Envio HyperIndex multichain indexer plus a thin Uniswap V4
 image: /blog-assets/privacy-pools-case-study.png
 last_update:
   date: 2026-05-07
+reviewed_by: Jordy-Baby
 ---
 
 <img src="/blog-assets/privacy-pools-case-study.png" alt="Privacy in Public: A Case Study on Privacy Pools" width="100%"/>

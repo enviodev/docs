@@ -9,6 +9,7 @@ authors: ["j_o_r_d_y_s"]
 last_update:
   date: 2026-06-26
   author: Jordyn Laurier
+reviewed_by: keenbeen32
 ---
 
 <img src="/blog-assets/scale-subgraphs-millions-of-requests.png" alt="How to Scale Subgraphs to Millions of Requests" width="100%"/>

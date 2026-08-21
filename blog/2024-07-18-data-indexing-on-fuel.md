@@ -7,6 +7,7 @@ image: /blog-assets/fuel-envio.png
 last_update:
   date: 2026-04-15
 authors: ["j_o_r_d_y_s"]
+reviewed_by: MJYoung114
 ---
 
 <img src="/blog-assets/fuel-envio.png" alt="Envio cover banner reading 'Real-time Data Indexing on Fuel' with HyperFuel + HyperIndex and the Fuel logo" width="100%"/>

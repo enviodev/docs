@@ -9,6 +9,7 @@ authors: ["j_o_r_d_y_s"]
 last_update:
   date: 2026-05-14
   author: Jordyn Laurier
+reviewed_by: nikbhintade
 ---
 
 <img src="/blog-assets/ai-agents-acting-onchain-indexer.png" alt="Envio blog cover: 'Why AI Agents Need an Indexer' with subtitle 'The data layer for onchain agents'" width="100%"/>

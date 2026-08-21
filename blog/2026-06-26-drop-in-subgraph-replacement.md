@@ -9,6 +9,7 @@ authors: ["j_o_r_d_y_s"]
 last_update:
   date: 2026-06-26
   author: Jordyn Laurier
+reviewed_by: nikbhintade
 ---
 
 <img src="/blog-assets/drop-in-subgraph-replacement.png" alt="Migrating From The Graph Without a Rewrite" width="100%"/>

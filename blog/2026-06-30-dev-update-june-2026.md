@@ -9,6 +9,7 @@ last_update:
   date: 2026-06-30
   author: Jordyn Laurier
 authors: ["j_o_r_d_y_s"]
+reviewed_by: keenbeen32
 ---
 
 <img src="/blog-assets/dev-update-june-2026.png" alt="Cover Image Envio Developer Update June 2026" width="100%"/>

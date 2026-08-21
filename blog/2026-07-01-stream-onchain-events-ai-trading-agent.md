@@ -9,6 +9,7 @@ last_update:
   date: 2026-07-01
   author: Jordyn Laurier
 authors: ["j_o_r_d_y_s"]
+reviewed_by: keenbeen32
 ---
 
 <img src="/blog-assets/stream-onchain-events-ai-trading-agent.png" alt="How to Stream Onchain Events to an AI Trading Agent" width="100%"/>

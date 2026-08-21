@@ -9,6 +9,7 @@ authors: ["j_o_r_d_y_s"]
 last_update:
   date: 2026-06-02
   author: Jordyn Laurier
+reviewed_by: keenbeen32
 ---
 
 <img src="/blog-assets/index-sei-smart-contracts-envio.png" alt="Envio cover banner with Sei logo and headline 'Indexing Sei Data in Minutes: A step-by-step guide'" width="100%"/>

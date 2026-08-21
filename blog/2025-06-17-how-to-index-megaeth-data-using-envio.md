@@ -7,6 +7,7 @@ image: /blog-assets/indexing-megaeth-data.png
 last_update:
   date: 2026-04-15
 authors: ["j_o_r_d_y_s"]
+reviewed_by: JonoPrest
 ---
 
 <img src="/blog-assets/indexing-megaeth-data.png" alt="Cover Image How to Index MegaEth Data Using Envio" width="100%"/>

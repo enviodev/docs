@@ -8,6 +8,7 @@ image: /blog-assets/tokenizing-rwa.png
 last_update:
   date: 2026-04-15
 authors: ["j_o_r_d_y_s"]
+reviewed_by: SvenMuller95
 ---
 
 <img src="/blog-assets/tokenizing-rwa.png" alt="Cover Image Tokenizing RWAs: How Blockchain is Redefining Real Estate Investment" width="100%"/>

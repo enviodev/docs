@@ -7,6 +7,7 @@ image: /blog-assets/envio-developer-community-november-2024.png
 last_update:
   date: 2026-04-15
 authors: ["j_o_r_d_y_s"]
+reviewed_by: SvenMuller95
 ---
 
 <img src="/blog-assets/envio-developer-community-november-2024.png" alt="Cover Image Envio Developer Community Update November 2024" width="100%"/>

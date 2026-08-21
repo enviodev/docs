@@ -7,6 +7,7 @@ image: /blog-assets/ethonline-hackathon-winners.png
 last_update:
   date: 2026-04-15
 authors: ["j_o_r_d_y_s"]
+reviewed_by: Jordy-Baby
 ---
 
 <img src="/blog-assets/ethonline-hackathon-winners.png" alt="Cover Image EthOnline 2024 Envio Hackathon Winners" width="100%"/>

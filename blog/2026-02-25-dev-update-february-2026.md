@@ -9,6 +9,7 @@ last_update:
   date: 2026-04-15
   author: Jords
 authors: ["j_o_r_d_y_s"]
+reviewed_by: keenbeen32
 ---
 
 <img src="/blog-assets/dev-update-feb-26.png" alt="Cover Image Envio Developer Update Feb 2026" width="100%"/>

@@ -9,6 +9,7 @@ last_update:
   date: 2026-06-03
   author: Denham
 authors: ["denhampreen"]
+reviewed_by: DenhamPreen
 ---
 
 <img src="/blog-assets/just-in-time-indexing-agents-onchain.png" alt="Just-in-Time Indexing: Using Agents to Answer Onchain Questions" width="100%"/>

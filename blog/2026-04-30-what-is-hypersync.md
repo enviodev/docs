@@ -8,6 +8,7 @@ authors: ["j_o_r_d_y_s"]
 last_update:
   date: 2026-04-30
   author: Jordyn Laurier
+reviewed_by: nikbhintade
 ---
 
 !["What is HyperSync? The fastest way to query blockchain data" Envio blog cover](/blog-assets/what-is-hypersync.png)

@@ -9,6 +9,7 @@ last_update:
   date: 2026-07-10
   author: Nikhil Bhintade
 authors: ["nikbhintade"]
+reviewed_by: Jordy-Baby
 ---
 
 <img src="/blog-assets/rwa-dashboard.png" alt="How to Build an Open Source RWA Stablecoin Dashboard" width="100%"/>

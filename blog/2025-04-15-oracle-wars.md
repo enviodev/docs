@@ -6,6 +6,7 @@ description: "Learn how Oracle Wars uses Envio's HyperIndex to visualise how dif
 image: /blog-assets/oracle-wars-1.png
 last_update:
   date: 2026-04-15
+reviewed_by: moose-code
 ---
 
 Co-authors: [Jordyn Laurier](https://x.com/j_o_r_d_y_s), Head of Marketing, and [Jonjon Clark](https://x.com/jonjonclark), Co-Founder at Envio

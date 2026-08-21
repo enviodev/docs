@@ -7,6 +7,7 @@ image: /blog-assets/hosted-service-v2.png
 last_update:
   date: 2026-04-15
 authors: ["j_o_r_d_y_s"]
+reviewed_by: moose-code
 ---
 
 <img src="/blog-assets/hosted-service-v2.png" alt="Envio Cloud launch banner: Introducing Envio Cloud, 10x Faster Indexer Deployments" width="100%"/>

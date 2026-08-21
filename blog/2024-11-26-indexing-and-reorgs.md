@@ -6,6 +6,7 @@ description: "Learn how Envio handles blockchain reorgs to maintain data accurac
 image: /blog-assets/indexing-and-reorgs.png
 last_update:
   date: 2026-04-15
+reviewed_by: JonoPrest
 ---
 
 Author: [Denham Preen](https://x.com/DenhamPreen), Co-Founder at Envio

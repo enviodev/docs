@@ -9,6 +9,7 @@ last_update:
   date: 2026-04-15
   author: Jordyn Laurier
 authors: ["j_o_r_d_y_s", "KenauVith32"]
+reviewed_by: keenbeen32
 ---
 
 <img src="/blog-assets/envio-docs-mcp-server.png" alt="Introducing the Envio Docs MCP Server" width="100%"/>

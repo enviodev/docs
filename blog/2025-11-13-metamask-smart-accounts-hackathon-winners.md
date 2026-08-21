@@ -8,6 +8,7 @@ image: /blog-assets/metamask-hackathon-2025.png
 last_update:
   date: 2026-04-15
 authors: ["j_o_r_d_y_s"]
+reviewed_by: nikbhintade
 ---
 
 <img src="/blog-assets/metamask-hackathon-2025.png" alt="Envio cover banner: Smart Accounts Hackathon Winners, $15,000 prize pool" width="100%"/>

@@ -8,6 +8,7 @@ image: /blog-assets/dev-update-august-2025.png
 last_update:
   date: 2026-04-15
 authors: ["j_o_r_d_y_s"]
+reviewed_by: keenbeen32
 ---
 
 <img src="/blog-assets/dev-update-august-2025.png" alt="Cover Image Envio Developer Community Update August 2025" width="100%"/>

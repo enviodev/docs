@@ -9,6 +9,7 @@ authors: ["j_o_r_d_y_s"]
 last_update:
   date: 2026-05-14
   author: Jordyn Laurier
+reviewed_by: nikbhintade
 ---
 
 <img src="/blog-assets/ai-onchain-app-hyperindex-claude.png" alt="Build an AI-Powered App with HyperIndex and Claude" width="100%"/>
