@@ -53,17 +53,17 @@ indexer.onInstruction(
       mint: accounts.mint ?? "",
       updateAuthority: accounts.update_authority,
       createdAtSlot: instruction.block.slot,
-      lastTxSignature: instruction.transaction.signatures[0],
+      lastTxSignature: instruction.transaction.signature,
     });
   },
 );
 ```
 
 :::note Reading `instruction.transaction`
-`instruction.transaction.signatures[0]` is only populated when the instruction
-opts into it via [field selection](/docs/HyperIndex/solana/configuration#field-selection)
-(`transaction_fields: [signatures]` in `config.yaml`). Without it the field is
-absent and won't type-check.
+`instruction.transaction.signature` is only populated when the instruction opts
+into it via [field selection](/docs/HyperIndex/solana/configuration#field-selection)
+(`transaction_fields: [signature]` in `config.yaml`). Without it the field is
+typed `FieldNotSelected` and won't type-check.
 :::
 
 ## The instruction object
@@ -108,12 +108,13 @@ error pointing at the config key to add.
 
 ```typescript
 type SvmTransaction = {
-  signatures: readonly string[];   // signatures[0] is the transaction id
+  signature: string;                 // the transaction id, a scalar
+  allSignatures: readonly string[];  // every signer's signature; selected separately
   transactionIndex: number;
   feePayer?: string;
   success?: boolean;
   err?: string;
-  fee?: bigint;                    // lamports
+  fee?: bigint;                      // lamports
   computeUnitsConsumed?: bigint;
   accountKeys: readonly string[];
   recentBlockhash?: string;
@@ -121,6 +122,16 @@ type SvmTransaction = {
   tokenBalances?: readonly SvmTokenBalance[]; // with token_balance_fields: true
 };
 ```
+
+The object itself is always there (`{}` when you selected nothing), so a missing
+selection is a compile error on the property, not a crash on `undefined`.
+
+:::tip `signature`, not `signatures[0]`
+The identifying signature is the scalar `instruction.transaction.signature`. The
+array of every signer's signature is a separate field, `allSignatures`, selected
+with its own entry in `transaction_fields` - selecting `signature` does not
+give you `allSignatures`. Nearly every handler wants the scalar.
+:::
 
 ### Token balances and balance changes
 
@@ -134,9 +145,10 @@ account touched by the transaction.
 type SvmTokenBalance = {
   account?: string;     // token account (base58)
   mint?: string;
-  owner?: string;
-  preAmount?: string;   // balance before the tx — u64 as a decimal string
-  postAmount?: string;  // balance after the tx  — u64 as a decimal string
+  owner?: string;       // owner at end of tx; falls back to owner on entry if it was closed
+  decimals?: number;    // mint decimals, for scaling the raw amounts
+  preAmount?: bigint;   // raw base units before the tx; absent if the account was created in it
+  postAmount?: bigint;  // raw base units after the tx;  absent if the account was closed in it
 };
 ```
 
@@ -144,28 +156,35 @@ type SvmTokenBalance = {
 indexer.onInstruction(
   { program: "Jupiter", instruction: "sharedAccountsRoute" },
   async ({ instruction, context }) => {
-    const txSig = instruction.transaction.signatures[0];
-    if (!txSig) return;
+    const txSig = instruction.transaction.signature;
 
     for (const b of instruction.transaction.tokenBalances ?? []) {
       if (!b.account) continue;
-      const pre = BigInt(b.preAmount ?? "0");
-      const post = BigInt(b.postAmount ?? "0");
+      const delta = (b.postAmount ?? 0n) - (b.preAmount ?? 0n); // signed
       context.TokenDelta.set({
         id: `${txSig}:${b.account}`,
         account: b.account,
         mint: b.mint ?? "",
         owner: b.owner,
-        delta: post - pre, // signed
+        decimals: b.decimals,
+        delta,
       });
     }
   },
 );
 ```
 
-:::tip Amounts are strings
-`preAmount`/`postAmount` (and any `u64`+ decoded arg) are **decimal strings** to
-avoid precision loss. Wrap them in `BigInt(...)` for arithmetic.
+:::tip Amounts are `bigint`, and `decimals` comes with them
+`preAmount`/`postAmount` are raw base units typed as **`bigint`** - no
+`BigInt(...)` wrapper, and `?? 0n` rather than `?? "0"` for the absent case. Both
+being absent means the balance entry carries no movement at all, which is worth
+distinguishing from a genuine zero.
+
+`decimals` arrives on the same object, so scaling to a human-readable amount no
+longer needs a per-mint lookup.
+
+Two things to watch: don't let a `bigint` reach an entity field typed as a string
+in `schema.graphql`, and don't `JSON.stringify` one - that throws.
 :::
 
 :::note Native SOL balances
@@ -250,7 +269,7 @@ deterministic entity ids and use `set` (which is insert-or-update). A common
 Solana id is the transaction signature combined with the instruction path:
 
 ```typescript
-const id = `${instruction.transaction.signatures[0]}:${instruction.instructionAddress.join(".")}`;
+const id = `${instruction.transaction.signature}:${instruction.instructionAddress.join(".")}`;
 ```
 
 ## Testing
@@ -267,27 +286,38 @@ import { createTestIndexer } from "envio";
 describe("my solana indexer", () => {
   it("indexes instructions in the pinned window", async () => {
     const indexer = createTestIndexer();
-    const result = await indexer.process({
-      chains: { 0: { startBlock: 420_620_000, endBlock: 420_620_200 } },
+    await indexer.process({
+      chains: { 0: { startBlock: 437_452_000, endBlock: 437_452_060 } },
     });
 
-    // result.changes is an array of per-batch checkpoints:
-    //   [{ block, chainId, eventsProcessed, <EntityName>: { sets: [...] } }, ...]
-    const sets = result.changes.flatMap(
-      (c) => c.TokenMetadataAccount?.sets ?? [],
-    );
-    expect(sets.length).toBeGreaterThan(0);
+    // Read the resulting rows straight off the test indexer.
+    const rows = await indexer.TokenMetadataAccount.getAll();
+    expect(rows.length).toBeGreaterThan(0);
   }, 120_000); // generous timeout - this hits the network
 });
 ```
 
+Each entity on the test indexer exposes `get` / `getOrThrow` / `getAll` /
+`getWhere` / `set`. `process` also returns per-batch checkpoints on
+`result.changes` (`[{ block, chainId, <EntityName>: { sets, deleted } }, …]`) if
+you'd rather assert on what each batch wrote.
+
 To keep a separate test config instead, point the `ENVIO_CONFIG` environment
 variable at a `config.test.yaml` (with its own `start_block`/`end_block`) before
-importing `envio`.
+importing `envio`. Interpolating an env var into `end_block` in the main
+`config.yaml` works too, as long as you set it before the `envio` import.
 
-Because these tests hit the real endpoint, assert on **shape and invariants**
-(e.g. "produced rows", "deltas equal post − pre", "saw ≥ 2 programs") rather than
-exact counts.
+Two practical notes:
+
+- SVM has **no synthetic/simulate items** in the test harness. Chain overrides
+  only accept a slot range, so these tests run the real handlers against a live
+  endpoint and need `ENVIO_API_TOKEN`. Without a token, `POST /query` 401s are
+  retried rather than failing fast, so a token-less run hangs until the test
+  timeout instead of erroring.
+- Because they hit the real endpoint, assert on **shape and invariants** ("produced
+  rows", "delta equals post minus pre", "saw at least 2 programs") rather than exact
+  counts. Zero rows means the build is wrong, and a wrong `discriminator` is the
+  usual cause: it fires nothing while every log stays green.
 
 ## Related
 

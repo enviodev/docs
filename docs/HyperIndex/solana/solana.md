@@ -49,6 +49,16 @@ Choose **Solana** when prompted, then pick a starter template (a Metaplex NFT
 instruction indexer, or a minimal slot handler). See
 [Getting Started](/docs/HyperIndex/solana/getting-started) for the full walkthrough.
 
+## Data endpoint and history
+
+Every Solana chain must name its HyperSync endpoint explicitly under
+`experimental.hypersync_config.url` - it is a **required** field, with no default
+applied when it is missing. Each endpoint serves history back to its own floor
+slot, and that floor moves forward over time, so pick both the endpoint and
+`start_block` deliberately. See
+[choosing an endpoint](/docs/HyperIndex/solana/configuration#choosing-an-endpoint-and-a-start-slot)
+for the current endpoints and the silent-skip failure mode to avoid.
+
 ## Mental model: coming from EVM?
 
 If you've used HyperIndex on EVM, the shift is mostly vocabulary:
@@ -57,7 +67,7 @@ If you've used HyperIndex on EVM, the shift is mostly vocabulary:
 | --- | --- |
 | Contract + ABI | Program + IDL |
 | Event (`onEvent`) | Instruction (`onInstruction`) |
-| `event.params` | `instruction.params.args` |
+| `event.params` | `instruction.params?.args` (optional: decoding can fail) |
 | Topic0 / event signature | Instruction discriminator |
 | Block (`onBlock`) | Slot (`onSlot`) |
 | Hex addresses `0x…` | Base58 addresses |
@@ -68,10 +78,10 @@ See [EVM vs Solana](/docs/HyperIndex/solana/evm-vs-solana) for the full picture.
 ## What's supported today
 
 - **Instruction indexing** via [`indexer.onInstruction`](/docs/HyperIndex/solana/instruction-handlers) — match by program + discriminator.
-- **IDL-aware decoding** — point at a standard Anchor IDL (legacy or 0.30+) and HyperIndex derives the argument and account layout. No IDL? Declare an [inline schema](/docs/HyperIndex/solana/decoding#inline-schema-no-idl).
+- **IDL-aware decoding**: point at a standard Anchor IDL (legacy or 0.30+) and HyperIndex derives the argument and account layout. The `discriminator` is always read from `config.yaml`, never from the IDL. No IDL? Declare an [inline schema](/docs/HyperIndex/solana/decoding#inline-schema-no-idl).
 - **Inner instructions (CPIs)** — decoded the same way as top-level ones, with a full instruction-address path so you can reconstruct the call tree.
 - **Token balances & balance changes** — pre/post SPL Token (and Token-2022) balances per transaction, so you get the net token movement without indexing every transfer. See [token balances](/docs/HyperIndex/solana/instruction-handlers#token-balances-and-balance-changes).
-- **Transaction metadata & logs** — fee payer, fee, compute units, success, signatures, and per-instruction program logs (opt-in via [field selection](/docs/HyperIndex/solana/configuration#field-selection)).
+- **Transaction metadata & logs**: fee payer, fee, compute units, success, the transaction signature, and per-instruction program logs (opt-in via [field selection](/docs/HyperIndex/solana/configuration#field-selection)).
 - **Slot handlers** via [`indexer.onSlot`](/docs/HyperIndex/solana/slot-handlers) + the [Effect API](/docs/HyperIndex/effect-api) for RPC enrichment.
 - **Local dev + GraphQL + Envio Cloud** — the same workflow and hosting as EVM.
 
@@ -81,8 +91,8 @@ See [EVM vs Solana](/docs/HyperIndex/solana/evm-vs-solana) for the full picture.
 - **Account-change subscriptions.** There is no `onAccount`/program-account handler. Account *state* is available only as the accounts referenced by an instruction (plus per-transaction token balances).
 - **A separate log handler.** Logs are a field on the instruction event, not their own handler.
 - **No-code contract import.** Solana has no `contract-import` flow — you configure programs/instructions by hand. (IDLs are wired up in `config.yaml`, not auto-imported.)
-- **ReScript.** Solana indexers are TypeScript only.
-- **Per-field selection.** Field-selection toggles accept `true` only, not field name lists (yet).
+- **ReScript.** Solana indexers are TypeScript only. Codegen emits no ReScript for `ecosystem: svm`, and `envio init` silently picks TypeScript if you ask for ReScript.
+- **Per-field selection on `token_balance_fields` / `log_fields`.** Those two toggles accept `true` only. `transaction_fields` and `block_fields` do take field name lists.
 
 If the piece you need is on this list, [tell us on Discord](https://discord.gg/envio) — there's a good chance we can sequence the work to unblock you, or point you at a [HyperSync-direct](/docs/HyperSync/solana) path that gets the data today.
 
