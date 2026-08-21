@@ -51,7 +51,7 @@ Select your preferred template from the interactive prompt.
 
 Use existing example indexers as a starting point. You can find these examples in:
 
-- [Envio Explorer](https://envio.dev/explorer)
+- [Examples](./example-uniswap-v4-multi-chain-indexer)
 - [Tutorials](./tutorial-erc20-token-transfers)
 - [GitHub Repositories](https://github.com/enviodev)
 
