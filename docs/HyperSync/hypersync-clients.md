@@ -18,6 +18,7 @@ HyperSync provides powerful client libraries that enable you to integrate high-p
 | **Python**           | [📦 PyPI](https://pypi.org/project/hypersync/) · [💻 GitHub](https://github.com/enviodev/hypersync-client-python) · [🧪 Examples](https://github.com/enviodev/hypersync-client-python/tree/main/examples)                                                                                     |
 | **Rust**             | [📦 Crates.io](https://crates.io/crates/hypersync-client) · [📝 API Docs](https://docs.rs/hypersync-client/latest/hypersync_client/) · [💻 GitHub](https://github.com/enviodev/hypersync-client-rust) · [🧪 Examples](https://github.com/enviodev/hypersync-client-rust/tree/main/examples)   |
 | **Go** _(community)_ | [💻 GitHub](https://github.com/enviodev/hypersync-client-go) · [🧪 Examples](https://github.com/enviodev/hypersync-client-go/tree/main/examples)                                                                                                                                              |
+| **Solana** _(Rust)_  | [📖 Guide](./Solana/solana-client.md) · [📦 Crates.io](https://crates.io/crates/hypersync-client-solana) · [📝 API Docs](https://docs.rs/hypersync-client-solana) · [💻 GitHub](https://github.com/enviodev/hypersync-client-solana)                                                          |
 | **API Tokens**       | [🔑 Get Tokens](./api-tokens.mdx)                                                                                                                                                                                                                                                             |
 
 ## Client Overview
@@ -102,6 +103,26 @@ Add the following to your `Cargo.toml`:
 [dependencies]
 hypersync-client = "0.1"
 tokio = { version = "1", features = ["full"] }
+```
+
+## Solana Client
+
+:::info Resources
+
+- [📖 Solana Client Guide](./Solana/solana-client.md)
+- [📦 Crates.io Package](https://crates.io/crates/hypersync-client-solana)
+- [📝 API Documentation](https://docs.rs/hypersync-client-solana)
+- [💻 GitHub Repository](https://github.com/enviodev/hypersync-client-solana)
+  :::
+
+Solana HyperSync has its own client, because the query and table model is Solana-shaped
+(slots, instruction calls, account activity) rather than EVM-shaped. It is Rust today, with
+unpublished Node bindings in the same repository. Everything client-side is covered in the
+[Solana client guide](./Solana/solana-client.md).
+
+```toml
+[dependencies]
+hypersync-client-solana = "0.2"
 ```
 
 ## Go Client
