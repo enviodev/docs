@@ -23,6 +23,10 @@ Web3 is inherently multichain. Apps no longer operate in isolation. If you are n
 
 Yet querying multiple chains efficiently remains a challenge. Each network has its own architecture, RPC limitations, and data structures, making direct integration complex and resource-intensive. Multichain indexing solves this by providing a unified way to structure, query, and analyze blockchain data across chains without the overhead of managing individual indexing solutions.
 
+## What is multichain?
+
+Multichain describes an application, protocol or dataset that spans more than one blockchain rather than living on a single network. A multichain DeFi protocol might hold liquidity on Ethereum, Base and Arbitrum at once, and a multichain NFT marketplace might list assets across several ecosystems. The term describes how something is deployed, not the technology used to read its data.
+
 ## What is multichain indexing?
 
 Multichain indexing is the process of ingesting, organizing, and providing blockchain data across multiple networks in a unified way. It simplifies the complexity of querying different blockchain infrastructures, giving you access to structured data from various chains through a single interface.
