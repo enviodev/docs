@@ -3,7 +3,7 @@ id: overview
 title: "HyperIndex: Fast Multichain Blockchain Indexer"
 sidebar_label: Overview
 slug: /overview
-description: HyperIndex turns on-chain events into a GraphQL API in minutes. Envio's multichain indexer, independently benchmarked as the fastest.
+description: HyperIndex turns onchain events into a GraphQL API in minutes. Envio's multichain indexer, independently benchmarked as the fastest.
 image: /docs-assets/og/HyperIndex/overview.png
 ---
 

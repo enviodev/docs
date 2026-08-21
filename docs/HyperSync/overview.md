@@ -11,7 +11,7 @@ image: /docs-assets/og/HyperSync/overview.png
 
 ## What is HyperSync?
 
-HyperSync is a purpose-built data retrieval layer for on-chain data, built from the ground up in Rust. It serves as an alternative to traditional JSON-RPC endpoints, letting you filter and select exactly the data you need. On the workloads in our [performance benchmarks](#performance-benchmarks), scans that take hours or days over RPC complete in seconds.
+HyperSync is a purpose-built data retrieval layer for onchain data, built from the ground up in Rust. It serves as an alternative to traditional JSON-RPC endpoints, letting you filter and select exactly the data you need. On the workloads in our [performance benchmarks](#performance-benchmarks), scans that take hours or days over RPC complete in seconds.
 
 :::info HyperSync & HyperIndex
 
