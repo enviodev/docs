@@ -341,6 +341,7 @@ Now that you understand the basics of using HyperSync:
 
 - Browse the [Python Client](./hypersync-clients.md) or other language-specific clients
 - Learn about [advanced query options](./hypersync-query.md)
+- Tune throughput, and read your rate-limit quota from code, in [Stream Config & Tuning](./stream-config-tuning.md)
 - See [example queries for common use cases](./hypersync-curl-examples.md)
 - [Get your API token](./api-tokens.mdx) to start building
 
