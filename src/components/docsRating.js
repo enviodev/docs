@@ -18,13 +18,13 @@ const DocsRating = ({ label }) => {
   const [downvotes, setDownvotes] = useState(0);
 
   const giveFeedback = (value) => {
-    if (window.ga) {
-      window.ga("send", {
-        hitType: "event",
-        eventCategory: "button",
-        eventAction: "feedback",
-        eventLabel: label,
-        eventValue: value,
+    // Universal Analytics was shut down in 2023 and the site loads gtag via the
+    // Docusaurus gtag plugin, so the old window.ga call never fired. Every
+    // rating since has been discarded.
+    if (typeof window.gtag === "function") {
+      window.gtag("event", "docs_page_rating", {
+        page_id: label,
+        rating: value === 1 ? "helpful" : "not_helpful",
       });
     }
     setHaveVoted(true);
