@@ -15,12 +15,10 @@ paginates a slot range across many concurrent requests for you.
 - [Crates.io](https://crates.io/crates/hypersync-client-solana) - [API docs](https://docs.rs/hypersync-client-solana) - [GitHub](https://github.com/enviodev/hypersync-client-solana)
 
 :::info Use 0.2.0 or newer
-`0.2.0` is the first release of the locked query API, and it also fixes a **silent data-loss
-bug**: on `stream_arrow` / `collect_arrow`, any chunk the server truncated (because it hit a
-row or time cap) dropped its tail instead of paginating it, losing up to 99% of rows on dense
-ranges. Nothing in the API surfaced the loss, so a stream on an older client looks healthy and
-is simply short. If you are streaming with any earlier version, upgrade before you trust the
-row counts.
+`0.2.0` is the first release of the locked query API and fixes a **silent data-loss bug** in
+`stream_arrow` / `collect_arrow`: chunks the server truncated (row or time cap) dropped their
+tail instead of paginating it, losing up to 99% of rows on dense ranges with no error. If you
+stream with an earlier version, upgrade before you trust the row counts.
 :::
 
 ## Install
@@ -69,7 +67,7 @@ bearer token.
 
 ## Typed rows or Arrow
 
-Every method comes in two flavours: typed structs, or the raw Arrow record batches the server
+Every method comes in two flavors: typed structs, or the raw Arrow record batches the server
 sent.
 
 | What you want | Single query | Whole slot range |
@@ -82,8 +80,8 @@ The typed structs live in `hypersync_client_solana::simple_types`: `Block`, `Tra
 `Vec` per table. Arrow responses instead carry `data.tables`, a map keyed by table name
 (`blocks`, `transactions`, `instruction_calls`, `logs`, `account_activity`, `rewards`).
 
-Reach for Arrow when you are feeding a columnar pipeline (Polars, DataFusion, Parquet) or want
-to skip the per-row decode entirely; reach for the typed structs for ordinary application code.
+Use Arrow when feeding a columnar pipeline (Polars, DataFusion, Parquet); use typed structs for
+ordinary application code.
 
 :::note Every field is `Option<T>`
 `field_selection` can project any column away, so a `None` means exactly "not selected, or the
@@ -130,7 +128,8 @@ A single `get` covers as much of the range as the server's budget allows, so use
 
 Responses can carry a `rollback_guard` describing the server's in-memory head window, so you
 can detect a shallow reorg before committing near-head data. It is absent when the server has
-no complete window to describe, and on a paginated `collect` it is the guard of the last page.
+no complete window to describe, and on a paginated `collect` it is the guard of the last page
+that carried one.
 See [Reorg detection](./solana-query#reorg-detection-rollback_guard) for the algorithm.
 
 ## Rate limits
@@ -140,7 +139,7 @@ read the quota yourself, the Solana client exposes the same surface as the EVM c
 `get_with_rate_limit` / `get_arrow_with_rate_limit`, `rate_limit_info()`,
 `wait_for_rate_limit()`, and the `proactive_rate_limit_sleep` config field. See
 [Inspecting rate limits from your code](/docs/HyperSync/stream-config-tuning#inspecting-rate-limits-from-your-code)
-for the fields, the header mapping, and the one behavioural difference from the EVM client
+for the fields, the header mapping, and the one behavioral difference from the EVM client
 (the Solana `*_with_rate_limit` methods retry a 429; the EVM ones do not).
 
 ## Node bindings
@@ -149,22 +148,19 @@ The repository also contains napi-rs Node bindings (`node/`), exposing `SolanaCl
 `getHeight()`, `query()`, `getWithRateLimit()`, `rateLimitInfo()`, and `waitForRateLimit()`.
 They are **not published to npm yet**, so build them from source
 ([repo](https://github.com/enviodev/hypersync-client-solana)); the streaming methods are Rust
-only for now.
-
-Two things to know if you are using them:
+only for now. If you use them:
 
 - The query object is camelCase (`fromSlot`, `instructionCalls`, `executingAccount`,
   `fieldSelection`), but `fieldSelection` **values** are the snake_case column names from
   [Available fields](./solana-query#available-fields-by-table), for example
   `{ instructionCall: ["executing_account", "tx_success"] }`.
 - `response.tables` is keyed by table name, so instruction rows are under `instruction_calls`.
-- `includeAccountActivity` was removed and now throws with guidance: use
+- `includeAccountActivity` is deprecated; setting it to `true` throws with guidance. Use
   `accountActivity: [{}]`.
 
 ## Upgrading to 0.2.0
 
-`0.2.0` locked the query API, and the renames are breaking on the **response** side while the
-request side still accepts the legacy names as aliases. The full mapping, including
-`is_committed` to `tx_success` and the `account_activity.owner` split into
-`pre_owner` / `post_owner`, is in
+`0.2.0` locked the query API. The renames are breaking on the **response** side; the request
+side still accepts legacy names as aliases. Full mapping (including `is_committed` to
+`tx_success` and the `account_activity.owner` split into `pre_owner` / `post_owner`):
 [Renamed fields and compatibility](./solana-query#renamed-fields-and-compatibility).

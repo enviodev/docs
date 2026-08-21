@@ -3,20 +3,20 @@ id: solana
 title: Solana HyperSync
 sidebar_label: Overview
 slug: /solana
-description: HyperSync for Solana - ultra-fast queries over Solana blocks, transactions, instructions, and logs.
+description: HyperSync for Solana - ultra-fast queries over Solana slots, transactions, instruction calls, logs, and account activity.
 ---
 
 # Solana HyperSync
 
-:::info Early access — built in the open
-Solana HyperSync is **early**. The core query path (slots, transactions, instructions, logs, account activity, rewards) is live and ready to test against real workloads — and we're actively shaping it with the teams using it. If you're evaluating it for a real project, **please [say hi on Discord](https://discord.gg/envio)** before you build a lot on top of it: we can tell you which parts are stable, which parts are still moving, and often suggest a better data path for your specific use case (NFTs, AMMs, token flows, wallet activity, custom programs, etc.).
+:::info Early access, built in the open
+Solana HyperSync is **early**. The core query path (slots, transactions, instruction calls, logs, account activity, rewards) is live and ready to test against real workloads. If you're evaluating it for a real project, [say hi on Discord](https://discord.gg/envio) first: we can tell you which parts are stable and often suggest a better data path for your use case.
 
-**Rolling retention window.** Only the most recent chain data is retained — not a fixed history from one slot forever. The oldest slot served was `403000000` when measured on 2026-08-18 (head `440067639`); as new slots are indexed, older slots fall off, so this number moves. Use `GET https://solana.hypersync.xyz/height` for the current synced head and **do not hard-code** historical lower bounds. Need a deeper window for backfill? Tell us — we're prioritizing this based on real use cases.
+**Rolling retention window.** Only recent chain data (on the order of tens of millions of slots behind head) is retained; the floor moves forward as new slots are indexed. Use `GET https://solana.hypersync.xyz/height` for the current head and do not hard-code historical lower bounds. Need deeper backfill? Tell us.
 :::
 
-HyperSync for Solana exposes **`https://solana.hypersync.xyz`**: one JSON (or Arrow) API over slots, transactions, instruction calls, logs, account activity (native SOL + SPL token), and rewards. Use the [Solana client](./solana-client) or any HTTP client (for example `curl`). Details: [Query & Response](./solana-query), [curl Examples](./solana-curl-examples).
+HyperSync for Solana exposes **`https://solana.hypersync.xyz`**: one JSON (or Arrow) API over slots, transactions, instruction calls, logs, account activity (native SOL + SPL token), and rewards. Use the [Solana client](./solana-client) or any HTTP client. Details: [Query & Response](./solana-query), [curl Examples](./solana-curl-examples).
 
-**Slots vs blocks:** Some slots have **no block** (skipped leader, etc.). A query over `[from_slot, to_slot)` can return **fewer block rows** than the slot span implies; that is normal, not a bug.
+**Slots vs blocks:** some slots have no block (skipped leader, etc.), so a query over `[from_slot, to_slot)` can return fewer block rows than the slot span implies.
 
 ## Differences vs EVM HyperSync
 
@@ -26,7 +26,7 @@ HyperSync for Solana exposes **`https://solana.hypersync.xyz`**: one JSON (or Ar
 | Range bounds | `from_block` / `to_block` | `from_slot` / `to_slot` |
 | Primary filter | `logs`, `transactions`, `traces` | `instruction_calls`, `transactions`, `logs`, `account_activity` |
 | Match key | event topic + address | program ID + discriminator + account positions |
-| Logs | Contract events (topics + structured log data) | Program output lines (free-form strings; filter by emitter `program_id` and parsed `kind`) |
+| Logs | Contract events (topics + structured data) | Program output lines (free-form strings; filter by emitter `program_id` and parsed `kind`) |
 | Pagination | `next_block` | `next_slot` |
 
 ## Endpoints
@@ -34,21 +34,24 @@ HyperSync for Solana exposes **`https://solana.hypersync.xyz`**: one JSON (or Ar
 | Path | Description |
 |---|---|
 | `POST /query` | JSON query, JSON response. |
-| `POST /query/arrow` | Same JSON query; response is **Apache Arrow IPC** (stream-encoded record batches—typically smaller and faster to decode than JSON). |
-| `GET /height` | Current synced slot (JSON). Example: `curl https://solana.hypersync.xyz/height`. |
+| `POST /query/arrow` | Same query; response is Apache Arrow IPC (smaller and faster to decode than JSON). |
+| `GET /height` | Current synced slot. |
 | `GET /height/sse` | Server-sent events stream of the head slot (see [curl Examples](./solana-curl-examples#head-slot-sse)). |
 | `GET /health` | Health check. |
-| `POST /`, `POST /rpc` | **Experimental** Solana JSON-RPC-compatible facade for tooling that already speaks JSON-RPC; coverage may be incomplete—prefer `POST /query` for indexing. |
+| `POST /`, `POST /rpc` | **Experimental** Solana JSON-RPC-compatible facade; coverage may be incomplete, so prefer `POST /query` for indexing. |
 
 ## Minimal first query
 
+Only recent slots are served, so anchor the range to the current head:
+
 ```bash
+HEAD=$(curl -sS https://solana.hypersync.xyz/height)
 curl -sS "https://solana.hypersync.xyz/query" \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "from_slot": 391800000,
-    "to_slot": 391800010,
+    "from_slot": '$((HEAD - 1000))',
+    "to_slot": '$((HEAD - 990))',
     "field_selection": { "instruction_call": ["slot", "executing_account", "d8"] },
     "instruction_calls": [
       { "executing_account": ["6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"] }
@@ -56,33 +59,23 @@ curl -sS "https://solana.hypersync.xyz/query" \
   }'
 ```
 
-Expect JSON with `instruction_calls` (and any joined tables you asked for), `next_slot`, optional `rollback_guard`, and other keys empty or omitted. [API tokens](/docs/HyperSync/api-tokens) are the same as for EVM HyperSync (`Authorization: Bearer`).
+Expect JSON with `instruction_calls` (plus any joined tables you selected), `next_slot`, and an optional `rollback_guard`. [API tokens](/docs/HyperSync/api-tokens) are the same as for EVM HyperSync.
 
 ## What's stable vs. what's still evolving
 
-We want you to be able to build against this without guessing what will move under you. As of today:
-
 **Stable enough to build on**
 
-- The **endpoint** (`https://solana.hypersync.xyz`) and **bearer-token auth** model.
-- The **request shape** for `POST /query`: `from_slot` / `to_slot`, the `instruction_calls` / `transactions` / `logs` / `account_activity` selection arrays, `field_selection` projection, and the AND-within-object / OR-across-objects semantics.
-- The **core filter primitives**: `executing_account` (the invoked program), discriminator filters (`d1` / `d2` / `d4` / `d8`), account-position filters (`a0` to `a9`), `is_inner`, `tx_success`, `success`, `fee_payer`, `transaction_id`, log `kind`.
-- The **table model**: `block`, `transaction`, `instruction_call`, `log`, `account_activity`, `reward`, with the fields listed in [Query & Response](./solana-query#available-fields-by-table).
-- **Pagination** via `next_slot` and **reorg detection** via `rollback_guard`.
+- The endpoint and bearer-token auth model.
+- The `POST /query` request shape: `from_slot` / `to_slot`, the `instruction_calls` / `transactions` / `logs` / `account_activity` selection arrays, `field_selection`, and the AND-within-object / OR-across-objects semantics.
+- The core filter primitives: `executing_account`, discriminators (`d1` / `d2` / `d4` / `d8`), account positions (`a0` to `a9`), `is_inner`, `tx_success`, `success`, `fee_payer`, `transaction_id`, log `kind`.
+- The table model: `block`, `transaction`, `instruction_call`, `log`, `account_activity`, `reward`, with the fields in [Query & Response](./solana-query#available-fields-by-table).
+- Pagination via `next_slot` and reorg detection via `rollback_guard`.
 
-**Still evolving — check in if you depend on these**
+**Still evolving**
 
-- The **historical retention floor** (rolling window today; we're prioritizing deeper backfill based on demand).
-- Decoded / higher-level helpers built on top of the raw tables (IDL-aware decoding, common-program shortcuts).
-- The **JSON-RPC-compatible facade** (`POST /` / `POST /rpc`) — useful for tools that already speak Solana JSON-RPC, but coverage is incomplete; prefer `POST /query` for indexing.
-- Client libraries beyond the [Rust client](./solana-client) (the Node bindings are not published yet; Python is not started).
+- The historical retention floor (rolling window today; deeper backfill prioritized by demand).
+- Decoded / higher-level helpers on top of the raw tables (IDL-aware decoding, common-program shortcuts).
+- The JSON-RPC-compatible facade (`POST /` / `POST /rpc`).
+- Clients beyond the [Rust client](./solana-client): Node bindings are not published yet; Python is not started.
 
-If a piece you need is in the second list, the fastest path is to tell us — most of the roadmap here is being driven by the use cases people bring us.
-
-## Working with us
-
-Solana HyperSync is the right time to be a design partner: the foundation is live, the abstractions on top are being shaped now, and your use case can influence what gets prioritized.
-
-- **[Join us on Discord](https://discord.gg/envio)** — fastest way to reach the team building this.
-- Have a specific Solana indexing problem (NFTs, AMM trades, token flows, wallet activity, a custom program)? Share a sample transaction signature or program ID and we'll map it to a concrete query path.
-- Hitting a missing field, a too-shallow retention window, or a filter you wish existed? File it on [GitHub](https://github.com/enviodev/hypersync-client-solana/issues) or tell us on Discord — early feedback shapes what ships next.
+If you need something from the second list, or hit a missing field, a too-shallow retention window, or a filter you wish existed, tell us on [Discord](https://discord.gg/envio) or file it on [GitHub](https://github.com/enviodev/hypersync-client-solana/issues). Share a sample transaction signature or program ID and we'll map it to a concrete query path. The roadmap here is driven by the use cases people bring us.

@@ -233,7 +233,7 @@ Sometimes waiting is not enough: you may want to show quota in a dashboard, or c
 budget across several processes that share one token. Every response carries the server's
 `x-ratelimit-*` headers, and the clients expose them under the same names.
 
-| Purpose | Rust | Node |
+| Purpose | Rust | Node (EVM client) |
 |---|---|---|
 | Query and get the headers back | `get_with_rate_limit`, `get_arrow_with_rate_limit` | `getWithRateLimit` |
 | Last observed headers, no request | `rate_limit_info()` | `rateLimitInfo()` |
@@ -260,7 +260,7 @@ observed headers before sending and waits out a window it knows is exhausted, in
 spending a request on a certain 429. Turn it off if you are doing your own scheduling.
 
 :::note One difference between the EVM and Solana clients
-The names and shapes are identical, but the 429 behaviour is not. On the **EVM** client
+The names and shapes are identical, but the 429 behavior is not. On the **EVM** client
 `get_with_rate_limit` does **not** retry a 429: it returns with no response body and the
 rate-limit info filled in, and retrying is your job. On the **Solana** client the
 `*_with_rate_limit` methods retry exactly like the plain `get` / `get_arrow`, so the response

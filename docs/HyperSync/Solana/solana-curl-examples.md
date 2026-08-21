@@ -9,16 +9,21 @@ description: Copy-paste curl examples for the Solana HyperSync API against real 
 # Solana curl Examples
 
 :::info Early access
-Solana HyperSync is **early** but the query shape used in these examples is stable enough to build against. Only **recent** slots are retained — the floor is a **rolling window** (see [Overview](./solana)); use `GET /height` instead of hard-coding how far back you can query. Working on something specific? [Ping us on Discord](https://discord.gg/envio) — we can often suggest a tighter query for your use case.
+Solana HyperSync is early, but the query shape used here is stable enough to build against. Only recent slots are retained (rolling window, see [Overview](./solana)); use `GET /height` instead of hard-coding how far back you can query.
 :::
 
-Copy-paste examples against **`https://solana.hypersync.xyz`**. Use the same [API token](/docs/HyperSync/api-tokens) as EVM HyperSync: pass `Authorization: Bearer <token>` on **`POST /query`** (and on Arrow). `GET /health`, `GET /height`, and `GET /height/sse` are typically usable without a token, but follow whatever your deployment returns.
+Copy-paste examples against **`https://solana.hypersync.xyz`**. Pass the same [API token](/docs/HyperSync/api-tokens) as EVM HyperSync via `Authorization: Bearer <token>`; `GET /height` and `/height/sse` work without one.
 
-Curl is great for testing; for production, prefer the [Solana client](./solana-client): it is Rust, uses Arrow for faster decoding, and handles pagination, retries, and rate limits for you. Node bindings live in the same repo but are not published yet, and there is no Python client; tell us on Discord which one would unblock you and we will prioritize accordingly.
+curl is great for testing; for production, prefer the [Solana client](./solana-client), which uses Arrow and handles pagination, retries, and rate limits for you.
 
 ```bash
 export URL=https://solana.hypersync.xyz
 export TOKEN="your-api-token"
+
+# Only a rolling window of recent slots is served, so anchor ranges to the head
+HEAD=$(curl -sS "$URL/height")
+FROM=$((HEAD - 2000))
+TO=$((HEAD - 1900))
 
 # JSON POST helper (adds auth + content-type)
 curl_query() {
@@ -29,20 +34,18 @@ curl_query() {
 }
 ```
 
-Discriminator filters accept hex **with or without** a `0x` prefix (`03` and `0x03` are the same). Pipe responses through `jq` or `python3 -m json.tool` for readability.
+The examples splice `$FROM` / `$TO` into single-quoted JSON with `'$FROM'`; a range below the retention floor returns empty tables with `next_slot` not advancing.
 
-Every response table is an array of row **batches**, so the `jq` below flattens with `[.table[][]]` before indexing or counting. See [Response](./solana-query#response).
+Discriminator filters accept hex with or without a `0x` prefix. Every response table is an array of row **batches**, so the `jq` below flattens with `[.table[][]]` before indexing or counting (see [Response](./solana-query#response)).
 
 ## Quick checks
 
 ```bash
-curl -sS "$URL/health"
 curl -sS "$URL/height"
+curl -sS -H "Authorization: Bearer $TOKEN" "$URL/health"
 ```
 
 ### Head slot (SSE)
-
-`curl -N` disables buffering so lines arrive as the server pushes them:
 
 ```bash
 curl -sSN -H "Accept: text/event-stream" "$URL/height/sse"
@@ -54,8 +57,8 @@ curl -sSN -H "Accept: text/event-stream" "$URL/height/sse"
 
 ```bash
 curl_query '{
-  "from_slot": 391800000,
-  "to_slot": 391800100,
+  "from_slot": '$FROM',
+  "to_slot": '$TO',
   "field_selection": {
     "instruction_call": ["slot", "transaction_index", "executing_account", "account_arguments", "data", "d8"],
     "transaction": ["slot", "signatures", "fee_payer", "success", "fee"]
@@ -73,8 +76,8 @@ curl_query '{
 
 ```bash
 curl_query '{
-  "from_slot": 391800000,
-  "to_slot": 391800100,
+  "from_slot": '$FROM',
+  "to_slot": '$TO',
   "field_selection": {
     "instruction_call": ["slot", "executing_account", "account_arguments", "data", "d1"],
     "account_activity": ["slot", "transaction_index", "account", "mint", "pre_owner", "post_owner", "token_state", "pre_token_balance", "post_token_balance"]
@@ -88,13 +91,12 @@ curl_query '{
 
 ## Wallet activity (native SOL + tokens)
 
-`account` is the wallet on a native row and the token account on a token row, and fields
-within one selection are AND-ed, so "everything for wallet W" is **two** selections.
+`account` is the wallet on a native row and the token account on a token row, and fields within one selection are AND-ed, so "everything for wallet W" is **two** selections.
 
 ```bash
 curl_query '{
-  "from_slot": 391800000,
-  "to_slot": 391800100,
+  "from_slot": '$FROM',
+  "to_slot": '$TO',
   "field_selection": {
     "account_activity": ["slot", "transaction_id", "account", "pre_balance", "post_balance", "mint", "pre_owner", "post_owner", "token_state", "pre_token_balance", "post_token_balance"]
   },
@@ -105,13 +107,12 @@ curl_query '{
 }'
 ```
 
-To pull **every** activity row in a range (the replacement for the removed
-`include_account_activity` flag), use one empty selection:
+To pull **every** activity row in a range (the replacement for the removed `include_account_activity` flag), use one empty selection:
 
 ```bash
 curl_query '{
-  "from_slot": 391800000,
-  "to_slot": 391800010,
+  "from_slot": '$FROM',
+  "to_slot": '$TO',
   "field_selection": { "account_activity": ["slot", "account", "pre_balance", "post_balance"] },
   "account_activity": [{}]
 }'
@@ -123,8 +124,8 @@ curl_query '{
 
 ```bash
 curl_query '{
-  "from_slot": 391800000,
-  "to_slot": 391800100,
+  "from_slot": '$FROM',
+  "to_slot": '$TO',
   "field_selection": {
     "instruction_call": ["slot", "executing_account", "d8", "tx_success", "error", "compute_units_consumed"]
   },
@@ -137,12 +138,12 @@ curl_query '{
 
 ## Jupiter **or** Orca (program-only OR)
 
-Each object in `instruction_calls` is OR-ed. This is the “match by program id only” pattern (no discriminator).
+Each object in `instruction_calls` is OR-ed; this is the "match by program only" pattern (no discriminator).
 
 ```bash
 curl_query '{
-  "from_slot": 391800000,
-  "to_slot": 391800100,
+  "from_slot": '$FROM',
+  "to_slot": '$TO',
   "field_selection": {
     "instruction_call": ["slot", "executing_account", "data", "d8"]
   },
@@ -157,8 +158,8 @@ curl_query '{
 
 ```bash
 curl_query '{
-  "from_slot": 391800000,
-  "to_slot": 391800100,
+  "from_slot": '$FROM',
+  "to_slot": '$TO',
   "field_selection": {
     "transaction": ["slot", "signatures", "fee_payer", "success", "fee", "compute_units_consumed"],
     "instruction_call": ["slot", "executing_account", "data", "account_arguments"]
@@ -171,12 +172,12 @@ curl_query '{
 
 ## Pump.fun bonding-curve trades (account index)
 
-`a2` matches the **third account** in the instruction's account metas (`a0` = first). For Pump.fun's buy/sell instructions, the mint is **account index 2 per that program's IDL**—not a Solana-wide rule.
+`a2` matches the **third account** in the instruction's account metas (`a0` = first). For Pump.fun's buy/sell instructions the mint is account index 2 per that program's IDL, not a Solana-wide rule.
 
 ```bash
 curl_query '{
-  "from_slot": 391800000,
-  "to_slot": 391800100,
+  "from_slot": '$FROM',
+  "to_slot": '$TO',
   "field_selection": {
     "instruction_call": ["slot", "executing_account", "account_arguments", "data", "d8", "a2"],
     "transaction": ["slot", "fee_payer", "success"]
@@ -191,8 +192,8 @@ curl_query '{
 
 ```bash
 curl_query '{
-  "from_slot": 391800000,
-  "to_slot": 391800100,
+  "from_slot": '$FROM',
+  "to_slot": '$TO',
   "field_selection": {
     "log": ["slot", "program_id", "kind", "message"],
     "transaction": ["slot", "fee_payer", "success"]
@@ -208,8 +209,6 @@ curl_query '{
 Use the same termination rule as [Query & Response](./solana-query#pagination): stop when `next_slot >= to_slot`, or when `next_slot` does not advance (stuck at head).
 
 ```bash
-FROM=391800000
-TO=391801000
 SLOT=$FROM
 while [ "$SLOT" -lt "$TO" ]; do
   RESP=$(curl_query "{
