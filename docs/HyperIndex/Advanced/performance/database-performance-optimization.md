@@ -85,6 +85,29 @@ HyperIndex automatically creates indices for:
 
 There's no need to manually add indices for these fields.
 
+## Deferred Index Creation
+
+Indices make writes slower, and a backfill is nothing but writes. Since v3.5, HyperIndex builds the indices your schema declares in one pass *after* the backfill completes, rather than up front. Some users see a **2.5x backfill speedup** from this alone.
+
+Nothing to configure. Two things change in what you'll observe:
+
+- Querying the database directly mid-backfill is slower, because the declared indices don't exist yet.
+- Near the end of the backfill, the indexer pauses to create them and logs that it's doing so. On a large database this takes a while — it's progress, not a hang.
+
+### Indices created on demand
+
+A [`getWhere`](/docs/HyperIndex/event-handlers#retrieving-entities-by-field) call on a field with no index creates one the first time a handler asks for it. That means `getWhere` works on **any** entity field, and you don't need to declare `@index` for the fields your handlers filter on — HyperIndex works out which indices your handlers need.
+
+`@index` is for the queries **you** serve. Declare it on the fields your GraphQL consumers filter and sort by, since HyperIndex can't know those from your handler code:
+
+```graphql
+type Transfer {
+  id: ID!
+  userAddress: String! @index
+  timestamp: BigInt!
+}
+```
+
 ## Strategic Indexing: When to Use Each Type
 
 ### When to Use Single-Column Indices

@@ -10,11 +10,12 @@
     "dev": "yarn start",
     "prebuild": "node ./scripts/update-endpoints.js && node ./scripts/generate-blog-index.js && node ./scripts/generate-shipper-videos.js && node ./scripts/validate-blog-social-images.js && node ./scripts/generate-og-images.js && node ./scripts/generate-blog-og-images.js && node ./scripts/generate-showcase-og-images.js && node ./scripts/test-blog-jsonld.js",
     "build": "docusaurus build",
+    "postbuild": "node ./scripts/validate-llms.js",
     "swizzle": "docusaurus swizzle",
     "update-endpoints": "node ./scripts/update-endpoints.js",
     "test-blog-jsonld": "node ./scripts/test-blog-jsonld.js",
     "update-cli-help": "node ./scripts/update-cli-help.js",
-    "update-evm-config-schema": "curl https://raw.githubusercontent.com/enviodev/hyperindex/main/codegenerator/cli/npm/envio/evm.schema.json > ./static/schemas/config.evm.json",
+    "update-evm-config-schema": "curl -fsS https://raw.githubusercontent.com/enviodev/hyperindex/v2.32.12/codegenerator/cli/npm/envio/evm.schema.json -o ./static/schemas/config.evm.json && curl -fsS https://raw.githubusercontent.com/enviodev/hyperindex/main/packages/envio/evm.schema.json -o ./static/schemas/config.v3.evm.json",
     "generate-config-schema-doc": "node ./scripts/generate-config-schema-doc.js",
     "generate-og-images": "node ./scripts/generate-og-images.js",
     "generate-blog-og-images": "node ./scripts/generate-blog-og-images.js",
@@ -29,7 +30,8 @@
     "preinstall": "npx only-allow yarn",
     "consolidate-docs": "node ./scripts/consolidate-hyperindex-docs.js --all",
     "build-llm": "yarn consolidate-docs && node ./scripts/validate-blog-social-images.js && npx docusaurus build --config docusaurus.config.llm.js",
-    "start-llm": "yarn consolidate-docs && npx docusaurus start --config docusaurus.config.llm.js"
+    "start-llm": "yarn consolidate-docs && npx docusaurus start --config docusaurus.config.llm.js",
+    "validate-llms": "node ./scripts/validate-llms.js"
   },
   "dependencies": {
     "@cookbookdev/docsbot": "^4.21.23",
@@ -42,6 +44,7 @@
     "docusaurus": "^1.14.7",
     "docusaurus-json-schema-plugin": "^1.12.2",
     "docusaurus-plugin-mcp-server": "^0.11.0",
+    "gray-matter": "^4.0.3",
     "minimatch": "^10.0.3",
     "prism-react-renderer": "^2.1.0",
     "react": "^18.2.0",

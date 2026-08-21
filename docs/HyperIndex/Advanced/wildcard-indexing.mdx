@@ -9,7 +9,7 @@ description: Learn how to index events using wildcard indexing feature and topic
 Wildcard indexing is a feature that allows you to index all events matching a specified event signature without requiring the contract address from which the event was emitted. This is useful in cases such as indexing contracts deployed through factories, where the factory contract does not emit any events upon contract creation. It also enables indexing events from all contracts implementing a standard (e.g. all ERC20 transfers).
 
 :::note
-Wildcard Indexing is supported on [HyperSync](/docs/HyperIndex/Advanced/hypersync.md), [HyperFuel](/docs/HyperIndex/fuel/fuel.md), and [RPC](/docs/HyperIndex/Advanced/rpc-sync.md) data sources.
+Wildcard Indexing is supported on [HyperSync](/docs/HyperIndex/hypersync), [HyperFuel](/docs/HyperIndex/fuel), and [RPC](/docs/HyperIndex/rpc-sync) data sources. Since v3.3, an RPC-backed indexer can register **multiple** wildcard events — earlier versions allowed only one.
 :::
 
 ## Index all ERC20 transfers
@@ -84,7 +84,7 @@ indexer.onEvent(
 
 ## Multiple Filters
 
-If you want to index both `Mint` and `Burn` events you can provide multiple filters as an array. Also, every parameter can accept an array to filter by multiple possible values. We'll use it to filter by a group of whitelisted addresses in the example below:
+If you want to index both `Mint` and `Burn` events you can provide multiple filters as an array, and an event is indexed if it matches any one of them. Within a single filter, all parameters must match. Also, every parameter can accept an array to filter by multiple possible values. We'll use it to filter by a group of whitelisted addresses in the example below:
 
 ```typescript
 import { indexer } from "envio";
@@ -114,6 +114,10 @@ indexer.onEvent(
   },
 );
 ```
+
+:::note
+On [RPC data sources](/docs/HyperIndex/rpc-sync), passing an array requires v3.3 or later. HyperSync supports it on all V3 versions.
+:::
 
 ## Different Filters per Chain
 
@@ -295,8 +299,6 @@ indexer.contractRegister(
 );
 ```
 
-## Limitations
-
-- For any given chain, only one event of a given signature can be indexed using wildcard indexing. This means that if you have multiple contract definitions in your config that contain the same event signature, only one of them is allowed to be set to `wildcard: true`.
-
-- Either the `contractRegister` or the `onEvent` registration for a given event can take a `where` option, but not both.
+:::note
+Wildcard registrations are matched by event signature. If the same signature is declared on more than one contract in your `config.yaml`, set `wildcard: true` on just one of them.
+:::

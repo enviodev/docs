@@ -1,6 +1,7 @@
 ---
 id: hosted-service-monitoring
 title: Monitoring Your Indexer
+description: Monitor a V2 indexer on Envio Cloud with the real-time dashboard, deployment status indicators, network sync progress, and usage statistics.
 sidebar_label: Monitoring
 slug: /hosted-service-monitoring
 ---

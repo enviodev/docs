@@ -157,9 +157,17 @@ Use dynamic contract registration when:
 
 - **Block Coverage**: When a dynamic contract is registered, Envio will index all events from that contract in the same block where it was created, even if those events happened in transactions before the registration event. This is particularly useful for contracts that emit events during their construction.
 
-- **Handler Organization**: You can register contracts from any event handler. For example, you might register a token contract when you see it being added to a registry, not just when it's created.
+- **Triggering Event**: Any event can trigger a registration — it doesn't have to be the one that created the contract. You might register a token when you see it added to a registry, or when it's first used, rather than at deployment.
 
-- **Pre-registration**: Pre-registration was a recommended mode in early V2 to optimize performance. The `preRegisterDynamicContracts` option has been removed entirely in V3 — the default registration path is now the fastest, so no flag is needed.
+## Scaling to Very Large Factories
+
+There is no practical ceiling on how many addresses a factory can register. Before v3.5, HyperIndex started to struggle at around 8 million addresses. That limit is gone — indexers with billions of registered addresses are supported.
+
+You don't need to configure anything for this. Once a contract accumulates enough addresses, HyperIndex automatically changes how it filters events for that contract: instead of asking the data source for a specific address list, it fetches events more broadly and filters them locally. The switch is per contract, so one large factory doesn't affect how your other contracts are indexed.
+
+The trade-off is that a very large factory fetches more data than its handlers ultimately use, since the filtering happens after the fetch rather than before it. That's what keeps indexing fast at this scale.
+
+To see how many addresses a chain has registered, watch `envio_indexing_addresses` on the [metrics endpoint](/docs/HyperIndex/observability#available-metrics).
 
 ## Debugging Tips
 

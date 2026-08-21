@@ -256,330 +256,133 @@ const updateMarkdownFiles = async () => {
   }
 };
 
-// Function to generate markdown content
-const generateHyperSyncMarkdownContent = (network, variant = "v2") => {
-  const capitalizedTitle = capitalizeAndSplit(network.name);
 
-  const hypersyncUrl = `https://${network.name}.hypersync.xyz`;
-  const hyperrpcUrl = `https://${network.name}.rpc.hypersync.xyz`;
+// Supported networks are documented as a single table rather than one page
+// per chain. The per-chain pages were ~300 words each and 61% identical to one
+// another, they made up over half of the sitemap, and the equivalent (better
+// optimised) pages already live at https://envio.dev/chains/<chain>. Collapsing
+// them into one table gives developers a single searchable reference and stops
+// the docs competing with the marketing site for the same queries.
 
-  // Check if this is a traces network and modify the URL accordingly
-  const isTracesNetwork = network.name.toLowerCase().includes("traces");
-  const chainIdSuffix = isTracesNetwork ? `-traces` : "";
+const ALL_NETWORKS_COLUMNS = [
+  { name: "Network", width: 28 },
+  { name: "Chain ID", width: 10 },
+  { name: "HyperSync URL", width: 46 },
+  { name: "HyperRPC URL", width: 46 },
+];
 
-  const chainsKey = variant === "v3" ? "chains" : "networks";
-  const docsBase =
-    variant === "v3" ? "/docs/HyperIndex" : "/docs/v2/HyperIndex";
-  const quickstartSlug = variant === "v3" ? "quickstart" : "contract-import";
+const RPC_ONLY_CELL = "_RPC only_";
 
-  return `---
-id: ${network.name}
-title: ${capitalizedTitle}
-description: Start indexing ${capitalizedTitle} data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
-sidebar_label: ${capitalizedTitle}
-slug: /${network.name}
----
+// Build one row set covering every network we support, from all three sources:
+// the HyperSync chains API, the request-access config, and the RPC-only config.
+const collectAllNetworks = (data) => {
+  const rows = new Map();
 
-# ${capitalizedTitle}
+  sortAndFilterChains(withRequestAccessChains(data)).forEach((chain) => {
+    const isTraces = chain.name.toLowerCase().includes("traces");
+    const suffix = isTraces ? "-traces" : "";
+    const requestAccess = isRequestAccessChain(chain);
+    rows.set(chain.name, {
+      name: getNetworkName(chain) + (networkAnnotations[chain.name] ? "*" : ""),
+      chainId: chain.chain_id,
+      hyperSync: requestAccess
+        ? REQUEST_ACCESS_CELL
+        : `https://${chain.chain_id}${suffix}.hypersync.xyz`,
+      hyperRPC: requestAccess
+        ? REQUEST_ACCESS_CELL
+        : `https://${chain.chain_id}${suffix}.rpc.hypersync.xyz`,
+    });
+  });
 
-## Indexing ${capitalizedTitle} Data with Envio
+  // RPC-only networks have no HyperSync endpoint; they are still supported as
+  // an indexing data source, so they belong in the table.
+  rpcNetworks.forEach((network) => {
+    const slug = sluggifyName(network);
+    if (rows.has(network.name) || rows.has(slug)) return;
+    if (data.some((c) => c.chain_id === network.chainId)) return;
+    rows.set(slug, {
+      name: capitalizeAndSplit(network.name),
+      chainId: network.chainId,
+      hyperSync: RPC_ONLY_CELL,
+      hyperRPC: RPC_ONLY_CELL,
+    });
+  });
 
-| **Field**                     | **Value**                                                                                          |
-|-------------------------------|----------------------------------------------------------------------------------------------------|
-| **${capitalizedTitle} Chain ID**     | ${network.chain_id}                                                                                            |
-| **HyperSync URL Endpoint**    | [${hypersyncUrl}](${hypersyncUrl}) or [https://${network.chain_id}${chainIdSuffix}.hypersync.xyz](https://${network.chain_id}${chainIdSuffix}.hypersync.xyz) |
-| **HyperRPC URL Endpoint**     | [${hyperrpcUrl}](${hyperrpcUrl}) or [https://${network.chain_id}${chainIdSuffix}.rpc.hypersync.xyz](https://${network.chain_id}${chainIdSuffix}.rpc.hypersync.xyz) |
+  return [...rows.values()].sort((a, b) => a.name.localeCompare(b.name));
+};
 
----
+const generateAllNetworksTable = (data) => {
+  let table = generateCommonTableHeader(ALL_NETWORKS_COLUMNS);
+  collectAllNetworks(data).forEach((row) => {
+    table += generateTableRow(ALL_NETWORKS_COLUMNS, [
+      row.name,
+      String(row.chainId),
+      row.hyperSync,
+      row.hyperRPC,
+    ]);
+  });
+  return table;
+};
 
-### Overview
+// Replace the generated block in a supported-networks hub page, leaving the
+// hand-written prose around it untouched.
+const NETWORKS_TABLE_START = "<!-- NETWORKS_TABLE_START -->";
+const NETWORKS_TABLE_END = "<!-- NETWORKS_TABLE_END -->";
 
-Envio is a modular hyper-performant data indexing solution for ${capitalizedTitle}, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](${docsBase}/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
-
-HyperSync accelerates the synchronization of historical data on ${capitalizedTitle}, enabling what usually takes hours to sync millions of events to be completed in under a minute—up to 2000x faster than traditional RPC methods.
-
-Designed to optimize the user experience, Envio offers automatic code generation, flexible language support, multi-chain data aggregation, and a reliable, cost-effective hosted service.
-
-To get started, see our documentation or follow our quickstart [guide](${docsBase}/${quickstartSlug}).
-
----
-
-### Defining ${chainsKey === "chains" ? "Chain" : "Network"} Configurations
-
-\`\`\`yaml
-name: IndexerName # Specify indexer name
-description: Indexer Description # Include indexer description
-${chainsKey}:
-  - id: ${network.chain_id} # ${capitalizedTitle}
-    start_block: START_BLOCK_NUMBER  # Specify the starting block
-    contracts:
-      - name: ContractName
-        address:
-          - "0xYourContractAddress1"
-          - "0xYourContractAddress2"
-        events:
-          - event: Event # Specify event
-          - event: Event
-\`\`\`
-
-With these steps completed, your application will be set to efficiently index ${capitalizedTitle} data using Envio’s blockchain indexer.
-
-For more information on how to set up your config, define a schema, and write event handlers, refer to the guides section in our [documentation](${docsBase}/configuration-file).
-
-### Support
-
-Can’t find what you’re looking for or need support? Reach out to us on [Discord](https://discord.gg/envio); we’re always happy to help!
-
----
-`;
+const writeNetworksTable = (filePath, data) => {
+  if (!fs.existsSync(filePath)) {
+    console.warn(`Skipping networks table, file not found: ${filePath}`);
+    return;
+  }
+  const before = fs.readFileSync(filePath, "utf8");
+  const startIdx = before.indexOf(NETWORKS_TABLE_START);
+  const endIdx = before.indexOf(NETWORKS_TABLE_END);
+  if (startIdx === -1 || endIdx === -1) {
+    console.warn(`Skipping networks table, markers missing in: ${filePath}`);
+    return;
+  }
+  const table = generateAllNetworksTable(data);
+  const notes = generateNotesSection(data);
+  const after =
+    before.slice(0, startIdx + NETWORKS_TABLE_START.length) +
+    "\n\n" +
+    table +
+    notes +
+    "\n" +
+    before.slice(endIdx);
+  if (after !== before) {
+    fs.writeFileSync(filePath, after, "utf8");
+    console.log(`Updated networks table: ${filePath}`);
+  }
 };
 
 const sluggifyName = (network) => {
   console.log(network.name.toLowerCase().replace(/\s+/g, "-"));
   return network.name.toLowerCase().replace(/\s+/g, "-");
 };
-// Function to generate markdown content for RPC networks
-const generateRPCMarkdownContent = (network, variant = "v2") => {
-  let slugFriendlyName = sluggifyName(network);
 
-  const chainsKey = variant === "v3" ? "chains" : "networks";
-  const docsBase =
-    variant === "v3" ? "/docs/HyperIndex" : "/docs/v2/HyperIndex";
-  const primaryRpc = network.rpcEndpoints[0];
-  const fallbackKey = variant === "v3" ? "rpc" : "url";
-  const fallbackComments = network.rpcEndpoints
-    .slice(1)
-    .map((url) => `\n    # ${fallbackKey}: ${url} # alternative`)
-    .join("");
-  const rpcBlock =
-    variant === "v3"
-      ? `    rpc: ${primaryRpc}${fallbackComments}`
-      : `    rpc_config:\n      url: ${primaryRpc}${fallbackComments}`;
-
-  return `---
-id: ${slugFriendlyName}
-title: ${network.name}
-description: Start indexing ${network.name} data with Envio. A blazing-fast, developer-friendly multichain blockchain indexer.
-sidebar_label: ${network.name}
-slug: /${slugFriendlyName}
----
-
-# ${network.name}
-
-## Indexing ${network.name} Data with Envio via RPC
-
-:::warning
-RPC as a source is not as fast as HyperSync. It is important in production to source RPC data from reliable sources. We recommend our partners at [drpc.org](https://drpc.org). Below, we have provided a set of free endpoints sourced from chainlist.org. **We don't recommend using these in production** as they may be rate limited. We recommend [tweaking the RPC config](./rpc-sync) to accommodate potential rate limiting.
-:::
-
-We suggest getting the latest from [chainlist.org](https://chainlist.org).
-
-### Overview
-
-Envio supports ${network.name
-    } through an RPC-based indexing approach. This method allows you to ingest blockchain data via an RPC endpoint by setting the RPC configuration.
-
----
-
-### Defining ${chainsKey === "chains" ? "Chain" : "Network"} Configurations
-
-To use ${network.name
-    }, define the RPC configuration in your ${chainsKey === "chains" ? "chain" : "network"} configuration file as follows:
-
-:::info
-You may need to adjust more parameters of the [rpc configuration](${docsBase}/rpc-sync) to support the specific rpc provider.
-:::
-
-\`\`\`yaml
-name: IndexerName # Specify indexer name
-description: Indexer Description # Include indexer description
-${chainsKey}:
-  - id: ${network.chainId} # ${network.name}
-${rpcBlock}
-    start_block: START_BLOCK_NUMBER # Specify the starting block
-    contracts:
-      - name: ContractName
-        address:
-          - "0xYourContractAddress1"
-          - "0xYourContractAddress2"
-        events:
-          - event: Event # Specify event
-          - event: Event
-\`\`\`
-
-Want HyperSync for ${network.name
-    }? Request network support here [Discord](https://discord.gg/envio)!
-`;
-};
-
-// Function to generate markdown content for request-access networks.
-// These networks are supported by HyperSync, but access is granted per
-// request rather than via public endpoints.
-const generateRequestAccessMarkdownContent = (network, variant = "v2") => {
-  const title = network.title;
-
-  const chainsKey = variant === "v3" ? "chains" : "networks";
-  const docsBase =
-    variant === "v3" ? "/docs/HyperIndex" : "/docs/v2/HyperIndex";
-  const quickstartSlug = variant === "v3" ? "quickstart" : "contract-import";
-
-  return `---
-id: ${network.name}
-title: ${title}
-description: Start indexing ${title} data with Envio. HyperSync support for ${title} is available on request.
-sidebar_label: ${title}
-slug: /${network.name}
----
-
-# ${title}
-
-## Indexing ${title} Data with Envio
-
-:::info Access on request
-HyperSync support for ${title} is available on a request basis. To get access, reach out to us on [Discord](https://discord.gg/envio) and we'll enable it for your project.
-:::
-
-| **Field**                     | **Value**                                                                                          |
-|-------------------------------|----------------------------------------------------------------------------------------------------|
-| **${title} Chain ID**     | ${network.chainId}                                                                                            |
-| **HyperSync Access**    | On request — [reach out on Discord](https://discord.gg/envio) |
-
----
-
-### Overview
-
-Envio is a modular hyper-performant data indexing solution for ${title}, enabling applications and developers to efficiently index and aggregate real-time and historical blockchain data. Envio offers three primary solutions for indexing and accessing large amounts of data: [HyperIndex](${docsBase}/overview) (a customizable indexing framework), [HyperSync](/docs/HyperSync/overview) (a real-time indexed data layer), and [HyperRPC](/docs/HyperRPC/overview-hyperrpc) (extremely fast read-only RPC).
-
-${title} is supported through HyperSync on a request basis. Once access has been granted, HyperIndex uses HyperSync as the data source for ${title}, enabling sync speeds up to 2000x faster than traditional RPC methods.
-
-To get started, see our documentation or follow our quickstart [guide](${docsBase}/${quickstartSlug}).
-
----
-
-### Defining ${chainsKey === "chains" ? "Chain" : "Network"} Configurations
-
-\`\`\`yaml
-name: IndexerName # Specify indexer name
-description: Indexer Description # Include indexer description
-${chainsKey}:
-  - id: ${network.chainId} # ${title}
-    start_block: START_BLOCK_NUMBER  # Specify the starting block
-    contracts:
-      - name: ContractName
-        address:
-          - "0xYourContractAddress1"
-          - "0xYourContractAddress2"
-        events:
-          - event: Event # Specify event
-          - event: Event
-\`\`\`
-
-With these steps completed, your application will be set to efficiently index ${title} data using Envio’s blockchain indexer.
-
-For more information on how to set up your config, define a schema, and write event handlers, refer to the guides section in our [documentation](${docsBase}/configuration-file).
-
-### Support
-
-Request access to ${title}, or ask us anything, on [Discord](https://discord.gg/envio); we’re always happy to help!
-
----
-`;
-};
-
-// a function to generate a markdown file for each network with a table of endpoints and basic data about the network
+// Generate the supported-networks table pages (replaces per-chain page generation)
 const generateMarkdownFiles = async () => {
   try {
     const response = await fetch(URL);
     const data = await response.json();
 
-    // Per-version output directories. Each supported-networks page is
-    // written into both V2 and V3 doc trees so the shared
-    // supported-networks.json resolves against both sidebars.
-    const outputDirs = {
-      v2: path.join(__dirname, "../docs/HyperIndexV2/supported-networks"),
-      v3: path.join(__dirname, "../docs/HyperIndex/supported-networks"),
-    };
-
-    for (const dir of Object.values(outputDirs)) {
-      if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-      }
-    }
-
-    let supportedNetworks = [];
-
-    const isRequestAccess = (chain) =>
-      requestAccessNetworks.some(
-        (n) => n.name === chain.name || n.chainId === chain.chain_id
-      );
-
-    // Generate HyperSync files
-    data.forEach((network) => {
-      if (
-        network.tier.toLowerCase() !== "hidden" &&
-        network.tier.toLowerCase() !== "internal" &&
-        !network.name.toLowerCase().includes("traces") && // Exclude traces networks from HyperIndex docs
-        !isRequestAccess(network) // Request-access networks get their own page format
-      ) {
-        for (const [variant, dir] of Object.entries(outputDirs)) {
-          const content = generateHyperSyncMarkdownContent(network, variant);
-          const filePath = path.join(dir, `${network.name}.md`);
-          fs.writeFileSync(filePath, content, "utf8");
-          console.log(`Generated file: ${filePath}`);
-        }
-        supportedNetworks.push(`"supported-networks/${network.name}"`);
-      }
-    });
-
-    // Generate request-access files
-    requestAccessNetworks.forEach((network) => {
-      // Prefer the chain id reported by the API if the chain is listed there
-      const apiChain = data.find(
-        (c) => c.name === network.name || c.chain_id === network.chainId
-      );
-      const chainId = apiChain ? apiChain.chain_id : network.chainId;
-      for (const [variant, dir] of Object.entries(outputDirs)) {
-        const content = generateRequestAccessMarkdownContent(
-          { ...network, chainId },
-          variant
-        );
-        const filePath = path.join(dir, `${network.name}.md`);
-        fs.writeFileSync(filePath, content, "utf8");
-        console.log(`Generated file: ${filePath}`);
-      }
-      supportedNetworks.push(`"supported-networks/${network.name}"`);
-    });
-
-    // Generate RPC files
-    rpcNetworks.forEach((network) => {
-      // if network.chainId exists in data, skip it, implies it's now supported in hypersync
-      if (data.find((item) => item.chain_id === network.chainId)) {
-        return;
-      }
-      // Skip networks that are handled as request-access above
-      if (requestAccessNetworks.some((n) => n.chainId === network.chainId)) {
-        return;
-      }
-      for (const [variant, dir] of Object.entries(outputDirs)) {
-        const content = generateRPCMarkdownContent(network, variant);
-        const filePath = path.join(dir, `${sluggifyName(network)}.md`);
-        fs.writeFileSync(filePath, content, "utf8");
-        console.log(`Generated file: ${filePath}`);
-      }
-      supportedNetworks.push(`"supported-networks/${sluggifyName(network)}"`);
-    });
+    // One table page per docs version, in place of ~236 per-chain pages.
+    [
+      path.join(__dirname, "../docs/HyperIndex/supported-networks/index.md"),
+      path.join(__dirname, "../docs/HyperIndexV2/supported-networks/index.md"),
+    ].forEach((file) => writeNetworksTable(file, data));
 
     const rootDir = path.join(__dirname, "..");
 
-    // Update supported-networks.json
+    // Only the hand-written supported-networks pages remain in the sidebar.
     fs.writeFileSync(
       path.join(rootDir, "supported-networks.json"),
       `{
     "supportedNetworks": [
       "supported-networks/any-evm-with-rpc",
       "supported-networks/local-anvil",
-      "supported-networks/local-hardhat",
-      ${supportedNetworks.sort().join(",\n      ")}]}`,
+      "supported-networks/local-hardhat"]}`,
       "utf8"
     );
 

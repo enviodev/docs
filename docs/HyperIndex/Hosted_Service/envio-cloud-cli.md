@@ -238,12 +238,73 @@ envio-cloud indexer env import myindexer myorg --file .env
 
 The `.env` file format is one `KEY=VALUE` per line. Lines starting with `#` are ignored.
 
+#### View the Security Configuration
+
+Both access controls for an indexer — API key authentication and the IP whitelist — are shown by a single command:
+
+```bash
+envio-cloud indexer security get myindexer myorg
+envio-cloud indexer security get myindexer myorg -o json
+```
+
+API keys are never printed here. Use `api-key list --show-tokens` to reveal them.
+
+#### Configure API Key Authentication
+
+Require clients to send an `Authorization: Bearer <token>` header on every request to your indexer's GraphQL endpoints.
+
+```bash
+# Turn it on — an initial key is provisioned automatically
+envio-cloud indexer security api-key enable myindexer myorg
+
+# Check whether it is on, and which keys exist (never prints tokens)
+envio-cloud indexer security api-key status myindexer myorg
+
+# List keys, then reveal the tokens
+envio-cloud indexer security api-key list myindexer myorg
+envio-cloud indexer security api-key list myindexer myorg --show-tokens
+
+# Turn it off — the endpoints stop requiring a token
+envio-cloud indexer security api-key disable myindexer myorg
+```
+
+Tokens are only requested from the API when `--show-tokens` is passed, so a plain listing never puts a secret on the wire.
+
+Query an endpoint with a key. Read the URL from `deployment endpoint` rather than hardcoding a host — it differs per deployment:
+
+```bash
+curl -X POST "$(envio-cloud deployment endpoint myindexer abc1234 myorg)" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $ENVIO_API_KEY" \
+  -d '{"query":"{ __typename }"}'
+```
+
+##### Rotating Keys
+
+An indexer can hold several named keys at once, which is how you rotate without downtime: add a new key, migrate your clients onto it, then revoke the old one.
+
+```bash
+envio-cloud indexer security api-key add myindexer myorg production-2026-08
+# ...migrate clients to the new key...
+envio-cloud indexer security api-key remove myindexer myorg production-2026-07
+```
+
+Key names may contain letters, digits, `-`, `.` and `_`, must start with a letter or digit, and must be 63 characters or fewer.
+
+:::info
+Removing a key revokes it **immediately** — any client still using it loses access. A newly added key shows as `provisioning` for a few seconds before its token is available. The last remaining key cannot be removed; disable API key authentication instead.
+:::
+
+:::note
+API key authentication requires a Production tier plan or above.
+:::
+
 #### Configure IP Whitelisting
 
 Restrict access to your indexer's GraphQL endpoint by IP address. Supports IPv4 addresses and CIDR notation.
 
 ```bash
-# View current IP whitelist configuration
+# View the current configuration
 envio-cloud indexer security get myindexer myorg
 
 # Add IPs to the whitelist

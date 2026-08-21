@@ -1,0 +1,63 @@
+.footer {
+  border-top: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-background-color);
+}
+
+.inner {
+  width: 100%;
+  max-width: var(--ifm-container-width-xl);
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 1.5rem;
+}
+
+/* auto-fit rather than a fixed column count: the footer reflows from five
+   columns to two on a phone without a breakpoint per layout. */
+.columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: 2rem 1.5rem;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.heading {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.link {
+  font-size: 0.875rem;
+  color: var(--ifm-color-emphasis-600);
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+
+.bottom {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  font-size: 0.875rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+@media (max-width: 480px) {
+  .inner {
+    padding: 2rem 1rem 1.25rem;
+  }
+
+  .columns {
+    gap: 1.5rem 1rem;
+  }
+}

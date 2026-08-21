@@ -88,7 +88,7 @@ For a team considering a migration off The Graph, Envio's subgraph-compatible en
 
 - [Katana SushiSwap V3 indexer (GitHub)](https://github.com/katana-network/katana-sushi-v3-subgraph)
 - [Original Sushi staker subgraph on The Graph](https://thegraph.com/explorer/subgraphs/2hnbrb3a4zWmQDkAbvDmYsBLGMWSaH6vAYcJnUJcLe1B?view=Query&chain=arbitrum-one)
-- [Indexing Katana Data with Envio](https://docs.envio.dev/docs/HyperIndex/katana)
+- [Indexing Katana Data with Envio](https://envio.dev/chains/katana)
 - [Migrating from The Graph](https://docs.envio.dev/docs/HyperIndex/migration-guide)
 - [HyperIndex Quickstart](https://docs.envio.dev/docs/HyperIndex/contract-import)
 - [HyperSync](https://docs.envio.dev/docs/HyperSync/overview)

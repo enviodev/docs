@@ -8,10 +8,19 @@
  * <Head> og:image / twitter:image so each /showcase/<slug> URL unfurls with its
  * own card instead of falling back to the generic site banner.
  *
- * Why static cards and not the live screenshots: several showcase entries only
- * have a video (webm/mp4) or an animated gif, neither of which unfurls as a
- * static preview on most social platforms. A deterministic, generated card
- * guarantees a clean preview for every entry with no headless browser needed.
+ * The showcase index itself gets the same treatment, written to _index.png and
+ * referenced by src/pages/showcase/index.js. Entry slugs are restricted to
+ * [a-z0-9-] below, so the leading underscore cannot collide with a real entry.
+ *
+ * Each card is that entry's own showcase asset cropped to the 1200x630 OG frame,
+ * with no branding over it, so a shared /showcase/<slug> link unfurls as the
+ * project itself rather than as generic Envio branding.
+ *
+ * Animated gifs are flattened to their first frame, since no social platform
+ * unfurls an animation. Video entries (webm/mp4) cannot be sampled at build time
+ * without ffmpeg, so each carries a committed `poster` still in _data.js that is
+ * used here instead. Any entry left with no usable still falls back to a
+ * generated text card and is named in the run summary.
  *
  * The source of truth for the entries is src/pages/showcase/_data.js. That file
  * is an ES module that webpack bundles for the site; here we evaluate it in a
@@ -36,6 +45,8 @@ const REPO_ROOT = path.resolve(__dirname, "..");
 const STATIC_DIR = path.join(REPO_ROOT, "static");
 const OUT_DIR = path.join(STATIC_DIR, "img", "showcase", "og");
 const DATA_FILE = path.join(REPO_ROOT, "src", "pages", "showcase", "_data.js");
+const INDEX_FILE = path.join(REPO_ROOT, "src", "pages", "showcase", "index.js");
+const INDEX_CARD_NAME = "_index";
 const NETWORK_COUNT_FILE = path.join(REPO_ROOT, "src", "data", "network-count.json");
 
 // Image dimensions (standard OG image)
@@ -78,6 +89,11 @@ const DESC_MAX_LINES = 3;
 // stays within the 630px canvas.
 const SECTION_Y = 278;
 const TITLE_START_Y = 356;
+
+// Showcase assets live under this prefix; anything else is rejected rather than
+// read, so a bad _data.js entry cannot pull an arbitrary file into a card.
+const ASSET_PREFIX = "/img/showcase/";
+const STATIC_ASSET_EXTS = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif"]);
 const TITLE_DESC_GAP = 2; // extra gap below the title block, before the description
 
 const GLOW_LARGE_OPACITY = 0.18;
@@ -190,6 +206,41 @@ function buildSvg({ title, description }) {
 }
 
 /**
+ * Absolute path to the entry's own screenshot, or null when it has no asset that
+ * can be rendered as a still. Entries whose showcase asset is a video carry a
+ * `poster` still alongside it purely for this card, since the page itself plays
+ * the video and never renders the poster.
+ */
+function resolveAsset(site) {
+  const ref = site.poster || site.image;
+  if (typeof ref !== "string" || !ref.startsWith(ASSET_PREFIX) || ref.includes("..")) {
+    return null;
+  }
+  if (!STATIC_ASSET_EXTS.has(path.extname(ref).toLowerCase())) return null;
+
+  const abs = path.join(STATIC_DIR, ref);
+  return fs.existsSync(abs) ? abs : null;
+}
+
+/**
+ * The entry's screenshot cropped to the OG frame, with no branding over it so
+ * the project's own interface is all that shows. Every showcase asset is
+ * landscape and close to 16:9, so a top-anchored cover crop into the slightly
+ * wider 1200x630 frame trims the edges without cutting into the content.
+ * `animated: false` takes frame one of a gif rather than the whole sequence.
+ */
+function buildAssetCard(assetPath) {
+  return sharp(assetPath, { animated: false })
+    .resize(WIDTH, HEIGHT, { fit: "cover", position: "top" })
+    .png()
+    .toBuffer();
+}
+
+function buildTextCard({ title, description }) {
+  return sharp(Buffer.from(buildSvg({ title, description }))).png().toBuffer();
+}
+
+/**
  * Load the showcase entries from src/pages/showcase/_data.js without duplicating
  * them here. The file is an ESM module with a single JSON import and a single
  * named export; we strip the import (supplying `networkCount` ourselves) and
@@ -209,15 +260,70 @@ function loadSites() {
   return sites;
 }
 
+/**
+ * Read the showcase index page's own title and description straight out of
+ * index.js, so its card and its <Head> tags can never drift apart.
+ */
+function loadIndexMeta() {
+  const src = fs.readFileSync(INDEX_FILE, "utf8");
+  // Tolerant of the line breaks and quote style a formatter may introduce, so a
+  // reformat of index.js cannot fail the build.
+  const read = (name) => {
+    const m = src.match(
+      new RegExp(`\\bconst\\s+${name}\\s*=\\s*(["'])((?:\\\\.|(?!\\1).)*)\\1`)
+    );
+    return m ? m[2] : null;
+  };
+  const title = read("TITLE");
+  const description = read("DESCRIPTION");
+  if (!title || !description) {
+    throw new Error(
+      "Could not read TITLE/DESCRIPTION from src/pages/showcase/index.js"
+    );
+  }
+  return { title, description };
+}
+
+/**
+ * Shared write path for every card. Returns "ok", "skipped" or "dry" so the run
+ * summary reflects what actually happened.
+ */
+async function writeCard(name, makeBuffer) {
+  const outPath = path.join(OUT_DIR, `${name}.png`);
+  const staticUrl = "/" + path.relative(STATIC_DIR, outPath);
+
+  if (fs.existsSync(outPath) && !FORCE) {
+    console.log(`  SKIP (exists): ${staticUrl}`);
+    return "skipped";
+  }
+  if (DRY_RUN) {
+    console.log(`  WOULD generate: ${staticUrl}`);
+    return "dry";
+  }
+
+  fs.writeFileSync(outPath, await makeBuffer());
+  console.log(`  OK: ${staticUrl}`);
+  return "ok";
+}
+
 async function main() {
   const sites = loadSites();
+  const indexMeta = loadIndexMeta();
 
   if (PREVIEW) {
     const previewOut = path.join(STATIC_DIR, "showcase-og-preview.png");
+    // Preview whatever that entry would really ship, so the overlay constants
+    // can be tuned against the layout most cards actually use.
     const s = sites[0];
-    const svg = buildSvg({ title: s.title, description: s.description });
-    await sharp(Buffer.from(svg)).png().toFile(previewOut);
-    console.log(`Preview written to: ${path.relative(REPO_ROOT, previewOut)} (source: ${s.slug})`);
+    const asset = resolveAsset(s);
+    const buf = asset
+      ? await buildAssetCard(asset)
+      : await buildTextCard({ title: s.title, description: s.description });
+    fs.writeFileSync(previewOut, buf);
+    console.log(
+      `Preview written to: ${path.relative(REPO_ROOT, previewOut)} ` +
+        `(source: ${s.slug}, ${asset ? "asset card" : "text card"})`
+    );
     return;
   }
 
@@ -229,6 +335,19 @@ async function main() {
   let ok = 0,
     skipped = 0,
     errors = 0;
+  const noAsset = [];
+
+  const tally = (status) => {
+    if (status === "ok") ok++;
+    else if (status === "skipped") skipped++;
+  };
+
+  try {
+    tally(await writeCard(INDEX_CARD_NAME, () => buildTextCard(indexMeta)));
+  } catch (err) {
+    console.error(`  ERROR: ${INDEX_CARD_NAME}: ${err.message}`);
+    errors++;
+  }
 
   for (const site of sites) {
     // The slug becomes both the output filename and the og:image URL used by
@@ -241,28 +360,17 @@ async function main() {
       continue;
     }
 
-    const outPath = path.join(OUT_DIR, `${slug}.png`);
-    const staticUrl = "/" + path.relative(STATIC_DIR, outPath);
-
-    if (fs.existsSync(outPath) && !FORCE) {
-      console.log(`  SKIP (exists): ${staticUrl}`);
-      skipped++;
-      continue;
-    }
-
-    if (DRY_RUN) {
-      console.log(`  WOULD generate: ${staticUrl}`);
-      continue;
-    }
+    const asset = resolveAsset(site);
+    if (!asset) noAsset.push(slug);
 
     try {
-      const svg = buildSvg({
-        title: site.title,
-        description: site.description,
-      });
-      await sharp(Buffer.from(svg)).png().toFile(outPath);
-      console.log(`  OK: ${staticUrl}`);
-      ok++;
+      tally(
+        await writeCard(slug, () =>
+          asset
+            ? buildAssetCard(asset)
+            : buildTextCard({ title: site.title, description: site.description })
+        )
+      );
     } catch (err) {
       console.error(`  ERROR: ${site.slug}: ${err.message}`);
       errors++;
@@ -270,6 +378,13 @@ async function main() {
   }
 
   console.log(`\nDone. Generated: ${ok}, Skipped: ${skipped}, Errors: ${errors}`);
+  if (noAsset.length > 0) {
+    console.log(
+      `\n${noAsset.length} entr${noAsset.length === 1 ? "y has" : "ies have"} no still asset ` +
+        `and fell back to a text card: ${noAsset.join(", ")}.\n` +
+        `Add a static image to _data.js for these to unfurl as the project itself.`
+    );
+  }
   if (errors > 0) process.exit(1);
 }
 

@@ -54,8 +54,6 @@ HyperIndex tracks per-entity state history for every unfinalised block at the fr
 
 ## Head-to-Head at a Glance
 
-<div className="scroll-table" tabIndex={0} role="region" aria-label="Envio vs The Graph comparison table">
-
 | Comparison Point | Envio HyperIndex | The Graph |
 | --- | --- | --- |
 | Handler language | TypeScript in Node, any npm package | AssemblyScript compiled to WebAssembly |
@@ -64,8 +62,6 @@ HyperIndex tracks per-entity state history for every unfinalised block at the fr
 | Reorg handling | Framework-level, rollback on by default | Automatic via graph-node, bounded by prune settings |
 | Query language | Standard GraphQL, plus a converter for subgraph queries | Custom GraphQL dialect |
 | Hosted runtime | Envio Cloud, GitHub-native deploy, or self-host via Docker | Subgraph Studio and the decentralised network |
-
-</div>
 
 ## Switching From The Graph
 

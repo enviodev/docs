@@ -82,7 +82,7 @@ These are just a few examples of Envio powering applications in the Monad ecosys
 ## Relevant resources
 
 * [Getting Started](https://docs.envio.dev/docs/HyperIndex/getting-started)
-* [Indexing Monad Data with Envio](https://docs.envio.dev/docs/HyperIndex/monad-testnet#indexing-monad-testnet-data-with-envio)
+* [Indexing Monad Data with Envio](https://envio.dev/chains/monad-testnet)
 * [Envio's HyperSync](https://docs.envio.dev/docs/HyperSync/overview)
 * [Envio's Hosted Service](https://docs.envio.dev/docs/HyperIndex/hosted-service)
 * [How to build a transfer notification bot with Envio HyperIndex](https://docs.monad.xyz/guides/indexers/tg-bot-using-envio)

@@ -1,6 +1,9 @@
 const { themes } = require("prism-react-renderer");
+const { getBlogLastmodMap } = require("./scripts/blog-lastmod");
 const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
+
+const blogLastmod = getBlogLastmodMap();
 
 const redirectsList = [
   {
@@ -255,6 +258,16 @@ try {
   );
 }
 
+// Chain count for the llms.txt header. network-count.json is regenerated from
+// the live chain API on every build, so this tracks reality instead of drifting
+// like a hardcoded number does. The count is EVM-only (update-endpoints.js
+// filters out Fuel and the -traces endpoint variants), which is why Fuel is
+// named separately in the header sentence. Falls back to a deliberately vague
+// phrase rather than a stale figure if the file is missing.
+const hyperSyncChainCountLabel = networkCountData.hyperSyncChainCount
+  ? `${networkCountData.hyperSyncChainCount}+`
+  : "many";
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Envio",
@@ -325,7 +338,12 @@ const config = {
           blogDescription:
             "Technical articles, case studies, tutorials, product updates, and agentic indexing insights from Envio's blockchain data infrastructure team.",
           postsPerPage: "ALL",
-          blogSidebarCount: 0,
+          // Every post links to every other post. Older posts had no inbound
+          // links except the /blog index, which left them with too little
+          // internal link equity for Google to spend crawl budget on them
+          // ("Discovered - currently not indexed" in Search Console).
+          blogSidebarCount: "ALL",
+          blogSidebarTitle: "All posts",
           tagsBasePath: 'tag',
         },
 
@@ -337,6 +355,10 @@ const config = {
           anonymizeIP: true,
         },
         sitemap: {
+          // Google ignores changefreq/priority entirely and uses lastmod as the
+          // signal for which URLs are worth recrawling. Without it every URL
+          // looked equally stale, so older posts were never crawled at all.
+          lastmod: "date",
           ignorePatterns: [
             "/docs/HyperIndex-LLM/**",
             "/docs/HyperSync-LLM/**",
@@ -347,7 +369,22 @@ const config = {
             "/docs/v2/HyperIndex/**",
             // Client-side search results page carries no indexable content.
             "/search",
+            // Auto-generated blog index pages carry no unique content. They
+            // stay crawlable for link discovery, but listing them in the
+            // sitemap spends discovery budget that real articles need.
+            "/blog/archive",
+            "/blog/author/**",
           ],
+          // Docs keep the git-derived lastmod; blog posts use their
+          // frontmatter revision date instead. See scripts/blog-lastmod.js.
+          async createSitemapItems({ defaultCreateSitemapItems, ...params }) {
+            const items = await defaultCreateSitemapItems(params);
+            return items.map((item) => {
+              const pathname = new URL(item.url).pathname.replace(/\/$/, "");
+              const lastmod = blogLastmod.get(pathname);
+              return lastmod ? { ...item, lastmod } : item;
+            });
+          },
         },
       }),
     ],
@@ -379,23 +416,22 @@ const config = {
           style: { display: "none" },
         },
         items: [
+          // A plain link, not a version dropdown. The dropdown put a sitewide
+          // link to `/docs/v2/HyperIndex/overview` on all 282 pages, and that
+          // page — like all 64 v2 pages — is `noindex`. Across the whole site
+          // 2,596 internal links terminated in that tree, so a large share of
+          // the link graph drained into pages Google is told to discard, and
+          // v3's own overview never got a top-level sitewide link of its own
+          // (the dropdown's parent label is a button, not an anchor).
+          //
+          // v2 stays published and reachable — see the migration guides, which
+          // is where someone on v2 actually starts.
           {
-            type: "dropdown",
+            to: "docs/HyperIndex/overview",
             label: "HyperIndex",
             position: "left",
-            items: [
-              {
-                label: "v3 (latest)",
-                to: "docs/HyperIndex/overview",
-                activeBaseRegex:
-                  "^/docs/HyperIndex/(?!(hosted-service|self-hosting|organisation-setup|envio-cloud-cli))",
-              },
-              {
-                label: "v2",
-                to: "docs/v2/HyperIndex/overview",
-                activeBaseRegex: "^/docs/v2/HyperIndex/",
-              },
-            ],
+            activeBaseRegex:
+              "^/docs/HyperIndex/(?!(hosted-service|self-hosting|organisation-setup|envio-cloud-cli))",
           },
           {
             to: "docs/HyperSync/overview",
@@ -415,6 +451,36 @@ const config = {
             position: "left",
             activeBaseRegex:
               "^/docs/HyperIndex/(hosted-service|self-hosting|organisation-setup|envio-cloud-cli)",
+          },
+          // Blog and Showcase are now real navbar items on every viewport.
+          // They previously carried `navbar__item--mobile-only`, so on desktop
+          // their only entry point was the docs sidebar header — which renders
+          // on `/docs/*` and nowhere else. Both are content hubs we want
+          // crawled, and neither had a sitewide link.
+          {
+            to: "/blog",
+            label: "Blog",
+            position: "left",
+          },
+          {
+            to: "/showcase",
+            label: "Showcase",
+            position: "left",
+          },
+          // Changelog and Shipper's Logs stay out of the desktop navbar to keep
+          // it from wrapping, but they are no longer sidebar-only: the footer
+          // below now carries them sitewide.
+          {
+            href: "https://envio.dev/changelog",
+            label: "Changelog",
+            position: "left",
+            className: "navbar__item--mobile-only",
+          },
+          {
+            to: "/videos",
+            label: "Shipper's Logs",
+            position: "left",
+            className: "navbar__item--mobile-only",
           },
           {
             href: "https://github.com/enviodev",
@@ -436,33 +502,80 @@ const config = {
         appId: "584MK2OMPZ",
         contextualSearch: true,
       },
+      // The footer renders on all ~280 pages, so it is the only surface that
+      // can give a page a sitewide link. It previously carried four links
+      // (Discord, Twitter, Blog, GitHub), which left every content hub relying
+      // on the docs sidebar header — a surface that exists only under /docs/*.
+      //
+      // The Pricing column is deliberately cross-domain. envio.dev has no
+      // footer at all, and /pricing/hypersync, /pricing/hyperrpc and
+      // /pricing/services had zero inbound links from anywhere on either site:
+      // they existed in envio.dev's sitemap and in no link graph, which is the
+      // textbook shape of "Discovered - currently not indexed". Linking them
+      // from here gives each one a real inbound edge from every docs page
+      // until envio.dev grows a footer of its own.
       footer: {
         style: "dark",
         links: [
           {
-            title: "Community",
+            title: "Docs",
             items: [
+              { label: "HyperIndex", to: "/docs/HyperIndex/overview" },
+              { label: "HyperSync", to: "/docs/HyperSync/overview" },
+              { label: "HyperRPC", to: "/docs/HyperRPC/overview-hyperrpc" },
+              { label: "Envio Cloud", to: "/docs/HyperIndex/hosted-service" },
+              { label: "Migrate to v3", to: "/docs/HyperIndex/migration-guide" },
+            ],
+          },
+          {
+            title: "Resources",
+            items: [
+              { label: "Blog", to: "/blog" },
+              { label: "Showcase", to: "/showcase" },
+              { label: "Shipper's Logs", to: "/videos" },
+              { label: "Benchmarks", to: "/docs/HyperIndex/benchmarks" },
               {
-                label: "Discord",
-                href: "https://discord.gg/envio",
+                label: "Supported Chains",
+                href: "https://envio.dev/chains",
               },
               {
-                label: "Twitter",
-                href: "https://twitter.com/envio_indexer",
+                label: "Changelog",
+                href: "https://envio.dev/changelog",
               },
             ],
           },
           {
-            title: "More",
+            title: "Pricing",
             items: [
               {
-                label: "Blog",
-                to: "/blog",
+                label: "HyperIndex Hosting",
+                href: "https://envio.dev/pricing/hosting",
               },
               {
-                label: "GitHub",
-                href: "https://github.com/enviodev",
+                label: "HyperSync",
+                href: "https://envio.dev/pricing/hypersync",
               },
+              {
+                label: "HyperRPC",
+                href: "https://envio.dev/pricing/hyperrpc",
+              },
+              {
+                label: "Subgraph Hosting",
+                href: "https://envio.dev/pricing/subgraphs",
+              },
+              {
+                label: "Support & Services",
+                href: "https://envio.dev/pricing/services",
+              },
+            ],
+          },
+          {
+            title: "Community",
+            items: [
+              { label: "Discord", href: "https://discord.gg/envio" },
+              { label: "Telegram", href: "https://t.me/+BeS5ihVUFONjNGFk" },
+              { label: "Twitter", href: "https://twitter.com/envio_indexer" },
+              { label: "GitHub", href: "https://github.com/enviodev" },
             ],
           },
         ],
@@ -517,8 +630,10 @@ const config = {
     [
       require.resolve("./plugins/plugin-generate-llms"),
       {
-        // LLM-mirror plugins are bundled re-exports of other docs — skip them
-        // entirely to avoid duplication.
+        // LLM-mirror plugins are bundled re-exports of other docs — keep them
+        // out of the llms.txt / llms-full.txt indexes to avoid duplication.
+        // Their .md copies are still written so the pages resolve when
+        // fetched directly (e.g. /docs/HyperSync-LLM/hypersync-complete.md).
         excludePluginIds: [
           "HyperIndex-LLM",
           "HyperSync-LLM",
@@ -528,6 +643,15 @@ const config = {
         // V2 is listed in llms.txt for discoverability but stays out of
         // llms-full.txt and the per-page .md copies.
         excludeFromFullPluginIds: ["HyperIndexV2"],
+        // Standalone pages and showcase entries are live, sitemapped pages that
+        // the docs and blog collectors do not own. Both are read from the same
+        // sources that render them, so new entries appear in llms.txt with no
+        // second list to maintain.
+        pages: { path: "src/pages" },
+        showcase: {
+          dataPath: "src/pages/showcase/_data.js",
+          routeBasePath: "showcase",
+        },
         filesConfigs: [
           {
             main: true, // becomes llms.txt
@@ -535,7 +659,7 @@ const config = {
             header: `
 # Envio: Fast, Multi-Chain Blockchain Indexer
 
-> Envio is a real-time multichain blockchain indexer. HyperIndex is a multichain indexer supporting any EVM chain, plus Solana and Fuel. HyperSync is a high-throughput data layer natively available on 70+ EVM chains and Fuel, and supports any EVM chain via RPC. HyperRPC is a read-only JSON-RPC endpoint powered by HyperSync, up to 5x faster than traditional nodes. Benchmark: Envio 1 min vs The Graph 143 min (Uniswap V2 Factory, [Sentio, May 2025](https://docs.envio.dev/docs/HyperIndex/benchmarks.md)).
+> Envio is a real-time multichain blockchain indexer. HyperIndex is a multichain indexer supporting any EVM chain, plus Solana and Fuel. HyperSync is a high-throughput data layer natively available on ${hyperSyncChainCountLabel} EVM chains and Fuel, and supports any EVM chain via RPC. HyperRPC is a read-only JSON-RPC endpoint powered by HyperSync, up to 5x faster than traditional nodes. On the Uniswap V2 Factory case, independent Sentio benchmarks from April 2025 measured Envio at 8s against The Graph at 19m, 142x slower ([full results](https://docs.envio.dev/docs/HyperIndex/benchmarks.md)).
 
 This file is generated from page frontmatter at build time and follows the llmstxt.org standard.
 `,
@@ -698,14 +822,40 @@ This file is generated from page frontmatter at build time and follows the llmst
                 ],
               },
               {
+                heading: "Showcase",
+                source: "showcase",
+                catchAll: true,
+              },
+              {
                 heading: "Legal",
                 include: [
                   "docs/HyperIndex/privacy-policy.{md,mdx}",
                   "docs/HyperIndex/terms-of-service.{md,mdx}",
                 ],
               },
+              {
+                heading: "Other pages",
+                source: "pages",
+                catchAll: true,
+              },
             ],
             optional: [
+              // The full-text dumps point back at this file, but nothing here
+              // pointed at them, so an agent starting from llms.txt had no way
+              // to discover them. Listed first because they are the highest
+              // value follow-up for an agent that can ingest them.
+              {
+                label: "Full documentation (llms-full.txt)",
+                href: "https://docs.envio.dev/llms-full.txt",
+                description:
+                  "Every documentation page concatenated as markdown with per-page source URLs, for direct ingestion into a context window.",
+              },
+              {
+                label: "Full blog and case studies (llms-full-blog.txt)",
+                href: "https://docs.envio.dev/llms-full-blog.txt",
+                description:
+                  "Every blog post and case study concatenated as markdown with per-page source URLs.",
+              },
               {
                 label: "Envio website",
                 href: "https://envio.dev",

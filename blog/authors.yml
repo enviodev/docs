@@ -1,12 +1,9 @@
 nikbhintade:
   name: Nikhil Bhintade
-  title: Growth Engineer at Envio
+  title: Former Growth Engineer at Envio
   url: /blog/author/nikbhintade
   image_url: /blog-assets/authors/nikbhintade.jpg
-  description: "Working on developer experience, ecosystem growth, and technical content around blockchain indexing and Web3 infrastructure."
-  socials:
-    twitter: https://x.com/nikbhintade
-    linkedin: https://linkedin.com/in/nikbhintade
+  description: "Worked on developer experience, ecosystem growth, and technical content around blockchain indexing and Web3 infrastructure."
 j_o_r_d_y_s:
   name: Jordyn Laurier
   title: Head of Marketing at Envio
@@ -33,3 +30,11 @@ denhampreen:
   description: "Co-Founder at Envio. Building blockchain indexing infrastructure for the multichain era."
   socials:
     twitter: https://x.com/DenhamPreen
+jonjonclark:
+  name: Jonjon Clark
+  title: Co-Founder at Envio
+  url: /blog/author/jonjonclark
+  image_url: /blog-assets/authors/jonjonclark.jpg
+  description: "Co-Founder at Envio. Building blockchain indexing infrastructure, and digging through onchain data to see what it actually shows."
+  socials:
+    twitter: https://x.com/jonjonclark

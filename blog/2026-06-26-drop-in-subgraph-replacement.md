@@ -1,7 +1,7 @@
 ---
 title: Migrating From The Graph Without a Rewrite
 sidebar_label: Migrating From The Graph Without a Rewrite
-tags: [tutorial]
+tags: [tutorials]
 slug: /drop-in-subgraph-replacement
 description: "Migrating off The Graph keeps your entities and GraphQL shape, with TypeScript instead of AssemblyScript. A side-by-side guide to a drop-in subgraph replacement on Envio HyperIndex."
 image: /blog-assets/drop-in-subgraph-replacement.png
