@@ -6,7 +6,7 @@ slug: /quickstart
 description: Learn to quickly autogenerate and configure a HyperIndex indexer for any smart contract.
 ---
 
-The **Quickstart** enables you to instantly autogenerate a powerful blockchain indexer and start querying blockchain data in minutes. This is the fastest and easiest way to begin using HyperIndex.
+The **Quickstart** enables you to instantly autogenerate a powerful blockchain indexer and start querying blockchain data in minutes. This is the fastest and easiest way to begin using HyperIndex. If you are new to indexing, see [what a blockchain indexer is](/blog/what-is-a-blockchain-indexer) for the wider context.
 
 **Example:** Autogenerate an indexer for the Eigenlayer contract and index its entire history in less than 5 minutes by simply running `pnpx envio init` and providing the contract address from [Etherscan](https://etherscan.io/address/0x858646372cc42e1a627fce94aa7a7033e7cf075a).
 

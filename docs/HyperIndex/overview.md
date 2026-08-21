@@ -7,7 +7,7 @@ description: HyperIndex turns onchain events into a GraphQL API in minutes. Envi
 image: /docs-assets/og/HyperIndex/overview.png
 ---
 
-**HyperIndex** is a blazing-fast, developer-friendly multichain indexer, optimized for both local development and reliable hosted deployment. It empowers developers to effortlessly build robust backends for blockchain applications.
+**HyperIndex** is a blazing-fast, developer-friendly multichain indexer, optimized for both local development and reliable hosted deployment. It empowers developers to effortlessly build robust backends for blockchain applications. If you are new to indexing, see [what a blockchain indexer is](/blog/what-is-a-blockchain-indexer) for the wider context.
 
 ![Sync Process](../../static/img/sync.gif)
 
