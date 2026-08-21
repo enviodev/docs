@@ -134,6 +134,7 @@ Small nuance differences:
 - You can remove the `@entity` directive
 - [Enums](../HyperIndex/schema#enum-types)
 - [BigDecimals](../HyperIndex/schema#working-with-bigdecimal)
+- GraphQL `interface` types are not supported
 
 ## 3. Event handler migration
 
